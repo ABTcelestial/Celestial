@@ -42,15 +42,31 @@ export type Database = {
       produits: {
         Row: {
           id: string; nom: string; icone: string; description: string;
-          modules: string[]; prix: number; featured: boolean;
-          ordre: number; actif: boolean; created_at: string;
+          prix: number; featured: boolean; ordre: number; actif: boolean; created_at: string;
         };
         Insert: {
           id?: string; nom: string; icone?: string; description: string;
-          modules?: string[]; prix?: number; featured?: boolean;
-          ordre?: number; actif?: boolean; created_at?: string;
+          prix?: number; featured?: boolean; ordre?: number; actif?: boolean; created_at?: string;
         };
         Update: Partial<Database['public']['Tables']['produits']['Row']>;
+        Relationships: [];
+      };
+      modules: {
+        Row: {
+          id: string; nom: string; description: string; prix: number;
+          icone: string; actif: boolean; ordre: number; created_at: string;
+        };
+        Insert: {
+          id?: string; nom: string; description?: string; prix?: number;
+          icone?: string; actif?: boolean; ordre?: number; created_at?: string;
+        };
+        Update: Partial<Database['public']['Tables']['modules']['Row']>;
+        Relationships: [];
+      };
+      produit_modules: {
+        Row: { produit_id: string; module_id: string };
+        Insert: { produit_id: string; module_id: string };
+        Update: { produit_id?: string; module_id?: string };
         Relationships: [];
       };
       contact_info: {

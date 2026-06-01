@@ -43,11 +43,9 @@ export function ProduitsList({ initialData }: { initialData: Produit[] }) {
                   {!p.actif && <span className="badge" style={{ color: 'var(--danger)', borderColor: 'rgba(229,88,94,0.35)' }}>Masqué</span>}
                 </div>
                 <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginBottom: 10 }}>{p.description}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {(p.modules as string[]).map((m, i) => (
-                    <span key={i} className="chip" style={{ fontSize: 12 }}>{m}</span>
-                  ))}
-                </div>
+                <p style={{ fontSize: 12, color: 'var(--text-faint)', marginTop: 2 }}>
+                  Modules configurés via l'onglet Modifier
+                </p>
               </div>
             </div>
             <div className="flex flex-col items-end gap-3" style={{ flexShrink: 0 }}>
