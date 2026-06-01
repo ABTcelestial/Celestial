@@ -57,10 +57,19 @@ export function CommanderStepper({ produits, bundles }: { produits: Produit[]; b
     let total = 0;
     selectedIds.forEach(pid => {
       const prod = produits.find(p => p.id === pid);
+      if (!prod) return;
+      total += prod.prix; // prix de base du logiciel
       const selMods = moduleSelections[pid] ?? [];
-      prod?.modules.filter(m => selMods.includes(m.id)).forEach(m => { total += m.prix; });
+      prod.modules.filter(m => selMods.includes(m.id)).forEach(m => { total += m.prix; });
     });
     return total;
+  }
+
+  function getProduitSubtotal(pid: string) {
+    const prod = produits.find(p => p.id === pid);
+    if (!prod) return 0;
+    const selMods = moduleSelections[pid] ?? [];
+    return prod.prix + prod.modules.filter(m => selMods.includes(m.id)).reduce((s, m) => s + m.prix, 0);
   }
 
   function hasSelection()  { return mode === 'individual' ? selectedIds.length > 0 : selectedBundle !== null; }
@@ -188,10 +197,10 @@ export function CommanderStepper({ produits, bundles }: { produits: Produit[]; b
                         <div style={{ width: 24, height: 24, borderRadius: 6, border: `2px solid ${sel ? 'var(--gold)' : 'var(--glass-border)'}`, background: sel ? 'var(--gold)' : 'transparent', display: 'grid', placeItems: 'center' }}>
                           {sel && <span style={{ fontSize: 11, color: '#000', fontWeight: 700 }}>✓</span>}
                         </div>
-                        <div style={{ fontSize: 12, color: 'var(--text-faint)' }}>à partir de</div>
                         <div style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: sel ? 'var(--gold-bright)' : 'var(--text-primary)' }}>
-                          {fmt(p.modules.reduce((s, m) => s + m.prix, 0))}
+                          {fmt(p.prix)}
                         </div>
+                        <div style={{ fontSize: 12, color: 'var(--text-faint)' }}>+ modules à la carte</div>
                       </div>
                     </div>
                   </div>
@@ -259,7 +268,8 @@ export function CommanderStepper({ produits, bundles }: { produits: Produit[]; b
 
           {selectedProduits.map(p => {
             const selMods = moduleSelections[p.id] ?? [];
-            const subtotal = p.modules.filter(m => selMods.includes(m.id)).reduce((s, m) => s + m.prix, 0);
+            const modulesTotal = p.modules.filter(m => selMods.includes(m.id)).reduce((s, m) => s + m.prix, 0);
+            const subtotal = p.prix + modulesTotal;
             return (
               <div key={p.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div className="flex items-center justify-between">
@@ -267,7 +277,12 @@ export function CommanderStepper({ produits, bundles }: { produits: Produit[]; b
                     <span style={{ fontSize: 24 }}>{p.icone}</span>
                     <span style={{ fontWeight: 600, fontSize: 17 }}>{p.nom}</span>
                   </div>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--gold-bright)' }}>{fmt(subtotal)}</span>
+                  <div style={{ textAlign: 'right' }}>
+                    <span style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--gold-bright)' }}>{fmt(subtotal)}</span>
+                    <div style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>
+                      base {fmt(p.prix)} + modules {fmt(modulesTotal)}
+                    </div>
+                  </div>
                 </div>
 
                 {p.modules.length === 0 ? (
@@ -370,20 +385,32 @@ export function CommanderStepper({ produits, bundles }: { produits: Produit[]; b
             ) : (
               selectedProduits.map(p => {
                 const selMods = p.modules.filter(m => (moduleSelections[p.id] ?? []).includes(m.id));
-                const subtotal = selMods.reduce((s, m) => s + m.prix, 0);
+                const modsTotal = selMods.reduce((s, m) => s + m.prix, 0);
                 return (
-                  <div key={p.id} style={{ paddingBottom: 12, borderBottom: '1px solid var(--hairline)' }}>
-                    <div className="flex items-center justify-between mb-8">
+                  <div key={p.id} style={{ paddingBottom: 14, borderBottom: '1px solid var(--hairline)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {/* Base price */}
+                    <div className="flex items-center justify-between">
                       <span style={{ fontWeight: 600, fontSize: 15 }}>{p.icone} {p.nom}</span>
-                      <span style={{ fontFamily: 'var(--font-display)', fontSize: 16, color: 'var(--gold-bright)' }}>{fmt(subtotal)}</span>
+                      <span style={{ fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--text-secondary)' }}>{fmt(p.prix)}</span>
                     </div>
+                    {/* Modules */}
                     {selMods.length > 0 ? (
-                      <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 6 }}>
-                        {selMods.map(m => <span key={m.id} style={{ fontSize: 11.5, padding: '3px 9px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--hairline)', borderRadius: 'var(--r-pill)', color: 'var(--text-muted)' }}>{m.icone} {m.nom} — {m.prix.toLocaleString('fr-DZ')} DA</span>)}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 5, paddingLeft: 12, borderLeft: '2px solid var(--hairline)' }}>
+                        {selMods.map(m => (
+                          <div key={m.id} className="flex items-center justify-between" style={{ fontSize: 13 }}>
+                            <span style={{ color: 'var(--text-muted)' }}>{m.icone} {m.nom}</span>
+                            <span style={{ fontFamily: 'var(--font-display)', color: 'var(--text-muted)' }}>+{fmt(m.prix)}</span>
+                          </div>
+                        ))}
                       </div>
                     ) : (
-                      <span style={{ fontSize: 12, color: 'var(--text-faint)', fontStyle: 'italic' }}>Aucun module sélectionné</span>
+                      <span style={{ fontSize: 12, color: 'var(--text-faint)', fontStyle: 'italic', paddingLeft: 12 }}>Aucun module</span>
                     )}
+                    {/* Subtotal */}
+                    <div className="flex items-center justify-between" style={{ paddingTop: 4 }}>
+                      <span style={{ fontSize: 13, color: 'var(--text-faint)' }}>Sous-total</span>
+                      <span style={{ fontFamily: 'var(--font-display)', fontSize: 16, color: 'var(--gold-bright)' }}>{fmt(getProduitSubtotal(p.id))}</span>
+                    </div>
                   </div>
                 );
               })
