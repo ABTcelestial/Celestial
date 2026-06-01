@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { AdminNav } from '@/components/admin/AdminNav';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = { title: 'Celestial Admin' };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
