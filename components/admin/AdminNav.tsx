@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -6,13 +6,13 @@ import { LogoMark } from '@/components/layout/LogoMark';
 import { cn } from '@/lib/utils';
 
 const links = [
-  { href: '/admin',             label: 'Dashboard',      exact: true,  icon: '▦' },
-  { href: '/admin/devis',       label: 'Demandes',        exact: false, icon: '✉' },
-  { href: '/admin/produits',      label: 'Logiciels',      exact: false, icon: '⬡' },
-  { href: '/admin/offres-config', label: 'Config offres', exact: false, icon: '⊞' },
-  { href: '/admin/changelogs',    label: 'Changelogs',    exact: false, icon: '≡' },
-  { href: '/admin/documentation', label: 'Documentation', exact: false, icon: '◫' },
-  { href: '/admin/parametres',  label: 'Paramètres',      exact: false, icon: '⚙' },
+  { href: '/celestial-admin-rtabt',             label: 'Dashboard',      exact: true,  icon: '▦' },
+  { href: '/celestial-admin-rtabt/devis',       label: 'Demandes',        exact: false, icon: '✉' },
+  { href: '/celestial-admin-rtabt/produits',      label: 'Logiciels',      exact: false, icon: '⬡' },
+  { href: '/celestial-admin-rtabt/offres-config', label: 'Config offres', exact: false, icon: '⊞' },
+  { href: '/celestial-admin-rtabt/changelogs',    label: 'Changelogs',    exact: false, icon: '≡' },
+  { href: '/celestial-admin-rtabt/documentation', label: 'Documentation', exact: false, icon: '◫' },
+  { href: '/celestial-admin-rtabt/parametres',  label: 'Paramètres',      exact: false, icon: '⚙' },
 ];
 
 export function AdminNav() {
@@ -22,7 +22,7 @@ export function AdminNav() {
 
   async function handleLogout() {
     await supabase.auth.signOut();
-    router.push('/admin/login');
+    router.push('/celestial-admin-rtabt/login');
     router.refresh();
   }
 
@@ -30,7 +30,7 @@ export function AdminNav() {
     <nav className="nav scrolled" style={{ borderBottom: '1px solid var(--hairline)' }}>
       <div className="flex items-center justify-between gap-4 w-full px-6" style={{ maxWidth: 1400, margin: '0 auto' }}>
         <div className="flex items-center gap-5">
-          <Link href="/admin" className="logo" style={{ flexShrink: 0 }}>
+          <Link href="/celestial-admin-rtabt" className="logo" style={{ flexShrink: 0 }}>
             <LogoMark />
             <span className="logo-name">
               Celestial<span className="dot">.</span>{' '}

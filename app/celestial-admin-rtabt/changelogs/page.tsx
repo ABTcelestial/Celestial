@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { AdminChangelogList } from '@/components/admin/AdminChangelogList';
 import Link from 'next/link';
 
@@ -16,7 +16,7 @@ export default async function AdminChangelogsPage() {
             {data?.length ?? 0} entrée{(data?.length ?? 0) > 1 ? 's' : ''}
           </p>
         </div>
-        <Link href="/admin/changelogs/new" className="btn btn-gold">+ Nouvelle entrée</Link>
+        <Link href="/celestial-admin-rtabt/changelogs/new" className="btn btn-gold">+ Nouvelle entrée</Link>
       </div>
       <AdminChangelogList initialData={data ?? []} />
     </main>

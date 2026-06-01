@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -37,7 +37,7 @@ export function DocPagesList({ initialData }: { initialData: DocPage[] }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
       {data.length === 0 && (
         <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: 48 }}>
-          Aucune page. <Link href="/admin/documentation/new" style={{ color: 'var(--gold)' }}>Créer la première →</Link>
+          Aucune page. <Link href="/celestial-admin-rtabt/documentation/new" style={{ color: 'var(--gold)' }}>Créer la première →</Link>
         </p>
       )}
       {Object.entries(grouped).map(([produit, sections]) => (
@@ -61,7 +61,7 @@ export function DocPagesList({ initialData }: { initialData: DocPage[] }) {
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <Link href={`/admin/documentation/${p.id}/edit`} className="btn btn-glass btn-sm">Modifier</Link>
+                        <Link href={`/celestial-admin-rtabt/documentation/${p.id}/edit`} className="btn btn-glass btn-sm">Modifier</Link>
                         <button onClick={() => handleDelete(p.id)} className="btn btn-glass btn-sm" style={{ color: 'var(--danger)' }}>
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
                         </button>

@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { ProduitsList } from '@/components/admin/ProduitsList';
 import Link from 'next/link';
 
@@ -16,7 +16,7 @@ export default async function AdminProduitsPage() {
             {data?.length ?? 0} produit{(data?.length ?? 0) > 1 ? 's' : ''}
           </p>
         </div>
-        <Link href="/admin/produits/new" className="btn btn-gold">+ Nouveau logiciel</Link>
+        <Link href="/celestial-admin-rtabt/produits/new" className="btn btn-gold">+ Nouveau logiciel</Link>
       </div>
       <ProduitsList initialData={data ?? []} />
     </main>

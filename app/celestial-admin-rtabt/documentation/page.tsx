@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { DocPagesList } from '@/components/admin/DocPagesList';
 import Link from 'next/link';
 
@@ -21,7 +21,7 @@ export default async function AdminDocumentationPage() {
             {data?.length ?? 0} page{(data?.length ?? 0) > 1 ? 's' : ''}
           </p>
         </div>
-        <Link href="/admin/documentation/new" className="btn btn-gold">+ Nouvelle page</Link>
+        <Link href="/celestial-admin-rtabt/documentation/new" className="btn btn-gold">+ Nouvelle page</Link>
       </div>
       <DocPagesList initialData={data ?? []} />
     </main>

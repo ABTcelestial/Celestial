@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr';
+﻿import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function proxy(request: NextRequest) {
@@ -23,20 +23,20 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Protect all /admin routes except /admin/login
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  if (pathname.startsWith('/celestial-admin-rtabt') && pathname !== '/celestial-admin-rtabt/login') {
     if (!user) {
-      return NextResponse.redirect(new URL('/admin/login', request.url));
+      return NextResponse.redirect(new URL('/celestial-admin-rtabt/login', request.url));
     }
   }
 
   // Redirect authenticated users away from login
-  if (pathname === '/admin/login' && user) {
-    return NextResponse.redirect(new URL('/admin', request.url));
+  if (pathname === '/celestial-admin-rtabt/login' && user) {
+    return NextResponse.redirect(new URL('/celestial-admin-rtabt', request.url));
   }
 
   return supabaseResponse;
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/celestial-admin-rtabt/:path*'],
 };

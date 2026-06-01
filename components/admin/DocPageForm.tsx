@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -32,7 +32,7 @@ export function DocPageForm({ mode, initialData }: { mode: 'create' | 'edit'; in
       : await supabase.from('doc_pages').update(payload).eq('id', initialData!.id);
 
     if (err) { setError(err.message); setSaving(false); return; }
-    router.push('/admin/documentation');
+    router.push('/celestial-admin-rtabt/documentation');
     router.refresh();
   }
 

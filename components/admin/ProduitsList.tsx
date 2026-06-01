@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -28,7 +28,7 @@ export function ProduitsList({ initialData }: { initialData: Produit[] }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       {data.length === 0 && (
         <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: 48 }}>
-          Aucun logiciel. <Link href="/admin/produits/new" className="text-gold">Créer le premier →</Link>
+          Aucun logiciel. <Link href="/celestial-admin-rtabt/produits/new" className="text-gold">Créer le premier →</Link>
         </p>
       )}
       {data.map(p => (
@@ -62,7 +62,7 @@ export function ProduitsList({ initialData }: { initialData: Produit[] }) {
                 >
                   {p.actif ? '● Visible' : '○ Masqué'}
                 </button>
-                <Link href={`/admin/produits/${p.id}/edit`} className="btn btn-glass btn-sm">Modifier</Link>
+                <Link href={`/celestial-admin-rtabt/produits/${p.id}/edit`} className="btn btn-glass btn-sm">Modifier</Link>
                 <button onClick={() => handleDelete(p.id)} className="btn btn-glass btn-sm" style={{ color: 'var(--danger)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
                 </button>

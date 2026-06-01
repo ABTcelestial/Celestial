@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -21,7 +21,7 @@ export default function AdminLoginPage() {
       setError('Email ou mot de passe incorrect.');
       setLoading(false);
     } else {
-      router.push('/admin');
+      router.push('/celestial-admin-rtabt');
       router.refresh();
     }
   }

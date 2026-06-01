@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -61,7 +61,7 @@ export function ChangelogForm({ mode, initialData }: { mode: 'create' | 'edit'; 
       : await supabase.from('changelogs').update(payload).eq('id', initialData!.id);
 
     if (err) { setError(err.message); setSaving(false); return; }
-    router.push('/admin/changelogs');
+    router.push('/celestial-admin-rtabt/changelogs');
     router.refresh();
   }
 

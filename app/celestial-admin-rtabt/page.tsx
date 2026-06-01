@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 
 async function getStats() {
@@ -21,9 +21,9 @@ export default async function AdminDashboardPage() {
   const { totalDevis, newDevis, totalChangelogs, recentDevis } = await getStats();
 
   const stats = [
-    { label: 'Demandes totales', value: totalDevis, icon: '📩', href: '/admin/devis' },
-    { label: 'Non traitées', value: newDevis, icon: '🔔', href: '/admin/devis?statut=nouveau', alert: newDevis > 0 },
-    { label: 'Entrées changelog', value: totalChangelogs, icon: '📋', href: '/admin/changelogs' },
+    { label: 'Demandes totales', value: totalDevis, icon: '📩', href: '/celestial-admin-rtabt/devis' },
+    { label: 'Non traitées', value: newDevis, icon: '🔔', href: '/celestial-admin-rtabt/devis?statut=nouveau', alert: newDevis > 0 },
+    { label: 'Entrées changelog', value: totalChangelogs, icon: '📋', href: '/celestial-admin-rtabt/changelogs' },
   ];
 
   return (
@@ -57,7 +57,7 @@ export default async function AdminDashboardPage() {
         <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
           <div className="flex items-center justify-between" style={{ padding: '22px 28px', borderBottom: '1px solid var(--hairline)' }}>
             <h2 style={{ fontSize: 18 }}>Demandes récentes</h2>
-            <Link href="/admin/devis" className="btn btn-glass btn-sm">Voir tout →</Link>
+            <Link href="/celestial-admin-rtabt/devis" className="btn btn-glass btn-sm">Voir tout →</Link>
           </div>
           {recentDevis.length === 0 ? (
             <p style={{ padding: '32px 28px', color: 'var(--text-muted)', textAlign: 'center' }}>Aucune demande pour le moment.</p>
@@ -89,10 +89,10 @@ export default async function AdminDashboardPage() {
           <div className="card" style={{ padding: '24px 26px' }}>
             <h2 style={{ fontSize: 17, marginBottom: 18 }}>Actions rapides</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <Link href="/admin/changelogs/new" className="btn btn-gold btn-sm btn-block">
+              <Link href="/celestial-admin-rtabt/changelogs/new" className="btn btn-gold btn-sm btn-block">
                 + Nouveau changelog
               </Link>
-              <Link href="/admin/devis" className="btn btn-glass btn-sm btn-block">
+              <Link href="/celestial-admin-rtabt/devis" className="btn btn-glass btn-sm btn-block">
                 Voir les demandes
               </Link>
               <Link href="/" target="_blank" className="btn btn-glass btn-sm btn-block">

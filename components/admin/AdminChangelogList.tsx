@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -29,7 +29,7 @@ export function AdminChangelogList({ initialData }: { initialData: Changelog[] }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       {data.length === 0 && (
-        <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: 48 }}>Aucune entrée. <Link href="/admin/changelogs/new" className="text-gold">Créer la première →</Link></p>
+        <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: 48 }}>Aucune entrée. <Link href="/celestial-admin-rtabt/changelogs/new" className="text-gold">Créer la première →</Link></p>
       )}
       {data.map(entry => (
         <div key={entry.id} className="card" style={{ padding: '22px 26px' }}>
@@ -57,7 +57,7 @@ export function AdminChangelogList({ initialData }: { initialData: Changelog[] }
               </div>
             </div>
             <div className="flex gap-2" style={{ flexShrink: 0 }}>
-              <Link href={`/admin/changelogs/${entry.id}/edit`} className="btn btn-glass btn-sm">Modifier</Link>
+              <Link href={`/celestial-admin-rtabt/changelogs/${entry.id}/edit`} className="btn btn-glass btn-sm">Modifier</Link>
               <button onClick={() => handleDelete(entry.id)} className="btn btn-glass btn-sm" style={{ color: 'var(--danger)' }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
               </button>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -37,7 +37,7 @@ export function ProduitForm({ mode, initialData }: { mode: 'create' | 'edit'; in
       : await supabase.from('produits').update(payload).eq('id', initialData!.id);
 
     if (err) { setError(err.message); setSaving(false); return; }
-    router.push('/admin/produits');
+    router.push('/celestial-admin-rtabt/produits');
     router.refresh();
   }
 
