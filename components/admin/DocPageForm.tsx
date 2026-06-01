@@ -1,32 +1,39 @@
-﻿'use client';
+'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import type { Database, DocProduit } from '@/lib/supabase/types';
+import type { Database } from '@/lib/supabase/types';
 
 type DocPage = Database['public']['Tables']['doc_pages']['Row'];
 
-export function DocPageForm({ mode, initialData }: { mode: 'create' | 'edit'; initialData?: DocPage }) {
+export function DocPageForm({
+  mode, initialData, suggestions = [],
+}: {
+  mode: 'create' | 'edit';
+  initialData?: DocPage;
+  suggestions?: string[];
+}) {
   const router = useRouter();
   const supabase = createClient();
 
-  const [produit, setProduit] = useState<DocProduit>(initialData?.produit ?? 'business');
-  const [section, setSection] = useState(initialData?.section ?? '');
+  const [produit, setProduit]           = useState(initialData?.produit ?? '');
+  const [section, setSection]           = useState(initialData?.section ?? '');
   const [sectionOrdre, setSectionOrdre] = useState(initialData?.section_ordre ?? 0);
-  const [titre, setTitre] = useState(initialData?.titre ?? '');
-  const [contenu, setContenu] = useState(initialData?.contenu ?? '');
-  const [ordre, setOrdre] = useState(initialData?.ordre ?? 0);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
-  const [tab, setTab] = useState<'edit' | 'preview'>('edit');
+  const [titre, setTitre]               = useState(initialData?.titre ?? '');
+  const [contenu, setContenu]           = useState(initialData?.contenu ?? '');
+  const [ordre, setOrdre]               = useState(initialData?.ordre ?? 0);
+  const [saving, setSaving]             = useState(false);
+  const [error, setError]               = useState('');
+  const [tab, setTab]                   = useState<'edit' | 'preview'>('edit');
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!titre.trim()) { setError('Le titre est requis.'); return; }
+    if (!titre.trim())   { setError('Le titre est requis.');   return; }
     if (!section.trim()) { setError('La section est requise.'); return; }
+    if (!produit.trim()) { setError('Le produit est requis.');  return; }
     setSaving(true); setError('');
 
-    const payload = { produit, section, section_ordre: sectionOrdre, titre, contenu, ordre };
+    const payload = { produit: produit.trim(), section, section_ordre: sectionOrdre, titre, contenu, ordre };
     const { error: err } = mode === 'create'
       ? await supabase.from('doc_pages').insert(payload)
       : await supabase.from('doc_pages').update(payload).eq('id', initialData!.id);
@@ -43,11 +50,21 @@ export function DocPageForm({ mode, initialData }: { mode: 'create' | 'edit'; in
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 100px 100px', gap: 16 }}>
           <div className="field">
             <label>Produit *</label>
-            <select className="cel-select" value={produit} onChange={e => setProduit(e.target.value as DocProduit)}>
-              <option value="business">📊 Business Process</option>
-              <option value="compta">🧮 Compta Process</option>
-              <option value="pay">💼 Pay Process</option>
-            </select>
+            <input
+              className="cel-input"
+              list="produit-suggestions"
+              placeholder="ex: Business Process"
+              value={produit}
+              onChange={e => setProduit(e.target.value)}
+              required
+              autoComplete="off"
+            />
+            <datalist id="produit-suggestions">
+              {suggestions.map(s => <option key={s} value={s} />)}
+            </datalist>
+            <p style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 4 }}>
+              Tapez librement ou choisissez parmi les suggestions.
+            </p>
           </div>
           <div className="field">
             <label>Section *</label>
@@ -68,7 +85,6 @@ export function DocPageForm({ mode, initialData }: { mode: 'create' | 'edit'; in
           <input className="cel-input" placeholder="Introduction, Installation…" value={titre} onChange={e => setTitre(e.target.value)} required />
         </div>
 
-        {/* Content editor with preview */}
         <div className="field">
           <div className="flex items-center justify-between mb-2">
             <label>Contenu (HTML)</label>

@@ -4,11 +4,15 @@ import type { Database } from '@/lib/supabase/types';
 
 type DocPage = Database['public']['Tables']['doc_pages']['Row'];
 
-const PRODUIT_LABEL: Record<string, string> = {
+// Fallback labels pour les anciens slugs — tout nouveau produit utilise son nom directement
+const LEGACY_LABEL: Record<string, string> = {
   business: '📊 Business Process',
-  compta: '🧮 Compta Process',
-  pay: '💼 Pay Process',
+  compta:   '🧮 Compta Process',
+  pay:      '💼 Pay Process',
 };
+function produitLabel(produit: string) {
+  return LEGACY_LABEL[produit] ?? produit;
+}
 
 interface Tree {
   [produit: string]: {
@@ -83,8 +87,8 @@ export function DocViewer({ pages }: { pages: DocPage[] }) {
           return (
             <div key={produit} style={{ marginBottom: 6 }}>
               <div onClick={() => toggleProduit(produit)} className="flex items-center gap-2 cursor-pointer" style={{ padding: '9px 10px', borderRadius: 'var(--r-xs)', fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 13.5 }}>
-                <span style={{ width: 22, height: 22, borderRadius: 6, display: 'grid', placeItems: 'center', background: 'var(--glass)', border: '1px solid var(--hairline)', flexShrink: 0, fontSize: 12 }}>{PRODUIT_LABEL[produit]?.slice(0, 2)}</span>
-                {PRODUIT_LABEL[produit]?.slice(3) ?? produit}
+                <span style={{ width: 22, height: 22, borderRadius: 6, display: 'grid', placeItems: 'center', background: 'var(--glass)', border: '1px solid var(--hairline)', flexShrink: 0, fontSize: 12 }}>{produitLabel(produit).slice(0, 2)}</span>
+                {produitLabel(produit).slice(3) || produitLabel(produit)}
                 <svg style={{ marginLeft: 'auto', transition: 'transform 0.25s', transform: pCollapsed ? 'rotate(-90deg)' : 'none', color: 'var(--text-muted)' }} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
               </div>
               {!pCollapsed && (
@@ -119,7 +123,7 @@ export function DocViewer({ pages }: { pages: DocPage[] }) {
         {activePage && (
           <>
             <div className="flex items-center gap-2 flex-wrap" style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 26 }}>
-              <span>{PRODUIT_LABEL[activePage.produit] ?? activePage.produit}</span>
+              <span>{produitLabel(activePage.produit)}</span>
               <span style={{ color: 'var(--text-faint)' }}>/</span>
               <span>{activePage.section}</span>
               <span style={{ color: 'var(--text-faint)' }}>/</span>
