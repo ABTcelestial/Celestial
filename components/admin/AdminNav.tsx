@@ -9,6 +9,7 @@ const links = [
   { href: '/celestial-admin-rtabt',             label: 'Dashboard',      exact: true,  icon: '▦' },
   { href: '/celestial-admin-rtabt/devis',       label: 'Demandes',        exact: false, icon: '✉' },
   { href: '/celestial-admin-rtabt/produits',      label: 'Logiciels',      exact: false, icon: '⬡' },
+  { href: '/celestial-admin-rtabt/bundles',        label: 'Bundles',       exact: false, icon: '◈' },
   { href: '/celestial-admin-rtabt/offres-config', label: 'Config offres', exact: false, icon: '⊞' },
   { href: '/celestial-admin-rtabt/changelogs',    label: 'Changelogs',    exact: false, icon: '≡' },
   { href: '/celestial-admin-rtabt/documentation', label: 'Documentation', exact: false, icon: '◫' },

@@ -57,7 +57,7 @@ export default async function OffresPage() {
               <div style={{ marginTop: 'auto' }}>
                 <div><span style={{ fontFamily: 'var(--font-display)', fontSize: 34, fontWeight: 600 }}>{p.prix.toLocaleString('fr-DZ')}</span> <span style={{ fontSize: 15, color: 'var(--text-muted)' }}>DZD</span></div>
                 <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>Licence perpétuelle · 1ʳᵉ année de support incluse</div>
-                <Link href="/contact" className={`btn ${p.featured ? 'btn-gold' : 'btn-glass'} btn-block`} style={{ marginTop: 18 }}>Demander une démo</Link>
+                <Link href="/commander" className={`btn ${p.featured ? 'btn-gold' : 'btn-glass'} btn-block`} style={{ marginTop: 18 }}>Configurer & commander →</Link>
               </div>
             </div>
           </RevealWrapper>
@@ -78,7 +78,7 @@ export default async function OffresPage() {
                 <div style={{ fontFamily: 'var(--font-display)', fontSize: 14, color: 'var(--text-muted)', textDecoration: 'line-through' }}>{totalBase.toLocaleString('fr-DZ')} DZD</div>
                 <div><span className="stat-num text-gold" style={{ fontSize: 38 }}>{bundlePrice.toLocaleString('fr-DZ')}</span> <span style={{ fontSize: 15, color: 'var(--text-muted)' }}>DZD</span></div>
                 <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>Économisez {remise}%</div>
-                <Link href="/contact" className="btn btn-gold" style={{ marginTop: 12 }}>Demander un devis suite →</Link>
+                <Link href="/commander" className="btn btn-gold" style={{ marginTop: 12 }}>Voir nos bundles →</Link>
               </div>
             </div>
           </RevealWrapper>

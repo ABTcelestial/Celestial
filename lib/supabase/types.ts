@@ -93,6 +93,18 @@ export type Database = {
         Update: { id?: string; feature?: string; business?: boolean; compta?: boolean; pay?: boolean; ordre?: number; };
         Relationships: [];
       };
+      bundles: {
+        Row: {
+          id: string; nom: string; description: string; produits: string[];
+          remise_pct: number; badge: string | null; actif: boolean; ordre: number; created_at: string;
+        };
+        Insert: {
+          id?: string; nom: string; description?: string; produits?: string[];
+          remise_pct?: number; badge?: string | null; actif?: boolean; ordre?: number; created_at?: string;
+        };
+        Update: Partial<Database['public']['Tables']['bundles']['Row']>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
