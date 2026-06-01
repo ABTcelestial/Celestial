@@ -6,7 +6,7 @@ import Link from 'next/link';
 export const metadata = { title: 'Celestial — Offres & Logiciels' };
 export const revalidate = 60;
 
-type ModuleRow = { id: string; nom: string; description: string; prix: number; icone: string };
+type ModuleRow = { id: string; nom: string; description: string; prix: number; icone: string; ordre: number };
 type ProduitRow = {
   id: string; nom: string; icone: string; description: string;
   prix: number; featured: boolean; ordre: number; actif: boolean;
@@ -18,22 +18,31 @@ export default async function OffresPage() {
   const [
     { data: produitsRaw },
     { data: suite },
-    { data: comparatif },
+    { data: bundlesRaw },
   ] = await Promise.all([
     supabase.from('produits').select(`
       id, nom, icone, description, prix, featured, ordre, actif,
-      produit_modules ( modules ( id, nom, description, prix, icone ) )
+      produit_modules ( modules ( id, nom, description, prix, icone, ordre ) )
     `).eq('actif', true).order('ordre'),
     supabase.from('suite_config').select('*').eq('id', 1).single(),
-    supabase.from('comparatif_modules').select('*').order('ordre'),
+    supabase.from('bundles').select('*').eq('actif', true).order('ordre'),
   ]);
 
-  const list = (produitsRaw as ProduitRow[] | null) ?? [];
-  const totalBase = list.reduce((sum, p) => sum + p.prix, 0);
-  const remise = suite?.remise_pct ?? 20;
+  const list    = (produitsRaw as ProduitRow[] | null) ?? [];
+  const bundles = bundlesRaw ?? [];
+
+  // Suite totals
+  const totalBase  = list.reduce((s, p) => s + p.prix, 0);
+  const remise     = suite?.remise_pct ?? 20;
   const bundlePrice = Math.round(totalBase * (1 - remise / 100));
   const showBundle = (suite?.actif ?? true) && list.length >= 2;
-  const rows = comparatif ?? [];
+
+  // Comparatif dynamique : tous les modules distincts assignés à au moins un produit
+  const modulesMap = new Map<string, ModuleRow>();
+  list.forEach(p => p.produit_modules.forEach(pm => {
+    if (!modulesMap.has(pm.modules.id)) modulesMap.set(pm.modules.id, pm.modules);
+  }));
+  const allModules = Array.from(modulesMap.values()).sort((a, b) => a.ordre - b.ordre);
 
   return (
     <main className="wrap">
@@ -47,10 +56,10 @@ export default async function OffresPage() {
         </p>
       </header>
 
-      {/* Product cards */}
+      {/* ── Produit cards ── */}
       <section style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(list.length || 3, 3)},1fr)`, gap: 24, marginTop: 60 }}>
         {list.map((p, i) => {
-          const mods = p.produit_modules.map(pm => pm.modules).filter(Boolean);
+          const mods = p.produit_modules.map(pm => pm.modules).filter(Boolean).sort((a, b) => a.ordre - b.ordre);
           return (
             <RevealWrapper key={p.id} delay={i * 120}>
               <div className="card card-hover flex flex-col" style={{ ...(p.featured ? { borderColor: 'rgba(201,168,76,0.4)', boxShadow: '0 0 50px rgba(201,168,76,0.10)' } : {}), position: 'relative', height: '100%' }}>
@@ -59,7 +68,6 @@ export default async function OffresPage() {
                 <div style={{ width: 52, height: 52, borderRadius: 'var(--r-sm)', display: 'grid', placeItems: 'center', fontSize: 26, border: '1px solid var(--glass-border)', marginBottom: 20, background: p.featured ? 'var(--grad-gold)' : 'linear-gradient(150deg,rgba(139,63,224,0.2),rgba(26,35,126,0.18))' }}>{p.icone}</div>
                 <h3 style={{ fontSize: 24 }}>{p.nom}</h3>
                 <p style={{ color: 'var(--text-secondary)', fontSize: 14.5, marginTop: 10, minHeight: 44 }}>{p.description}</p>
-
                 {mods.length > 0 && (
                   <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 9, margin: '22px 0', padding: '22px 0', borderTop: '1px solid var(--hairline)', borderBottom: '1px solid var(--hairline)' }}>
                     {mods.map(m => (
@@ -75,7 +83,6 @@ export default async function OffresPage() {
                     ))}
                   </ul>
                 )}
-
                 <div style={{ marginTop: 'auto' }}>
                   <div><span style={{ fontFamily: 'var(--font-display)', fontSize: 34, fontWeight: 600 }}>{p.prix.toLocaleString('fr-DZ')}</span> <span style={{ fontSize: 15, color: 'var(--text-muted)' }}>DZD</span></div>
                   <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>Licence perpétuelle · 1ʳᵉ année de support incluse</div>
@@ -87,7 +94,7 @@ export default async function OffresPage() {
         })}
       </section>
 
-      {/* Bundle */}
+      {/* ── Suite ── */}
       {showBundle && (
         <section style={{ marginTop: 24 }}>
           <RevealWrapper>
@@ -101,15 +108,60 @@ export default async function OffresPage() {
                 <div style={{ fontFamily: 'var(--font-display)', fontSize: 14, color: 'var(--text-muted)', textDecoration: 'line-through' }}>{totalBase.toLocaleString('fr-DZ')} DZD</div>
                 <div><span className="stat-num text-gold" style={{ fontSize: 38 }}>{bundlePrice.toLocaleString('fr-DZ')}</span> <span style={{ fontSize: 15, color: 'var(--text-muted)' }}>DZD</span></div>
                 <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>Économisez {remise}%</div>
-                <Link href="/commander" className="btn btn-gold" style={{ marginTop: 12 }}>Voir nos bundles →</Link>
+                <Link href="/commander" className="btn btn-gold" style={{ marginTop: 12 }}>Voir tous les bundles →</Link>
               </div>
             </div>
           </RevealWrapper>
         </section>
       )}
 
-      {/* Comparatif */}
-      {rows.length > 0 && (
+      {/* ── Bundles ── */}
+      {bundles.length > 0 && (
+        <section style={{ marginTop: 16 }}>
+          <RevealWrapper>
+            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(bundles.length, 3)},1fr)`, gap: 14 }}>
+              {bundles.map(b => {
+                const bProds   = list.filter(p => b.produits.includes(p.nom));
+                const base     = bProds.reduce((s, p) => s + p.prix, 0);
+                const prix     = Math.round(base * (1 - b.remise_pct / 100));
+                const savings  = base - prix;
+                return (
+                  <div key={b.id} className="card" style={{ background: 'rgba(255,255,255,0.025)', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <div className="flex items-center gap-2">
+                      <span style={{ fontWeight: 600, fontSize: 15 }}>{b.nom}</span>
+                      {b.badge && <span className="badge badge-gold" style={{ fontSize: 11 }}>{b.badge}</span>}
+                    </div>
+                    {b.description && <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5 }}>{b.description}</p>}
+                    <div className="flex gap-1.5 flex-wrap">
+                      {b.produits.map(pn => (
+                        <span key={pn} style={{ fontSize: 11.5, padding: '3px 9px', background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 'var(--r-pill)', color: 'var(--gold)' }}>{pn}</span>
+                      ))}
+                    </div>
+                    <div style={{ marginTop: 'auto', paddingTop: 10, borderTop: '1px solid var(--hairline)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div>
+                        {b.remise_pct > 0 && (
+                          <>
+                            <div style={{ fontSize: 11, color: 'var(--text-faint)', textDecoration: 'line-through' }}>{base.toLocaleString('fr-DZ')} DA</div>
+                            <div style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: 'var(--gold-bright)' }}>{prix.toLocaleString('fr-DZ')} DA</div>
+                            <div style={{ fontSize: 11, color: 'var(--cel-success)' }}>−{b.remise_pct}% · Écon. {savings.toLocaleString('fr-DZ')} DA</div>
+                          </>
+                        )}
+                        {b.remise_pct === 0 && (
+                          <div style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: 'var(--text-primary)' }}>{prix.toLocaleString('fr-DZ')} DA</div>
+                        )}
+                      </div>
+                      <Link href="/commander" className="btn btn-glass btn-sm">Choisir →</Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </RevealWrapper>
+        </section>
+      )}
+
+      {/* ── Comparatif dynamique ── */}
+      {allModules.length > 0 && list.length > 0 && (
         <section className="section">
           <div className="text-center mb-2.5">
             <div className="eyebrow" style={{ justifyContent: 'center' }}>Comparatif</div>
@@ -118,13 +170,37 @@ export default async function OffresPage() {
           <div style={{ marginTop: 50, border: '1px solid var(--hairline)', borderRadius: 'var(--r-lg)', overflow: 'hidden', background: 'rgba(255,255,255,0.015)' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr>{['Module ERP','Business','Compta','Pay'].map((h,i) => <th key={i} style={{ textAlign: i===0?'left':'center', padding:'16px 22px', background:'rgba(255,255,255,0.03)', fontFamily:'var(--font-display)', fontSize:14, color:i===2?'var(--gold-bright)':'var(--text-primary)', borderTop:0 }}>{h}</th>)}</tr>
+                <tr>
+                  <th style={{ textAlign: 'left', padding: '16px 22px', background: 'rgba(255,255,255,0.03)', fontFamily: 'var(--font-display)', fontSize: 14, color: 'var(--text-primary)', borderTop: 0 }}>
+                    Module
+                  </th>
+                  {list.map((p, i) => (
+                    <th key={p.id} style={{ textAlign: 'center', padding: '16px 22px', background: 'rgba(255,255,255,0.03)', fontFamily: 'var(--font-display)', fontSize: 14, color: p.featured ? 'var(--gold-bright)' : 'var(--text-primary)', borderTop: 0 }}>
+                      {p.icone} {p.nom}
+                    </th>
+                  ))}
+                  <th style={{ textAlign: 'right', padding: '16px 22px', background: 'rgba(255,255,255,0.03)', fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--text-muted)', borderTop: 0 }}>
+                    Prix module
+                  </th>
+                </tr>
               </thead>
               <tbody>
-                {rows.map(row => (
-                  <tr key={row.id}>
-                    <td style={{ padding:'16px 22px', borderTop:'1px solid var(--hairline)', color:'var(--text-secondary)', fontSize:14.5 }}>{row.feature}</td>
-                    {[row.business, row.compta, row.pay].map((v,j) => <td key={j} style={{ padding:'16px 22px', borderTop:'1px solid var(--hairline)', textAlign:'center', color:v?'var(--cel-success)':'var(--text-faint)' }}>{v?'●':'—'}</td>)}
+                {allModules.map(mod => (
+                  <tr key={mod.id}>
+                    <td style={{ padding: '14px 22px', borderTop: '1px solid var(--hairline)', color: 'var(--text-secondary)', fontSize: 14 }}>
+                      <span className="flex items-center gap-2">{mod.icone} {mod.nom}</span>
+                    </td>
+                    {list.map(p => {
+                      const has = p.produit_modules.some(pm => pm.modules.id === mod.id);
+                      return (
+                        <td key={p.id} style={{ padding: '14px 22px', borderTop: '1px solid var(--hairline)', textAlign: 'center', color: has ? 'var(--cel-success)' : 'var(--text-faint)', fontSize: 16 }}>
+                          {has ? '●' : '—'}
+                        </td>
+                      );
+                    })}
+                    <td style={{ padding: '14px 22px', borderTop: '1px solid var(--hairline)', textAlign: 'right', fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--text-faint)', whiteSpace: 'nowrap' }}>
+                      {mod.prix.toLocaleString('fr-DZ')} DA
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -133,8 +209,8 @@ export default async function OffresPage() {
         </section>
       )}
 
-      {/* FAQ */}
-      <section className="section" style={{ paddingTop: rows.length > 0 ? 0 : undefined }}>
+      {/* ── FAQ ── */}
+      <section className="section" style={{ paddingTop: allModules.length > 0 ? 0 : undefined }}>
         <div className="text-center" style={{ marginBottom: 44 }}>
           <div className="eyebrow" style={{ justifyContent: 'center' }}>Licences &amp; abonnements</div>
           <h2 style={{ fontSize: 'clamp(28px,3.2vw,40px)', marginTop: 14 }}>Questions fréquentes</h2>
