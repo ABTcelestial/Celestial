@@ -160,57 +160,8 @@ export default async function OffresPage() {
         </section>
       )}
 
-      {/* ── Comparatif dynamique ── */}
-      {allModules.length > 0 && list.length > 0 && (
-        <section className="section">
-          <div className="text-center mb-2.5">
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>Comparatif</div>
-            <h2 style={{ fontSize: 'clamp(28px,3.2vw,40px)', marginTop: 14 }}>Quels modules pour quel besoin ?</h2>
-          </div>
-          <div style={{ marginTop: 50, border: '1px solid var(--hairline)', borderRadius: 'var(--r-lg)', overflow: 'hidden', background: 'rgba(255,255,255,0.015)' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr>
-                  <th style={{ textAlign: 'left', padding: '16px 22px', background: 'rgba(255,255,255,0.03)', fontFamily: 'var(--font-display)', fontSize: 14, color: 'var(--text-primary)', borderTop: 0 }}>
-                    Module
-                  </th>
-                  {list.map((p, i) => (
-                    <th key={p.id} style={{ textAlign: 'center', padding: '16px 22px', background: 'rgba(255,255,255,0.03)', fontFamily: 'var(--font-display)', fontSize: 14, color: p.featured ? 'var(--gold-bright)' : 'var(--text-primary)', borderTop: 0 }}>
-                      {p.icone} {p.nom}
-                    </th>
-                  ))}
-                  <th style={{ textAlign: 'right', padding: '16px 22px', background: 'rgba(255,255,255,0.03)', fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--text-muted)', borderTop: 0 }}>
-                    Prix module
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {allModules.map(mod => (
-                  <tr key={mod.id}>
-                    <td style={{ padding: '14px 22px', borderTop: '1px solid var(--hairline)', color: 'var(--text-secondary)', fontSize: 14 }}>
-                      <span className="flex items-center gap-2">{mod.icone} {mod.nom}</span>
-                    </td>
-                    {list.map(p => {
-                      const has = p.produit_modules.some(pm => pm.modules.id === mod.id);
-                      return (
-                        <td key={p.id} style={{ padding: '14px 22px', borderTop: '1px solid var(--hairline)', textAlign: 'center', color: has ? 'var(--cel-success)' : 'var(--text-faint)', fontSize: 16 }}>
-                          {has ? '●' : '—'}
-                        </td>
-                      );
-                    })}
-                    <td style={{ padding: '14px 22px', borderTop: '1px solid var(--hairline)', textAlign: 'right', fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--text-faint)', whiteSpace: 'nowrap' }}>
-                      {mod.prix.toLocaleString('fr-DZ')} DA
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      )}
-
       {/* ── FAQ ── */}
-      <section className="section" style={{ paddingTop: allModules.length > 0 ? 0 : undefined }}>
+      <section className="section">
         <div className="text-center" style={{ marginBottom: 44 }}>
           <div className="eyebrow" style={{ justifyContent: 'center' }}>Licences &amp; abonnements</div>
           <h2 style={{ fontSize: 'clamp(28px,3.2vw,40px)', marginTop: 14 }}>Questions fréquentes</h2>

@@ -90,10 +90,15 @@ export function ProduitForm({
 
         {/* Module picker */}
         <div>
-          <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
-            <label style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', fontFamily: 'var(--font-display)', letterSpacing: '0.02em' }}>
-              Modules inclus
-            </label>
+          <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
+            <div>
+              <label style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', fontFamily: 'var(--font-display)', letterSpacing: '0.02em' }}>
+                Modules compatibles
+              </label>
+              <p style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>
+                Seuls ces modules seront proposés aux clients lors de leur commande.
+              </p>
+            </div>
             <span style={{ fontSize: 12, color: 'var(--text-faint)' }}>
               {selectedIds.length} sélectionné{selectedIds.length > 1 ? 's' : ''}
             </span>
