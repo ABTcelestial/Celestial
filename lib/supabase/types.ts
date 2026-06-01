@@ -1,5 +1,5 @@
 export type DevisStatut = 'nouveau' | 'lu' | 'traite';
-export type ChangelogProduit = 'business' | 'pay' | 'compta' | 'company';
+export type ChangelogProduit = string;
 export type DocProduit = string;
 
 export interface ChangelogChangement {

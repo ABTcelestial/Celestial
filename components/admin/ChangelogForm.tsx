@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import type { Database, ChangelogChangement, ChangelogProduit } from '@/lib/supabase/types';
+import type { Database, ChangelogChangement } from '@/lib/supabase/types';
 
 type Changelog = Database['public']['Tables']['changelogs']['Row'];
 
@@ -21,11 +21,15 @@ const CHANGEMENT_CLS_OPTIONS = [
   { cls: 'badge-new', label: 'Actu' },
 ];
 
-export function ChangelogForm({ mode, initialData }: { mode: 'create' | 'edit'; initialData?: Changelog }) {
+export function ChangelogForm({ mode, initialData, suggestions = [] }: {
+  mode: 'create' | 'edit';
+  initialData?: Changelog;
+  suggestions?: string[];
+}) {
   const router = useRouter();
   const supabase = createClient();
 
-  const [produit, setProduit] = useState(initialData?.produit ?? 'business');
+  const [produit, setProduit] = useState(initialData?.produit ?? '');
   const [version, setVersion] = useState(initialData?.version ?? '');
   const [titre, setTitre] = useState(initialData?.titre ?? '');
   const [date, setDate] = useState(initialData?.date ?? new Date().toISOString().slice(0, 10));
@@ -54,7 +58,7 @@ export function ChangelogForm({ mode, initialData }: { mode: 'create' | 'edit'; 
     setSaving(true);
     setError('');
 
-    const payload = { produit: produit as any, version: version || null, titre, date, type_badge: typeBadge, type_badge_cls: typeBadgeCls, changements };
+    const payload = { produit, version: version || null, titre, date, type_badge: typeBadge, type_badge_cls: typeBadgeCls, changements };
 
     const { error: err } = mode === 'create'
       ? await supabase.from('changelogs').insert(payload)
@@ -73,12 +77,18 @@ export function ChangelogForm({ mode, initialData }: { mode: 'create' | 'edit'; 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
           <div className="field">
             <label>Produit *</label>
-            <select className="cel-select" value={produit} onChange={e => setProduit(e.target.value as ChangelogProduit)}>
-              <option value="business">📊 Business Process</option>
-              <option value="compta">🧮 Compta Process</option>
-              <option value="pay">💼 Pay Process</option>
-              <option value="company">⭐ Entreprise</option>
-            </select>
+            <input
+              className="cel-input"
+              list="changelog-produit-suggestions"
+              placeholder="ex: Business Process"
+              value={produit}
+              onChange={e => setProduit(e.target.value)}
+              required
+              autoComplete="off"
+            />
+            <datalist id="changelog-produit-suggestions">
+              {suggestions.map(s => <option key={s} value={s} />)}
+            </datalist>
           </div>
           <div className="field">
             <label>Version (optionnel)</label>
