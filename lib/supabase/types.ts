@@ -81,7 +81,6 @@ export type Database = {
         Update: Partial<Database['public']['Tables']['doc_pages']['Row']>;
         Relationships: [];
       };
-    };
       suite_config: {
         Row: { id: number; label: string; description: string; remise_pct: number; actif: boolean; updated_at: string; };
         Insert: { id?: number; label?: string; description?: string; remise_pct?: number; actif?: boolean; updated_at?: string; };

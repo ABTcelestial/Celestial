@@ -29,7 +29,7 @@ export function ComparatifEditor({ initialData }: { initialData: Row[] }) {
 
   async function updateRow(id: string, field: 'business' | 'compta' | 'pay' | 'feature', value: boolean | string) {
     setSaving(id);
-    await supabase.from('comparatif_modules').update({ [field]: value }).eq('id', id);
+    await supabase.from('comparatif_modules').update({ [field]: value } as Database['public']['Tables']['comparatif_modules']['Update']).eq('id', id);
     setRows(r => r.map(row => row.id === id ? { ...row, [field]: value } : row));
     setSaving(null);
     router.refresh();
