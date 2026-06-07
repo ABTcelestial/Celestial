@@ -2,23 +2,25 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { useUser } from '@clerk/nextjs';
-import { usePlatformClient } from '@/lib/supabase/platform-client';
+import { createClient } from '@/lib/supabase/client';
 import type { Database } from '@/lib/supabase/types';
 
 type Message = Database['public']['Tables']['platform_messages']['Row'];
 
 export default function MessagesPage() {
   const { workspaceId } = useParams<{ workspaceId: string }>();
-  const { user } = useUser();
-  const supabase = usePlatformClient();
   const [messages, setMessages] = useState<Message[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    async function load() {
+    const supabase = createClient();
+    async function init() {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUserId(user?.id ?? null);
+
       const { data } = await supabase
         .from('platform_messages')
         .select('*')
@@ -26,20 +28,21 @@ export default function MessagesPage() {
         .order('created_at', { ascending: true });
       setMessages(data ?? []);
     }
-    load();
-  }, [workspaceId, supabase]);
+    init();
+  }, [workspaceId]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   async function send() {
-    if (!text.trim() || !user) return;
+    if (!text.trim() || !userId) return;
     setSending(true);
+    const supabase = createClient();
     const { data } = await supabase.from('platform_messages').insert({
       workspace_id: workspaceId,
       sender_type: 'client',
-      clerk_user_id: user.id,
+      user_id: userId,
       content: text.trim(),
     }).select().single();
     if (data) setMessages((prev) => [...prev, data]);
@@ -60,7 +63,7 @@ export default function MessagesPage() {
       }}>
         {messages.length === 0 && (
           <div style={{ color: 'var(--text-muted)', textAlign: 'center', margin: 'auto' }}>
-            Envoyez un message à l'équipe Celestial.
+            Envoyez un message à l&apos;équipe Celestial.
           </div>
         )}
         {messages.map((m) => (

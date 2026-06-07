@@ -1,6 +1,5 @@
-import { auth } from '@clerk/nextjs/server';
+import { createClient } from '@/lib/supabase/server';
 import { redirect, notFound } from 'next/navigation';
-import { createPlatformClient } from '@/lib/supabase/platform-server';
 import { WorkspaceProvider } from '@/components/platform/WorkspaceProvider';
 import type { ErpColumnDef } from '@/lib/supabase/types';
 
@@ -13,17 +12,17 @@ export default async function WorkspaceLayout({
   children: React.ReactNode;
   params: Promise<{ workspaceId: string }>;
 }) {
-  const { userId } = await auth();
-  if (!userId) redirect('/platforme-BusinessProcess/login');
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/platforme-BusinessProcess/login');
 
   const { workspaceId } = await params;
-  const supabase = await createPlatformClient();
 
   const { data: membership } = await supabase
     .from('platform_members')
     .select('role, workspace_id')
     .eq('workspace_id', workspaceId)
-    .eq('clerk_user_id', userId)
+    .eq('user_id', user.id)
     .single();
 
   if (!membership) notFound();

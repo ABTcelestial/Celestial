@@ -1,52 +1,53 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-const isPlatformRoute = createRouteMatcher(['/platforme-BusinessProcess/:path*']);
-const isPlatformLogin = createRouteMatcher(['/platforme-BusinessProcess/login']);
-const isAdminLogin = createRouteMatcher(['/celestial-admin-rtabt/login']);
-
-export const proxy = clerkMiddleware(async (auth, request: NextRequest) => {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  let response = NextResponse.next({ request });
 
-  // Platform routes → Clerk auth.protect()
-  if (isPlatformRoute(request) && !isPlatformLogin(request)) {
-    await auth.protect();
-  }
-
-  // Admin routes → Supabase session check
-  if (pathname.startsWith('/celestial-admin-rtabt')) {
-    let supabaseResponse = NextResponse.next({ request });
-
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() { return request.cookies.getAll(); },
-          setAll(toSet) {
-            toSet.forEach(({ name, value }) => request.cookies.set(name, value));
-            supabaseResponse = NextResponse.next({ request });
-            toSet.forEach(({ name, value, options }) =>
-              supabaseResponse.cookies.set(name, value, options)
-            );
-          },
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() { return request.cookies.getAll(); },
+        setAll(toSet) {
+          toSet.forEach(({ name, value }) => request.cookies.set(name, value));
+          response = NextResponse.next({ request });
+          toSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
         },
-      }
-    );
+      },
+    }
+  );
 
-    const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
 
-    if (!isAdminLogin(request) && !user) {
+  if (pathname.startsWith('/celestial-admin-rtabt')) {
+    const isLogin = pathname === '/celestial-admin-rtabt/login';
+    if (!isLogin && !user) {
       return NextResponse.redirect(new URL('/celestial-admin-rtabt/login', request.url));
     }
-    if (isAdminLogin(request) && user) {
+    if (isLogin && user) {
       return NextResponse.redirect(new URL('/celestial-admin-rtabt', request.url));
     }
-
-    return supabaseResponse;
+    return response;
   }
-});
+
+  if (pathname.startsWith('/platforme-BusinessProcess')) {
+    const isLogin = pathname === '/platforme-BusinessProcess/login';
+    if (!isLogin && !user) {
+      return NextResponse.redirect(new URL('/platforme-BusinessProcess/login', request.url));
+    }
+    if (isLogin && user) {
+      return NextResponse.redirect(new URL('/platforme-BusinessProcess/dashboard', request.url));
+    }
+    return response;
+  }
+
+  return response;
+}
 
 export const config = {
   matcher: ['/celestial-admin-rtabt/:path*', '/platforme-BusinessProcess/:path*'],

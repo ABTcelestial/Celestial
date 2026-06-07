@@ -1,17 +1,16 @@
-import { auth } from '@clerk/nextjs/server';
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { createPlatformClient } from '@/lib/supabase/platform-server';
 
 export default async function WorkspaceSettingsPage({
   params,
 }: {
   params: Promise<{ workspaceId: string }>;
 }) {
-  const { userId } = await auth();
-  if (!userId) redirect('/platforme-BusinessProcess/login');
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/platforme-BusinessProcess/login');
 
   const { workspaceId } = await params;
-  const supabase = await createPlatformClient();
 
   const { data: members } = await supabase
     .from('platform_members')

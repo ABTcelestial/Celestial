@@ -51,14 +51,14 @@ export default async function TablesPage({
 
       {tables.length === 0 ? (
         <div style={{ background: 'var(--glass)', border: '1px solid var(--glass-border)', borderRadius: 'var(--r-sm)', padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-          Aucune table accessible. Contactez l'équipe Celestial.
+          Aucune table accessible. Contactez l&apos;équipe Celestial.
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}>
           {tables.map((t) => (
             <Link
               key={t.id}
-              href={`/platform/workspace/${workspaceId}/tables/${t.name}`}
+              href={`/platforme-BusinessProcess/workspace/${workspaceId}/tables/${t.name}`}
               style={{ display: 'block', background: 'var(--glass)', border: '1px solid var(--glass-border)', borderRadius: 'var(--r-sm)', padding: '1.25rem 1.5rem', textDecoration: 'none' }}
             >
               <div style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '1rem' }}>{t.label}</div>

@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { UserButton } from '@clerk/nextjs';
+import { usePathname, useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 
 export function PlatformNav() {
   const pathname = usePathname();
+  const router = useRouter();
 
   const workspaceIdMatch = pathname.match(/\/platforme-BusinessProcess\/workspace\/([^/]+)/);
   const workspaceId = workspaceIdMatch?.[1];
@@ -19,6 +20,12 @@ export function PlatformNav() {
         { href: `/platforme-BusinessProcess/workspace/${workspaceId}/settings`, label: 'Paramètres' },
       ]
     : [];
+
+  async function handleSignOut() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push('/platforme-BusinessProcess/login');
+  }
 
   return (
     <nav style={{
@@ -64,7 +71,20 @@ export function PlatformNav() {
       )}
 
       <div style={{ marginLeft: 'auto' }}>
-        <UserButton />
+        <button
+          onClick={handleSignOut}
+          style={{
+            background: 'none',
+            border: '1px solid var(--glass-border)',
+            borderRadius: 'var(--r-xs)',
+            color: 'var(--text-secondary)',
+            padding: '0.3rem 0.75rem',
+            fontSize: '0.8rem',
+            cursor: 'pointer',
+          }}
+        >
+          Déconnexion
+        </button>
       </div>
     </nav>
   );

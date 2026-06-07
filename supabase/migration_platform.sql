@@ -13,15 +13,15 @@ alter table platform_workspaces enable row level security;
 create policy "admin_all_platform_workspaces" on platform_workspaces
   for all to authenticated using (true) with check (true);
 
--- Platform Members (linked to Clerk user IDs)
+-- Platform Members (linked to Supabase auth.users)
 create table if not exists platform_members (
   id            uuid primary key default gen_random_uuid(),
   workspace_id  uuid not null references platform_workspaces(id) on delete cascade,
-  clerk_user_id text not null,
+  user_id       uuid not null references auth.users(id) on delete cascade,
   email         text not null,
   role          text not null check (role in ('owner', 'viewer')),
   created_at    timestamptz not null default now(),
-  unique(workspace_id, clerk_user_id)
+  unique(workspace_id, user_id)
 );
 
 alter table platform_members enable row level security;
@@ -29,7 +29,7 @@ alter table platform_members enable row level security;
 -- Members can read their own workspace membership
 create policy "platform_members_read_own" on platform_members
   for select to authenticated using (
-    clerk_user_id = auth.jwt()->>'sub'
+    user_id = auth.uid()
   );
 
 -- Admin (service role) manages members
@@ -68,7 +68,7 @@ create policy "platform_read_workspace_table_access" on workspace_table_access
   for select to authenticated using (
     workspace_id in (
       select workspace_id from platform_members
-      where clerk_user_id = auth.jwt()->>'sub'
+      where user_id = auth.uid()
     )
   );
 
@@ -79,7 +79,7 @@ create policy "platform_read_erp_table_definitions" on erp_table_definitions
     id in (
       select wta.table_id from workspace_table_access wta
       join platform_members pm on pm.workspace_id = wta.workspace_id
-      where pm.clerk_user_id = auth.jwt()->>'sub'
+      where pm.user_id = auth.uid()
     )
   );
 
@@ -104,7 +104,7 @@ create policy "platform_read_erp_data" on erp_data
   for select to authenticated using (
     workspace_id in (
       select workspace_id from platform_members
-      where clerk_user_id = auth.jwt()->>'sub'
+      where user_id = auth.uid()
     )
     and table_name in (
       select etd.name
@@ -113,9 +113,6 @@ create policy "platform_read_erp_data" on erp_data
       where wta.workspace_id = erp_data.workspace_id
     )
   );
-
--- Anon insert allowed for sync-agent using licence_key resolution
--- (sync-agent uses service_role key directly, so no anon policy needed)
 
 -- Platform Notifications
 create table if not exists platform_notifications (
@@ -136,7 +133,7 @@ create policy "platform_read_own_notifications" on platform_notifications
   for select to authenticated using (
     workspace_id in (
       select workspace_id from platform_members
-      where clerk_user_id = auth.jwt()->>'sub'
+      where user_id = auth.uid()
     )
   );
 
@@ -144,7 +141,7 @@ create policy "platform_update_own_notifications" on platform_notifications
   for update to authenticated using (
     workspace_id in (
       select workspace_id from platform_members
-      where clerk_user_id = auth.jwt()->>'sub'
+      where user_id = auth.uid()
     )
   ) with check (true);
 
@@ -153,7 +150,7 @@ create table if not exists platform_messages (
   id            uuid primary key default gen_random_uuid(),
   workspace_id  uuid not null references platform_workspaces(id) on delete cascade,
   sender_type   text not null check (sender_type in ('client', 'admin')),
-  clerk_user_id text,
+  user_id       uuid references auth.users(id) on delete set null,
   content       text not null,
   created_at    timestamptz not null default now()
 );
@@ -167,7 +164,7 @@ create policy "platform_read_own_messages" on platform_messages
   for select to authenticated using (
     workspace_id in (
       select workspace_id from platform_members
-      where clerk_user_id = auth.jwt()->>'sub'
+      where user_id = auth.uid()
     )
   );
 
@@ -175,10 +172,10 @@ create policy "platform_insert_own_messages" on platform_messages
   for insert to authenticated with check (
     workspace_id in (
       select workspace_id from platform_members
-      where clerk_user_id = auth.jwt()->>'sub'
+      where user_id = auth.uid()
     )
     and sender_type = 'client'
-    and clerk_user_id = auth.jwt()->>'sub'
+    and user_id = auth.uid()
   );
 
 -- ERP Sync Logs
@@ -201,12 +198,12 @@ create policy "platform_read_own_sync_logs" on erp_sync_logs
   for select to authenticated using (
     workspace_id in (
       select workspace_id from platform_members
-      where clerk_user_id = auth.jwt()->>'sub'
+      where user_id = auth.uid()
     )
   );
 
 -- Indexes
-create index if not exists platform_members_clerk_idx on platform_members (clerk_user_id);
+create index if not exists platform_members_user_idx on platform_members (user_id);
 create index if not exists platform_members_workspace_idx on platform_members (workspace_id);
 create index if not exists erp_data_workspace_table_idx on erp_data (workspace_id, table_name);
 create index if not exists erp_data_synced_at_idx on erp_data (synced_at desc);

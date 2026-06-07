@@ -134,8 +134,8 @@ export type Database = {
         Relationships: [];
       };
       platform_members: {
-        Row: { id: string; workspace_id: string; clerk_user_id: string; email: string; role: 'owner' | 'viewer'; created_at: string; };
-        Insert: { id?: string; workspace_id: string; clerk_user_id: string; email: string; role: 'owner' | 'viewer'; created_at?: string; };
+        Row: { id: string; workspace_id: string; user_id: string; email: string; role: 'owner' | 'viewer'; created_at: string; };
+        Insert: { id?: string; workspace_id: string; user_id: string; email: string; role: 'owner' | 'viewer'; created_at?: string; };
         Update: Partial<Database['public']['Tables']['platform_members']['Row']>;
         Relationships: [];
       };
@@ -164,8 +164,8 @@ export type Database = {
         Relationships: [];
       };
       platform_messages: {
-        Row: { id: string; workspace_id: string; sender_type: 'client' | 'admin'; clerk_user_id: string | null; content: string; created_at: string; };
-        Insert: { id?: string; workspace_id: string; sender_type: 'client' | 'admin'; clerk_user_id?: string | null; content: string; created_at?: string; };
+        Row: { id: string; workspace_id: string; sender_type: 'client' | 'admin'; user_id: string | null; content: string; created_at: string; };
+        Insert: { id?: string; workspace_id: string; sender_type: 'client' | 'admin'; user_id?: string | null; content: string; created_at?: string; };
         Update: Partial<Database['public']['Tables']['platform_messages']['Row']>;
         Relationships: [];
       };

@@ -1,17 +1,16 @@
-import { auth } from '@clerk/nextjs/server';
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { createPlatformClient } from '@/lib/supabase/platform-server';
 
 export default async function PlatformDashboardPage() {
-  const { userId } = await auth();
-  if (!userId) redirect('/platforme-BusinessProcess/login');
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/platforme-BusinessProcess/login');
 
-  const supabase = await createPlatformClient();
   const { data: memberships } = await supabase
     .from('platform_members')
     .select('role, workspace_id')
-    .eq('clerk_user_id', userId);
+    .eq('user_id', user.id);
 
   const wsIds = (memberships ?? []).map((m) => m.workspace_id);
   const roles: Record<string, string> = {};
@@ -28,7 +27,7 @@ export default async function PlatformDashboardPage() {
   }
 
   if (workspaces.length === 1) {
-    redirect(`/platform/workspace/${workspaces[0].id}`);
+    redirect(`/platforme-BusinessProcess/workspace/${workspaces[0].id}`);
   }
 
   return (
@@ -46,14 +45,14 @@ export default async function PlatformDashboardPage() {
           borderRadius: 'var(--r-sm)', padding: '2rem', textAlign: 'center', color: 'var(--text-muted)',
         }}>
           Aucun workspace associé à votre compte.<br />
-          Contactez l'équipe Celestial pour obtenir l'accès.
+          Contactez l&apos;équipe Celestial pour obtenir l&apos;accès.
         </div>
       ) : (
         <div style={{ display: 'grid', gap: '1rem' }}>
           {workspaces.map((ws) => (
             <Link
               key={ws.id}
-              href={`/platform/workspace/${ws.id}`}
+              href={`/platforme-BusinessProcess/workspace/${ws.id}`}
               style={{
                 display: 'block', background: 'var(--glass)', border: '1px solid var(--glass-border)',
                 borderRadius: 'var(--r-sm)', padding: '1.25rem 1.5rem', textDecoration: 'none',
