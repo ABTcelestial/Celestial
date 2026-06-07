@@ -51,16 +51,6 @@ alter table erp_table_definitions enable row level security;
 create policy "admin_all_erp_table_definitions" on erp_table_definitions
   for all to authenticated using (true) with check (true);
 
--- Platform members can read table definitions for their workspace
-create policy "platform_read_erp_table_definitions" on erp_table_definitions
-  for select to authenticated using (
-    id in (
-      select wta.table_id from workspace_table_access wta
-      join platform_members pm on pm.workspace_id = wta.workspace_id
-      where pm.clerk_user_id = auth.jwt()->>'sub'
-    )
-  );
-
 -- Workspace Table Access (which tables each workspace can see)
 create table if not exists workspace_table_access (
   workspace_id  uuid not null references platform_workspaces(id) on delete cascade,
@@ -79,6 +69,17 @@ create policy "platform_read_workspace_table_access" on workspace_table_access
     workspace_id in (
       select workspace_id from platform_members
       where clerk_user_id = auth.jwt()->>'sub'
+    )
+  );
+
+-- Platform members can read table definitions for their workspace
+-- (defined after workspace_table_access to avoid forward reference)
+create policy "platform_read_erp_table_definitions" on erp_table_definitions
+  for select to authenticated using (
+    id in (
+      select wta.table_id from workspace_table_access wta
+      join platform_members pm on pm.workspace_id = wta.workspace_id
+      where pm.clerk_user_id = auth.jwt()->>'sub'
     )
   );
 
