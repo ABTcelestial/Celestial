@@ -59,7 +59,7 @@ export default async function PlatformAdminDashboard() {
           { label: 'Workspaces', value: workspacesCount ?? 0, href: '/celestial-admin-rtabt/platform/workspaces' },
           { label: 'Membres', value: membersCount ?? 0, href: '/celestial-admin-rtabt/platform/workspaces' },
         ].map((stat) => (
-          <Link key={stat.href} href={stat.href} style={{ textDecoration: 'none' }}>
+          <Link key={stat.label} href={stat.href} style={{ textDecoration: 'none' }}>
             <div style={{ background: 'var(--glass)', border: '1px solid var(--glass-border)', borderRadius: 'var(--r-sm)', padding: '1.25rem 1.5rem' }}>
               <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{stat.label}</div>
               <div style={{ color: 'var(--gold)', fontSize: '2rem', fontWeight: 700, marginTop: '0.25rem' }}>{stat.value}</div>

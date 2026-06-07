@@ -1,0 +1,72 @@
+CELESTIAL — TOUTES LES URLS DU SITE
+====================================
+
+
+SITE PUBLIC
+-----------
+/                                          Page d'accueil
+/a-propos                                  À propos de Celestial
+/changelogs                                Notes de version ERP
+/commander                                 Commander / configurateur
+/contact                                   Page contact
+/design-system                             Design system (interne)
+/documentation                             Documentation produits
+/guide                                     Guide utilisateur
+/offres                                    Offres & tarifs
+
+
+ADMIN — /celestial-admin-rtabt
+-------------------------------
+/celestial-admin-rtabt/login               Connexion admin
+
+/celestial-admin-rtabt                     Dashboard principal
+/celestial-admin-rtabt/parametres          Paramètres (contact_info)
+/celestial-admin-rtabt/devis               Devis reçus (lecture seule)
+
+/celestial-admin-rtabt/produits            Liste des produits
+/celestial-admin-rtabt/produits/new        Créer un produit
+/celestial-admin-rtabt/produits/[id]/edit  Modifier un produit
+
+/celestial-admin-rtabt/modules             Liste des modules
+/celestial-admin-rtabt/modules/new         Créer un module
+/celestial-admin-rtabt/modules/[id]/edit   Modifier un module
+
+/celestial-admin-rtabt/bundles             Liste des bundles
+/celestial-admin-rtabt/bundles/new         Créer un bundle
+/celestial-admin-rtabt/bundles/[id]/edit   Modifier un bundle
+
+/celestial-admin-rtabt/changelogs          Liste des changelogs
+/celestial-admin-rtabt/changelogs/new      Créer un changelog
+/celestial-admin-rtabt/changelogs/[id]/edit Modifier un changelog
+
+/celestial-admin-rtabt/documentation       Liste des pages doc
+/celestial-admin-rtabt/documentation/new   Créer une page doc
+/celestial-admin-rtabt/documentation/[id]/edit Modifier une page doc
+
+/celestial-admin-rtabt/offres-config       Configuration suite & comparatif
+
+/celestial-admin-rtabt/platform            Dashboard plateforme client
+/celestial-admin-rtabt/platform/workspaces             Liste des workspaces
+/celestial-admin-rtabt/platform/workspaces/new         Créer un workspace
+/celestial-admin-rtabt/platform/workspaces/[id]        Détail workspace
+/celestial-admin-rtabt/platform/workspaces/[id]/members Gérer les membres
+/celestial-admin-rtabt/platform/workspaces/[id]/tables  Gérer l'accès aux tables
+/celestial-admin-rtabt/platform/table-definitions       Liste des définitions de tables ERP
+/celestial-admin-rtabt/platform/table-definitions/new   Créer une définition de table
+/celestial-admin-rtabt/platform/table-definitions/[id]/edit Modifier une définition
+/celestial-admin-rtabt/platform/sync-logs               Logs de synchronisation
+/celestial-admin-rtabt/platform/messages                Messages support clients
+/celestial-admin-rtabt/platform/notifications/new       Envoyer une notification
+
+
+PLATEFORME CLIENT — /platforme-BusinessProcess
+-----------------------------------------------
+/platforme-BusinessProcess/login           Connexion client (Supabase Auth)
+/platforme-BusinessProcess/dashboard       Sélection du workspace
+
+/platforme-BusinessProcess/workspace/[id]                    Dashboard workspace (KPIs)
+/platforme-BusinessProcess/workspace/[id]/tables             Liste des tables ERP accessibles
+/platforme-BusinessProcess/workspace/[id]/tables/[tableName] Vue table paginée + export
+/platforme-BusinessProcess/workspace/[id]/notifications      Notifications
+/platforme-BusinessProcess/workspace/[id]/messages           Support Celestial (messagerie)
+/platforme-BusinessProcess/workspace/[id]/settings           Paramètres & historique sync
