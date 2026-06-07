@@ -1,0 +1,1658 @@
+unit UnitFSGenerateurEtats;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, StdCtrls, Buttons, ExtCtrls, ComCtrls;
+
+type
+  TFSGenerateurEtats = class(TForm)
+    TableauListeEtats: TStringGrid;
+    TableauRubriqueEtat: TStringGrid;
+    TableauFormule: TStringGrid;
+    BitNouvelEtat: TBitBtn;
+    BitModifierEtat: TBitBtn;
+    BitSupprimerEtat: TBitBtn;
+    BitValiderRubriqueEtat: TBitBtn;
+    Bevel1: TBevel;
+    AfficheOptionListeEtats: TPanel;
+    Bevel2: TBevel;
+    BitBtn3: TBitBtn;
+    BitOuiOptionListeEtats: TBitBtn;
+    EditOptionListeEtats: TEdit;
+    Bevel3: TBevel;
+    BitSupprimerRubriqueEtat: TBitBtn;
+    AfficheOptionRubriquesEtat: TPanel;
+    BitBtn5: TBitBtn;
+    BitOptionRubriquesEtat: TBitBtn;
+    Bevel4: TBevel;
+    Bevel5: TBevel;
+    Bevel6: TBevel;
+    Bevel7: TBevel;
+    EditOptionRubriquesEtat: TEdit;
+    AfficheNomEtat: TPanel;
+    RadioGroup1: TRadioGroup;
+    RBEtatCNAS: TRadioButton;
+    RBEtatCACOBAT: TRadioButton;
+    RBEtatRecapitulatif: TRadioButton;
+    BitBtn1: TBitBtn;
+    BitValiderNomEtat: TBitBtn;
+    BitBtn4: TBitBtn;
+    EditNomEtat: TEdit;
+    BitAuthentificationRubriques: TBitBtn;
+    TableauRubriqueEtatPlus: TStringGrid;
+    BitTransfertRubriquePlus: TBitBtn;
+    AfficheModifierFormule: TPanel;
+    EditPositionFormule: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    EditCodeFormule: TEdit;
+    Label3: TLabel;
+    EditLibelleFormule: TEdit;
+    Label4: TLabel;
+    EditFormule: TEdit;
+    Label5: TLabel;
+    EditConditionFormule: TEdit;
+    Label6: TLabel;
+    EditCummuleFormule: TEdit;
+    Label7: TLabel;
+    EditTypeFormule: TEdit;
+    Label8: TLabel;
+    EditSensFormule: TEdit;
+    Label9: TLabel;
+    EditBaseFormule: TEdit;
+    Label10: TLabel;
+    EditTauxFormule: TEdit;
+    Label11: TLabel;
+    EditDebitFormule: TEdit;
+    Label12: TLabel;
+    EditCreditFormule: TEdit;
+    Label13: TLabel;
+    EditEtatFormule: TEdit;
+    Bevel8: TBevel;
+    Bevel9: TBevel;
+    Panel1: TPanel;
+    Bevel10: TBevel;
+    BitValiderModificationFormule: TBitBtn;
+    BitAnnulerModificationFormule: TBitBtn;
+    AffichePatientez: TPanel;
+    TimerAuthentification: TTimer;
+    TableauSelectTypeFormule: TStringGrid;
+    BitTableauSelectTypeFormule: TBitBtn;
+    AffichePeriodeEtat: TPanel;
+    Bevel11: TBevel;
+    EditDebutValidite: TComboBox;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    BitBtn2: TBitBtn;
+    Bevel12: TBevel;
+    BitValiderPeriodeEtat: TBitBtn;
+    EditFinValidite: TComboBox;
+    AfficheAutoImporteFormules: TPanel;
+    BitBtn7: TBitBtn;
+    TableauAutoImporteFormules: TStringGrid;
+    Bevel13: TBevel;
+    BitBtn8: TBitBtn;
+    AfficheOperationsAutoImporteFormules: TPanel;
+    BitBtn10: TBitBtn;
+    BitBtn6: TBitBtn;
+    BitBtn9: TBitBtn;
+    Bevel14: TBevel;
+    EditAutorisation: TEdit;
+    Bevel15: TBevel;
+    Bevel16: TBevel;
+    Label17: TLabel;
+    EditCodeTypeFormuleAfficher: TEdit;
+    EditDesignationFormuleAfficher: TEdit;
+    TableauTypeFormule: TStringGrid;
+    AfficheOperationRubriqueEtat: TPanel;
+    BitBtn11: TBitBtn;
+    Bevel17: TBevel;
+    RBAttestationSalaire: TRadioButton;
+    TableauPlanComptable: TStringGrid;
+    EditOrdreCompteComptable: TEdit;
+    UpDown1: TUpDown;
+    Label18: TLabel;
+    RBUtiliseOrdre: TCheckBox;
+    procedure TableauRubriqueEtatKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauRubriqueEtatKeyPress(Sender: TObject; var Key: Char);
+    procedure TableauRubriqueEtatKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauFormuleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauListeEtatsClick(Sender: TObject);
+    procedure BitNouvelEtatClick(Sender: TObject);
+    procedure BitModifierEtatClick(Sender: TObject);
+    procedure BitValiderRubriqueEtatClick(Sender: TObject);
+    procedure BitSupprimerEtatClick(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitOuiOptionListeEtatsClick(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure BitOptionRubriquesEtatClick(Sender: TObject);
+    procedure TableauRubriqueEtatClick(Sender: TObject);
+    procedure BitSupprimerRubriqueEtatClick(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitValiderNomEtatClick(Sender: TObject);
+    procedure RBEtatCNASClick(Sender: TObject);
+    procedure RBEtatCACOBATClick(Sender: TObject);
+    procedure RBEtatRecapitulatifClick(Sender: TObject);
+    procedure TableauListeEtatsKeyPress(Sender: TObject; var Key: Char);
+    procedure TableauListeEtatsKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBEtatCNASKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBEtatCACOBATKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBEtatRecapitulatifKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitAuthentificationRubriquesClick(Sender: TObject);
+    procedure BitTransfertRubriquePlusClick(Sender: TObject);
+    procedure BitValiderModificationFormuleClick(Sender: TObject);
+    procedure BitAnnulerModificationFormuleClick(Sender: TObject);
+    procedure TableauRubriqueEtatPlusClick(Sender: TObject);
+    procedure EditDebitFormuleKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCreditFormuleKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TimerAuthentificationTimer(Sender: TObject);
+    procedure AffichePatientezClick(Sender: TObject);
+    procedure BitTableauSelectTypeFormuleClick(Sender: TObject);
+    procedure TableauSelectTypeFormuleDblClick(Sender: TObject);
+    procedure EditDebutValiditeKeyPress(Sender: TObject; var Key: Char);
+    procedure EditFinValiditeKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitValiderPeriodeEtatClick(Sender: TObject);
+    procedure EditDebutValiditeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditFinValiditeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure BitBtn8Click(Sender: TObject);
+    procedure TableauAutoImporteFormulesDblClick(Sender: TObject);
+    procedure BitBtn9Click(Sender: TObject);
+    procedure AfficheAutoImporteFormulesDblClick(Sender: TObject);
+    procedure BitBtn10Click(Sender: TObject);
+    procedure EditCodeTypeFormuleAfficherEnter(Sender: TObject);
+    procedure TableauTypeFormuleDblClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure TableauRubriqueEtatContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure BitBtn11Click(Sender: TObject);
+    procedure TableauRubriqueEtatDblClick(Sender: TObject);
+    procedure RBAttestationSalaireClick(Sender: TObject);
+    procedure UpDown1Click(Sender: TObject; Button: TUDBtnType);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSGenerateurEtats: TFSGenerateurEtats;
+
+Procedure ProcAfficheEtat;
+Procedure SelectionEtat(Etat:string);
+Procedure ImporteTypeFormules(TableauTypeFormules:TStringGrid);
+Procedure ListeAutoImporteFormuleEtat(TableauTypeFormules:TStringGrid; PositionEtat:string);
+
+implementation
+
+Uses  UnitInitialisation, UnitSuppression, UnitFSMenuPrincipal, UnitFSFormules,
+  UnitFSCompleteFormulesEtat, UnitFSAttente;
+
+var i,K:integer; OK,Confirme:boolean;
+
+{$R *.dfm}
+
+Procedure ListeAutoImporteFormuleEtat(TableauTypeFormules:TStringGrid; PositionEtat:string);
+var  R,ARow:integer;  OKTypeFormule:boolean;
+begin
+     if(PositionEtat='')then Exit;
+
+     ImporteTypeFormules(TableauTypeFormules);
+
+     OpenFParc(RParc);
+     ChAutoImporteFormuleEtat:=RParc.Parcours+'\'+Exercice+'FAutoImporteFormuleEtat';
+     assignfile(FAutoImporteFormuleEtat,ChAutoImporteFormuleEtat);
+     if FileExists(ChAutoImporteFormuleEtat)then
+     Reset(FAutoImporteFormuleEtat)
+     else Rewrite(FAutoImporteFormuleEtat);
+     seek(FAutoImporteFormuleEtat,0);
+     ARow:=TableauTypeFormules.RowCount-1;
+     while not eof(FAutoImporteFormuleEtat)do
+     begin
+          Read(FAutoImporteFormuleEtat,RAutoImporteFormuleEtat);
+          if(RAutoImporteFormuleEtat.PositionEtat=strtointeger(PositionEtat))then
+          begin
+               R:=1;
+               OKTypeFormule:=false;
+               while(R<=ARow)and(OKTypeFormule=false)do
+               begin
+                    if(RAutoImporteFormuleEtat.TypeFormule=TableauTypeFormules.Cells[1,R])then
+                    begin
+                         OKTypeFormule:=true;
+                         TableauTypeFormules.Cells[0,R]:='OK';
+                    end;
+               R:=R+1;
+               end;
+
+               if(OKTypeFormule=false)then
+               begin
+                    ARow:=ARow+1;
+                    TableauTypeFormules.Cells[0,ARow]:='OK';
+                    TableauTypeFormules.Cells[1,ARow]:=RFormule.TypeAffichage;
+                    if(RFormule.TypeAffichage='C')then TableauTypeFormules.Cells[2,ARow]:='Calculé';
+                    if(RFormule.TypeAffichage='P')then TableauTypeFormules.Cells[2,ARow]:='Prime';
+                    if(RFormule.TypeAffichage='V')then TableauTypeFormules.Cells[2,ARow]:='Variable';
+                    if(RFormule.TypeAffichage='A')then TableauTypeFormules.Cells[2,ARow]:='Pointage';
+                    if(RFormule.TypeAffichage='S')then TableauTypeFormules.Cells[2,ARow]:='Système';                    
+               end;
+          end;
+     end;
+     CloseFile(FAutoImporteFormuleEtat);
+
+     TableauTypeFormules.RowCount:=ARow+1;
+end;
+
+Procedure ImporteTypeFormules(TableauTypeFormules:TStringGrid);
+var   R,ARow:integer;  OKTypeFormule:boolean;
+begin
+     TableauTypeFormules.RowCount:=2;
+     TableauTypeFormules.Rows[1].Text:='';
+
+     TableauTypeFormules.Cols[0].Text:='Sélection !';
+     TableauTypeFormules.Cols[1].Text:='Type';
+     TableauTypeFormules.Cols[2].Text:='Désignation';
+     
+     OpenFParc(RParc);
+     ChFormule:=RParc.Parcours+'\'+Exercice+FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text;  
+     assignfile(FFormule,ChFormule);
+     if FileExists(ChFormule)then
+     Reset(FFormule)
+     else Rewrite(FFormule);
+     seek(FFormule,0);
+     ARow:=0;
+     while not eof(FFormule)do
+     begin
+         Read(FFormule,RFormule);
+         OKTypeFormule:=false;
+         R:=1;
+         while(R<=ARow)and(OKTypeFormule=false)do
+         begin
+              if RFormule.TypeAffichage=TableauTypeFormules.Cells[1,R]then OKTypeFormule:=true;
+         R:=R+1;
+         end;
+
+         if(OKTypeFormule=false)then
+         begin
+              ARow:=ARow+1;
+              TableauTypeFormules.Rows[ARow].Text:='';
+              TableauTypeFormules.Cells[0,ARow]:='';
+              TableauTypeFormules.Cells[1,ARow]:=RFormule.TypeAffichage;
+              if(RFormule.TypeAffichage='C')then TableauTypeFormules.Cells[2,ARow]:='Calculé';
+              if(RFormule.TypeAffichage='P')then TableauTypeFormules.Cells[2,ARow]:='Prime';
+              if(RFormule.TypeAffichage='V')then TableauTypeFormules.Cells[2,ARow]:='Variable';
+              if(RFormule.TypeAffichage='A')then TableauTypeFormules.Cells[2,ARow]:='Pointage';
+              if(RFormule.TypeAffichage='S')then TableauTypeFormules.Cells[2,ARow]:='Système';              
+         end;
+     end;
+     CloseFile(FFormule);
+
+     if(ARow>0)then TableauTypeFormules.RowCount:=ARow+1
+               else TableauTypeFormules.RowCount:=2;
+end;
+
+Procedure SelectionEtat(Etat:string);
+begin
+     if(Etat='Etat')then
+     begin
+          FSGenerateurEtats.BitNouvelEtat.Visible:=true;
+          FSGenerateurEtats.BitModifierEtat.Visible:=true;
+          FSGenerateurEtats.BitSupprimerEtat.Visible:=true;
+
+          FSGenerateurEtats.BitValiderRubriqueEtat.Visible:=false;
+          FSGenerateurEtats.BitSupprimerRubriqueEtat.Visible:=false;
+     end;
+
+     if(Etat='Rubrique Etat')then
+     begin
+          FSGenerateurEtats.BitNouvelEtat.Visible:=false;
+          FSGenerateurEtats.BitModifierEtat.Visible:=false;
+          FSGenerateurEtats.BitSupprimerEtat.Visible:=false;
+
+          FSGenerateurEtats.BitValiderRubriqueEtat.Visible:=true;
+          FSGenerateurEtats.BitSupprimerRubriqueEtat.Visible:=true;
+     end;
+
+FSGenerateurEtats.AfficheOperationsAutoImporteFormules.Height:=41;
+end;
+
+Procedure ProcAfficheEtat;
+var    R:integer;
+begin
+FSGenerateurEtats.TableauListeEtats.Cols[0].Text:='N°.';
+FSGenerateurEtats.TableauListeEtats.Cols[1].Text:='P°.';
+FSGenerateurEtats.TableauListeEtats.Cols[2].Text:='Code';
+FSGenerateurEtats.TableauListeEtats.Cols[3].Text:='Désignation';
+FSGenerateurEtats.TableauListeEtats.Cols[4].Text:='Date Début';
+FSGenerateurEtats.TableauListeEtats.Cols[5].Text:='Date Fin';
+FSGenerateurEtats.TableauListeEtats.Cols[6].Text:='Organisme Concerné';
+FSGenerateurEtats.TableauListeEtats.Cols[7].Text:='Code Organisme';
+FSGenerateurEtats.TableauListeEtats.Cols[8].Text:='Imprimé utilisé';
+FSGenerateurEtats.TableauListeEtats.RowCount:=2;
+FSGenerateurEtats.TableauListeEtats.Rows[1].Text:='';
+
+OpenFParc(RParc);
+ChEtat:=RParc.Parcours+'\'+Exercice+'FEtat'+FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text;
+assignfile(FEtat,ChEtat);
+if FileExists(ChEtat)then
+Reset(FEtat)
+else begin Rewrite(FEtat);end;
+seek(FEtat,0);
+R:=0;
+while not eof(FEtat)do
+begin
+    Read(FEtat,REtat);
+    R:=R+1;
+    FSGenerateurEtats.TableauListeEtats.Rows[R].Text:='';
+    FSGenerateurEtats.TableauListeEtats.Cells[0,R]:=inttostr(R);
+    FSGenerateurEtats.TableauListeEtats.Cells[1,R]:=inttostr(REtat.PositionEtat);
+    FSGenerateurEtats.TableauListeEtats.Cells[2,R]:=REtat.CodeEtat;
+    FSGenerateurEtats.TableauListeEtats.Cells[3,R]:=REtat.NomEtat;
+    FSGenerateurEtats.TableauListeEtats.Cells[4,R]:=REtat.DateEtatDebut;
+    FSGenerateurEtats.TableauListeEtats.Cells[5,R]:=REtat.DateEtatFin;
+    FSGenerateurEtats.TableauListeEtats.Cells[6,R]:=REtat.OrganismeConcerne;
+    FSGenerateurEtats.TableauListeEtats.Cells[7,R]:=REtat.CodeOrganisme;
+    FSGenerateurEtats.TableauListeEtats.Cells[8,R]:=REtat.Imprime;
+end;
+if(R>0)then FSGenerateurEtats.TableauListeEtats.RowCount:=R+1
+       else FSGenerateurEtats.TableauListeEtats.RowCount:=2;
+end;
+
+procedure TFSGenerateurEtats.TableauRubriqueEtatKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var  ARow,ACol,NbrRub,R:integer;  OK,OKUnite:boolean;
+begin//D0
+ARow:=FSGenerateurEtats.TableauRubriqueEtat.Row;
+ACol:=FSGenerateurEtats.TableauRubriqueEtat.Col;
+if(ACol>1)then FSGenerateurEtats.TableauRubriqueEtat.Col:=2;
+
+if(key=VK_INSERT)then
+begin
+FSGenerateurEtats.TableauFormule.Visible:=true;
+
+OpenFParc(RParc);
+ChFormule:=RParc.Parcours+'\'+Exercice+FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text;
+assignfile(FFormule,ChFormule);
+if FileExists(ChFormule)then
+Reset(FFormule)
+else begin Rewrite(FFormule); exit end;
+seek(FFormule,0);
+k:=0;
+while not eof(FFormule)do
+begin//D1
+    Read(FFormule,RFormule);
+    k:=k+1;
+    FSGenerateurEtats.TableauFormule.Cells[1,k]:=inttostr(RFormule.PositionFormule);
+    FSGenerateurEtats.TableauFormule.Cells[2,k]:=RFormule.CodeFormule;
+    FSGenerateurEtats.TableauFormule.Cells[3,k]:=RFormule.Libelle;
+end;//F1
+
+if(k>=1)then FSGenerateurEtats.TableauFormule.RowCount:=k+1
+        else
+        begin//D4
+             FSGenerateurEtats.TableauFormule.RowCount:=2;
+             FSGenerateurEtats.TableauFormule.Rows[1].Text:='';
+        end;//F4
+
+if(((k+1)*21)<280)
+    then FSGenerateurEtats.TableauFormule.Height:=(k+1)*21
+    else FSGenerateurEtats.TableauFormule.Height:=280;
+FSGenerateurEtats.TableauFormule.SetFocus;
+end;
+
+if(key=VK_DOWN)
+and((FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow]='')
+or(ARow=FSGenerateurEtats.TableauRubriqueEtat.RowCount-1))
+then key:=VK_RETURN;
+
+if key in[VK_RETURN] then
+begin//D1
+OK:=true;
+     for R:=1 to ARow-1 do
+          begin
+               if(FSGenerateurEtats.TableauRubriqueEtat.Cells[2,R]=FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow])
+               then
+               begin
+                   OK:=false;
+                   FSGenerateurEtats.TableauRubriqueEtat.Rows[ARow].Text:='';
+               end;
+          end;
+
+     if(FSGenerateurEtats.TableauRubriqueEtat.Cells[2,FSGenerateurEtats.TableauRubriqueEtat.Row]<>'')then
+     begin
+     OK:=false;
+          if(FSGenerateurEtats.TableauFormule.Visible=true)
+          and(FSGenerateurEtats.TableauFormule.Cells[2,FSGenerateurEtats.TableauFormule.Row]<>'')
+          then
+          begin
+               FSGenerateurEtats.TableauFormule.SetFocus;
+          end
+          else
+          begin
+               if(FSGenerateurEtats.TableauRubriqueEtat.Row=FSGenerateurEtats.TableauRubriqueEtat.RowCount-1)
+               then
+               begin
+                    FSGenerateurEtats.TableauRubriqueEtat.RowCount:=
+                    FSGenerateurEtats.TableauRubriqueEtat.RowCount+1;
+                    FSGenerateurEtats.TableauRubriqueEtat.Row:=
+                    FSGenerateurEtats.TableauRubriqueEtat.Row+1;
+                    FSGenerateurEtats.TableauRubriqueEtat.Rows[FSGenerateurEtats.TableauRubriqueEtat.Row].Text:='';
+                    FSGenerateurEtats.TableauRubriqueEtat.Col:=2;
+               end
+               else
+               begin
+                    FSGenerateurEtats.TableauRubriqueEtat.Row:=
+                    FSGenerateurEtats.TableauRubriqueEtat.Row+1;
+                    FSGenerateurEtats.TableauRubriqueEtat.Col:=2;
+               end;
+          end;
+     end;
+
+     if(OK=true)
+     and(FSGenerateurEtats.TableauRubriqueEtat.RowCount>2)
+     and(FSGenerateurEtats.TableauRubriqueEtat.Row=FSGenerateurEtats.TableauRubriqueEtat.RowCount-1)
+     //and(FSGenerateurEtats.TableauRubriqueEtat.Cells[0,ARow-1]<>'')
+     then
+     begin//D5
+
+     FSGenerateurEtats.TableauFormule.Visible:=false;
+     FSGenerateurEtats.TableauRubriqueEtat.RowCount:=
+     FSGenerateurEtats.TableauRubriqueEtat.RowCount-1;
+
+     end;//F5
+
+end;//F1
+
+if(FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow]='')
+and(key=VK_UP)
+then key:=VK_DELETE;
+
+if key in[VK_DELETE] then
+begin
+     ARow:=FSGenerateurEtats.TableauRubriqueEtat.RowCount-1;
+     if(FSGenerateurEtats.TableauRubriqueEtat.RowCount>2)
+     and(FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow]='')
+     then
+     begin
+     FSGenerateurEtats.TableauRubriqueEtat.RowCount:=
+     FSGenerateurEtats.TableauRubriqueEtat.RowCount-1;
+     FSGenerateurEtats.TableauRubriqueEtat.Col:=2;
+     end;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.TableauRubriqueEtatKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['a'..'z','A'..'Z','0'..'9']then
+begin
+//FSGenerateurEtats.TableauRubriqueEtat.Cells[0,FSGenerateurEtats.TableauRubriqueEtat.Row]:='';
+FSGenerateurEtats.TableauRubriqueEtat.Cells[1,FSGenerateurEtats.TableauRubriqueEtat.Row]:='';
+//FSGenerateurEtats.TableauRubriqueEtat.Cells[2,FSGenerateurEtats.TableauRubriqueEtat.Row]:='';
+FSGenerateurEtats.TableauRubriqueEtat.Cells[3,FSGenerateurEtats.TableauRubriqueEtat.Row]:='';
+end;
+
+end;
+
+procedure TFSGenerateurEtats.TableauRubriqueEtatKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var ARow:integer;  i,R:integer;
+begin//D0
+ARow:=FSGenerateurEtats.TableauRubriqueEtat.Row;
+if(FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow]<>'')
+and(FSGenerateurEtats.TableauRubriqueEtat.Cells[3,ARow]='')
+then
+begin
+FSGenerateurEtats.TableauFormule.Visible:=true;
+
+OpenFParc(RParc);
+ChFormule:=RParc.Parcours+'\'+Exercice+FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text;
+assignfile(FFormule,ChFormule);
+if FileExists(ChFormule)then
+Reset(FFormule)
+else begin Rewrite(FFormule); exit end;
+seek(FFormule,0);
+k:=0;
+while not eof(FFormule)do
+begin//D1
+    OK:=true;
+    Read(FFormule,RFormule);
+    if(FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow]<>'')then
+    for i:=1 to Longueur(FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow])do
+    begin//D2
+        if(RFormule.CodeFormule[i]<>FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow][i])then OK:=false;
+    end;//F2
+
+    if(OK=true)then
+    begin//D3
+         k:=k+1;
+         FSGenerateurEtats.TableauFormule.Cells[0,k]:=inttostr(RFormule.PositionFormule);
+         FSGenerateurEtats.TableauFormule.Cells[1,k]:=RFormule.CodeFormule;
+         FSGenerateurEtats.TableauFormule.Cells[2,k]:=RFormule.Libelle;
+    end;//F3
+end;//F1
+
+if(k>=1)then FSGenerateurEtats.TableauFormule.RowCount:=k+1
+        else
+        begin//D4
+             FSGenerateurEtats.TableauFormule.RowCount:=2;
+             FSGenerateurEtats.TableauFormule.Rows[1].Text:='';
+        end;//F4
+
+if(((k+1)*21)<280)
+    then FSGenerateurEtats.TableauFormule.Height:=(k+1)*21
+    else FSGenerateurEtats.TableauFormule.Height:=280;
+
+if(k=0)
+then
+begin
+     FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow]:='';
+     FSGenerateurEtats.TableauFormule.Visible:=false;
+end;
+
+if(k=1)then
+begin//D5
+OK:=true;
+for R:=1 to ARow-1 do
+          begin
+               if(FSGenerateurEtats.TableauRubriqueEtat.Cells[2,R]=FSGenerateurEtats.TableauFormule.Cells[1,1])
+               then
+               begin
+                   OK:=false;
+                   FSGenerateurEtats.TableauRubriqueEtat.Rows[ARow].Text:='';
+                   FSGenerateurEtats.TableauFormule.Visible:=false;
+               end;
+          end;
+if(OK=true)then
+begin
+if(FSGenerateurEtats.TableauRubriqueEtat.Cells[0,ARow]='')
+then FSGenerateurEtats.TableauRubriqueEtat.Rows[ARow].Text:='';
+FSGenerateurEtats.TableauRubriqueEtat.Cells[1,ARow]:=FSGenerateurEtats.TableauFormule.Cells[0,1];
+FSGenerateurEtats.TableauRubriqueEtat.Cells[2,ARow]:=FSGenerateurEtats.TableauFormule.Cells[1,1];
+FSGenerateurEtats.TableauRubriqueEtat.Cells[3,ARow]:=FSGenerateurEtats.TableauFormule.Cells[2,1];
+
+FSGenerateurEtats.TableauFormule.Visible:=false;
+end;
+
+end;//F5
+
+end;
+end;
+
+procedure TFSGenerateurEtats.TableauFormuleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var R:integer;
+begin
+if key=VK_RETURN then
+begin
+OK:=true;
+for R:=1 to FSGenerateurEtats.TableauRubriqueEtat.Row-1 do
+          begin
+               if(FSGenerateurEtats.TableauRubriqueEtat.Cells[1,R]=FSGenerateurEtats.TableauFormule.Cells[0,FSGenerateurEtats.TableauFormule.Row])
+               then
+               begin
+                   OK:=false;
+                   FSGenerateurEtats.TableauRubriqueEtat.Rows[FSGenerateurEtats.TableauRubriqueEtat.Row].Text:='';
+                   FSGenerateurEtats.TableauRubriqueEtat.SetFocus;
+                   FSGenerateurEtats.TableauFormule.Visible:=false;
+               end;
+          end;
+if(OK=true)then
+begin
+if(FSGenerateurEtats.TableauRubriqueEtat.Cells[0,FSGenerateurEtats.TableauRubriqueEtat.Row]='')
+then FSGenerateurEtats.TableauRubriqueEtat.Rows[FSGenerateurEtats.TableauRubriqueEtat.Row].Text:='';
+FSGenerateurEtats.TableauRubriqueEtat.Cells[1,FSGenerateurEtats.TableauRubriqueEtat.Row]:=FSGenerateurEtats.TableauFormule.Cells[0,FSGenerateurEtats.TableauFormule.Row];
+FSGenerateurEtats.TableauRubriqueEtat.Cells[2,FSGenerateurEtats.TableauRubriqueEtat.Row]:=FSGenerateurEtats.TableauFormule.Cells[1,FSGenerateurEtats.TableauFormule.Row];
+FSGenerateurEtats.TableauRubriqueEtat.Cells[3,FSGenerateurEtats.TableauRubriqueEtat.Row]:=FSGenerateurEtats.TableauFormule.Cells[2,FSGenerateurEtats.TableauFormule.Row];
+FSGenerateurEtats.TableauRubriqueEtat.RowCount:=
+FSGenerateurEtats.TableauRubriqueEtat.RowCount+1;
+FSGenerateurEtats.TableauRubriqueEtat.Col:=2;
+FSGenerateurEtats.TableauRubriqueEtat.Row:=FSGenerateurEtats.TableauRubriqueEtat.RowCount-1;
+FSGenerateurEtats.TableauRubriqueEtat.Rows[FSGenerateurEtats.TableauRubriqueEtat.Row].Text:='';
+FSGenerateurEtats.TableauRubriqueEtat.SetFocus;
+FSGenerateurEtats.TableauFormule.Visible:=false;
+end;
+
+end;
+
+end;
+
+procedure TFSGenerateurEtats.TableauListeEtatsClick(Sender: TObject);
+var  R:integer;
+begin
+SelectionEtat('Etat');
+
+FSGenerateurEtats.AfficheOptionListeEtats.Visible:=false;
+FSGenerateurEtats.AfficheOptionRubriquesEtat.Visible:=false;
+FSGenerateurEtats.TableauFormule.Visible:=false;
+FSGenerateurEtats.AfficheNomEtat.Visible:=false;
+
+if(FSGenerateurEtats.EditDebitFormule.Color=$0062FF62)
+or(FSGenerateurEtats.EditCreditFormule.Color=$0062FF62)
+then
+begin
+     showmessage('Veuillez terminer les modifications SVP!');
+     FSGenerateurEtats.BitValiderModificationFormule.SetFocus;
+end
+else
+begin
+FSGenerateurEtats.TableauRubriqueEtatPlus.Visible:=false;
+FSGenerateurEtats.BitTransfertRubriquePlus.Visible:=false;
+
+if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpETAT')then
+begin
+     FSGenerateurEtats.AfficheModifierFormule.Visible:=true;
+     FSGenerateurEtats.BitAuthentificationRubriques.Visible:=true;
+     FSGenerateurEtats.TableauSelectTypeFormule.Visible:=true;
+     FSGenerateurEtats.BitTableauSelectTypeFormule.Visible:=true;
+     FSGenerateurEtats.TableauSelectTypeFormule.Cells[2,0]:='Sélectionnez !';
+
+     FSGenerateurEtats.EditDebitFormule.Color:=clWindow;
+     FSGenerateurEtats.EditCreditFormule.Color:=clWindow;
+
+     FSGenerateurEtats.EditPositionFormule.Text:='';
+     FSGenerateurEtats.EditCodeFormule.Text:='';
+     FSGenerateurEtats.EditEtatFormule.Text:='';
+     FSGenerateurEtats.EditLibelleFormule.Text:='';
+     FSGenerateurEtats.EditFormule.Text:='';
+     FSGenerateurEtats.EditConditionFormule.Text:='';
+     FSGenerateurEtats.EditCummuleFormule.Text:='';
+     FSGenerateurEtats.EditTypeFormule.Text:='';
+     FSGenerateurEtats.EditSensFormule.Text:='';
+     FSGenerateurEtats.EditBaseFormule.Text:='';
+     FSGenerateurEtats.EditTauxFormule.Text:='';
+     FSGenerateurEtats.EditDebitFormule.Text:='';
+     FSGenerateurEtats.EditCreditFormule.Text:='';
+end
+else
+begin
+     FSGenerateurEtats.AfficheModifierFormule.Visible:=false;
+     FSGenerateurEtats.BitAuthentificationRubriques.Visible:=false;
+     FSGenerateurEtats.TableauSelectTypeFormule.Visible:=false;
+     FSGenerateurEtats.BitTableauSelectTypeFormule.Visible:=false;
+end;
+end;
+
+ProcAfficheRubriqueEtat(FSGenerateurEtats.TableauRubriqueEtat,strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]),FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text);
+
+if(FSGenerateurEtats.AfficheAutoImporteFormules.Visible=true)
+then ListeAutoImporteFormuleEtat(FSGenerateurEtats.TableauAutoImporteFormules,FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]);
+end;
+
+procedure TFSGenerateurEtats.BitNouvelEtatClick(Sender: TObject);
+begin
+
+if(FSGenerateurEtats.BitNouvelEtat.Caption='Nouvel')
+then
+begin
+     FSGenerateurEtats.BitNouvelEtat.Caption:='Valider';
+     FSGenerateurEtats.TableauListeEtats.RowCount:=2;
+     FSGenerateurEtats.TableauListeEtats.Rows[1].Text:='N';
+     FSGenerateurEtats.TableauListeEtats.SetFocus;
+     FSGenerateurEtats.TableauListeEtats.Col:=2;
+end
+else
+begin
+     if(FSGenerateurEtats.TableauListeEtats.Cells[2,1]<>'')then
+     begin
+     FSGenerateurEtats.AfficheOptionListeEtats.Visible:=true;
+     FSGenerateurEtats.AfficheOptionListeEtats.Caption:='Voulez vous enregistrer le nouveau Etat ?';
+     FSGenerateurEtats.EditOptionListeEtats.Text:='Nouveau';
+     FSGenerateurEtats.BitOuiOptionListeEtats.SetFocus;
+     end
+     else
+     begin
+          ProcAfficheEtat;
+          FSGenerateurEtats.BitNouvelEtat.Caption:='Nouvel';
+     end;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.BitModifierEtatClick(Sender: TObject);
+begin
+FSGenerateurEtats.AfficheOptionListeEtats.Visible:=true;
+FSGenerateurEtats.AfficheOptionListeEtats.Caption:='Voulez vous sauvgarder les modifications ?';
+FSGenerateurEtats.EditOptionListeEtats.Text:='Modifier';
+FSGenerateurEtats.BitOuiOptionListeEtats.SetFocus;
+end;
+
+procedure TFSGenerateurEtats.BitValiderRubriqueEtatClick(Sender: TObject);
+begin
+if(FSGenerateurEtats.TableauRubriqueEtat.RowCount>2)
+and(FSGenerateurEtats.TableauRubriqueEtat.Cells[0,FSGenerateurEtats.TableauRubriqueEtat.RowCount-1]='')
+and(FSGenerateurEtats.TableauRubriqueEtat.Cells[1,FSGenerateurEtats.TableauRubriqueEtat.RowCount-1]='')
+and(FSGenerateurEtats.TableauRubriqueEtat.Cells[2,FSGenerateurEtats.TableauRubriqueEtat.RowCount-1]='')
+and(FSGenerateurEtats.TableauRubriqueEtat.Cells[3,FSGenerateurEtats.TableauRubriqueEtat.RowCount-1]='')
+and(FSGenerateurEtats.TableauRubriqueEtat.Cells[4,FSGenerateurEtats.TableauRubriqueEtat.RowCount-1]='')
+then
+begin
+     FSGenerateurEtats.TableauFormule.Visible:=false;
+     FSGenerateurEtats.TableauRubriqueEtat.RowCount:=
+     FSGenerateurEtats.TableauRubriqueEtat.RowCount-1;
+end;
+
+FSGenerateurEtats.AfficheOptionRubriquesEtat.Visible:=true;
+FSGenerateurEtats.AfficheOptionRubriquesEtat.Caption:='Valider les Rubriques !';
+FSGenerateurEtats.EditOptionRubriquesEtat.Text:='Valider';
+FSGenerateurEtats.BitOptionRubriquesEtat.SetFocus;
+end;
+
+procedure TFSGenerateurEtats.BitSupprimerEtatClick(Sender: TObject);
+begin
+
+if(FSGenerateurEtats.TableauRubriqueEtat.Cells[0,1]<>'')then
+begin
+     showmessage('Opération non valide !; L''Etat comporte des Rubriques');
+     Exit;
+end;
+
+FSGenerateurEtats.AfficheOptionListeEtats.Visible:=true;
+FSGenerateurEtats.AfficheOptionListeEtats.Caption:='Voulez vous supprimer l''enregistrement Etat sélectionné ?';
+FSGenerateurEtats.EditOptionListeEtats.Text:='Supprimer';
+FSGenerateurEtats.BitOuiOptionListeEtats.SetFocus;
+
+end;
+
+procedure TFSGenerateurEtats.BitBtn3Click(Sender: TObject);
+begin
+
+if(FSGenerateurEtats.EditOptionListeEtats.Text='Nouveau')then
+begin
+     FSGenerateurEtats.BitNouvelEtat.Caption:='Nouvel';
+end;
+
+ProcAfficheEtat;
+FSGenerateurEtats.EditOptionListeEtats.Text:='';
+FSGenerateurEtats.AfficheOptionListeEtats.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.BitOuiOptionListeEtatsClick(Sender: TObject);
+var  R,PositionEtat:integer; OKEtat,Confirme:boolean;
+begin
+
+if(FSGenerateurEtats.EditOptionListeEtats.Text='Modifier')then
+begin
+     for R:=1 to FSGenerateurEtats.TableauListeEtats.RowCount-1 do
+     begin
+          OpenFParc(RParc);
+          ChEtat:=RParc.Parcours+'\'+Exercice+'FEtat'+FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text;
+          assignfile(FEtat,ChEtat);
+          if FileExists(ChEtat)then
+          Reset(FEtat)
+          else Rewrite(FEtat);
+          seek(FEtat,0);
+          i:=0;
+          OKEtat:=false;
+          while not eof(FEtat)and(OKEtat=false)do
+          begin
+               Read(FEtat,REtat);
+               if(REtat.PositionEtat=strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,R]))then
+               begin
+                    OKEtat:=true;
+                    Seek(FEtat,i);
+                    REtat.PositionEtat:=strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,R]);
+                    REtat.CodeEtat:=FSGenerateurEtats.TableauListeEtats.Cells[2,R];
+                    REtat.NomEtat:=FSGenerateurEtats.TableauListeEtats.Cells[3,R];
+                    REtat.DateEtatDebut:=FSGenerateurEtats.TableauListeEtats.Cells[4,R];
+                    REtat.DateEtatFin:=FSGenerateurEtats.TableauListeEtats.Cells[5,R];
+                    REtat.OrganismeConcerne:=FSGenerateurEtats.TableauListeEtats.Cells[6,R];
+                    REtat.CodeOrganisme:=FSGenerateurEtats.TableauListeEtats.Cells[7,R];
+                    REtat.Imprime:=FSGenerateurEtats.TableauListeEtats.Cells[8,R];
+
+                    write(FEtat,REtat);
+               end;
+               i:=i+1;
+          end;
+          CloseFile(FEtat);
+     end;
+end;
+
+if(FSGenerateurEtats.EditOptionListeEtats.Text='Supprimer')then
+begin
+     PositionEtat:=strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]);
+     DeleteFEtat(PositionEtat,FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text,Confirme);
+end;
+
+if(FSGenerateurEtats.EditOptionListeEtats.Text='Nouveau')then
+begin
+FSGenerateurEtats.BitNouvelEtat.Caption:='Nouvel';
+OpenFParc(RParc);
+ChEtat:=RParc.Parcours+'\'+Exercice+'FEtat'+FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text;
+assignfile(FEtat,ChEtat);
+if FileExists(ChEtat)then
+Reset(FEtat)
+else Rewrite(FEtat);
+seek(FEtat,0);
+i:=0;
+while not eof(FEtat)do
+begin
+    Read(FEtat,REtat);
+    i:=i+1;
+end;
+Seek(FEtat,i);
+REtat.PositionEtat:=i-1;
+REtat.CodeEtat:=FSGenerateurEtats.TableauListeEtats.Cells[2,1];
+REtat.NomEtat:=FSGenerateurEtats.TableauListeEtats.Cells[3,1];
+REtat.DateEtatDebut:=FSGenerateurEtats.TableauListeEtats.Cells[4,1];
+REtat.DateEtatFin:=FSGenerateurEtats.TableauListeEtats.Cells[5,1];
+REtat.OrganismeConcerne:=FSGenerateurEtats.TableauListeEtats.Cells[6,1];
+REtat.CodeOrganisme:=FSGenerateurEtats.TableauListeEtats.Cells[7,1];
+REtat.Imprime:=FSGenerateurEtats.TableauListeEtats.Cells[8,1];
+
+write(FEtat,REtat);
+CloseFile(FEtat);
+end;
+
+ProcAfficheEtat;
+FSGenerateurEtats.EditOptionListeEtats.Text:='';
+FSGenerateurEtats.AfficheOptionListeEtats.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.BitBtn5Click(Sender: TObject);
+begin
+ProcAfficheRubriqueEtat(FSGenerateurEtats.TableauRubriqueEtat,strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]),FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text);
+FSGenerateurEtats.EditOptionRubriquesEtat.Text:='';
+FSGenerateurEtats.AfficheOptionRubriquesEtat.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.BitOptionRubriquesEtatClick(Sender: TObject);
+var  R,PositionEtat,PositionRubriqueEtat:integer; OKRubriqueEtat,Confirme:boolean;
+begin
+
+if(FSGenerateurEtats.EditOptionRubriquesEtat.Text='Valider')then
+begin
+     for R:=1 to FSGenerateurEtats.TableauRubriqueEtat.RowCount-1 do
+     if(FSGenerateurEtats.TableauRubriqueEtat.Cells[1,R]<>'')
+     then
+     begin
+          OpenFParc(RParc);
+          ChRubriqueEtat:=RParc.Parcours+'\'+Exercice+'FRubriqueEtat'+FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text;
+          assignfile(FRubriqueEtat,ChRubriqueEtat);
+          if FileExists(ChRubriqueEtat)then
+          Reset(FRubriqueEtat)
+          else Rewrite(FRubriqueEtat);
+          seek(FRubriqueEtat,0);
+          i:=0;
+          OKRubriqueEtat:=false;
+          while not eof(FRubriqueEtat)and(OKRubriqueEtat=false)do
+          begin
+               Read(FRubriqueEtat,RRubriqueEtat);
+               if(RRubriqueEtat.PositionEtat=strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]))
+               and(inttostr(RRubriqueEtat.PositionRubriqueEtat)=FSGenerateurEtats.TableauRubriqueEtat.Cells[0,R])then
+               begin
+                    OKRubriqueEtat:=true;
+                    i:=i-1;
+               end;
+               i:=i+1;
+          end;
+
+          Seek(FRubriqueEtat,i);
+          RRubriqueEtat.Ordre:=R;
+          RRubriqueEtat.PositionRubriqueEtat:=i;
+          RRubriqueEtat.PositionEtat:=strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]);
+          RRubriqueEtat.PositionFormule:=strtointeger(FSGenerateurEtats.TableauRubriqueEtat.Cells[1,R]);
+          write(FRubriqueEtat,RRubriqueEtat);
+          CloseFile(FRubriqueEtat);
+     end;
+end;
+
+if(FSGenerateurEtats.EditOptionRubriquesEtat.Text='Supprimer')then
+begin
+     PositionEtat:=strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]);
+     PositionRubriqueEtat:=strtointeger(FSGenerateurEtats.TableauRubriqueEtat.Cells[0,FSGenerateurEtats.TableauRubriqueEtat.Row]);
+     DeleteFRubriqueEtat(PositionEtat,PositionRubriqueEtat,FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text,Confirme);
+end;
+
+ProcAfficheRubriqueEtat(FSGenerateurEtats.TableauRubriqueEtat,strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]),FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text);
+FSGenerateurEtats.EditOptionRubriquesEtat.Text:='';
+FSGenerateurEtats.AfficheOptionRubriquesEtat.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.TableauRubriqueEtatClick(Sender: TObject);
+begin
+SelectionEtat('Rubrique Etat');
+
+FSGenerateurEtats.AffichePatientez.Visible:=false;
+
+FSGenerateurEtats.AfficheOptionListeEtats.Visible:=false;
+FSGenerateurEtats.AfficheOptionRubriquesEtat.Visible:=false;
+FSGenerateurEtats.TableauFormule.Visible:=false;
+FSGenerateurEtats.AfficheNomEtat.Visible:=false;
+
+if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpETAT')then
+begin
+     FSGenerateurEtats.AfficheModifierFormule.Visible:=true;
+
+     if(FSGenerateurEtats.EditDebitFormule.Color=$0062FF62)
+     or(FSGenerateurEtats.EditCreditFormule.Color=$0062FF62)
+     then
+     begin
+          showmessage('Veuillez terminer les modifications SVP!');
+          FSGenerateurEtats.BitValiderModificationFormule.SetFocus;
+     end
+     else
+     begin
+     FSGenerateurEtats.EditPositionFormule.Text:='';
+     FSGenerateurEtats.EditCodeFormule.Text:='';
+     FSGenerateurEtats.EditEtatFormule.Text:='';
+     FSGenerateurEtats.EditLibelleFormule.Text:='';
+     FSGenerateurEtats.EditFormule.Text:='';
+     FSGenerateurEtats.EditConditionFormule.Text:='';
+     FSGenerateurEtats.EditCummuleFormule.Text:='';
+     FSGenerateurEtats.EditTypeFormule.Text:='';
+     FSGenerateurEtats.EditSensFormule.Text:='';
+     FSGenerateurEtats.EditBaseFormule.Text:='';
+     FSGenerateurEtats.EditTauxFormule.Text:='';
+     FSGenerateurEtats.EditDebitFormule.Text:='';
+     FSGenerateurEtats.EditCreditFormule.Text:='';
+
+     FSGenerateurEtats.EditDebitFormule.Color:=clWindow;
+     FSGenerateurEtats.EditCreditFormule.Color:=clWindow;
+
+     if(FSGenerateurEtats.TableauRubriqueEtat.Cells[1,FSGenerateurEtats.TableauRubriqueEtat.Row]<>'')then
+     begin
+          RFormule:=ChercheFormule(strtointeger(FSGenerateurEtats.TableauRubriqueEtat.Cells[1,FSGenerateurEtats.TableauRubriqueEtat.Row]),FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text);
+          FSGenerateurEtats.EditPositionFormule.Text:=inttostr(RFormule.PositionFormule);
+          FSGenerateurEtats.EditCodeFormule.Text:=RFormule.CodeFormule;
+          FSGenerateurEtats.EditEtatFormule.Text:=booltostr(RFormule.Active);
+          FSGenerateurEtats.EditLibelleFormule.Text:=RFormule.Libelle;
+          FSGenerateurEtats.EditFormule.Text:=RFormule.FormuleTexte;
+          FSGenerateurEtats.EditConditionFormule.Text:=RFormule.Condition;
+          FSGenerateurEtats.EditCummuleFormule.Text:=RFormule.Accumuler;
+          FSGenerateurEtats.EditTypeFormule.Text:=RFormule.TypeAffichage;
+          FSGenerateurEtats.EditSensFormule.Text:=RFormule.Sens;
+          FSGenerateurEtats.EditBaseFormule.Text:=RFormule.Base;
+          FSGenerateurEtats.EditTauxFormule.Text:=RFormule.Taux;
+          FSGenerateurEtats.EditDebitFormule.Text:=RFormule.Debit;
+          FSGenerateurEtats.EditCreditFormule.Text:=RFormule.Credit;
+     end;
+     end;
+end
+else
+begin
+     FSGenerateurEtats.AfficheModifierFormule.Visible:=false;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.BitSupprimerRubriqueEtatClick(Sender: TObject);
+begin
+FSGenerateurEtats.AfficheOptionRubriquesEtat.Visible:=true;
+FSGenerateurEtats.AfficheOptionRubriquesEtat.Caption:='Supprimer la Rubrique !';
+FSGenerateurEtats.EditOptionRubriquesEtat.Text:='Supprimer';
+FSGenerateurEtats.BitOptionRubriquesEtat.SetFocus;
+end;
+
+procedure TFSGenerateurEtats.BitBtn4Click(Sender: TObject);
+begin
+FSGenerateurEtats.TableauListeEtats.SetFocus;
+FSGenerateurEtats.EditNomEtat.Text:='';
+FSGenerateurEtats.AfficheNomEtat.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.BitValiderNomEtatClick(Sender: TObject);
+begin
+FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]:=FSGenerateurEtats.EditNomEtat.Text;
+FSGenerateurEtats.EditNomEtat.Text:='';
+FSGenerateurEtats.TableauListeEtats.SetFocus;
+FSGenerateurEtats.AfficheNomEtat.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.RBEtatCNASClick(Sender: TObject);
+begin
+FSGenerateurEtats.EditNomEtat.Text:='ImpCNAS';
+end;
+
+procedure TFSGenerateurEtats.RBEtatCACOBATClick(Sender: TObject);
+begin
+FSGenerateurEtats.EditNomEtat.Text:='ImpCACOBAT';
+end;
+
+procedure TFSGenerateurEtats.RBEtatRecapitulatifClick(Sender: TObject);
+begin
+FSGenerateurEtats.EditNomEtat.Text:='ImpETAT';
+end;
+
+procedure TFSGenerateurEtats.TableauListeEtatsKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if(FSGenerateurEtats.TableauListeEtats.Col=4)
+or(FSGenerateurEtats.TableauListeEtats.Col=5)
+then
+begin
+     Key:=#0;
+     FSGenerateurEtats.AffichePeriodeEtat.Visible:=true;
+     FSGenerateurEtats.EditDebutValidite.Text:=FSGenerateurEtats.TableauListeEtats.Cells[4,FSGenerateurEtats.TableauListeEtats.Row];
+     FSGenerateurEtats.EditFinValidite.Text:=FSGenerateurEtats.TableauListeEtats.Cells[5,FSGenerateurEtats.TableauListeEtats.Row];
+     FSGenerateurEtats.EditDebutValidite.SetFocus;
+end;
+
+if(FSGenerateurEtats.TableauListeEtats.Col=8)then
+begin
+     Key:=#0;
+     FSGenerateurEtats.AfficheNomEtat.Visible:=true;
+     FSGenerateurEtats.EditNomEtat.Text:='';
+
+     if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpCNAS')
+     then
+      begin
+           FSGenerateurEtats.RBEtatCNAS.Checked:=true;
+           FSGenerateurEtats.RBEtatCNAS.SetFocus;
+     end
+     else
+     if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpCACOBAT')then
+     begin
+          FSGenerateurEtats.RBEtatCACOBAT.Checked:=true;
+          FSGenerateurEtats.RBEtatCACOBAT.SetFocus;
+     end
+     else
+     if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpETAT')then
+     begin
+          FSGenerateurEtats.RBEtatRecapitulatif.Checked:=true;
+          FSGenerateurEtats.RBEtatRecapitulatif.SetFocus;
+     end
+     else
+     if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpATSalaire')then
+     begin
+          FSGenerateurEtats.RBAttestationSalaire.Checked:=true;
+          FSGenerateurEtats.RBAttestationSalaire.SetFocus;
+     end
+     else
+     begin
+          FSGenerateurEtats.RBEtatRecapitulatif.Checked:=true;
+          FSGenerateurEtats.RBEtatRecapitulatif.SetFocus;
+     end;
+
+     FSGenerateurEtats.EditNomEtat.Text:=FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row];
+
+end;
+
+end;
+
+procedure TFSGenerateurEtats.TableauListeEtatsKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if(FSGenerateurEtats.TableauListeEtats.Col=8)then
+begin
+     if(not key in[VK_LEFT,VK_UP,VK_RIGHT,VK_DOWN])
+     or(key in[VK_DELETE])
+     then
+     begin
+          key:=VK_RETURN;
+          FSGenerateurEtats.AfficheNomEtat.Visible:=true;
+          FSGenerateurEtats.EditNomEtat.Text:='';
+
+          if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpCNAS')
+          then
+          begin
+                FSGenerateurEtats.RBEtatCNAS.Checked:=true;
+                FSGenerateurEtats.RBEtatCNAS.SetFocus;
+          end
+          else
+          if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpCACOBAT')then
+          begin
+               FSGenerateurEtats.RBEtatCACOBAT.Checked:=true;
+               FSGenerateurEtats.RBEtatCACOBAT.SetFocus;
+          end
+          else
+          if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpETAT')then
+          begin
+               FSGenerateurEtats.RBEtatRecapitulatif.Checked:=true;
+               FSGenerateurEtats.RBEtatRecapitulatif.SetFocus;
+          end
+          else
+          if(FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row]='ImpATSalaire')then
+          begin
+               FSGenerateurEtats.RBAttestationSalaire.Checked:=true;
+               FSGenerateurEtats.RBAttestationSalaire.SetFocus;
+          end
+          else
+          begin
+               FSGenerateurEtats.RBEtatRecapitulatif.Checked:=true;
+               FSGenerateurEtats.RBEtatRecapitulatif.SetFocus;
+          end;
+
+          FSGenerateurEtats.EditNomEtat.Text:=FSGenerateurEtats.TableauListeEtats.Cells[8,FSGenerateurEtats.TableauListeEtats.Row];
+          
+     end;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.RBEtatCNASKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSGenerateurEtats.BitValiderNomEtat.SetFocus;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.RBEtatCACOBATKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSGenerateurEtats.BitValiderNomEtat.SetFocus;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.RBEtatRecapitulatifKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSGenerateurEtats.BitValiderNomEtat.SetFocus;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.BitBtn1Click(Sender: TObject);
+begin
+
+if(FSGenerateurEtats.EditNomEtat.Text='ImpCNAS')then
+begin
+
+end;
+
+if(FSGenerateurEtats.EditNomEtat.Text='ImpCACOBAT')then
+begin
+     
+end;
+
+if(FSGenerateurEtats.EditNomEtat.Text='ImpETAT')then
+begin
+     ImprimerETAT;
+end;
+
+if(FSGenerateurEtats.EditNomEtat.Text='ImpATSalaire')then
+begin
+
+end;
+
+end;
+
+procedure TFSGenerateurEtats.BitAuthentificationRubriquesClick(Sender: TObject);
+begin
+FSGenerateurEtats.AffichePatientez.Visible:=true;
+
+FSGenerateurEtats.TableauRubriqueEtatPlus.Visible:=true;
+FSGenerateurEtats.TableauRubriqueEtatPlus.Cols[0].Text:='P° Rub';
+FSGenerateurEtats.TableauRubriqueEtatPlus.Cols[1].Text:='P° Formule';
+FSGenerateurEtats.TableauRubriqueEtatPlus.Cols[2].Text:='Code Rub.';
+FSGenerateurEtats.TableauRubriqueEtatPlus.Cols[3].Text:='          Désignation';
+FSGenerateurEtats.TableauRubriqueEtatPlus.Cols[4].Text:='Sens';
+FSGenerateurEtats.TableauRubriqueEtatPlus.RowCount:=2;
+FSGenerateurEtats.TableauRubriqueEtatPlus.Rows[1].Text:='';
+
+FSGenerateurEtats.TimerAuthentification.Enabled:=true;
+
+
+end;
+
+procedure TFSGenerateurEtats.BitTransfertRubriquePlusClick(
+  Sender: TObject);
+var   R,ARow:integer;  OKRub:boolean;
+begin
+
+R:=1;
+while(R<=FSGenerateurEtats.TableauRubriqueEtat.RowCount-1)and(OKRub=false)do
+begin
+     if(FSGenerateurEtats.TableauRubriqueEtat.Cells[1,R]=FSGenerateurEtats.TableauRubriqueEtatPlus.Cells[1,FSGenerateurEtats.TableauRubriqueEtatPlus.Row])then
+     begin
+          OKRub:=true;
+     end;
+R:=R+1;
+end;
+
+if(OKRub=false)then
+begin
+     if(FSGenerateurEtats.TableauRubriqueEtat.Cells[1,FSGenerateurEtats.TableauRubriqueEtat.Row]<>'')
+     then FSGenerateurEtats.TableauRubriqueEtat.RowCount:=
+          FSGenerateurEtats.TableauRubriqueEtat.RowCount+1;
+     
+     for R:=MaxInt(FSGenerateurEtats.TableauRubriqueEtat.RowCount-1,1)downto FSGenerateurEtats.TableauRubriqueEtat.Row do
+     begin
+          FSGenerateurEtats.TableauRubriqueEtat.Rows[R].Text:=FSGenerateurEtats.TableauRubriqueEtat.Rows[R-1].Text;
+     end;
+
+     FSGenerateurEtats.TableauRubriqueEtat.Rows[FSGenerateurEtats.TableauRubriqueEtat.Row].Text:=
+     FSGenerateurEtats.TableauRubriqueEtatPlus.Rows[FSGenerateurEtats.TableauRubriqueEtatPlus.Row].Text;
+
+     FSGenerateurEtats.TableauRubriqueEtatPlus.Rows[FSGenerateurEtats.TableauRubriqueEtatPlus.Row].Text:='';
+     for R:=FSGenerateurEtats.TableauRubriqueEtatPlus.Row to FSGenerateurEtats.TableauRubriqueEtatPlus.RowCount-2 do
+     begin
+          FSGenerateurEtats.TableauRubriqueEtatPlus.Rows[R].Text:=FSGenerateurEtats.TableauRubriqueEtatPlus.Rows[R+1].Text;
+     end;
+     FSGenerateurEtats.TableauRubriqueEtatPlus.RowCount:=
+     MaxInt(FSGenerateurEtats.TableauRubriqueEtatPlus.RowCount-1,2);
+end;
+
+end;
+
+procedure TFSGenerateurEtats.BitValiderModificationFormuleClick(Sender: TObject);
+var  OKFormule:boolean;
+begin
+
+if(FSGenerateurEtats.EditPositionFormule.Text<>'')then
+begin
+   OpenFParc(RParc);
+ChFormule:=RParc.Parcours+'\'+Exercice+FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text;
+assignfile(FFormule,ChFormule);
+if FileExists(ChFormule)then
+Reset(FFormule)
+else Rewrite(FFormule);
+seek(FFormule,0);
+i:=0;
+OKFormule:=false;
+while not eof(FFormule)and(OKFormule=false)do
+begin
+     Read(FFormule,RFormule);
+     if(RFormule.PositionFormule=strtointeger(FSGenerateurEtats.EditPositionFormule.Text))then
+     begin
+          OKFormule:=true;
+          RFormule.PositionFormule:=strtointeger(FSGenerateurEtats.EditPositionFormule.Text);
+          RFormule.CodeFormule:=FSGenerateurEtats.EditCodeFormule.Text;
+          RFormule.Libelle:=FSGenerateurEtats.EditLibelleFormule.Text;
+          RFormule.FormuleTexte:=FSGenerateurEtats.EditFormule.Text;
+          RFormule.Condition:=FSGenerateurEtats.EditConditionFormule.Text;
+          RFormule.Accumuler:=FSGenerateurEtats.EditCummuleFormule.Text;
+          RFormule.TypeAffichage:=FSGenerateurEtats.EditTypeFormule.Text;
+          RFormule.Sens:=FSGenerateurEtats.EditSensFormule.Text;
+          RFormule.Base:=FSGenerateurEtats.EditBaseFormule.Text;
+          RFormule.Taux:=FSGenerateurEtats.EditTauxFormule.Text;
+          RFormule.Debit:=FSGenerateurEtats.EditDebitFormule.Text;
+          RFormule.Credit:=FSGenerateurEtats.EditCreditFormule.Text;
+          RFormule.Active:=strtobool(FSGenerateurEtats.EditEtatFormule.Text);
+          seek(FFormule,i);
+          write(FFormule,RFormule);
+     end;
+     i:=i+1;
+end;
+CloseFile(FFormule);
+
+FSGenerateurEtats.EditDebitFormule.Color:=clWindow;
+FSGenerateurEtats.EditCreditFormule.Color:=clWindow;
+
+ProcAfficheRubriqueEtat(FSGenerateurEtats.TableauRubriqueEtat,strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]),FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text);
+end;
+
+end;
+
+procedure TFSGenerateurEtats.BitAnnulerModificationFormuleClick(Sender: TObject);
+begin
+FSGenerateurEtats.EditDebitFormule.Color:=clWindow;
+FSGenerateurEtats.EditCreditFormule.Color:=clWindow;
+FSGenerateurEtats.AfficheModifierFormule.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.TableauRubriqueEtatPlusClick(Sender: TObject);
+begin
+FSGenerateurEtats.BitTransfertRubriquePlus.Visible:=true;
+FSGenerateurEtats.AffichePatientez.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.EditDebitFormuleKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var  Ordre:integer;
+begin
+FSGenerateurEtats.EditDebitFormule.Color:=$0062FF62;
+
+if FSGenerateurEtats.RBUtiliseOrdre.Checked=true
+then Ordre:=strtointeger(FSGenerateurEtats.EditOrdreCompteComptable.Text)
+else Ordre:=longueur(FSGenerateurEtats.EditDebitFormule.Text);
+
+if(FSGenerateurEtats.EditDebitFormule.Text<>'')
+then ListePlanComptable(FSGenerateurEtats.TableauPlanComptable,Ordre,FSGenerateurEtats.EditDebitFormule.Text,'','PlanComptable')
+else ListePlanComptable(FSGenerateurEtats.TableauPlanComptable,Ordre,'','','PlanComptable');
+end;
+
+procedure TFSGenerateurEtats.EditCreditFormuleKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var  Ordre:integer;
+begin
+FSGenerateurEtats.EditCreditFormule.Color:=$0062FF62;
+
+if FSGenerateurEtats.RBUtiliseOrdre.Checked=true
+then Ordre:=strtointeger(FSGenerateurEtats.EditOrdreCompteComptable.Text)
+else Ordre:=longueur(FSGenerateurEtats.EditCreditFormule.Text);
+
+if(FSGenerateurEtats.EditCreditFormule.Text<>'')
+then ListePlanComptable(FSGenerateurEtats.TableauPlanComptable,Ordre,FSGenerateurEtats.EditCreditFormule.Text,'','PlanComptable')
+else ListePlanComptable(FSGenerateurEtats.TableauPlanComptable,Ordre,'','','PlanComptable');
+end;
+
+procedure TFSGenerateurEtats.TimerAuthentificationTimer(Sender: TObject);
+var  R,ARow:integer;  OKRub,OKFormule:boolean;
+begin
+FSGenerateurEtats.AffichePatientez.Visible:=false;
+FSGenerateurEtats.TimerAuthentification.Enabled:=false;
+end;
+
+procedure TFSGenerateurEtats.AffichePatientezClick(Sender: TObject);
+begin
+FSGenerateurEtats.AffichePatientez.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.BitTableauSelectTypeFormuleClick(Sender: TObject);
+begin
+
+if(FSGenerateurEtats.TableauSelectTypeFormule.Height=128)
+then
+begin
+     FSGenerateurEtats.TableauSelectTypeFormule.Height:=23;
+end
+else
+begin
+     FSGenerateurEtats.TableauSelectTypeFormule.Height:=128;
+     FSGenerateurEtats.TableauSelectTypeFormule.RowCount:=6;
+     ListeAutoImporteFormuleEtat(FSGenerateurEtats.TableauSelectTypeFormule,FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]);
+end;
+
+end;
+
+procedure TFSGenerateurEtats.TableauSelectTypeFormuleDblClick(
+  Sender: TObject);
+begin
+
+if FSGenerateurEtats.TableauSelectTypeFormule.Cells[0,FSGenerateurEtats.TableauSelectTypeFormule.Row]='OK'
+then FSGenerateurEtats.TableauSelectTypeFormule.Cells[0,FSGenerateurEtats.TableauSelectTypeFormule.Row]:=''
+else FSGenerateurEtats.TableauSelectTypeFormule.Cells[0,FSGenerateurEtats.TableauSelectTypeFormule.Row]:='OK';
+
+end;
+
+procedure TFSGenerateurEtats.EditDebutValiditeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+key:=#0;
+end;
+
+procedure TFSGenerateurEtats.EditFinValiditeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+key:=#0;
+end;
+
+procedure TFSGenerateurEtats.BitBtn2Click(Sender: TObject);
+begin
+FSGenerateurEtats.TableauListeEtats.SetFocus;
+FSGenerateurEtats.AffichePeriodeEtat.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.BitValiderPeriodeEtatClick(Sender: TObject);
+begin
+FSGenerateurEtats.TableauListeEtats.Cells[4,FSGenerateurEtats.TableauListeEtats.Row]:=
+FSGenerateurEtats.EditDebutValidite.Text;
+FSGenerateurEtats.TableauListeEtats.Cells[5,FSGenerateurEtats.TableauListeEtats.Row]:=
+FSGenerateurEtats.EditFinValidite.Text;
+FSGenerateurEtats.TableauListeEtats.SetFocus;
+FSGenerateurEtats.AffichePeriodeEtat.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.EditDebutValiditeKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSGenerateurEtats.EditFinValidite.SetFocus;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.EditFinValiditeKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSGenerateurEtats.BitValiderPeriodeEtat.SetFocus;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.BitBtn6Click(Sender: TObject);
+var  R:integer;
+begin
+FSGenerateurEtats.AfficheAutoImporteFormules.Visible:=true;
+ListeAutoImporteFormuleEtat(FSGenerateurEtats.TableauAutoImporteFormules,FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]);
+FSGenerateurEtats.TableauAutoImporteFormules.SetFocus;
+
+FSGenerateurEtats.AfficheOperationsAutoImporteFormules.Height:=41;
+end;
+
+procedure TFSGenerateurEtats.BitBtn7Click(Sender: TObject);
+begin
+FSGenerateurEtats.AfficheAutoImporteFormules.Visible:=false;
+end;
+
+procedure TFSGenerateurEtats.BitBtn8Click(Sender: TObject);
+var i,R:Integer;    OKTypeFormules,Confirme:boolean;
+begin
+
+R:=1;
+while(R<=FSGenerateurEtats.TableauAutoImporteFormules.RowCount-1)do
+begin
+     if(FSGenerateurEtats.TableauAutoImporteFormules.Cells[0,R]='OK')then
+     begin
+          OpenFParc(RParc);
+          ChAutoImporteFormuleEtat:=RParc.Parcours+'\'+Exercice+'FAutoImporteFormuleEtat';
+          assignfile(FAutoImporteFormuleEtat,ChAutoImporteFormuleEtat);
+          if FileExists(ChAutoImporteFormuleEtat)then
+          Reset(FAutoImporteFormuleEtat)
+          else Rewrite(FAutoImporteFormuleEtat);
+          seek(FAutoImporteFormuleEtat,0);
+          OKTypeFormules:=false;
+          i:=0;
+          while not eof(FAutoImporteFormuleEtat)do
+          begin
+               Read(FAutoImporteFormuleEtat,RAutoImporteFormuleEtat);
+               i:=i+1;
+               if(RAutoImporteFormuleEtat.PositionEtat=strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]))
+               and(RAutoImporteFormuleEtat.TypeFormule=FSGenerateurEtats.TableauAutoImporteFormules.Cells[1,R])
+               then
+               begin
+                    OKTypeFormules:=true;
+               end;
+          end;
+
+          if(OKTypeFormules=false)then
+          begin
+               seek(FAutoImporteFormuleEtat,i);
+               RAutoImporteFormuleEtat.PositionEtat:=strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]);
+               RAutoImporteFormuleEtat.TypeFormule:=FSGenerateurEtats.TableauAutoImporteFormules.Cells[1,R];
+               write(FAutoImporteFormuleEtat,RAutoImporteFormuleEtat);
+          end;
+          Closefile(FAutoImporteFormuleEtat);
+     end
+     else
+     begin
+          DeleteFAutoImporteFormuleEtat(strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]),FSGenerateurEtats.TableauAutoImporteFormules.Cells[1,R],Confirme);
+     end;
+R:=R+1;
+end;
+
+ListeAutoImporteFormuleEtat(FSGenerateurEtats.TableauAutoImporteFormules,FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]);
+end;
+
+procedure TFSGenerateurEtats.TableauAutoImporteFormulesDblClick(
+  Sender: TObject);
+begin
+     if(FSGenerateurEtats.TableauAutoImporteFormules.Cells[0,FSGenerateurEtats.TableauAutoImporteFormules.Row]='')
+     then FSGenerateurEtats.TableauAutoImporteFormules.Cells[0,FSGenerateurEtats.TableauAutoImporteFormules.Row]:='OK'
+     else FSGenerateurEtats.TableauAutoImporteFormules.Cells[0,FSGenerateurEtats.TableauAutoImporteFormules.Row]:='';
+end;
+
+procedure TFSGenerateurEtats.BitBtn9Click(Sender: TObject);
+begin
+FSCompleteFormulesEtat.EditCodeTypeFormuleAfficher.Text:=FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text;
+FSCompleteFormulesEtat.EditDesignationFormuleAfficher.Text:=FSGenerateurEtats.EditDesignationFormuleAfficher.Text;
+FSMenuPrincipal.EditListePositionEtatControle.Text:='';
+FSAttente.Show;
+FSAttente.TimerControleFormulesEtat.Enabled:=true;
+
+FSGenerateurEtats.AfficheOperationsAutoImporteFormules.Height:=41;
+end;
+
+procedure TFSGenerateurEtats.AfficheAutoImporteFormulesDblClick(
+  Sender: TObject);
+var  R:integer;
+begin
+     FSGenerateurEtats.TableauAutoImporteFormules.RowCount:=2;
+     FSGenerateurEtats.TableauAutoImporteFormules.Rows[1].Text:='';
+
+     FSGenerateurEtats.TableauAutoImporteFormules.Cols[0].Text:='Sélection !';
+     FSGenerateurEtats.TableauAutoImporteFormules.Cols[1].Text:='Type';
+     FSGenerateurEtats.TableauAutoImporteFormules.Cols[2].Text:='Désignation';
+
+     OpenFParc(RParc);
+     ChAutoImporteFormuleEtat:=RParc.Parcours+'\'+Exercice+'FAutoImporteFormuleEtat';
+     assignfile(FAutoImporteFormuleEtat,ChAutoImporteFormuleEtat);
+     if FileExists(ChAutoImporteFormuleEtat)then
+     Reset(FAutoImporteFormuleEtat)
+     else Rewrite(FAutoImporteFormuleEtat);
+     seek(FAutoImporteFormuleEtat,0);
+     while not eof(FAutoImporteFormuleEtat)do
+     begin
+          Read(FAutoImporteFormuleEtat,RAutoImporteFormuleEtat);
+          R:=R+1;
+          FSGenerateurEtats.TableauAutoImporteFormules.Rows[R].Text:='';
+          FSGenerateurEtats.TableauAutoImporteFormules.Cells[1,R]:=inttostr(RAutoImporteFormuleEtat.PositionEtat);
+          FSGenerateurEtats.TableauAutoImporteFormules.Cells[2,R]:=RAutoImporteFormuleEtat.TypeFormule;
+
+     end;
+     Closefile(FAutoImporteFormuleEtat);
+end;
+
+procedure TFSGenerateurEtats.BitBtn10Click(Sender: TObject);
+begin
+
+if(FSGenerateurEtats.AfficheOperationsAutoImporteFormules.Height=153)then
+begin
+     FSGenerateurEtats.AfficheOperationsAutoImporteFormules.Height:=41
+end
+else
+begin
+     if(FSGenerateurEtats.EditAutorisation.Text='')then
+     begin
+          FSGenerateurEtats.AfficheOperationsAutoImporteFormules.Height:=153;
+          FSGenerateurEtats.EditAutorisation.Text:='';
+     end
+     else
+     begin
+          showmessage('Saisissez le code d''autorisation SVP !');
+          FSGenerateurEtats.EditAutorisation.Text:='';
+          FSGenerateurEtats.EditAutorisation.SetFocus;
+     end;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.EditCodeTypeFormuleAfficherEnter(
+  Sender: TObject);
+begin
+FSGenerateurEtats.TableauTypeFormule.Visible:=true;
+ListeTypeFormule(FSGenerateurEtats.TableauTypeFormule);
+end;
+
+procedure TFSGenerateurEtats.TableauTypeFormuleDblClick(Sender: TObject);
+begin
+FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text:=FSGenerateurEtats.TableauTypeFormule.Cells[2,FSGenerateurEtats.TableauTypeFormule.Row];
+FSGenerateurEtats.EditDesignationFormuleAfficher.Text:=FSGenerateurEtats.TableauTypeFormule.Cells[3,FSGenerateurEtats.TableauTypeFormule.Row];
+FSGenerateurEtats.TableauTypeFormule.Visible:=false;
+
+ProcAfficheEtat;
+ProcAfficheRubriqueEtat(FSGenerateurEtats.TableauRubriqueEtat,strtointeger(FSGenerateurEtats.TableauListeEtats.Cells[1,FSGenerateurEtats.TableauListeEtats.Row]),FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text);
+end;
+
+procedure TFSGenerateurEtats.FormShow(Sender: TObject);
+begin
+     FSGenerateurEtats.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Générateur d''Etats';
+     FSGenerateurEtats.AfficheOperationRubriqueEtat.Width:=0;
+
+     if(FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text='')then
+     begin
+          OpenFParc(RParc);
+          ChTypeFormule:=RParc.Parcours+'\'+Exercice+'FTypeFormule';
+          assignfile(FTypeFormule,ChTypeFormule);
+          if FileExists(ChTypeFormule)then
+          Reset(FTypeFormule)
+          else Rewrite(FTypeFormule);
+          seek(FTypeFormule,0);
+          if not eof(FTypeFormule)then
+          begin
+              Read(FTypeFormule,RTypeFormule);
+              FSGenerateurEtats.EditCodeTypeFormuleAfficher.Text:=RTypeFormule.CodeTypeFormule;
+              FSGenerateurEtats.EditDesignationFormuleAfficher.Text:=RTypeFormule.DesignationTypeFormule;
+          end;
+          CloseFile(FTypeFormule);
+     end;
+end;
+
+procedure TFSGenerateurEtats.TableauRubriqueEtatContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSGenerateurEtats.AfficheOperationRubriqueEtat.Width:=281;
+FSGenerateurEtats.AfficheOperationRubriqueEtat.Caption:='';
+end;
+
+procedure TFSGenerateurEtats.BitBtn11Click(Sender: TObject);
+begin
+FSGenerateurEtats.AfficheOperationRubriqueEtat.Width:=0;
+FSGenerateurEtats.AfficheOperationRubriqueEtat.Caption:='Trie';
+end;
+
+procedure TFSGenerateurEtats.TableauRubriqueEtatDblClick(Sender: TObject);
+var R:integer;
+begin
+
+if(FSGenerateurEtats.AfficheOperationRubriqueEtat.Caption='Trie')then
+begin
+     FSGenerateurEtats.AfficheOperationRubriqueEtat.Caption:='';
+     TrierTableauARowSpecial(FSGenerateurEtats.TableauRubriqueEtat,1,FSGenerateurEtats.TableauRubriqueEtat.RowCount-1,0,inttostr(FSGenerateurEtats.TableauRubriqueEtat.Col),'','+');
+     for R:=1 to FSGenerateurEtats.TableauRubriqueEtat.RowCount-1 do
+     begin
+          FSGenerateurEtats.TableauRubriqueEtat.Cells[4,R]:=inttostr(R);
+     end;
+end;
+
+end;
+
+procedure TFSGenerateurEtats.RBAttestationSalaireClick(Sender: TObject);
+begin
+FSGenerateurEtats.EditNomEtat.Text:='ImpATSalaire';
+end;
+
+procedure TFSGenerateurEtats.UpDown1Click(Sender: TObject;
+  Button: TUDBtnType);
+begin
+ListePlanComptable(FSGenerateurEtats.TableauPlanComptable,strtointeger(FSGenerateurEtats.EditOrdreCompteComptable.Text),'','','PlanComptable');
+end;
+
+end.

@@ -1,0 +1,3278 @@
+unit UnitFSListePrelevement;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, ExtCtrls, StdCtrls, Buttons, Mask, ComCtrls;
+
+type
+  TFSListePrelevement = class(TForm)
+    TableauListePrelevement: TStringGrid;
+    Panel1: TPanel;
+    LabelTypeAffichage: TLabel;
+    TypeAffichagePeriode: TLabel;
+    AfficheOperationPrelevement: TPanel;
+    BitOperationPrelevement: TBitBtn;
+    EditNumPrelevement: TEdit;
+    EditNumEquipe: TEdit;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Bevel1: TBevel;
+    Bevel2: TBevel;
+    BitBtn1: TBitBtn;
+    TableauEquipe: TStringGrid;
+    EditDesignationEquipe: TEdit;
+    EditDatePrelevement: TDateTimePicker;
+    EditHeurePrelevement: TDateTimePicker;
+    AfficheAuthentification: TPanel;
+    TableauAuthentification: TStringGrid;
+    Bevel3: TBevel;
+    BitBtn2: TBitBtn;
+    BitAnnulerCorrectionAutomatique: TBitBtn;
+    Bevel4: TBevel;
+    AfficheRapport: TPanel;
+    AfficheOptionPrelevement: TPanel;
+    BitBtn4: TBitBtn;
+    Panel2: TPanel;
+    Bevel7: TBevel;
+    RBAfficherEcartSuperieur: TCheckBox;
+    EditSoldeMinimum: TEdit;
+    EditSigleDevise: TEdit;
+    Label8: TLabel;
+    EditDesignationDevise: TEdit;
+    BitCorrectionAutomatique: TBitBtn;
+    Bevel8: TBevel;
+    EditDateDebutPrelevement: TDateTimePicker;
+    EditDateFinPrelevement: TDateTimePicker;
+    Label7: TLabel;
+    Label9: TLabel;
+    RBAfficheSoldeAnterieur: TCheckBox;
+    BitBtn20: TBitBtn;
+    Bevel32: TBevel;
+    RadioGroup5: TRadioGroup;
+    StaticText2: TStaticText;
+    RBOrientationPapierPrelevement: TComboBox;
+    RBAjustementPrelevement: TCheckBox;
+    MemoTitre: TMemo;
+    Panel3: TPanel;
+    AfficheControleImportePrelevement: TPanel;
+    Panel4: TPanel;
+    BitBtn6: TBitBtn;
+    Bevel9: TBevel;
+    Bevel10: TBevel;
+    Bevel11: TBevel;
+    BitValiderImportePrelevement: TBitBtn;
+    EditMatriculeEffectif: TEdit;
+    EditEffectifEquipe: TEdit;
+    TableauEffectifEquipe: TStringGrid;
+    BitBtn7: TBitBtn;
+    Label10: TLabel;
+    Bevel12: TBevel;
+    EditCodeAutorisationControle: TEdit;
+    RBTableauVolatile: TCheckBox;
+    Bevel6: TBevel;
+    Label1: TLabel;
+    EditTypeAffichge: TComboBox;
+    Bevel5: TBevel;
+    Panel5: TPanel;
+    Bevel13: TBevel;
+    BitBtn8: TBitBtn;
+    BitControleAnomalies: TBitBtn;
+    Bevel14: TBevel;
+    Bevel15: TBevel;
+    EditMoisListePrelevement: TComboBox;
+    EditMatricule: TEdit;
+    Label11: TLabel;
+    RBUtiliserPositionArchive: TCheckBox;
+    RBControleAnomalieSelect: TCheckBox;
+    AffichePatienterSVP: TPanel;
+    TimerControleImportePrelevement: TTimer;
+    TimerControleAnomalie: TTimer;
+    TimerEnregistrerImpostation: TTimer;
+    BitBtn10: TBitBtn;
+    Panel6: TPanel;
+    RBRubriqueTrie: TCheckBox;
+    EditRubriqueTrie: TEdit;
+    EditTypeDataTrie: TEdit;
+    TypeTrie: TRadioGroup;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    Label6: TLabel;
+    RBAbregerTitreRubrique: TCheckBox;
+    RBControleAnomalieUnParUn: TCheckBox;
+    TimerControleAnomalieTableauAffiche: TTimer;
+    RBControleTableauAffiche: TCheckBox;
+    Panel7: TPanel;
+    ProgressPatienter: TProgressBar;
+    RBEtatArchive: TCheckBox;
+    EditExercicePrelevement: TComboBox;
+    Label12: TLabel;
+    TimerControleSystimatique: TTimer;
+    RBSelectNext: TCheckBox;
+    RBExecutionAutomatique: TCheckBox;
+    AfficheOperationListePrelevement: TPanel;
+    BitBtn3: TBitBtn;
+    BitValiderOperationListePrelevement: TBitBtn;
+    Bevel16: TBevel;
+    RBOKSupprissionManuel: TCheckBox;
+    RBSuspendreControleAutomatique: TCheckBox;
+    RBSuspendreListePrelevementMatricule: TCheckBox;
+    RBSelectLastTableau: TCheckBox;
+    BitBtn5: TBitBtn;
+    EditTypeAnalyse: TEdit;
+    RBProcListeMouvementActive: TCheckBox;
+    RBSuspendre: TCheckBox;
+    procedure TableauListePrelevementKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure TableauListePrelevementDblClick(Sender: TObject);
+    procedure TableauListePrelevementKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure TableauListePrelevementClick(Sender: TObject);
+    procedure BitOperationPrelevementClick(Sender: TObject);
+    procedure EditNumEquipeEnter(Sender: TObject);
+    procedure TableauEquipeDblClick(Sender: TObject);
+    procedure TableauEquipeExit(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitAnnulerCorrectionAutomatiqueClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure RBTableauVolatileClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure RBAfficherEcartSuperieurClick(Sender: TObject);
+    procedure EditSoldeMinimumEnter(Sender: TObject);
+    procedure BitCorrectionAutomatiqueClick(Sender: TObject);
+    procedure EditDateDebutPrelevementChange(Sender: TObject);
+    procedure RBAfficheSoldeAnterieurClick(Sender: TObject);
+    procedure BitBtn20Click(Sender: TObject);
+    procedure AfficheControleImportePrelevementClick(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitValiderImportePrelevementClick(Sender: TObject);
+    procedure BitBtn8Click(Sender: TObject);
+    procedure EditEffectifEquipeEnter(Sender: TObject);
+    procedure TableauEffectifEquipeDblClick(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure BitControleAnomaliesClick(Sender: TObject);
+    procedure EditMoisListePrelevementKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditMoisListePrelevementSelect(Sender: TObject);
+    procedure TimerControleImportePrelevementTimer(Sender: TObject);
+    procedure TimerControleAnomalieTimer(Sender: TObject);
+    procedure TimerEnregistrerImpostationTimer(Sender: TObject);
+    procedure BitBtn10Click(Sender: TObject);
+    procedure TableauListePrelevementContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure TableauAuthentificationContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RadioButton1Click(Sender: TObject);
+    procedure RadioButton2Click(Sender: TObject);
+    procedure RBAbregerTitreRubriqueClick(Sender: TObject);
+    procedure TimerControleAnomalieTableauAfficheTimer(Sender: TObject);
+    procedure EditTypeAffichgeChange(Sender: TObject);
+    procedure EditExercicePrelevementSelect(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure TimerControleSystimatiqueTimer(Sender: TObject);
+    procedure RBExecutionAutomatiqueClick(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitValiderOperationListePrelevementClick(Sender: TObject);
+    procedure AffichePatienterSVPClick(Sender: TObject);
+    procedure TableauListePrelevementMouseDown(Sender: TObject;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure TableauListePrelevementDrawCell(Sender: TObject; ACol,
+      ARow: Integer; Rect: TRect; State: TGridDrawState);
+    procedure TableauAuthentificationDrawCell(Sender: TObject; ACol,
+      ARow: Integer; Rect: TRect; State: TGridDrawState);
+    procedure TableauEquipeDrawCell(Sender: TObject; ACol, ARow: Integer;
+      Rect: TRect; State: TGridDrawState);
+    procedure TableauEffectifEquipeDrawCell(Sender: TObject; ACol,
+      ARow: Integer; Rect: TRect; State: TGridDrawState);
+    procedure EditMoisListePrelevementDropDown(Sender: TObject);
+    procedure RBSuspendreListePrelevementMatriculeClick(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSListePrelevement: TFSListePrelevement;
+
+Procedure ListePrelevement(TableauListePrelevement:TStringGrid; DateDubut,DateFin,Matricule,NumPrelevementSelect,MatriculeSelect:string; AbregerTitreRubrique:boolean);
+Procedure ListePrelevementTypeAffichage(TableauListePrelevement:TStringGrid; DateDubut,DateFin,Matricule,NumPrelevementSelect,MatriculeSelect,TypeAffichage:string; AbregerTitreRubrique:boolean);
+Procedure ListePrelevementMatricule(TableauListePrelevement:TStringGrid; DateDubut,DateFin:string);
+Procedure SelectRowListePrelevement(TableauListePrelevement:TStringGrid; NumPrelevement,Matricule:string; ReafficheDatePrelevement:boolean);
+
+implementation
+
+Uses UnitInitialisation, UnitFSGenerateurBase, UnitFSPrelevement, UnitFSNowPrelevement,
+     UnitFSMenuPrincipal, UnitFSOperationPrelevement, UnitSuppression, UnitFSParametresAvances,
+  UnitFSMoyenTransport;
+
+var
+   RParc:RInstalle;
+   FParc:FInstalle;
+   ParcInstalle:string100;
+
+   RRegistre:REnregistrement;
+   FRegistre:FEnregistrement;
+   ChEnregistrement:string250;
+
+   TUtilisateur:TUtilisateurs;
+   RUtilisateur:RUtilisateurs;
+   FUtilisateur:FUtilisateurs;
+   ChUtilisateur:string250;
+
+   TPosteMenu:TPosteMenus;
+   RPosteMenu:RPosteMenus;
+   FPosteMenu:FPosteMenus;
+   ChPosteMenu:string250;
+
+   TAccesPrivilegie:TAccesPrivilegies;
+   RAccesPrivilegie:RAccesPrivilegies;
+   FAccesPrivilegie:FAccesPrivilegies;
+   ChAccesPrivilegie:string250;
+
+   TPrelevement:TPrelevements;
+   RPrelevement:RPrelevements;
+   FPrelevement:FPrelevements;
+   ChPrelevement:string250;
+
+   TCompteur:TCompteurs;
+   RCompteur:RCompteurs;
+   FCompteur:FCompteurs;
+   ChCompteur:string250;
+
+   TPrelevementCompteur,TArchivePrelevementCompteur:TRegistrePrelevementCompteurs;
+   RPrelevementCompteur,RArchivePrelevementCompteur:RRegistrePrelevementCompteurs;
+   FPrelevementCompteur,FArchivePrelevementCompteur:FRegistrePrelevementCompteurs;
+   ChPrelevementCompteur,ChArchivePrelevementCompteur:string250;
+
+   TEquipe:TEquipes;
+   REquipe:REquipes;
+   FEquipe:FEquipes;
+   ChEquipe:string250;
+
+   TEffectifEquipe:TEffectifEquipes;
+   REffectifEquipe:REffectifEquipes;
+   FEffectifEquipe:FEffectifEquipes;
+   ChEffectifEquipe:string250;
+
+   TTypeUniteFonds:TTypeUniteFondss;
+   RTypeUniteFonds:RTypeUniteFondss;
+   FTypeUniteFonds:FTypeUniteFondss;
+   ChTypeUniteFonds:string250;
+
+   TUniteFonds:TUniteFondss;
+   RUniteFonds:RUniteFondss;
+   FUniteFonds:FUniteFondss;
+   ChUniteFonds:string250;
+
+   TPrelevementUniteFonds,TArchivePrelevementUniteFonds:TRegistrePrelevementUniteFondss;
+   RPrelevementUniteFonds,RArchivePrelevementUniteFonds:RRegistrePrelevementUniteFondss;
+   FPrelevementUniteFonds,FArchivePrelevementUniteFonds:FRegistrePrelevementUniteFondss;
+   ChPrelevementUniteFonds,ChArchivePrelevementUniteFonds:string250;
+
+   TAvis:TAviss;
+   RAvis:RAviss;
+   FAvis:FAviss;
+   ChAvis:string250;
+
+   TTypeAvis:TTypeAviss;
+   RTypeAvis:RTypeAviss;
+   FTypeAvis:FTypeAviss;
+   ChTypeAvis:string250;
+
+   TStock,TStockArticle:TStocks;
+   RStock,RStockArticle:RStocks;
+   FStock,FStockArticle:FStocks;
+   ChStock,ChStockArticle:string250;
+
+{$R *.dfm}
+
+Procedure ListePrelevement(TableauListePrelevement:TStringGrid; DateDubut,DateFin,Matricule,NumPrelevementSelect,MatriculeSelect:string; AbregerTitreRubrique:boolean);
+var i,R,C,RowSelect,IndiceDebutControleTrieRow,IndiceFinControleTrieRow:integer;  DateAnterieur:string[10];  OKAffichePrelevement,OKPrelevementSelect:boolean;  NotCol,SignePositive,TypeProcesPrelevement,FichierConcernePrelevement,AdressePrelevement:string;
+    TotalMontantPrelevement,TotalFondRoulement,TotalUniteFonds,TotalSoldePrelevement,
+    MontantPrelevementAnterieur,MontantFondRoulementAnterieur,MontantUniteFondsAnterieur,SoldeAnterieur:real;
+    RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3:RRegistrePositionArchives;
+begin
+     FSListePrelevement.RBProcListeMouvementActive.Checked:=true;
+
+     TableauListePrelevement.RowCount:=2;
+     TableauListePrelevement.Rows[1].Text:='';
+
+     TableauListePrelevement.ColCount:=32;
+
+     if(AbregerTitreRubrique=true)then
+     begin
+           TableauListePrelevement.Cols[1].Text:='Sél.';
+           TableauListePrelevement.Cols[2].Text:='Num';
+           TableauListePrelevement.Cols[3].Text:='C.U';
+           TableauListePrelevement.Cols[4].Text:='Eq.';
+           TableauListePrelevement.Cols[5].Text:='Mat.';
+           TableauListePrelevement.Cols[6].Text:='Eff.';
+           TableauListePrelevement.Cols[7].Text:='Date';
+           TableauListePrelevement.Cols[8].Text:='Heure';
+           TableauListePrelevement.Cols[9].Text:='Arch.';
+           TableauListePrelevement.Cols[10].Text:='Mt.P';
+           TableauListePrelevement.Cols[11].Text:='Mt.F.R';
+           TableauListePrelevement.Cols[12].Text:='Mt.U.F';
+           TableauListePrelevement.Cols[13].Text:='Solde';
+
+           TableauListePrelevement.Cols[14].Text:='P°D1';
+           TableauListePrelevement.Cols[15].Text:='P°F1';
+
+           TableauListePrelevement.Cols[16].Text:='P°D2';
+           TableauListePrelevement.Cols[17].Text:='P°F2';
+
+           TableauListePrelevement.Cols[18].Text:='P°D3';
+           TableauListePrelevement.Cols[19].Text:='P°F3';
+
+           TableauListePrelevement.Cols[20].Text:='P°D4';
+           TableauListePrelevement.Cols[21].Text:='P°F4';
+
+           TableauListePrelevement.Cols[22].Text:='P°D5';
+           TableauListePrelevement.Cols[23].Text:='P°F5';
+
+           TableauListePrelevement.Cols[24].Text:='P°D6';
+           TableauListePrelevement.Cols[25].Text:='P°F6';
+
+           TableauListePrelevement.Cols[26].Text:='P°D7';
+           TableauListePrelevement.Cols[27].Text:='P°F7';
+
+           TableauListePrelevement.Cols[28].Text:='P°D8';
+           TableauListePrelevement.Cols[29].Text:='P°F8';
+
+           TableauListePrelevement.Cols[30].Text:='P°D9';
+           TableauListePrelevement.Cols[31].Text:='P°F9';
+     end
+     else
+     begin
+           TableauListePrelevement.Cols[1].Text:='Sélect.';
+           TableauListePrelevement.Cols[2].Text:='Num';
+           TableauListePrelevement.Cols[3].Text:='C.U';
+           TableauListePrelevement.Cols[4].Text:='Equipe';
+           TableauListePrelevement.Cols[5].Text:='Matricule';
+           TableauListePrelevement.Cols[6].Text:='Efféctif';
+           TableauListePrelevement.Cols[7].Text:='Date';
+           TableauListePrelevement.Cols[8].Text:='Heure';
+           TableauListePrelevement.Cols[9].Text:='Archivage';
+           TableauListePrelevement.Cols[10].Text:='Mt.Prélèvement';
+           TableauListePrelevement.Cols[11].Text:='Mt.F.Roulement';
+           TableauListePrelevement.Cols[12].Text:='Mt.Unités Fonds';
+           TableauListePrelevement.Cols[13].Text:='Solde';
+
+           TableauListePrelevement.Cols[14].Text:='P° Prélèvement Compteur début';
+           TableauListePrelevement.Cols[15].Text:='P° Prélèvement Compteur Fin';
+
+           TableauListePrelevement.Cols[16].Text:='P° Prelevement Unité Fonds Début';
+           TableauListePrelevement.Cols[17].Text:='P° Prelevement Unité Fonds Fin';
+
+           TableauListePrelevement.Cols[18].Text:='P° Prelevement Efféctif Equipe Début';
+           TableauListePrelevement.Cols[19].Text:='P° Prelevement Efféctif Equipe Fin';
+
+           TableauListePrelevement.Cols[20].Text:='P° Prelevement Affectation Efféctif Equipe Début';
+           TableauListePrelevement.Cols[21].Text:='P° Prelevement Affectation Efféctif Equipe Fin';
+
+           TableauListePrelevement.Cols[22].Text:='P° Prelevement DetailArticlePrelevementUniteFonds Début';
+           TableauListePrelevement.Cols[23].Text:='P° Prelevement DetailArticlePrelevementUniteFonds Fin';
+
+           TableauListePrelevement.Cols[24].Text:='P° Prelevement MoyenTransportPrelevement Début';
+           TableauListePrelevement.Cols[25].Text:='P° Prelevement MoyenTransportPrelevement Fin';
+
+           TableauListePrelevement.Cols[26].Text:='P° Prelevement Etat Stock Prelevement Début';
+           TableauListePrelevement.Cols[27].Text:='P° Prelevement Etat Stock Prelevement Fin';
+
+           TableauListePrelevement.Cols[28].Text:='P° Prelevement Autre2 Début';
+           TableauListePrelevement.Cols[29].Text:='P° Prelevement Autre2 Fin';
+
+           TableauListePrelevement.Cols[30].Text:='P° Prelevement Autre3 Début';
+           TableauListePrelevement.Cols[31].Text:='P° Prelevement Autre3 Fin';
+     end;
+
+     R:=0;
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+     begin
+          R:=R+1;
+          TableauListePrelevement.Rows[R].Text:='';
+          TableauListePrelevement.Cells[1,R]:='';
+          TableauListePrelevement.Cells[2,R]:='';
+          TableauListePrelevement.Cells[3,R]:='';
+          TableauListePrelevement.Cells[4,R]:='';
+          TableauListePrelevement.Cells[5,R]:='';
+          TableauListePrelevement.Cells[6,R]:='Solde au:';
+          TableauListePrelevement.Cells[7,R]:=datetostr(stringtodate(DateDubut,'Erreure date DateDubut: '+DateDubut)-1);
+          TableauListePrelevement.Cells[8,R]:='';
+          TableauListePrelevement.Cells[9,R]:=booleantostr(true);
+          TableauListePrelevement.Cells[10,R]:='';
+          TableauListePrelevement.Cells[11,R]:='';
+          TableauListePrelevement.Cells[12,R]:='';
+          TableauListePrelevement.Cells[13,R]:='';
+          TableauListePrelevement.Cells[14,R]:='';
+          TableauListePrelevement.Cells[15,R]:='';
+          TableauListePrelevement.Cells[16,R]:='';
+          TableauListePrelevement.Cells[17,R]:='';
+          TableauListePrelevement.Cells[18,R]:='';
+          TableauListePrelevement.Cells[19,R]:='';
+          TableauListePrelevement.Cells[20,R]:='';
+          TableauListePrelevement.Cells[21,R]:='';
+          TableauListePrelevement.Cells[22,R]:='';
+          TableauListePrelevement.Cells[23,R]:='';
+          TableauListePrelevement.Cells[24,R]:='';
+          TableauListePrelevement.Cells[25,R]:='';
+          TableauListePrelevement.Cells[26,R]:='';
+          TableauListePrelevement.Cells[27,R]:='';
+          TableauListePrelevement.Cells[28,R]:='';
+          TableauListePrelevement.Cells[29,R]:='';
+          TableauListePrelevement.Cells[30,R]:='';
+          TableauListePrelevement.Cells[31,R]:='';
+
+     end;
+
+     TotalMontantPrelevement:=0;
+     TotalFondRoulement:=0;
+     TotalUniteFonds:=0;
+     TotalSoldePrelevement:=0;
+
+     MontantPrelevementAnterieur:=0;
+     MontantFondRoulementAnterieur:=0;
+     MontantUniteFondsAnterieur:=0;
+     SoldeAnterieur:=0;
+
+     TypeProcesPrelevement:='Business';
+     FichierConcernePrelevement:='FPrelevement';
+     AdressePrelevement:='';
+     if not(FunctionAdresseProces(TypeProcesPrelevement,FichierConcernePrelevement,'',AdressePrelevement,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcernePrelevement+' recherché !');
+     end;
+
+     ChPrelevement:=AdressePrelevement;
+     assignfile(FPrelevement,ChPrelevement);
+     try
+     if FileExists(ChPrelevement)then
+     Reset(FPrelevement)
+     else Rewrite(FPrelevement);
+
+     FSListePrelevement.AffichePatienterSVP.Caption:='Patienter SVP !';
+     FSListePrelevement.ProgressPatienter.Position:=0;
+     FSListePrelevement.AffichePatienterSVP.Visible:=true;
+     FSListePrelevement.ProgressPatienter.Max:=FileSize(FPrelevement);
+     FSListePrelevement.RBSuspendreListePrelevementMatricule.Checked:=false;
+
+     Seek(FPrelevement,0);
+     RowSelect:=0;
+     i:=0;
+     while not eof(FPrelevement)do
+     begin
+          read(FPrelevement,RPrelevement); Application.ProcessMessages;  if(FSListePrelevement.RBSuspendre.Checked=true)then begin FSListePrelevement.RBSuspendre.Checked:=false; FSListePrelevement.RBProcListeMouvementActive.Checked:=false; FSListePrelevement.AffichePatienterSVP.Caption:='Affichage suspendu !'; FSListePrelevement.ProgressPatienter.Position:=0; Exit; end;
+
+          FSListePrelevement.ProgressPatienter.StepIt;
+
+          if datecorrecte(RPrelevement.DatePrelevement)
+          then OKAffichePrelevement:=true
+          else OKAffichePrelevement:=false;
+
+          if(Matricule<>'')then
+          begin
+               if(RPrelevement.Matricule=Matricule)
+               then OKAffichePrelevement:=true
+               else OKAffichePrelevement:=false;
+          end;
+
+          if(OKAffichePrelevement=true)then
+          begin
+                if(stringtodate(RPrelevement.DatePrelevement,'Erreure date RPrelevement.DatePrelevement: '+RPrelevement.DatePrelevement)<stringtodate(DateDubut,'Erreure date DateDubut: '+DateDubut))then
+                begin
+                     MontantPrelevementAnterieur:=MontantPrelevementAnterieur+RPrelevement.MontantPrelevement;
+                     MontantFondRoulementAnterieur:=MontantFondRoulementAnterieur+RPrelevement.MontantFondRoulement;
+                     MontantUniteFondsAnterieur:=MontantUniteFondsAnterieur+RPrelevement.MontantUnitesFonds;
+                     SoldeAnterieur:=SoldeAnterieur+RPrelevement.SoldePrelevement;
+
+                     TotalMontantPrelevement:=TotalMontantPrelevement+RPrelevement.MontantPrelevement;
+                     TotalFondRoulement:=TotalFondRoulement+RPrelevement.MontantFondRoulement;
+                     TotalUniteFonds:=TotalUniteFonds+RPrelevement.MontantUnitesFonds;
+                     TotalSoldePrelevement:=TotalSoldePrelevement+RPrelevement.SoldePrelevement;
+                end;
+
+                if(stringtodate(RPrelevement.DatePrelevement,'Erreure date RPrelevement.DatePrelevement: '+RPrelevement.DatePrelevement+' N°: '+inttostr(RPrelevement.NumPrelevement)+'/'+RPrelevement.Matricule)>=stringtodate(DateDubut,'Erreure date DateDubut: '+DateDubut))and(stringtodate(RPrelevement.DatePrelevement,'Erreure date RPrelevement.DatePrelevement: '+RPrelevement.DatePrelevement+' N°: '+inttostr(RPrelevement.NumPrelevement)+'/'+RPrelevement.Matricule)<=stringtodate(DateFin,'Erreure date DateFin: '+DateFin))then
+                begin
+                     R:=R+1;
+                     TableauListePrelevement.Rows[R].Text:=inttostr(i);
+                     TableauListePrelevement.Cells[1,R]:='';
+                     TableauListePrelevement.Cells[2,R]:=inttostr(RPrelevement.NumPrelevement);
+                     TableauListePrelevement.Cells[3,R]:=RPrelevement.CodeUtilisateur;
+                     TableauListePrelevement.Cells[4,R]:=inttostr(RPrelevement.NumEquipe);
+                     TableauListePrelevement.Cells[5,R]:=RPrelevement.Matricule;
+                     RPersonnel:=CherchePersonnel(RPrelevement.Matricule);
+                     TableauListePrelevement.Cells[6,R]:=RPersonnel.Nom+' '+RPersonnel.Prenom;
+                     TableauListePrelevement.Cells[7,R]:=RPrelevement.DatePrelevement;
+                     TableauListePrelevement.Cells[8,R]:=RPrelevement.HeurePrelevement;
+                     TableauListePrelevement.Cells[9,R]:=booleantostr(RPrelevement.Archiver);
+                     TableauListePrelevement.Cells[10,R]:=Vergule(floattostr(RPrelevement.MontantPrelevement),'2','C','');
+                     TableauListePrelevement.Cells[11,R]:=Vergule(floattostr(RPrelevement.MontantFondRoulement),'2','C','');
+                     TableauListePrelevement.Cells[12,R]:=Vergule(floattostr(RPrelevement.MontantUnitesFonds),'2','C','');
+                     if(RPrelevement.SoldePrelevement>0)then SignePositive:='+'else SignePositive:='';
+                     TableauListePrelevement.Cells[13,R]:=SignePositive+Vergule(floattostr(RPrelevement.SoldePrelevement),'2','C','');
+
+                     TableauListePrelevement.Cells[14,R]:=inttostr(RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[15,R]:=inttostr(RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[16,R]:=inttostr(RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[17,R]:=inttostr(RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[18,R]:=inttostr(RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[19,R]:=inttostr(RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[20,R]:=inttostr(RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[21,R]:=inttostr(RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[22,R]:=inttostr(RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[23,R]:=inttostr(RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[24,R]:=inttostr(RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[25,R]:=inttostr(RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[26,R]:=inttostr(RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[27,R]:=inttostr(RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[28,R]:=inttostr(RPrelevement.RegistrePositionAutre2.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[29,R]:=inttostr(RPrelevement.RegistrePositionAutre2.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[30,R]:=inttostr(RPrelevement.RegistrePositionAutre3.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[31,R]:=inttostr(RPrelevement.RegistrePositionAutre3.PositionArchiveEnd);
+
+                     TotalMontantPrelevement:=TotalMontantPrelevement+RPrelevement.MontantPrelevement;
+                     TotalFondRoulement:=TotalFondRoulement+RPrelevement.MontantFondRoulement;
+                     TotalUniteFonds:=TotalUniteFonds+RPrelevement.MontantUnitesFonds;
+                     TotalSoldePrelevement:=TotalSoldePrelevement+RPrelevement.SoldePrelevement;
+                end;
+          end;
+     i:=i+1;
+     end;
+     finally
+     CloseFile(FPrelevement);
+     end;
+
+     if(R>0)then TableauListePrelevement.RowCount:=R+1
+            else TableauListePrelevement.RowCount:=2;
+
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+     begin
+          TableauListePrelevement.Cells[10,1]:=Vergule(floattostr(MontantPrelevementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[11,1]:=Vergule(floattostr(MontantFondRoulementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[12,1]:=Vergule(floattostr(MontantUniteFondsAnterieur),'2','C','');
+          if(SoldeAnterieur>0)then SignePositive:='+'else SignePositive:='';
+          TableauListePrelevement.Cells[13,1]:=SignePositive+Vergule(floattostr(SoldeAnterieur),'2','C','');
+
+          TableauListePrelevement.RowCount:=TableauListePrelevement.RowCount+2;
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-2].Text:='';
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-1].Text:='';
+          TableauListePrelevement.Cells[9,TableauListePrelevement.RowCount-1]:='Total:';
+          TableauListePrelevement.Cells[10,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantPrelevement),'2','C','');
+          TableauListePrelevement.Cells[11,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalFondRoulement),'2','C','');
+          TableauListePrelevement.Cells[12,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalUniteFonds),'2','C','');
+          if(TotalSoldePrelevement>0)then SignePositive:='+'else SignePositive:='';
+          TableauListePrelevement.Cells[13,TableauListePrelevement.RowCount-1]:=SignePositive+Vergule(floattostr(TotalSoldePrelevement),'2','C','');
+     end
+     else
+     begin
+          TableauListePrelevement.RowCount:=TableauListePrelevement.RowCount+2;
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-2].Text:='';
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-1].Text:='';
+          TableauListePrelevement.Cells[9,TableauListePrelevement.RowCount-1]:='Total:';
+          TableauListePrelevement.Cells[10,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantPrelevement-MontantPrelevementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[11,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalFondRoulement-MontantFondRoulementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[12,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalUniteFonds-MontantUniteFondsAnterieur),'2','C','');
+          if(TotalSoldePrelevement-SoldeAnterieur>0)then SignePositive:='+'else SignePositive:='';
+          TableauListePrelevement.Cells[13,TableauListePrelevement.RowCount-1]:=SignePositive+Vergule(floattostr(TotalSoldePrelevement-SoldeAnterieur),'2','C','');
+     end;
+
+     NotCol:='3;4;14-31';
+     for C:=1 to TableauListePrelevement.ColCount-1 do if existenumintexte(inttostr(C),NotCol) then TableauListePrelevement.ColWidths[C]:=0;
+     AjusterColWidth(TableauListePrelevement,'',NotCol);
+
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+     begin
+          IndiceDebutControleTrieRow:=2;
+          IndiceFinControleTrieRow:=FSListePrelevement.TableauListePrelevement.RowCount-3;
+     end
+     else
+     begin
+          IndiceDebutControleTrieRow:=1;
+          IndiceFinControleTrieRow:=FSListePrelevement.TableauListePrelevement.RowCount-3;
+     end;
+
+    // TrierTableauARowSpecial(TableauListePrelevement,IndiceDebutControleTrieRow,IndiceFinControleTrieRow,1,FSListePrelevement.EditRubriqueTrie.Text,FSListePrelevement.EditTypeDataTrie.Text,FSListePrelevement.TypeTrie.Caption);
+
+     if(RowSelect=0)then RowSelect:=R;
+     
+     if(NumPrelevementSelect<>'')and(MatriculeSelect<>'')then
+     begin
+          R:=1;
+          OKPrelevementSelect:=false;
+          while(R<=TableauListePrelevement.RowCount-1)and(OKPrelevementSelect=false)do
+          begin
+               Application.ProcessMessages;   if(FSListePrelevement.RBSuspendre.Checked=true)then begin FSListePrelevement.RBSuspendre.Checked:=false; FSListePrelevement.RBProcListeMouvementActive.Checked:=false; Exit; end;
+               
+               if(TableauListePrelevement.Cells[2,R]=NumPrelevementSelect)
+               and(TableauListePrelevement.Cells[5,R]=MatriculeSelect)then
+               begin
+                    RowSelect:=R;
+                    OKPrelevementSelect:=true;
+               end;
+          R:=R+1;
+          end;
+     end;
+
+    TableauListePrelevement.Row:=MaxInt(1,RowSelect);
+    FSListePrelevement.EditTypeAffichge.Text:='Par Prélèvement';
+
+    FSListePrelevement.RBProcListeMouvementActive.Checked:=false;
+
+    FSListePrelevement.AffichePatienterSVP.Visible:=false;
+end;
+
+Procedure ListePrelevementTypeAffichage(TableauListePrelevement:TStringGrid; DateDubut,DateFin,Matricule,NumPrelevementSelect,MatriculeSelect,TypeAffichage:string; AbregerTitreRubrique:boolean);
+var R,l,N,C,RowSelect,IndiceDebutControleTrieRow,IndiceFinControleTrieRow:integer;  DateAnterieur:string[10];  OKAffichePrelevement,OKPrelevementSelect,OKExistePrelevement:boolean;  NotCol,SignePositive,TypeProcesPrelevement,FichierConcernePrelevement,AdressePrelevement:string;
+    TotalMontantPrelevement,TotalFondRoulement,TotalUniteFonds,TotalSoldePrelevement,
+    MontantPrelevementAnterieur,MontantFondRoulementAnterieur,MontantUniteFondsAnterieur,SoldeAnterieur:real;
+    RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3:RRegistrePositionArchives;
+begin
+     TableauListePrelevement.RowCount:=2;
+     TableauListePrelevement.Rows[1].Text:='';
+
+     TableauListePrelevement.ColCount:=32;
+
+     if(AbregerTitreRubrique=true)then
+     begin
+           TableauListePrelevement.Cols[1].Text:='Sél.';
+           TableauListePrelevement.Cols[2].Text:='Num';
+           TableauListePrelevement.Cols[3].Text:='C.U';
+           TableauListePrelevement.Cols[4].Text:='Eq.';
+           TableauListePrelevement.Cols[5].Text:='Mat.';
+           TableauListePrelevement.Cols[6].Text:='Eff.';
+           TableauListePrelevement.Cols[7].Text:='Date';
+           TableauListePrelevement.Cols[8].Text:='Heure';
+           TableauListePrelevement.Cols[9].Text:='Arch.';
+           TableauListePrelevement.Cols[10].Text:='Mt.P';
+           TableauListePrelevement.Cols[11].Text:='Mt.F.R';
+           TableauListePrelevement.Cols[12].Text:='Mt.U.F';
+           TableauListePrelevement.Cols[13].Text:='Solde';
+
+           TableauListePrelevement.Cols[14].Text:='P°D1';
+           TableauListePrelevement.Cols[15].Text:='P°F1';
+
+           TableauListePrelevement.Cols[16].Text:='P°D2';
+           TableauListePrelevement.Cols[17].Text:='P°F2';
+
+           TableauListePrelevement.Cols[18].Text:='P°D3';
+           TableauListePrelevement.Cols[19].Text:='P°F3';
+
+           TableauListePrelevement.Cols[20].Text:='P°D4';
+           TableauListePrelevement.Cols[21].Text:='P°F4';
+
+           TableauListePrelevement.Cols[22].Text:='P°D5';
+           TableauListePrelevement.Cols[23].Text:='P°F5';
+
+           TableauListePrelevement.Cols[24].Text:='P°D6';
+           TableauListePrelevement.Cols[25].Text:='P°F6';
+
+           TableauListePrelevement.Cols[26].Text:='P°D7';
+           TableauListePrelevement.Cols[27].Text:='P°F7';
+
+           TableauListePrelevement.Cols[28].Text:='P°D8';
+           TableauListePrelevement.Cols[29].Text:='P°F8';
+
+           TableauListePrelevement.Cols[30].Text:='P°D9';
+           TableauListePrelevement.Cols[31].Text:='P°F9';
+     end
+     else
+     begin
+           TableauListePrelevement.Cols[1].Text:='Sélect.';
+           TableauListePrelevement.Cols[2].Text:='Num';
+           TableauListePrelevement.Cols[3].Text:='C.U';
+           TableauListePrelevement.Cols[4].Text:='Equipe';
+           TableauListePrelevement.Cols[5].Text:='Matricule';
+           TableauListePrelevement.Cols[6].Text:='Efféctif';
+           TableauListePrelevement.Cols[7].Text:='Date';
+           TableauListePrelevement.Cols[8].Text:='Heure';
+           TableauListePrelevement.Cols[9].Text:='Archivage';
+           TableauListePrelevement.Cols[10].Text:='Mt.Prélèvement';
+           TableauListePrelevement.Cols[11].Text:='Mt.F.Roulement';
+           TableauListePrelevement.Cols[12].Text:='Mt.Unités Fonds';
+           TableauListePrelevement.Cols[13].Text:='Solde';
+
+           TableauListePrelevement.Cols[14].Text:='P° Prélèvement Compteur début';
+           TableauListePrelevement.Cols[15].Text:='P° Prélèvement Compteur Fin';
+
+           TableauListePrelevement.Cols[16].Text:='P° Prelevement Unité Fonds Début';
+           TableauListePrelevement.Cols[17].Text:='P° Prelevement Unité Fonds Fin';
+
+           TableauListePrelevement.Cols[18].Text:='P° Prelevement Efféctif Equipe Début';
+           TableauListePrelevement.Cols[19].Text:='P° Prelevement Efféctif Equipe Fin';
+
+           TableauListePrelevement.Cols[20].Text:='P° Prelevement Affectation Efféctif Equipe Début';
+           TableauListePrelevement.Cols[21].Text:='P° Prelevement Affectation Efféctif Equipe Fin';
+
+           TableauListePrelevement.Cols[22].Text:='P° Prelevement DetailArticlePrelevementUniteFonds Début';
+           TableauListePrelevement.Cols[23].Text:='P° Prelevement DetailArticlePrelevementUniteFonds Fin';
+
+           TableauListePrelevement.Cols[24].Text:='P° Prelevement MoyenTransportPrelevement Début';
+           TableauListePrelevement.Cols[25].Text:='P° Prelevement MoyenTransportPrelevement Fin';
+
+           TableauListePrelevement.Cols[26].Text:='P° Prelevement Etat Stock Prelevement Début';
+           TableauListePrelevement.Cols[27].Text:='P° Prelevement Etat Stock Prelevement Fin';
+
+           TableauListePrelevement.Cols[28].Text:='P° Prelevement Autre2 Début';
+           TableauListePrelevement.Cols[29].Text:='P° Prelevement Autre2 Fin';
+
+           TableauListePrelevement.Cols[30].Text:='P° Prelevement Autre3 Début';
+           TableauListePrelevement.Cols[31].Text:='P° Prelevement Autre3 Fin';
+     end;
+
+     R:=0;
+     N:=1;
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+     begin
+          R:=R+1;
+          N:=2;
+          TableauListePrelevement.Rows[R].Text:=inttostr(R);
+          TableauListePrelevement.Cells[1,R]:='';
+          TableauListePrelevement.Cells[2,R]:='';
+          TableauListePrelevement.Cells[3,R]:='';
+          TableauListePrelevement.Cells[4,R]:='';
+          TableauListePrelevement.Cells[5,R]:='';
+          TableauListePrelevement.Cells[6,R]:='Solde au:';
+          TableauListePrelevement.Cells[7,R]:=datetostr(stringtodate(DateDubut,'Erreure date DateDubut: '+DateDubut)-1);
+          TableauListePrelevement.Cells[8,R]:='';
+          TableauListePrelevement.Cells[9,R]:=booleantostr(true);
+          TableauListePrelevement.Cells[10,R]:='';
+          TableauListePrelevement.Cells[11,R]:='';
+          TableauListePrelevement.Cells[12,R]:='';
+          TableauListePrelevement.Cells[13,R]:='';
+          TableauListePrelevement.Cells[14,R]:='';
+          TableauListePrelevement.Cells[15,R]:='';
+          TableauListePrelevement.Cells[16,R]:='';
+          TableauListePrelevement.Cells[17,R]:='';
+          TableauListePrelevement.Cells[18,R]:='';
+          TableauListePrelevement.Cells[19,R]:='';
+          TableauListePrelevement.Cells[20,R]:='';
+          TableauListePrelevement.Cells[21,R]:='';
+          TableauListePrelevement.Cells[22,R]:='';
+          TableauListePrelevement.Cells[23,R]:='';
+          TableauListePrelevement.Cells[24,R]:='';
+          TableauListePrelevement.Cells[25,R]:='';
+          TableauListePrelevement.Cells[26,R]:='';
+          TableauListePrelevement.Cells[27,R]:='';
+          TableauListePrelevement.Cells[28,R]:='';
+          TableauListePrelevement.Cells[29,R]:='';
+          TableauListePrelevement.Cells[30,R]:='';
+          TableauListePrelevement.Cells[31,R]:='';
+     end;
+
+     TotalMontantPrelevement:=0;
+     TotalFondRoulement:=0;
+     TotalUniteFonds:=0;
+     TotalSoldePrelevement:=0;
+
+     MontantPrelevementAnterieur:=0;
+     MontantFondRoulementAnterieur:=0;
+     MontantUniteFondsAnterieur:=0;
+     SoldeAnterieur:=0;
+
+     TypeProcesPrelevement:='Business';
+     FichierConcernePrelevement:='FPrelevement';
+     AdressePrelevement:='';
+     if not(FunctionAdresseProces(TypeProcesPrelevement,FichierConcernePrelevement,'',AdressePrelevement,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcernePrelevement+' recherché !');
+     end;
+
+     ChPrelevement:=AdressePrelevement;
+     assignfile(FPrelevement,ChPrelevement);
+     if FileExists(ChPrelevement)then
+     Reset(FPrelevement)
+     else Rewrite(FPrelevement);
+     Seek(FPrelevement,0);
+     RowSelect:=0;
+     while not eof(FPrelevement)do
+     begin
+          read(FPrelevement,RPrelevement);  Application.ProcessMessages;  if(FSListePrelevement.RBSuspendre.Checked=true)then Exit;
+
+          OKAffichePrelevement:=true;
+
+          if(Matricule<>'')then
+          begin
+               if(RPrelevement.Matricule=Matricule)
+               then OKAffichePrelevement:=true
+               else OKAffichePrelevement:=false;
+          end;
+
+          OKExistePrelevement:=false;
+          if(OKAffichePrelevement=true)then
+          begin
+               l:=N;
+               while(l<=R)and(OKExistePrelevement=false)do
+               begin
+                    if(TypeAffichage='Par Jour')then
+                    begin
+                         if(RPrelevement.DatePrelevement=TableauListePrelevement.Cells[7,l])
+                         then OKExistePrelevement:=true;
+
+                    end;
+
+                    if(TypeAffichage='Par Equipe')then
+                    begin
+                         if(inttostr(RPrelevement.NumPrelevement)=TableauListePrelevement.Cells[2,l])
+                         and(inttostr(RPrelevement.NumEquipe)=TableauListePrelevement.Cells[4,l])
+                         then OKExistePrelevement:=true;
+                    end;
+
+                    if(OKExistePrelevement=true)then
+                    begin
+                          OKAffichePrelevement:=false;
+                          if(stringtodate(RPrelevement.DatePrelevement,'Erreure date RPrelevement.DatePrelevement: '+RPrelevement.DatePrelevement)<stringtodate(DateDubut,'Erreure date DateDubut: '+DateDubut))then
+                          begin
+                               MontantPrelevementAnterieur:=MontantPrelevementAnterieur+RPrelevement.MontantPrelevement;
+                               MontantFondRoulementAnterieur:=MontantFondRoulementAnterieur+RPrelevement.MontantFondRoulement;
+                               MontantUniteFondsAnterieur:=MontantUniteFondsAnterieur+RPrelevement.MontantUnitesFonds;
+                               SoldeAnterieur:=SoldeAnterieur+RPrelevement.SoldePrelevement;
+
+                               TotalMontantPrelevement:=TotalMontantPrelevement+RPrelevement.MontantPrelevement;
+                               TotalFondRoulement:=TotalFondRoulement+RPrelevement.MontantFondRoulement;
+                               TotalUniteFonds:=TotalUniteFonds+RPrelevement.MontantUnitesFonds;
+                               TotalSoldePrelevement:=TotalSoldePrelevement+RPrelevement.SoldePrelevement;
+                          end;
+
+                          if(stringtodate(RPrelevement.DatePrelevement,'Erreure date RPrelevement.DatePrelevement: '+RPrelevement.DatePrelevement)>=stringtodate(DateDubut,'Erreure date DateDubut: '+DateDubut))and(stringtodate(RPrelevement.DatePrelevement,'Erreure date RPrelevement.DatePrelevement: '+RPrelevement.DatePrelevement)<=stringtodate(DateFin,'Erreure date DateFin: '+DateFin))then
+                          begin
+                               if Not(ExisteNuminTexte(inttostr(RPrelevement.NumPrelevement),TableauListePrelevement.Cells[2,l]))then TableauListePrelevement.Cells[2,l]:=TableauListePrelevement.Cells[2,l]+';'+inttostr(RPrelevement.NumPrelevement);
+                               //TableauListePrelevement.Cells[3,l]:=RPrelevement.CodeUtilisateur;
+                               if Not(ExisteNuminTexte(inttostr(RPrelevement.NumEquipe),TableauListePrelevement.Cells[4,l]))then TableauListePrelevement.Cells[4,l]:=TableauListePrelevement.Cells[4,l]+';'+inttostr(RPrelevement.NumEquipe);
+                               if Not(ExisteNuminTexte(RPrelevement.Matricule,TableauListePrelevement.Cells[5,l]))then
+                               begin
+                                    TableauListePrelevement.Cells[5,l]:=TableauListePrelevement.Cells[5,l]+';'+RPrelevement.Matricule;
+                                    RPersonnel:=CherchePersonnel(RPrelevement.Matricule);
+                                    TableauListePrelevement.Cells[6,l]:=TableauListePrelevement.Cells[6,l]+' / '+RPersonnel.Nom+' '+RPersonnel.Prenom;
+                               end;
+                               //TableauListePrelevement.Cells[7,l]:=RPrelevement.DatePrelevement;
+                               if Not(ExisteNuminTexte(RPrelevement.HeurePrelevement,TableauListePrelevement.Cells[8,l]))then TableauListePrelevement.Cells[8,l]:=TableauListePrelevement.Cells[8,l]+';'+RPrelevement.HeurePrelevement;
+                               //TableauListePrelevement.Cells[9,l]:=booleantostr(RPrelevement.Archiver);
+                               TableauListePrelevement.Cells[10,l]:=Vergule(floattostr(strtoreal(TableauListePrelevement.Cells[10,l])+RPrelevement.MontantPrelevement),'2','C','');
+                               TableauListePrelevement.Cells[11,l]:=Vergule(floattostr(strtoreal(TableauListePrelevement.Cells[11,l])+RPrelevement.MontantFondRoulement),'2','C','');
+                               TableauListePrelevement.Cells[12,l]:=Vergule(floattostr(strtoreal(TableauListePrelevement.Cells[12,l])+RPrelevement.MontantUnitesFonds),'2','C','');
+                               if(strtoreal(TableauListePrelevement.Cells[13,l])+RPrelevement.SoldePrelevement>0)then SignePositive:='+'else SignePositive:='';
+                               TableauListePrelevement.Cells[13,l]:=SignePositive+Vergule(floattostr(strtoreal(TableauListePrelevement.Cells[13,l])+RPrelevement.SoldePrelevement),'2','C','');
+
+                               TableauListePrelevement.Cells[14,l]:=inttostr(MinInt(strtointeger(TableauListePrelevement.Cells[14,l]),RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveBegin));
+                               TableauListePrelevement.Cells[15,l]:=inttostr(MaxInt(strtointeger(TableauListePrelevement.Cells[15,l]),RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveEnd));
+
+                               TableauListePrelevement.Cells[16,l]:=inttostr(MinInt(strtointeger(TableauListePrelevement.Cells[16,l]),RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveBegin));
+                               TableauListePrelevement.Cells[17,l]:=inttostr(MaxInt(strtointeger(TableauListePrelevement.Cells[17,l]),RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveEnd));
+
+                               TableauListePrelevement.Cells[18,l]:=inttostr(MinInt(strtointeger(TableauListePrelevement.Cells[18,l]),RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin));
+                               TableauListePrelevement.Cells[19,l]:=inttostr(MaxInt(strtointeger(TableauListePrelevement.Cells[19,l]),RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd));
+
+                               TableauListePrelevement.Cells[20,l]:=inttostr(MinInt(strtointeger(TableauListePrelevement.Cells[20,l]),RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin));
+                               TableauListePrelevement.Cells[21,l]:=inttostr(MaxInt(strtointeger(TableauListePrelevement.Cells[20,l]),RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd));
+
+                               TableauListePrelevement.Cells[22,l]:=inttostr(MinInt(strtointeger(TableauListePrelevement.Cells[22,l]),RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin));
+                               TableauListePrelevement.Cells[23,l]:=inttostr(MaxInt(strtointeger(TableauListePrelevement.Cells[22,l]),RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd));
+
+                               TableauListePrelevement.Cells[24,l]:=inttostr(MinInt(strtointeger(TableauListePrelevement.Cells[24,l]),RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin));
+                               TableauListePrelevement.Cells[25,l]:=inttostr(MaxInt(strtointeger(TableauListePrelevement.Cells[24,l]),RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd));
+
+                               TableauListePrelevement.Cells[26,l]:=inttostr(MinInt(strtointeger(TableauListePrelevement.Cells[26,l]),RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveBegin));
+                               TableauListePrelevement.Cells[27,l]:=inttostr(MaxInt(strtointeger(TableauListePrelevement.Cells[26,l]),RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveEnd));
+
+                               TableauListePrelevement.Cells[28,l]:=inttostr(MinInt(strtointeger(TableauListePrelevement.Cells[28,l]),RPrelevement.RegistrePositionAutre2.PositionArchiveBegin));
+                               TableauListePrelevement.Cells[29,l]:=inttostr(MaxInt(strtointeger(TableauListePrelevement.Cells[28,l]),RPrelevement.RegistrePositionAutre2.PositionArchiveEnd));
+
+                               TableauListePrelevement.Cells[30,l]:=inttostr(MinInt(strtointeger(TableauListePrelevement.Cells[30,l]),RPrelevement.RegistrePositionAutre3.PositionArchiveBegin));
+                               TableauListePrelevement.Cells[31,l]:=inttostr(MaxInt(strtointeger(TableauListePrelevement.Cells[30,l]),RPrelevement.RegistrePositionAutre3.PositionArchiveEnd));
+
+                               TotalMontantPrelevement:=TotalMontantPrelevement+RPrelevement.MontantPrelevement;
+                               TotalFondRoulement:=TotalFondRoulement+RPrelevement.MontantFondRoulement;
+                               TotalUniteFonds:=TotalUniteFonds+RPrelevement.MontantUnitesFonds;
+                               TotalSoldePrelevement:=TotalSoldePrelevement+RPrelevement.SoldePrelevement;
+                          end;
+                    end;
+               l:=l+1;
+               end;
+          end;
+
+          if(OKAffichePrelevement=true)then
+          begin
+                if(stringtodate(RPrelevement.DatePrelevement,'Erreure date RPrelevement.DatePrelevement: '+RPrelevement.DatePrelevement)<stringtodate(DateDubut,'Erreure date DateDubut: '+DateDubut))then
+                begin
+                     MontantPrelevementAnterieur:=MontantPrelevementAnterieur+RPrelevement.MontantPrelevement;
+                     MontantFondRoulementAnterieur:=MontantFondRoulementAnterieur+RPrelevement.MontantFondRoulement;
+                     MontantUniteFondsAnterieur:=MontantUniteFondsAnterieur+RPrelevement.MontantUnitesFonds;
+                     SoldeAnterieur:=SoldeAnterieur+RPrelevement.SoldePrelevement;
+
+                     TotalMontantPrelevement:=TotalMontantPrelevement+RPrelevement.MontantPrelevement;
+                     TotalFondRoulement:=TotalFondRoulement+RPrelevement.MontantFondRoulement;
+                     TotalUniteFonds:=TotalUniteFonds+RPrelevement.MontantUnitesFonds;
+                     TotalSoldePrelevement:=TotalSoldePrelevement+RPrelevement.SoldePrelevement;
+                end;
+
+                if(stringtodate(RPrelevement.DatePrelevement,'Erreure date RPrelevement.DatePrelevement: '+RPrelevement.DatePrelevement)>=stringtodate(DateDubut,'Erreure date DateDubut: '+DateDubut))and(stringtodate(RPrelevement.DatePrelevement,'Erreure date RPrelevement.DatePrelevement: '+RPrelevement.DatePrelevement)<=stringtodate(DateFin,'Erreure date DateFin: '+DateFin))then
+                begin
+                     R:=R+1;
+                     TableauListePrelevement.Rows[R].Text:=inttostr(R);
+                     TableauListePrelevement.Cells[1,R]:='';
+                     TableauListePrelevement.Cells[2,R]:=inttostr(RPrelevement.NumPrelevement);
+                     TableauListePrelevement.Cells[3,R]:=RPrelevement.CodeUtilisateur;
+                     TableauListePrelevement.Cells[4,R]:=inttostr(RPrelevement.NumEquipe);
+                     TableauListePrelevement.Cells[5,R]:=RPrelevement.Matricule;
+                     RPersonnel:=CherchePersonnel(RPrelevement.Matricule);
+                     TableauListePrelevement.Cells[6,R]:=RPersonnel.Nom+' '+RPersonnel.Prenom;
+                     TableauListePrelevement.Cells[7,R]:=RPrelevement.DatePrelevement;
+                     TableauListePrelevement.Cells[8,R]:=RPrelevement.HeurePrelevement;
+                     TableauListePrelevement.Cells[9,R]:=booleantostr(RPrelevement.Archiver);
+                     TableauListePrelevement.Cells[10,R]:=Vergule(floattostr(RPrelevement.MontantPrelevement),'2','C','');
+                     TableauListePrelevement.Cells[11,R]:=Vergule(floattostr(RPrelevement.MontantFondRoulement),'2','C','');
+                     TableauListePrelevement.Cells[12,R]:=Vergule(floattostr(RPrelevement.MontantUnitesFonds),'2','C','');
+                     if(RPrelevement.SoldePrelevement>0)then SignePositive:='+'else SignePositive:='';
+                     TableauListePrelevement.Cells[13,R]:=SignePositive+Vergule(floattostr(RPrelevement.SoldePrelevement),'2','C','');
+
+                     TableauListePrelevement.Cells[14,R]:=inttostr(RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[15,R]:=inttostr(RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[16,R]:=inttostr(RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[17,R]:=inttostr(RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[18,R]:=inttostr(RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[19,R]:=inttostr(RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[20,R]:=inttostr(RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[21,R]:=inttostr(RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[22,R]:=inttostr(RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[23,R]:=inttostr(RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[24,R]:=inttostr(RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[25,R]:=inttostr(RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[26,R]:=inttostr(RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[27,R]:=inttostr(RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[28,R]:=inttostr(RPrelevement.RegistrePositionAutre2.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[29,R]:=inttostr(RPrelevement.RegistrePositionAutre2.PositionArchiveEnd);
+
+                     TableauListePrelevement.Cells[30,R]:=inttostr(RPrelevement.RegistrePositionAutre3.PositionArchiveBegin);
+                     TableauListePrelevement.Cells[31,R]:=inttostr(RPrelevement.RegistrePositionAutre3.PositionArchiveEnd);
+
+                     TotalMontantPrelevement:=TotalMontantPrelevement+RPrelevement.MontantPrelevement;
+                     TotalFondRoulement:=TotalFondRoulement+RPrelevement.MontantFondRoulement;
+                     TotalUniteFonds:=TotalUniteFonds+RPrelevement.MontantUnitesFonds;
+                     TotalSoldePrelevement:=TotalSoldePrelevement+RPrelevement.SoldePrelevement;
+
+                     if((RowSelect=0)and(RPrelevement.Archiver=false))then RowSelect:=R;
+                end;
+          end;
+     end;
+     CloseFile(FPrelevement);
+
+     if(R>0)then TableauListePrelevement.RowCount:=R+1
+            else TableauListePrelevement.RowCount:=2;
+
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+     begin
+          TableauListePrelevement.Cells[10,1]:=Vergule(floattostr(MontantPrelevementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[11,1]:=Vergule(floattostr(MontantFondRoulementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[12,1]:=Vergule(floattostr(MontantUniteFondsAnterieur),'2','C','');
+          if(SoldeAnterieur>0)then SignePositive:='+'else SignePositive:='';
+          TableauListePrelevement.Cells[13,1]:=SignePositive+Vergule(floattostr(SoldeAnterieur),'2','C','');
+
+          TableauListePrelevement.RowCount:=TableauListePrelevement.RowCount+2;
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-2].Text:='';
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-1].Text:='';
+          TableauListePrelevement.Cells[9,TableauListePrelevement.RowCount-1]:='Total:';
+          TableauListePrelevement.Cells[10,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantPrelevement),'2','C','');
+          TableauListePrelevement.Cells[11,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalFondRoulement),'2','C','');
+          TableauListePrelevement.Cells[12,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalUniteFonds),'2','C','');
+          if(TotalSoldePrelevement>0)then SignePositive:='+'else SignePositive:='';
+          TableauListePrelevement.Cells[13,TableauListePrelevement.RowCount-1]:=SignePositive+Vergule(floattostr(TotalSoldePrelevement),'2','C','');
+     end
+     else
+     begin
+          TableauListePrelevement.RowCount:=TableauListePrelevement.RowCount+2;
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-2].Text:='';
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-1].Text:='';
+          TableauListePrelevement.Cells[9,TableauListePrelevement.RowCount-1]:='Total:';
+          TableauListePrelevement.Cells[10,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantPrelevement-MontantPrelevementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[11,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalFondRoulement-MontantFondRoulementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[12,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalUniteFonds-MontantUniteFondsAnterieur),'2','C','');
+          if(TotalSoldePrelevement-SoldeAnterieur>0)then SignePositive:='+'else SignePositive:='';
+          TableauListePrelevement.Cells[13,TableauListePrelevement.RowCount-1]:=SignePositive+Vergule(floattostr(TotalSoldePrelevement-SoldeAnterieur),'2','C','');
+     end;
+
+     NotCol:='3;4;14-31';
+     for C:=1 to TableauListePrelevement.ColCount-1 do if existenumintexte(inttostr(C),NotCol) then TableauListePrelevement.ColWidths[C]:=0;
+     AjusterColWidth(TableauListePrelevement,'',NotCol);
+
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+     begin
+          IndiceDebutControleTrieRow:=2;
+          IndiceFinControleTrieRow:=FSListePrelevement.TableauListePrelevement.RowCount-3;
+     end
+     else
+     begin
+          IndiceDebutControleTrieRow:=1;
+          IndiceFinControleTrieRow:=FSListePrelevement.TableauListePrelevement.RowCount-3;
+     end;
+     TrierTableauARowSpecial(TableauListePrelevement,IndiceDebutControleTrieRow,IndiceFinControleTrieRow,1,FSListePrelevement.EditRubriqueTrie.Text,FSListePrelevement.EditTypeDataTrie.Text,FSListePrelevement.TypeTrie.Caption);
+
+     if(NumPrelevementSelect<>'')and(MatriculeSelect<>'')then
+     begin
+          R:=1;
+          OKPrelevementSelect:=false;
+          while(R<=TableauListePrelevement.RowCount-1)and(OKPrelevementSelect=false)do
+          begin
+               if(TableauListePrelevement.Cells[2,R]=NumPrelevementSelect)
+               and(TableauListePrelevement.Cells[5,R]=MatriculeSelect)then
+               begin
+                    RowSelect:=R;
+                    OKPrelevementSelect:=true;
+               end;
+          R:=R+1;
+          end;
+     end;
+
+    TableauListePrelevement.Row:=MaxInt(1,RowSelect);
+end;
+
+procedure TFSListePrelevement.TableauListePrelevementKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+var  R,NbrSelect:integer;  NumPrelevement,NumPrelevementFin,DateIn,HeureIn,DatePrelevement,HeurePrelevement,NumStructure,MatriculeEffectif:string;
+     MontantCompteur,MontantFondRoulement,MontantUniteFonds,SoldePrelevement,Ecart:real;   OKNotification:boolean;
+     RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionAutre1,RegistrePositionAutre2,RegistrePositionAutre3:RRegistrePositionArchives;
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPrelevement.EditMatricule.Text:='';
+     FSPrelevement.EditNomEffectif.Text:='';
+
+     if(FSListePrelevement.EditTypeAffichge.Text='Par Prélèvement')then
+     begin
+          R:=1;
+          NbrSelect:=0;
+          while(R<=FSListePrelevement.TableauListePrelevement.RowCount-1)and(NbrSelect<>1)do
+          begin
+               if(FSListePrelevement.TableauListePrelevement.Cells[1,R]='OK')then
+               begin
+                    NbrSelect:=1;
+                    FSPrelevement.PagePrelevementCompteursUniteFonds.Show;
+                    FSPrelevement.Show;
+                    NumPrelevement:=FSListePrelevement.TableauListePrelevement.Cells[2,R];
+                    NumPrelevementFin:='';
+                    MatriculeEffectif:=FSListePrelevement.TableauListePrelevement.Cells[5,R];
+                    FSPrelevement.EditMatricule.Text:=FSListePrelevement.TableauListePrelevement.Cells[5,R];
+                    FSPrelevement.EditNomEffectif.Text:=FSListePrelevement.TableauListePrelevement.Cells[6,R];
+                    DateIn:='';
+                    HeureIn:='';
+                    DatePrelevement:=FSListePrelevement.TableauListePrelevement.Cells[7,R];
+                    HeurePrelevement:=FSListePrelevement.TableauListePrelevement.Cells[8,R];
+                    AfficherPrelevement(FSPrelevement.OKEffectifEquipe.Checked,FSPrelevement.OKAffectationEffectifEquipe.Checked,FSPrelevement.OKPrelevementUniteFonds.Checked,FSPrelevement.OKDetailArticle.Checked,FSPrelevement.OKArborescenceArticle.Checked,FSPrelevement.OKDetailTypeUniteFonds.Checked,FSPrelevement.OKDetailTiers.Checked,FSPrelevement.OKEtatStockPrelevement.Checked,FSPrelevement.OKRecapitulatif.Checked,FSPrelevement.TableauPrelevementCompteur,FSPrelevement.TableauTitrePrelevementCompteur,FSPrelevement.TableauDetailArticle,FSPrelevement.TableauTitreDetailArticle,FSPrelevement.TableauPrelevementUniteFonds,FSPrelevement.TableauTitrePrelevementUniteFonds,FSPrelevement.TableauDetailTypeUniteFonds,FSPrelevement.TableauTitreDetailTypeUniteFonds,FSPrelevement.TableauDetailTiers,FSPrelevement.TableauTitreDetailTiers,
+                    FSPrelevement.TableauEquipe,FSPrelevement.TableauTitreEquipe,FSPrelevement.TableauEffectifEquipe,FSPrelevement.TableauTitreEffectifEquipe,FSPrelevement.TableauUtilisateur,FSPrelevement.TableauTitreUtilisateur,FSPrelevement.EditMontantCompteur,FSPrelevement.EditFondRoulement,FSPrelevement.EditMontantArticle,FSPrelevement.EditMontantUniteFonds,FSPrelevement.EditMontatntDetailTypeUniteFonds,FSPrelevement.EditCumuleSelectionTypeUniteFonds,FSPrelevement.EditMontatntDetailTiers,FSPrelevement.EditSoldePrelevement,FSPrelevement.EditNumPrelevementCompteur,FSPrelevement.EditNumPrelevementUF,NumPrelevement,NumPrelevementFin,MatriculeEffectif,NumStructure);
+
+                    if(FSListePrelevement.TableauListePrelevement.Cells[0,0]='EFI'+Firstlaters(datetostr(date),2))
+                    then FSPrelevement.EditModifierPrelevement.Text:='Archive'
+                    else FSPrelevement.EditModifierPrelevement.Text:='';
+
+                    if(FSListePrelevement.RBTableauVolatile.Checked=true)then FSListePrelevement.Close;
+               end;
+          R:=R+1;
+          end;
+
+          if(NbrSelect=0)then
+          begin
+               Showmessage('Aucun Prélèvement n''est sélectionné !');
+          end;
+     end;
+
+     if(FSListePrelevement.EditTypeAffichge.Text='Par Equipe')then
+     begin
+          R:=1;
+          NbrSelect:=0;
+          while(R<=FSListePrelevement.TableauListePrelevement.RowCount-1)and(NbrSelect<>1)do
+          begin
+               if(FSListePrelevement.TableauListePrelevement.Cells[1,R]='OK')then
+               begin
+                    NbrSelect:=1;
+                    FSPrelevement.PagePrelevementCompteursUniteFonds.Show;
+                    FSPrelevement.Show;
+                    NumPrelevement:=FSListePrelevement.TableauListePrelevement.Cells[2,R];
+                    NumPrelevementFin:='';
+                    MatriculeEffectif:='';
+                    FSPrelevement.EditMatricule.Text:='';
+                    FSPrelevement.EditNomEffectif.Text:='';
+                    DateIn:='';
+                    HeureIn:='';
+                    DatePrelevement:=FSListePrelevement.TableauListePrelevement.Cells[7,R];
+                    HeurePrelevement:=FSListePrelevement.TableauListePrelevement.Cells[8,R];
+                    AfficherPrelevement(FSPrelevement.OKEffectifEquipe.Checked,FSPrelevement.OKAffectationEffectifEquipe.Checked,FSPrelevement.OKPrelevementUniteFonds.Checked,FSPrelevement.OKDetailArticle.Checked,FSPrelevement.OKArborescenceArticle.Checked,FSPrelevement.OKDetailTypeUniteFonds.Checked,FSPrelevement.OKDetailTiers.Checked,FSPrelevement.OKEtatStockPrelevement.Checked,FSPrelevement.OKRecapitulatif.Checked,FSPrelevement.TableauPrelevementCompteur,FSPrelevement.TableauTitrePrelevementCompteur,FSPrelevement.TableauDetailArticle,FSPrelevement.TableauTitreDetailArticle,FSPrelevement.TableauPrelevementUniteFonds,FSPrelevement.TableauTitrePrelevementUniteFonds,FSPrelevement.TableauDetailTypeUniteFonds,FSPrelevement.TableauTitreDetailTypeUniteFonds,FSPrelevement.TableauDetailTiers,FSPrelevement.TableauTitreDetailTiers,
+                    FSPrelevement.TableauEquipe,FSPrelevement.TableauTitreEquipe,FSPrelevement.TableauEffectifEquipe,FSPrelevement.TableauTitreEffectifEquipe,FSPrelevement.TableauUtilisateur,FSPrelevement.TableauTitreUtilisateur,FSPrelevement.EditMontantCompteur,FSPrelevement.EditFondRoulement,FSPrelevement.EditMontantArticle,FSPrelevement.EditMontantUniteFonds,FSPrelevement.EditMontatntDetailTypeUniteFonds,FSPrelevement.EditCumuleSelectionTypeUniteFonds,FSPrelevement.EditMontatntDetailTiers,FSPrelevement.EditSoldePrelevement,FSPrelevement.EditNumPrelevementCompteur,FSPrelevement.EditNumPrelevementUF,NumPrelevement,NumPrelevementFin,MatriculeEffectif,NumStructure);
+
+                    if(FSListePrelevement.TableauListePrelevement.Cells[0,0]='EFI'+Firstlaters(datetostr(date),2))
+                    then FSPrelevement.EditModifierPrelevement.Text:='Archive'
+                    else FSPrelevement.EditModifierPrelevement.Text:='';
+
+                    if(FSListePrelevement.RBTableauVolatile.Checked=true)then FSListePrelevement.Close;
+               end;
+          R:=R+1;
+          end;
+
+          if(NbrSelect=0)then
+          begin
+               Showmessage('Aucun Prélèvement n''est sélectionné !');
+          end;
+     end;
+
+     if(FSListePrelevement.EditTypeAffichge.Text='Par Jour')then
+     begin
+          NumPrelevement:='';
+          NumPrelevementFin:='';
+          DateIn:='';
+          HeureIn:='';
+          DatePrelevement:='';
+          HeurePrelevement:='';
+
+          NbrSelect:=0;
+          R:=1;
+          while(R<=FSListePrelevement.TableauListePrelevement.RowCount-1)and(NbrSelect<2)do
+          begin
+               if(FSListePrelevement.TableauListePrelevement.Cells[1,R]='OK')then
+               begin
+                    NbrSelect:=NbrSelect+1;
+
+                    if(NbrSelect=1)then
+                    begin
+                         DateIn:=FSListePrelevement.TableauListePrelevement.Cells[5,R];
+                         HeureIn:=FSListePrelevement.TableauListePrelevement.Cells[6,R];
+                         NumPrelevement:=FSListePrelevement.TableauListePrelevement.Cells[2,R];
+                    end;
+                    if(NbrSelect=2)then
+                    begin
+                         DatePrelevement:=FSListePrelevement.TableauListePrelevement.Cells[5,R];
+                         HeurePrelevement:=FSListePrelevement.TableauListePrelevement.Cells[6,R];
+                         NumPrelevementFin:=FSListePrelevement.TableauListePrelevement.Cells[2,R];
+                    end;
+               end;
+          R:=R+1;
+          end;
+
+          if(NbrSelect=2)then
+          begin
+               FSPrelevement.Show;
+               AfficherPrelevement(FSPrelevement.OKEffectifEquipe.Checked,FSPrelevement.OKAffectationEffectifEquipe.Checked,FSPrelevement.OKPrelevementUniteFonds.Checked,FSPrelevement.OKDetailArticle.Checked,FSPrelevement.OKArborescenceArticle.Checked,FSPrelevement.OKDetailTypeUniteFonds.Checked,FSPrelevement.OKDetailTiers.Checked,FSPrelevement.OKEtatStockPrelevement.Checked,FSPrelevement.OKRecapitulatif.Checked,FSPrelevement.TableauPrelevementCompteur,FSPrelevement.TableauTitrePrelevementCompteur,FSPrelevement.TableauDetailArticle,FSPrelevement.TableauTitreDetailArticle,FSPrelevement.TableauPrelevementUniteFonds,FSPrelevement.TableauTitrePrelevementUniteFonds,FSPrelevement.TableauDetailTypeUniteFonds,FSPrelevement.TableauTitreDetailTypeUniteFonds,FSPrelevement.TableauDetailTiers,FSPrelevement.TableauTitreDetailTiers,
+               FSPrelevement.TableauEquipe,FSPrelevement.TableauTitreEquipe,FSPrelevement.TableauEffectifEquipe,FSPrelevement.TableauTitreEffectifEquipe,FSPrelevement.TableauUtilisateur,FSPrelevement.TableauTitreUtilisateur,FSPrelevement.EditMontantCompteur,FSPrelevement.EditFondRoulement,FSPrelevement.EditMontantArticle,FSPrelevement.EditMontantUniteFonds,FSPrelevement.EditMontatntDetailTypeUniteFonds,FSPrelevement.EditCumuleSelectionTypeUniteFonds,FSPrelevement.EditMontatntDetailTiers,FSPrelevement.EditSoldePrelevement,FSPrelevement.EditNumPrelevementCompteur,FSPrelevement.EditNumPrelevementUF,NumPrelevement,NumPrelevementFin,'',NumStructure);
+               if(FSListePrelevement.RBTableauVolatile.Checked=true)then FSListePrelevement.Close;
+          end
+          else
+          begin
+               Showmessage('Aucun Période n''est sélectionnée !');
+          end;
+     end;
+end;
+
+end;
+
+procedure TFSListePrelevement.TableauListePrelevementDblClick(
+  Sender: TObject);
+var  R,NbrSelect:integer; MontantCompteur,MontantFondRoulement,MontantUniteFonds,SoldePrelevement:real; OKADD:boolean;
+begin
+FSListePrelevement.TableauListePrelevement.Cells[0,0]:='';
+
+if(FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row]='')then Exit;
+
+if(FSListePrelevement.EditTypeAffichge.Text='Par Prélèvement')or(FSListePrelevement.EditTypeAffichge.Text='Par Equipe')then
+begin
+     FSListePrelevement.TypeAffichagePeriode.Caption:=FSListePrelevement.EditTypeAffichge.Text;
+     
+     for R:=1 to FSListePrelevement.TableauListePrelevement.RowCount-1 do
+     begin
+          if(R=FSListePrelevement.TableauListePrelevement.Row)
+          then
+          begin
+               FSListePrelevement.TableauListePrelevement.Cells[1,R]:='OK';
+               FSListePrelevement.TypeAffichagePeriode.Caption:=FSListePrelevement.EditTypeAffichge.Text+'N° '+FSListePrelevement.TableauListePrelevement.Cells[2,R]+' du: '+FSListePrelevement.TableauListePrelevement.Cells[5,R]+' à '+FSListePrelevement.TableauListePrelevement.Cells[6,R];
+          end
+          else
+          begin
+               FSListePrelevement.TableauListePrelevement.Cells[1,R]:='';
+          end;
+     end;
+end;
+
+if(FSListePrelevement.EditTypeAffichge.Text='Par Jour')then
+begin
+     TableauListePrelevement.Rows[TableauListePrelevement.RowCount-2].Text:='';
+     TableauListePrelevement.Rows[TableauListePrelevement.RowCount-1].Text:='';
+     TableauListePrelevement.Cells[9,TableauListePrelevement.RowCount-1]:='Total:';
+     
+     if(Strtoboolean(FSListePrelevement.TableauListePrelevement.Cells[9,FSListePrelevement.TableauListePrelevement.Row])=false)
+     then
+     begin
+          showmessage('Le Prélèvement n''est pas Archivé !');
+          Exit;
+     end;
+
+     if(FSListePrelevement.TableauListePrelevement.Cells[1,FSListePrelevement.TableauListePrelevement.Row]='')then
+     begin
+          FSListePrelevement.TableauListePrelevement.Cells[1,FSListePrelevement.TableauListePrelevement.Row]:='OK';
+     end
+     else
+     begin
+          FSListePrelevement.TableauListePrelevement.Cells[1,FSListePrelevement.TableauListePrelevement.Row]:='';
+     end;
+
+     NbrSelect:=0;
+     MontantCompteur:=0;
+     MontantFondRoulement:=0;
+     MontantUniteFonds:=0;
+     SoldePrelevement:=0;
+     OKADD:=false;
+     for R:=1 to FSListePrelevement.TableauListePrelevement.RowCount-1 do
+     begin
+          if(FSListePrelevement.TableauListePrelevement.Cells[1,R]='OK')then
+          begin
+               OKADD:=true;
+               NbrSelect:=NbrSelect+1;
+          end;
+
+          if(OKADD=true)then
+          begin
+               if(NbrSelect=2)then OKADD:=false;
+               MontantCompteur:=MontantCompteur+strtoreal(TableauListePrelevement.Cells[10,R]);
+               MontantFondRoulement:=MontantFondRoulement+strtoreal(TableauListePrelevement.Cells[11,R]);
+               MontantUniteFonds:=MontantUniteFonds+strtoreal(TableauListePrelevement.Cells[12,R]);
+               SoldePrelevement:=SoldePrelevement+strtoreal(TableauListePrelevement.Cells[13,R]);
+          end;
+     end;
+     TableauListePrelevement.Cells[10,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(MontantCompteur),'2','C','');
+     TableauListePrelevement.Cells[11,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(MontantFondRoulement),'2','C','');
+     TableauListePrelevement.Cells[12,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(MontantUniteFonds),'2','C','');
+     TableauListePrelevement.Cells[13,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(SoldePrelevement),'2','C','');
+
+     if(NbrSelect<=2)then
+     begin
+          FSListePrelevement.TypeAffichagePeriode.Caption:=FSListePrelevement.EditTypeAffichge.Text;
+
+          NbrSelect:=0;
+          for R:=1 to FSListePrelevement.TableauListePrelevement.RowCount-1 do
+          begin
+               if(FSListePrelevement.TableauListePrelevement.Cells[1,R]='OK')then
+               begin
+                    NbrSelect:=NbrSelect+1;
+
+                    if(NbrSelect=1)then
+                    begin
+                         FSListePrelevement.TypeAffichagePeriode.Caption:=FSListePrelevement.TypeAffichagePeriode.Caption+'N°:'+FSListePrelevement.TableauListePrelevement.Cells[2,R]+' du '+FSListePrelevement.TableauListePrelevement.Cells[5,R]+'/'+FSListePrelevement.TableauListePrelevement.Cells[6,R];
+                    end;
+                    if(NbrSelect=2)then
+                    begin
+                         FSListePrelevement.TypeAffichagePeriode.Caption:=FSListePrelevement.TypeAffichagePeriode.Caption+' au '+'N°:'+FSListePrelevement.TableauListePrelevement.Cells[2,R]+' du '+FSListePrelevement.TableauListePrelevement.Cells[5,R]+'/'+FSListePrelevement.TableauListePrelevement.Cells[6,R];
+                    end;
+               end;
+          end;
+     end
+     else
+     begin
+          FSListePrelevement.TableauListePrelevement.Cells[1,FSListePrelevement.TableauListePrelevement.Row]:='';
+          Showmessage('La Période est sélectionné !, Veuillez confirmer votre requette SVP');
+     end;
+end;
+
+end;
+
+procedure TFSListePrelevement.TableauListePrelevementKeyPress(
+  Sender: TObject; var Key: Char);
+var  R,RowCountMoins,Existant,Suprimer,Sauvegarder:integer; PositionPrelevement,TypeProcesPrelevement,FichierConcernePrelevement,AdressePrelevement:string;
+     OKListePrelevement:boolean;
+begin
+
+if(Strtoboolean(FSListePrelevement.TableauListePrelevement.Cells[9,FSListePrelevement.TableauListePrelevement.Row])=true)
+and(key in ['m','M'])
+then
+begin
+     if not AccesPrivilegies('FS Liste Prélèvement',FSMenuPrincipal.EditCodeUtilisateur.Text,'MM',true)then exit;
+
+     FSListePrelevement.AfficheOperationPrelevement.Visible:=true;
+     FSListePrelevement.EditNumPrelevement.Text:=FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row];
+     FSListePrelevement.EditMatricule.Text:=FSListePrelevement.TableauListePrelevement.Cells[5,FSListePrelevement.TableauListePrelevement.Row];
+     FSListePrelevement.EditNumEquipe.Text:=FSListePrelevement.TableauListePrelevement.Cells[4,FSListePrelevement.TableauListePrelevement.Row];
+     FSListePrelevement.EditDesignationEquipe.Text:=ChercherEquipe(FSListePrelevement.EditNumEquipe.Text).DesignationEquipe;
+     FSListePrelevement.EditDatePrelevement.Date:=strtodate(FSListePrelevement.TableauListePrelevement.Cells[7,FSListePrelevement.TableauListePrelevement.Row]);
+     FSListePrelevement.EditHeurePrelevement.Time:=strtotime(FSListePrelevement.TableauListePrelevement.Cells[8,FSListePrelevement.TableauListePrelevement.Row]);
+end;
+
+if(key in ['s','S'])then
+begin
+     FSListePrelevement.EditTypeAnalyse.Text:='Ecartement';
+
+     if(Strtoboolean(FSListePrelevement.TableauListePrelevement.Cells[9,FSListePrelevement.TableauListePrelevement.Row])=true)then
+     begin
+           if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then RowCountMoins:=3 else RowCountMoins:=1;
+
+           R:=1;
+           OKListePrelevement:=false;
+           while(R<=FSListePrelevement.TableauListePrelevement.RowCount-RowCountMoins)and(OKListePrelevement=false)do
+           begin
+                if (R<>FSListePrelevement.TableauListePrelevement.Row)
+                and(FSListePrelevement.TableauListePrelevement.Cells[2,R]=FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[5,R]=FSListePrelevement.TableauListePrelevement.Cells[5,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[7,R]=FSListePrelevement.TableauListePrelevement.Cells[7,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[8,R]=FSListePrelevement.TableauListePrelevement.Cells[8,FSListePrelevement.TableauListePrelevement.Row])
+                {and(FSListePrelevement.TableauListePrelevement.Cells[14,R]=FSListePrelevement.TableauListePrelevement.Cells[14,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[15,R]=FSListePrelevement.TableauListePrelevement.Cells[15,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[16,R]=FSListePrelevement.TableauListePrelevement.Cells[16,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[17,R]=FSListePrelevement.TableauListePrelevement.Cells[17,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[18,R]=FSListePrelevement.TableauListePrelevement.Cells[18,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[19,R]=FSListePrelevement.TableauListePrelevement.Cells[19,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[20,R]=FSListePrelevement.TableauListePrelevement.Cells[20,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[21,R]=FSListePrelevement.TableauListePrelevement.Cells[21,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[22,R]=FSListePrelevement.TableauListePrelevement.Cells[22,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[23,R]=FSListePrelevement.TableauListePrelevement.Cells[23,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[24,R]=FSListePrelevement.TableauListePrelevement.Cells[24,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[25,R]=FSListePrelevement.TableauListePrelevement.Cells[25,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[26,R]=FSListePrelevement.TableauListePrelevement.Cells[26,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[27,R]=FSListePrelevement.TableauListePrelevement.Cells[27,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[28,R]=FSListePrelevement.TableauListePrelevement.Cells[28,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[29,R]=FSListePrelevement.TableauListePrelevement.Cells[29,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[30,R]=FSListePrelevement.TableauListePrelevement.Cells[30,FSListePrelevement.TableauListePrelevement.Row])
+                and(FSListePrelevement.TableauListePrelevement.Cells[31,R]=FSListePrelevement.TableauListePrelevement.Cells[31,FSListePrelevement.TableauListePrelevement.Row])}
+                then OKListePrelevement:=true;
+           R:=R+1;
+           end;
+
+           if(OKListePrelevement=false)then
+           begin
+                if(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[14,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[15,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[16,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[17,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[18,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[19,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[20,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[21,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[22,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[23,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[24,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[25,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[26,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[27,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[28,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[29,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[30,FSListePrelevement.TableauListePrelevement.Row])=0)
+                and(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[31,FSListePrelevement.TableauListePrelevement.Row])=0)
+                then OKListePrelevement:=true;
+           end;
+
+           if(OKListePrelevement=true)then
+           begin
+                FSListePrelevement.AfficheOperationListePrelevement.Color:=$0080FF80;
+                FSListePrelevement.AfficheOperationListePrelevement.Visible:=true;
+                FSListePrelevement.BitValiderOperationListePrelevement.Caption:='Suppression Manuel';
+                FSListePrelevement.AfficheOperationListePrelevement.Caption:='Suppression manuel du prélèvement sélectionné !';
+                FSListePrelevement.RBOKSupprissionManuel.Checked:=true;
+           end
+           else
+           begin
+                FSListePrelevement.AfficheOperationListePrelevement.Color:=$00FFFF80;
+                FSListePrelevement.AfficheOperationListePrelevement.Visible:=true;
+                FSListePrelevement.BitValiderOperationListePrelevement.Caption:='Suppression Système';
+                FSListePrelevement.AfficheOperationListePrelevement.Caption:='Suppression Système du prélèvement sélectionné !';
+                FSListePrelevement.RBOKSupprissionManuel.Checked:=false;
+           end;
+     end
+     else
+     begin
+          FSListePrelevement.AfficheOperationListePrelevement.Color:=$00FFFF80;
+          FSListePrelevement.AfficheOperationListePrelevement.Visible:=true;
+          FSListePrelevement.BitValiderOperationListePrelevement.Caption:='Suppression Manuel';
+          FSListePrelevement.AfficheOperationListePrelevement.Caption:='Suppression manuel du prélèvement sélectionné !';
+          FSListePrelevement.RBOKSupprissionManuel.Checked:=true;
+     end;
+end;
+
+if(key in ['a','A'])then
+begin
+     if(FSListePrelevement.EditCodeAutorisationControle.Text='000')then
+     begin
+          if not AccesPrivilegies('FS Liste Prélèvement',FSMenuPrincipal.EditCodeUtilisateur.Text,'MM',true)then exit;
+          RPrelevement:=ChercherPrelevement(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row]),ExerciceAnnee,FSListePrelevement.TableauListePrelevement.Cells[5,FSListePrelevement.TableauListePrelevement.Row],PositionPrelevement);
+
+          TypeProcesPrelevement:='Business';
+          FichierConcernePrelevement:='FPrelevement';
+          AdressePrelevement:='';
+          if not(FunctionAdresseProces(TypeProcesPrelevement,FichierConcernePrelevement,'',AdressePrelevement,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+               AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcernePrelevement+' recherché !');
+          end;
+
+          ChPrelevement:=AdressePrelevement;
+          assignfile(FPrelevement,ChPrelevement);
+          if FileExists(ChPrelevement)then
+          Reset(FPrelevement)
+          else Rewrite(FPrelevement);
+          Seek(FPrelevement,strtointeger(PositionPrelevement));
+          if not eof(FPrelevement)then
+          begin
+               read(FPrelevement,RPrelevement);
+               RPrelevement.Archiver:=FSListePrelevement.RBEtatArchive.Checked;
+               Seek(FPrelevement,strtointeger(PositionPrelevement));
+               write(FPrelevement,RPrelevement);
+          end;
+          CloseFile(FPrelevement);
+
+          ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row],FSListePrelevement.TableauListePrelevement.Cells[5,FSListePrelevement.TableauListePrelevement.Row],FSListePrelevement.RBAbregerTitreRubrique.Checked);
+
+          FSListePrelevement.EditCodeAutorisationControle.Text:='';
+     end
+     else
+     begin
+          FSListePrelevement.EditCodeAutorisationControle.Text:='';
+          FSListePrelevement.EditCodeAutorisationControle.SetFocus;
+     end;
+end;
+
+if(key in ['c','C'])then
+begin
+     FSListePrelevement.EditTypeAnalyse.Text:='Double';
+
+     FSListePrelevement.AfficheOperationListePrelevement.Color:=$00FFFF80;
+     FSListePrelevement.AfficheOperationListePrelevement.Visible:=true;
+     FSListePrelevement.BitValiderOperationListePrelevement.Caption:='Côntrome Système';
+     FSListePrelevement.AfficheOperationListePrelevement.Caption:='Côntrole Système du prélèvement sélectionné !';
+     FSListePrelevement.RBOKSupprissionManuel.Checked:=false;
+end;
+
+end;
+
+procedure TFSListePrelevement.TableauListePrelevementClick(
+  Sender: TObject);
+var  IndiceDebutControleTrieRow,IndiceFinControleTrieRow:integer; TypeData:string;
+begin
+FSListePrelevement.AfficheOperationListePrelevement.Visible:=false;
+FSListePrelevement.TableauEquipe.Visible:=false;
+FSListePrelevement.TableauEffectifEquipe.Visible:=false;
+FSListePrelevement.AfficheOptionPrelevement.Height:=33;
+FSListePrelevement.AfficheControleImportePrelevement.Height:=33;
+
+if(FSListePrelevement.EditCodeAutorisationControle.Text<>'000')
+and(FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row]<>'')
+then FSListePrelevement.RBEtatArchive.Checked:=strtoboolean(FSListePrelevement.TableauListePrelevement.Cells[9,FSListePrelevement.TableauListePrelevement.Row]);
+
+if(FSListePrelevement.RBRubriqueTrie.Checked=true)then
+begin
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+     begin
+          IndiceDebutControleTrieRow:=2;
+          IndiceFinControleTrieRow:=FSListePrelevement.TableauListePrelevement.RowCount-3;
+     end
+     else
+     begin
+          IndiceDebutControleTrieRow:=1;
+          IndiceFinControleTrieRow:=FSListePrelevement.TableauListePrelevement.RowCount-3;
+     end;
+
+     FSListePrelevement.EditRubriqueTrie.Text:=inttostr(FSListePrelevement.TableauListePrelevement.Col);
+
+     TypeData:='';
+
+     if(FSListePrelevement.TableauListePrelevement.Col=7)
+     or(FSListePrelevement.TableauListePrelevement.Col=8)
+     then
+     begin
+          TypeData:='Date';
+     end;
+
+     if(FSListePrelevement.TableauListePrelevement.Col=2)
+     or(FSListePrelevement.TableauListePrelevement.Col=4)
+     or(FSListePrelevement.TableauListePrelevement.Col=5)
+     or(FSListePrelevement.TableauListePrelevement.Col in[10..31])
+     then
+     begin
+          TypeData:='Num';
+     end;
+
+     FSListePrelevement.EditTypeDataTrie.Text:=TypeData;
+
+     FSListePrelevement.RBRubriqueTrie.Checked:=false;
+     TrierTableauARowSpecial(FSListePrelevement.TableauListePrelevement,IndiceDebutControleTrieRow,IndiceFinControleTrieRow,1,FSListePrelevement.EditRubriqueTrie.Text,FSListePrelevement.EditTypeDataTrie.Text,FSListePrelevement.TypeTrie.Caption);
+end;
+
+end;
+
+procedure TFSListePrelevement.BitOperationPrelevementClick(
+  Sender: TObject);
+begin
+FSListePrelevement.AfficheOperationPrelevement.Visible:=false;
+FSListePrelevement.TableauEquipe.Visible:=false;
+end;
+
+procedure TFSListePrelevement.EditNumEquipeEnter(Sender: TObject);
+begin
+FSListePrelevement.TableauEquipe.Visible:=true;
+ListeEquipe(FSListePrelevement.TableauEquipe,FSListePrelevement.EditNumEquipe.Text);
+FSListePrelevement.TableauEquipe.SetFocus;
+end;
+
+procedure TFSListePrelevement.TableauEquipeDblClick(Sender: TObject);
+begin
+FSListePrelevement.EditNumEquipe.Text:=FSListePrelevement.TableauEquipe.Cells[1,FSListePrelevement.TableauEquipe.Row];
+FSListePrelevement.EditDesignationEquipe.Text:=FSListePrelevement.TableauEquipe.Cells[3,FSListePrelevement.TableauEquipe.Row];
+FSListePrelevement.EditHeurePrelevement.Time:=strtotime(FSListePrelevement.TableauEquipe.Cells[5,FSListePrelevement.TableauEquipe.Row]);
+FSListePrelevement.TableauEquipe.Visible:=false;
+end;
+
+procedure TFSListePrelevement.TableauEquipeExit(Sender: TObject);
+begin
+FSListePrelevement.TableauEquipe.Visible:=false;
+end;
+
+procedure TFSListePrelevement.BitBtn1Click(Sender: TObject);
+var i:integer; PositionPrelevement:string;
+begin
+          RPrelevement:=ChercherPrelevement(strtointeger(FSListePrelevement.EditNumPrelevement.Text),ExerciceAnnee,FSListePrelevement.EditMatricule.Text,PositionPrelevement);
+
+          OpenFParc(RParc);
+          ChPrelevement:=RParc.Parcours+'\'+Exercice+'FPrelevement';
+          assignfile(FPrelevement,ChPrelevement);
+          if FileExists(ChPrelevement)then
+          Reset(FPrelevement)
+          else Rewrite(FPrelevement);
+          Seek(FPrelevement,strtointeger(PositionPrelevement));
+          if not eof(FPrelevement)then
+          begin
+               read(FPrelevement,RPrelevement);
+               RPrelevement.NumEquipe:=strtointeger(FSListePrelevement.EditNumEquipe.Text);
+               RPrelevement.DatePrelevement:=datetostr(FSListePrelevement.EditDatePrelevement.Date);
+               RPrelevement.HeurePrelevement:=timetostr(FSListePrelevement.EditHeurePrelevement.Time);
+               Seek(FPrelevement,strtointeger(PositionPrelevement));
+               write(FPrelevement,RPrelevement);
+          end;
+          CloseFile(FPrelevement);
+
+          ChArchivePrelevementCompteur:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur';
+          assignfile(FArchivePrelevementCompteur,ChArchivePrelevementCompteur);
+          if FileExists(ChArchivePrelevementCompteur)then
+          Reset(FArchivePrelevementCompteur)
+          else Rewrite(FArchivePrelevementCompteur);
+          Seek(FArchivePrelevementCompteur,0);
+          i:=0;
+          while not eof(FArchivePrelevementCompteur)do
+          begin
+               read(FArchivePrelevementCompteur,RArchivePrelevementCompteur);
+               if(RArchivePrelevementCompteur.NumPrelevement=strtointeger(FSListePrelevement.EditNumPrelevement.Text))
+               and(RArchivePrelevementCompteur.Matricule=FSListePrelevement.EditMatricule.Text)
+               then
+               begin
+                    RArchivePrelevementCompteur.NumEquipe:=strtointeger(FSListePrelevement.EditNumEquipe.Text);
+                    RArchivePrelevementCompteur.DatePrelevement:=datetostr(FSListePrelevement.EditDatePrelevement.Date);
+                    RArchivePrelevementCompteur.HeurePrelevement:=timetostr(FSListePrelevement.EditHeurePrelevement.Time);
+                    Seek(FArchivePrelevementCompteur,i);
+                    write(FArchivePrelevementCompteur,RArchivePrelevementCompteur);
+                    Seek(FArchivePrelevementCompteur,i+1);
+               end;
+               i:=i+1;
+          end;
+          CloseFile(FArchivePrelevementCompteur);
+
+          ChArchivePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds';
+          assignfile(FArchivePrelevementUniteFonds,ChArchivePrelevementUniteFonds);
+          if FileExists(ChArchivePrelevementUniteFonds)then
+          Reset(FArchivePrelevementUniteFonds)
+          else Rewrite(FArchivePrelevementUniteFonds);
+          Seek(FArchivePrelevementUniteFonds,0);
+          i:=0;
+          while not eof(FArchivePrelevementUniteFonds)do
+          begin
+               read(FArchivePrelevementUniteFonds,RArchivePrelevementUniteFonds);
+               if(RArchivePrelevementUniteFonds.NumPrelevement=strtointeger(FSListePrelevement.EditNumPrelevement.Text))
+               and(RArchivePrelevementUniteFonds.Matricule=FSListePrelevement.EditMatricule.Text)
+               then
+               begin
+                    RArchivePrelevementUniteFonds.NumEquipe:=strtointeger(FSListePrelevement.EditNumEquipe.Text);
+                    RArchivePrelevementUniteFonds.DatePrelevement:=datetostr(FSListePrelevement.EditDatePrelevement.Date);
+                    RArchivePrelevementUniteFonds.HeurePrelevement:=timetostr(FSListePrelevement.EditHeurePrelevement.Time);
+                    Seek(FArchivePrelevementUniteFonds,i);
+                    write(FArchivePrelevementUniteFonds,RArchivePrelevementUniteFonds);
+                    Seek(FArchivePrelevementUniteFonds,i+1);
+               end;
+               i:=i+1;
+          end;
+          CloseFile(FArchivePrelevementUniteFonds);
+
+          ChArchiveDetailArticlePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds';
+          assignfile(FArchiveDetailArticlePrelevementUniteFonds,ChArchiveDetailArticlePrelevementUniteFonds);
+          if FileExists(ChArchiveDetailArticlePrelevementUniteFonds)then
+          Reset(FArchiveDetailArticlePrelevementUniteFonds)
+          else Rewrite(FArchiveDetailArticlePrelevementUniteFonds);
+          Seek(FArchiveDetailArticlePrelevementUniteFonds,0);
+          i:=0;
+          while not eof(FArchiveDetailArticlePrelevementUniteFonds)do
+          begin
+               read(FArchiveDetailArticlePrelevementUniteFonds,RArchiveDetailArticlePrelevementUniteFonds);
+               if(RArchiveDetailArticlePrelevementUniteFonds.NumPrelevement=strtointeger(FSListePrelevement.EditNumPrelevement.Text))
+               and(RArchiveDetailArticlePrelevementUniteFonds.Matricule=FSListePrelevement.EditMatricule.Text)
+               then
+               begin
+                    RArchiveDetailArticlePrelevementUniteFonds.NumEquipe:=strtointeger(FSListePrelevement.EditNumEquipe.Text);
+                    RArchiveDetailArticlePrelevementUniteFonds.DatePrelevement:=datetostr(FSListePrelevement.EditDatePrelevement.Date);
+                    RArchiveDetailArticlePrelevementUniteFonds.HeurePrelevement:=timetostr(FSListePrelevement.EditHeurePrelevement.Time);
+                    Seek(FArchiveDetailArticlePrelevementUniteFonds,i);
+                    write(FArchiveDetailArticlePrelevementUniteFonds,RArchiveDetailArticlePrelevementUniteFonds);
+                    Seek(FArchiveDetailArticlePrelevementUniteFonds,i+1);
+               end;
+               i:=i+1;
+          end;
+          CloseFile(FArchiveDetailArticlePrelevementUniteFonds);
+
+          ChArchivePrelevementEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe';
+          assignfile(FArchivePrelevementEffectifEquipe,ChArchivePrelevementEffectifEquipe);
+          if FileExists(ChArchivePrelevementEffectifEquipe)then
+          Reset(FArchivePrelevementEffectifEquipe)
+          else Rewrite(FArchivePrelevementEffectifEquipe);
+          Seek(FArchivePrelevementEffectifEquipe,0);
+          i:=0;
+          while not eof(FArchivePrelevementEffectifEquipe)do
+          begin
+               read(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe);
+               if(RArchivePrelevementEffectifEquipe.NumPrelevement=strtointeger(FSListePrelevement.EditNumPrelevement.Text))
+               and(RArchivePrelevementEffectifEquipe.Matricule=FSListePrelevement.EditMatricule.Text)
+               then
+               begin
+                    RArchivePrelevementEffectifEquipe.NumEquipe:=strtointeger(FSListePrelevement.EditNumEquipe.Text);
+                    RArchivePrelevementEffectifEquipe.DatePrelevement:=datetostr(FSListePrelevement.EditDatePrelevement.Date);
+                    RArchivePrelevementEffectifEquipe.HeurePrelevement:=timetostr(FSListePrelevement.EditHeurePrelevement.Time);
+                    Seek(FArchivePrelevementEffectifEquipe,i);
+                    write(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe);
+                    Seek(FArchivePrelevementEffectifEquipe,i+1);
+               end;
+               i:=i+1;
+          end;
+          CloseFile(FArchivePrelevementEffectifEquipe);
+
+          ChArchiveRegistreEtatStockPrelevement:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement';
+          assignfile(FArchiveRegistreEtatStockPrelevement,ChArchiveRegistreEtatStockPrelevement);
+          if FileExists(ChArchiveRegistreEtatStockPrelevement)then
+          Reset(FArchiveRegistreEtatStockPrelevement)
+          else Rewrite(FArchiveRegistreEtatStockPrelevement);
+          Seek(FArchiveRegistreEtatStockPrelevement,0);
+          i:=0;
+          while not eof(FArchiveRegistreEtatStockPrelevement)do
+          begin
+               read(FArchiveRegistreEtatStockPrelevement,RArchiveRegistreEtatStockPrelevement);
+               if(RArchiveRegistreEtatStockPrelevement.NumPrelevement=strtointeger(FSListePrelevement.EditNumPrelevement.Text))
+               and(RArchiveRegistreEtatStockPrelevement.Matricule=FSListePrelevement.EditMatricule.Text)
+               then
+               begin
+                    RArchiveRegistreEtatStockPrelevement.NumEquipe:=strtointeger(FSListePrelevement.EditNumEquipe.Text);
+                    RArchiveRegistreEtatStockPrelevement.DatePrelevement:=datetostr(FSListePrelevement.EditDatePrelevement.Date);
+                    RArchiveRegistreEtatStockPrelevement.HeurePrelevement:=timetostr(FSListePrelevement.EditHeurePrelevement.Time);
+                    Seek(FArchiveRegistreEtatStockPrelevement,i);
+                    write(FArchiveRegistreEtatStockPrelevement,RArchiveRegistreEtatStockPrelevement);
+                    Seek(FArchiveRegistreEtatStockPrelevement,i+1);
+               end;
+               i:=i+1;
+          end;
+          CloseFile(FArchiveRegistreEtatStockPrelevement);
+
+FSListePrelevement.AfficheOperationPrelevement.Visible:=false;
+FSListePrelevement.TableauEquipe.Visible:=false;
+ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,FSListePrelevement.EditNumPrelevement.Text,FSListePrelevement.EditMatricule.Text,FSListePrelevement.RBAbregerTitreRubrique.Checked);
+FSListePrelevement.TableauListePrelevement.SetFocus;
+end;
+
+procedure TFSListePrelevement.BitAnnulerCorrectionAutomatiqueClick(Sender: TObject);
+begin
+     if(FSListePrelevement.TableauListePrelevement.Row<FSListePrelevement.TableauListePrelevement.RowCount-1)
+     and(FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row+1]<>'')
+     then
+     begin
+          FSListePrelevement.TableauListePrelevement.Row:=FSListePrelevement.TableauListePrelevement.Row+1;
+          FSListePrelevement.AfficheControleImportePrelevement.Height:=269;
+          FSListePrelevement.BitControleAnomalies.SetFocus;
+          FSListePrelevement.RBControleAnomalieUnParUn.Checked:=false;
+     end;
+
+     FSListePrelevement.AfficheAuthentification.Height:=0;
+
+     FSListePrelevement.TimerControleSystimatique.Enabled:=FSListePrelevement.RBExecutionAutomatique.Checked;
+end;
+
+procedure TFSListePrelevement.BitBtn2Click(Sender: TObject);
+var  R:integer; TitreEtat,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol:string;  ImprimeTableau:boolean;
+begin
+     TitreEtat:='Authentification Prélèvements: '+FSListePrelevement.AfficheRapport.Caption;
+
+     GrasARow:='0';
+     GrasACol:='0';
+     CenterARow:='0';
+     CenterACol:='0-5;7-9';
+     RightARow:='';
+     RightACol:='10-13;32-35';
+     ImprimeTableau:=true;
+     OptionsImpression(FSListePrelevement.TableauAuthentification,'Center',R,1,TitreEtat,FSListePrelevement.RBAjustementPrelevement.Checked,FSListePrelevement.RBOrientationPapierPrelevement.Text,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol,ImprimeTableau,1,FSMenuPrincipal.ImageCodebarre,true,R);
+end;
+
+procedure TFSListePrelevement.BitBtn4Click(Sender: TObject);
+begin
+FSListePrelevement.AfficheControleImportePrelevement.Height:=33;
+
+if(FSListePrelevement.AfficheOptionPrelevement.Height=345)
+then FSListePrelevement.AfficheOptionPrelevement.Height:=33
+else FSListePrelevement.AfficheOptionPrelevement.Height:=345;
+
+end;
+
+procedure TFSListePrelevement.RBTableauVolatileClick(Sender: TObject);
+begin
+FSListePrelevement.AfficheOptionPrelevement.Height:=33;
+FSListePrelevement.AfficheControleImportePrelevement.Height:=33;
+end;
+
+procedure TFSListePrelevement.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+     TitreFicheSaisie(FSListePrelevement,'Liste des prélèvements');
+
+     FSListePrelevement.AfficheAuthentification.Height:=0;
+     FSListePrelevement.TableauEquipe.Visible:=false;
+     FSListePrelevement.AfficheOptionPrelevement.Height:=33;
+     FSListePrelevement.AfficheControleImportePrelevement.Height:=33;
+end;
+
+procedure TFSListePrelevement.RBAfficherEcartSuperieurClick(
+  Sender: TObject);
+begin
+     FSListePrelevement.AfficheAuthentification.Height:=0;
+     FSListePrelevement.EditSoldeMinimum.Enabled:=FSListePrelevement.RBAfficherEcartSuperieur.Checked;
+     if(FSListePrelevement.RBAfficherEcartSuperieur.Checked=false)
+     then
+     begin
+          FSListePrelevement.EditSoldeMinimum.Text:='';
+     end
+     else
+     begin
+          if(FSListePrelevement.EditSoldeMinimum.Text='')
+          then FSListePrelevement.EditSoldeMinimum.SetFocus;
+     end;
+end;
+
+procedure TFSListePrelevement.EditSoldeMinimumEnter(Sender: TObject);
+begin
+     FSListePrelevement.AfficheAuthentification.Height:=0;
+end;
+
+procedure TFSListePrelevement.BitCorrectionAutomatiqueClick(Sender: TObject);
+var  R,l,C:integer;  NumPrelevementSelect,MatriculeSelect,SignePositive,NotCol:string;   OKPrelevement:boolean;
+     TotalMontantPrelevement,TotalFondRoulement,TotalUniteFonds,TotalSoldePrelevement:real;
+begin
+     if(FSListePrelevement.RBControleAnomalieSelect.Checked=true)then
+     begin
+          NumPrelevementSelect:=FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row];
+          MatriculeSelect:=FSListePrelevement.TableauListePrelevement.Cells[5,FSListePrelevement.TableauListePrelevement.Row];
+     end
+     else
+     begin
+          NumPrelevementSelect:='';
+          MatriculeSelect:='';
+     end;
+
+     OpenFParc(RParc);
+     ChPrelevement:=RParc.Parcours+'\'+Exercice+'FPrelevement';
+     assignfile(FPrelevement,ChPrelevement);
+     if FileExists(ChPrelevement)then
+     Reset(FPrelevement)
+     else Rewrite(FPrelevement);
+     R:=1;
+     while(R<=FSListePrelevement.TableauAuthentification.RowCount-1)do
+     begin
+          RPrelevement.NumPrelevement:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[2,R]);
+          RPrelevement.CodeUtilisateur:=FSListePrelevement.TableauAuthentification.Cells[3,R];
+          RPrelevement.NumEquipe:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[4,R]);
+          RPrelevement.Matricule:=FSListePrelevement.TableauAuthentification.Cells[5,R];
+          RPrelevement.DatePrelevement:=FSListePrelevement.TableauAuthentification.Cells[7,R];
+          RPrelevement.HeurePrelevement:=FSListePrelevement.TableauAuthentification.Cells[8,R];
+          RPrelevement.Archiver:=strtoboolean(FSListePrelevement.TableauAuthentification.Cells[9,R]);
+
+          //RPrelevement.MontantPrelevement:=strtoreal(FSListePrelevement.TableauAuthentification.Cells[10,R]);
+          //RPrelevement.MontantFondRoulement:=strtoreal(FSListePrelevement.TableauAuthentification.Cells[11,R]);
+          //RPrelevement.MontantUnitesFonds:=strtoreal(FSListePrelevement.TableauAuthentification.Cells[12,R]);
+          //RPrelevement.SoldePrelevement:=strtoreal(FSListePrelevement.TableauAuthentification.Cells[13,R]);
+
+          RPrelevement.MontantPrelevement:=strtoreal(FSListePrelevement.TableauAuthentification.Cells[32,R]);
+          RPrelevement.MontantFondRoulement:=strtoreal(FSListePrelevement.TableauAuthentification.Cells[33,R]);
+          RPrelevement.MontantUnitesFonds:=strtoreal(FSListePrelevement.TableauAuthentification.Cells[34,R]);
+          RPrelevement.SoldePrelevement:=strtoreal(FSListePrelevement.TableauAuthentification.Cells[35,R]);
+
+          RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[14,R]);
+          RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[15,R]);
+
+          RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[16,R]);
+          RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[17,R]);
+
+          RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[18,R]);
+          RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[19,R]);
+
+          RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[20,R]);
+          RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[21,R]);
+
+          RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[22,R]);
+          RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[23,R]);
+
+          RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[24,R]);
+          RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[25,R]);
+
+          RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[26,R]);
+          RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[27,R]);
+
+          RPrelevement.RegistrePositionAutre2.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[28,R]);
+          RPrelevement.RegistrePositionAutre2.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[29,R]);
+
+          RPrelevement.RegistrePositionAutre3.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[30,R]);
+          RPrelevement.RegistrePositionAutre3.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauAuthentification.Cells[31,R]);
+
+          Seek(FPrelevement,strtointeger(FSListePrelevement.TableauAuthentification.Cells[1,R]));
+          write(FPrelevement,RPrelevement);
+     R:=R+1;
+
+     ///////////////////////////////////////////////////////////////////////////
+     l:=1;
+     OKPrelevement:=false;
+     while(l<=FSListePrelevement.TableauListePrelevement.RowCount-1)and(OKPrelevement=false)do
+     begin
+          if(FSListePrelevement.TableauListePrelevement.Cells[2,l]=inttostr(RPrelevement.NumPrelevement))
+          and(FSListePrelevement.TableauListePrelevement.Cells[3,l]=RPrelevement.CodeUtilisateur)
+          and(FSListePrelevement.TableauListePrelevement.Cells[4,l]=inttostr(RPrelevement.NumEquipe))
+          and(FSListePrelevement.TableauListePrelevement.Cells[5,l]=RPrelevement.Matricule)
+          then
+          begin
+               OKPrelevement:=true;
+
+               TotalMontantPrelevement:=strtoreal(TableauListePrelevement.Cells[10,TableauListePrelevement.RowCount-1])-strtoreal(TableauListePrelevement.Cells[10,l])+RPrelevement.MontantPrelevement;
+               TotalFondRoulement:=strtoreal(TableauListePrelevement.Cells[11,TableauListePrelevement.RowCount-1])-strtoreal(TableauListePrelevement.Cells[11,l])+RPrelevement.MontantFondRoulement;
+               TotalUniteFonds:=strtoreal(TableauListePrelevement.Cells[12,TableauListePrelevement.RowCount-1])-strtoreal(TableauListePrelevement.Cells[12,l])+RPrelevement.MontantUnitesFonds;
+               TotalSoldePrelevement:=strtoreal(TableauListePrelevement.Cells[13,TableauListePrelevement.RowCount-1])-strtoreal(TableauListePrelevement.Cells[13,l])+RPrelevement.SoldePrelevement;
+
+               //FSListePrelevement.TableauListePrelevement.Rows[l].Text:=inttostr(l);
+               //FSListePrelevement.TableauListePrelevement.Cells[1,l]:='';
+               //FSListePrelevement.TableauListePrelevement.Cells[2,l]:=inttostr(RPrelevement.NumPrelevement);
+               //FSListePrelevement.TableauListePrelevement.Cells[3,l]:=RPrelevement.CodeUtilisateur;
+               //FSListePrelevement.TableauListePrelevement.Cells[4,l]:=inttostr(RPrelevement.NumEquipe);
+               //FSListePrelevement.TableauListePrelevement.Cells[5,l]:=RPrelevement.Matricule;
+               //RPersonnel:=CherchePersonnel(RPrelevement.Matricule);
+               //FSListePrelevement.TableauListePrelevement.Cells[6,l]:=RPersonnel.Nom+' '+RPersonnel.Prenom;
+               //FSListePrelevement.TableauListePrelevement.Cells[7,l]:=RPrelevement.DatePrelevement;
+               //FSListePrelevement.TableauListePrelevement.Cells[8,l]:=RPrelevement.HeurePrelevement;
+               //FSListePrelevement.TableauListePrelevement.Cells[9,l]:=booleantostr(RPrelevement.Archiver);
+               FSListePrelevement.TableauListePrelevement.Cells[10,l]:=Vergule(floattostr(RPrelevement.MontantPrelevement),'2','C','');
+               FSListePrelevement.TableauListePrelevement.Cells[11,l]:=Vergule(floattostr(RPrelevement.MontantFondRoulement),'2','C','');
+               FSListePrelevement.TableauListePrelevement.Cells[12,l]:=Vergule(floattostr(RPrelevement.MontantUnitesFonds),'2','C','');
+               if(RPrelevement.SoldePrelevement>0)then SignePositive:='+'else SignePositive:='';
+               FSListePrelevement.TableauListePrelevement.Cells[13,l]:=SignePositive+Vergule(floattostr(RPrelevement.SoldePrelevement),'2','C','');
+
+               FSListePrelevement.TableauListePrelevement.Cells[14,l]:=inttostr(RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveBegin);
+               FSListePrelevement.TableauListePrelevement.Cells[15,l]:=inttostr(RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveEnd);
+
+               FSListePrelevement.TableauListePrelevement.Cells[16,l]:=inttostr(RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveBegin);
+               FSListePrelevement.TableauListePrelevement.Cells[17,l]:=inttostr(RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveEnd);
+
+               FSListePrelevement.TableauListePrelevement.Cells[18,l]:=inttostr(RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin);
+               FSListePrelevement.TableauListePrelevement.Cells[19,l]:=inttostr(RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd);
+
+               FSListePrelevement.TableauListePrelevement.Cells[20,l]:=inttostr(RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin);
+               FSListePrelevement.TableauListePrelevement.Cells[21,l]:=inttostr(RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd);
+
+               FSListePrelevement.TableauListePrelevement.Cells[22,l]:=inttostr(RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin);
+               FSListePrelevement.TableauListePrelevement.Cells[23,l]:=inttostr(RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd);
+
+               FSListePrelevement.TableauListePrelevement.Cells[24,l]:=inttostr(RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin);
+               FSListePrelevement.TableauListePrelevement.Cells[25,l]:=inttostr(RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd);
+
+               FSListePrelevement.TableauListePrelevement.Cells[26,l]:=inttostr(RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveBegin);
+               FSListePrelevement.TableauListePrelevement.Cells[27,l]:=inttostr(RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveEnd);
+
+               FSListePrelevement.TableauListePrelevement.Cells[28,l]:=inttostr(RPrelevement.RegistrePositionAutre2.PositionArchiveBegin);
+               FSListePrelevement.TableauListePrelevement.Cells[29,l]:=inttostr(RPrelevement.RegistrePositionAutre2.PositionArchiveEnd);
+
+               FSListePrelevement.TableauListePrelevement.Cells[30,l]:=inttostr(RPrelevement.RegistrePositionAutre3.PositionArchiveBegin);
+               FSListePrelevement.TableauListePrelevement.Cells[31,l]:=inttostr(RPrelevement.RegistrePositionAutre3.PositionArchiveEnd);
+
+               TableauListePrelevement.Cells[10,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantPrelevement),'2','C','');
+               TableauListePrelevement.Cells[11,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalFondRoulement),'2','C','');
+               TableauListePrelevement.Cells[12,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalUniteFonds),'2','C','');
+               if(TotalSoldePrelevement>0)then SignePositive:='+'else SignePositive:='';
+               TableauListePrelevement.Cells[13,TableauListePrelevement.RowCount-1]:=SignePositive+Vergule(floattostr(TotalSoldePrelevement),'2','C','');
+          end;
+     l:=l+1;
+     end;
+
+     NotCol:='3;4;14-31';
+     for C:=1 to FSListePrelevement.TableauListePrelevement.ColCount-1 do if existenumintexte(inttostr(C),NotCol) then FSListePrelevement.TableauListePrelevement.ColWidths[C]:=0;
+     AjusterColWidth(FSListePrelevement.TableauListePrelevement,'',NotCol);
+     ///////////////////////////////////////////////////////////////////////////
+     end;
+     CloseFile(FPrelevement);
+
+     //ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,NumPrelevementSelect,MatriculeSelect,FSListePrelevement.RBAbregerTitreRubrique.Checked);
+     FSListePrelevement.TableauListePrelevement.SetFocus;
+
+     if(FSListePrelevement.RBSelectNext.Checked=true)then
+     begin
+          if(FSListePrelevement.TableauListePrelevement.Row<FSListePrelevement.TableauListePrelevement.RowCount-1)
+          and(FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row+1]<>'')
+          then
+          begin
+               FSListePrelevement.TableauListePrelevement.Row:=FSListePrelevement.TableauListePrelevement.Row+1;
+               FSListePrelevement.AfficheControleImportePrelevement.Height:=269;
+               FSListePrelevement.BitControleAnomalies.SetFocus;
+          end;
+     end;
+     FSListePrelevement.AfficheAuthentification.Height:=0;
+
+     FSListePrelevement.TimerControleSystimatique.Enabled:=FSListePrelevement.RBExecutionAutomatique.Checked;
+end;
+
+procedure TFSListePrelevement.EditDateDebutPrelevementChange(
+  Sender: TObject);
+begin
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked)
+end;
+
+procedure TFSListePrelevement.RBAfficheSoldeAnterieurClick(
+  Sender: TObject);
+begin
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked)
+end;
+
+procedure TFSListePrelevement.BitBtn20Click(Sender: TObject);
+var  R:integer; TitreEtat,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol:string;  ImprimeTableau:boolean;
+begin
+     FSListePrelevement.MemoTitre.Text:='';
+     FSListePrelevement.MemoTitre.Lines.Add('Liste Prélevements');
+     FSListePrelevement.MemoTitre.Lines.Add('Période du: '+datetostr(FSListePrelevement.EditDateDebutPrelevement.Date)+' au '+datetostr(FSListePrelevement.EditDateFinPrelevement.Date));
+     if(FSListePrelevement.EditEffectifEquipe.Text<>'')
+     then FSListePrelevement.MemoTitre.Lines.Add('Efféctif: '+FSListePrelevement.EditEffectifEquipe.Text);
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)
+     then FSListePrelevement.MemoTitre.Lines.Add('Solde antérieur inclus')
+     else FSListePrelevement.MemoTitre.Lines.Add('Sans solde antérieur');
+     TitreEtat:=FSListePrelevement.MemoTitre.Text;
+
+     GrasARow:='0;'+inttostr(FSListePrelevement.TableauListePrelevement.RowCount-1);
+     GrasACol:='0';
+     CenterARow:='0';
+     CenterACol:='0-5;7-9';
+     RightARow:='';
+     RightACol:='10-13';
+     ImprimeTableau:=true;
+     OptionsImpression(FSListePrelevement.TableauListePrelevement,'Center',R,1,TitreEtat,FSListePrelevement.RBAjustementPrelevement.Checked,FSListePrelevement.RBOrientationPapierPrelevement.Text,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol,ImprimeTableau,1,FSMenuPrincipal.ImageCodebarre,true,R);
+
+     FSListePrelevement.AfficheOptionPrelevement.Height:=33;
+
+end;
+
+Procedure ListePrelevementMatricule(TableauListePrelevement:TStringGrid; DateDubut,DateFin:string);
+var R,l:integer;  DateAnterieur:string[10];  OKPrelevement:boolean;  PositionPrelevement,TypeProcesPrelevement,FichierConcernePrelevement,AdressePrelevement:string;
+    MontantCompteur,MontantUniteFonds,MontantFondRoulement,SoldePrelevement,
+    TotalMontantCompteur,TotalMontantUniteFonds,TotalMontantFondRoulement,TotalSoldePrelevement,
+    MontantCompteurAnterieur,MontantUniteFondsAnterieur,MontantFondRoulementAnterieur,SoldePrelevementAnterieur:real;
+    RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3:RRegistrePositionArchives;
+begin
+     TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule);
+
+     TableauListePrelevement.ColCount:=32;
+     TableauListePrelevement.Cols[1].Text:='Sélect.';
+     TableauListePrelevement.Cols[2].Text:='Num';
+     TableauListePrelevement.Cols[3].Text:='Code Untilisateur';
+     TableauListePrelevement.Cols[4].Text:='Num. Equipe';
+     TableauListePrelevement.Cols[5].Text:='Matricule';
+     TableauListePrelevement.Cols[6].Text:='Efféctif';
+     TableauListePrelevement.Cols[7].Text:='Date';
+     TableauListePrelevement.Cols[8].Text:='Heure';
+     TableauListePrelevement.Cols[9].Text:='Archivage';
+     TableauListePrelevement.Cols[10].Text:='Mt. Prélèvement';
+     TableauListePrelevement.Cols[11].Text:='Mt. Fond Roulement';
+     TableauListePrelevement.Cols[12].Text:='Mt. Unités Fonds';
+     TableauListePrelevement.Cols[13].Text:='Solde';
+
+     TableauListePrelevement.Cols[14].Text:='P° Prélèvement Compteur début';
+     TableauListePrelevement.Cols[15].Text:='P° Prélèvement Compteur Fin';
+
+     TableauListePrelevement.Cols[16].Text:='P° Prélèvement Unité Fonds Début';
+     TableauListePrelevement.Cols[17].Text:='P° Prélèvement Unité Fonds Fin';
+
+     TableauListePrelevement.Cols[18].Text:='P° Prélèvement Efféctif Equipe Début';
+     TableauListePrelevement.Cols[19].Text:='P° Prélèvement Efféctif Equipe Fin';
+
+     TableauListePrelevement.Cols[20].Text:='P° Prélèvement Affectation Efféctif Equipe Début';
+     TableauListePrelevement.Cols[21].Text:='P° Prélèvement Affectation Efféctif Equipe Fin';
+
+     TableauListePrelevement.Cols[22].Text:='P° Prélèvement DetailArticlePrelevementUniteFonds Début';
+     TableauListePrelevement.Cols[23].Text:='P° Prélèvement DetailArticlePrelevementUniteFonds Fin';
+
+     TableauListePrelevement.Cols[24].Text:='P° Prélèvement MoyenTransportPrelevement Début';
+     TableauListePrelevement.Cols[25].Text:='P° Prélèvement MoyenTransportPrelevement Fin';
+
+     TableauListePrelevement.Cols[26].Text:='P° Prélèvement Etat Stock Prélèvement Début';
+     TableauListePrelevement.Cols[27].Text:='P° Prélèvement Etat Stock Prélèvement Fin';
+
+     TableauListePrelevement.Cols[28].Text:='P° Prélèvement Autre1 Début';
+     TableauListePrelevement.Cols[29].Text:='P° Prélèvement Autre1 Fin';
+
+     TableauListePrelevement.Cols[30].Text:='P° Prélèvement Autre2 Début';
+     TableauListePrelevement.Cols[31].Text:='P° Prélèvement Autre2 Fin';
+
+     TableauListePrelevement.RowCount:=2;
+     TableauListePrelevement.Rows[1].Text:='';
+
+     MontantCompteur:=0;
+     MontantFondRoulement:=0;
+     MontantUniteFonds:=0;
+     SoldePrelevement:=0;
+
+     TotalMontantCompteur:=0;
+     TotalMontantFondRoulement:=0;
+     TotalMontantUniteFonds:=0;
+     TotalSoldePrelevement:=0;
+
+     MontantCompteurAnterieur:=0;
+     MontantFondRoulementAnterieur:=0;
+     MontantUniteFondsAnterieur:=0;
+     SoldePrelevementAnterieur:=0;
+
+     R:=0;
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+     begin
+          R:=R+1;
+          TableauListePrelevement.Rows[R].Text:=inttostr(R);
+          TableauListePrelevement.Cells[1,R]:='';
+          TableauListePrelevement.Cells[2,R]:='';
+          TableauListePrelevement.Cells[3,R]:='';
+          TableauListePrelevement.Cells[4,R]:='';
+          TableauListePrelevement.Cells[5,R]:='';
+          TableauListePrelevement.Cells[6,R]:='Solde au:';
+          TableauListePrelevement.Cells[7,R]:=datetostr(strtodate(DateDubut)-1);
+          TableauListePrelevement.Cells[8,R]:='';
+          TableauListePrelevement.Cells[9,R]:=booleantostr(true);
+          TableauListePrelevement.Cells[10,R]:='';
+          TableauListePrelevement.Cells[11,R]:='';
+          TableauListePrelevement.Cells[12,R]:='';
+          TableauListePrelevement.Cells[13,R]:='';
+          TableauListePrelevement.Cells[14,R]:='';
+          TableauListePrelevement.Cells[15,R]:='';
+          TableauListePrelevement.Cells[16,R]:='';
+          TableauListePrelevement.Cells[17,R]:='';
+          TableauListePrelevement.Cells[18,R]:='';
+          TableauListePrelevement.Cells[19,R]:='';
+          TableauListePrelevement.Cells[20,R]:='';
+          TableauListePrelevement.Cells[21,R]:='';
+          TableauListePrelevement.Cells[22,R]:='';
+          TableauListePrelevement.Cells[23,R]:='';
+          TableauListePrelevement.Cells[24,R]:='';
+          TableauListePrelevement.Cells[25,R]:='';
+          TableauListePrelevement.Cells[26,R]:='';
+          TableauListePrelevement.Cells[27,R]:='';
+          TableauListePrelevement.Cells[28,R]:='';
+          TableauListePrelevement.Cells[29,R]:='';
+          TableauListePrelevement.Cells[30,R]:='';
+          TableauListePrelevement.Cells[31,R]:='';
+
+          TypeProcesPrelevement:='Business';
+          FichierConcernePrelevement:='FPrelevement';
+          AdressePrelevement:='';
+          if not(FunctionAdresseProces(TypeProcesPrelevement,FichierConcernePrelevement,'',AdressePrelevement,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+               AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcernePrelevement+' recherché !');
+          end;
+
+          ChPrelevement:=AdressePrelevement;
+          assignfile(FPrelevement,ChPrelevement);
+          if FileExists(ChPrelevement)then
+          Reset(FPrelevement)
+          else Rewrite(FPrelevement);
+          Seek(FPrelevement,0);
+          while not eof(FPrelevement)do
+          begin
+               read(FPrelevement,RPrelevement);  Application.ProcessMessages;  if(FSListePrelevement.RBSuspendreListePrelevementMatricule.Checked=true)then Exit;
+
+               if(RPrelevement.DatePrelevement='31/12/'+inttostr(strtointeger(ExerciceAnnee)-1))then
+               begin
+                    MontantCompteurAnterieur:=MontantCompteurAnterieur+RPrelevement.MontantPrelevement;
+                    MontantFondRoulementAnterieur:=MontantFondRoulementAnterieur+RPrelevement.MontantFondRoulement;
+                    MontantUniteFondsAnterieur:=MontantUniteFondsAnterieur+RPrelevement.MontantUnitesFonds;
+                    SoldePrelevementAnterieur:=SoldePrelevementAnterieur+RPrelevement.SoldePrelevement;
+
+                    TotalMontantCompteur:=TotalMontantCompteur+RPrelevement.MontantPrelevement;
+                    TotalMontantFondRoulement:=TotalMontantFondRoulement+RPrelevement.MontantFondRoulement;
+                    TotalMontantUniteFonds:=TotalMontantUniteFonds+RPrelevement.MontantUnitesFonds;
+                    TotalSoldePrelevement:=TotalSoldePrelevement+RPrelevement.SoldePrelevement;
+               end;
+          end;
+          CloseFile(FPrelevement);
+     end;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe';
+     assignfile(FArchivePrelevementEffectifEquipe,ChArchivePrelevementEffectifEquipe);
+     if FileExists(ChArchivePrelevementEffectifEquipe)then
+     Reset(FArchivePrelevementEffectifEquipe)
+     else Rewrite(FArchivePrelevementEffectifEquipe);
+     Seek(FArchivePrelevementEffectifEquipe,0);
+     while not eof(FArchivePrelevementEffectifEquipe)do
+     begin
+          read(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe);  Application.ProcessMessages; if(FSListePrelevement.RBSuspendreListePrelevementMatricule.Checked=true)then Exit;
+
+          FSListePrelevement.ProgressPatienter.StepIt;
+
+          //if(RArchivePrelevementEffectifEquipe.NumPrelevement>0)then
+          begin
+                if(strtodate(RArchivePrelevementEffectifEquipe.DatePrelevement)<strtodate(DateDubut))then
+                begin
+                     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+                     begin
+                          DataArchivePrelevement(RArchivePrelevementEffectifEquipe.NumPrelevement,ExerciceAnnee,inttostr(RArchivePrelevementEffectifEquipe.NumEquipe),RArchivePrelevementEffectifEquipe.Matricule,false,true,TPrelevementCopie,ArrayIndexPrelevementMatricule,MontantCompteur,MontantUniteFonds,MontantFondRoulement,SoldePrelevement,RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3,PositionPrelevement,OKPrelevementArchiveAvecSucce);
+
+                          MontantCompteurAnterieur:=MontantCompteurAnterieur+RPrelevement.MontantPrelevement;
+                          MontantFondRoulementAnterieur:=MontantFondRoulementAnterieur+RPrelevement.MontantFondRoulement;
+                          MontantUniteFondsAnterieur:=MontantUniteFondsAnterieur+RPrelevement.MontantUnitesFonds;
+                          SoldePrelevementAnterieur:=SoldePrelevementAnterieur+RPrelevement.SoldePrelevement;
+
+                          TotalMontantCompteur:=TotalMontantCompteur+RPrelevement.MontantPrelevement;
+                          TotalMontantFondRoulement:=TotalMontantFondRoulement+RPrelevement.MontantFondRoulement;
+                          TotalMontantUniteFonds:=TotalMontantUniteFonds+RPrelevement.MontantUnitesFonds;
+                          TotalSoldePrelevement:=TotalSoldePrelevement+RPrelevement.SoldePrelevement;
+                     end;
+                end;
+
+                if(strtodate(RArchivePrelevementEffectifEquipe.DatePrelevement)>=strtodate(DateDubut))and(strtodate(RArchivePrelevementEffectifEquipe.DatePrelevement)<=strtodate(DateFin))then
+                begin
+                     OKPrelevement:=true;
+
+                     if(OKPrelevement=true)then
+                     begin
+                          DataArchivePrelevement(RArchivePrelevementEffectifEquipe.NumPrelevement,ExerciceAnnee,inttostr(RArchivePrelevementEffectifEquipe.NumEquipe),RArchivePrelevementEffectifEquipe.Matricule,false,false,TPrelevementCopie,ArrayIndexPrelevementMatricule,MontantCompteur,MontantUniteFonds,MontantFondRoulement,SoldePrelevement,RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3,PositionPrelevement,OKPrelevementArchiveAvecSucce);
+
+                          R:=R+1;
+                          TableauListePrelevement.Rows[R].Text:=inttostr(R);
+                          TableauListePrelevement.Cells[1,R]:='';
+                          TableauListePrelevement.Cells[2,R]:=inttostr(RArchivePrelevementEffectifEquipe.NumPrelevement);
+                          TableauListePrelevement.Cells[3,R]:=RArchivePrelevementEffectifEquipe.CodeUtilisateur;
+                          TableauListePrelevement.Cells[4,R]:=inttostr(RArchivePrelevementEffectifEquipe.NumEquipe);
+                          TableauListePrelevement.Cells[5,R]:=RArchivePrelevementEffectifEquipe.Matricule;
+                          RPersonnel:=CherchePersonnel(RArchivePrelevementEffectifEquipe.Matricule);
+                          TableauListePrelevement.Cells[6,R]:=RPersonnel.Nom+' '+RPersonnel.Prenom;
+                          TableauListePrelevement.Cells[7,R]:=RArchivePrelevementEffectifEquipe.DatePrelevement;
+                          TableauListePrelevement.Cells[8,R]:=RArchivePrelevementEffectifEquipe.HeurePrelevement;
+                          TableauListePrelevement.Cells[9,R]:='Oui';
+                          TableauListePrelevement.Cells[10,R]:=Vergule(floattostr(MontantCompteur),'2','C','');
+                          TableauListePrelevement.Cells[11,R]:=Vergule(floattostr(MontantFondRoulement),'2','C','');
+                          TableauListePrelevement.Cells[12,R]:=Vergule(floattostr(MontantUniteFonds),'2','C','');
+                          TableauListePrelevement.Cells[13,R]:=Vergule(floattostr(SoldePrelevement),'2','C','');
+
+                          TableauListePrelevement.Cells[14,R]:=inttostr(RegistrePositionPrelevementCompteur.PositionArchiveBegin);
+                          TableauListePrelevement.Cells[15,R]:=inttostr(RegistrePositionPrelevementCompteur.PositionArchiveEnd);
+
+                          TableauListePrelevement.Cells[16,R]:=inttostr(RegistrePositionPrelevementUniteFonds.PositionArchiveBegin);
+                          TableauListePrelevement.Cells[17,R]:=inttostr(RegistrePositionPrelevementUniteFonds.PositionArchiveEnd);
+
+                          TableauListePrelevement.Cells[18,R]:=inttostr(RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin);
+                          TableauListePrelevement.Cells[19,R]:=inttostr(RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd);
+
+                          TableauListePrelevement.Cells[20,R]:=inttostr(RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin);
+                          TableauListePrelevement.Cells[21,R]:=inttostr(RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd);
+
+                          TableauListePrelevement.Cells[22,R]:=inttostr(RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin);
+                          TableauListePrelevement.Cells[23,R]:=inttostr(RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd);
+
+                          TableauListePrelevement.Cells[24,R]:=inttostr(RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin);
+                          TableauListePrelevement.Cells[25,R]:=inttostr(RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd);
+
+                          TableauListePrelevement.Cells[26,R]:=inttostr(RegistrePositionEtatStockPrelevement.PositionArchiveBegin);
+                          TableauListePrelevement.Cells[27,R]:=inttostr(RegistrePositionEtatStockPrelevement.PositionArchiveEnd);
+
+                          TableauListePrelevement.Cells[28,R]:=inttostr(RegistrePositionAutre2.PositionArchiveBegin);
+                          TableauListePrelevement.Cells[29,R]:=inttostr(RegistrePositionAutre2.PositionArchiveEnd);
+
+                          TableauListePrelevement.Cells[30,R]:=inttostr(RegistrePositionAutre3.PositionArchiveBegin);
+                          TableauListePrelevement.Cells[31,R]:=inttostr(RegistrePositionAutre3.PositionArchiveEnd);
+
+                          TotalMontantCompteur:=TotalMontantCompteur+MontantCompteur;
+                          TotalMontantFondRoulement:=TotalMontantFondRoulement+MontantFondRoulement;
+                          TotalMontantUniteFonds:=TotalMontantUniteFonds+MontantUniteFonds;
+                          TotalSoldePrelevement:=TotalSoldePrelevement+SoldePrelevement;
+
+                          TableauListePrelevement.RowCount:=R+1;
+
+                          if(FSListePrelevement.RBSelectLastTableau.Checked=true)then
+                          begin
+                               TableauListePrelevement.Row:=R;
+                               TableauListePrelevement.SetFocus;
+                          end;
+                     end;
+                end;
+          end;
+     end;
+     CloseFile(FArchivePrelevementEffectifEquipe);
+
+     if(R>0)then TableauListePrelevement.RowCount:=R+1
+            else TableauListePrelevement.RowCount:=2;
+
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then
+     begin
+          TableauListePrelevement.Cells[10,1]:=Vergule(floattostr(MontantCompteurAnterieur),'2','C','');
+          TableauListePrelevement.Cells[11,1]:=Vergule(floattostr(MontantFondRoulementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[12,1]:=Vergule(floattostr(MontantUniteFondsAnterieur),'2','C','');
+          TableauListePrelevement.Cells[13,1]:=Vergule(floattostr(SoldePrelevementAnterieur),'2','C','');
+
+          TableauListePrelevement.RowCount:=TableauListePrelevement.RowCount+2;
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-2].Text:='';
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-1].Text:='';
+          TableauListePrelevement.Cells[9,TableauListePrelevement.RowCount-1]:='Total:';
+          TableauListePrelevement.Cells[10,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantCompteur),'2','C','');
+          TableauListePrelevement.Cells[11,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantFondRoulement),'2','C','');
+          TableauListePrelevement.Cells[12,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantUniteFonds),'2','C','');
+          TableauListePrelevement.Cells[13,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalSoldePrelevement),'2','C','');
+     end
+     else
+     begin
+          TableauListePrelevement.RowCount:=TableauListePrelevement.RowCount+2;
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-2].Text:='';
+          TableauListePrelevement.Rows[TableauListePrelevement.RowCount-1].Text:='';
+          TableauListePrelevement.Cells[9,TableauListePrelevement.RowCount-1]:='Total:';
+          TableauListePrelevement.Cells[10,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantCompteur-MontantCompteurAnterieur),'2','C','');
+          TableauListePrelevement.Cells[11,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantFondRoulement-MontantFondRoulementAnterieur),'2','C','');
+          TableauListePrelevement.Cells[12,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalMontantUniteFonds-MontantUniteFondsAnterieur),'2','C','');
+          TableauListePrelevement.Cells[13,TableauListePrelevement.RowCount-1]:=Vergule(floattostr(TotalSoldePrelevement-SoldePrelevementAnterieur),'2','C','');
+     end;
+
+     AjusterColWidth(TableauListePrelevement,'','');
+end;
+
+procedure TFSListePrelevement.AfficheControleImportePrelevementClick(Sender: TObject);
+begin
+     FSListePrelevement.RBControleAnomalieUnParUn.Checked:=false;
+     
+     if(FSListePrelevement.AfficheControleImportePrelevement.Height=269)
+     then FSListePrelevement.AfficheControleImportePrelevement.Height:=33
+     else FSListePrelevement.AfficheControleImportePrelevement.Height:=269;
+
+     FSListePrelevement.BitControleAnomalies.SetFocus;
+
+     Exit;
+
+     if(FSListePrelevement.EditCodeAutorisationControle.Text='000')then
+     begin
+          if(FSListePrelevement.AfficheControleImportePrelevement.Height=269)
+          then FSListePrelevement.AfficheControleImportePrelevement.Height:=33
+          else FSListePrelevement.AfficheControleImportePrelevement.Height:=269;
+
+          FSListePrelevement.EditCodeAutorisationControle.Text:='';
+     end
+     else
+     begin
+          FSListePrelevement.EditCodeAutorisationControle.Text:='';
+          FSListePrelevement.EditCodeAutorisationControle.SetFocus;
+          FSListePrelevement.AfficheControleImportePrelevement.Height:=33;
+     end;
+end;
+
+procedure TFSListePrelevement.BitBtn6Click(Sender: TObject);
+var i:integer;
+begin
+     FSListePrelevement.ProgressPatienter.Position:=0;
+     FSListePrelevement.ProgressPatienter.InitiateAction;
+     FSListePrelevement.AffichePatienterSVP.Visible:=true;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe';
+     assignfile(FArchivePrelevementEffectifEquipe,ChArchivePrelevementEffectifEquipe);
+     if FileExists(ChArchivePrelevementEffectifEquipe)then
+     Reset(FArchivePrelevementEffectifEquipe)
+     else Rewrite(FArchivePrelevementEffectifEquipe);
+     Seek(FArchivePrelevementEffectifEquipe,0);
+     i:=0;
+     while not eof(FArchivePrelevementEffectifEquipe)do
+     begin
+          read(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe);
+          i:=i+1;
+     end;
+
+     FSListePrelevement.ProgressPatienter.Max:=i;
+
+     FSListePrelevement.AfficheControleImportePrelevement.Height:=33;
+     FSListePrelevement.RBSuspendreListePrelevementMatricule.Checked:=false;
+     FSListePrelevement.TimerControleImportePrelevement.Enabled:=true;
+end;
+
+procedure TFSListePrelevement.BitValiderImportePrelevementClick(Sender: TObject);
+begin
+     FSListePrelevement.AffichePatienterSVP.Visible:=true;
+     FSListePrelevement.AfficheControleImportePrelevement.Height:=33;
+     FSListePrelevement.BitValiderImportePrelevement.Enabled:=false;
+     FSListePrelevement.TimerEnregistrerImpostation.Enabled:=true;
+end;
+
+procedure TFSListePrelevement.BitBtn8Click(Sender: TObject);
+var  TitreEtat,SousTitreEtat:string;
+begin
+     FSListePrelevement.AfficheControleImportePrelevement.Height:=33;
+
+     FSListePrelevement.MemoTitre.Text:='';
+     FSListePrelevement.MemoTitre.Lines.Add('Liste Prélevements');
+     FSListePrelevement.MemoTitre.Lines.Add('Période du: '+datetostr(FSListePrelevement.EditDateDebutPrelevement.Date)+' au '+datetostr(FSListePrelevement.EditDateFinPrelevement.Date));
+     TitreEtat:=FSListePrelevement.MemoTitre.Text;
+
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)
+     then SousTitreEtat:='Solde antérieur inclus'
+     else SousTitreEtat:='Sans solde antérieur';
+     TableauToExcel(FSListePrelevement.TableauListePrelevement,1,0,'','','','','','',TitreEtat,SousTitreEtat,'',true,FSMenuPrincipal.RBInsertLogo.Checked,FSMenuPrincipal.RBAfficherLaSaisie.Checked);
+end;
+
+procedure TFSListePrelevement.EditEffectifEquipeEnter(Sender: TObject);
+begin
+     FSListePrelevement.TableauEffectifEquipe.Left:=56;
+     FSListePrelevement.TableauEffectifEquipe.Top:=82;
+     FSListePrelevement.TableauEffectifEquipe.Visible:=true;
+     ListeEffectifEquipe(FSListePrelevement.TableauEffectifEquipe,'',false);
+end;
+
+procedure TFSListePrelevement.TableauEffectifEquipeDblClick(
+  Sender: TObject);
+begin
+     FSListePrelevement.EditMatriculeEffectif.Text:=FSListePrelevement.TableauEffectifEquipe.Cells[3,FSListePrelevement.TableauEffectifEquipe.Row];
+     FSListePrelevement.EditEffectifEquipe.Text:=FSListePrelevement.TableauEffectifEquipe.Cells[4,FSListePrelevement.TableauEffectifEquipe.Row];
+
+     FSListePrelevement.TableauEffectifEquipe.Visible:=false;
+
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked)
+end;
+
+procedure TFSListePrelevement.BitBtn7Click(Sender: TObject);
+begin
+     FSListePrelevement.EditMatriculeEffectif.Text:='';
+     FSListePrelevement.EditEffectifEquipe.Text:='';
+
+     FSListePrelevement.TableauEffectifEquipe.Visible:=false;
+
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked)
+end;
+
+
+
+procedure TFSListePrelevement.BitControleAnomaliesClick(Sender: TObject);
+var i:integer;
+begin
+     FSListePrelevement.ProgressPatienter.Position:=0;
+     FSListePrelevement.ProgressPatienter.InitiateAction;
+     FSListePrelevement.AffichePatienterSVP.Visible:=true;
+     FSListePrelevement.AfficheControleImportePrelevement.Height:=33;
+
+     if(FSListePrelevement.RBControleTableauAffiche.Checked=true)then
+     begin
+          if(FSListePrelevement.RBControleAnomalieUnParUn.Checked=true)
+          then
+          begin
+               if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)
+               then FSListePrelevement.ProgressPatienter.Max:=FSListePrelevement.TableauListePrelevement.RowCount-5
+               else FSListePrelevement.ProgressPatienter.Max:=FSListePrelevement.TableauListePrelevement.RowCount-4;
+          end
+          else FSListePrelevement.ProgressPatienter.Max:=1;
+          FSListePrelevement.TimerControleAnomalieTableauAffiche.Enabled:=true;
+     end
+     else
+     begin
+          if(FSListePrelevement.RBControleAnomalieUnParUn.Checked=true)
+          then
+          begin
+               if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)
+               then FSListePrelevement.ProgressPatienter.Max:=FSListePrelevement.TableauListePrelevement.RowCount-5
+               else FSListePrelevement.ProgressPatienter.Max:=FSListePrelevement.TableauListePrelevement.RowCount-4;
+          end
+          else
+          begin
+               if(FSListePrelevement.RBControleAnomalieSelect.Checked=true)
+               then FSListePrelevement.ProgressPatienter.Max:=1
+               else
+               begin
+                    OpenFParc(RParc);
+                    ChPrelevement:=RParc.Parcours+'\'+Exercice+'FPrelevement';
+                    assignfile(FPrelevement,ChPrelevement);
+                    if FileExists(ChPrelevement)then
+                    Reset(FPrelevement)
+                    else Rewrite(FPrelevement);
+                    Seek(FPrelevement,0);
+                    i:=0;
+                    while(not eof(FPrelevement))do
+                    begin
+                         read(FPrelevement,RPrelevement);
+                         if(RPrelevement.Archiver=true)and(RPrelevement.NumPrelevement<>0)
+                         then i:=i+1;
+                    end;
+                    CloseFile(FPrelevement);
+                    FSListePrelevement.ProgressPatienter.Max:=i;
+               end;
+          end;
+          FSListePrelevement.TimerControleAnomalie.Enabled:=true;
+     end;
+
+     FSListePrelevement.TimerControleSystimatique.Enabled:=FSListePrelevement.RBExecutionAutomatique.Checked;
+end;
+
+procedure TFSListePrelevement.EditMoisListePrelevementKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSListePrelevement.EditMoisListePrelevementSelect(
+  Sender: TObject);
+begin
+     FSListePrelevement.EditDateDebutPrelevement.Date:=strtodate('01/'+Completezerogauche(MidelLaters(FSListePrelevement.EditMoisListePrelevement.Text,2,3),'2')+'/'+FSListePrelevement.EditExercicePrelevement.Text);
+     FSListePrelevement.EditDateFinPrelevement.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSListePrelevement.EditDateDebutPrelevement.Date))),'2')+'/'+lastlaters(datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),7));
+
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked);
+end;
+
+procedure TFSListePrelevement.TimerControleImportePrelevementTimer(
+  Sender: TObject);
+var  DateBegin,DateEnd:string;
+begin
+     FSListePrelevement.TimerControleImportePrelevement.Enabled:=false;
+
+     FSListePrelevement.EditDateDebutPrelevement.Date:=strtodate('01/01/'+ExerciceAnnee);
+     FSListePrelevement.EditDateFinPrelevement.Date:=strtodate('31/12/'+ExerciceAnnee);
+     DateBegin:='01/01/'+ExerciceAnnee;
+     DateEnd:='31/12/'+ExerciceAnnee;
+     ListePrelevementMatricule(FSListePrelevement.TableauListePrelevement,DateBegin,DateEnd);
+     FSListePrelevement.BitValiderImportePrelevement.Enabled:=true;
+
+     FSListePrelevement.AffichePatienterSVP.Visible:=false;
+end;
+
+procedure TFSListePrelevement.TimerControleAnomalieTimer(Sender: TObject);
+var  i,R,C,NbrSelect:integer; PositionPrelevement:string;  NumPrelevement,NumPrelevementFin,DateIn,HeureIn,DatePrelevement,HeurePrelevement,NumStructure,NotCol:string;
+     MontantCompteur,MontantFondRoulement,MontantUniteFonds,SoldePrelevement,EcartMontantCompteur,EcartMontantFondRoulement,EcartMontantUniteFonds,EcartSoldePrelevement:real;   OKAfficheAnomalie,OKNotification,OKPrelevement:boolean;
+     RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3:RRegistrePositionArchives;
+begin
+     FSListePrelevement.TimerControleAnomalie.Enabled:=false;
+
+     TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule);
+
+     FSListePrelevement.TableauAuthentification.RowCount:=2;
+     FSListePrelevement.TableauAuthentification.Rows[1].Text:='';
+
+     FSListePrelevement.TableauAuthentification.ColCount:=36;
+     FSListePrelevement.TableauAuthentification.Cols[1].Text:='P°';
+     FSListePrelevement.TableauAuthentification.Cols[2].Text:='Num';
+     FSListePrelevement.TableauAuthentification.Cols[3].Text:='Code Untilisateur';
+     FSListePrelevement.TableauAuthentification.Cols[4].Text:='Num. Equipe';
+     FSListePrelevement.TableauAuthentification.Cols[5].Text:='Matricule';
+     FSListePrelevement.TableauAuthentification.Cols[6].Text:='Efféctif';
+     FSListePrelevement.TableauAuthentification.Cols[7].Text:='Date';
+     FSListePrelevement.TableauAuthentification.Cols[8].Text:='Heure';
+     FSListePrelevement.TableauAuthentification.Cols[9].Text:='Archivage';
+     FSListePrelevement.TableauAuthentification.Cols[10].Text:='Mt. Prélèvement';
+     FSListePrelevement.TableauAuthentification.Cols[11].Text:='Mt. Fond Roulement';
+     FSListePrelevement.TableauAuthentification.Cols[12].Text:='Mt. Unités Fonds';
+     FSListePrelevement.TableauAuthentification.Cols[13].Text:='Solde Archivé';
+
+     FSListePrelevement.TableauAuthentification.Cols[14].Text:='P° Prélèvement Compteur début';
+     FSListePrelevement.TableauAuthentification.Cols[15].Text:='P° Prélèvement Compteur Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[16].Text:='P° Prelevement Unité Fonds Début';
+     FSListePrelevement.TableauAuthentification.Cols[17].Text:='P° Prelevement Unité Fonds Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[18].Text:='P° Prelevement Efféctif Equipe Début';
+     FSListePrelevement.TableauAuthentification.Cols[19].Text:='P° Prelevement Efféctif Equipe Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[20].Text:='P° Prelevement Affectation Efféctif Equipe Début';
+     FSListePrelevement.TableauAuthentification.Cols[21].Text:='P° Prelevement Affectation Efféctif Equipe Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[22].Text:='P° Prelevement DetailArticlePrelevementUniteFonds Début';
+     FSListePrelevement.TableauAuthentification.Cols[23].Text:='P° Prelevement DetailArticlePrelevementUniteFonds Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[24].Text:='P° Prelevement MoyenTransportPrelevement Début';
+     FSListePrelevement.TableauAuthentification.Cols[25].Text:='P° Prelevement MoyenTransportPrelevement Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[26].Text:='P° Prelevement Etat Stock Prelevement Début';
+     FSListePrelevement.TableauAuthentification.Cols[27].Text:='P° Prelevement Etat Stock Prelevement Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[28].Text:='P° Prelevement Autre2 Début';
+     FSListePrelevement.TableauAuthentification.Cols[29].Text:='P° Prelevement Autre2 Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[30].Text:='P° Prelevement Autre3 Début';
+     FSListePrelevement.TableauAuthentification.Cols[31].Text:='P° Prelevement Autre3 Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[32].Text:='Mt. Prélèvement CAL.';
+     FSListePrelevement.TableauAuthentification.Cols[33].Text:='Mt. Fond Roulement CAL.';
+     FSListePrelevement.TableauAuthentification.Cols[34].Text:='Mt. Unités Fonds CAL.';
+     FSListePrelevement.TableauAuthentification.Cols[35].Text:='Solde Archivé CAL.';
+
+     FSListePrelevement.AfficheRapport.Caption:='';
+
+     OpenFParc(RParc);
+     ChPrelevement:=RParc.Parcours+'\'+Exercice+'FPrelevement';
+     assignfile(FPrelevement,ChPrelevement);
+     if FileExists(ChPrelevement)then
+     Reset(FPrelevement)
+     else Rewrite(FPrelevement);
+     Seek(FPrelevement,0);
+     R:=0;
+     i:=0;
+     OKAfficheAnomalie:=false;
+     while(not eof(FPrelevement))and(OKAfficheAnomalie=false)do
+     begin
+          read(FPrelevement,RPrelevement);
+
+          if(FSListePrelevement.RBControleAnomalieUnParUn.Checked=true)then
+          begin
+               if(stringtodate(RPrelevement.DatePrelevement,'RPrelevement.DatePrelevement '+RPrelevement.DatePrelevement)>=FSListePrelevement.EditDateDebutPrelevement.Date)
+               and(stringtodate(RPrelevement.DatePrelevement,'RPrelevement.DatePrelevement '+RPrelevement.DatePrelevement)<=FSListePrelevement.EditDateFinPrelevement.Date)
+               then OKPrelevement:=true;
+          end
+          else
+          begin
+               if(FSListePrelevement.RBControleAnomalieSelect.Checked=true)then
+               begin
+                    if(inttostr(RPrelevement.NumPrelevement)=FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row])
+                    and(RPrelevement.Matricule=FSListePrelevement.TableauListePrelevement.Cells[5,FSListePrelevement.TableauListePrelevement.Row])
+                    then OKPrelevement:=true
+                    else OKPrelevement:=false;
+
+                    if(OKPrelevement=true)then OKAfficheAnomalie:=true;
+               end
+               else OKPrelevement:=true;
+          end;
+
+          if(OKPrelevement=true)and(RPrelevement.Archiver=true)and(RPrelevement.NumPrelevement<>0)then
+          begin
+               FSListePrelevement.ProgressPatienter.StepIt;
+               
+               DataArchivePrelevement(RPrelevement.NumPrelevement,ExerciceAnnee,'',RPrelevement.Matricule,false,false,TPrelevementCopie,ArrayIndexPrelevementMatricule,MontantCompteur,MontantUniteFonds,MontantFondRoulement,SoldePrelevement,RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3,PositionPrelevement,OKPrelevementArchiveAvecSucce);
+
+               EcartMontantCompteur:=RPrelevement.MontantPrelevement-MontantCompteur;
+               EcartMontantFondRoulement:=RPrelevement.MontantFondRoulement-MontantFondRoulement;
+               EcartMontantUniteFonds:=RPrelevement.MontantUnitesFonds-MontantUniteFonds;
+               EcartSoldePrelevement:=RPrelevement.SoldePrelevement-SoldePrelevement;
+
+               OKNotification:=false;
+
+               if(EcartMontantCompteur<0)then EcartMontantCompteur:=(-1)*EcartMontantCompteur;
+               if(EcartMontantCompteur>strtoreal(FSListePrelevement.EditSoldeMinimum.Text))
+               then OKNotification:=true;
+
+               if(EcartMontantFondRoulement<0)then EcartMontantFondRoulement:=(-1)*EcartMontantFondRoulement;
+               if(EcartMontantFondRoulement>strtoreal(FSListePrelevement.EditSoldeMinimum.Text))
+               then OKNotification:=true;
+
+               if(EcartMontantUniteFonds<0)then EcartMontantUniteFonds:=(-1)*EcartMontantUniteFonds;
+               if(EcartMontantUniteFonds>strtoreal(FSListePrelevement.EditSoldeMinimum.Text))
+               then OKNotification:=true;
+
+               if(EcartSoldePrelevement<0)then EcartSoldePrelevement:=(-1)*EcartSoldePrelevement;
+               if(EcartSoldePrelevement>strtoreal(FSListePrelevement.EditSoldeMinimum.Text))
+               then OKNotification:=true;
+
+               if(RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveBegin<>RegistrePositionPrelevementCompteur.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveEnd<>RegistrePositionPrelevementCompteur.PositionArchiveEnd)
+               or(RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveBegin<>RegistrePositionPrelevementUniteFonds.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveEnd<>RegistrePositionPrelevementUniteFonds.PositionArchiveEnd)
+               or(RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin<>RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd<>RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd)
+               or(RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin<>RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd<>RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd)
+               or(RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin<>RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin<>RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin<>RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin<>RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveBegin<>RegistrePositionEtatStockPrelevement.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveBegin<>RegistrePositionEtatStockPrelevement.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionAutre2.PositionArchiveBegin<>RegistrePositionAutre2.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionAutre2.PositionArchiveBegin<>RegistrePositionAutre2.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionAutre3.PositionArchiveBegin<>RegistrePositionAutre3.PositionArchiveBegin)
+               or(RPrelevement.RegistrePositionAutre3.PositionArchiveBegin<>RegistrePositionAutre3.PositionArchiveBegin)
+               then OKNotification:=true;
+
+               if(OKNotification=true)then
+               begin
+                     R:=R+1;
+                     FSListePrelevement.TableauAuthentification.Rows[R].Text:=inttostr(R);
+                     FSListePrelevement.TableauAuthentification.Cells[1,R]:=inttostr(i);
+                     FSListePrelevement.TableauAuthentification.Cells[2,R]:=inttostr(RPrelevement.NumPrelevement);
+                     FSListePrelevement.TableauAuthentification.Cells[3,R]:=RPrelevement.CodeUtilisateur;
+                     FSListePrelevement.TableauAuthentification.Cells[4,R]:=inttostr(RPrelevement.NumEquipe);
+                     FSListePrelevement.TableauAuthentification.Cells[5,R]:=RPrelevement.Matricule;
+                     RPersonnel:=CherchePersonnel(RPrelevement.Matricule);
+                     FSListePrelevement.TableauAuthentification.Cells[6,R]:=RPersonnel.Nom+' '+RPersonnel.Prenom;
+                     FSListePrelevement.TableauAuthentification.Cells[7,R]:=RPrelevement.DatePrelevement;
+                     FSListePrelevement.TableauAuthentification.Cells[8,R]:=RPrelevement.HeurePrelevement;
+                     FSListePrelevement.TableauAuthentification.Cells[9,R]:=booleantostr(RPrelevement.Archiver);
+                     FSListePrelevement.TableauAuthentification.Cells[10,R]:=Vergule(floattostr(RPrelevement.MontantPrelevement),'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[11,R]:=Vergule(floattostr(RPrelevement.MontantFondRoulement),'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[12,R]:=Vergule(floattostr(RPrelevement.MontantUnitesFonds),'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[13,R]:=Vergule(floattostr(RPrelevement.SoldePrelevement),'2','C','');
+
+                     FSListePrelevement.TableauAuthentification.Cells[14,R]:=inttostr(RegistrePositionPrelevementCompteur.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[15,R]:=inttostr(RegistrePositionPrelevementCompteur.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[16,R]:=inttostr(RegistrePositionPrelevementUniteFonds.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[17,R]:=inttostr(RegistrePositionPrelevementUniteFonds.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[18,R]:=inttostr(RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[19,R]:=inttostr(RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[20,R]:=inttostr(RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[21,R]:=inttostr(RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[22,R]:=inttostr(RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[23,R]:=inttostr(RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[24,R]:=inttostr(RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[25,R]:=inttostr(RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[26,R]:=inttostr(RegistrePositionEtatStockPrelevement.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[27,R]:=inttostr(RegistrePositionEtatStockPrelevement.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[28,R]:=inttostr(RegistrePositionAutre2.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[29,R]:=inttostr(RegistrePositionAutre2.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[30,R]:=inttostr(RegistrePositionAutre3.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[31,R]:=inttostr(RegistrePositionAutre3.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[32,R]:=Vergule(floattostr(MontantCompteur),'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[33,R]:=Vergule(floattostr(MontantFondRoulement),'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[34,R]:=Vergule(floattostr(MontantUniteFonds),'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[35,R]:=Vergule(floattostr(SoldePrelevement),'2','C','');
+
+                     if(FSListePrelevement.RBControleAnomalieUnParUn.Checked=true)
+                     or(FSListePrelevement.RBControleAnomalieSelect.Checked=true)
+                     then OKAfficheAnomalie:=true;
+               end;
+          end;
+     i:=i+1;
+     end;
+     CloseFile(FPrelevement);
+
+     if(R>0)then
+     begin
+          FSListePrelevement.TableauAuthentification.RowCount:=R+1;
+          FSListePrelevement.AfficheRapport.Caption:=inttostr(R)+' Cas ambigus';
+          FSListePrelevement.AfficheAuthentification.Height:=270;
+
+          FSListePrelevement.BitCorrectionAutomatique.SetFocus;
+     end
+     else
+     begin
+          FSListePrelevement.TableauAuthentification.RowCount:=2;
+          FSListePrelevement.AfficheRapport.Caption:='Aucun Cas ambigus';
+          FSListePrelevement.AfficheAuthentification.Height:=57;
+
+          FSListePrelevement.BitAnnulerCorrectionAutomatique.SetFocus;
+     end;
+
+     NotCol:='3;4;14-31';
+     for C:=1 to TableauAuthentification.ColCount-1 do if existenumintexte(inttostr(C),NotCol) then TableauAuthentification.ColWidths[C]:=0;
+     AjusterColWidth(FSListePrelevement.TableauAuthentification,'',NotCol);
+
+     FSListePrelevement.AffichePatienterSVP.Visible:=false;
+end;
+
+procedure TFSListePrelevement.TimerEnregistrerImpostationTimer(
+  Sender: TObject);
+var  i,R:integer;
+begin
+     FSListePrelevement.TimerEnregistrerImpostation.Enabled:=false;
+
+     OpenFParc(RParc);
+     ChPrelevement:=RParc.Parcours+'\'+Exercice+'FPrelevement';
+     assignfile(FPrelevement,ChPrelevement);
+     if FileExists(ChPrelevement)then
+     Reset(FPrelevement)
+     else Rewrite(FPrelevement);
+     Seek(FPrelevement,0);
+     Truncate(FPrelevement);
+     i:=0;
+     R:=1;
+     while(R<=FSListePrelevement.TableauListePrelevement.RowCount-3)do
+     begin
+          RPrelevement.NumPrelevement:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[2,R]);
+          RPrelevement.CodeUtilisateur:=FSListePrelevement.TableauListePrelevement.Cells[3,R];
+          RPrelevement.NumEquipe:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[4,R]);
+          RPrelevement.Matricule:=FSListePrelevement.TableauListePrelevement.Cells[5,R];
+          RPrelevement.DatePrelevement:=FSListePrelevement.TableauListePrelevement.Cells[7,R];
+          RPrelevement.HeurePrelevement:=FSListePrelevement.TableauListePrelevement.Cells[8,R];
+          RPrelevement.Archiver:=strtoboolean(FSListePrelevement.TableauListePrelevement.Cells[9,R]);
+          RPrelevement.MontantPrelevement:=strtoreal(FSListePrelevement.TableauListePrelevement.Cells[10,R]);
+          RPrelevement.MontantFondRoulement:=strtoreal(FSListePrelevement.TableauListePrelevement.Cells[11,R]);
+          RPrelevement.MontantUnitesFonds:=strtoreal(FSListePrelevement.TableauListePrelevement.Cells[12,R]);
+          RPrelevement.SoldePrelevement:=strtoreal(FSListePrelevement.TableauListePrelevement.Cells[13,R]);
+
+          RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[14,R]);
+          RPrelevement.RegistrePositionPrelevementCompteur.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[15,R]);
+
+          RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[16,R]);
+          RPrelevement.RegistrePositionPrelevementUniteFonds.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[17,R]);
+
+          RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[18,R]);
+          RPrelevement.RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[19,R]);
+
+          RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[20,R]);
+          RPrelevement.RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[21,R]);
+
+          RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[22,R]);
+          RPrelevement.RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[23,R]);
+
+          RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[24,R]);
+          RPrelevement.RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[25,R]);
+
+          RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[26,R]);
+          RPrelevement.RegistrePositionEtatStockPrelevement.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[27,R]);
+
+          RPrelevement.RegistrePositionAutre2.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[28,R]);
+          RPrelevement.RegistrePositionAutre2.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[29,R]);
+
+          RPrelevement.RegistrePositionAutre3.PositionArchiveBegin:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[30,R]);
+          RPrelevement.RegistrePositionAutre3.PositionArchiveEnd:=strtointeger(FSListePrelevement.TableauListePrelevement.Cells[31,R]);
+
+          Seek(FPrelevement,i);
+          write(FPrelevement,RPrelevement);
+          i:=i+1;
+     R:=R+1;
+     end;
+     CloseFile(FPrelevement);
+
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked);
+
+     FSListePrelevement.AffichePatienterSVP.Visible:=false;
+end;
+
+procedure TFSListePrelevement.BitBtn10Click(Sender: TObject);
+var  TitreEtat,SousTitreEtat:string;
+begin
+     FSListePrelevement.MemoTitre.Text:='';
+     FSListePrelevement.MemoTitre.Lines.Add('Liste des notifications');
+
+     if(FSListePrelevement.RBControleAnomalieSelect.Checked=true)
+     then FSListePrelevement.MemoTitre.Lines.Add('Prélèvement N°: '+FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row])
+     else FSListePrelevement.MemoTitre.Lines.Add('Tous les prélèvements');
+     TitreEtat:=FSListePrelevement.MemoTitre.Text;
+     SousTitreEtat:='Période du: '+datetostr(FSListePrelevement.EditDateDebutPrelevement.Date)+' au '+datetostr(FSListePrelevement.EditDateFinPrelevement.Date);
+
+     TableauToExcel(FSListePrelevement.TableauAuthentification,1,0,'','','','','','',TitreEtat,SousTitreEtat,'',true,FSMenuPrincipal.RBInsertLogo.Checked,FSMenuPrincipal.RBAfficherLaSaisie.Checked);
+end;
+
+procedure TFSListePrelevement.TableauListePrelevementContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+     AjusterColWidth(FSListePrelevement.TableauListePrelevement,'','');
+end;
+
+procedure TFSListePrelevement.TableauAuthentificationContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+     AjusterColWidth(FSListePrelevement.TableauAuthentification,'','');
+end;
+
+procedure TFSListePrelevement.RadioButton1Click(Sender: TObject);
+begin
+     FSListePrelevement.TypeTrie.Caption:='-';
+end;
+
+procedure TFSListePrelevement.RadioButton2Click(Sender: TObject);
+begin
+     FSListePrelevement.TypeTrie.Caption:='+';
+end;
+
+procedure TFSListePrelevement.RBAbregerTitreRubriqueClick(Sender: TObject);
+begin
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked)
+end;
+
+procedure TFSListePrelevement.TimerControleAnomalieTableauAfficheTimer(
+  Sender: TObject);
+var  R,l,p,C,NbrSelect:integer; PositionPrelevement:string; NumPrelevement,NumPrelevementFin,DateIn,HeureIn,DatePrelevement,HeurePrelevement,NumStructure,NotCol:string;
+     MontantCompteur,MontantFondRoulement,MontantUniteFonds,SoldePrelevement,EcartMontantCompteur,EcartMontantFondRoulement,EcartMontantUniteFonds,EcartSoldePrelevement:real;   OKAfficheAnomalie,OKNotification,OKPrelevement:boolean;
+     RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3:RRegistrePositionArchives;
+begin
+     FSListePrelevement.TimerControleAnomalieTableauAffiche.Enabled:=false;
+
+     TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule);
+
+     FSListePrelevement.TableauAuthentification.RowCount:=2;
+     FSListePrelevement.TableauAuthentification.Rows[1].Text:='';
+
+     FSListePrelevement.TableauAuthentification.ColCount:=36;
+     FSListePrelevement.TableauAuthentification.Cols[1].Text:='P°';
+     FSListePrelevement.TableauAuthentification.Cols[2].Text:='Num';
+     FSListePrelevement.TableauAuthentification.Cols[3].Text:='Code Untilisateur';
+     FSListePrelevement.TableauAuthentification.Cols[4].Text:='Num. Equipe';
+     FSListePrelevement.TableauAuthentification.Cols[5].Text:='Matricule';
+     FSListePrelevement.TableauAuthentification.Cols[6].Text:='Efféctif';
+     FSListePrelevement.TableauAuthentification.Cols[7].Text:='Date';
+     FSListePrelevement.TableauAuthentification.Cols[8].Text:='Heure';
+     FSListePrelevement.TableauAuthentification.Cols[9].Text:='Archivage';
+     FSListePrelevement.TableauAuthentification.Cols[10].Text:='Mt. Prélèvement';
+     FSListePrelevement.TableauAuthentification.Cols[11].Text:='Mt. Fond Roulement';
+     FSListePrelevement.TableauAuthentification.Cols[12].Text:='Mt. Unités Fonds';
+     FSListePrelevement.TableauAuthentification.Cols[13].Text:='Solde Archivé';
+
+     FSListePrelevement.TableauAuthentification.Cols[14].Text:='P° Prélèvement Compteur début';
+     FSListePrelevement.TableauAuthentification.Cols[15].Text:='P° Prélèvement Compteur Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[16].Text:='P° Prelevement Unité Fonds Début';
+     FSListePrelevement.TableauAuthentification.Cols[17].Text:='P° Prelevement Unité Fonds Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[18].Text:='P° Prelevement Efféctif Equipe Début';
+     FSListePrelevement.TableauAuthentification.Cols[19].Text:='P° Prelevement Efféctif Equipe Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[20].Text:='P° Prelevement Affectation Efféctif Equipe Début';
+     FSListePrelevement.TableauAuthentification.Cols[21].Text:='P° Prelevement Affectation Efféctif Equipe Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[22].Text:='P° Prelevement DetailArticlePrelevementUniteFonds Début';
+     FSListePrelevement.TableauAuthentification.Cols[23].Text:='P° Prelevement DetailArticlePrelevementUniteFonds Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[24].Text:='P° Prelevement MoyenTransportPrelevement Début';
+     FSListePrelevement.TableauAuthentification.Cols[25].Text:='P° Prelevement MoyenTransportPrelevement Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[26].Text:='P° Prelevement Etat Stock Prelevement Début';
+     FSListePrelevement.TableauAuthentification.Cols[27].Text:='P° Prelevement Etat Stock Prelevement Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[28].Text:='P° Prelevement Autre2 Début';
+     FSListePrelevement.TableauAuthentification.Cols[29].Text:='P° Prelevement Autre2 Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[30].Text:='P° Prelevement Autre3 Début';
+     FSListePrelevement.TableauAuthentification.Cols[31].Text:='P° Prelevement Autre3 Fin';
+
+     FSListePrelevement.TableauAuthentification.Cols[32].Text:='Mt. Prélèvement CAL.';
+     FSListePrelevement.TableauAuthentification.Cols[33].Text:='Mt. Fond Roulement CAL.';
+     FSListePrelevement.TableauAuthentification.Cols[34].Text:='Mt. Unités Fonds CAL.';
+     FSListePrelevement.TableauAuthentification.Cols[35].Text:='Solde Archivé CAL.';
+
+     FSListePrelevement.AfficheRapport.Caption:='';
+
+     if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)
+     then l:=2
+     else l:=1;
+
+     p:=3;
+
+     R:=0;
+     OKAfficheAnomalie:=false;
+
+     while(l<=FSListePrelevement.TableauListePrelevement.RowCount-p)and(OKAfficheAnomalie=false)do
+     begin
+          if(FSListePrelevement.RBControleAnomalieUnParUn.Checked=true)then
+          begin
+               if(stringtodate(FSListePrelevement.TableauListePrelevement.Cells[7,l],'FSListePrelevement.TableauListePrelevement.Cells[7,l]..1.. '+FSListePrelevement.TableauListePrelevement.Cells[7,l]+' l:'+inttostr(l))>=FSListePrelevement.EditDateDebutPrelevement.Date)
+               and(stringtodate(FSListePrelevement.TableauListePrelevement.Cells[7,l],'FSListePrelevement.TableauListePrelevement.Cells[7,l]..2.. '+FSListePrelevement.TableauListePrelevement.Cells[7,l]+' l:'+inttostr(l))<=FSListePrelevement.EditDateFinPrelevement.Date)
+               then OKPrelevement:=true;
+          end
+          else
+          begin
+               if(FSListePrelevement.RBControleAnomalieSelect.Checked=true)then
+               begin
+                    if(FSListePrelevement.TableauListePrelevement.Cells[2,l]=FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row])
+                    and(FSListePrelevement.TableauListePrelevement.Cells[5,l]=FSListePrelevement.TableauListePrelevement.Cells[5,FSListePrelevement.TableauListePrelevement.Row])
+                    then OKPrelevement:=true
+                    else OKPrelevement:=false;
+
+                    if(OKPrelevement=true)then OKAfficheAnomalie:=true;
+               end
+               else OKPrelevement:=true;
+          end;
+
+          if(OKPrelevement=true)and(strtoboolean(FSListePrelevement.TableauListePrelevement.Cells[9,l])=true)and(FSListePrelevement.TableauListePrelevement.Cells[2,l]<>'')then
+          begin
+               FSListePrelevement.ProgressPatienter.StepIt;
+               
+               DataArchivePrelevement(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[2,l]),ExerciceAnnee,'',FSListePrelevement.TableauListePrelevement.Cells[5,l],false,false,TPrelevementCopie,ArrayIndexPrelevementMatricule,MontantCompteur,MontantUniteFonds,MontantFondRoulement,SoldePrelevement,RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3,PositionPrelevement,OKPrelevementArchiveAvecSucce);
+
+               EcartMontantCompteur:=strtoreal(FSListePrelevement.TableauListePrelevement.Cells[10,l])-MontantCompteur;
+               EcartMontantFondRoulement:=strtoreal(FSListePrelevement.TableauListePrelevement.Cells[11,l])-MontantFondRoulement;
+               EcartMontantUniteFonds:=strtoreal(FSListePrelevement.TableauListePrelevement.Cells[12,l])-MontantUniteFonds;
+               EcartSoldePrelevement:=strtoreal(FSListePrelevement.TableauListePrelevement.Cells[13,l])-SoldePrelevement;
+
+               OKNotification:=false;
+
+               if(EcartMontantCompteur<0)then EcartMontantCompteur:=(-1)*EcartMontantCompteur;
+               if(EcartMontantCompteur>strtoreal(FSListePrelevement.EditSoldeMinimum.Text))
+               then OKNotification:=true;
+
+               if(EcartMontantFondRoulement<0)then EcartMontantFondRoulement:=(-1)*EcartMontantFondRoulement;
+               if(EcartMontantFondRoulement>strtoreal(FSListePrelevement.EditSoldeMinimum.Text))
+               then OKNotification:=true;
+
+               if(EcartMontantUniteFonds<0)then EcartMontantUniteFonds:=(-1)*EcartMontantUniteFonds;
+               if(EcartMontantUniteFonds>strtoreal(FSListePrelevement.EditSoldeMinimum.Text))
+               then OKNotification:=true;
+
+               if(EcartSoldePrelevement<0)then EcartSoldePrelevement:=(-1)*EcartSoldePrelevement;
+               if(EcartSoldePrelevement>strtoreal(FSListePrelevement.EditSoldeMinimum.Text))
+               then OKNotification:=true;
+
+               if(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[14,l])<>RegistrePositionPrelevementCompteur.PositionArchiveBegin)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[15,l])<>RegistrePositionPrelevementCompteur.PositionArchiveEnd)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[16,l])<>RegistrePositionPrelevementUniteFonds.PositionArchiveBegin)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[17,l])<>RegistrePositionPrelevementUniteFonds.PositionArchiveEnd)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[18,l])<>RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[19,l])<>RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[20,l])<>RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[21,l])<>RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[22,l])<>RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[23,l])<>RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[24,l])<>RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[25,l])<>RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[26,l])<>RegistrePositionEtatStockPrelevement.PositionArchiveBegin)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[27,l])<>RegistrePositionEtatStockPrelevement.PositionArchiveEnd)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[28,l])<>RegistrePositionAutre2.PositionArchiveBegin)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[29,l])<>RegistrePositionAutre2.PositionArchiveEnd)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[30,l])<>RegistrePositionAutre3.PositionArchiveBegin)
+               or(strtointeger(FSListePrelevement.TableauListePrelevement.Cells[31,l])<>RegistrePositionAutre3.PositionArchiveEnd)
+               then OKNotification:=true;
+
+               if(OKNotification=true)then
+               begin
+                     R:=R+1;
+                     FSListePrelevement.TableauAuthentification.Rows[R].Text:=inttostr(R);
+                     FSListePrelevement.TableauAuthentification.Cells[1,R]:=PositionPrelevement;
+                     FSListePrelevement.TableauAuthentification.Cells[2,R]:=FSListePrelevement.TableauListePrelevement.Cells[2,l];
+                     FSListePrelevement.TableauAuthentification.Cells[3,R]:=FSListePrelevement.TableauListePrelevement.Cells[3,l];
+                     FSListePrelevement.TableauAuthentification.Cells[4,R]:=FSListePrelevement.TableauListePrelevement.Cells[4,l];
+                     FSListePrelevement.TableauAuthentification.Cells[5,R]:=FSListePrelevement.TableauListePrelevement.Cells[5,l];
+                     RPersonnel:=CherchePersonnel(FSListePrelevement.TableauListePrelevement.Cells[5,l]);
+                     FSListePrelevement.TableauAuthentification.Cells[6,R]:=RPersonnel.Nom+' '+RPersonnel.Prenom;
+                     FSListePrelevement.TableauAuthentification.Cells[7,R]:=FSListePrelevement.TableauListePrelevement.Cells[7,l];
+                     FSListePrelevement.TableauAuthentification.Cells[8,R]:=FSListePrelevement.TableauListePrelevement.Cells[8,l];
+                     FSListePrelevement.TableauAuthentification.Cells[9,R]:=FSListePrelevement.TableauListePrelevement.Cells[9,l];
+                     FSListePrelevement.TableauAuthentification.Cells[10,R]:=Vergule(FSListePrelevement.TableauListePrelevement.Cells[10,l],'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[11,R]:=Vergule(FSListePrelevement.TableauListePrelevement.Cells[11,l],'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[12,R]:=Vergule(FSListePrelevement.TableauListePrelevement.Cells[12,l],'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[13,R]:=Vergule(FSListePrelevement.TableauListePrelevement.Cells[13,l],'2','C','');
+
+                     FSListePrelevement.TableauAuthentification.Cells[14,R]:=inttostr(RegistrePositionPrelevementCompteur.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[15,R]:=inttostr(RegistrePositionPrelevementCompteur.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[16,R]:=inttostr(RegistrePositionPrelevementUniteFonds.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[17,R]:=inttostr(RegistrePositionPrelevementUniteFonds.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[18,R]:=inttostr(RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[19,R]:=inttostr(RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[20,R]:=inttostr(RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[21,R]:=inttostr(RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[22,R]:=inttostr(RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[23,R]:=inttostr(RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[24,R]:=inttostr(RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[25,R]:=inttostr(RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[26,R]:=inttostr(RegistrePositionEtatStockPrelevement.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[27,R]:=inttostr(RegistrePositionEtatStockPrelevement.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[28,R]:=inttostr(RegistrePositionAutre2.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[29,R]:=inttostr(RegistrePositionAutre2.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[30,R]:=inttostr(RegistrePositionAutre3.PositionArchiveBegin);
+                     FSListePrelevement.TableauAuthentification.Cells[31,R]:=inttostr(RegistrePositionAutre3.PositionArchiveEnd);
+
+                     FSListePrelevement.TableauAuthentification.Cells[32,R]:=Vergule(floattostr(MontantCompteur),'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[33,R]:=Vergule(floattostr(MontantFondRoulement),'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[34,R]:=Vergule(floattostr(MontantUniteFonds),'2','C','');
+                     FSListePrelevement.TableauAuthentification.Cells[35,R]:=Vergule(floattostr(SoldePrelevement),'2','C','');
+
+                     if(FSListePrelevement.RBControleAnomalieUnParUn.Checked=true)
+                     or(FSListePrelevement.RBControleAnomalieSelect.Checked=true)
+                     then OKAfficheAnomalie:=true;
+               end;               
+          end;
+     l:=l+1;
+     end;
+
+     if(R>0)then
+     begin
+          FSListePrelevement.TableauAuthentification.RowCount:=R+1;
+          FSListePrelevement.AfficheRapport.Caption:=inttostr(R)+' Cas ambigus';
+          FSListePrelevement.AfficheAuthentification.Height:=270;
+
+          FSListePrelevement.BitCorrectionAutomatique.SetFocus;
+     end
+     else
+     begin
+          FSListePrelevement.TableauAuthentification.RowCount:=2;
+          FSListePrelevement.AfficheRapport.Caption:='Aucun Cas ambigus';
+          FSListePrelevement.AfficheAuthentification.Height:=57;
+
+          FSListePrelevement.BitAnnulerCorrectionAutomatique.SetFocus;
+     end;
+
+     NotCol:='3;4;14-31';
+     for C:=1 to TableauAuthentification.ColCount-1 do if existenumintexte(inttostr(C),NotCol) then TableauAuthentification.ColWidths[C]:=0;
+     AjusterColWidth(FSListePrelevement.TableauAuthentification,'',NotCol);
+
+     FSListePrelevement.AffichePatienterSVP.Visible:=false;
+    // FSListePrelevement.TimerPourcentage.Enabled:=false;
+end;
+
+procedure TFSListePrelevement.EditTypeAffichgeChange(Sender: TObject);
+begin
+     if(FSListePrelevement.EditTypeAffichge.Text='Par Prélèvement')then
+     begin
+          ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked)
+     end
+     else
+     begin
+          ListePrelevementTypeAffichage(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.EditTypeAffichge.Text,FSListePrelevement.RBAbregerTitreRubrique.Checked)
+     end;
+end;
+
+procedure TFSListePrelevement.EditExercicePrelevementSelect(
+  Sender: TObject);
+var  DateMaxPrelevement:string;
+begin
+     if(FSListePrelevement.EditExercicePrelevement.Text=Lastlaters(datetostr(date),4))
+     then DateMaxPrelevement:=datetostr(date)
+     else DateMaxPrelevement:='31/12/'+FSListePrelevement.EditExercicePrelevement.Text;
+     FSListePrelevement.EditMoisListePrelevement.ItemIndex:=(strtointeger(MidelLaters(DateMaxPrelevement,4,5))-1);
+     FSListePrelevement.EditDateDebutPrelevement.Date:=strtodate('01/'+Completezerogauche(MidelLaters(FSListePrelevement.EditMoisListePrelevement.Text,2,3),'2')+'/'+FSListePrelevement.EditExercicePrelevement.Text);
+     FSListePrelevement.EditDateFinPrelevement.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSListePrelevement.EditDateDebutPrelevement.Date))),'2')+'/'+lastlaters(datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),7));
+
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked);
+end;
+
+procedure TFSListePrelevement.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+procedure TFSListePrelevement.TimerControleSystimatiqueTimer(Sender: TObject);
+begin
+     FSListePrelevement.TimerControleSystimatique.Enabled:=false;
+
+     if(FSListePrelevement.RBSuspendreControleAutomatique.Checked=false)then
+     begin
+           if(FSListePrelevement.AfficheControleImportePrelevement.Height=269)then
+           begin
+                FSListePrelevement.BitControleAnomalies.Click;
+           end
+           else
+           if(FSListePrelevement.AfficheAuthentification.Height=270)then
+           begin
+                FSListePrelevement.BitCorrectionAutomatique.Click;
+           end
+           else
+           if(FSListePrelevement.AfficheAuthentification.Height=57)then
+           begin
+                FSListePrelevement.BitAnnulerCorrectionAutomatique.Click;
+           end;
+     end
+     else FSListePrelevement.RBExecutionAutomatique.Checked:=false;
+end;
+
+procedure TFSListePrelevement.RBExecutionAutomatiqueClick(Sender: TObject);
+begin
+     FSListePrelevement.RBSuspendreControleAutomatique.Checked:=not FSListePrelevement.RBExecutionAutomatique.Checked;
+     if(FSListePrelevement.RBExecutionAutomatique.Checked=true)
+     then FSListePrelevement.RBSelectNext.Checked:=true;
+
+     FSListePrelevement.TimerControleSystimatique.Enabled:=FSListePrelevement.RBExecutionAutomatique.Checked;
+end;
+
+procedure TFSListePrelevement.BitBtn3Click(Sender: TObject);
+begin
+     FSListePrelevement.AfficheOperationListePrelevement.Visible:=false;
+end;
+
+procedure TFSListePrelevement.BitValiderOperationListePrelevementClick(
+  Sender: TObject);
+var  RExistant,RSupprimer,RSauvgarder,RowCountMoins:integer; NumPrelevementSelect:string;
+begin
+     FSListePrelevement.AfficheOperationListePrelevement.Visible:=false;
+
+     if(FSListePrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+           if(FSListePrelevement.RBOKSupprissionManuel.Checked=true)then
+           begin
+                if(FSListePrelevement.RBAfficheSoldeAnterieur.Checked=true)then RowCountMoins:=3 else RowCountMoins:=1;
+
+                SupprimerFPrelevement(FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row],FSListePrelevement.TableauListePrelevement.Cells[5,FSListePrelevement.TableauListePrelevement.Row],true,true,RExistant,RSupprimer,RSauvgarder);
+                NumPrelevementSelect:='';
+                if(FSListePrelevement.TableauListePrelevement.Row+1<=FSListePrelevement.TableauListePrelevement.RowCount-RowCountMoins)then NumPrelevementSelect:=FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row+1];
+                ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,NumPrelevementSelect,'',FSListePrelevement.RBAbregerTitreRubrique.Checked);
+           end
+           else
+           begin
+                if not AccesPrivilegies('FS Liste Prélèvement',FSMenuPrincipal.EditCodeUtilisateur.Text,'MS',true)then exit;
+                FSOperationPrelevement.EditTypeAnalyse.Text:='Ecartement';
+                FSOperationPrelevement.Show;
+                FSOperationPrelevement.TimerLancerTransfert.Enabled:=true;
+           end;
+     end
+     else
+     if(FSListePrelevement.EditTypeAnalyse.Text='Double')then
+     begin
+          FSOperationPrelevement.EditTypeAnalyse.Text:='Double';
+          FSOperationPrelevement.Show;
+          FSOperationPrelevement.TimerLancerTransfert.Enabled:=true;
+     end;
+
+
+end;
+
+procedure TFSListePrelevement.AffichePatienterSVPClick(Sender: TObject);
+begin
+     FSListePrelevement.RBSelectLastTableau.Checked:=true;
+end;
+
+procedure TFSListePrelevement.TableauListePrelevementMouseDown(
+  Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+  Y: Integer);
+begin
+     FSListePrelevement.RBSelectLastTableau.Checked:=false;
+end;
+
+procedure TFSListePrelevement.BitBtn5Click(Sender: TObject);
+begin
+     FSListePrelevement.RBSuspendreListePrelevementMatricule.Checked:=true;
+end;
+
+procedure TFSListePrelevement.TableauListePrelevementDrawCell(
+  Sender: TObject; ACol, ARow: Integer; Rect: TRect;
+  State: TGridDrawState);
+begin
+     TableauCouleursLignes(Sender,ACol,ARow,Rect,State);
+end;
+
+procedure TFSListePrelevement.TableauAuthentificationDrawCell(
+  Sender: TObject; ACol, ARow: Integer; Rect: TRect;
+  State: TGridDrawState);
+begin
+          TableauCouleursLignes(Sender,ACol,ARow,Rect,State);
+end;
+
+procedure TFSListePrelevement.TableauEquipeDrawCell(Sender: TObject; ACol,
+  ARow: Integer; Rect: TRect; State: TGridDrawState);
+begin
+     TableauCouleursLignes(Sender,ACol,ARow,Rect,State);
+end;
+
+procedure TFSListePrelevement.TableauEffectifEquipeDrawCell(
+  Sender: TObject; ACol, ARow: Integer; Rect: TRect;
+  State: TGridDrawState);
+begin
+     TableauCouleursLignes(Sender,ACol,ARow,Rect,State);
+end;
+
+Procedure SelectRowListePrelevement(TableauListePrelevement:TStringGrid; NumPrelevement,Matricule:string; ReafficheDatePrelevement:boolean);
+var  R,RowSelect:integer;
+     OKPrelevement,OKTeste:boolean;
+     SignePositive:string;
+begin
+     if(ReafficheDatePrelevement=true)then TPrelevementCopie:=RemplireTPrelevementNumPrelevementMatricule(ExerciceAnnee);
+
+     RowSelect:=1;
+     R:=1;
+     OKPrelevement:=false;
+     while(R<=FSListePrelevement.TableauListePrelevement.RowCount-3)and(OKPrelevement=false)do
+     begin
+          if(NumPrelevement<>'')then
+          begin
+               if(FSListePrelevement.TableauListePrelevement.Cells[2,R]=NumPrelevement)
+               then OKTeste:=true
+               else OKTeste:=false;
+          end
+          else OKTeste:=false;
+
+          if(OKTeste=true)then
+          begin
+               if(Matricule<>'')then
+               begin
+                    if(FSListePrelevement.TableauListePrelevement.Cells[5,R]=Matricule)
+                    then OKTeste:=true
+                    else OKTeste:=false;
+               end;
+          end;
+
+          if(OKTeste=true)then
+          begin
+               OKPrelevement:=true;
+               RowSelect:=R;
+          end;
+     R:=R+1;
+     end;
+
+     FSListePrelevement.TableauListePrelevement.Row:=RowSelect;
+
+     if(ReafficheDatePrelevement=true)
+     and(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].NumPrelevement=strtointeger(NumPrelevement))
+     and(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].Matricule=Matricule)
+     then
+     begin
+          TableauListePrelevement.Cells[2,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].NumPrelevement);
+          TableauListePrelevement.Cells[3,RowSelect]:=TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].CodeUtilisateur;
+          TableauListePrelevement.Cells[4,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].NumEquipe);
+          TableauListePrelevement.Cells[5,RowSelect]:=TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].Matricule;
+          RPersonnel:=CherchePersonnel(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].Matricule);
+          TableauListePrelevement.Cells[6,RowSelect]:=RPersonnel.Nom+' '+RPersonnel.Prenom;
+          TableauListePrelevement.Cells[7,RowSelect]:=TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].DatePrelevement;
+          TableauListePrelevement.Cells[8,RowSelect]:=TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].HeurePrelevement;
+          TableauListePrelevement.Cells[9,RowSelect]:=booleantostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].Archiver);
+          TableauListePrelevement.Cells[10,RowSelect]:=Vergule(floattostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].MontantPrelevement),'2','C','');
+          TableauListePrelevement.Cells[11,RowSelect]:=Vergule(floattostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].MontantFondRoulement),'2','C','');
+          TableauListePrelevement.Cells[12,RowSelect]:=Vergule(floattostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].MontantUnitesFonds),'2','C','');
+          if(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].SoldePrelevement>0)then SignePositive:='+'else SignePositive:='';
+          TableauListePrelevement.Cells[13,RowSelect]:=SignePositive+Vergule(floattostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].SoldePrelevement),'2','C','');
+
+          TableauListePrelevement.Cells[14,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionPrelevementCompteur.PositionArchiveBegin);
+          TableauListePrelevement.Cells[15,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionPrelevementCompteur.PositionArchiveEnd);
+
+          TableauListePrelevement.Cells[16,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionPrelevementUniteFonds.PositionArchiveBegin);
+          TableauListePrelevement.Cells[17,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionPrelevementUniteFonds.PositionArchiveEnd);
+
+          TableauListePrelevement.Cells[18,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin);
+          TableauListePrelevement.Cells[19,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionPrelevementEffectifEquipe.PositionArchiveEnd);
+
+          TableauListePrelevement.Cells[20,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin);
+          TableauListePrelevement.Cells[21,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveEnd);
+
+          TableauListePrelevement.Cells[22,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin);
+          TableauListePrelevement.Cells[23,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveEnd);
+
+          TableauListePrelevement.Cells[24,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionMoyenTransportPrelevement.PositionArchiveBegin);
+          TableauListePrelevement.Cells[25,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionMoyenTransportPrelevement.PositionArchiveEnd);
+
+          TableauListePrelevement.Cells[26,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionEtatStockPrelevement.PositionArchiveBegin);
+          TableauListePrelevement.Cells[27,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionEtatStockPrelevement.PositionArchiveEnd);
+
+          TableauListePrelevement.Cells[28,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionAutre2.PositionArchiveBegin);
+          TableauListePrelevement.Cells[29,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionAutre2.PositionArchiveEnd);
+
+          TableauListePrelevement.Cells[30,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionAutre3.PositionArchiveBegin);
+          TableauListePrelevement.Cells[31,RowSelect]:=inttostr(TPrelevementCopie[strtointeger(NumPrelevement+Matricule)].RegistrePositionAutre3.PositionArchiveEnd);
+     end;
+end;
+
+procedure TFSListePrelevement.EditMoisListePrelevementDropDown(
+  Sender: TObject);
+begin
+     FSListePrelevement.RBSuspendreListePrelevementMatricule.Checked:=false;
+     if(FSListePrelevement.RBProcListeMouvementActive.Checked=true)then FSListePrelevement.RBSuspendre.Checked:=true;
+end;
+
+procedure TFSListePrelevement.RBSuspendreListePrelevementMatriculeClick(
+  Sender: TObject);
+begin
+     if(FSListePrelevement.RBProcListeMouvementActive.Checked=true)then FSListePrelevement.RBSuspendre.Checked:=true;
+end;
+
+end.

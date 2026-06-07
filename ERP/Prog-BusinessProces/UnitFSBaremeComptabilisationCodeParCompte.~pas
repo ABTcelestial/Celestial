@@ -1,0 +1,372 @@
+unit UnitFSBaremeComptabilisationCodeParCompte;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, ExtCtrls, Grids, ComCtrls;
+
+type
+  TFSBaremeComptabilisationCodeParCompte = class(TForm)
+    TableauBaremeComptabilisationCodeParCompte: TStringGrid;
+    AfficheOperationBaremeComptabilisationCodeParCompte: TPanel;
+    BitBtn1: TBitBtn;
+    BitOperationBaremeComptabilisationCodeParCompte: TBitBtn;
+    Label1: TLabel;
+    EditPositionBaremeCCPC: TEdit;
+    Label2: TLabel;
+    TitreEditFichierConserne: TLabel;
+    Label4: TLabel;
+    EditCodeAImputer: TEdit;
+    Bevel1: TBevel;
+    Label5: TLabel;
+    EditCompteImputation: TEdit;
+    Bevel2: TBevel;
+    EditDesignationCodeAImputer: TEdit;
+    EditDesignationCompteImputation: TEdit;
+    EditTypeProces: TComboBox;
+    EditFichierConcerne: TComboBox;
+    TableauSelect: TStringGrid;
+    Label14: TLabel;
+    Bevel10: TBevel;
+    EditOrdreCompteComptable: TEdit;
+    IncrimentOrdreCompteComptable: TUpDown;
+    EditMotCle: TEdit;
+    Label3: TLabel;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure TableauBaremeComptabilisationCodeParCompteClick(
+      Sender: TObject);
+    procedure BitOperationBaremeComptabilisationCodeParCompteClick(
+      Sender: TObject);
+    procedure TableauBaremeComptabilisationCodeParCompteKeyPress(
+      Sender: TObject; var Key: Char);
+    procedure EditPositionBaremeCCPCKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditTypeProcesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditFichierConcerneKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCodeAImputerKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDesignationCodeAImputerKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditCompteImputationKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDesignationCompteImputationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditTypeProcesSelect(Sender: TObject);
+    procedure EditCompteImputationEnter(Sender: TObject);
+    procedure TableauSelectKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCompteImputationKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCodeAImputerEnter(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSBaremeComptabilisationCodeParCompte: TFSBaremeComptabilisationCodeParCompte;
+
+Procedure AfficheListeBaremeCCPC(TableauListeBaremeCCPC:TStringGrid;  CompteImputation:string);
+
+implementation
+
+Uses  UnitInitialisation, UnitSuppression, UnitFSTiers;
+
+{$R *.dfm}
+
+procedure TFSBaremeComptabilisationCodeParCompte.BitBtn1Click(
+  Sender: TObject);
+begin
+     FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Visible:=false;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompteClick(
+  Sender: TObject);
+begin
+     FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Visible:=false;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompteClick(
+  Sender: TObject);
+var  l,LTrouver:integer;  OKBaremeCCPC:boolean;
+begin
+
+     if(FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.Caption='Valider')then
+     begin
+          OpenFParc(RParc);
+          ChBaremeComptabilisationCodeParCompte:=RParc.Parcours+'\'+Exercice+'FBaremeComptabilisationCodeParCompte';
+          assignfile(FBaremeComptabilisationCodeParCompte,ChBaremeComptabilisationCodeParCompte);
+          if FileExists(ChBaremeComptabilisationCodeParCompte)then
+          Reset(FBaremeComptabilisationCodeParCompte)
+          else Rewrite(FBaremeComptabilisationCodeParCompte);
+          Seek(FBaremeComptabilisationCodeParCompte,0);
+          OKBaremeCCPC:=false;
+          l:=0;
+          while not eof(FBaremeComptabilisationCodeParCompte)and(OKBaremeCCPC=false)do
+          begin
+               read(FBaremeComptabilisationCodeParCompte,RBaremeComptabilisationCodeParCompte);
+
+               if(inttostr(RBaremeComptabilisationCodeParCompte.PositionBaremeCCPC)=FSBaremeComptabilisationCodeParCompte.EditPositionBaremeCCPC.Text)then
+               begin
+                    LTrouver:=l;
+                    OKBaremeCCPC:=true;
+               end;
+          l:=l+1;
+          end;
+
+          if(OKBaremeCCPC=true)then l:=LTrouver;
+          Seek(FBaremeComptabilisationCodeParCompte,l);
+          RBaremeComptabilisationCodeParCompte.PositionBaremeCCPC:=l;
+          RBaremeComptabilisationCodeParCompte.TypeProces:=FSBaremeComptabilisationCodeParCompte.EditTypeProces.Text;
+          RBaremeComptabilisationCodeParCompte.FichierConcerne:=FSBaremeComptabilisationCodeParCompte.EditFichierConcerne.Text;
+          RBaremeComptabilisationCodeParCompte.CodeAImputer:=FSBaremeComptabilisationCodeParCompte.EditCodeAImputer.Text;
+          RBaremeComptabilisationCodeParCompte.CompteImputation:=FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Text;
+          Write(FBaremeComptabilisationCodeParCompte,RBaremeComptabilisationCodeParCompte);
+          CloseFile(FBaremeComptabilisationCodeParCompte);
+     end;
+
+     if(FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.Caption='Supprimer')then
+     begin
+          DeleteFBaremeComptabilisationCodeParCompte(FSBaremeComptabilisationCodeParCompte.EditPositionBaremeCCPC.Text,OKBaremeCCPC);
+     end;
+
+     AfficheListeBaremeCCPC(FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte,'');
+     FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Visible:=false;
+
+     FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.SetFocus;
+end;
+
+Procedure AfficheListeBaremeCCPC(TableauListeBaremeCCPC:TStringGrid;  CompteImputation:string);
+var  R:integer;  OKBaremeCCPC:boolean;
+begin
+     TableauListeBaremeCCPC.ColCount:=8;
+     TableauListeBaremeCCPC.Cols[0].Text:='N°°';
+     TableauListeBaremeCCPC.Cols[1].Text:='Position';
+     TableauListeBaremeCCPC.Cols[2].Text:='TypeProces';
+     TableauListeBaremeCCPC.Cols[3].Text:='Fichier Concerne';
+     TableauListeBaremeCCPC.Cols[4].Text:='Code à Imputer';
+     TableauListeBaremeCCPC.Cols[5].Text:='Désignation';
+     TableauListeBaremeCCPC.Cols[6].Text:='Compte d''imputation';
+     TableauListeBaremeCCPC.Cols[7].Text:='Désignation Compte';
+
+     TableauListeBaremeCCPC.RowCount:=2;
+     TableauListeBaremeCCPC.Rows[1].Text:='';
+
+     OpenFParc(RParc);
+     ChBaremeComptabilisationCodeParCompte:=RParc.Parcours+'\'+Exercice+'FBaremeComptabilisationCodeParCompte';
+     assignfile(FBaremeComptabilisationCodeParCompte,ChBaremeComptabilisationCodeParCompte);
+     if FileExists(ChBaremeComptabilisationCodeParCompte)then
+     Reset(FBaremeComptabilisationCodeParCompte)
+     else Rewrite(FBaremeComptabilisationCodeParCompte);
+     Seek(FBaremeComptabilisationCodeParCompte,0);
+     
+     R:=0;
+     while not eof(FBaremeComptabilisationCodeParCompte)do
+     begin
+          read(FBaremeComptabilisationCodeParCompte,RBaremeComptabilisationCodeParCompte);
+
+          if(CompteImputation<>'')then
+          begin
+               if(RBaremeComptabilisationCodeParCompte.CompteImputation=CompteImputation)
+               then OKBaremeCCPC:=true
+               else OKBaremeCCPC:=false;
+          end
+          else OKBaremeCCPC:=true;
+
+          if(OKBaremeCCPC=true)then
+          begin
+               R:=R+1;
+               TableauListeBaremeCCPC.Rows[R].Text:=inttostr(R);
+               TableauListeBaremeCCPC.Cells[1,R]:=inttostr(RBaremeComptabilisationCodeParCompte.PositionBaremeCCPC);
+               TableauListeBaremeCCPC.Cells[2,R]:=RBaremeComptabilisationCodeParCompte.TypeProces;
+               TableauListeBaremeCCPC.Cells[3,R]:=RBaremeComptabilisationCodeParCompte.FichierConcerne;
+               TableauListeBaremeCCPC.Cells[4,R]:=RBaremeComptabilisationCodeParCompte.CodeAImputer;
+               TableauListeBaremeCCPC.Cells[5,R]:='???';
+               TableauListeBaremeCCPC.Cells[6,R]:=RBaremeComptabilisationCodeParCompte.CompteImputation;
+               if(ChercherCompteComptable(RBaremeComptabilisationCodeParCompte.CompteImputation,inttostr(longueur(RBaremeComptabilisationCodeParCompte.CompteImputation)),'PlanComptable',RRegistreCompteCopie))
+               then TableauListeBaremeCCPC.Cells[7,R]:=RRegistreCompteCopie.Designation
+               else TableauListeBaremeCCPC.Cells[7,R]:='???';
+          end;
+     end;
+     CloseFile(FBaremeComptabilisationCodeParCompte);
+
+     if(R>0)then TableauListeBaremeCCPC.RowCount:=R+1
+            else TableauListeBaremeCCPC.RowCount:=2;
+
+     AjusterColWidth(TableauListeBaremeCCPC,'','');
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompteKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     if key in['n','N']then
+     begin
+          FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Visible:=true;
+          FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.Kind:=bkAll;
+          FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.Caption:='Valider';
+
+          FSBaremeComptabilisationCodeParCompte.EditPositionBaremeCCPC.Text:='';
+          FSBaremeComptabilisationCodeParCompte.EditTypeProces.Text:='';
+          FSBaremeComptabilisationCodeParCompte.EditFichierConcerne.Text:='';
+          FSBaremeComptabilisationCodeParCompte.EditCodeAImputer.Text:='';
+          FSBaremeComptabilisationCodeParCompte.EditDesignationCodeAImputer.Text:='';
+          FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Text:='';
+          FSBaremeComptabilisationCodeParCompte.EditDesignationCompteImputation.Text:='';
+
+          FSBaremeComptabilisationCodeParCompte.EditTypeProces.SetFocus;
+     end;
+
+     if key in['m','M']then
+     begin
+          FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Visible:=true;
+          FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.Kind:=bkAll;
+          FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.Caption:='Valider';
+
+          FSBaremeComptabilisationCodeParCompte.EditPositionBaremeCCPC.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[1,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditTypeProces.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[2,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          ListeTypeFichierTiersBox(FSBaremeComptabilisationCodeParCompte.EditTypeProces.Text,'','',FSBaremeComptabilisationCodeParCompte.EditFichierConcerne,FSBaremeComptabilisationCodeParCompte.TitreEditFichierConserne);
+          FSBaremeComptabilisationCodeParCompte.EditFichierConcerne.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[3,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditCodeAImputer.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[4,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditDesignationCodeAImputer.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[5,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[6,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditDesignationCompteImputation.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[7,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+
+          FSBaremeComptabilisationCodeParCompte.EditTypeProces.SetFocus;
+     end;
+
+     if key in['s','S']then
+     begin
+          FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Visible:=true;
+          FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.Kind:=bkCancel;
+          FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.Caption:='Supprimer';
+
+          FSBaremeComptabilisationCodeParCompte.EditPositionBaremeCCPC.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[1,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditTypeProces.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[2,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          ListeTypeFichierTiersBox(FSBaremeComptabilisationCodeParCompte.EditTypeProces.Text,'',FSBaremeComptabilisationCodeParCompte.EditFichierConcerne,FSBaremeComptabilisationCodeParCompte.TitreEditFichierConserne);
+          FSBaremeComptabilisationCodeParCompte.EditFichierConcerne.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[3,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditCodeAImputer.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[4,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditDesignationCodeAImputer.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[5,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[6,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+          FSBaremeComptabilisationCodeParCompte.EditDesignationCompteImputation.Text:=FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Cells[7,FSBaremeComptabilisationCodeParCompte.TableauBaremeComptabilisationCodeParCompte.Row];
+
+          FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.SetFocus;
+     end;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditPositionBaremeCCPCKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSBaremeComptabilisationCodeParCompte.EditTypeProces.SetFocus;
+     end;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditTypeProcesKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSBaremeComptabilisationCodeParCompte.EditFichierConcerne.SetFocus;
+     end;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditFichierConcerneKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSBaremeComptabilisationCodeParCompte.EditDesignationCodeAImputer.SetFocus;
+     end;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditCodeAImputerKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSBaremeComptabilisationCodeParCompte.EditCompteImputation.SetFocus;
+     end;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditDesignationCodeAImputerKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSBaremeComptabilisationCodeParCompte.EditCompteImputation.SetFocus;
+     end;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditCompteImputationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSBaremeComptabilisationCodeParCompte.TableauSelect.SetFocus;
+     end;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditDesignationCompteImputationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.SetFocus;
+     end;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditTypeProcesSelect(
+  Sender: TObject);
+begin
+     ListeTypeFichierTiersBox(FSBaremeComptabilisationCodeParCompte.EditTypeProces.Text,'',FSBaremeComptabilisationCodeParCompte.EditFichierConcerne,FSBaremeComptabilisationCodeParCompte.TitreEditFichierConserne);
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditCompteImputationEnter(
+  Sender: TObject);
+begin
+     FSBaremeComptabilisationCodeParCompte.TableauSelect.Top:=FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Top
+                                                             +FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Top
+                                                             +FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Height+10;
+     FSBaremeComptabilisationCodeParCompte.TableauSelect.Left:=FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Left
+                                                              +FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Left;
+     FSBaremeComptabilisationCodeParCompte.TableauSelect.Visible:=true;
+
+     ListePlanComptable(FSBaremeComptabilisationCodeParCompte.TableauSelect,strtointeger(FSBaremeComptabilisationCodeParCompte.EditOrdreCompteComptable.Text),FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Text,FSBaremeComptabilisationCodeParCompte.EditMotCle.Text,'PlanComptable');   
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.TableauSelectKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Text:=FSBaremeComptabilisationCodeParCompte.TableauSelect.Cells[1,FSBaremeComptabilisationCodeParCompte.TableauSelect.Row];
+          FSBaremeComptabilisationCodeParCompte.EditDesignationCompteImputation.Text:=FSBaremeComptabilisationCodeParCompte.TableauSelect.Cells[2,FSBaremeComptabilisationCodeParCompte.TableauSelect.Row];
+          FSBaremeComptabilisationCodeParCompte.BitOperationBaremeComptabilisationCodeParCompte.SetFocus;
+
+          FSBaremeComptabilisationCodeParCompte.TableauSelect.Visible:=false
+     end;
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditCompteImputationKeyUp(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     ListePlanComptable(FSBaremeComptabilisationCodeParCompte.TableauSelect,strtointeger(FSBaremeComptabilisationCodeParCompte.EditOrdreCompteComptable.Text),FSBaremeComptabilisationCodeParCompte.EditCompteImputation.Text,FSBaremeComptabilisationCodeParCompte.EditMotCle.Text,'PlanComptable');
+end;
+
+procedure TFSBaremeComptabilisationCodeParCompte.EditCodeAImputerEnter(
+  Sender: TObject);
+begin
+     FSBaremeComptabilisationCodeParCompte.TableauSelect.Top:=FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Top
+                                                             +FSBaremeComptabilisationCodeParCompte.EditCodeAImputer.Top
+                                                             +FSBaremeComptabilisationCodeParCompte.EditCodeAImputer.Height+10;
+     FSBaremeComptabilisationCodeParCompte.TableauSelect.Left:=FSBaremeComptabilisationCodeParCompte.AfficheOperationBaremeComptabilisationCodeParCompte.Left
+                                                              +FSBaremeComptabilisationCodeParCompte.EditCodeAImputer.Left;
+     FSBaremeComptabilisationCodeParCompte.TableauSelect.Visible:=true;
+end;
+
+end.

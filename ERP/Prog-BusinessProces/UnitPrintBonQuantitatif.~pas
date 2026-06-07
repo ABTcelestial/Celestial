@@ -1,0 +1,198 @@
+unit UnitPrintBonQuantitatif;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls;
+
+type
+  TPrintBonQuantitatif = class(TQuickRep)
+    PageHeaderBand1: TQRBand;
+    TextEntreprise: TQRLabel;
+    EnteteTitre: TQRLabel;
+    TextDate: TQRLabel;
+    QRShape1: TQRShape;
+    TitreFournisseur: TQRLabel;
+    QRShape2: TQRShape;
+    QRShape3: TQRShape;
+    QRShape4: TQRShape;
+    QRShape5: TQRShape;
+    QRLabel2: TQRLabel;
+    QRShape6: TQRShape;
+    QRShape7: TQRShape;
+    QRShape8: TQRShape;
+    ModePaiement: TQRLabel;
+    QRLabel4: TQRLabel;
+    QRLabel5: TQRLabel;
+    NbrPage: TQRLabel;
+    QRSysData1: TQRSysData;
+    Logo: TQRImage;
+    LabelISO: TQRImage;
+    ModePaiementCheque: TQRLabel;
+    ModePaiementEspece: TQRLabel;
+    ModePaiementATerme: TQRLabel;
+    TitleBand1: TQRBand;
+    QRShape9: TQRShape;
+    QRShape10: TQRShape;
+    QRShape11: TQRShape;
+    QRShape12: TQRShape;
+    QRShape13: TQRShape;
+    QRShape14: TQRShape;
+    QRShape15: TQRShape;
+    QRShape16: TQRShape;
+    QRShape17: TQRShape;
+    QRShape18: TQRShape;
+    QRShape19: TQRShape;
+    QRShape20: TQRShape;
+    QRShape21: TQRShape;
+    TitreNum: TQRLabel;
+    TitreDesignation: TQRLabel;
+    TitreRef: TQRLabel;
+    TitreQuantiteProduit: TQRLabel;
+    TitreQteDemandee: TQRLabel;
+    TitreQteRecue: TQRLabel;
+    TitreObservation: TQRLabel;
+    TitreSignataire: TQRLabel;
+    N1: TQRLabel;
+    N2: TQRLabel;
+    N3: TQRLabel;
+    N4: TQRLabel;
+    N5: TQRLabel;
+    N6: TQRLabel;
+    N7: TQRLabel;
+    N8: TQRLabel;
+    N9: TQRLabel;
+    N10: TQRLabel;
+    N11: TQRLabel;
+    N12: TQRLabel;
+    N13: TQRLabel;
+    N14: TQRLabel;
+    N15: TQRLabel;
+    N16: TQRLabel;
+    N17: TQRLabel;
+    N18: TQRLabel;
+    N19: TQRLabel;
+    N20: TQRLabel;
+    Designe1: TQRLabel;
+    Designe2: TQRLabel;
+    Designe3: TQRLabel;
+    Designe4: TQRLabel;
+    Designe5: TQRLabel;
+    Designe6: TQRLabel;
+    Designe7: TQRLabel;
+    Designe8: TQRLabel;
+    Designe9: TQRLabel;
+    Designe10: TQRLabel;
+    Designe11: TQRLabel;
+    Designe12: TQRLabel;
+    Designe13: TQRLabel;
+    Designe14: TQRLabel;
+    Designe15: TQRLabel;
+    Designe16: TQRLabel;
+    Designe17: TQRLabel;
+    Designe18: TQRLabel;
+    Designe19: TQRLabel;
+    Designe20: TQRLabel;
+    Ref1: TQRLabel;
+    Ref2: TQRLabel;
+    Ref3: TQRLabel;
+    Ref4: TQRLabel;
+    Ref5: TQRLabel;
+    Ref6: TQRLabel;
+    Ref7: TQRLabel;
+    Ref8: TQRLabel;
+    Ref9: TQRLabel;
+    Ref10: TQRLabel;
+    Ref11: TQRLabel;
+    Ref12: TQRLabel;
+    Ref13: TQRLabel;
+    Ref14: TQRLabel;
+    Ref15: TQRLabel;
+    Ref16: TQRLabel;
+    Ref17: TQRLabel;
+    Ref18: TQRLabel;
+    Ref19: TQRLabel;
+    Ref20: TQRLabel;
+    QDemmande1: TQRLabel;
+    QDemmande2: TQRLabel;
+    QDemmande3: TQRLabel;
+    QDemmande4: TQRLabel;
+    QDemmande5: TQRLabel;
+    QDemmande6: TQRLabel;
+    QDemmande7: TQRLabel;
+    QDemmande8: TQRLabel;
+    QDemmande9: TQRLabel;
+    QDemmande10: TQRLabel;
+    QDemmande11: TQRLabel;
+    QDemmande12: TQRLabel;
+    QDemmande13: TQRLabel;
+    QDemmande14: TQRLabel;
+    QDemmande15: TQRLabel;
+    QDemmande16: TQRLabel;
+    QDemmande17: TQRLabel;
+    QDemmande18: TQRLabel;
+    QDemmande19: TQRLabel;
+    QDemmande20: TQRLabel;
+    QRecue1: TQRLabel;
+    QRecue2: TQRLabel;
+    QRecue3: TQRLabel;
+    QRecue4: TQRLabel;
+    QRecue5: TQRLabel;
+    QRecue6: TQRLabel;
+    QRecue7: TQRLabel;
+    QRecue8: TQRLabel;
+    QRecue9: TQRLabel;
+    QRecue10: TQRLabel;
+    QRecue11: TQRLabel;
+    QRecue12: TQRLabel;
+    QRecue13: TQRLabel;
+    QRecue14: TQRLabel;
+    QRecue15: TQRLabel;
+    QRecue16: TQRLabel;
+    QRecue17: TQRLabel;
+    QRecue18: TQRLabel;
+    QRecue19: TQRLabel;
+    QRecue20: TQRLabel;
+    Observation1: TQRLabel;
+    Observation2: TQRLabel;
+    Observation3: TQRLabel;
+    Observation4: TQRLabel;
+    Observation5: TQRLabel;
+    Observation6: TQRLabel;
+    Observation7: TQRLabel;
+    Observation8: TQRLabel;
+    Observation9: TQRLabel;
+    Observation10: TQRLabel;
+    Observation11: TQRLabel;
+    Observation12: TQRLabel;
+    Observation13: TQRLabel;
+    Observation14: TQRLabel;
+    Observation15: TQRLabel;
+    Observation16: TQRLabel;
+    Observation17: TQRLabel;
+    Observation18: TQRLabel;
+    Observation19: TQRLabel;
+    Observation20: TQRLabel;
+    CTotal: TQRShape;
+    CTitreTotal: TQRShape;
+    Total: TQRLabel;
+    TitreTotal: TQRLabel;
+    TotalEnLettre: TQRRichText;
+    TitreSoit: TQRLabel;
+    DataEntreprise: TQRRichText;
+    DataTiers: TQRRichText;
+    DataEntrepriseBasPage: TQRRichText;
+  private
+
+  public
+
+  end;
+
+var
+  PrintBonQuantitatif: TPrintBonQuantitatif;
+
+implementation
+
+{$R *.DFM}
+
+end.

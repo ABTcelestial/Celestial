@@ -1,0 +1,1467 @@
+unit UnitFSArchivesPhotosCommentaires;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, Buttons, Grids, ExtDlgs, ComCtrls, jpeg;
+
+type
+  TFSArchivesPhotosCommentaires = class(TForm)
+    AfficheOperationArchivesPhotosCommentaire: TPanel;
+    BitBtn1: TBitBtn;
+    BitOperationArchivesPhotosCommentaires: TBitBtn;
+    EditPositionArchivePhotoCommentaire: TEdit;
+    EditTypeModuleArchivePhotoCommentaire: TComboBox;
+    EditDesignationStructure: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    EditDesignationGroupe: TEdit;
+    Label4: TLabel;
+    EditDesignationArticle: TEdit;
+    Label6: TLabel;
+    EditNomFichierArchive: TEdit;
+    Label7: TLabel;
+    Bevel1: TBevel;
+    EditPhotoArchive: TImage;
+    Bevel2: TBevel;
+    TableauArchivesPhotosCommentaire: TStringGrid;
+    Panel2: TPanel;
+    PhotoArchive: TImage;
+    EditCommentaire: TMemo;
+    Panel1: TPanel;
+    Label8: TLabel;
+    EditTypeModuleArchivePhotoCommentaireAfficher: TComboBox;
+    BitOuvrirPhoto: TBitBtn;
+    Bevel3: TBevel;
+    OuvrirPhotos: TOpenPictureDialog;
+    EditOrdreArchivePhotoCommentaire: TEdit;
+    EditNomPhotoCharger: TEdit;
+    AfficheTableauSelect: TPanel;
+    TableauSelect: TStringGrid;
+    EditRechercheCode: TEdit;
+    Label9: TLabel;
+    EditRechercheDesignation: TEdit;
+    Label10: TLabel;
+    UpDown1: TUpDown;
+    EditOrdre: TEdit;
+    Label11: TLabel;
+    Bevel4: TBevel;
+    Bevel5: TBevel;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    EditListeStructure: TComboBox;
+    EditListeGroupe: TComboBox;
+    Label12: TLabel;
+    Label13: TLabel;
+    TitreEtat: TMemo;
+    PhotoVide: TImage;
+    Label14: TLabel;
+    EditCodeArticle: TEdit;
+    Label15: TLabel;
+    EditReferenceArticle: TEdit;
+    EditOrdreGroupe: TEdit;
+    EditCodeStructure: TEdit;
+    EditCodeGroupe: TEdit;
+    BitBtn4: TBitBtn;
+    RBTrieStructutre: TCheckBox;
+    EditRubriqueTrieStructure: TEdit;
+    EditTypeTrieStructure: TComboBox;
+    RadioGroup1: TRadioGroup;
+    RBArticleAvecSansPhoto: TRadioButton;
+    RBArticleAvecPhoto: TRadioButton;
+    RBArticleSansPhoto: TRadioButton;
+    EditAvecSansPhoto: TEdit;
+    RBInclureReference: TCheckBox;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure TableauArchivesPhotosCommentaireKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure BitOperationArchivesPhotosCommentairesClick(Sender: TObject);
+    procedure EditPositionArchivePhotoCommentaireKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditTypeModuleArchivePhotoCommentaireKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditDesignationStructureKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditDesignationGroupeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDesignationArticleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCommentaireKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNomFichierArchiveKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauArchivesPhotosCommentaireClick(Sender: TObject);
+    procedure EditTypeModuleArchivePhotoCommentaireAfficherSelect(
+      Sender: TObject);
+    procedure BitOuvrirPhotoClick(Sender: TObject);
+    procedure EditDesignationStructureEnter(Sender: TObject);
+    procedure TableauSelectKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDesignationGroupeEnter(Sender: TObject);
+    procedure EditDesignationArticleEnter(Sender: TObject);
+    procedure EditRechercheCodeKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure UpDown1Click(Sender: TObject; Button: TUDBtnType);
+    procedure EditRechercheCodeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditRechercheDesignationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure EditTypeModuleArchivePhotoCommentaireAfficherKeyPress(
+      Sender: TObject; var Key: Char);
+    procedure EditListeStructureKeyPress(Sender: TObject; var Key: Char);
+    procedure EditListeGroupeKeyPress(Sender: TObject; var Key: Char);
+    procedure EditListeStructureSelect(Sender: TObject);
+    procedure EditListeGroupeSelect(Sender: TObject);
+    procedure EditCodeArticleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure RBArticleAvecSansPhotoClick(Sender: TObject);
+    procedure RBArticleAvecPhotoClick(Sender: TObject);
+    procedure RBArticleSansPhotoClick(Sender: TObject);
+    procedure EditPhotoArchiveDblClick(Sender: TObject);
+    procedure PhotoArchiveDblClick(Sender: TObject);
+    procedure EditTypeModuleArchivePhotoCommentaireChange(Sender: TObject);
+    procedure EditTypeModuleArchivePhotoCommentaireEnter(Sender: TObject);
+    procedure TableauSelectDblClick(Sender: TObject);
+    procedure AfficheOperationArchivesPhotosCommentaireMouseDown(
+      Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+      Y: Integer);
+    procedure AfficheTableauSelectMouseDown(Sender: TObject;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSArchivesPhotosCommentaires: TFSArchivesPhotosCommentaires;
+
+  Procedure ListeArchivePhotosCommenatires(TableauArchivePhotosCommenatires:TStringGrid;  TypeModule,Structure,Groupe:string;  EditListeStructure,EditListeGroupe:TComboBox; OKReinitialiseBox:boolean; ArticleAvecSansPhoto,PositionArchivePhotoCommentaireSelect:string);
+  Function IndiqueAdresseArchivePhoto(PositionArchivePhoto,DesignationStructure,CodeArticle,DesignationArticle:string;  TableauListePositionArchivePhoto:TStringGrid;  var AdresseArchivePhoto:string):boolean;
+  Procedure ChargerActionTableauSelect;
+
+implementation
+
+Uses UnitInitialisation, UnitSuppression, UnitFSMenuPrincipal, UnitFSAttachements, UnitFSGenerateurBase,
+     UnitFSParametresAvances, UnitPrintArchivePhotos, UnitFSFicheSaisie;
+
+{$R *.dfm}
+
+procedure TFSArchivesPhotosCommentaires.BitBtn1Click(Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Visible:=false;
+end;
+
+procedure TFSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaireKeyPress(
+  Sender: TObject; var Key: Char);
+var  AdresseArchivePhoto:string;
+begin
+     if key in['n','N']then
+     begin
+          FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Visible:=true;
+          FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.Kind:=bkAll;
+          FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.Caption:='Valider';
+
+          FSArchivesPhotosCommentaires.EditPositionArchivePhotoCommentaire.Text:='';
+          FSArchivesPhotosCommentaires.EditOrdreArchivePhotoCommentaire.Text:='';
+          if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.ItemIndex>0)
+          then FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.ItemIndex:=FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.ItemIndex-1
+          else FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text:='';
+          FSArchivesPhotosCommentaires.EditCodeStructure.Text:='';
+          FSArchivesPhotosCommentaires.EditDesignationStructure.Text:='';
+          FSArchivesPhotosCommentaires.EditOrdreGroupe.Text:='';
+          FSArchivesPhotosCommentaires.EditCodeGroupe.Text:='';
+          FSArchivesPhotosCommentaires.EditDesignationGroupe.Text:='';
+          FSArchivesPhotosCommentaires.EditCodeArticle.Text:='';
+          FSArchivesPhotosCommentaires.EditDesignationArticle.Text:='';
+          FSArchivesPhotosCommentaires.EditReferenceArticle.Text:='';
+          FSArchivesPhotosCommentaires.EditCommentaire.Text:='';
+          FSArchivesPhotosCommentaires.EditNomFichierArchive.Text:='';
+          FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text:='';
+          FSArchivesPhotosCommentaires.EditPhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+
+          FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.SetFocus;
+     end;
+
+     if key in['m','M']then
+     begin
+          FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Visible:=true;
+          FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.Kind:=bkAll;
+          FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.Caption:='Valider';
+
+          FSArchivesPhotosCommentaires.EditPositionArchivePhotoCommentaire.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[1,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditOrdreArchivePhotoCommentaire.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[2,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[3,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditCodeStructure.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[4,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditDesignationStructure.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[5,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditOrdreGroupe.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[6,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditCodeGroupe.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[7,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditDesignationGroupe.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[8,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditCodeArticle.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[9,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditDesignationArticle.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[10,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditReferenceArticle.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[11,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditCommentaire.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[12,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditNomFichierArchive.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+
+          OpenFParc(RParc);
+          AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+
+          if FileExists(AdresseArchivePhoto)then
+          begin
+               FSArchivesPhotosCommentaires.EditPhotoArchive.Picture.LoadFromFile(AdresseArchivePhoto);
+               FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text:=FSArchivesPhotosCommentaires.EditNomFichierArchive.Text;
+          end
+          else
+          begin
+               FSArchivesPhotosCommentaires.EditPhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+               FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text:='???';
+          end;
+
+          FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.SetFocus;
+     end;
+
+     if key in['s','S']then
+     begin
+          FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Visible:=true;
+          FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.Kind:=bkCancel;
+          FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.Caption:='Supprimer';
+
+          FSArchivesPhotosCommentaires.EditPositionArchivePhotoCommentaire.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[1,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditOrdreArchivePhotoCommentaire.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[2,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[3,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditCodeStructure.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[4,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditDesignationStructure.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[5,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditOrdreGroupe.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[6,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditCodeGroupe.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[7,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditDesignationGroupe.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[8,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditCodeArticle.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[9,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditDesignationArticle.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[10,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditReferenceArticle.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[11,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditCommentaire.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[12,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+          FSArchivesPhotosCommentaires.EditNomFichierArchive.Text:=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+
+          OpenFParc(RParc);
+          AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+
+          if FileExists(AdresseArchivePhoto)then
+          begin
+               FSArchivesPhotosCommentaires.EditPhotoArchive.Picture.LoadFromFile(AdresseArchivePhoto);
+               FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text:=FSArchivesPhotosCommentaires.EditNomFichierArchive.Text;
+          end
+          else
+          begin
+               FSArchivesPhotosCommentaires.EditPhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+               FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text:='???';
+          end;
+
+          FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentairesClick(
+  Sender: TObject);
+var  i,iselect,OrdreArchivePhoto:integer; OKArchivePhotoCommentaire:boolean;   AdresseArchivePhoto,PositionSelect:string;
+begin
+     PositionSelect:='';
+
+     if(FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.Caption='Valider')then
+     begin
+          OpenFParc(RParc);
+          ChArchivePhotoCommentaire:=RParc.Parcours+'\'+Exercice+'FArchivePhotoCommentaire';
+          assignfile(FArchivePhotoCommentaire,ChArchivePhotoCommentaire);
+          if FileExists(ChArchivePhotoCommentaire)then
+          Reset(FArchivePhotoCommentaire)
+          else Rewrite(FArchivePhotoCommentaire);
+          Seek(FArchivePhotoCommentaire,0);
+          OKArchivePhotoCommentaire:=false;
+          i:=0;
+          iSelect:=0;
+          OrdreArchivePhoto:=0;
+
+          while not eof(FArchivePhotoCommentaire)and(OKArchivePhotoCommentaire=false)do
+          begin
+               read(FArchivePhotoCommentaire,RArchivePhotoCommentaire);
+
+               if(RArchivePhotoCommentaire.TypeModuleArchivePhotoCommentaire=FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text)then
+               begin
+                    if(OrdreArchivePhoto<=RArchivePhotoCommentaire.OrdreArchivePhotoCommentaire)then OrdreArchivePhoto:=RArchivePhotoCommentaire.OrdreArchivePhotoCommentaire+1;
+               end;
+
+               if(inttostr(RArchivePhotoCommentaire.PositionArchivePhotoCommentaire)=FSArchivesPhotosCommentaires.EditPositionArchivePhotoCommentaire.Text)then
+               begin
+                    OKArchivePhotoCommentaire:=true;
+                    iSelect:=i;
+                    OrdreArchivePhoto:=RArchivePhotoCommentaire.OrdreArchivePhotoCommentaire;
+               end;
+          i:=i+1;
+          end;
+
+          if(OKArchivePhotoCommentaire=true)then i:=iSelect;
+          PositionSelect:=inttostr(i);
+          RArchivePhotoCommentaire.PositionArchivePhotoCommentaire:=i;
+          RArchivePhotoCommentaire.OrdreArchivePhotoCommentaire:=OrdreArchivePhoto;
+          RArchivePhotoCommentaire.TypeModuleArchivePhotoCommentaire:=FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text;
+          RArchivePhotoCommentaire.CodeStructure:=FSArchivesPhotosCommentaires.EditCodeStructure.Text;
+          RArchivePhotoCommentaire.DesignationStructure:=FSArchivesPhotosCommentaires.EditDesignationStructure.Text;
+          RArchivePhotoCommentaire.OrdreGroupe:=strtointeger(FSArchivesPhotosCommentaires.EditOrdreGroupe.Text);
+          RArchivePhotoCommentaire.CodeGroupe:=FSArchivesPhotosCommentaires.EditCodeGroupe.Text;
+          RArchivePhotoCommentaire.DesignationGroupe:=FSArchivesPhotosCommentaires.EditDesignationGroupe.Text;
+          RArchivePhotoCommentaire.CodeArticle:=FSArchivesPhotosCommentaires.EditCodeArticle.Text;
+          RArchivePhotoCommentaire.DesignationArticle:=FSArchivesPhotosCommentaires.EditDesignationArticle.Text;
+          RArchivePhotoCommentaire.ReferenceArticle:=FSArchivesPhotosCommentaires.EditReferenceArticle.Text;
+          RArchivePhotoCommentaire.Commentaire:=FSArchivesPhotosCommentaires.EditCommentaire.Text;
+
+          if(FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text<>'')and(FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text<>'???')then
+          begin
+               RArchivePhotoCommentaire.NomFichierArchive:='ArchivePhoto'+FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text+' '+inttostr(OrdreArchivePhoto)+'.jpg';
+               AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+RArchivePhotoCommentaire.NomFichierArchive;
+               FSArchivesPhotosCommentaires.EditPhotoArchive.Picture.SaveToFile(AdresseArchivePhoto);
+          end
+          else RArchivePhotoCommentaire.NomFichierArchive:='';
+
+          Seek(FArchivePhotoCommentaire,i);
+          write(FArchivePhotoCommentaire,RArchivePhotoCommentaire);
+          CloseFile(FArchivePhotoCommentaire);
+
+     end;
+
+     if(FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.Caption='Supprimer')then
+     begin
+          PositionSelect:=inttostr(strtointeger(FSArchivesPhotosCommentaires.EditPositionArchivePhotoCommentaire.Text)-1);
+          DeleteFArchivePhotoCommentaire(FSArchivesPhotosCommentaires.EditPositionArchivePhotoCommentaire.Text,OKArchivePhotoCommentaire);
+          if(OKArchivePhotoCommentaire=true)then
+          begin
+               AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.EditNomFichierArchive.Text;
+               DeleteFile(AdresseArchivePhoto);
+          end;
+     end;
+
+     ListeArchivePhotosCommenatires(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire,FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.Text,FSArchivesPhotosCommentaires.EditListeStructure.Text,FSArchivesPhotosCommentaires.EditListeGroupe.Text,FSArchivesPhotosCommentaires.EditListeStructure,FSArchivesPhotosCommentaires.EditListeGroupe,false,FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text,PositionSelect);
+
+     FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Visible:=false;
+
+     FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.SetFocus;
+
+     if(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row]<>'')then
+     begin
+          OpenFParc(RParc);
+          AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+
+          if FileExists(AdresseArchivePhoto)
+          then FSArchivesPhotosCommentaires.PhotoArchive.Picture.LoadFromFile(AdresseArchivePhoto)
+          else FSArchivesPhotosCommentaires.PhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+     end
+     else FSArchivesPhotosCommentaires.PhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+end;
+
+Procedure ListeArchivePhotosCommenatires(TableauArchivePhotosCommenatires:TStringGrid;  TypeModule,Structure,Groupe:string;  EditListeStructure,EditListeGroupe:TComboBox; OKReinitialiseBox:boolean; ArticleAvecSansPhoto,PositionArchivePhotoCommentaireSelect:string);
+var  R,l,LStructure,LGroupe,RowSelect:integer;  OKArchivePhotoCommentaire,OKStructure,OKGroupe:boolean;    AdresseArchivePhoto:string;
+begin
+     TableauArchivePhotosCommenatires.ColCount:=14;
+     TableauArchivePhotosCommenatires.Cols[1].Text:='P°';
+     TableauArchivePhotosCommenatires.Cols[2].Text:='OrdreArchive';
+     TableauArchivePhotosCommenatires.Cols[3].Text:='Type Module';
+     TableauArchivePhotosCommenatires.Cols[4].Text:='Code Structure';
+     TableauArchivePhotosCommenatires.Cols[5].Text:='Désignation Structure';
+     TableauArchivePhotosCommenatires.Cols[6].Text:='Ordre groupe';
+     TableauArchivePhotosCommenatires.Cols[7].Text:='Code groupe';
+     TableauArchivePhotosCommenatires.Cols[8].Text:='Désignation groupe';
+     TableauArchivePhotosCommenatires.Cols[9].Text:='Code Article';
+     TableauArchivePhotosCommenatires.Cols[10].Text:='Désignation Article';
+     TableauArchivePhotosCommenatires.Cols[11].Text:='Réf Article';
+     TableauArchivePhotosCommenatires.Cols[12].Text:='Commentaire';
+     TableauArchivePhotosCommenatires.Cols[13].Text:='Nom Fichier';
+
+     TableauArchivePhotosCommenatires.RowCount:=2;
+     TableauArchivePhotosCommenatires.Rows[1].Text:='';
+
+     if(OKReinitialiseBox=true)then
+     begin
+          EditListeStructure.Items.Text:='Tous';
+          EditListeGroupe.Items.Text:='Tous';
+     end;
+
+     OpenFParc(RParc);
+     ChArchivePhotoCommentaire:=RParc.Parcours+'\'+Exercice+'FArchivePhotoCommentaire';
+     assignfile(FArchivePhotoCommentaire,ChArchivePhotoCommentaire);
+     if FileExists(ChArchivePhotoCommentaire)then
+     Reset(FArchivePhotoCommentaire)
+     else Rewrite(FArchivePhotoCommentaire);
+     Seek(FArchivePhotoCommentaire,0);
+     RowSelect:=1;
+     R:=0;
+     l:=0;
+     LStructure:=0;
+     LGroupe:=0;
+     while not eof(FArchivePhotoCommentaire)do
+     begin
+          read(FArchivePhotoCommentaire,RArchivePhotoCommentaire);
+
+          if(TypeModule<>'')and(TypeModule<>'Tous')then
+          begin
+               if(RArchivePhotoCommentaire.TypeModuleArchivePhotoCommentaire=TypeModule)
+               then OKArchivePhotoCommentaire:=true
+               else OKArchivePhotoCommentaire:=false;
+          end
+          else OKArchivePhotoCommentaire:=true;
+
+          if(OKArchivePhotoCommentaire=true)and(OKReinitialiseBox=true)then
+          begin
+               l:=0;
+               OKStructure:=false;
+               while(l<=LStructure)and(OKStructure=false)do
+               begin
+                    if(EditListeStructure.Items.Strings[l]=RArchivePhotoCommentaire.DesignationStructure)then OKStructure:=true;
+               l:=l+1;
+               end;
+
+               if(OKStructure=false)then
+               begin
+                    LStructure:=LStructure+1;
+                    EditListeStructure.Items.Add(RArchivePhotoCommentaire.DesignationStructure);
+               end;
+
+
+               l:=0;
+               OKGroupe:=false;
+               while(l<=LGroupe)and(OKGroupe=false)do
+               begin
+                    if(EditListeGroupe.Items.Strings[l]=RArchivePhotoCommentaire.DesignationGroupe)then OKGroupe:=true;
+               l:=l+1;
+               end;
+
+               if(OKGroupe=false)then
+               begin
+                    LGroupe:=LGroupe+1;
+                    EditListeGroupe.Items.Add(RArchivePhotoCommentaire.DesignationGroupe);
+               end;
+          end;
+
+          if(OKArchivePhotoCommentaire=true)then
+          begin
+               if(Structure<>'')and(Structure<>'Tous')then
+               begin
+                    if(RArchivePhotoCommentaire.DesignationStructure=Structure)
+                    then OKArchivePhotoCommentaire:=true
+                    else OKArchivePhotoCommentaire:=false;
+               end;
+          end;
+
+          if(OKArchivePhotoCommentaire=true)then
+          begin
+               if(Groupe<>'')and(Groupe<>'Tous')then
+               begin
+                    if(RArchivePhotoCommentaire.DesignationGroupe=Groupe)
+                    then OKArchivePhotoCommentaire:=true
+                    else OKArchivePhotoCommentaire:=false;
+               end;
+          end;
+
+          if(OKArchivePhotoCommentaire=true)then
+          begin
+               if(ArticleAvecSansPhoto='Avec')then
+               begin
+                    if(RArchivePhotoCommentaire.NomFichierArchive='')then
+                    begin
+                         OKArchivePhotoCommentaire:=false;
+                    end
+                    else
+                    begin
+                         OpenFParc(RParc);
+                         AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+RArchivePhotoCommentaire.NomFichierArchive;
+
+                         if Not FileExists(AdresseArchivePhoto)then OKArchivePhotoCommentaire:=false;
+                    end;
+               end;
+
+               if(ArticleAvecSansPhoto='Sans')then
+               begin
+                    if(RArchivePhotoCommentaire.NomFichierArchive<>'')then
+                    begin
+                         OpenFParc(RParc);
+                         AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+RArchivePhotoCommentaire.NomFichierArchive;
+
+                         if FileExists(AdresseArchivePhoto)then OKArchivePhotoCommentaire:=false;
+                    end;
+               end;
+          end;
+
+          if(OKArchivePhotoCommentaire=true)then
+          begin
+               R:=R+1;
+               TableauArchivePhotosCommenatires.Rows[R].Text:=inttostr(R);
+               TableauArchivePhotosCommenatires.Cells[1,R]:=inttostr(RArchivePhotoCommentaire.PositionArchivePhotoCommentaire);
+               TableauArchivePhotosCommenatires.Cells[2,R]:=inttostr(RArchivePhotoCommentaire.OrdreArchivePhotoCommentaire);
+               TableauArchivePhotosCommenatires.Cells[3,R]:=RArchivePhotoCommentaire.TypeModuleArchivePhotoCommentaire;
+               TableauArchivePhotosCommenatires.Cells[4,R]:=RArchivePhotoCommentaire.CodeStructure;
+               TableauArchivePhotosCommenatires.Cells[5,R]:=RArchivePhotoCommentaire.DesignationStructure;
+               TableauArchivePhotosCommenatires.Cells[6,R]:=inttostr(RArchivePhotoCommentaire.OrdreGroupe);
+               TableauArchivePhotosCommenatires.Cells[7,R]:=RArchivePhotoCommentaire.CodeGroupe;
+               TableauArchivePhotosCommenatires.Cells[8,R]:=RArchivePhotoCommentaire.DesignationGroupe;
+               TableauArchivePhotosCommenatires.Cells[9,R]:=RArchivePhotoCommentaire.CodeArticle;
+               TableauArchivePhotosCommenatires.Cells[10,R]:=RArchivePhotoCommentaire.DesignationArticle;
+               TableauArchivePhotosCommenatires.Cells[11,R]:=RArchivePhotoCommentaire.ReferenceArticle;
+               TableauArchivePhotosCommenatires.Cells[12,R]:=RArchivePhotoCommentaire.Commentaire;
+               TableauArchivePhotosCommenatires.Cells[13,R]:=RArchivePhotoCommentaire.NomFichierArchive;
+
+               if(inttostr(RArchivePhotoCommentaire.PositionArchivePhotoCommentaire)=PositionArchivePhotoCommentaireSelect)then RowSelect:=R;
+          end;
+
+     end;
+     CloseFile(FArchivePhotoCommentaire);
+
+     if(R>0)then TableauArchivePhotosCommenatires.RowCount:=R+1
+            else TableauArchivePhotosCommenatires.RowCount:=2;
+
+     if(OKReinitialiseBox=true)then
+     begin
+          EditListeStructure.ItemIndex:=0;
+          EditListeGroupe.ItemIndex:=0;
+     end;
+
+     AjusterColWidth(TableauArchivePhotosCommenatires,'','');
+
+     OpenFParc(RParc);
+     AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+
+     if FileExists(AdresseArchivePhoto)
+     then FSArchivesPhotosCommentaires.PhotoArchive.Picture.LoadFromFile(AdresseArchivePhoto)
+     else FSArchivesPhotosCommentaires.PhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+
+     TableauArchivePhotosCommenatires.Row:=RowSelect;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditPositionArchivePhotoCommentaireKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.EditDesignationStructure.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditDesignationStructureKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.EditDesignationGroupe.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditDesignationGroupeKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.EditCodeArticle.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditDesignationArticleKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.EditCommentaire.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditCommentaireKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.EditNomFichierArchive.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditNomFichierArchiveKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.BitOperationArchivesPhotosCommentaires.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaireClick(
+  Sender: TObject);
+var  AdresseArchivePhoto,TypeData:string;
+begin
+     FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Visible:=false;
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=false;
+
+     if(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row]<>'')then
+     begin
+          OpenFParc(RParc);
+          AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Row];
+
+          if FileExists(AdresseArchivePhoto)
+          then FSArchivesPhotosCommentaires.PhotoArchive.Picture.LoadFromFile(AdresseArchivePhoto)
+          else FSArchivesPhotosCommentaires.PhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+     end
+     else FSArchivesPhotosCommentaires.PhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+
+     if(FSArchivesPhotosCommentaires.RBTrieStructutre.Checked=true)then
+     begin
+          FSArchivesPhotosCommentaires.RBTrieStructutre.Checked:=false;
+          FSArchivesPhotosCommentaires.EditRubriqueTrieStructure.Text:=inttostr(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Col);
+          TypeData:='';
+
+          TrierTableauARowSpecial(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire,1,FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.RowCount-1,1,FSArchivesPhotosCommentaires.EditRubriqueTrieStructure.Text,TypeData,FSArchivesPhotosCommentaires.EditTypeTrieStructure.Text);
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficherSelect(
+  Sender: TObject);
+begin
+     ListeArchivePhotosCommenatires(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire,FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.Text,FSArchivesPhotosCommentaires.EditListeStructure.Text,FSArchivesPhotosCommentaires.EditListeGroupe.Text,FSArchivesPhotosCommentaires.EditListeStructure,FSArchivesPhotosCommentaires.EditListeGroupe,true,FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text,'');
+end;
+
+procedure TFSArchivesPhotosCommentaires.BitOuvrirPhotoClick(
+  Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.OuvrirPhotos.Execute;
+
+     if FileExists(FSArchivesPhotosCommentaires.OuvrirPhotos.FileName)then
+     begin
+          FSArchivesPhotosCommentaires.EditPhotoArchive.Picture.LoadFromFile(FSArchivesPhotosCommentaires.OuvrirPhotos.FileName);
+          FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text:=FSArchivesPhotosCommentaires.OuvrirPhotos.FileName;
+          FSArchivesPhotosCommentaires.EditNomFichierArchive.Text:='';
+     end
+     else
+     begin
+          FSArchivesPhotosCommentaires.EditPhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+          FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text:='';
+          FSArchivesPhotosCommentaires.EditNomFichierArchive.Text:='';
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditDesignationStructureEnter(
+  Sender: TObject);
+var R,C:integer;  NotCol:string;
+begin
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Left:=FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Left
+                                                            +FSArchivesPhotosCommentaires.EditCodeStructure.Left;
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Top:=FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Top
+                                                            +FSArchivesPhotosCommentaires.EditCodeStructure.Top
+                                                            +FSArchivesPhotosCommentaires.EditCodeStructure.Height+2;
+
+
+     FSArchivesPhotosCommentaires.EditRechercheCode.Text:='';
+     FSArchivesPhotosCommentaires.EditRechercheDesignation.Text:='';
+
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Situation Marche')then
+     begin
+          FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=true;
+          ProcAfficheAttachement(FSArchivesPhotosCommentaires.TableauSelect,'','',true);
+          FSArchivesPhotosCommentaires.TableauSelect.ColCount:=FSArchivesPhotosCommentaires.TableauSelect.ColCount+2;
+          FSArchivesPhotosCommentaires.TableauSelect.Cols[FSArchivesPhotosCommentaires.TableauSelect.ColCount-2].Text:='Marche';
+          FSArchivesPhotosCommentaires.TableauSelect.Cols[FSArchivesPhotosCommentaires.TableauSelect.ColCount-1].Text:='Tiers';
+          for R:=1 to FSArchivesPhotosCommentaires.TableauSelect.RowCount-1 do
+          begin
+               RMarcheCopie:=ChercherMarche(strtointeger(FSArchivesPhotosCommentaires.TableauSelect.Cells[2,R]));
+               FSArchivesPhotosCommentaires.TableauSelect.Cells[FSArchivesPhotosCommentaires.TableauSelect.ColCount-2,R]:='Marche N° '+CompleteZeroGauche(inttostr(RMarcheCopie.NSMarche),'2')+' du '+RMarcheCopie.DateMarche;
+               RTiersCopie:=ChercherTiers(RMarcheCopie.TypeProces,RMarcheCopie.FichierConcerneTiers,RMarcheCopie.CodeMaitreOuvrage,'');
+               FSArchivesPhotosCommentaires.TableauSelect.Cells[FSArchivesPhotosCommentaires.TableauSelect.ColCount-1,R]:=RTiersCopie.NomTiers+' '+RTiersCopie.PrenomTiers;
+          end;
+          NotCol:='';
+          for C:=1 to FSArchivesPhotosCommentaires.TableauSelect.ColCount-1 do
+          begin
+               if(FSArchivesPhotosCommentaires.TableauSelect.ColWidths[C]=0)then
+               if(NotCol='')then NotCol:=inttostr(C)
+                            else NotCol:=NotCol+';'+inttostr(C);
+          end;
+
+          AjusterColWidth(FSArchivesPhotosCommentaires.TableauSelect,'',NotCol);
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Structure';
+          FSArchivesPhotosCommentaires.TableauSelect.SetFocus;
+     end;
+
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Article')then
+     begin
+          FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=true;
+          ListeProjetFinance(FSArchivesPhotosCommentaires.TableauSelect,'','','10',false,'1','',false,true,'','');
+
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Structure';
+          FSArchivesPhotosCommentaires.TableauSelect.SetFocus;
+     end;
+
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Marche')then
+     begin
+          FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=true;
+          ListeProjetFinance(FSArchivesPhotosCommentaires.TableauSelect,'','','10',false,'1','',false,true,'','');
+
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Structure';
+          FSArchivesPhotosCommentaires.TableauSelect.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.TableauSelectKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          ChargerActionTableauSelect;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditDesignationGroupeEnter(
+  Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Left:=FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Left
+                                                            +FSArchivesPhotosCommentaires.EditCodeGroupe.Left;
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Top:=FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Top
+                                                            +FSArchivesPhotosCommentaires.EditCodeGroupe.Top
+                                                            +FSArchivesPhotosCommentaires.EditCodeGroupe.Height+2;
+
+     FSArchivesPhotosCommentaires.EditRechercheCode.Text:='';
+     FSArchivesPhotosCommentaires.EditRechercheDesignation.Text:='';
+     
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Situation Marche')then
+     begin
+          FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=true;
+          ProcAfficheDetailAttachement(FSArchivesPhotosCommentaires.TableauSelect,strtointeger(Midellaters(FSArchivesPhotosCommentaires.EditCodeStructure.Text,1,5)),0,0,strtointeger(Midellaters(FSArchivesPhotosCommentaires.EditCodeStructure.Text,6,10)));
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Groupe';
+     end;
+
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Article')then
+     begin
+          FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=true;
+          FSArchivesPhotosCommentaires.EditOrdre.Text:='6';
+          ListePlanComptable(FSArchivesPhotosCommentaires.TableauSelect,6,'','','PlanComptable');
+
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Groupe '+FSArchivesPhotosCommentaires.EditOrdre.Text;
+          FSArchivesPhotosCommentaires.TableauSelect.SetFocus;
+     end;
+
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Marche')then
+     begin
+          FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=true;
+          FSArchivesPhotosCommentaires.EditOrdre.Text:='6';
+          ListePlanComptable(FSArchivesPhotosCommentaires.TableauSelect,6,'','','Marche');
+
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Groupe '+FSArchivesPhotosCommentaires.EditOrdre.Text;
+          FSArchivesPhotosCommentaires.TableauSelect.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditDesignationArticleEnter(
+  Sender: TObject);
+var  OrdrePlanComptable:integer; 
+     TypeStock,CodeStockArticle,CompteConcerne,CodeSFamille,CodeArticle,DesignationArticle,CodeArticleSelection:string; DistinguerDesignationReference:boolean; RowIn:integer; var RowOut:integer;
+begin
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Left:=FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Left
+                                                            +FSArchivesPhotosCommentaires.EditCodeArticle.Left;
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Top:=FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Top
+                                                            +FSArchivesPhotosCommentaires.EditCodeArticle.Top
+                                                            +FSArchivesPhotosCommentaires.EditCodeArticle.Height+2;
+
+     FSArchivesPhotosCommentaires.EditRechercheCode.Text:='';
+     FSArchivesPhotosCommentaires.EditRechercheDesignation.Text:='';
+     
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Situation Marche')then
+     begin
+          FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=true;
+          ProcAfficheDetailAttachement(FSArchivesPhotosCommentaires.TableauSelect,strtointeger(Midellaters(FSArchivesPhotosCommentaires.EditCodeStructure.Text,1,5)),0,0,strtointeger(Midellaters(FSArchivesPhotosCommentaires.EditCodeStructure.Text,6,10)));
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Article';
+     end;
+
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Article')then
+     begin
+          FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=true;
+
+          OrdrePlanComptable:=strtointeger(FSArchivesPhotosCommentaires.EditOrdreGroupe.Text);
+          CodeSFamille:=FSArchivesPhotosCommentaires.EditCodeGroupe.Text;
+
+          TypeStock:=FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text;
+          CodeStockArticle:=FSArchivesPhotosCommentaires.EditCodeStructure.Text;
+          CompteConcerne:='';
+          CodeSFamille:=CodeSFamille;
+          CodeArticle:='';
+          DesignationArticle:='';
+          CodeArticleSelection:='';
+          DistinguerDesignationReference:=true;
+          RowIn:=0;
+          RowOut:=0;
+          ProcAfficheStockArticleListe(FSArchivesPhotosCommentaires.TableauSelect,TypeStock,CodeStockArticle,CompteConcerne,CodeSFamille,CodeArticle,DesignationArticle,CodeArticleSelection,DistinguerDesignationReference,RowIn,RowOut);
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Article';
+          FSArchivesPhotosCommentaires.TableauSelect.SetFocus
+     end;
+
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Marche')then
+     begin
+          FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=true;
+
+          OrdrePlanComptable:=strtointeger(FSArchivesPhotosCommentaires.EditOrdreGroupe.Text);
+          CodeSFamille:=FSArchivesPhotosCommentaires.EditCodeGroupe.Text;
+
+          OpenFParc(RParc);
+          if(FunctStockSpecifierParStructure(false)=true)
+          then ChStockArticle:=RParc.Parcours+'\'+Exercice+'FStockMarche'+FSArchivesPhotosCommentaires.EditCodeStructure.Text
+          else ChStockArticle:=RParc.Parcours+'\'+Exercice+'FStockMarche';
+          ProcAfficheListeStock(FSArchivesPhotosCommentaires.TableauSelect,ChStockArticle,CodeSFamille,'','');
+
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Marche';
+          FSArchivesPhotosCommentaires.TableauSelect.SetFocus
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditRechercheCodeKeyUp(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+var  OrdrePlanComptable:integer;
+     TypeStock,CodeStockArticle,CompteConcerne,CodeSFamille,CodeArticle,DesignationArticle,CodeArticleSelection:string; DistinguerDesignationReference:boolean; RowIn:integer; var RowOut:integer;
+begin
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Article')then
+     begin
+          if(firstlaters(FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0],6)='Groupe')then
+          begin
+               OrdrePlanComptable:=strtointeger(FSArchivesPhotosCommentaires.EditOrdre.Text);
+               ListePlanComptable(FSArchivesPhotosCommentaires.TableauSelect,OrdrePlanComptable,FSArchivesPhotosCommentaires.EditRechercheCode.Text,FSArchivesPhotosCommentaires.EditRechercheDesignation.Text,'PlanComptable');
+               FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Groupe '+inttostr(OrdrePlanComptable);
+          end;
+
+          if(FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]='Article')then
+          begin
+               OrdrePlanComptable:=strtointeger(FSArchivesPhotosCommentaires.EditOrdreGroupe.Text);
+               CodeSFamille:=FSArchivesPhotosCommentaires.EditCodeGroupe.Text;
+
+               TypeStock:=FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text;
+               CodeStockArticle:=FSArchivesPhotosCommentaires.EditCodeStructure.Text;
+               CompteConcerne:='';
+               CodeSFamille:=CodeSFamille;
+               CodeArticle:=FSArchivesPhotosCommentaires.EditRechercheCode.Text;
+               DesignationArticle:=FSArchivesPhotosCommentaires.EditRechercheDesignation.Text;
+               CodeArticleSelection:='';
+               DistinguerDesignationReference:=true;
+               RowIn:=0;
+               RowOut:=0;
+               ProcAfficheStockArticleListe(FSArchivesPhotosCommentaires.TableauSelect,TypeStock,CodeStockArticle,CompteConcerne,CodeSFamille,CodeArticle,DesignationArticle,CodeArticleSelection,DistinguerDesignationReference,RowIn,RowOut);
+               FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Article';
+          end;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.UpDown1Click(Sender: TObject;
+  Button: TUDBtnType);
+var  OrdrePlanComptable:integer;
+begin
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Article')
+     and(firstlaters(FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0],6)='Groupe')then
+     begin
+          OrdrePlanComptable:=strtointeger(FSArchivesPhotosCommentaires.EditOrdre.Text);
+          ListePlanComptable(FSArchivesPhotosCommentaires.TableauSelect,OrdrePlanComptable,FSArchivesPhotosCommentaires.EditRechercheCode.Text,FSArchivesPhotosCommentaires.EditRechercheDesignation.Text,'PlanComptable');
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Groupe '+inttostr(OrdrePlanComptable);
+     end;
+
+     if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Marche')
+     and(firstlaters(FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0],6)='Groupe')then
+     begin
+          OrdrePlanComptable:=strtointeger(FSArchivesPhotosCommentaires.EditOrdre.Text);
+          ListePlanComptable(FSArchivesPhotosCommentaires.TableauSelect,OrdrePlanComptable,FSArchivesPhotosCommentaires.EditRechercheCode.Text,FSArchivesPhotosCommentaires.EditRechercheDesignation.Text,'Marche');
+          FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]:='Groupe '+inttostr(OrdrePlanComptable);
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditRechercheCodeKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.TableauSelect.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditRechercheDesignationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.TableauSelect.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.BitBtn2Click(Sender: TObject);
+var  i,iselect,OrdreArchivePhoto:integer; OKArchivePhotoCommentaire:boolean;   AdresseArchivePhoto,PositionSelect:string;
+begin
+     AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.EditNomFichierArchive.Text;
+     if(DeleteFile(AdresseArchivePhoto))then
+     begin
+          FSArchivesPhotosCommentaires.EditNomFichierArchive.Text:='';
+          FSArchivesPhotosCommentaires.EditPhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+          FSArchivesPhotosCommentaires.PhotoArchive.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+     end;
+
+     FSArchivesPhotosCommentaires.EditNomFichierArchive.Text:='';
+     FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text:='';
+
+          OpenFParc(RParc);
+          ChArchivePhotoCommentaire:=RParc.Parcours+'\'+Exercice+'FArchivePhotoCommentaire';
+          assignfile(FArchivePhotoCommentaire,ChArchivePhotoCommentaire);
+          if FileExists(ChArchivePhotoCommentaire)then
+          Reset(FArchivePhotoCommentaire)
+          else Rewrite(FArchivePhotoCommentaire);
+          Seek(FArchivePhotoCommentaire,0);
+          OKArchivePhotoCommentaire:=false;
+          i:=0;
+          iSelect:=0;
+          OrdreArchivePhoto:=0;
+
+          while not eof(FArchivePhotoCommentaire)and(OKArchivePhotoCommentaire=false)do
+          begin
+               read(FArchivePhotoCommentaire,RArchivePhotoCommentaire);
+
+               if(RArchivePhotoCommentaire.TypeModuleArchivePhotoCommentaire=FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text)then
+               begin
+                    if(OrdreArchivePhoto<=RArchivePhotoCommentaire.OrdreArchivePhotoCommentaire)then OrdreArchivePhoto:=RArchivePhotoCommentaire.OrdreArchivePhotoCommentaire+1;
+               end;
+
+               if(inttostr(RArchivePhotoCommentaire.PositionArchivePhotoCommentaire)=FSArchivesPhotosCommentaires.EditPositionArchivePhotoCommentaire.Text)then
+               begin
+                    OKArchivePhotoCommentaire:=true;
+                    iSelect:=i;
+                    OrdreArchivePhoto:=RArchivePhotoCommentaire.OrdreArchivePhotoCommentaire;
+               end;
+          i:=i+1;
+          end;
+
+          if(OKArchivePhotoCommentaire=true)then i:=iSelect;
+          PositionSelect:=inttostr(i);
+          RArchivePhotoCommentaire.PositionArchivePhotoCommentaire:=i;
+          RArchivePhotoCommentaire.OrdreArchivePhotoCommentaire:=OrdreArchivePhoto;
+          RArchivePhotoCommentaire.TypeModuleArchivePhotoCommentaire:=FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text;
+          RArchivePhotoCommentaire.CodeStructure:=FSArchivesPhotosCommentaires.EditCodeStructure.Text;
+          RArchivePhotoCommentaire.DesignationStructure:=FSArchivesPhotosCommentaires.EditDesignationStructure.Text;
+          RArchivePhotoCommentaire.OrdreGroupe:=strtointeger(FSArchivesPhotosCommentaires.EditOrdreGroupe.Text);
+          RArchivePhotoCommentaire.CodeGroupe:=FSArchivesPhotosCommentaires.EditCodeGroupe.Text;
+          RArchivePhotoCommentaire.DesignationGroupe:=FSArchivesPhotosCommentaires.EditDesignationGroupe.Text;
+          RArchivePhotoCommentaire.CodeArticle:=FSArchivesPhotosCommentaires.EditCodeArticle.Text;
+          RArchivePhotoCommentaire.DesignationArticle:=FSArchivesPhotosCommentaires.EditDesignationArticle.Text;
+          RArchivePhotoCommentaire.ReferenceArticle:=FSArchivesPhotosCommentaires.EditReferenceArticle.Text;
+          RArchivePhotoCommentaire.Commentaire:=FSArchivesPhotosCommentaires.EditCommentaire.Text;
+
+          if(FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text<>'')and(FSArchivesPhotosCommentaires.EditNomPhotoCharger.Text<>'???')then
+          begin
+               RArchivePhotoCommentaire.NomFichierArchive:='ArchivePhoto'+FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text+' '+inttostr(OrdreArchivePhoto)+'.jpg';
+               AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+RArchivePhotoCommentaire.NomFichierArchive;
+               FSArchivesPhotosCommentaires.EditPhotoArchive.Picture.SaveToFile(AdresseArchivePhoto);
+               showmessage(AdresseArchivePhoto)
+          end
+          else RArchivePhotoCommentaire.NomFichierArchive:='';;
+
+          Seek(FArchivePhotoCommentaire,i);
+          write(FArchivePhotoCommentaire,RArchivePhotoCommentaire);
+          CloseFile(FArchivePhotoCommentaire);
+
+          ListeArchivePhotosCommenatires(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire,FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.Text,FSArchivesPhotosCommentaires.EditListeStructure.Text,FSArchivesPhotosCommentaires.EditListeGroupe.Text,FSArchivesPhotosCommentaires.EditListeStructure,FSArchivesPhotosCommentaires.EditListeGroupe,false,FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text,PositionSelect);
+
+          FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Visible:=false;
+
+          FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.SetFocus;
+end;
+
+procedure TFSArchivesPhotosCommentaires.FormShow(Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Top:=FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Top+
+                                                            FSArchivesPhotosCommentaires.EditDesignationStructure.Top;
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Left:=FSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaire.Left+
+                                                            FSArchivesPhotosCommentaires.EditDesignationStructure.Left+
+                                                            FSArchivesPhotosCommentaires.EditDesignationStructure.Width+2;
+end;
+
+procedure TFSArchivesPhotosCommentaires.BitBtn3Click(Sender: TObject);
+var  R,l,m,NbrPage:integer;  OKImprimeEtat:boolean;  AdresseArchivePhoto,Reference:string;
+begin
+      OpenFParc(RParc);
+      PrintArchivePhotos.Logo.Picture:=FSMenuPrincipal.Logo.Picture;
+      PrintArchivePhotos.TitreEntreprise1.Caption:=RParc.Text1;
+      PrintArchivePhotos.TitreEntreprise2.Caption:=RParc.Text2;
+      PrintArchivePhotos.TitreEntreprise3.Caption:=RParc.Text3;
+      PrintArchivePhotos.TitreEntreprise4.Caption:=RParc.Text4;
+
+      PrintArchivePhotos.CadreInvisibleArchivePhoto1.Enabled:=true;
+      PrintArchivePhotos.CadreInvisibleArchivePhoto2.Enabled:=true;
+      PrintArchivePhotos.CadreInvisibleArchivePhoto3.Enabled:=true;
+      PrintArchivePhotos.CadreInvisibleArchivePhoto4.Enabled:=true;
+
+      PrintArchivePhotos.InfoArchivePhoto1.Lines.Text:='';
+      PrintArchivePhotos.ArchivePhoto1.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+      PrintArchivePhotos.RefArchivePhoto1.Caption:='';
+
+      PrintArchivePhotos.InfoArchivePhoto2.Lines.Text:='';
+      PrintArchivePhotos.ArchivePhoto2.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+      PrintArchivePhotos.RefArchivePhoto2.Caption:='';
+
+      PrintArchivePhotos.InfoArchivePhoto3.Lines.Text:='';
+      PrintArchivePhotos.ArchivePhoto3.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+      PrintArchivePhotos.RefArchivePhoto3.Caption:='';
+
+      PrintArchivePhotos.InfoArchivePhoto4.Lines.Text:='';
+      PrintArchivePhotos.ArchivePhoto4.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+      PrintArchivePhotos.RefArchivePhoto4.Caption:='';
+
+      FSArchivesPhotosCommentaires.TitreEtat.Lines.Text:='';
+      FSArchivesPhotosCommentaires.TitreEtat.Lines.Add('Photos');
+
+      if(FSArchivesPhotosCommentaires.EditListeStructure.Text<>'')and(FSArchivesPhotosCommentaires.EditListeStructure.Text<>'Tous')
+      then FSArchivesPhotosCommentaires.TitreEtat.Lines.Add('Structure: '+FSArchivesPhotosCommentaires.EditListeStructure.Text);
+
+      if(FSArchivesPhotosCommentaires.EditListeGroupe.Text<>'')and(FSArchivesPhotosCommentaires.EditListeGroupe.Text<>'Tous')
+      then FSArchivesPhotosCommentaires.TitreEtat.Lines.Add('Groupe: '+FSArchivesPhotosCommentaires.EditListeGroupe.Text);
+
+      PrintArchivePhotos.TitreEtat.Lines.Text:=FSArchivesPhotosCommentaires.TitreEtat.Text;
+
+      Division(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.RowCount-1,4,NbrPage,l);
+      if(l>0)then NbrPage:=NbrPage+1;
+
+      R:=1;
+      l:=0;
+      m:=0;
+      while(R<=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.RowCount-1)do
+      begin
+           OKImprimeEtat:=false;
+           l:=l+1;
+           if(l<=4)then
+           begin
+                if(FSArchivesPhotosCommentaires.RBInclureReference.Checked=true)
+                then Reference:=' {'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[11,R]+'}'
+                else Reference:='';
+
+                if(l=1)then
+                begin
+                     PrintArchivePhotos.CadreInvisibleArchivePhoto1.Enabled:=false;
+
+                     PrintArchivePhotos.InfoArchivePhoto1.Lines.Add(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[10,R]+Reference);
+                     PrintArchivePhotos.InfoArchivePhoto1.Lines.Add(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[12,R]);
+                     PrintArchivePhotos.RefArchivePhoto1.Caption:=Reference;
+
+                     if(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,R]<>'')then
+                     begin
+                          OpenFParc(RParc);
+                          AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,R];
+
+                          if FileExists(AdresseArchivePhoto)
+                          then PrintArchivePhotos.ArchivePhoto1.Picture.LoadFromFile(AdresseArchivePhoto)
+                          else PrintArchivePhotos.ArchivePhoto1.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                     end
+                     else PrintArchivePhotos.ArchivePhoto1.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                end;
+
+                if(l=2)then
+                begin
+                     PrintArchivePhotos.CadreInvisibleArchivePhoto2.Enabled:=false;
+
+                     PrintArchivePhotos.InfoArchivePhoto2.Lines.Add(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[10,R]+Reference);
+                     PrintArchivePhotos.InfoArchivePhoto2.Lines.Add(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[12,R]);
+                     PrintArchivePhotos.RefArchivePhoto2.Caption:=Reference;
+
+                     if(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,R]<>'')then
+                     begin
+                          OpenFParc(RParc);
+                          AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,R];
+
+                          if FileExists(AdresseArchivePhoto)
+                          then PrintArchivePhotos.ArchivePhoto2.Picture.LoadFromFile(AdresseArchivePhoto)
+                          else PrintArchivePhotos.ArchivePhoto2.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                     end
+                     else PrintArchivePhotos.ArchivePhoto2.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                end;
+
+                if(l=3)then
+                begin
+                     PrintArchivePhotos.CadreInvisibleArchivePhoto3.Enabled:=false;
+
+                     PrintArchivePhotos.InfoArchivePhoto3.Lines.Add(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[10,R]+Reference);
+                     PrintArchivePhotos.InfoArchivePhoto3.Lines.Add(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[12,R]);
+                     PrintArchivePhotos.RefArchivePhoto3.Caption:=Reference;
+
+                     if(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,R]<>'')then
+                     begin
+                          OpenFParc(RParc);
+                          AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,R];
+
+                          if FileExists(AdresseArchivePhoto)
+                          then PrintArchivePhotos.ArchivePhoto3.Picture.LoadFromFile(AdresseArchivePhoto)
+                          else PrintArchivePhotos.ArchivePhoto3.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                     end
+                     else PrintArchivePhotos.ArchivePhoto3.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                end;
+
+                if(l=4)then
+                begin
+                     PrintArchivePhotos.CadreInvisibleArchivePhoto4.Enabled:=false;
+
+                     PrintArchivePhotos.InfoArchivePhoto4.Lines.Add(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[10,R]+Reference);
+                     PrintArchivePhotos.InfoArchivePhoto4.Lines.Add(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[12,R]);
+                     PrintArchivePhotos.RefArchivePhoto4.Caption:=Reference;
+
+                     if(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,R]<>'')then
+                     begin
+                          OpenFParc(RParc);
+                          AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.Cells[13,R];
+
+                          if FileExists(AdresseArchivePhoto)
+                          then PrintArchivePhotos.ArchivePhoto4.Picture.LoadFromFile(AdresseArchivePhoto)
+                          else PrintArchivePhotos.ArchivePhoto4.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                     end
+                     else PrintArchivePhotos.ArchivePhoto4.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                end;
+           end;
+
+           if(l=4)or(R=FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire.RowCount-1)then
+           begin
+                l:=0;
+                m:=m+1;
+                PrintArchivePhotos.NumPage.Caption:='Page N°: '+inttostr(m)+'/'+inttostr(NbrPage);
+                PrintArchivePhotos.Preview;
+
+                PrintArchivePhotos.CadreInvisibleArchivePhoto1.Enabled:=true;
+                PrintArchivePhotos.CadreInvisibleArchivePhoto2.Enabled:=true;
+                PrintArchivePhotos.CadreInvisibleArchivePhoto3.Enabled:=true;
+                PrintArchivePhotos.CadreInvisibleArchivePhoto4.Enabled:=true;
+
+                PrintArchivePhotos.InfoArchivePhoto1.Lines.Text:='';
+                PrintArchivePhotos.ArchivePhoto1.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                PrintArchivePhotos.RefArchivePhoto1.Caption:='';
+
+                PrintArchivePhotos.InfoArchivePhoto2.Lines.Text:='';
+                PrintArchivePhotos.ArchivePhoto2.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                PrintArchivePhotos.RefArchivePhoto2.Caption:='';
+
+                PrintArchivePhotos.InfoArchivePhoto3.Lines.Text:='';
+                PrintArchivePhotos.ArchivePhoto3.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                PrintArchivePhotos.RefArchivePhoto3.Caption:='';
+
+                PrintArchivePhotos.InfoArchivePhoto4.Lines.Text:='';
+                PrintArchivePhotos.ArchivePhoto4.Picture:=FSArchivesPhotosCommentaires.PhotoVide.Picture;
+                PrintArchivePhotos.RefArchivePhoto4.Caption:='';
+           end;
+      R:=R+1;
+      end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficherKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditListeStructureKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditListeGroupeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditListeStructureSelect(
+  Sender: TObject);
+begin
+     ListeArchivePhotosCommenatires(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire,FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.Text,FSArchivesPhotosCommentaires.EditListeStructure.Text,FSArchivesPhotosCommentaires.EditListeGroupe.Text,FSArchivesPhotosCommentaires.EditListeStructure,FSArchivesPhotosCommentaires.EditListeGroupe,false,FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text,'');
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditListeGroupeSelect(
+  Sender: TObject);
+begin
+     ListeArchivePhotosCommenatires(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire,FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.Text,FSArchivesPhotosCommentaires.EditListeStructure.Text,FSArchivesPhotosCommentaires.EditListeGroupe.Text,FSArchivesPhotosCommentaires.EditListeStructure,FSArchivesPhotosCommentaires.EditListeGroupe,false,FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text,'');
+end;
+
+Function IndiqueAdresseArchivePhoto(PositionArchivePhoto,DesignationStructure,CodeArticle,DesignationArticle:string;  TableauListePositionArchivePhoto:TStringGrid;  var AdresseArchivePhoto:string):boolean;
+var  R:integer; OKArchivePhoto:boolean;
+begin
+     if(PositionArchivePhoto='')then
+     begin
+          TableauListePositionArchivePhoto.ColCount:=6;
+          TableauListePositionArchivePhoto.Cols[0].Text:='N°';
+          TableauListePositionArchivePhoto.Cols[1].Text:='P°';
+          TableauListePositionArchivePhoto.Cols[2].Text:='Code';
+          TableauListePositionArchivePhoto.Cols[3].Text:='Désignation';
+          TableauListePositionArchivePhoto.Cols[4].Text:='Réf';
+          TableauListePositionArchivePhoto.Cols[5].Text:='Nom Photo';
+
+          TableauListePositionArchivePhoto.RowCount:=2;
+          TableauListePositionArchivePhoto.Rows[1].Text:='';
+     end;
+
+     OpenFParc(RParc);
+     ChArchivePhotoCommentaire:=RParc.Parcours+'\'+Exercice+'FArchivePhotoCommentaire';
+     assignfile(FArchivePhotoCommentaire,ChArchivePhotoCommentaire);
+     if FileExists(ChArchivePhotoCommentaire)then
+     Reset(FArchivePhotoCommentaire)
+     else Rewrite(FArchivePhotoCommentaire);
+     Seek(FArchivePhotoCommentaire,0);
+     AdresseArchivePhoto:='';
+     R:=0;
+     OKArchivePhoto:=false;
+     while not eof(FArchivePhotoCommentaire)and(OKArchivePhoto=false)do
+     begin
+          read(FArchivePhotoCommentaire,RArchivePhotoCommentaire);
+
+          OKArchivePhoto:=false;
+
+          if(PositionArchivePhoto<>'')then
+          begin
+               if(inttostr(RArchivePhotoCommentaire.PositionArchivePhotoCommentaire)=PositionArchivePhoto)
+               then OKArchivePhoto:=true
+               else OKArchivePhoto:=false;
+          end
+          else
+          begin
+               if(DesignationStructure<>'')then
+               begin
+                    if(RArchivePhotoCommentaire.DesignationStructure=DesignationStructure)
+                    then OKArchivePhoto:=true
+                    else OKArchivePhoto:=false;
+               end
+               else OKArchivePhoto:=true;
+
+               if(OKArchivePhoto=true)then
+               begin
+                    if(CodeArticle<>'')then
+                    begin
+                         if(RArchivePhotoCommentaire.CodeArticle=CodeArticle)
+                         then OKArchivePhoto:=true
+                         else OKArchivePhoto:=false;
+                    end;
+               end;
+
+               if(OKArchivePhoto=true)then
+               begin
+                    if(DesignationArticle<>'')then
+                    begin
+                         if(RArchivePhotoCommentaire.DesignationArticle=DesignationArticle)
+                         then OKArchivePhoto:=true
+                         else OKArchivePhoto:=false;
+                    end
+                    else
+                    if(DesignationStructure='')and(CodeArticle='')then OKArchivePhoto:=false;
+               end;
+          end;
+
+          if(OKArchivePhoto=true)then
+          begin
+               OpenFParc(RParc);
+               AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+RArchivePhotoCommentaire.NomFichierArchive;
+
+               if(PositionArchivePhoto='')then
+               begin
+                    R:=R+1;
+                    TableauListePositionArchivePhoto.Rows[R].Text:=inttostr(R);
+                    TableauListePositionArchivePhoto.Cells[1,R]:=inttostr(RArchivePhotoCommentaire.PositionArchivePhotoCommentaire);
+                    TableauListePositionArchivePhoto.Cells[2,R]:=RArchivePhotoCommentaire.CodeArticle;
+                    TableauListePositionArchivePhoto.Cells[3,R]:=RArchivePhotoCommentaire.DesignationArticle;
+                    TableauListePositionArchivePhoto.Cells[4,R]:=RArchivePhotoCommentaire.ReferenceArticle;
+                    TableauListePositionArchivePhoto.Cells[5,R]:=RArchivePhotoCommentaire.NomFichierArchive;
+
+                    OKArchivePhoto:=false;
+               end;
+          end;
+     end;
+     CloseFile(FArchivePhotoCommentaire);
+
+     if(R=0)then
+     begin
+          if(PositionArchivePhoto='')then
+          begin
+               OKArchivePhoto:=false;
+               TableauListePositionArchivePhoto.Visible:=false;
+          end;
+     end
+     else
+     if(R=1)then
+     begin
+          OpenFParc(RParc);
+          AdresseArchivePhoto:=RParc.Parcours+'\'+Entreprise+'-'+TableauListePositionArchivePhoto.Cells[5,1];
+          OKArchivePhoto:=true;
+
+          if not FileExists(AdresseArchivePhoto)then
+          begin
+               OKArchivePhoto:=false;
+               AdresseArchivePhoto:='';
+          end;
+     end
+     else
+     if(PositionArchivePhoto='')then
+     begin
+          TableauListePositionArchivePhoto.RowCount:=R+1;
+          AjusterColWidth(TableauListePositionArchivePhoto,'','');
+          TableauListePositionArchivePhoto.Visible:=true;
+          TableauListePositionArchivePhoto.SetFocus;
+          OKArchivePhoto:=false;
+     end;
+
+     IndiqueAdresseArchivePhoto:=OKArchivePhoto;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditCodeArticleKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSArchivesPhotosCommentaires.EditDesignationArticle.SetFocus;
+     end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.BitBtn4Click(Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=false;
+end;
+
+procedure TFSArchivesPhotosCommentaires.RBArticleAvecSansPhotoClick(
+  Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text:='Tous';
+
+     ListeArchivePhotosCommenatires(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire,FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.Text,FSArchivesPhotosCommentaires.EditListeStructure.Text,FSArchivesPhotosCommentaires.EditListeGroupe.Text,FSArchivesPhotosCommentaires.EditListeStructure,FSArchivesPhotosCommentaires.EditListeGroupe,false,FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text,'');
+end;
+
+procedure TFSArchivesPhotosCommentaires.RBArticleAvecPhotoClick(
+  Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text:='Avec';
+
+     ListeArchivePhotosCommenatires(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire,FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.Text,FSArchivesPhotosCommentaires.EditListeStructure.Text,FSArchivesPhotosCommentaires.EditListeGroupe.Text,FSArchivesPhotosCommentaires.EditListeStructure,FSArchivesPhotosCommentaires.EditListeGroupe,false,FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text,'');
+end;
+
+procedure TFSArchivesPhotosCommentaires.RBArticleSansPhotoClick(
+  Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text:='Sans';
+
+     ListeArchivePhotosCommenatires(FSArchivesPhotosCommentaires.TableauArchivesPhotosCommentaire,FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireAfficher.Text,FSArchivesPhotosCommentaires.EditListeStructure.Text,FSArchivesPhotosCommentaires.EditListeGroupe.Text,FSArchivesPhotosCommentaires.EditListeStructure,FSArchivesPhotosCommentaires.EditListeGroupe,false,FSArchivesPhotosCommentaires.EditAvecSansPhoto.Text,'');
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditPhotoArchiveDblClick(
+  Sender: TObject);
+begin
+     AfficherPhotoPleinEcarn(FSArchivesPhotosCommentaires.EditPhotoArchive);
+end;
+
+procedure TFSArchivesPhotosCommentaires.PhotoArchiveDblClick(
+  Sender: TObject);
+begin
+     AfficherPhotoPleinEcarn(FSArchivesPhotosCommentaires.PhotoArchive);
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireChange(
+  Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.EditCodeStructure.SetFocus;
+end;
+
+procedure TFSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaireEnter(
+  Sender: TObject);
+begin
+     FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=false;
+end;
+
+Procedure ChargerActionTableauSelect;
+var  OrdrePlanComptable:integer;
+begin
+
+          if(FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]='Article')or(FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]='Marche')then
+          begin
+               if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Situation Marche')
+               then
+               begin
+                    FSArchivesPhotosCommentaires.EditCodeArticle.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[3,FSArchivesPhotosCommentaires.TableauSelect.Row];
+                    FSArchivesPhotosCommentaires.EditDesignationArticle.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[4,FSArchivesPhotosCommentaires.TableauSelect.Row];
+                    FSArchivesPhotosCommentaires.EditReferenceArticle.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[6,FSArchivesPhotosCommentaires.TableauSelect.Row]+' '+FSArchivesPhotosCommentaires.TableauSelect.Cells[5,FSArchivesPhotosCommentaires.TableauSelect.Row];
+               end;
+
+               if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Article')or(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Marche')
+               then
+               begin
+                    FSArchivesPhotosCommentaires.EditCodeArticle.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[1,FSArchivesPhotosCommentaires.TableauSelect.Row];
+                    FSArchivesPhotosCommentaires.EditDesignationArticle.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[2,FSArchivesPhotosCommentaires.TableauSelect.Row];
+                    FSArchivesPhotosCommentaires.EditReferenceArticle.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[3,FSArchivesPhotosCommentaires.TableauSelect.Row];
+               end;
+               FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=false;
+               FSArchivesPhotosCommentaires.EditCommentaire.SetFocus;
+          end;
+
+          if(Firstlaters(FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0],6)='Groupe')then
+          begin
+               if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Situation Marche')
+               then
+               begin
+                    FSArchivesPhotosCommentaires.EditOrdreGroupe.Text:='';
+                    FSArchivesPhotosCommentaires.EditCodeGroupe.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[3,FSArchivesPhotosCommentaires.TableauSelect.Row];
+                    FSArchivesPhotosCommentaires.EditDesignationGroupe.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[4,FSArchivesPhotosCommentaires.TableauSelect.Row];
+               end;
+
+               if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Article')or(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Marche')then
+               begin
+                    FSArchivesPhotosCommentaires.EditOrdreGroupe.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0][8];
+                    FSArchivesPhotosCommentaires.EditCodeGroupe.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[1,FSArchivesPhotosCommentaires.TableauSelect.Row];
+                    FSArchivesPhotosCommentaires.EditDesignationGroupe.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[2,FSArchivesPhotosCommentaires.TableauSelect.Row];
+               end;
+               FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=false;
+               FSArchivesPhotosCommentaires.EditDesignationArticle.SetFocus;
+          end;
+
+          if(FSArchivesPhotosCommentaires.TableauSelect.Cells[0,0]='Structure')then
+          begin
+               if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Situation Marche')
+               then
+               begin
+                    FSArchivesPhotosCommentaires.EditCodeStructure.Text:=Completezerogauche(FSArchivesPhotosCommentaires.TableauSelect.Cells[2,FSArchivesPhotosCommentaires.TableauSelect.Row],'5')+Completezerogauche(FSArchivesPhotosCommentaires.TableauSelect.Cells[3,FSArchivesPhotosCommentaires.TableauSelect.Row],'5');
+                    FSArchivesPhotosCommentaires.EditDesignationStructure.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[1,FSArchivesPhotosCommentaires.TableauSelect.Row]
+                                                                                +' N°: '+FSArchivesPhotosCommentaires.TableauSelect.Cells[2,FSArchivesPhotosCommentaires.TableauSelect.Row]+
+                                                                                ' Attachement N°: '+FSArchivesPhotosCommentaires.TableauSelect.Cells[3,FSArchivesPhotosCommentaires.TableauSelect.Row]+
+                                                                                ' du '+FSArchivesPhotosCommentaires.TableauSelect.Cells[4,FSArchivesPhotosCommentaires.TableauSelect.Row];
+               end;
+
+
+               if(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Article')or(FSArchivesPhotosCommentaires.EditTypeModuleArchivePhotoCommentaire.Text='Marche')
+               then
+               begin
+                    FSArchivesPhotosCommentaires.EditCodeStructure.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[1,FSArchivesPhotosCommentaires.TableauSelect.Row];
+                    FSArchivesPhotosCommentaires.EditDesignationStructure.Text:=FSArchivesPhotosCommentaires.TableauSelect.Cells[2,FSArchivesPhotosCommentaires.TableauSelect.Row];
+               end;
+               FSArchivesPhotosCommentaires.AfficheTableauSelect.Visible:=false;
+               FSArchivesPhotosCommentaires.EditDesignationGroupe.SetFocus;
+          end;
+end;
+
+procedure TFSArchivesPhotosCommentaires.TableauSelectDblClick(
+  Sender: TObject);
+begin
+     ChargerActionTableauSelect;
+end;
+
+procedure TFSArchivesPhotosCommentaires.AfficheOperationArchivesPhotosCommentaireMouseDown(
+  Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+  Y: Integer);
+begin
+     DeplacerObjet(Sender);
+end;
+
+procedure TFSArchivesPhotosCommentaires.AfficheTableauSelectMouseDown(
+  Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+  Y: Integer);
+begin
+     DeplacerObjet(Sender);
+end;
+
+end.

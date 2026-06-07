@@ -1,0 +1,117 @@
+unit UnitFSClient;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ScktComp, ActnList, ExtCtrls;
+
+type
+  TFSClient = class(TForm)
+    GroupBox3: TGroupBox;
+    Bevel1: TBevel;
+    Edit3: TEdit;
+    GroupBox2: TGroupBox;
+    Label1: TLabel;
+    GroupBox1: TGroupBox;
+    Label2: TLabel;
+    Button1: TButton;
+    Button2: TButton;
+    Edit1: TEdit;
+    Memo1: TMemo;
+    Edit2: TEdit;
+    Button3: TButton;
+    SocketClient: TClientSocket;
+    ActionList1: TActionList;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure SocketClientConnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure SocketClientConnecting(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure SocketClientDisconnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure SocketClientError(Sender: TObject; Socket: TCustomWinSocket;
+      ErrorEvent: TErrorEvent; var ErrorCode: Integer);
+    procedure Button3Click(Sender: TObject);
+    procedure SocketClientRead(Sender: TObject; Socket: TCustomWinSocket);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FSClient: TFSClient;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFSClient.Button1Click(Sender: TObject);
+begin
+     if(FSClient.Edit1.Text<>'')then
+     begin
+          SocketClient.Address:=Edit1.Text;
+          SocketClient.Active:=true;
+     end;
+end;
+
+procedure TFSClient.Button2Click(Sender: TObject);
+begin
+SocketClient.Active:=false;
+end;
+
+procedure TFSClient.SocketClientConnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+FSClient.Caption:='Chat Connecter';
+button1.Enabled:=false;
+button2.Enabled:=true;
+end;
+
+procedure TFSClient.SocketClientConnecting(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+FSClient.Caption:='Chat en cours de Connecter';
+button1.Enabled:=false;
+button2.Enabled:=true;
+end;
+
+procedure TFSClient.SocketClientDisconnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+FSClient.Caption:='Chat Déconnecter';
+button1.Enabled:=true;
+button2.Enabled:=false;
+end;
+
+procedure TFSClient.SocketClientError(Sender: TObject;
+  Socket: TCustomWinSocket; ErrorEvent: TErrorEvent;
+  var ErrorCode: Integer);
+begin
+FSClient.Caption:=' Erreur Chat';
+button1.Enabled:=true;
+button2.Enabled:=false;
+end;
+
+procedure TFSClient.Button3Click(Sender: TObject);
+begin
+Memo1.Lines.Add(' '+Edit2.Text+' dit : '+Edit3.Text);
+SocketClient.Socket.SendText(' '+Edit2.Text+' dit : '+Edit3.Text);
+Edit3.Clear;
+end;
+
+procedure TFSClient.SocketClientRead(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+Memo1.Lines.Add(Socket.ReceiveText);
+end;
+
+procedure TFSClient.FormCreate(Sender: TObject);
+begin
+Memo1.Clear;
+Edit3.Clear;
+end;
+end.

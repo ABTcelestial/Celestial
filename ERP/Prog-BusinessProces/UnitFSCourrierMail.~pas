@@ -1,0 +1,672 @@
+unit UnitFSCourrierMail;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Grids, ExtCtrls, Buttons, ComCtrls, ShellAPI, tlhelp32, Psapi;
+
+type
+  TFSCourrierMail = class(TForm)
+    AfficheIdentificateurEntreprise: TPanel;
+    TableauIdentificateurEntreprise: TStringGrid;
+    EditOrganismeTutelle: TComboBox;
+    EditDataIdentificateurEntreprise: TEdit;
+    Bevel1: TBevel;
+    AfficheMaiEntreprise: TPanel;
+    MailEntreprise: TEdit;
+    CodeSecuriteMailEntreprise: TEdit;
+    Bevel2: TBevel;
+    Label1: TLabel;
+    Label2: TLabel;
+    BitBtn1: TBitBtn;
+    Bevel3: TBevel;
+    IDentifiantFindData: TLabel;
+    BitBtn2: TBitBtn;
+    Bevel4: TBevel;
+    Label3: TLabel;
+    EditMailTiers: TEdit;
+    Bevel5: TBevel;
+    Tiers: TLabel;
+    EditObjet: TEdit;
+    Label4: TLabel;
+    BitBtn3: TBitBtn;
+    Bevel6: TBevel;
+    BitBtn4: TBitBtn;
+    Label5: TLabel;
+    EditPieceJointe: TEdit;
+    AfficheTiers: TPanel;
+    Label83: TLabel;
+    EditSelectTypeProces: TComboBox;
+    EditTitreFichierConcerne: TLabel;
+    EditFichierConcerne: TComboBox;
+    TableauTiers: TStringGrid;
+    Bevel7: TBevel;
+    Label15: TLabel;
+    EditRechercheTiers: TEdit;
+    EditNbrKeyUp: TEdit;
+    EditNbrKeyUpMemo: TEdit;
+    RBRechercheTiersEntie: TRadioButton;
+    RBRechercheTiersMotCle: TRadioButton;
+    TimerAfficheTiers: TTimer;
+    TimerLancerAfficheTiers: TTimer;
+    BitBtn5: TBitBtn;
+    EditAdresseApplicationMail: TEdit;
+    EditAdresseFichierParametresMail: TEdit;
+    Label6: TLabel;
+    Label7: TLabel;
+    FichierEnvoi: TMemo;
+    EditMessageTexte: TEdit;
+    EditMessage: TMemo;
+    BitOuvrirFichierParametresMail: TBitBtn;
+    TableauResultaEnvoi: TStringGrid;
+    RBMailEntreprise: TCheckBox;
+    RBCodeSecuriteMailEntreprise: TCheckBox;
+    RBEditMailTiers: TCheckBox;
+    RBEditObjet: TCheckBox;
+    RBEditMessage: TCheckBox;
+    RBEditPieceJointe: TCheckBox;
+    AfficheNotificationEnvoiMail: TPanel;
+    TimerNotificationEnvoiMail: TTimer;
+    TimerControleParametresMail: TTimer;
+    EditIncrimenteTimer: TEdit;
+    EditResultatEnvoi: TEdit;
+    TimerAttenteResultatEnvoiMail: TTimer;
+    BitBtn6: TBitBtn;
+    Bevel8: TBevel;
+    Bevel9: TBevel;
+    Bevel10: TBevel;
+    Bevel11: TBevel;
+    Bevel12: TBevel;
+    procedure EditOrganismeTutelleChange(Sender: TObject);
+    procedure TableauIdentificateurEntrepriseClick(Sender: TObject);
+    procedure MailEntrepriseDblClick(Sender: TObject);
+    procedure CodeSecuriteMailEntrepriseDblClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure EditMailTiersDblClick(Sender: TObject);
+    procedure EditFichierConcerneSelect(Sender: TObject);
+    procedure TimerLancerAfficheTiersTimer(Sender: TObject);
+    procedure TimerAfficheTiersTimer(Sender: TObject);
+    procedure TableauTiersDblClick(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure EditSelectTypeProcesChange(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure TableauTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditObjetKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitOuvrirFichierParametresMailClick(Sender: TObject);
+    procedure TimerControleParametresMailTimer(Sender: TObject);
+    procedure TimerNotificationEnvoiMailTimer(Sender: TObject);
+    procedure TimerAttenteResultatEnvoiMailTimer(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSCourrierMail: TFSCourrierMail;
+
+  Procedure EnregistrerMailEntreprise;
+  Function FindMailEntreprise:string;
+  Function FindCodeSecuriteMailEntreprise:string;
+  Procedure ProcChargerFichierParametresMail(AdresseFichierMail:string; var Resultat:string);
+  Procedure ReInitialisationFicheMail(All:boolean);
+  function IsApplicationRunning(const ExecutablePath: string): Boolean;
+  function TerminateProcessByHandle(ProcessHandle: THandle): Boolean;
+  function TerminateProcessByName(const ProcessName: string): Boolean;
+  Function CloseApplicationByNam(AppName: string):boolean;
+
+implementation
+
+uses UnitInitialisation, UnitFSParametresAvances, UnitFSTiers, UnitFSMenuPrincipal;
+
+var TimeKeyUp:integer;
+
+{$R *.dfm}
+
+procedure TFSCourrierMail.EditOrganismeTutelleChange(Sender: TObject);
+begin
+     ListeIdentificateurEnttreprise(FSCourrierMail.TableauIdentificateurEntreprise,FSCourrierMail.EditOrganismeTutelle.Text);
+end;
+
+procedure TFSCourrierMail.TableauIdentificateurEntrepriseClick(
+  Sender: TObject);
+begin
+     FSCourrierMail.EditDataIdentificateurEntreprise.Text:=FindDataIdentificateurEnttreprise(FSCourrierMail.TableauIdentificateurEntreprise.Cells[2,FSCourrierMail.TableauIdentificateurEntreprise.Row]);
+end;
+
+procedure TFSCourrierMail.MailEntrepriseDblClick(Sender: TObject);
+begin
+     FSCourrierMail.IDentifiantFindData.Caption:=FSCourrierMail.MailEntreprise.Name;
+     FSCourrierMail.EditDataIdentificateurEntreprise.Text:='';
+     FSCourrierMail.AfficheIdentificateurEntreprise.Visible:=true;
+     ListeOrganismeTutelleComboBox(FSCourrierMail.EditOrganismeTutelle,true);
+     ListeIdentificateurEnttreprise(FSCourrierMail.TableauIdentificateurEntreprise,FSCourrierMail.EditOrganismeTutelle.Text);
+end;
+
+procedure TFSCourrierMail.CodeSecuriteMailEntrepriseDblClick(
+  Sender: TObject);
+begin
+     FSCourrierMail.IDentifiantFindData.Caption:=FSCourrierMail.CodeSecuriteMailEntreprise.Name;
+     FSCourrierMail.EditDataIdentificateurEntreprise.Text:='';
+     FSCourrierMail.AfficheIdentificateurEntreprise.Visible:=true;
+     ListeOrganismeTutelleComboBox(FSCourrierMail.EditOrganismeTutelle,true);
+     ListeIdentificateurEnttreprise(FSCourrierMail.TableauIdentificateurEntreprise,FSCourrierMail.EditOrganismeTutelle.Text);
+end;
+
+procedure TFSCourrierMail.BitBtn1Click(Sender: TObject);
+begin
+     if(FSCourrierMail.IDentifiantFindData.Caption=FSCourrierMail.MailEntreprise.Name)then FSCourrierMail.MailEntreprise.Text:=FSCourrierMail.EditDataIdentificateurEntreprise.Text;
+     if(FSCourrierMail.IDentifiantFindData.Caption=FSCourrierMail.CodeSecuriteMailEntreprise.Name)then FSCourrierMail.CodeSecuriteMailEntreprise.Text:=FSCourrierMail.EditDataIdentificateurEntreprise.Text;
+
+     FSCourrierMail.AfficheIdentificateurEntreprise.Visible:=false;
+
+     EnregistrerMailEntreprise;
+end;
+
+procedure TFSCourrierMail.FormShow(Sender: TObject);
+begin
+     FSCourrierMail.AfficheIdentificateurEntreprise.Top:=FSCourrierMail.AfficheMaiEntreprise.Top;
+     FSCourrierMail.AfficheIdentificateurEntreprise.Left:=FSCourrierMail.AfficheMaiEntreprise.Left;
+
+     FSCourrierMail.AfficheTiers.Top:=FSCourrierMail.EditMailTiers.Top+FSCourrierMail.EditMailTiers.Height+5;
+     FSCourrierMail.AfficheTiers.Left:=FSCourrierMail.EditMailTiers.Left;
+
+     FSCourrierMail.MailEntreprise.Text:=FindMailEntreprise;
+     FSCourrierMail.CodeSecuriteMailEntreprise.Text:=FindCodeSecuriteMailEntreprise;
+     FSCourrierMail.EditMailTiers.Text:='';
+     FSCourrierMail.Tiers.Caption:='';
+     FSCourrierMail.EditObjet.Text:='';
+     FSCourrierMail.EditMessage.Lines.Text:='';
+     FSCourrierMail.EditPieceJointe.Text:='';
+
+     FSCourrierMail.EditAdresseApplicationMail.Text:=ProcAdresseApplicationMail;
+     FSCourrierMail.EditAdresseFichierParametresMail.Text:=ProcAdresseFichierParametresMail;
+end;
+
+procedure TFSCourrierMail.BitBtn2Click(Sender: TObject);
+begin
+     FSCourrierMail.AfficheIdentificateurEntreprise.Visible:=false;
+end;
+
+Procedure EnregistrerMailEntreprise;
+begin
+     OpenFParc(RParc);
+     ChMailEntreprise:=RParc.Parcours+'\'+Exercice+'FMailEntreprise';
+     assignfile(FMailEntreprise,ChMailEntreprise);
+     if FileExists(ChMailEntreprise)then
+     Reset(FMailEntreprise)
+     else Rewrite(FMailEntreprise);
+     Seek(FMailEntreprise,0);
+     Truncate(FMailEntreprise);
+     RMailEntreprise.MailEntreprise:=FSCourrierMail.MailEntreprise.Text;
+     RMailEntreprise.CodeSecuriteMailEntreprise:=FSCourrierMail.CodeSecuriteMailEntreprise.Text;
+     Seek(FMailEntreprise,0);
+     write(FMailEntreprise,RMailEntreprise);
+     CloseFile(FMailEntreprise);
+end;
+
+Function FindMailEntreprise:string;
+begin
+     FindMailEntreprise:='';
+
+     OpenFParc(RParc);
+     ChMailEntreprise:=RParc.Parcours+'\'+Exercice+'FMailEntreprise';
+     assignfile(FMailEntreprise,ChMailEntreprise);
+     if FileExists(ChMailEntreprise)then
+     begin
+          Reset(FMailEntreprise);
+          Seek(FMailEntreprise,0);
+          if not eof(FMailEntreprise)then
+          begin
+               read(FMailEntreprise,RMailEntreprise);
+
+               FindMailEntreprise:=RMailEntreprise.MailEntreprise;
+
+          end;
+          CloseFile(FMailEntreprise);
+     end;
+end;
+
+Function FindCodeSecuriteMailEntreprise:string;
+begin
+     FindCodeSecuriteMailEntreprise:='';
+
+     OpenFParc(RParc);
+     ChMailEntreprise:=RParc.Parcours+'\'+Exercice+'FMailEntreprise';
+     assignfile(FMailEntreprise,ChMailEntreprise);
+     if FileExists(ChMailEntreprise)then
+     begin
+          Reset(FMailEntreprise);
+          Seek(FMailEntreprise,0);
+          if not eof(FMailEntreprise)then
+          begin
+               read(FMailEntreprise,RMailEntreprise);
+
+               FindCodeSecuriteMailEntreprise:=RMailEntreprise.CodeSecuriteMailEntreprise;
+          end;
+          CloseFile(FMailEntreprise);
+     end;
+end;
+
+    
+procedure TFSCourrierMail.EditMailTiersDblClick(Sender: TObject);
+begin
+     FSCourrierMail.AfficheTiers.Visible:=true;
+     ListeTypeFichierTiersBox(FSCourrierMail.EditSelectTypeProces.Text,'','',FSCourrierMail.EditFichierConcerne,FSCourrierMail.EditTitreFichierConcerne);
+     ListeTiersMotsCle(FSCourrierMail.TableauTiers,FSCourrierMail.EditSelectTypeProces.Text,FSCourrierMail.EditFichierConcerne.Text,'','',FSCourrierMail.EditRechercheTiers.Text,EditNbrKeyUp,EditNbrKeyUpMemo,FSCourrierMail.TimerLancerAfficheTiers,false,FSCourrierMail.RBRechercheTiersMotCle.Checked);
+end;
+
+procedure TFSCourrierMail.EditFichierConcerneSelect(Sender: TObject);
+begin
+     ListeTiersMotsCle(FSCourrierMail.TableauTiers,FSCourrierMail.EditSelectTypeProces.Text,FSCourrierMail.EditFichierConcerne.Text,'','',FSCourrierMail.EditRechercheTiers.Text,EditNbrKeyUp,EditNbrKeyUpMemo,FSCourrierMail.TimerLancerAfficheTiers,false,FSCourrierMail.RBRechercheTiersMotCle.Checked);
+end;
+
+procedure TFSCourrierMail.TimerLancerAfficheTiersTimer(Sender: TObject);
+begin
+     FSTiers.TimerLancerAfficheTiers.Enabled:=false;
+
+     while(GetTickCount-TimeKeyUp<200)do
+     begin
+          Exit;
+     end;
+
+     FSCourrierMail.TimerAfficheTiers.Enabled:=true;
+end;
+
+procedure TFSCourrierMail.TimerAfficheTiersTimer(Sender: TObject);
+begin
+     Application.ProcessMessages;
+     FSCourrierMail.TimerAfficheTiers.Enabled:=false;
+
+     while(GetTickCount-TimeKeyUp<200)do
+     begin
+          Exit;
+     end;
+     
+     ListeTiersMotsCle(FSCourrierMail.TableauTiers,FSCourrierMail.EditSelectTypeProces.Text,FSCourrierMail.EditFichierConcerne.Text,'','',FSCourrierMail.EditRechercheTiers.Text,FSCourrierMail.EditNbrKeyUp,FSCourrierMail.EditNbrKeyUpMemo,FSCourrierMail.TimerLancerAfficheTiers,false,FSCourrierMail.RBRechercheTiersMotCle.Checked);
+end;
+
+procedure TFSCourrierMail.TableauTiersDblClick(Sender: TObject);
+begin
+     FSCourrierMail.Tiers.Caption:=FSCourrierMail.TableauTiers.Cells[2,FSCourrierMail.TableauTiers.Row];
+     FSCourrierMail.EditMailTiers.Text:=FSCourrierMail.TableauTiers.Cells[20,FSCourrierMail.TableauTiers.Row];
+     FSCourrierMail.AfficheTiers.Visible:=false;
+     FSCourrierMail.EditObjet.SetFocus;
+end;
+
+procedure TFSCourrierMail.BitBtn5Click(Sender: TObject);
+begin
+     FSCourrierMail.AfficheTiers.Visible:=false;
+end;
+
+procedure TFSCourrierMail.EditSelectTypeProcesChange(Sender: TObject);
+begin
+     ListeTypeFichierTiersBox(FSCourrierMail.EditSelectTypeProces.Text,'','',FSCourrierMail.EditFichierConcerne,FSCourrierMail.EditTitreFichierConcerne);
+     ListeTiersMotsCle(FSCourrierMail.TableauTiers,FSCourrierMail.EditSelectTypeProces.Text,FSCourrierMail.EditFichierConcerne.Text,'','',FSCourrierMail.EditRechercheTiers.Text,EditNbrKeyUp,EditNbrKeyUpMemo,FSCourrierMail.TimerLancerAfficheTiers,false,FSCourrierMail.RBRechercheTiersMotCle.Checked);
+end;
+
+procedure TFSCourrierMail.BitBtn4Click(Sender: TObject);
+begin
+     ReInitialisationFicheMail(False);
+end;
+
+procedure TFSCourrierMail.TableauTiersKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSCourrierMail.Tiers.Caption:=FSCourrierMail.TableauTiers.Cells[2,FSCourrierMail.TableauTiers.Row];
+          FSCourrierMail.EditMailTiers.Text:=FSCourrierMail.TableauTiers.Cells[20,FSCourrierMail.TableauTiers.Row];
+          FSCourrierMail.AfficheTiers.Visible:=false;
+          FSCourrierMail.EditObjet.SetFocus;
+     end;
+end;
+
+procedure TFSCourrierMail.EditObjetKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSCourrierMail.EditMessage.SetFocus;
+     end;
+end;
+
+procedure TFSCourrierMail.BitBtn3Click(Sender: TObject);
+var  Resultat,AdresseSource,AdresseCible,ApplicationExe,Separator,AdresseFichierParametresMail,AdresseExecutionProces,AdresseProces:string;
+     RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression,OKMiseAJour,OKVerifierAdresseMAJ:boolean;
+begin
+     ReInitialisationFicheMail(false);
+     
+     FSCourrierMail.EditMessageTexte.Text:=FSCourrierMail.MailEntreprise.Text+'&'+
+                                           FSCourrierMail.CodeSecuriteMailEntreprise.Text+'&'+
+                                           FSCourrierMail.EditMailTiers.Text+'&'+
+                                           FSCourrierMail.EditObjet.Text+'&'+
+                                           FSCourrierMail.EditMessage.Lines.Text+'&'+
+                                           FSCourrierMail.EditPieceJointe.Text+'&';
+
+     FSCourrierMail.FichierEnvoi.Lines.Text:='';
+     FSCourrierMail.FichierEnvoi.Lines.Text:=FSCourrierMail.EditMessageTexte.Text;
+
+     if(FSCourrierMail.EditAdresseFichierParametresMail.Text<>'')
+     then AdresseFichierParametresMail:=FSCourrierMail.EditAdresseFichierParametresMail.Text
+     else AdresseFichierParametresMail:='C:\EmailSend.txt';
+     FSCourrierMail.FichierEnvoi.Lines.SaveToFile(AdresseFichierParametresMail);
+
+     OKVerifierAdresseMAJ:=false;
+
+     AdresseSource:=FSCourrierMail.EditAdresseApplicationMail.Text;
+     if FileExists(AdresseSource)then
+     begin
+          ShellExecute(Handle,'Open',PChar(AdresseSource),nil,nil,SW_SHOWDEFAULT);
+     end
+     else
+     begin
+          if(AdresseSource='')then
+          begin
+               if(nonoui('Aucune adresse, de mise à jour, enregistrée ! Voulez vous vérifier ?'))then
+               begin
+                    OKVerifierAdresseMAJ:=true;
+               end;
+          end
+          else
+          begin
+               if(nonoui('adresse, de mise à jour, introuvable '+AdresseSource+' ! Voulez vous vérifier ?'))then
+               begin
+                    OKVerifierAdresseMAJ:=true;
+               end;
+          end;
+     end;
+
+     if(OKVerifierAdresseMAJ=true)then
+     begin
+          FSParametresAvances.Show;
+          FSParametresAvances.PageModeConnectiviteBaseData.Show;
+          FSParametresAvances.PagePrincipale.Enabled:=false;
+          FSParametresAvances.EditCodeActivation.Text:='';
+          FSParametresAvances.EditCodeActivation.SetFocus;
+     end;
+
+     FSCourrierMail.RBMailEntreprise.Checked:=false;
+     FSCourrierMail.RBCodeSecuriteMailEntreprise.Checked:=false;
+     FSCourrierMail.RBEditMailTiers.Checked:=false;
+     FSCourrierMail.RBEditObjet.Checked:=false;
+     FSCourrierMail.RBEditMessage.Checked:=false;
+     FSCourrierMail.RBEditPieceJointe.Checked:=false;
+
+     FSCourrierMail.TimerControleParametresMail.Enabled:=true;
+
+end;
+
+procedure TFSCourrierMail.BitOuvrirFichierParametresMailClick(Sender: TObject);
+var  Resultat:string;
+begin
+     ReInitialisationFicheMail(false);
+     
+     FSCourrierMail.RBMailEntreprise.Checked:=true;
+     FSCourrierMail.RBCodeSecuriteMailEntreprise.Checked:=true;
+     FSCourrierMail.RBEditMailTiers.Checked:=true;
+     FSCourrierMail.RBEditObjet.Checked:=true;
+     FSCourrierMail.RBEditMessage.Checked:=true;
+     FSCourrierMail.RBEditPieceJointe.Checked:=true;
+
+     FSCourrierMail.TimerControleParametresMail.Enabled:=true;
+end;
+
+Procedure ProcChargerFichierParametresMail(AdresseFichierMail:string; var Resultat:string);
+var  i,R,l,Nbr:integer;
+     TextGlobal,TextSequance:string;
+     FichierMail:TextFile;
+begin
+     FSCourrierMail.TableauResultaEnvoi.ColCount:=2;
+     FSCourrierMail.TableauResultaEnvoi.Cols[0].Text:='Résult';
+     FSCourrierMail.TableauResultaEnvoi.Cols[1].Text:='Value';
+
+     FSCourrierMail.TableauResultaEnvoi.RowCount:=2;
+     FSCourrierMail.TableauResultaEnvoi.Rows[1].Text:='';
+     R:=0;
+
+     AdresseFichierMail:=FSCourrierMail.EditAdresseFichierParametresMail.Text;
+
+     AssignFile(FichierMail,AdresseFichierMail);
+     Reset(FichierMail);
+     FSCourrierMail.FichierEnvoi.Lines.Text:='';       
+     while not eof(FichierMail)do
+     begin
+          TextGlobal:='';
+          Readln(FichierMail,TextGlobal);
+          FSCourrierMail.FichierEnvoi.Lines.Add(TextGlobal);
+     end;
+     CloseFile(FichierMail);
+
+     FSCourrierMail.EditMessageTexte.Text:=FSCourrierMail.FichierEnvoi.Lines.Strings[0];
+     TextGlobal:=FSCourrierMail.EditMessageTexte.Text;
+     TextSequance:='';
+     i:=1;
+     Nbr:=0;
+     Resultat:='';
+     l:=longueur(TextGlobal);
+     while(i<=l)do
+     begin
+          if(TextGlobal[i]<>'&')then
+          begin
+               TextSequance:=TextSequance+TextGlobal[i];
+          end;
+
+          if(TextGlobal[i]='&')or(i=l)then
+          begin
+               Nbr:=Nbr+1;
+
+               if(Nbr=1)and(FSCourrierMail.RBMailEntreprise.Checked)then FSCourrierMail.MailEntreprise.Text:=TextSequance;
+               if(Nbr=2)and(FSCourrierMail.RBCodeSecuriteMailEntreprise.Checked)then FSCourrierMail.CodeSecuriteMailEntreprise.Text:=TextSequance;
+               if(Nbr=3)and(FSCourrierMail.RBEditMailTiers.Checked)then FSCourrierMail.EditMailTiers.Text:=TextSequance;
+               if(Nbr=4)and(FSCourrierMail.RBEditObjet.Checked)then FSCourrierMail.EditObjet.Text:=TextSequance;
+               if(Nbr=5)and(FSCourrierMail.RBEditMessage.Checked)then FSCourrierMail.EditMessage.Text:=TextSequance;
+               if(Nbr=6)and(FSCourrierMail.RBEditPieceJointe.Checked)then FSCourrierMail.EditPieceJointe.Text:=TextSequance;
+               if(Nbr>=7)then
+               begin
+                    if(TextSequance<>'0')and((TextSequance<>'1'))then TextSequance:='Aucun Résultat ('+TextSequance+')';
+                    R:=R+1;
+                    FSCourrierMail.TableauResultaEnvoi.Rows[R].Text:='Résult '+inttostr(R);
+                    if(TextSequance='0')then FSCourrierMail.TableauResultaEnvoi.Cells[1,R]:='Non Envoiyé'
+                    else
+                    if(TextSequance='1')then FSCourrierMail.TableauResultaEnvoi.Cells[1,R]:='Envoyé avec succès'
+                    else
+                    FSCourrierMail.TableauResultaEnvoi.Cells[1,R]:=TextSequance;
+
+                    Resultat:=TextSequance;
+               end;
+
+               TextSequance:='';
+          end;
+     i:=i+1;
+     end;
+
+     if(R>0)then FSCourrierMail.TableauResultaEnvoi.RowCount:=R+1
+            else FSCourrierMail.TableauResultaEnvoi.RowCount:=2;
+
+     AjusterColWidth(FSCourrierMail.TableauResultaEnvoi,'','');
+
+end;
+
+procedure TFSCourrierMail.TimerControleParametresMailTimer(Sender: TObject);
+var  Resultat:string;
+begin
+     ProcChargerFichierParametresMail(FSCourrierMail.EditAdresseFichierParametresMail.Text,Resultat);
+
+     if(FSCourrierMail.TimerAttenteResultatEnvoiMail.Enabled=false) then FSCourrierMail.TimerAttenteResultatEnvoiMail.Enabled:=true;
+
+     FSCourrierMail.EditResultatEnvoi.Text:=Resultat;
+
+     if(Resultat<>'')then
+     begin
+          FSCourrierMail.EditIncrimenteTimer.Text:='0';
+          FSCourrierMail.TimerAttenteResultatEnvoiMail.Enabled:=false;
+          FSCourrierMail.TimerControleParametresMail.Enabled:=false;
+          FSCourrierMail.TimerNotificationEnvoiMail.Enabled:=true;
+     end;
+end;
+
+procedure TFSCourrierMail.TimerNotificationEnvoiMailTimer(Sender: TObject);
+var  Couleur:TColor; MessageTexte:string;
+begin
+     Couleur:=clBtnFace;
+     MessageTexte:='Aucun résultat';
+
+     FSCourrierMail.AfficheNotificationEnvoiMail.Visible:=true;
+
+     FSCourrierMail.EditIncrimenteTimer.Text:=inttostr(strtointeger(FSCourrierMail.EditIncrimenteTimer.Text)+1);
+
+     if(FSCourrierMail.EditResultatEnvoi.Text<>'0')
+     and(FSCourrierMail.EditResultatEnvoi.Text<>'1')then begin Couleur:=clYellow; MessageTexte:=FSCourrierMail.EditResultatEnvoi.Text; end;
+     if(FSCourrierMail.EditResultatEnvoi.Text='0')then begin Couleur:=clRed;    MessageTexte:='Non Envoiyé'; end;
+     if(FSCourrierMail.EditResultatEnvoi.Text='1')then begin Couleur:=clLime;   MessageTexte:='Envoyé avec succès'; end;
+      
+     FSCourrierMail.AfficheNotificationEnvoiMail.Caption:=MessageTexte;
+
+     if(FSCourrierMail.AfficheNotificationEnvoiMail.Color=clBtnFace)
+     then FSCourrierMail.AfficheNotificationEnvoiMail.Color:=Couleur
+     else FSCourrierMail.AfficheNotificationEnvoiMail.Color:=clBtnFace;
+
+     if(strtointeger(FSCourrierMail.EditIncrimenteTimer.Text)>=50)then
+     begin
+          FSCourrierMail.AfficheNotificationEnvoiMail.Visible:=false;
+          FSCourrierMail.TimerNotificationEnvoiMail.Enabled:=false;
+     end;
+end;
+
+Procedure ReInitialisationFicheMail(All:boolean);
+begin
+     FSCourrierMail.TimerAttenteResultatEnvoiMail.Enabled:=false;
+     FSCourrierMail.TimerControleParametresMail.Enabled:=false;
+     FSCourrierMail.TimerNotificationEnvoiMail.Enabled:=false;
+     FSCourrierMail.AfficheNotificationEnvoiMail.Visible:=false;
+
+     FSCourrierMail.TableauResultaEnvoi.RowCount:=2;
+     FSCourrierMail.TableauResultaEnvoi.Rows[1].Text:='';
+
+     if(All=true)then
+     begin
+          FSCourrierMail.EditMailTiers.Text:='';
+          FSCourrierMail.Tiers.Caption:='';
+          FSCourrierMail.EditObjet.Text:='';
+          FSCourrierMail.EditMessage.Lines.Text:='';
+          FSCourrierMail.EditPieceJointe.Text:='';
+          FSCourrierMail.FichierEnvoi.Lines.Text:='';
+          FSCourrierMail.EditMessageTexte.Text:='';
+     end;
+
+     if(IsApplicationRunning(FSCourrierMail.EditAdresseApplicationMail.Text)=true)
+     then CloseApplicationByNam(ExtractFileName(FSCourrierMail.EditAdresseApplicationMail.Text));
+end;
+
+procedure TFSCourrierMail.TimerAttenteResultatEnvoiMailTimer(
+  Sender: TObject);
+begin
+     if(IsApplicationRunning(FSCourrierMail.EditAdresseApplicationMail.Text)=false)then
+     begin
+          FSCourrierMail.EditResultatEnvoi.Text:='Attente d''envoi trop longue';
+          FSCourrierMail.EditIncrimenteTimer.Text:='0';
+          FSCourrierMail.TimerControleParametresMail.Enabled:=false;
+          FSCourrierMail.TimerNotificationEnvoiMail.Enabled:=true;
+          FSCourrierMail.TimerAttenteResultatEnvoiMail.Enabled:=false;
+     end;
+end;
+
+procedure TFSCourrierMail.BitBtn6Click(Sender: TObject);
+begin
+     Close;
+end;
+
+function IsApplicationRunning(const ExecutablePath: string): Boolean;
+var
+  hSnapshot: THandle;
+  ProcessEntry32: TProcessEntry32;
+  hProcess: THandle;
+  ModuleName: array[0..MAX_PATH] of Char;
+  I: Integer;
+begin
+  Result := False;
+  hSnapshot := CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+  if hSnapshot <> INVALID_HANDLE_VALUE then
+  begin
+    ProcessEntry32.dwSize := SizeOf(ProcessEntry32);
+    if Process32First(hSnapshot, ProcessEntry32) then
+    begin
+      repeat
+        hProcess := OpenProcess(PROCESS_QUERY_INFORMATION or PROCESS_VM_READ, False, ProcessEntry32.th32ProcessID);
+        if hProcess <> 0 then
+        begin
+          if GetModuleFileNameEx(hProcess, 0, ModuleName, SizeOf(ModuleName)) > 0 then
+          begin
+            if SameText(ExtractFileName(ModuleName), ExtractFileName(ExecutablePath)) then
+            begin
+              Result := True;
+              CloseHandle(hProcess);
+              break;
+            end;
+          end;
+          CloseHandle(hProcess);
+        end;
+      until not Process32Next(hSnapshot, ProcessEntry32);
+    end;
+    CloseHandle(hSnapshot);
+  end;
+end;
+
+function TerminateProcessByHandle(ProcessHandle: THandle): Boolean;
+begin
+  Result := TerminateProcess(ProcessHandle, 0);
+end;
+
+function TerminateProcessByName(const ProcessName: string): Boolean;
+var
+  ProcessEntry32: TProcessEntry32;
+  ProcessHandle: THandle;
+  hSnapshot: THandle;
+begin
+  Result := False;
+  hSnapshot := CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+  if hSnapshot <> INVALID_HANDLE_VALUE then
+  try
+    ProcessEntry32.dwSize := SizeOf(ProcessEntry32);
+    if Process32First(hSnapshot, ProcessEntry32) then
+    repeat
+      if CompareText(ProcessEntry32.szExeFile, PChar(ProcessName)) = 0 then
+      begin
+        ProcessHandle := OpenProcess(PROCESS_TERMINATE, False, ProcessEntry32.th32ProcessID);
+        if ProcessHandle <> 0 then
+        try
+          Result := TerminateProcessByHandle(ProcessHandle);
+        finally
+          CloseHandle(ProcessHandle);
+        end;
+        Break; // Arrête la recherche après avoir trouvé le premier processus
+      end;
+    until not Process32Next(hSnapshot, ProcessEntry32);
+  finally
+    CloseHandle(hSnapshot);
+  end;
+end;
+
+Function CloseApplicationByNam(AppName: string):boolean;
+var  OKFermerAppllication:boolean;
+begin
+     OKFermerAppllication:=TerminateProcessByName(AppName);
+
+     if(OKFermerAppllication=true)
+     then FSCourrierMail.AfficheNotificationEnvoiMail.Caption:='Application ' + AppName + ' fermée avec succès.'
+     else FSCourrierMail.AfficheNotificationEnvoiMail.Caption:='Impossible de fermer l''application ' + AppName + '.';
+
+     CloseApplicationByNam:=OKFermerAppllication;
+
+     FSCourrierMail.AfficheNotificationEnvoiMail.Visible:=true;
+end;
+
+end.

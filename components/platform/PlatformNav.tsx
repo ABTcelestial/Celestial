@@ -7,16 +7,16 @@ import { UserButton } from '@clerk/nextjs';
 export function PlatformNav() {
   const pathname = usePathname();
 
-  const workspaceIdMatch = pathname.match(/\/platform\/workspace\/([^/]+)/);
+  const workspaceIdMatch = pathname.match(/\/platforme-BusinessProcess\/workspace\/([^/]+)/);
   const workspaceId = workspaceIdMatch?.[1];
 
   const navLinks = workspaceId
     ? [
-        { href: `/platform/workspace/${workspaceId}`, label: 'Dashboard' },
-        { href: `/platform/workspace/${workspaceId}/tables`, label: 'Données' },
-        { href: `/platform/workspace/${workspaceId}/notifications`, label: 'Notifications' },
-        { href: `/platform/workspace/${workspaceId}/messages`, label: 'Support' },
-        { href: `/platform/workspace/${workspaceId}/settings`, label: 'Paramètres' },
+        { href: `/platforme-BusinessProcess/workspace/${workspaceId}`, label: 'Dashboard' },
+        { href: `/platforme-BusinessProcess/workspace/${workspaceId}/tables`, label: 'Données' },
+        { href: `/platforme-BusinessProcess/workspace/${workspaceId}/notifications`, label: 'Notifications' },
+        { href: `/platforme-BusinessProcess/workspace/${workspaceId}/messages`, label: 'Support' },
+        { href: `/platforme-BusinessProcess/workspace/${workspaceId}/settings`, label: 'Paramètres' },
       ]
     : [];
 
@@ -32,7 +32,7 @@ export function PlatformNav() {
       gap: '2rem',
     }}>
       <Link
-        href="/platform/dashboard"
+        href="/platforme-BusinessProcess/dashboard"
         style={{ color: 'var(--gold)', fontWeight: 700, fontFamily: 'var(--font-display)', fontSize: '1rem', textDecoration: 'none', flexShrink: 0 }}
       >
         Celestial Platform
@@ -41,7 +41,7 @@ export function PlatformNav() {
       {navLinks.length > 0 && (
         <div style={{ display: 'flex', gap: '0.25rem', flex: 1 }}>
           {navLinks.map((link) => {
-            const isActive = pathname === link.href || (link.href !== `/platform/workspace/${workspaceId}` && pathname.startsWith(link.href));
+            const isActive = pathname === link.href || (link.href !== `/platforme-BusinessProcess/workspace/${workspaceId}` && pathname.startsWith(link.href));
             return (
               <Link
                 key={link.href}

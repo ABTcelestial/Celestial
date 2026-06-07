@@ -1,0 +1,25 @@
+unit UnitPrintBordereauRemise;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls;
+
+type
+  TPrintBordereauRemise = class(TQuickRep)
+    PageHeaderBand1: TQRBand;
+    TitleBand1: TQRBand;
+  private
+
+  public
+
+  end;
+
+var
+  PrintBordereauRemise: TPrintBordereauRemise;
+
+implementation
+
+{$R *.DFM}
+
+end.

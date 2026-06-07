@@ -1,0 +1,204 @@
+unit UnitPrintEtatDynamique;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls;
+
+type
+  TPrintEtatDynamique = class(TQuickRep)
+    PageTitreEtat: TQRBand;
+    TitreEtatLong: TQRRichText;
+    LogoEntreprise: TQRImage;
+    TitreDonnee1: TQRLabel;
+    TitreDonnee2: TQRLabel;
+    TitreDonnee3: TQRLabel;
+    TitreDonnee4: TQRLabel;
+    NumPage: TQRLabel;
+    PageDonnees: TQRBand;
+    CadreRubriqueB44: TQRShape;
+    CadreRubriqueA44: TQRShape;
+    RubriqueA44: TQRLabel;
+    RubriqueB44: TQRLabel;
+    CadreRubriqueC44: TQRShape;
+    RubriqueC44: TQRLabel;
+    CadreRubriqueD44: TQRShape;
+    RubriqueD44: TQRLabel;
+    CadreRubriqueE44: TQRShape;
+    RubriqueE44: TQRLabel;
+    CadreRubriqueF44: TQRShape;
+    RubriqueF44: TQRLabel;
+    CadreRubriqueG44: TQRShape;
+    RubriqueG44: TQRLabel;
+    CadreRubriqueH44: TQRShape;
+    RubriqueH44: TQRLabel;
+    CadreRubriqueI44: TQRShape;
+    RubriqueI44: TQRLabel;
+    CadreRubriqueJ44: TQRShape;
+    RubriqueJ44: TQRLabel;
+    CadreRubriqueK44: TQRShape;
+    RubriqueK44: TQRLabel;
+    CadreRubriqueL44: TQRShape;
+    RubriqueL44: TQRLabel;
+    CadreRubriqueM44: TQRShape;
+    RubriqueM44: TQRLabel;
+    CadreRubriqueN44: TQRShape;
+    RubriqueN44: TQRLabel;
+    CadreRubriqueO44: TQRShape;
+    RubriqueO44: TQRLabel;
+    CadreRubriqueP44: TQRShape;
+    RubriqueP44: TQRLabel;
+    CadreRubriqueQ44: TQRShape;
+    RubriqueQ44: TQRLabel;
+    CadreRubriqueR44: TQRShape;
+    RubriqueR44: TQRLabel;
+    CadreRubriqueS44: TQRShape;
+    RubriqueS44: TQRLabel;
+    CadreRubriqueT44: TQRShape;
+    RubriqueT44: TQRLabel;
+    CadreRubriqueU44: TQRShape;
+    RubriqueU44: TQRLabel;
+    CadreRubriqueV44: TQRShape;
+    RubriqueV44: TQRLabel;
+    CadreRubriqueW44: TQRShape;
+    RubriqueW44: TQRLabel;
+    CadreRubriqueX44: TQRShape;
+    RubriqueX44: TQRLabel;
+    CadreRubriqueY44: TQRShape;
+    RubriqueY44: TQRLabel;
+    CadreRubriqueZ44: TQRShape;
+    RubriqueZ44: TQRLabel;
+    RubriqueA0: TQRRichText;
+    RubriqueA26: TQRRichText;
+    RubriqueA1: TQRRichText;
+    RubriqueA2: TQRRichText;
+    RubriqueA3: TQRRichText;
+    RubriqueA4: TQRRichText;
+    RubriqueA5: TQRRichText;
+    RubriqueA6: TQRRichText;
+    RubriqueA7: TQRRichText;
+    RubriqueA8: TQRRichText;
+    RubriqueA9: TQRRichText;
+    RubriqueA10: TQRRichText;
+    RubriqueA11: TQRRichText;
+    RubriqueA12: TQRRichText;
+    RubriqueA25: TQRRichText;
+    RubriqueA24: TQRRichText;
+    RubriqueA23: TQRRichText;
+    RubriqueA22: TQRRichText;
+    RubriqueA21: TQRRichText;
+    RubriqueA20: TQRRichText;
+    RubriqueA19: TQRRichText;
+    RubriqueA18: TQRRichText;
+    RubriqueA17: TQRRichText;
+    RubriqueA16: TQRRichText;
+    RubriqueA15: TQRRichText;
+    RubriqueA14: TQRRichText;
+    RubriqueA13: TQRRichText;
+    RubriqueA39: TQRRichText;
+    RubriqueA38: TQRRichText;
+    RubriqueA37: TQRRichText;
+    RubriqueA36: TQRRichText;
+    RubriqueA35: TQRRichText;
+    RubriqueA34: TQRRichText;
+    RubriqueA33: TQRRichText;
+    RubriqueA32: TQRRichText;
+    RubriqueA31: TQRRichText;
+    RubriqueA30: TQRRichText;
+    RubriqueA29: TQRRichText;
+    RubriqueA28: TQRRichText;
+    RubriqueA27: TQRRichText;
+    RubriqueB0: TQRRichText;
+    RubriqueB26: TQRRichText;
+    RubriqueB1: TQRRichText;
+    RubriqueB2: TQRRichText;
+    RubriqueB3: TQRRichText;
+    RubriqueB4: TQRRichText;
+    RubriqueB5: TQRRichText;
+    RubriqueB6: TQRRichText;
+    RubriqueB7: TQRRichText;
+    RubriqueB8: TQRRichText;
+    RubriqueB9: TQRRichText;
+    RubriqueB10: TQRRichText;
+    RubriqueB11: TQRRichText;
+    RubriqueB12: TQRRichText;
+    RubriqueB25: TQRRichText;
+    RubriqueB24: TQRRichText;
+    RubriqueB23: TQRRichText;
+    RubriqueB22: TQRRichText;
+    RubriqueB21: TQRRichText;
+    RubriqueB20: TQRRichText;
+    RubriqueB19: TQRRichText;
+    RubriqueB18: TQRRichText;
+    RubriqueB17: TQRRichText;
+    RubriqueB16: TQRRichText;
+    RubriqueB15: TQRRichText;
+    RubriqueB14: TQRRichText;
+    RubriqueB13: TQRRichText;
+    RubriqueB39: TQRRichText;
+    RubriqueB38: TQRRichText;
+    RubriqueB37: TQRRichText;
+    RubriqueB36: TQRRichText;
+    RubriqueB35: TQRRichText;
+    RubriqueB34: TQRRichText;
+    RubriqueB33: TQRRichText;
+    RubriqueB32: TQRRichText;
+    RubriqueB31: TQRRichText;
+    RubriqueB30: TQRRichText;
+    RubriqueB29: TQRRichText;
+    RubriqueB28: TQRRichText;
+    RubriqueB27: TQRRichText;
+    RubriqueC0: TQRRichText;
+    RubriqueC26: TQRRichText;
+    RubriqueC1: TQRRichText;
+    RubriqueC2: TQRRichText;
+    RubriqueC3: TQRRichText;
+    RubriqueC4: TQRRichText;
+    RubriqueC5: TQRRichText;
+    RubriqueC6: TQRRichText;
+    RubriqueC7: TQRRichText;
+    RubriqueC8: TQRRichText;
+    RubriqueC9: TQRRichText;
+    RubriqueC10: TQRRichText;
+    RubriqueC11: TQRRichText;
+    RubriqueC12: TQRRichText;
+    RubriqueC25: TQRRichText;
+    RubriqueC24: TQRRichText;
+    RubriqueC23: TQRRichText;
+    RubriqueC22: TQRRichText;
+    RubriqueC21: TQRRichText;
+    RubriqueC20: TQRRichText;
+    RubriqueC19: TQRRichText;
+    RubriqueC18: TQRRichText;
+    RubriqueC17: TQRRichText;
+    RubriqueC16: TQRRichText;
+    RubriqueC15: TQRRichText;
+    RubriqueC14: TQRRichText;
+    RubriqueC13: TQRRichText;
+    RubriqueC39: TQRRichText;
+    RubriqueC38: TQRRichText;
+    RubriqueC37: TQRRichText;
+    RubriqueC36: TQRRichText;
+    RubriqueC35: TQRRichText;
+    RubriqueC34: TQRRichText;
+    RubriqueC33: TQRRichText;
+    RubriqueC32: TQRRichText;
+    RubriqueC31: TQRRichText;
+    RubriqueC30: TQRRichText;
+    RubriqueC29: TQRRichText;
+    RubriqueC28: TQRRichText;
+    RubriqueC27: TQRRichText;
+  private
+
+  public
+
+  end;
+
+var
+  PrintEtatDynamique: TPrintEtatDynamique;
+
+implementation
+
+{$R *.DFM}
+
+end.

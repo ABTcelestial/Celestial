@@ -1,0 +1,171 @@
+unit UnitFSConsultationExercice;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Mask, ExtCtrls, ComCtrls, Buttons;
+
+type
+  TFSConsultationExercice = class(TForm)
+    Bevel1: TBevel;
+    Label1: TLabel;
+    EditExercice: TMaskEdit;
+    UpDown1: TUpDown;
+    BitValiderExercice: TBitBtn;
+    procedure EditExerciceKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitValiderExerciceClick(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSConsultationExercice: TFSConsultationExercice;
+
+  Procedure ConsulterExercice(OpenExercice:string);
+
+implementation
+
+Uses UnitInitialisation, UnitFSMenuPrincipal, UnitFSGenerateurBase;
+
+var
+
+RParc:RInstalle;
+FParc:FInstalle;
+ParcInstalle:string100;
+
+RRegistre,RRegistreVolatile:REnregistrement;
+FRegistre,FRegistreVolatile:FEnregistrement;
+ChEnregistrement:string250;
+
+{$R *.dfm}
+
+procedure TFSConsultationExercice.EditExerciceKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSConsultationExercice.BitValiderExercice.SetFocus;
+     end;
+
+end;
+
+procedure TFSConsultationExercice.BitValiderExerciceClick(Sender: TObject);
+begin
+     ConsulterExercice(FSConsultationExercice.EditExercice.Text);
+     FSMenuPrincipal.TimerCodeAcces.Enabled:=true;
+     ListeAdresseDossierPartageReseaux(FSMenuPrincipal.TableauAdresseDossierPartageReseaux,true,false,true);// Contrôle connéctivité réseaux
+
+     FSConsultationExercice.Close;
+end;
+
+Procedure ConsulterExercice(OpenExercice:string);
+var  i:integer;   OKRegistre:boolean;
+     AdresseReseauxLocal,NomDossierPartageOut,EmlacementLocalOuReseauxOut:string;
+begin
+     for i:= 1 to longueur(OpenExercice)do
+     begin
+          if(not strtointeger(OpenExercice[i])in[0..9])or(i>4)then
+          begin
+               showmessage('Veuillez saisire correctement l''Exercice SVP!');
+               FSConsultationExercice.EditExercice.Text:='';
+               FSConsultationExercice.EditExercice.SetFocus;
+               Exit;
+          end;
+     end;
+
+if FileExists('C:\WinBus.File')then
+begin
+     assignfile(FRegistreVolatile,'C:\WinBus.File');
+     reset(FRegistreVolatile);
+     Seek(FRegistreVolatile,0);
+     Read(FRegistreVolatile,RRegistreVolatile);
+     RRegistreVolatile.Exercice:=OpenExercice;
+     Seek(FRegistreVolatile,0);
+     Write(FRegistreVolatile,RRegistreVolatile);
+
+     /////////////////// enregistrement réseaux local /////////////////////////
+     AdresseReseauxLocal:=ProcAdresseDossierPartageReseaux('','Local',NomDossierPartageOut,EmlacementLocalOuReseauxOut);
+     if(DirectoryExists(AdresseReseauxLocal))then
+     begin
+          AdresseReseauxLocal:=AdresseReseauxLocal+'\WinBus'+DataIdentificateurReseaux+' '+NomDossierPartageOut+'.File';
+          assignfile(FRegistre,AdresseReseauxLocal);
+          if FileExists(AdresseReseauxLocal)then
+          Reset(FRegistre)
+          else Rewrite(FRegistre); //Création nouveau fichier
+          Seek(FRegistre,0);
+          Truncate(FRegistre);
+          write(FRegistre,RRegistreVolatile);
+          CloseFile(FRegistre);
+     end;
+     //////////////////////////////////////////////////////////////////////////
+     if FileExists('C:\WinBuss.dll')then
+     begin
+          assignfile(FRegistre,'C:\WinBuss.dll');
+          reset(FRegistre);
+          Seek(FRegistre,0);
+          OKRegistre:=false;
+          i:=0;
+          while not eof(FRegistre)and(OKRegistre=false)do
+          begin
+               Read(FRegistre,RRegistre);
+               if(AnsiUpperCase(RRegistre.Repertoire)=AnsiUpperCase(RRegistreVolatile.Repertoire))
+               and(AnsiUpperCase(RRegistre.Adresse)=AnsiUpperCase(RRegistreVolatile.Adresse))
+               then
+               begin
+                    OKRegistre:=true;
+                    RRegistre.Exercice:=OpenExercice;
+                    Seek(FRegistre,i);
+                    Write(FRegistre,RRegistre);
+                    AfficherMessage('Le répertoire "'+RRegistre.Repertoire+'" est ouvert sur l''exercice "'+RRegistre.Exercice+'"');
+               end;
+          i:=i+1;
+          end;
+
+          if(OKRegistre=false)then
+          begin
+               AfficherMessage('Le répertoire sélectionné ne correspond pas au répertoire enregistré !');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('le regitre des répertoires Business n''éxiste pas !');
+     end;
+end
+else
+begin
+     AfficherMessage('le regitre du répertoire en cours Business n''éxiste pas !');
+end;
+
+OpenFParc(RParc);
+{*********************************************************************}
+FSMenuPrincipal.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Menu Principal';
+{*******************************************************************}
+
+{********** MOT DE PASSE **********}
+OpenFParc(RParc);
+if RParc.MotPasse<>'' then
+   begin
+   FSMenuPrincipal.MenuPrincipal.Items[0].Enabled:=false;
+   FSMenuPrincipal.MenuPrincipal.Items[1].Enabled:=false;
+   FSMenuPrincipal.MenuPrincipal.Items[2].Enabled:=false;
+   FSMenuPrincipal.PanelMotPasse.Visible:=true;
+   FSMenuPrincipal.EditMotPasse.SetFocus;
+   end
+   else
+   begin
+   FSMenuPrincipal.PanelMotPasse.Visible:=false;
+   FSMenuPrincipal.MenuPrincipal.Items[0].Enabled:=true;
+   FSMenuPrincipal.MenuPrincipal.Items[1].Enabled:=true;
+   FSMenuPrincipal.MenuPrincipal.Items[2].Enabled:=true;
+   end;
+{********** MOT DE PASSE **********}
+
+FSMenuPrincipal.TimerControleSoldeDomiciliation.Enabled:=true;
+end;
+
+end.

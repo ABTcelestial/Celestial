@@ -1,0 +1,44 @@
+unit UnitPrintEngagementPaiement;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls;
+
+type
+  TPrintEngagementPaiement = class(TQuickRep)
+    PageHeaderBand1: TQRBand;
+    TitleBand1: TQRBand;
+    Logo: TQRImage;
+    TitreEntreprise1: TQRLabel;
+    TitreEntreprise2: TQRLabel;
+    TitreEntreprise3: TQRLabel;
+    TitreEntreprise4: TQRLabel;
+    QRShape4: TQRShape;
+    TitreEtat: TQRLabel;
+    TitreConventionne: TQRLabel;
+    DataConventionne: TQRLabel;
+    TitreDateLieuNaisConventionne: TQRLabel;
+    DataDateLieuNaisConventionne: TQRLabel;
+    TitrePieceConventionne: TQRLabel;
+    DataPieceConventionne: TQRLabel;
+    TitreFonctionConventionne: TQRLabel;
+    DataFonctionConventionne: TQRLabel;
+    TitreDenommeConventionne: TQRLabel;
+    DataDenommeConventionne: TQRLabel;
+    QRLabel1: TQRLabel;
+    DataEngagement: TQRRichText;
+  private
+
+  public
+
+  end;
+
+var
+  PrintEngagementPaiement: TPrintEngagementPaiement;
+
+implementation
+
+{$R *.DFM}
+
+end.

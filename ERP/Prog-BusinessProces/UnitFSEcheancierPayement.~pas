@@ -1,0 +1,1848 @@
+unit UnitFSEcheancierPayement;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, ExtCtrls, StdCtrls, ComCtrls, Buttons;
+
+type
+  TFSEcheancierPayement = class(TForm)
+    TableauDetailEcheancierPayement: TStringGrid;
+    Panel2: TPanel;
+    AfficheEcheancierPayement: TPanel;
+    Panel5: TPanel;
+    Label5: TLabel;
+    EditPourcentagePenalite: TEdit;
+    EditDiffereApplicationPenalite: TEdit;
+    Label6: TLabel;
+    Bevel2: TBevel;
+    Label8: TLabel;
+    EditNatureDureeApplicationPenalite: TComboBox;
+    EditMontantMaxPenalite: TEdit;
+    Label9: TLabel;
+    Label7: TLabel;
+    TableauSelection: TStringGrid;
+    TableauListeEcheancierPayement: TStringGrid;
+    BitNouveauEcheancierPayement: TBitBtn;
+    Bevel5: TBevel;
+    Bevel6: TBevel;
+    BitModifierEcheancierPayement: TBitBtn;
+    Bevel7: TBevel;
+    BitSupprimerEcheancierPayement: TBitBtn;
+    Panel1: TPanel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    EditCodeTiers: TEdit;
+    EditMontantGlobale: TEdit;
+    EditDateEcheancier: TDateTimePicker;
+    EditNumEcheancier: TEdit;
+    EditApportInitial: TEdit;
+    EditChargementTypeProces: TEdit;
+    EditChargementFichierConcerne: TEdit;
+    Bevel8: TBevel;
+    Label16: TLabel;
+    AfficheMessagePenalite: TPanel;
+    BitBtn2: TBitBtn;
+    Bevel9: TBevel;
+    RBOrientationPapier: TComboBox;
+    TableauInformationEcheancier: TStringGrid;
+    RBAjusterTableau: TCheckBox;
+    TableauRecapitulatifEcheancierPaiement: TStringGrid;
+    RBRecapitulatifEcheancier: TCheckBox;
+    EditPenaliteJour: TEdit;
+    Bevel10: TBevel;
+    BitBtn3: TBitBtn;
+    Bevel11: TBevel;
+    Bevel12: TBevel;
+    Panel3: TPanel;
+    EditCompteDomiciliation: TEdit;
+    Label17: TLabel;
+    Label18: TLabel;
+    AfficheDomiciliation: TPanel;
+    Bevel17: TBevel;
+    TableauDomiciliation: TStringGrid;
+    BitBtn9: TBitBtn;
+    Panel6: TPanel;
+    Label19: TLabel;
+    EditTiers: TEdit;
+    EditListeNumPlanificateur: TEdit;
+    EditDomiciliation: TEdit;
+    EditEtablissementlegalisationsignature: TEdit;
+    EditCodeLocalisationGeographique: TEdit;
+    EditFichierLocalisationGeographique: TComboBox;
+    Label20: TLabel;
+    AfficheApportGlobal: TPanel;
+    TableauApportGlobal: TStringGrid;
+    PageTrancheEcheancier: TPageControl;
+    ParTrancheFixe: TTabSheet;
+    Label3: TLabel;
+    EditMontantTranche: TEdit;
+    PageDureeFixe: TTabSheet;
+    EditDureeTranche: TEdit;
+    EditNaturedureeTranche: TComboBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Bevel1: TBevel;
+    Label4: TLabel;
+    Label22: TLabel;
+    Bevel13: TBevel;
+    Panel4: TPanel;
+    Bevel4: TBevel;
+    Bevel3: TBevel;
+    BitOperationEcheancierPayement: TBitBtn;
+    BitBtn1: TBitBtn;
+    Label23: TLabel;
+    EditDureeEcheancier: TEdit;
+    EditNaturedureeEcheancier: TEdit;
+    RBActiveDureeEcheancier: TCheckBox;
+    RBActiveMontantTranche: TCheckBox;
+    EditEcheancierTexte: TMemo;
+    BitBtn4: TBitBtn;
+    Label21: TLabel;
+    EditApportBancaire: TEdit;
+    procedure EditListeNumPlanificateurEnter(Sender: TObject);
+    procedure TableauSelectionKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauSelectionDblClick(Sender: TObject);
+    procedure EditTiersKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditTiersEnter(Sender: TObject);
+    procedure EditTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditMontantGlobaleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditApportInitialKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure TableauDetailEcheancierPayementClick(Sender: TObject);
+    procedure EditDureeTrancheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNaturedureeTrancheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditMontantTrancheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditPourcentagePenaliteKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditDiffereApplicationPenaliteKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditNatureDureeApplicationPenaliteKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditMontantMaxPenaliteKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNaturedureeTrancheKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditNatureDureeApplicationPenaliteKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure BitOperationEcheancierPayementClick(Sender: TObject);
+    procedure EditMontantGlobaleEnter(Sender: TObject);
+    procedure EditMontantGlobaleExit(Sender: TObject);
+    procedure EditApportInitialExit(Sender: TObject);
+    procedure EditApportInitialEnter(Sender: TObject);
+    procedure TableauListeEcheancierPayementDblClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure BitNouveauEcheancierPayementClick(Sender: TObject);
+    procedure BitModifierEcheancierPayementClick(Sender: TObject);
+    procedure BitSupprimerEcheancierPayementClick(Sender: TObject);
+    procedure EditDateEcheancierKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditListeNumPlanificateurKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure TableauSelectionKeyPress(Sender: TObject; var Key: Char);
+    procedure EditMontantTrancheEnter(Sender: TObject);
+    procedure EditMontantMaxPenaliteEnter(Sender: TObject);
+    procedure EditMontantTrancheExit(Sender: TObject);
+    procedure EditMontantMaxPenaliteExit(Sender: TObject);
+    procedure TableauListeEcheancierPayementClick(Sender: TObject);
+    procedure EditPourcentagePenaliteKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditPourcentagePenaliteEnter(Sender: TObject);
+    procedure EditPourcentagePenaliteExit(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure RBRecapitulatifEcheancierClick(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure EditDomiciliationEnter(Sender: TObject);
+    procedure BitBtn9Click(Sender: TObject);
+    procedure TableauRecapitulatifEcheancierPaiementClick(Sender: TObject);
+    procedure TableauDomiciliationDblClick(Sender: TObject);
+    procedure TableauDomiciliationKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDomiciliationKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditEtablissementlegalisationsignatureKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditEtablissementlegalisationsignatureEnter(Sender: TObject);
+    procedure EditFichierLocalisationGeographiqueChange(Sender: TObject);
+    procedure EditNaturedureeTrancheChange(Sender: TObject);
+    procedure EditDureeEcheancierExit(Sender: TObject);
+    procedure EditDureeTrancheKeyPress(Sender: TObject; var Key: Char);
+    procedure EditDureeEcheancierKeyPress(Sender: TObject; var Key: Char);
+    procedure RBActiveMontantTrancheClick(Sender: TObject);
+    procedure RBActiveDureeEcheancierClick(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSEcheancierPayement: TFSEcheancierPayement;
+
+Procedure ListeParametreEcheancier(TableauParametreEcheancier:TStringGrid);
+Procedure AfficherDetailEcheancierPayement(TableauDetailEcheancierPayement:TStringGrid; NumEcheancier:integer; var MessagePenalite:string);
+Procedure AfficheDetailReglementEcheancier(TableauDetailEcheancierPayement,TableauRecapitulatifEcheancierPaiement:TStringGrid; CodeTiers,ListeNumPlanificateur:string);
+Procedure PrevoirDateEcheancier(DatePrincipale:string; delais:integer; UniteDelais:string; var DatePrevue:string);
+Function DiffereInJour(DatePrincipale:string; delais:integer; UniteDelais:string):integer;
+Procedure InformationEcheancier(TableauInformationEcheancier:TStringGrid; ListeNumPlanificateur,MessagePenalite:string);
+Procedure CalculePenalite(DureeDiffereApplicationPenalite:integer; NatureDureeDiffereApplicationPenalite:string; CapitalTranche,MontantMaxPenalite,PenaliteJour:real; DateFin,DatePaiement:string; Var MontantPenalite:real; var SituationEcheancier:string);
+
+implementation
+
+Uses UnitInitialisation, UnitSuppression, UnitFSAvis, UnitFSPlanificateur, UnitFSTiers,
+     UnitPrintEngagementPaiement, UnitFSMenuPrincipal, UnitFSGenerateurBase, UnitFSGenerateurLocalisationGeographique;
+
+var
+TParametreEcheancier:TParametreEcheanciers;
+RParametreEcheancier:RParametreEcheanciers;
+FParametreEcheancier:FParametreEcheanciers;
+ChParametreEcheancier:string250;
+
+{$R *.dfm}
+
+procedure TFSEcheancierPayement.EditListeNumPlanificateurEnter(
+  Sender: TObject);
+var  C:integer; Quantite,Montant:real; NotCol:string;
+begin
+     FSEcheancierPayement.TableauSelection.Left:=FSEcheancierPayement.AfficheEcheancierPayement.Left+FSEcheancierPayement.EditListeNumPlanificateur.Left;
+     FSEcheancierPayement.TableauSelection.Top:=FSEcheancierPayement.AfficheEcheancierPayement.Top+FSEcheancierPayement.EditListeNumPlanificateur.Top+20;
+
+     ListePlanificateurTiers(FSEcheancierPayement.TableauSelection,'',FSEcheancierPayement.EditCodeTiers.Text,'',Quantite,Montant);
+     FSEcheancierPayement.TableauSelection.Cells[0,0]:='Projet';
+     FSEcheancierPayement.TableauSelection.ColCount:=13;
+     FSEcheancierPayement.TableauSelection.Cols[12].Text:='OK';
+
+     NotCol:='2;3;5;7;8;10';
+     for C:=1 to FSEcheancierPayement.TableauSelection.ColCount-1 do
+     begin
+          if(ExisteNumInTexte(inttostr(C),NotCol))then FSEcheancierPayement.TableauSelection.ColWidths[C]:=0;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.TableauSelectionKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var  R,RApport:integer;  NumRubrique:string;   TotalApportBancaire,TotalApportInitial,ApportGlobal:real;
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          if(FSEcheancierPayement.TableauSelection.Cells[0,0]='Projet')then
+          begin
+               R:=1;
+               FSEcheancierPayement.EditListeNumPlanificateur.Text:='';
+               FSEcheancierPayement.EditMontantGlobale.Text:='';
+               while(R<=FSEcheancierPayement.TableauSelection.RowCount-1)do
+               begin
+                    if(FSEcheancierPayement.TableauSelection.Cells[12,R]='OK')then
+                    begin
+                         if(FSEcheancierPayement.EditListeNumPlanificateur.Text='')
+                         then FSEcheancierPayement.EditListeNumPlanificateur.Text:=FSEcheancierPayement.TableauSelection.Cells[3,R]
+                         else FSEcheancierPayement.EditListeNumPlanificateur.Text:=FSEcheancierPayement.EditListeNumPlanificateur.Text+';'+
+                                                                                      FSEcheancierPayement.TableauSelection.Cells[3,R];
+
+                         FSEcheancierPayement.EditMontantGlobale.Text:=floattostr(strtoreal(FSEcheancierPayement.EditMontantGlobale.Text)+
+                                                                       strtoreal(FSEcheancierPayement.TableauSelection.Cells[9,R]));
+
+                    end;
+               R:=R+1;
+               end;
+               FSEcheancierPayement.EditMontantGlobale.Text:=Vergule(FSEcheancierPayement.EditMontantGlobale.Text,'2','C','');
+
+               ///////////////////////   APPORT GLOBAL//////////////////////////
+               FSEcheancierPayement.AfficheApportGlobal.Visible:=true;
+               FSEcheancierPayement.TableauApportGlobal.ColCount:=5;
+               FSEcheancierPayement.TableauApportGlobal.Cols[0].Text:='N°';
+               FSEcheancierPayement.TableauApportGlobal.Cols[1].Text:='Structure';
+               FSEcheancierPayement.TableauApportGlobal.Cols[2].Text:='Apport bancaire';
+               FSEcheancierPayement.TableauApportGlobal.Cols[3].Text:='Apport Initial';
+               FSEcheancierPayement.TableauApportGlobal.Cols[4].Text:='Total Apport';
+
+               FSEcheancierPayement.TableauApportGlobal.RowCount:=2;
+               FSEcheancierPayement.TableauApportGlobal.Rows[1].Text:='';
+
+               RApport:=0;
+
+               OpenFParc(RParc);
+               ChFormulairePreselection:=RParc.Parcours+'\'+Exercice+'FFormulairePreselection';
+               assignfile(FFormulairePreselection,ChFormulairePreselection);
+               if FileExists(ChFormulairePreselection)then
+               Reset(FFormulairePreselection)
+               else Rewrite(FFormulairePreselection);
+               Seek(FFormulairePreselection,0);
+               TotalApportBancaire:=0;
+               TotalApportInitial:=0;
+               ApportGlobal:=0;
+               while not eof(FFormulairePreselection)do
+               begin
+                    read(FFormulairePreselection,RFormulairePreselection);
+                    R:=1;
+                    while(R<=FSEcheancierPayement.TableauSelection.RowCount-1)do
+                    begin
+                         NumRubrique:=FSEcheancierPayement.TableauSelection.Cells[2,FSEcheancierPayement.TableauSelection.Row];
+                         RubriqueArborescence('',NumRubrique,RRubriqueFicheTechnique,RFicheTechnique,RTypeAvis);
+                         if(FSEcheancierPayement.TableauSelection.Cells[12,R]='OK')then
+                         begin
+                              if(RFormulairePreselection.CodeTier=FSEcheancierPayement.TableauSelection.Cells[5,R])
+                              and(RFormulairePreselection.NumProjet=FSEcheancierPayement.TableauSelection.Cells[10,R])
+                              and(RFormulairePreselection.OKReglementApportInitial=true)
+                              then
+                              begin
+                                   RApport:=RApport+1;
+                                   FSEcheancierPayement.TableauApportGlobal.Rows[RApport].Text:=inttostr(RApport);
+                                   FSEcheancierPayement.TableauApportGlobal.Cells[1,RApport]:=RFormulairePreselection.DesignationProjet;
+                                   FSEcheancierPayement.TableauApportGlobal.Cells[2,RApport]:=Vergule(floattostr(RFormulairePreselection.SimulationBanque),'2','C','');
+                                   FSEcheancierPayement.TableauApportGlobal.Cells[3,RApport]:=Vergule(floattostr(RFormulairePreselection.ApportInitial),'2','C','');
+                                   FSEcheancierPayement.TableauApportGlobal.Cells[4,RApport]:=Vergule(floattostr(RFormulairePreselection.SimulationBanque+RFormulairePreselection.ApportInitial),'2','C','');
+
+                                   TotalApportBancaire:=TotalApportBancaire+RFormulairePreselection.SimulationBanque;
+                                   TotalApportInitial:=TotalApportInitial+RFormulairePreselection.ApportInitial;
+                                   ApportGlobal:=ApportGlobal+RFormulairePreselection.SimulationBanque+RFormulairePreselection.ApportInitial;
+                              end;
+                         end;
+                    R:=R+1;
+                    end;
+               end;
+               Closefile(FFormulairePreselection);
+               /////////////////////////////////////////////////////////////////
+
+               if(RApport>0)then
+                            begin
+                                 FSEcheancierPayement.TableauApportGlobal.RowCount:=RApport+3;
+                                 FSEcheancierPayement.TableauApportGlobal.Rows[RApport+1].Text:='';
+                                 FSEcheancierPayement.TableauApportGlobal.Rows[RApport+2].Text:='';
+                                 FSEcheancierPayement.TableauApportGlobal.Cells[1,RApport+2]:='Total:';
+                                 FSEcheancierPayement.TableauApportGlobal.Cells[2,RApport+2]:=Vergule(floattostr(TotalApportBancaire),'2','C','');
+                                 FSEcheancierPayement.TableauApportGlobal.Cells[3,RApport+2]:=Vergule(floattostr(TotalApportInitial),'2','C','');
+                                 FSEcheancierPayement.TableauApportGlobal.Cells[4,RApport+2]:=Vergule(floattostr(ApportGlobal),'2','C','');
+                            end
+                            else FSEcheancierPayement.TableauApportGlobal.RowCount:=2;
+
+               FSEcheancierPayement.EditApportInitial.Text:=Vergule(floattostr(TotalApportInitial),'2','C','');
+               FSEcheancierPayement.EditApportBancaire.Text:=Vergule(floattostr(TotalApportBancaire),'2','C','');
+               AjusterColWidth(FSEcheancierPayement.TableauApportGlobal,'','');
+
+               FSEcheancierPayement.EditApportInitial.SetFocus;
+               FSEcheancierPayement.TableauSelection.Visible:=false;
+          end;
+
+          if(FSEcheancierPayement.TableauSelection.Cells[0,0]='Tiers')then
+          begin
+               FSEcheancierPayement.EditCodeTiers.Text:=FSEcheancierPayement.TableauSelection.Cells[1,FSEcheancierPayement.TableauSelection.Row];
+               FSEcheancierPayement.EditTiers.Text:=FSEcheancierPayement.TableauSelection.Cells[2,FSEcheancierPayement.TableauSelection.Row];
+               FSEcheancierPayement.TableauSelection.Visible:=false;
+               FSEcheancierPayement.EditListeNumPlanificateur.SetFocus;
+          end;
+
+          if(FSEcheancierPayement.TableauSelection.Cells[0,0]='Pays')
+          or(FSEcheancierPayement.TableauSelection.Cells[0,0]='Wylaia')
+          or(FSEcheancierPayement.TableauSelection.Cells[0,0]='Daira')
+          or(FSEcheancierPayement.TableauSelection.Cells[0,0]='Commune')
+          or(FSEcheancierPayement.TableauSelection.Cells[0,0]='Zone')
+          then
+          begin
+               FSEcheancierPayement.EditCodeLocalisationGeographique.Text:=FSEcheancierPayement.TableauSelection.Cells[1,FSEcheancierPayement.TableauSelection.Row];
+               FSEcheancierPayement.EditEtablissementlegalisationsignature.Text:=FSEcheancierPayement.TableauSelection.Cells[2,FSEcheancierPayement.TableauSelection.Row];
+               FSEcheancierPayement.TableauSelection.Visible:=false;
+               FSEcheancierPayement.BitOperationEcheancierPayement.SetFocus;
+          end;
+     end;
+end;
+
+procedure TFSEcheancierPayement.TableauSelectionDblClick(Sender: TObject);
+begin
+     if(FSEcheancierPayement.TableauSelection.Cells[0,0]='Projet')then
+     begin
+          if(FSEcheancierPayement.TableauSelection.Cells[12,FSEcheancierPayement.TableauSelection.Row]='')
+          then FSEcheancierPayement.TableauSelection.Cells[12,FSEcheancierPayement.TableauSelection.Row]:='OK'
+          else FSEcheancierPayement.TableauSelection.Cells[12,FSEcheancierPayement.TableauSelection.Row]:='';
+     end;
+end;
+
+procedure TFSEcheancierPayement.EditTiersKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     ListeTiers(FSEcheancierPayement.TableauSelection,FSEcheancierPayement.EditChargementTypeProces.Text,FSEcheancierPayement.EditChargementFichierConcerne.Text,'','',FSEcheancierPayement.EditTiers.Text,true);
+     FSEcheancierPayement.TableauSelection.Cells[0,0]:='Tiers';
+end;
+
+procedure TFSEcheancierPayement.EditTiersEnter(Sender: TObject);
+begin
+     FSEcheancierPayement.TableauSelection.Left:=FSEcheancierPayement.AfficheEcheancierPayement.Left+FSEcheancierPayement.EditTiers.Left;
+     FSEcheancierPayement.TableauSelection.Top:=FSEcheancierPayement.AfficheEcheancierPayement.Top+FSEcheancierPayement.EditTiers.Top+20;
+
+     ListeTiers(FSEcheancierPayement.TableauSelection,FSEcheancierPayement.EditChargementTypeProces.Text,FSEcheancierPayement.EditChargementFichierConcerne.Text,'','',FSEcheancierPayement.EditTiers.Text,true);
+     FSEcheancierPayement.TableauSelection.Cells[0,0]:='Tiers';
+end;
+
+procedure TFSEcheancierPayement.EditTiersKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          if(FSEcheancierPayement.TableauSelection.Visible=true)
+          then FSEcheancierPayement.TableauSelection.SetFocus
+          else FSEcheancierPayement.EditListeNumPlanificateur.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditMontantGlobaleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          if(FSEcheancierPayement.EditMontantGlobale.Text<>'')
+          then FSEcheancierPayement.EditApportInitial.SetFocus
+          else FSEcheancierPayement.EditMontantGlobale.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditApportInitialKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditDomiciliation.SetFocus;
+          FSEcheancierPayement.AfficheApportGlobal.Visible:=false;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.BitBtn1Click(Sender: TObject);
+begin
+FSEcheancierPayement.AfficheEcheancierPayement.Visible:=false;
+FSEcheancierPayement.TableauSelection.Visible:=false;
+FSEcheancierPayement.AfficheDomiciliation.Visible:=false;
+FSEcheancierPayement.AfficheApportGlobal.Visible:=false;
+end;
+
+procedure TFSEcheancierPayement.TableauDetailEcheancierPayementClick(
+  Sender: TObject);
+begin
+FSEcheancierPayement.AfficheEcheancierPayement.Visible:=false;
+FSEcheancierPayement.TableauSelection.Visible:=false;
+end;
+
+procedure TFSEcheancierPayement.EditDureeTrancheKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditNaturedureeTranche.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditNaturedureeTrancheKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          if(FSEcheancierPayement.ParTrancheFixe.Showing=true)
+          then FSEcheancierPayement.EditMontantTranche.SetFocus
+          else FSEcheancierPayement.EditDureeEcheancier.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditMontantTrancheKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditPourcentagePenalite.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditPourcentagePenaliteKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditDiffereApplicationPenalite.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditDiffereApplicationPenaliteKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditNatureDureeApplicationPenalite.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditNatureDureeApplicationPenaliteKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditMontantMaxPenalite.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditMontantMaxPenaliteKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditEtablissementlegalisationsignature.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditNaturedureeTrancheKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+key:=#0;
+end;
+
+procedure TFSEcheancierPayement.EditNatureDureeApplicationPenaliteKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+key:=#0;
+end;
+
+procedure TFSEcheancierPayement.BitOperationEcheancierPayementClick(
+  Sender: TObject);
+var  i,RExistant,RSupprimer,RSauvgarder:integer;   OKParametreEcheancier:boolean;  MessagePenalite:string;
+begin
+
+if(FSEcheancierPayement.BitOperationEcheancierPayement.Caption='Valider')then
+begin
+     OpenFParc(RParc);
+     ChParametreEcheancier:=RParc.Parcours+'\'+Exercice+'FParametreEcheancier';
+     assignfile(FParametreEcheancier,ChParametreEcheancier);
+     if FileExists(ChParametreEcheancier)then
+     Reset(FParametreEcheancier)
+     else Rewrite(FParametreEcheancier);
+     Seek(FParametreEcheancier,0);
+     i:=0;
+     OKParametreEcheancier:=false;
+     while not eof(FParametreEcheancier)and(OKParametreEcheancier=false)do
+     begin
+          read(FParametreEcheancier,RParametreEcheancier);
+          if(inttostr(RParametreEcheancier.NumEcheancier)=FSEcheancierPayement.EditNumEcheancier.Text)then
+          begin
+               OKParametreEcheancier:=true;
+          end
+          else i:=i+1;
+     end;
+     RParametreEcheancier.NumEcheancier:=strtointeger(FSEcheancierPayement.EditNumEcheancier.Text);
+     RParametreEcheancier.DateEcheancier:=datetostr(FSEcheancierPayement.EditDateEcheancier.Date);
+     RParametreEcheancier.CodeTiers:=FSEcheancierPayement.EditCodeTiers.Text;
+     RParametreEcheancier.ListeNumPlanificateur:=FSEcheancierPayement.EditListeNumPlanificateur.Text;
+     RParametreEcheancier.MontantGlobal:=strtoreal(FSEcheancierPayement.EditMontantGlobale.Text);
+     RParametreEcheancier.ApportInitial:=strtoreal(FSEcheancierPayement.EditApportInitial.Text);
+     RParametreEcheancier.ApportBancaire:=strtoreal(FSEcheancierPayement.EditApportBancaire.Text);
+     RParametreEcheancier.DureeTranche:=strtointeger(FSEcheancierPayement.EditDureeTranche.Text);
+     RParametreEcheancier.NaturedureeTranche:=FSEcheancierPayement.EditNaturedureeTranche.Text;
+     RParametreEcheancier.MontantTranche:=strtoreal(FSEcheancierPayement.EditMontantTranche.Text);
+     RParametreEcheancier.PourcentagePenalite:=strtoreal(FSEcheancierPayement.EditPourcentagePenalite.Text);
+     RParametreEcheancier.DureeDiffereApplicationPenalite:=strtointeger(FSEcheancierPayement.EditDiffereApplicationPenalite.Text);
+     RParametreEcheancier.NatureDureeDiffereApplicationPenalite:=FSEcheancierPayement.EditNatureDureeApplicationPenalite.Text;
+     RParametreEcheancier.MontantMaxPenalite:=strtoreal(FSEcheancierPayement.EditMontantMaxPenalite.Text);
+     RParametreEcheancier.Domiciliation:=FSEcheancierPayement.EditDomiciliation.Text;
+     RParametreEcheancier.CompteDomiciliation:=FSEcheancierPayement.EditCompteDomiciliation.Text;
+     RParametreEcheancier.FichierLocalisationGeographique:=FSEcheancierPayement.EditFichierLocalisationGeographique.Text;
+     RParametreEcheancier.CodeLocalisationGeographique:=FSEcheancierPayement.EditCodeLocalisationGeographique.Text;
+     Seek(FParametreEcheancier,i);
+     write(FParametreEcheancier,RParametreEcheancier);
+     CloseFile(FParametreEcheancier);
+end;
+
+if(FSEcheancierPayement.BitOperationEcheancierPayement.Caption='Supprimer')then
+begin
+     if SupprimerFParametreEcheancier(FSEcheancierPayement.EditNumEcheancier.Text,RExistant,RSupprimer,RSauvgarder)then
+     begin
+          if(RSupprimer>0)
+          then AfficherMessage('Suppression réussie ! FTotal: '+inttostr(RExistant)+', FSupprimer: '+inttostr(RSupprimer)+', FSauvgarder: '+inttostr(RSauvgarder))
+          else AfficherMessage('Aucun Registre Supprimer ! FTotal: '+inttostr(RExistant)+', FSupprimer: '+inttostr(RSupprimer)+', FSauvgarder: '+inttostr(RSauvgarder));
+     end;
+end;
+
+ListeParametreEcheancier(FSEcheancierPayement.TableauListeEcheancierPayement);
+
+AfficherDetailEcheancierPayement(FSEcheancierPayement.TableauDetailEcheancierPayement,strtointeger(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[1,FSEcheancierPayement.TableauListeEcheancierPayement.Row]),MessagePenalite);
+FSEcheancierPayement.AfficheMessagePenalite.Caption:=MessagePenalite;
+InformationEcheancier(FSEcheancierPayement.TableauInformationEcheancier,FSEcheancierPayement.TableauListeEcheancierPayement.Cells[5,FSEcheancierPayement.TableauListeEcheancierPayement.Row],MessagePenalite);
+
+FSEcheancierPayement.AfficheEcheancierPayement.Visible:=false;
+FSEcheancierPayement.TableauSelection.Visible:=false;
+end;
+
+procedure TFSEcheancierPayement.EditMontantGlobaleEnter(Sender: TObject);
+begin
+     FSEcheancierPayement.EditMontantGlobale.Text:=floattostr(strtoreal(FSEcheancierPayement.EditMontantGlobale.Text));
+end;
+
+procedure TFSEcheancierPayement.EditMontantGlobaleExit(Sender: TObject);
+begin
+     FSEcheancierPayement.EditMontantGlobale.Text:=Vergule(FSEcheancierPayement.EditMontantGlobale.Text,'2','C','');
+end;
+
+procedure TFSEcheancierPayement.EditApportInitialExit(Sender: TObject);
+begin
+FSEcheancierPayement.EditApportInitial.Text:=Vergule(FSEcheancierPayement.EditApportInitial.Text,'2','C','');
+end;
+
+procedure TFSEcheancierPayement.EditApportInitialEnter(Sender: TObject);
+begin
+     FSEcheancierPayement.EditApportInitial.Text:=floattostr(strtoreal(FSEcheancierPayement.EditApportInitial.Text));
+end;
+
+procedure TFSEcheancierPayement.TableauListeEcheancierPayementDblClick(
+  Sender: TObject);
+begin
+     if(FSEcheancierPayement.TableauListeEcheancierPayement.Height=113)
+     then FSEcheancierPayement.TableauListeEcheancierPayement.Height:=FSEcheancierPayement.Height-49
+     else FSEcheancierPayement.TableauListeEcheancierPayement.Height:=113;
+end;
+
+Procedure ListeParametreEcheancier(TableauParametreEcheancier:TStringGrid);
+var  R:integer;   OKParametreEcheancier:boolean;
+begin
+     TableauParametreEcheancier.ColCount:=21;
+     TableauParametreEcheancier.RowCount:=2;
+     TableauParametreEcheancier.Rows[1].Text:='';
+     TableauParametreEcheancier.Cols[0].Text:='N°';
+     TableauParametreEcheancier.Cols[1].Text:='NumEcheancier';
+     TableauParametreEcheancier.Cols[2].Text:='DateEcheancier';
+     TableauParametreEcheancier.Cols[3].Text:='CodeTiers';
+     TableauParametreEcheancier.Cols[4].Text:='Tiers';
+     TableauParametreEcheancier.Cols[5].Text:='ListeNumPlanificateur';
+     TableauParametreEcheancier.Cols[6].Text:='MontantGlobale';
+     TableauParametreEcheancier.Cols[7].Text:='Apport Initial';
+     TableauParametreEcheancier.Cols[8].Text:='Apport Bancaire';
+     TableauParametreEcheancier.Cols[9].Text:='DureeTranche';
+     TableauParametreEcheancier.Cols[10].Text:='NaturedureeTranche';
+     TableauParametreEcheancier.Cols[11].Text:='MontantTranche';
+     TableauParametreEcheancier.Cols[12].Text:='PourcentagePenalite';
+     TableauParametreEcheancier.Cols[13].Text:='Différé Périodique';
+     TableauParametreEcheancier.Cols[14].Text:='NatureDureeApplicationPenalite';
+     TableauParametreEcheancier.Cols[15].Text:='MontantMaxPenalite';
+     TableauParametreEcheancier.Cols[16].Text:='Domiciliation';
+     TableauParametreEcheancier.Cols[17].Text:='N° Compte';
+     TableauParametreEcheancier.Cols[18].Text:='Fichier Loc.Géo.';
+     TableauParametreEcheancier.Cols[19].Text:='Code Loc.Géo.';
+     TableauParametreEcheancier.Cols[20].Text:='Loc.Géo.';
+
+     OpenFParc(RParc);
+     ChParametreEcheancier:=RParc.Parcours+'\'+Exercice+'FParametreEcheancier';
+     assignfile(FParametreEcheancier,ChParametreEcheancier);
+     if FileExists(ChParametreEcheancier)then
+     Reset(FParametreEcheancier)
+     else Rewrite(FParametreEcheancier);
+     Seek(FParametreEcheancier,0);
+     R:=0;
+     while not eof(FParametreEcheancier)do
+     begin
+          read(FParametreEcheancier,RParametreEcheancier);
+
+          OKParametreEcheancier:=true;
+
+          if(OKParametreEcheancier=true)then
+          begin
+               R:=R+1;
+               TableauParametreEcheancier.Rows[R].Text:=inttostr(R);
+               TableauParametreEcheancier.Cells[1,R]:=inttostr(RParametreEcheancier.NumEcheancier);
+               TableauParametreEcheancier.Cells[2,R]:=RParametreEcheancier.DateEcheancier;
+               TableauParametreEcheancier.Cells[3,R]:=RParametreEcheancier.CodeTiers;
+               RTier:=ChercherTiers(FSEcheancierPayement.EditChargementTypeProces.Text,FSEcheancierPayement.EditChargementFichierConcerne.Text,RParametreEcheancier.CodeTiers,'');
+               TableauParametreEcheancier.Cells[4,R]:=RTier.NomTiers+' '+RTier.PrenomTiers;
+               TableauParametreEcheancier.Cells[5,R]:=RParametreEcheancier.ListeNumPlanificateur;
+               TableauParametreEcheancier.Cells[6,R]:=Vergule(floattostr(RParametreEcheancier.MontantGlobal),'2','C','');
+               TableauParametreEcheancier.Cells[7,R]:=Vergule(floattostr(RParametreEcheancier.ApportInitial),'2','C','');
+               TableauParametreEcheancier.Cells[8,R]:=Vergule(floattostr(RParametreEcheancier.ApportBancaire),'2','C','');
+               TableauParametreEcheancier.Cells[9,R]:=inttostr(RParametreEcheancier.DureeTranche);
+               TableauParametreEcheancier.Cells[10,R]:=RParametreEcheancier.NaturedureeTranche;
+               TableauParametreEcheancier.Cells[11,R]:=Vergule(floattostr(RParametreEcheancier.MontantTranche),'2','C','');
+               TableauParametreEcheancier.Cells[12,R]:=Vergule(floattostr(RParametreEcheancier.PourcentagePenalite),'2','C','%');
+               TableauParametreEcheancier.Cells[13,R]:=inttostr(RParametreEcheancier.DureeDiffereApplicationPenalite);
+               TableauParametreEcheancier.Cells[14,R]:=RParametreEcheancier.NatureDureeDiffereApplicationPenalite;
+               TableauParametreEcheancier.Cells[15,R]:=Vergule(floattostr(RParametreEcheancier.MontantMaxPenalite),'2','C','');
+               TableauParametreEcheancier.Cells[16,R]:=RParametreEcheancier.Domiciliation;
+               TableauParametreEcheancier.Cells[17,R]:=RParametreEcheancier.CompteDomiciliation;
+               TableauParametreEcheancier.Cells[18,R]:=RParametreEcheancier.FichierLocalisationGeographique;
+               TableauParametreEcheancier.Cells[19,R]:=RParametreEcheancier.CodeLocalisationGeographique;
+               TableauParametreEcheancier.Cells[20,R]:=ChercherLocalisationGeographique(RParametreEcheancier.CodeLocalisationGeographique,'F'+RParametreEcheancier.FichierLocalisationGeographique).IntitulleLocalisationGeographique;
+          end
+     end;
+
+     if(R>0)then TableauParametreEcheancier.RowCount:=R+1
+            else TableauParametreEcheancier.RowCount:=2;
+
+     TableauParametreEcheancier.ColWidths[5]:=0;
+     AjusterColWidth(TableauParametreEcheancier,'','5');
+end;
+
+procedure TFSEcheancierPayement.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+     FSEcheancierPayement.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Echéancier de payement';
+
+     ListeParametreEcheancier(FSEcheancierPayement.TableauListeEcheancierPayement);
+end;
+
+procedure TFSEcheancierPayement.BitNouveauEcheancierPayementClick(Sender: TObject);
+var  NumEcheancier:integer;
+begin
+     FSEcheancierPayement.AfficheEcheancierPayement.Visible:=true;
+     
+     OpenFParc(RParc);
+     ChParametreEcheancier:=RParc.Parcours+'\'+Exercice+'FParametreEcheancier';
+     assignfile(FParametreEcheancier,ChParametreEcheancier);
+     if FileExists(ChParametreEcheancier)then
+     Reset(FParametreEcheancier)
+     else Rewrite(FParametreEcheancier);
+     Seek(FParametreEcheancier,0);
+     NumEcheancier:=1;
+     while not eof(FParametreEcheancier)do
+     begin
+          read(FParametreEcheancier,RParametreEcheancier);
+          if(NumEcheancier<=RParametreEcheancier.NumEcheancier)then NumEcheancier:=RParametreEcheancier.NumEcheancier+1;
+     end;
+     CloseFile(FParametreEcheancier);
+
+     FSEcheancierPayement.BitOperationEcheancierPayement.Kind:=FSEcheancierPayement.BitNouveauEcheancierPayement.Kind;
+     FSEcheancierPayement.BitOperationEcheancierPayement.Caption:='Valider';
+
+     FSEcheancierPayement.EditNumEcheancier.Text:=inttostr(NumEcheancier);
+     FSEcheancierPayement.EditDateEcheancier.Date:=Date;
+     FSEcheancierPayement.EditCodeTiers.Text:='';
+     FSEcheancierPayement.EditTiers.Text:='';
+     FSEcheancierPayement.EditListeNumPlanificateur.Text:='';
+     FSEcheancierPayement.EditMontantGlobale.Text:='';
+     FSEcheancierPayement.EditApportInitial.Text:='';
+     FSEcheancierPayement.EditApportBancaire.Text:='';
+     FSEcheancierPayement.EditDureeTranche.Text:='';
+     FSEcheancierPayement.EditNaturedureeTranche.ItemIndex:=0;
+     FSEcheancierPayement.EditMontantTranche.Text:='';
+     FSEcheancierPayement.EditPourcentagePenalite.Text:='';
+     FSEcheancierPayement.EditDiffereApplicationPenalite.Text:='';
+     FSEcheancierPayement.EditNatureDureeApplicationPenalite.ItemIndex:=0;
+     FSEcheancierPayement.EditMontantMaxPenalite.Text:='';
+     FSEcheancierPayement.EditDomiciliation.Text:='';
+     FSEcheancierPayement.EditCompteDomiciliation.Text:='';
+     FSEcheancierPayement.EditFichierLocalisationGeographique.ItemIndex:=3;
+     FSEcheancierPayement.EditCodeLocalisationGeographique.Text:='';
+     FSEcheancierPayement.EditEtablissementlegalisationsignature.Text:='';
+     FSEcheancierPayement.EditDateEcheancier.SetFocus;
+end;
+
+procedure TFSEcheancierPayement.BitModifierEcheancierPayementClick(Sender: TObject);
+var  l:integer;     OKCompte:boolean;
+begin
+     FSEcheancierPayement.AfficheEcheancierPayement.Visible:=true;
+     
+     FSEcheancierPayement.BitOperationEcheancierPayement.Kind:=FSEcheancierPayement.BitModifierEcheancierPayement.Kind;
+     FSEcheancierPayement.BitOperationEcheancierPayement.Caption:='Valider';
+
+     FSEcheancierPayement.EditNumEcheancier.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[1,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditDateEcheancier.Date:=strtodate(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[2,FSEcheancierPayement.TableauListeEcheancierPayement.Row]);
+     FSEcheancierPayement.EditCodeTiers.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[3,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditTiers.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[4,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditListeNumPlanificateur.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[5,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditMontantGlobale.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[6,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditApportInitial.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditApportBancaire.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditDureeTranche.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[9,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditNaturedureeTranche.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[10,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditMontantTranche.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[11,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditPourcentagePenalite.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[12,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditDiffereApplicationPenalite.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[13,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditNatureDureeApplicationPenalite.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[14,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditMontantMaxPenalite.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[15,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditDomiciliation.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[16,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditCompteDomiciliation.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[17,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditFichierLocalisationGeographique.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[18,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditCodeLocalisationGeographique.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[19,FSEcheancierPayement.TableauListeEcheancierPayement.Row];;
+     FSEcheancierPayement.EditEtablissementlegalisationsignature.Text:=ChercherLocalisationGeographique(FSEcheancierPayement.EditCodeLocalisationGeographique.Text,'F'+FSEcheancierPayement.EditFichierLocalisationGeographique.Text).IntitulleLocalisationGeographique;
+     FSEcheancierPayement.EditNaturedureeEcheancier.Text:=FSEcheancierPayement.EditNaturedureeTranche.Text;
+
+     if(strtoreal(FSEcheancierPayement.EditMontantTranche.Text)>0)then
+     begin
+          FSEcheancierPayement.EditDureeEcheancier.Text:=floattostr(((strtoreal(FSEcheancierPayement.EditMontantGlobale.Text)-strtoreal(FSEcheancierPayement.EditApportInitial.Text))/
+          strtoreal(FSEcheancierPayement.EditMontantTranche.Text))*strtoreal(FSEcheancierPayement.EditDureeTranche.Text));
+
+          l:=0;
+          OKCompte:=false;
+          while(OKCompte=false)do
+          begin
+               l:=l+1;
+               if(l*strtoreal(FSEcheancierPayement.EditDureeTranche.Text)>=strtoreal(FSEcheancierPayement.EditDureeEcheancier.Text))
+               then OKCompte:=true;
+          end;
+          FSEcheancierPayement.EditDureeEcheancier.Text:=inttostr(l*strtointeger(FSEcheancierPayement.EditDureeTranche.Text));
+     end;
+
+     FSEcheancierPayement.EditDateEcheancier.SetFocus;
+end;
+
+procedure TFSEcheancierPayement.BitSupprimerEcheancierPayementClick(
+  Sender: TObject);
+var  l:integer;     OKCompte:boolean;
+begin
+     FSEcheancierPayement.AfficheEcheancierPayement.Visible:=true;
+     
+     FSEcheancierPayement.BitOperationEcheancierPayement.Kind:=FSEcheancierPayement.BitSupprimerEcheancierPayement.Kind;
+     FSEcheancierPayement.BitOperationEcheancierPayement.Caption:='Supprimer';
+
+     FSEcheancierPayement.EditNumEcheancier.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[1,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditDateEcheancier.Date:=strtodate(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[2,FSEcheancierPayement.TableauListeEcheancierPayement.Row]);
+     FSEcheancierPayement.EditCodeTiers.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[3,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditTiers.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[4,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditListeNumPlanificateur.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[5,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditMontantGlobale.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[6,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditApportInitial.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+      FSEcheancierPayement.EditApportBancaire.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditDureeTranche.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[9,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditNaturedureeTranche.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[10,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditMontantTranche.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[11,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditPourcentagePenalite.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[12,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditDiffereApplicationPenalite.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[13,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditNatureDureeApplicationPenalite.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[14,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditMontantMaxPenalite.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[15,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditDomiciliation.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[16,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditCompteDomiciliation.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[17,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditFichierLocalisationGeographique.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[18,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     FSEcheancierPayement.EditCodeLocalisationGeographique.Text:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[19,FSEcheancierPayement.TableauListeEcheancierPayement.Row];;
+     FSEcheancierPayement.EditEtablissementlegalisationsignature.Text:=ChercherLocalisationGeographique(FSEcheancierPayement.EditCodeLocalisationGeographique.Text,'F'+FSEcheancierPayement.EditFichierLocalisationGeographique.Text).IntitulleLocalisationGeographique;
+     FSEcheancierPayement.EditNaturedureeEcheancier.Text:=FSEcheancierPayement.EditNaturedureeTranche.Text;
+
+     if(strtoreal(FSEcheancierPayement.EditMontantTranche.Text)>0)then
+     begin
+          FSEcheancierPayement.EditDureeEcheancier.Text:=floattostr(((strtoreal(FSEcheancierPayement.EditMontantGlobale.Text)-strtoreal(FSEcheancierPayement.EditApportInitial.Text))/
+          strtoreal(FSEcheancierPayement.EditMontantTranche.Text))*strtoreal(FSEcheancierPayement.EditDureeTranche.Text));
+
+          l:=0;
+          OKCompte:=false;
+          while(OKCompte=false)do
+          begin
+               l:=l+1;
+               if(l*strtoreal(FSEcheancierPayement.EditDureeTranche.Text)>=strtoreal(FSEcheancierPayement.EditDureeEcheancier.Text))
+               then OKCompte:=true;
+          end;
+          FSEcheancierPayement.EditDureeEcheancier.Text:=inttostr(l*strtointeger(FSEcheancierPayement.EditDureeTranche.Text));
+     end;
+     
+     FSEcheancierPayement.BitOperationEcheancierPayement.SetFocus;
+end;
+
+procedure TFSEcheancierPayement.EditDateEcheancierKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditTiers.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditListeNumPlanificateurKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          if(FSEcheancierPayement.TableauSelection.Visible=true)
+          then FSEcheancierPayement.TableauSelection.SetFocus
+          else FSEcheancierPayement.EditMontantGlobale.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.TableauSelectionKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if(key in['s','S'])then
+     begin
+          if(FSEcheancierPayement.TableauSelection.Cells[0,0]='Projet')then
+          begin
+               if(FSEcheancierPayement.TableauSelection.Cells[12,FSEcheancierPayement.TableauSelection.Row]='')
+               then FSEcheancierPayement.TableauSelection.Cells[12,FSEcheancierPayement.TableauSelection.Row]:='OK'
+               else FSEcheancierPayement.TableauSelection.Cells[12,FSEcheancierPayement.TableauSelection.Row]:='';
+          end;
+     end;
+end;
+
+procedure TFSEcheancierPayement.EditMontantTrancheEnter(Sender: TObject);
+begin
+     FSEcheancierPayement.EditMontantTranche.Text:=floattostr(strtoreal(FSEcheancierPayement.EditMontantTranche.Text));
+end;
+
+procedure TFSEcheancierPayement.EditMontantMaxPenaliteEnter(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.EditMontantMaxPenalite.Text:=floattostr(strtoreal(FSEcheancierPayement.EditMontantMaxPenalite.Text));
+end;
+
+procedure TFSEcheancierPayement.EditMontantTrancheExit(Sender: TObject);
+var  l:integer;     OKCompte:boolean;
+begin
+     if strtoreal(FSEcheancierPayement.EditMontantTranche.Text)>(strtoreal(FSEcheancierPayement.EditMontantGlobale.Text)-strtoreal(FSEcheancierPayement.EditApportInitial.Text))then
+     begin
+          showmessage('Le montant de la tranche ne doit pas dépasser le montant de l''echéancier !');
+          Exit;
+     end;
+
+     if(FSEcheancierPayement.RBActiveMontantTranche.Checked=true)
+     and(strtoreal(FSEcheancierPayement.EditMontantTranche.Text)>0)then
+     begin
+          FSEcheancierPayement.EditDureeEcheancier.Text:=floattostr(((strtoreal(FSEcheancierPayement.EditMontantGlobale.Text)-strtoreal(FSEcheancierPayement.EditApportInitial.Text)-strtoreal(FSEcheancierPayement.EditApportBancaire.Text))/
+          strtoreal(FSEcheancierPayement.EditMontantTranche.Text))*strtoreal(FSEcheancierPayement.EditDureeTranche.Text));
+
+          l:=0;
+          OKCompte:=false;
+          while(OKCompte=false)do
+          begin
+               l:=l+1;
+               if(l*strtoreal(FSEcheancierPayement.EditDureeTranche.Text)>=strtoreal(FSEcheancierPayement.EditDureeEcheancier.Text))
+               then OKCompte:=true;
+          end;
+          FSEcheancierPayement.EditDureeEcheancier.Text:=inttostr(l*strtointeger(FSEcheancierPayement.EditDureeTranche.Text));
+     end;
+
+     FSEcheancierPayement.EditMontantTranche.Text:=Vergule(FSEcheancierPayement.EditMontantTranche.Text,'2','C','');
+end;
+
+procedure TFSEcheancierPayement.EditMontantMaxPenaliteExit(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.EditMontantMaxPenalite.Text:=Vergule(FSEcheancierPayement.EditMontantMaxPenalite.Text,'2','C','');
+end;
+
+procedure TFSEcheancierPayement.TableauListeEcheancierPayementClick(
+  Sender: TObject);
+var  MessagePenalite:string;
+begin
+FSEcheancierPayement.RBRecapitulatifEcheancier.Checked:=false;
+FSEcheancierPayement.AfficheEcheancierPayement.Visible:=false;
+FSEcheancierPayement.TableauSelection.Visible:=false;
+FSEcheancierPayement.AfficheDomiciliation.Visible:=false;
+FSEcheancierPayement.AfficheApportGlobal.Visible:=false;
+
+AfficherDetailEcheancierPayement(FSEcheancierPayement.TableauDetailEcheancierPayement,strtointeger(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[1,FSEcheancierPayement.TableauListeEcheancierPayement.Row]),MessagePenalite);
+FSEcheancierPayement.AfficheMessagePenalite.Caption:=MessagePenalite;
+InformationEcheancier(FSEcheancierPayement.TableauInformationEcheancier,FSEcheancierPayement.TableauListeEcheancierPayement.Cells[5,FSEcheancierPayement.TableauListeEcheancierPayement.Row],MessagePenalite);
+
+FSEcheancierPayement.AfficheEcheancierPayement.Visible:=false;
+FSEcheancierPayement.TableauSelection.Visible:=false;
+end;
+
+procedure TFSEcheancierPayement.EditPourcentagePenaliteKeyUp(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+FSEcheancierPayement.EditMontantMaxPenalite.Text:=Vergule(floattostr(strtoreal(FSEcheancierPayement.EditMontantTranche.Text)*strtoreal(FSEcheancierPayement.EditPourcentagePenalite.Text)/100),'2','C','');
+end;
+
+procedure TFSEcheancierPayement.EditPourcentagePenaliteEnter(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.EditPourcentagePenalite.Text:=floattostr(strtoreal(FSEcheancierPayement.EditPourcentagePenalite.Text)*100);
+     FSEcheancierPayement.EditPourcentagePenalite.Text:=floattostr(strtoreal(FSEcheancierPayement.EditPourcentagePenalite.Text));
+end;
+
+procedure TFSEcheancierPayement.EditPourcentagePenaliteExit(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.EditPourcentagePenalite.Text:=floattostr(strtoreal(FSEcheancierPayement.EditPourcentagePenalite.Text)/100);
+     FSEcheancierPayement.EditPourcentagePenalite.Text:=Vergule(FSEcheancierPayement.EditPourcentagePenalite.Text,'2','C','%');
+end;
+
+Procedure AfficherDetailEcheancierPayement(TableauDetailEcheancierPayement:TStringGrid; NumEcheancier:integer; var MessagePenalite:string);
+var OKEcheancierPayement:boolean;   Penalite,PenaliteJour,CapitalGlobal,CapitalTranche,Reste:real; i,R,Resultat,NbrJourDiffere:integer;  DateDebut,DateFin,DateTeste:string;
+begin
+     TableauDetailEcheancierPayement.ColCount:=9;
+     TableauDetailEcheancierPayement.RowCount:=2;
+     TableauDetailEcheancierPayement.Rows[1].Text:='';
+     TableauDetailEcheancierPayement.Cols[0].Text:='Ordre';
+     TableauDetailEcheancierPayement.Cols[1].Text:='Date Début';
+     TableauDetailEcheancierPayement.Cols[2].Text:='Date Fin';
+     TableauDetailEcheancierPayement.Cols[3].Text:='Capital';
+     TableauDetailEcheancierPayement.Cols[4].Text:='Pénalité';
+     TableauDetailEcheancierPayement.Cols[5].Text:='Montant Global';
+     TableauDetailEcheancierPayement.Cols[6].Text:='Date Réglement';
+     TableauDetailEcheancierPayement.Cols[7].Text:='Montant Régler';
+     TableauDetailEcheancierPayement.Cols[8].Text:='Situation au: ';
+
+     OpenFParc(RParc);
+     ChParametreEcheancier:=RParc.Parcours+'\'+Exercice+'FParametreEcheancier';
+     assignfile(FParametreEcheancier,ChParametreEcheancier);
+     if FileExists(ChParametreEcheancier)then
+     Reset(FParametreEcheancier)
+     else Rewrite(FParametreEcheancier);
+     Seek(FParametreEcheancier,0);
+     OKEcheancierPayement:=false;
+     while not eof(FParametreEcheancier)and(OKEcheancierPayement=false)do
+     begin
+          read(FParametreEcheancier,RParametreEcheancier);
+          if(RParametreEcheancier.NumEcheancier=NumEcheancier)then
+          begin
+               OKEcheancierPayement:=true;
+          end;
+     end;
+     CloseFile(FParametreEcheancier);
+
+     if(OKEcheancierPayement=true)and(RParametreEcheancier.MontantGlobal>0)and(RParametreEcheancier.MontantTranche>0)then
+     begin
+          DateDebut:=RParametreEcheancier.DateEcheancier;
+          PrevoirDateEcheancier(DateDebut,RParametreEcheancier.DureeTranche,RParametreEcheancier.NaturedureeTranche,DateFin);
+          i:=0;
+          DateTeste:=DateDebut;
+          while(strtodate(DateTeste)<>strtodate(DateFin))do
+          begin
+               DateTeste:=datetostr(strtodate(DateTeste)+1);   Application.ProcessMessages;
+               i:=i+1;
+          end;
+
+          if(i>0)then PenaliteJour:=strtofloat(Vergule(floattostr(RParametreEcheancier.MontantTranche*RParametreEcheancier.PourcentagePenalite/i),'2','C',''))
+                 else PenaliteJour:=0;
+
+          FSEcheancierPayement.EditPenaliteJour.Text:=floattostr(PenaliteJour);
+
+          MessagePenalite:='Pas de pénalités !';
+          if(PenaliteJour>0)then
+          begin
+               MessagePenalite:='Une Pénalité de: '+Vergule(floattostr(RParametreEcheancier.PourcentagePenalite),'2','C','%')+' soit: '+Vergule(floattostr(PenaliteJour),'2','C','')+' DA, sera appliquer chaque jour, aprés '+inttostr(RParametreEcheancier.DureeDiffereApplicationPenalite)+' '+RParametreEcheancier.NatureDureeDiffereApplicationPenalite+' de retard de la date de l''échéancier, sur le capital périodique';
+               if(RParametreEcheancier.MontantMaxPenalite>0)
+               then MessagePenalite:=MessagePenalite+', (Max: '+Vergule(floattostr(RParametreEcheancier.MontantMaxPenalite),'2','C','')+')'
+               else MessagePenalite:=MessagePenalite+'.';
+          end;
+
+          CapitalGlobal:=RParametreEcheancier.MontantGlobal-RParametreEcheancier.ApportInitial-RParametreEcheancier.ApportBancaire;
+          CapitalTranche:=RParametreEcheancier.MontantTranche;
+          Resultat:=0;
+          while(CapitalGlobal>=CapitalTranche)do
+          begin
+               CapitalGlobal:=CapitalGlobal-CapitalTranche;
+               Resultat:=Resultat+1;
+          end;
+          Reste:=CapitalGlobal;
+
+          if(Reste>0)then
+          begin
+               if(RParametreEcheancier.ApportInitial>0)
+               then TableauDetailEcheancierPayement.RowCount:=Resultat+3
+               else TableauDetailEcheancierPayement.RowCount:=Resultat+2;
+          end
+          else
+          begin
+               if(RParametreEcheancier.ApportInitial>0)
+               then TableauDetailEcheancierPayement.RowCount:=Resultat+2
+               else TableauDetailEcheancierPayement.RowCount:=Resultat+1;
+          end;
+
+          if(RParametreEcheancier.ApportInitial>0)then
+          begin
+               TableauDetailEcheancierPayement.Rows[1].Text:=inttostr(0);
+               TableauDetailEcheancierPayement.Cells[1,1]:='Avant: '+RParametreEcheancier.DateEcheancier;
+               TableauDetailEcheancierPayement.Cells[2,1]:=RParametreEcheancier.DateEcheancier;
+               TableauDetailEcheancierPayement.Cells[3,1]:=Vergule(floattostr(RParametreEcheancier.ApportInitial+RParametreEcheancier.ApportBancaire),'2','C','');
+               TableauDetailEcheancierPayement.Cells[4,1]:='';
+               TableauDetailEcheancierPayement.Cells[5,1]:='';
+               TableauDetailEcheancierPayement.Cells[6,1]:='';
+               TableauDetailEcheancierPayement.Cells[7,1]:='';
+               TableauDetailEcheancierPayement.Cells[8,1]:='Apport Global';
+               R:=2;
+          end
+          else R:=1;
+          DateDebut:=RParametreEcheancier.DateEcheancier;
+          while(R<=TableauDetailEcheancierPayement.RowCount-1)do
+          begin
+               Application.ProcessMessages;
+               PrevoirDateEcheancier(DateDebut,RParametreEcheancier.DureeTranche,RParametreEcheancier.NaturedureeTranche,DateFin);
+               TableauDetailEcheancierPayement.Rows[R].Text:=inttostr(R);
+               TableauDetailEcheancierPayement.Cells[1,R]:=DateDebut;
+               TableauDetailEcheancierPayement.Cells[2,R]:=DateFin;
+               if(R<TableauDetailEcheancierPayement.RowCount-1)
+               then TableauDetailEcheancierPayement.Cells[3,R]:=Vergule(floattostr(CapitalTranche),'2','C','')
+               else TableauDetailEcheancierPayement.Cells[3,R]:=Vergule(floattostr(Reste),'2','C','');
+               TableauDetailEcheancierPayement.Cells[4,R]:='';
+               TableauDetailEcheancierPayement.Cells[5,R]:='';
+               TableauDetailEcheancierPayement.Cells[6,R]:='';
+               TableauDetailEcheancierPayement.Cells[7,R]:='';
+                ///////////////////////
+               Penalite:=0;
+               if(strtodate(DateFin)<Date)then
+               begin
+                    i:=0;
+                    DateTeste:=DateFin;
+                    while(strtodate(DateTeste)<>Date)do
+                    begin
+                         DateTeste:=datetostr(strtodate(DateTeste)+1);
+                         i:=i+1;
+                    end;
+                    TableauDetailEcheancierPayement.Cells[8,R]:='Dépasser de: '+inttostr(i)+' jours';
+
+                    if(PenaliteJour>0)then
+                    begin
+                         NbrJourDiffere:=DiffereInJour(DateFin,RParametreEcheancier.DureeDiffereApplicationPenalite,RParametreEcheancier.NatureDureeDiffereApplicationPenalite);
+                         if(i>NbrJourDiffere)then
+                         begin
+                              Penalite:=PenaliteJour*i;
+                              if(RParametreEcheancier.MontantMaxPenalite>0)then
+                              begin
+                                   if(Penalite>RParametreEcheancier.MontantMaxPenalite)then Penalite:=RParametreEcheancier.MontantMaxPenalite;
+                              end;
+
+                         TableauDetailEcheancierPayement.Cells[4,R]:=Vergule(floattostr(Penalite),'2','C','');
+                         end;
+                    end;
+               end;
+               
+               TableauDetailEcheancierPayement.Cells[5,R]:=Vergule(floattostr(CapitalTranche+Penalite),'2','C','');
+
+               if(strtodate(DateFin)>=Date)then
+               begin
+                    i:=0;
+                    DateTeste:=DateFin;
+                    while(strtodate(DateTeste)<>Date)do
+                    begin
+                         DateTeste:=datetostr(strtodate(DateTeste)-1);
+                         i:=i+1;
+                    end;
+                    TableauDetailEcheancierPayement.Cells[8,R]:='Reste: '+inttostr(i)+' jours';
+               end;
+               //////////////////
+               DateDebut:=DateFin;
+          R:=R+1;
+          end;
+
+          TableauDetailEcheancierPayement.RowCount:=TableauDetailEcheancierPayement.RowCount+3;
+          TableauDetailEcheancierPayement.Rows[TableauDetailEcheancierPayement.RowCount-1].Text:='';
+          TableauDetailEcheancierPayement.Rows[TableauDetailEcheancierPayement.RowCount-2].Text:='';
+          TableauDetailEcheancierPayement.Rows[TableauDetailEcheancierPayement.RowCount-3].Text:='';
+          TableauDetailEcheancierPayement.Cells[2,TableauDetailEcheancierPayement.RowCount-2]:='Total:';
+          TableauDetailEcheancierPayement.Cells[2,TableauDetailEcheancierPayement.RowCount-1]:='à régler:';
+          R:=1;
+          while(R<=TableauDetailEcheancierPayement.RowCount-3)do
+          begin
+               Application.ProcessMessages;
+               TableauDetailEcheancierPayement.Cells[3,TableauDetailEcheancierPayement.RowCount-2]:=Vergule(floattostr(strtoreal(TableauDetailEcheancierPayement.Cells[3,TableauDetailEcheancierPayement.RowCount-2])+
+                                                                                                    strtoreal(TableauDetailEcheancierPayement.Cells[3,R])),'2','C','');
+               TableauDetailEcheancierPayement.Cells[4,TableauDetailEcheancierPayement.RowCount-2]:=Vergule(floattostr(strtoreal(TableauDetailEcheancierPayement.Cells[4,TableauDetailEcheancierPayement.RowCount-2])+
+                                                                                                    strtoreal(TableauDetailEcheancierPayement.Cells[4,R])),'2','C','');
+               TableauDetailEcheancierPayement.Cells[5,TableauDetailEcheancierPayement.RowCount-2]:=Vergule(floattostr(strtoreal(TableauDetailEcheancierPayement.Cells[5,TableauDetailEcheancierPayement.RowCount-2])+
+                                                                                                    strtoreal(TableauDetailEcheancierPayement.Cells[5,R])),'2','C','');
+
+               if(Firstlaters(TableauDetailEcheancierPayement.Cells[8,R],8)='Dépasser')
+               then TableauDetailEcheancierPayement.Cells[5,TableauDetailEcheancierPayement.RowCount-1]:=Vergule(floattostr(strtoreal(TableauDetailEcheancierPayement.Cells[5,TableauDetailEcheancierPayement.RowCount-1])+
+                                                                                                    strtoreal(TableauDetailEcheancierPayement.Cells[5,R])),'2','C','');
+          R:=R+1;
+          end;
+     end
+     else
+     begin
+          if(OKEcheancierPayement=false)
+          then AfficherMessage('Le numéro de l''Echéancier n''existe pas !')
+          else AfficherMessage('Vérifier les données SVP !');
+     end;
+
+     AjusterColWidth(TableauDetailEcheancierPayement,'','');
+end;
+
+Procedure PrevoirDateEcheancier(DatePrincipale:string; delais:integer; UniteDelais:string; var DatePrevue:string);
+var  JJ,mm,AAAA,Resultat,Reste:integer; DateTeste:string[10];
+begin
+
+DatePrevue:=DatePrincipale;
+
+jj:=strtointeger(Midellaters(DatePrincipale,1,2));
+mm:=strtointeger(Midellaters(DatePrincipale,4,5));
+AAAA:=strtointeger(Midellaters(DatePrincipale,7,10));
+
+if(UniteDelais='Année')then
+begin
+     AAAA:=AAAA+delais;
+end;
+
+if(UniteDelais='Mois')then
+begin
+     Division(mm+delais,12,Resultat,Reste);
+     if(Reste=0)then begin Reste:=12; Resultat:=Resultat-1;end;
+     mm:=Reste;
+     AAAA:=AAAA+Resultat;
+end;
+
+if(UniteDelais='Jour')then
+begin
+     DateTeste:=datetostr(strtodate(DatePrincipale)+delais);
+     jj:=strtointeger(firstlaters(DateTeste,2));
+     mm:=strtointeger(firstlaters(lastlaters(DateTeste,7),2));
+     AAAA:=strtointeger(lastlaters(DateTeste,4));
+end;
+
+DatePrevue:=Completezerogauche(inttostr(jj),'2')+'/'+Completezerogauche(inttostr(mm),'2')+'/'+Completezerogauche(inttostr(AAAA),'4');
+
+end;
+
+Function DiffereInJour(DatePrincipale:string; delais:integer; UniteDelais:string):integer;
+var  d,JJ,mm,AAAA,Resultat,Reste:integer; DateFinale,DateTeste:string[10];
+begin
+
+DateFinale:=DatePrincipale;
+
+jj:=strtointeger(Midellaters(DatePrincipale,1,2));
+mm:=strtointeger(Midellaters(DatePrincipale,4,5));
+AAAA:=strtointeger(Midellaters(DatePrincipale,7,10));
+
+if(UniteDelais='Année')then
+begin
+     AAAA:=AAAA+delais;
+end;
+
+if(UniteDelais='Mois')then
+begin
+     Division(mm+delais,12,Resultat,Reste);
+     if(Reste=0)then begin Reste:=12; Resultat:=Resultat-1;end;
+     mm:=Reste;
+     AAAA:=AAAA+Resultat;
+end;
+
+if(UniteDelais='Jour')then
+begin
+     DateTeste:=datetostr(strtodate(DatePrincipale)+delais);
+     jj:=strtointeger(firstlaters(DateTeste,2));
+     mm:=strtointeger(firstlaters(lastlaters(DateTeste,7),2));
+     AAAA:=strtointeger(lastlaters(DateTeste,4));
+end;
+
+DateFinale:=Completezerogauche(inttostr(jj),'2')+'/'+Completezerogauche(inttostr(mm),'2')+'/'+Completezerogauche(inttostr(AAAA),'4');
+
+d:=0;
+if(strtodate(DatePrincipale)<=strtodate(DateFinale))then
+begin      
+     DateTeste:=DatePrincipale;
+     while(strtodate(DateTeste)<>strtodate(DateFinale))do
+     begin
+          DateTeste:=datetostr(strtodate(DateTeste)+1);
+          d:=d+1;
+     end;
+end;
+
+DiffereInJour:=d;
+end;
+
+Procedure AfficheDetailReglementEcheancier(TableauDetailEcheancierPayement,TableauRecapitulatifEcheancierPaiement:TStringGrid; CodeTiers,ListeNumPlanificateur:string);
+var  R,RowDetail,RowRecap:integer;   OKReglement:boolean;   ResteARegler,MontantRegler:real;
+     DureeDiffereApplicationPenalite:integer; NatureDureeDiffereApplicationPenalite:string; CapitalTranche,MontantMaxPenalite,PenaliteJour:real; DateFin,DatePaiement:string; MontantPenalite:real; MessageEtat:string;
+begin
+     TableauRecapitulatifEcheancierPaiement.ColCount:=9;
+     TableauRecapitulatifEcheancierPaiement.RowCount:=2;
+     TableauRecapitulatifEcheancierPaiement.Rows[1].Text:='';
+     TableauRecapitulatifEcheancierPaiement.Cols[0].Text:='Ordre';
+     TableauRecapitulatifEcheancierPaiement.Cols[1].Text:='Date Début';
+     TableauRecapitulatifEcheancierPaiement.Cols[2].Text:='Date Fin';
+     TableauRecapitulatifEcheancierPaiement.Cols[3].Text:='Capital';
+     TableauRecapitulatifEcheancierPaiement.Cols[4].Text:='Pénalité';
+     TableauRecapitulatifEcheancierPaiement.Cols[5].Text:='Montant Global';
+     TableauRecapitulatifEcheancierPaiement.Cols[6].Text:='Date Réglement';
+     TableauRecapitulatifEcheancierPaiement.Cols[7].Text:='Montant Régler';
+     TableauRecapitulatifEcheancierPaiement.Cols[8].Text:='Situation au: ';
+
+     OpenFParc(RParc);
+     ChDetailRubriqueFicheTechnique:=RParc.Parcours+'\'+Exercice+'FDetailRubriqueFicheTechnique';
+     assignfile(FDetailRubriqueFicheTechnique,ChDetailRubriqueFicheTechnique);
+     if FileExists(ChDetailRubriqueFicheTechnique)then
+     Reset(FDetailRubriqueFicheTechnique)
+     else Rewrite(FDetailRubriqueFicheTechnique);
+     Seek(FDetailRubriqueFicheTechnique,0);
+     RowRecap:=1;
+     RowDetail:=1;
+     TableauRecapitulatifEcheancierPaiement.Rows[RowRecap].Text:=TableauDetailEcheancierPayement.Rows[RowDetail].Text;
+     MontantRegler:=0;
+     ResteARegler:=0;
+     DureeDiffereApplicationPenalite:=strtointeger(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[12,FSEcheancierPayement.TableauListeEcheancierPayement.Row]);
+     NatureDureeDiffereApplicationPenalite:=FSEcheancierPayement.TableauListeEcheancierPayement.Cells[13,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+     MontantMaxPenalite:=strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[14,FSEcheancierPayement.TableauListeEcheancierPayement.Row]);
+     PenaliteJour:=strtoreal(FSEcheancierPayement.EditPenaliteJour.Text);
+     while not eof(FDetailRubriqueFicheTechnique)do
+     begin
+          read(FDetailRubriqueFicheTechnique,RDetailRubriqueFicheTechnique);
+          
+          if(RDetailRubriqueFicheTechnique.CodeTiers=CodeTiers)
+          and(ExisteNumintexte(inttostr(RDetailRubriqueFicheTechnique.NumPlanificateur),ListeNumPlanificateur))
+          then
+          begin
+               MontantRegler:=RDetailRubriqueFicheTechnique.Montant;
+               DatePaiement:=RDetailRubriqueFicheTechnique.Date;
+
+               while(MontantRegler>0)do
+               begin
+                    CapitalTranche:=strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[3,RowRecap]);
+                    DateFin:=TableauRecapitulatifEcheancierPaiement.Cells[2,RowRecap];
+                    MontantPenalite:=0;
+                    MessageEtat:='';
+
+                    if DateCorrecte(DatePaiement)and DateCorrecte(DateFin) then
+                    begin
+                         CalculePenalite(DureeDiffereApplicationPenalite,NatureDureeDiffereApplicationPenalite,CapitalTranche,MontantMaxPenalite,PenaliteJour,DateFin,DatePaiement,MontantPenalite,MessageEtat);
+                         TableauRecapitulatifEcheancierPaiement.Cells[4,RowRecap]:=Vergule(floattostr(MontantPenalite),'2','C','');
+                         TableauRecapitulatifEcheancierPaiement.Cells[5,RowRecap]:=Vergule(floattostr(CapitalTranche+MontantPenalite),'2','C','');
+                         TableauRecapitulatifEcheancierPaiement.Cells[8,RowRecap]:=MessageEtat;
+                    end;
+
+                    ResteARegler:=strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[5,RowRecap])-strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[7,RowRecap]);
+                    if(MontantRegler>ResteARegler)then
+                    begin
+                         MontantRegler:=MontantRegler-ResteARegler;
+                    end
+                    else
+                    begin
+                         ResteARegler:=MontantRegler;
+                         MontantRegler:=0;
+                    end;
+
+                    TableauRecapitulatifEcheancierPaiement.Cells[6,RowRecap]:=DatePaiement;
+                    TableauRecapitulatifEcheancierPaiement.Cells[7,RowRecap]:=Vergule(floattostr(strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[7,RowRecap])+ResteARegler),'2','C','');
+
+                    ResteARegler:=strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[5,RowRecap])-strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[7,RowRecap]);
+
+                    if(ResteARegler=0)then
+                    begin
+                         RowRecap:=RowRecap+1;
+                         RowDetail:=RowDetail+1;
+                         TableauRecapitulatifEcheancierPaiement.Rows[RowRecap].Text:=TableauDetailEcheancierPayement.Rows[RowDetail].Text;
+                    end
+                    else
+                    begin
+                         RowRecap:=RowRecap+1;
+                         //RowDetail:=RowDetail+1;
+                         TableauRecapitulatifEcheancierPaiement.Rows[RowRecap].Text:=TableauRecapitulatifEcheancierPaiement.Rows[RowRecap-1].Text;
+
+                         TableauRecapitulatifEcheancierPaiement.Cells[3,RowRecap]:=Vergule(floattostr(strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[3,RowRecap])-
+                                                                                   strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[7,RowRecap-1])),'2','C','');
+
+                         TableauRecapitulatifEcheancierPaiement.Cells[5,RowRecap]:=Vergule(floattostr(strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[5,RowRecap])-
+                                                                                   strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[7,RowRecap-1])),'2','C','');
+                         TableauRecapitulatifEcheancierPaiement.Cells[6,RowRecap]:='';
+                         TableauRecapitulatifEcheancierPaiement.Cells[7,RowRecap]:='';
+                         TableauRecapitulatifEcheancierPaiement.Cells[8,RowRecap]:='';
+
+                         CapitalTranche:=strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[3,RowRecap]);
+                         DatePaiement:=datetostr(date);
+                         DateFin:=TableauRecapitulatifEcheancierPaiement.Cells[2,RowRecap];
+                         MontantPenalite:=0;
+                         MessageEtat:='';
+
+                         if DateCorrecte(DatePaiement)and DateCorrecte(DateFin) then
+                         begin
+                              CalculePenalite(DureeDiffereApplicationPenalite,NatureDureeDiffereApplicationPenalite,CapitalTranche,MontantMaxPenalite,PenaliteJour,DateFin,DatePaiement,MontantPenalite,MessageEtat);
+                              TableauRecapitulatifEcheancierPaiement.Cells[4,RowRecap]:=Vergule(floattostr(MontantPenalite),'2','C','');
+                              TableauRecapitulatifEcheancierPaiement.Cells[5,RowRecap]:=Vergule(floattostr(CapitalTranche+MontantPenalite),'2','C','');
+                              TableauRecapitulatifEcheancierPaiement.Cells[8,RowRecap]:=MessageEtat;
+                         end;
+                    end;
+               end;
+
+          end;
+     end;
+     CloseFile(FDetailRubriqueFicheTechnique);
+
+     while(RowDetail<TableauDetailEcheancierPayement.RowCount-1)do
+     begin
+          RowRecap:=RowRecap+1;
+          RowDetail:=RowDetail+1;
+          TableauRecapitulatifEcheancierPaiement.Rows[RowRecap].Text:=TableauDetailEcheancierPayement.Rows[RowDetail].Text;
+     end;
+
+
+     if(RowRecap>0)then TableauRecapitulatifEcheancierPaiement.RowCount:=RowRecap+1
+                   else TableauRecapitulatifEcheancierPaiement.RowCount:=2;
+
+     TableauRecapitulatifEcheancierPaiement.Cells[3,TableauRecapitulatifEcheancierPaiement.RowCount-2]:='';
+     TableauRecapitulatifEcheancierPaiement.Cells[4,TableauRecapitulatifEcheancierPaiement.RowCount-2]:='';
+     TableauRecapitulatifEcheancierPaiement.Cells[5,TableauRecapitulatifEcheancierPaiement.RowCount-2]:='';
+     TableauRecapitulatifEcheancierPaiement.Cells[5,TableauRecapitulatifEcheancierPaiement.RowCount-1]:='';
+
+     R:=1;
+     while(R<=TableauRecapitulatifEcheancierPaiement.RowCount-3)do
+     begin
+          TableauRecapitulatifEcheancierPaiement.Cells[3,TableauRecapitulatifEcheancierPaiement.RowCount-2]:=Vergule(floattostr(strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[3,TableauRecapitulatifEcheancierPaiement.RowCount-2])+
+                                                                                                             strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[3,R])),'2','C','');
+          TableauRecapitulatifEcheancierPaiement.Cells[4,TableauRecapitulatifEcheancierPaiement.RowCount-2]:=Vergule(floattostr(strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[4,TableauRecapitulatifEcheancierPaiement.RowCount-2])+
+                                                                                                             strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[4,R])),'2','C','');
+          TableauRecapitulatifEcheancierPaiement.Cells[5,TableauRecapitulatifEcheancierPaiement.RowCount-2]:=Vergule(floattostr(strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[5,TableauRecapitulatifEcheancierPaiement.RowCount-2])+
+                                                                                                             strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[5,R])),'2','C','');
+
+          if(Firstlaters(TableauRecapitulatifEcheancierPaiement.Cells[8,R],8)='Dépasser')
+          then TableauRecapitulatifEcheancierPaiement.Cells[5,TableauRecapitulatifEcheancierPaiement.RowCount-1]:=Vergule(floattostr(strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[5,TableauRecapitulatifEcheancierPaiement.RowCount-1])+
+                                                                                                                  strtoreal(TableauRecapitulatifEcheancierPaiement.Cells[5,R])),'2','C','');
+     R:=R+1;
+     end;
+
+     AjusterColWidth(TableauRecapitulatifEcheancierPaiement,'','');
+end; 
+
+procedure TFSEcheancierPayement.BitBtn2Click(Sender: TObject);
+var  DebutRow,EcartTableau:integer;
+     TitreEtat,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol:string;
+     ImprimeEtat:boolean;
+begin
+TitreEtat:='Echéancier de payement N°: '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[1,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+', Tiers: '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[4,FSEcheancierPayement.TableauListeEcheancierPayement.Row];
+EcartTableau:=2;
+DebutRow:=0;
+
+GrasARow:='0';
+GrasACol:='0';
+CenterARow:='0';
+CenterACol:='';
+RightARow:='';
+RightACol:='';
+ImprimeEtat:=false;
+OptionsImpression(FSEcheancierPayement.TableauInformationEcheancier,'Center',DebutRow,1,TitreEtat,FSEcheancierPayement.RBAjusterTableau.Checked,FSEcheancierPayement.RBOrientationPapier.Text,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol,ImprimeEtat,EcartTableau,FSMenuPrincipal.ImageCodebarre,DebutRow);
+
+if(FSEcheancierPayement.TableauRecapitulatifEcheancierPaiement.Visible=true)then
+begin
+     GrasARow:='0;'+inttostr(FSEcheancierPayement.TableauRecapitulatifEcheancierPaiement.RowCount-2)+';'+inttostr(FSEcheancierPayement.TableauRecapitulatifEcheancierPaiement.RowCount-1);
+     GrasACol:='0';
+     CenterARow:='0';
+     CenterACol:='0;1;2;6';
+     RightARow:='';
+     RightACol:='3;4;5;7';
+     ImprimeEtat:=true;
+     OptionsImpression(FSEcheancierPayement.TableauRecapitulatifEcheancierPaiement,'Center',DebutRow,1,TitreEtat,FSEcheancierPayement.RBAjusterTableau.Checked,FSEcheancierPayement.RBOrientationPapier.Text,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol,ImprimeEtat,EcartTableau,FSMenuPrincipal.ImageCodebarre,DebutRow);
+end
+else
+begin
+     GrasARow:='0;'+inttostr(FSEcheancierPayement.TableauDetailEcheancierPayement.RowCount-2)+';'+inttostr(FSEcheancierPayement.TableauDetailEcheancierPayement.RowCount-1);
+     GrasACol:='0';
+     CenterARow:='0';
+     CenterACol:='0;1;2;6';
+     RightARow:='';
+     RightACol:='3;4;5;7';
+     ImprimeEtat:=true;
+     OptionsImpression(FSEcheancierPayement.TableauDetailEcheancierPayement,'Center',DebutRow,1,TitreEtat,FSEcheancierPayement.RBAjusterTableau.Checked,FSEcheancierPayement.RBOrientationPapier.Text,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol,ImprimeEtat,EcartTableau,FSMenuPrincipal.ImageCodebarre,DebutRow);
+end;
+
+
+end;
+
+Procedure InformationEcheancier(TableauInformationEcheancier:TStringGrid; ListeNumPlanificateur,MessagePenalite:string);
+var R:integer;
+begin
+     TableauInformationEcheancier.ColCount:=2;
+     TableauInformationEcheancier.Cols[0].Text:='Rubrique';
+     TableauInformationEcheancier.Cols[1].Text:='Information';
+     TableauInformationEcheancier.RowCount:=2;
+     TableauInformationEcheancier.Rows[1].Text:='';
+
+     TableauInformationEcheancier.Cells[0,1]:='Pénalité:';
+     TableauInformationEcheancier.Cells[1,1]:=MessagePenalite;
+
+     OpenFParc(RParc);
+     ChPlanificateur:=RParc.Parcours+'\'+Exercice+'FPlanificateur';
+     assignfile(FPlanificateur,ChPlanificateur);
+     if FileExists(ChPlanificateur)then
+     Reset(FPlanificateur)
+     else Rewrite(FPlanificateur);
+     Seek(FPlanificateur,0);
+     R:=1;
+     while not eof(FPlanificateur)do
+     begin
+          read(FPlanificateur,RPlanificateur);
+          if ExisteNuminTexte(inttostr(RPlanificateur.NumPlanificateur),ListeNumPlanificateur)then
+          begin
+               R:=R+1;
+               TableauInformationEcheancier.Cells[0,R]:='Structure '+inttostr(R-1);
+               TableauInformationEcheancier.Cells[1,R]:=RPlanificateur.DesignationPlanificateur+' '+RPlanificateur.DesignationStructureProjet+', Montant: '+Vergule(floattostr(RPlanificateur.Quantite*RPlanificateur.PrixUnitaire),'2','C','')+' DA.';
+          end;
+     end;
+     CloseFile(FPlanificateur);
+
+     TableauInformationEcheancier.RowCount:=R+1;
+end;
+
+procedure TFSEcheancierPayement.RBRecapitulatifEcheancierClick(
+  Sender: TObject);
+begin
+FSEcheancierPayement.TableauRecapitulatifEcheancierPaiement.Visible:=FSEcheancierPayement.RBRecapitulatifEcheancier.Checked;
+AfficheDetailReglementEcheancier(FSEcheancierPayement.TableauDetailEcheancierPayement,FSEcheancierPayement.TableauRecapitulatifEcheancierPaiement,FSEcheancierPayement.TableauListeEcheancierPayement.Cells[3,FSEcheancierPayement.TableauListeEcheancierPayement.Row],FSEcheancierPayement.TableauListeEcheancierPayement.Cells[5,FSEcheancierPayement.TableauListeEcheancierPayement.Row]);
+end;
+
+Procedure CalculePenalite(DureeDiffereApplicationPenalite:integer; NatureDureeDiffereApplicationPenalite:string; CapitalTranche,MontantMaxPenalite,PenaliteJour:real; DateFin,DatePaiement:string; Var MontantPenalite:real; var SituationEcheancier:string);
+var iP:integer; Penalite:real;  DateTeste:string[10];   NbrJourDiffere:integer;
+begin
+     MontantPenalite:=0;
+     SituationEcheancier:='';
+     Penalite:=0;
+     if(strtodate(DateFin)<strtodate(DatePaiement))then
+     begin
+          iP:=0;
+          DateTeste:=DateFin;
+          while(strtodate(DateTeste)<>strtodate(DatePaiement))do
+          begin
+               DateTeste:=datetostr(strtodate(DateTeste)+1);
+               iP:=iP+1;
+          end;
+
+          if(strtodate(DatePaiement)<date)then SituationEcheancier:='Retard de: '+inttostr(iP)+' jours'
+                                          else SituationEcheancier:='Dépasser de: '+inttostr(iP)+' jours';
+
+          if(PenaliteJour>0)then
+          begin
+               NbrJourDiffere:=DiffereInJour(DateFin,DureeDiffereApplicationPenalite,NatureDureeDiffereApplicationPenalite);
+               if(iP>NbrJourDiffere)then
+               begin
+                    Penalite:=PenaliteJour*iP;
+                    if(MontantMaxPenalite>0)then
+                    begin
+                         if(Penalite>MontantMaxPenalite)then Penalite:=MontantMaxPenalite;
+                    end;
+
+               MontantPenalite:=Penalite;
+               end;
+          end;
+          end;
+
+          if(strtodate(DateFin)>=strtodate(DatePaiement))then
+          begin
+               iP:=0;
+               DateTeste:=DateFin;
+               while(strtodate(DateTeste)<>strtodate(DatePaiement))do
+               begin
+                    DateTeste:=datetostr(strtodate(DateTeste)-1);
+                    iP:=iP+1;
+               end;
+
+               if(strtodate(DatePaiement)<date)then SituationEcheancier:='Avance de: '+inttostr(iP)+' jours'
+                                               else SituationEcheancier:='Reste: '+inttostr(iP)+' jours'
+          end;
+end;
+
+procedure TFSEcheancierPayement.BitBtn3Click(Sender: TObject);
+var  R:integer;     ListeStructure,MontantLettre,MontantTexte:string;
+begin
+     RTier:=ChercherTiers(FSEcheancierPayement.EditChargementTypeProces.Text,FSEcheancierPayement.EditChargementFichierConcerne.Text,FSEcheancierPayement.TableauListeEcheancierPayement.Cells[3,FSEcheancierPayement.TableauListeEcheancierPayement.Row],'');
+
+     OpenFParc(RParc);
+     PrintEngagementPaiement.TitreEntreprise1.Caption:=RParc.Text1;
+     PrintEngagementPaiement.TitreEntreprise2.Caption:=RParc.Text2;
+     PrintEngagementPaiement.TitreEntreprise3.Caption:=RParc.Text3;
+     PrintEngagementPaiement.Logo.Picture:=FSMenuPrincipal.Logo.Picture;
+
+     PrintEngagementPaiement.DataConventionne.Caption:=RTier.NomTiers+' '+RTier.PrenomTiers;
+     PrintEngagementPaiement.DataDateLieuNaisConventionne.Caption:=RTier.DateNaisTiers+' à '+RTier.LieuNaisTiers;
+     PrintEngagementPaiement.DataPieceConventionne.Caption:=RTier.NaturePieceIdentiteTiers+' N° '+RTier.NumPieceIdentiteTiers;
+     PrintEngagementPaiement.DataFonctionConventionne.Caption:=RTier.FonctionTiers;
+     PrintEngagementPaiement.DataDenommeConventionne.Caption:='Acheteur';
+
+     if(FSEcheancierPayement.EditEcheancierTexte.Visible=false)then
+     begin
+          PrintEngagementPaiement.DataEngagement.Lines.Text:='';//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('M''engage à honorer le paiement de l''achat du produit suivant :');
+
+          ListeStructure:='';
+          for R:=2 to FSEcheancierPayement.TableauInformationEcheancier.RowCount-1 do
+          begin
+               if(ListeStructure='')
+               then ListeStructure:='{'+FSEcheancierPayement.TableauInformationEcheancier.Cells[1,R]+'}'
+               else ListeStructure:=ListeStructure+'{'+FSEcheancierPayement.TableauInformationEcheancier.Cells[1,R]+'}';
+          end;
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add(ListeStructure);
+
+          if strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0then
+          begin
+               PrintEngagementPaiement.DataEngagement.Lines.Add('- Apport Initial:                        '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' DA');
+          end;
+
+          if strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0then
+          begin
+               PrintEngagementPaiement.DataEngagement.Lines.Add('- Apport Bancaire:                    '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' DA');
+          end;
+
+          MontantTexte:=floattostr(strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[6,FSEcheancierPayement.TableauListeEcheancierPayement.Row])-strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row])-strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row]));
+
+          if(strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0)
+          or(strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0)
+          then
+          begin
+               PrintEngagementPaiement.DataEngagement.Lines.Add('- Reste Objet d''échéancier:         '+Vergule(MontantTexte,'2','C','')+' DA')
+          end;
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('- Pour un montant d''échéancier Global de:');
+          PrintEngagementPaiement.DataEngagement.Lines.Add('                                                  En chiffres : '+Vergule(MontantTexte,'2','C','')+' DA');
+          PrintEngagementPaiement.DataEngagement.Lines.Add('                                                  En lettre    : '+ChiffreEnLettre(Vergule(MontantTexte,'2','C','')));
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('- Agissant pour le compte de '+RParc.Text1+', par paiement par tranche, Je m''engage à respecter les modalités suivantes : ');
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('- Le strict respect du tableau d''échéancier établi par la société sus nommée ;');
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('- Un montant de '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[11,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' DA, sera payé par période de '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[9,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[10,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+'; Je m''engage à les régler par virement au compte '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[16,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' N° '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[17,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' ou en espèce ;');
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('- La première échéance, devra débuter au plus tard à la date du début de la réalisation qui sera indiqué dans le tableau d''échéancier dument signé par les deux parties ;');
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('- En cas de non respect de ma part de l''une ou de plusieurs échéances, je m''engage à rembourser par anticipation la totalité du montant restant dû ;');
+
+          if strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0then
+          begin
+               PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+               PrintEngagementPaiement.DataEngagement.Lines.Add('- En cas d''annulation de mon crédit bancaire, je m''engage à adresser, à l''administration de '+RParc.Text1+', un courrier pour approbation, portant mise à jour de mon échéancier, cas échéant, la relation contractuelle sera annuler.');
+          end;
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('- Je m''engage à supporter tous les frais directs ou indirects qui peuvent résulter des poursuites de recouvrement ainsi que les pénalités de retards indiqués dans le tableau d''échéancier ;');
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('- En cas de litige, seul le tribunal que désignera '+RParc.Text1+' sera compétant pour le traitement du dossier.');
+
+          PrintEngagementPaiement.DataEngagement.Lines.Add('');//**************************************
+          PrintEngagementPaiement.DataEngagement.Lines.Add('     Signature légalisée du client                         Fait à : '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[20,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' Le : '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[2,FSEcheancierPayement.TableauListeEcheancierPayement.Row]);
+     end
+     else
+     begin
+          FSEcheancierPayement.EditEcheancierTexte.Visible:=false;
+          PrintEngagementPaiement.DataEngagement.Lines.Text:=FSEcheancierPayement.EditEcheancierTexte.Lines.Text;
+     end;
+
+
+     PrintEngagementPaiement.Preview;
+end;
+
+procedure TFSEcheancierPayement.EditDomiciliationEnter(Sender: TObject);
+begin
+     FSEcheancierPayement.AfficheDomiciliation.Left:=FSEcheancierPayement.AfficheEcheancierPayement.Left+FSEcheancierPayement.EditDomiciliation.Left;
+     FSEcheancierPayement.AfficheDomiciliation.Top:=FSEcheancierPayement.AfficheEcheancierPayement.Top+FSEcheancierPayement.EditDomiciliation.Top+20;
+
+     FSEcheancierPayement.AfficheDomiciliation.Visible:=true;
+     ListeDomiciliation(FSEcheancierPayement.TableauDomiciliation);
+end;
+
+procedure TFSEcheancierPayement.BitBtn9Click(Sender: TObject);
+begin
+     FSEcheancierPayement.AfficheDomiciliation.Visible:=false;
+end;
+
+procedure TFSEcheancierPayement.TableauRecapitulatifEcheancierPaiementClick(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.AfficheEcheancierPayement.Visible:=false;
+     FSEcheancierPayement.TableauSelection.Visible:=false;
+     FSEcheancierPayement.AfficheDomiciliation.Visible:=false;
+     FSEcheancierPayement.AfficheApportGlobal.Visible:=false;
+     FSEcheancierPayement.AfficheApportGlobal.Visible:=false;
+end;
+
+procedure TFSEcheancierPayement.TableauDomiciliationDblClick(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.EditDomiciliation.Text:=FSEcheancierPayement.TableauDomiciliation.Cells[2,FSEcheancierPayement.TableauDomiciliation.Row];
+     FSEcheancierPayement.EditCompteDomiciliation.Text:=FSEcheancierPayement.TableauDomiciliation.Cells[3,FSEcheancierPayement.TableauDomiciliation.Row];
+     FSEcheancierPayement.AfficheDomiciliation.Visible:=false;
+end;
+
+procedure TFSEcheancierPayement.TableauDomiciliationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditDomiciliation.Text:=FSEcheancierPayement.TableauDomiciliation.Cells[2,FSEcheancierPayement.TableauDomiciliation.Row];
+          FSEcheancierPayement.EditCompteDomiciliation.Text:=FSEcheancierPayement.TableauDomiciliation.Cells[3,FSEcheancierPayement.TableauDomiciliation.Row];
+          FSEcheancierPayement.AfficheDomiciliation.Visible:=false;
+          FSEcheancierPayement.EditDureeTranche.SetFocus;
+     end;
+end;
+
+procedure TFSEcheancierPayement.EditDomiciliationKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSEcheancierPayement.EditDureeTranche.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditEtablissementlegalisationsignatureKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          if(FSEcheancierPayement.TableauSelection.Visible=true)
+          then FSEcheancierPayement.TableauSelection.SetFocus
+          else FSEcheancierPayement.BitOperationEcheancierPayement.SetFocus;
+     end;
+
+end;
+
+procedure TFSEcheancierPayement.EditEtablissementlegalisationsignatureEnter(Sender: TObject);
+begin
+     FSEcheancierPayement.TableauSelection.Left:=FSEcheancierPayement.AfficheEcheancierPayement.Left+FSEcheancierPayement.EditEtablissementlegalisationsignature.Left;
+     FSEcheancierPayement.TableauSelection.Top:=FSEcheancierPayement.AfficheEcheancierPayement.Top+FSEcheancierPayement.EditEtablissementlegalisationsignature.Top-FSEcheancierPayement.TableauSelection.Height-8;
+     FSEcheancierPayement.TableauSelection.Visible:=true;
+     ListeLocalisationGeographique(FSEcheancierPayement.TableauSelection,'F'+FSEcheancierPayement.EditFichierLocalisationGeographique.Text,'Tous',1);
+     FSEcheancierPayement.TableauSelection.Cells[0,0]:=FSEcheancierPayement.EditFichierLocalisationGeographique.Text;
+end;
+
+procedure TFSEcheancierPayement.EditFichierLocalisationGeographiqueChange(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.EditCodeLocalisationGeographique.Text:='';
+     FSEcheancierPayement.EditEtablissementlegalisationsignature.Text:='';
+     FSEcheancierPayement.EditEtablissementlegalisationsignature.SetFocus;
+end;
+
+procedure TFSEcheancierPayement.EditNaturedureeTrancheChange(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.EditNaturedureeEcheancier.Text:=FSEcheancierPayement.EditNaturedureeTranche.Text;
+end;
+
+procedure TFSEcheancierPayement.EditDureeEcheancierExit(Sender: TObject);
+begin
+     if(FSEcheancierPayement.RBActiveDureeEcheancier.Checked=true)
+     and(strtoreal(FSEcheancierPayement.EditDureeEcheancier.Text)>0)
+     and(strtoreal(FSEcheancierPayement.EditDureeTranche.Text)>0)then
+     begin
+          FSEcheancierPayement.EditMontantTranche.Text:=Vergule(floattostr(((strtoreal(FSEcheancierPayement.EditMontantGlobale.Text)-strtoreal(FSEcheancierPayement.EditApportInitial.Text)-strtoreal(FSEcheancierPayement.EditApportBancaire.Text))/strtoreal(FSEcheancierPayement.EditDureeEcheancier.Text))*strtoreal(FSEcheancierPayement.EditDureeTranche.Text)),'2','C','');
+
+     end;
+end;
+
+procedure TFSEcheancierPayement.EditDureeTrancheKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if not(key in['0'..'9'])then key:=#0;
+end;
+
+procedure TFSEcheancierPayement.EditDureeEcheancierKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     if not(key in['0'..'9'])then key:=#0;
+end;
+
+procedure TFSEcheancierPayement.RBActiveMontantTrancheClick(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.EditMontantTranche.Enabled:=FSEcheancierPayement.RBActiveMontantTranche.Checked;
+     FSEcheancierPayement.RBActiveDureeEcheancier.Checked:=not FSEcheancierPayement.RBActiveMontantTranche.Checked
+end;
+
+procedure TFSEcheancierPayement.RBActiveDureeEcheancierClick(
+  Sender: TObject);
+begin
+     FSEcheancierPayement.EditDureeEcheancier.Enabled:=FSEcheancierPayement.RBActiveDureeEcheancier.Checked;
+     FSEcheancierPayement.RBActiveMontantTranche.Checked:=not FSEcheancierPayement.RBActiveDureeEcheancier.Checked
+end;
+
+procedure TFSEcheancierPayement.BitBtn4Click(Sender: TObject);
+var  R:integer;     ListeStructure,MontantLettre,MontantTexte:string;
+begin
+          FSEcheancierPayement.EditEcheancierTexte.Visible:=true;
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Text:='';//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('M''engage à honorer le paiement de l''achat du produit suivant :');
+
+          ListeStructure:='';
+          for R:=2 to FSEcheancierPayement.TableauInformationEcheancier.RowCount-1 do
+          begin
+               if(ListeStructure='')
+               then ListeStructure:='{'+FSEcheancierPayement.TableauInformationEcheancier.Cells[1,R]+'}'
+               else ListeStructure:=ListeStructure+'{'+FSEcheancierPayement.TableauInformationEcheancier.Cells[1,R]+'}';
+          end;
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add(ListeStructure);
+
+          if strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0then
+          begin
+               FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- Apport Initial:                        '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' DA');
+          end;
+
+          if strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0then
+          begin
+               FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- Apport Bancaire:                    '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' DA');
+          end;
+
+          MontantTexte:=floattostr(strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[6,FSEcheancierPayement.TableauListeEcheancierPayement.Row])-strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row])-strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row]));
+
+          if(strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[7,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0)
+          or(strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0)
+          then
+          begin
+               FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- Reste Objet d''échéancier:         '+Vergule(MontantTexte,'2','C','')+' DA')
+          end;
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- Pour un montant d''échéancier Global de:');
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('                                                  En chiffres : '+Vergule(MontantTexte,'2','C','')+' DA');
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('                                                  En lettre    : '+ChiffreEnLettre(Vergule(MontantTexte,'2','C','')));
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- Agissant pour le compte de '+RParc.Text1+', par paiement par tranche, Je m''engage à respecter les modalités suivantes : ');
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- Le strict respect du tableau d''échéancier établi par la société sus nommée ;');
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- Un montant de '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[11,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' DA, sera payé par période de '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[9,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[10,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+'; Je m''engage à les régler par virement au compte '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[16,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' N° '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[17,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' ou en espèce ;');
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- La première échéance, devra débuter au plus tard à la date du début de la réalisation qui sera indiqué dans le tableau d''échéancier dument signé par les deux parties ;');
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- En cas de non respect de ma part de l''une ou de plusieurs échéances, je m''engage à rembourser par anticipation la totalité du montant restant dû ;');
+
+          if strtoreal(FSEcheancierPayement.TableauListeEcheancierPayement.Cells[8,FSEcheancierPayement.TableauListeEcheancierPayement.Row])>0then
+          begin
+               FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+               FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- En cas d''annulation de mon crédit bancaire, je m''engage à adresser, à l''administration de '+RParc.Text1+', un courrier pour approbation, portant mise à jour de mon échéancier, cas échéant, la relation contractuelle sera annuler.');
+          end;
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- Je m''engage à supporter tous les frais directs ou indirects qui peuvent résulter des poursuites de recouvrement ainsi que les pénalités de retards indiqués dans le tableau d''échéancier ;');
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('- En cas de litige, seul le tribunal que désignera '+RParc.Text1+' sera compétant pour le traitement du dossier.');
+
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('');//**************************************
+          FSEcheancierPayement.EditEcheancierTexte.Lines.Add('     Signature légalisée du client                         Fait à : '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[20,FSEcheancierPayement.TableauListeEcheancierPayement.Row]+' Le : '+FSEcheancierPayement.TableauListeEcheancierPayement.Cells[2,FSEcheancierPayement.TableauListeEcheancierPayement.Row]);
+end;
+
+procedure TFSEcheancierPayement.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

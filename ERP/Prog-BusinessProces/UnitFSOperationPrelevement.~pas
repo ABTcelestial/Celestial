@@ -1,0 +1,2400 @@
+unit UnitFSOperationPrelevement;
+
+interface
+
+uses 
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, ComCtrls, ExtCtrls, StdCtrls, Buttons;
+
+type
+  TFSOperationPrelevement = class(TForm)
+    Panel1: TPanel;
+    EditValeurGlobalePrelevementCompteur: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    EditValeurEcarterPrelevementCompteur: TEdit;
+    Label3: TLabel;
+    EditValeurSauvgarderPrelevementCompteur: TEdit;
+    Label4: TLabel;
+    EditValeurPertePrelevementCompteur: TEdit;
+    AfficheResultatPrelevementCompteur: TPanel;
+    AffichePatienterSVPPrelevementCompteur: TPanel;
+    Panel7: TPanel;
+    ProgressPatienterPrelevementCompteur: TProgressBar;
+    BitPrelevementCompteur: TBitBtn;
+    TimerPrelevementCompteur: TTimer;
+    Panel5: TPanel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    EditValeurGlobalePrelevementUniteFonds: TEdit;
+    EditValeurEcarterPrelevementUniteFonds: TEdit;
+    EditValeurSauvgarderPrelevementUniteFonds: TEdit;
+    EditValeurPertePrelevementUniteFonds: TEdit;
+    AfficheResultatPrelevementUniteFonds: TPanel;
+    BitPrelevementUniteFonds: TBitBtn;
+    AffichePatienterSVPPrelevementUniteFonds: TPanel;
+    Panel9: TPanel;
+    ProgressPatienterPrelevementUniteFonds: TProgressBar;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    TimerPrelevementUniteFonds: TTimer;
+    TimerLancerTransfert: TTimer;
+    Panel8: TPanel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label15: TLabel;
+    EditValeurGlobalePrelevementEffectifEquipe: TEdit;
+    EditValeurEcarterPrelevementEffectifEquipe: TEdit;
+    EditValeurSauvgarderPrelevementEffectifEquipe: TEdit;
+    EditValeurPertePrelevementEffectifEquipe: TEdit;
+    AfficheResultatPrelevementEffectifEquipe: TPanel;
+    BitPrelevementEffectifEquipe: TBitBtn;
+    AffichePatienterSVPPrelevementEffectifEquipe: TPanel;
+    Panel4: TPanel;
+    ProgressPatienterPrelevementEffectifEquipe: TProgressBar;
+    Panel6: TPanel;
+    TimerPrelevementEffectifEquipe: TTimer;
+    AffichePatienterSVPRegistreAffectationEffectifEquipe: TPanel;
+    Panel10: TPanel;
+    ProgressPatienterRegistreAffectationEffectifEquipe: TProgressBar;
+    Panel11: TPanel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label16: TLabel;
+    EditValeurGlobaleRegistreAffectationEffectifEquipe: TEdit;
+    EditValeurEcarterRegistreAffectationEffectifEquipe: TEdit;
+    EditValeurSauvgarderRegistreAffectationEffectifEquipe: TEdit;
+    EditValeurPerteRegistreAffectationEffectifEquipe: TEdit;
+    AfficheResultatRegistreAffectationEffectifEquipe: TPanel;
+    BitRegistreAffectationEffectifEquipe: TBitBtn;
+    Panel12: TPanel;
+    TimerRegistreAffectationEffectifEquipe: TTimer;
+    Panel13: TPanel;
+    AffichePatienterSVPDetailArticlePrelevementUniteFonds: TPanel;
+    Panel16: TPanel;
+    ProgressPatienterDetailArticlePrelevementUniteFonds: TProgressBar;
+    Panel17: TPanel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
+    Label24: TLabel;
+    EditValeurGlobaleDetailArticlePrelevementUniteFonds: TEdit;
+    EditValeurEcarterDetailArticlePrelevementUniteFonds: TEdit;
+    EditValeurSauvgarderDetailArticlePrelevementUniteFonds: TEdit;
+    EditValeurPerteDetailArticlePrelevementUniteFonds: TEdit;
+    AfficheResultatDetailArticlePrelevementUniteFonds: TPanel;
+    BitDetailArticlePrelevementUniteFonds: TBitBtn;
+    TimerDetailArticlePrelevementUniteFonds: TTimer;
+    Panel18: TPanel;
+    Label25: TLabel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    EditValeurGlobaleRegistreEtatStockPrelevement: TEdit;
+    EditValeurEcarterRegistreEtatStockPrelevement: TEdit;
+    EditValeurSauvgarderRegistreEtatStockPrelevement: TEdit;
+    EditValeurPerteRegistreEtatStockPrelevement: TEdit;
+    AfficheResultatRegistreEtatStockPrelevement: TPanel;
+    BitRegistreEtatStockPrelevement: TBitBtn;
+    AffichePatienterSVPRegistreEtatStockPrelevement: TPanel;
+    Panel19: TPanel;
+    ProgressPatienterRegistreEtatStockPrelevement: TProgressBar;
+    Panel20: TPanel;
+    TimerRegistreEtatStockPrelevement: TTimer;
+    Panel14: TPanel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    EditValeurGlobaleMoyenTransport: TEdit;
+    EditValeurEcarterMoyenTransport: TEdit;
+    EditValeurSauvgarderMoyenTransport: TEdit;
+    EditValeurPerteMoyenTransport: TEdit;
+    AfficheResultatMoyenTransport: TPanel;
+    BitMoyenTransport: TBitBtn;
+    AffichePatienterSVPMoyenTransport: TPanel;
+    Panel15: TPanel;
+    ProgressPatienterMoyenTransport: TProgressBar;
+    Panel21: TPanel;
+    TimerMoyenTransport: TTimer;
+    AfficheValiderTransfert: TPanel;
+    BitBtn1: TBitBtn;
+    Panel22: TPanel;
+    RBPrelevementCompteur: TCheckBox;
+    RBPrelevementUniteFonds: TCheckBox;
+    RBPrelevementEffectifEquipe: TCheckBox;
+    RBRegistreAffectationEffectifEquipe: TCheckBox;
+    RBDetailArticlePrelevementUniteFonds: TCheckBox;
+    RBRegistreEtatStockPrelevement: TCheckBox;
+    RBMoyenTransport: TCheckBox;
+    EditNumPrelevementTransfert: TEdit;
+    EditMatriculeTransfert: TEdit;
+    Panel23: TPanel;
+    ProgressPatiente: TProgressBar;
+    EditPositionPrelevementTransfert: TEdit;
+    AffichePrelevementNonArchiver: TPanel;
+    BitBtn2: TBitBtn;
+    Bevel1: TBevel;
+    Bevel2: TBevel;
+    Bevel3: TBevel;
+    Bevel4: TBevel;
+    Bevel5: TBevel;
+    Bevel6: TBevel;
+    Bevel7: TBevel;
+    EditTypeAnalyse: TEdit;
+    procedure AfficheResultatPrelevementCompteurDblClick(Sender: TObject);
+    procedure TimerPrelevementCompteurTimer(Sender: TObject);
+    procedure TimerPrelevementUniteFondsTimer(Sender: TObject);
+    procedure TimerLancerTransfertTimer(Sender: TObject);
+    procedure AfficheResultatPrelevementUniteFondsDblClick(
+      Sender: TObject);
+    procedure TimerPrelevementEffectifEquipeTimer(Sender: TObject);
+    procedure TimerRegistreAffectationEffectifEquipeTimer(Sender: TObject);
+    procedure TimerDetailArticlePrelevementUniteFondsTimer(
+      Sender: TObject);
+    procedure TimerRegistreEtatStockPrelevementTimer(Sender: TObject);
+    procedure AfficheResultatPrelevementEffectifEquipeDblClick(
+      Sender: TObject);
+    procedure AfficheResultatRegistreAffectationEffectifEquipeDblClick(
+      Sender: TObject);
+    procedure AfficheResultatDetailArticlePrelevementUniteFondsDblClick(
+      Sender: TObject);
+    procedure AfficheResultatRegistreEtatStockPrelevementDblClick(
+      Sender: TObject);
+    procedure TimerMoyenTransportTimer(Sender: TObject);
+    procedure AfficheResultatMoyenTransportDblClick(Sender: TObject);
+    procedure BitPrelevementCompteurClick(Sender: TObject);
+    procedure BitPrelevementUniteFondsClick(Sender: TObject);
+    procedure BitPrelevementEffectifEquipeClick(Sender: TObject);
+    procedure BitRegistreAffectationEffectifEquipeClick(Sender: TObject);
+    procedure BitDetailArticlePrelevementUniteFondsClick(Sender: TObject);
+    procedure BitRegistreEtatStockPrelevementClick(Sender: TObject);
+    procedure BitMoyenTransportClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSOperationPrelevement: TFSOperationPrelevement;
+
+  Procedure EcartirePrelevementCompteur(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+  Function AfficheBitValiderTransfert:boolean;
+  Function AfficheBitPrelevementNonArchiver:boolean;
+
+  Procedure ControleDoublePrelevementCompteur(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+  Procedure ControleDoublePrelevementUniteFonds(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+  Procedure ControleDoublePrelevementEffectifEquipe(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+  Procedure ControleDoubleRegistreAffectationEffectifEquipe(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+  Procedure ControleDoubleDetailArticlePrelevementUniteFonds(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+  Procedure ControleDoubleRegistreEtatStockPrelevement(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+  Procedure ControleDoubleMoyenTransport(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+
+implementation
+
+uses UnitInitialisation, UnitFSNowPrelevement, UnitFSListePrelevement, UnitFSPrelevement;
+
+{$R *.dfm}
+
+Procedure EcartirePrelevementCompteur(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;
+begin
+     FSOperationPrelevement.ProgressPatienterPrelevementCompteur.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementCompteur:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur';
+     assignfile(FArchivePrelevementCompteur,ChArchivePrelevementCompteur);
+     if FileExists(ChArchivePrelevementCompteur)then
+     Reset(FArchivePrelevementCompteur)
+     else Rewrite(FArchivePrelevementCompteur);
+     Seek(FArchivePrelevementCompteur,0);
+     i:=0;
+     while not eof(FArchivePrelevementCompteur)do
+     begin
+          read(FArchivePrelevementCompteur,RArchivePrelevementCompteur);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchivePrelevementCompteur);
+     FSOperationPrelevement.ProgressPatienterPrelevementCompteur.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementCompteurCopie:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchivePrelevementCompteurCopie,ChArchivePrelevementCompteurCopie);
+     if FileExists(ChArchivePrelevementCompteurCopie)then
+     Reset(FArchivePrelevementCompteurCopie)
+     else Rewrite(FArchivePrelevementCompteurCopie);
+     Seek(FArchivePrelevementCompteurCopie,0);
+     Truncate(FArchivePrelevementCompteurCopie);
+
+     OpenFParc(RParc);
+     ChArchivePrelevementCompteur:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur';
+     assignfile(FArchivePrelevementCompteur,ChArchivePrelevementCompteur);
+     if FileExists(ChArchivePrelevementCompteur)then
+     Reset(FArchivePrelevementCompteur)
+     else Rewrite(FArchivePrelevementCompteur);
+     Seek(FArchivePrelevementCompteur,0);
+     i:=0;
+     while not eof(FArchivePrelevementCompteur)do
+     begin
+          read(FArchivePrelevementCompteur,RArchivePrelevementCompteur); Application.ProcessMessages;
+
+          FSOperationPrelevement.ProgressPatienterPrelevementCompteur.StepIt;
+
+          RCompteur:=ChercherCompteur(RArchivePrelevementCompteur.NumCompteur);
+          CalculeCompteurPrelevement(RCompteur.TypeIndicePrelevement,RArchivePrelevementCompteur.PrixPrelevement,RArchivePrelevementCompteur.ValeurInitiale,RArchivePrelevementCompteur.ValeurMouvement,RArchivePrelevementCompteur.ValeurPrelevement,QteOperation,MontantOperation);
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchivePrelevementCompteur.NumPrelevement=NumPrelevement)
+          and(RArchivePrelevementCompteur.Matricule=Matricule)
+          then
+          begin
+               ValeurEcarter:=ValeurEcarter+MontantOperation;
+          end
+          else
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchivePrelevementCompteurCopie,i);
+               write(FArchivePrelevementCompteurCopie,RArchivePrelevementCompteur);
+          i:=i+1;
+          end;
+     end;
+     CloseFile(FArchivePrelevementCompteur);
+     CloseFile(FArchivePrelevementCompteurCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPPrelevementCompteur.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobalePrelevementCompteur.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterPrelevementCompteur.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderPrelevementCompteur.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPertePrelevementCompteur.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitPrelevementCompteur.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitPrelevementCompteur.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitPrelevementCompteur.Visible:=false;
+     end;
+end;
+
+procedure TFSOperationPrelevement.AfficheResultatPrelevementCompteurDblClick(
+  Sender: TObject);
+begin
+     if(FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color=clRed)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color:=clYellow;
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Caption:='Forcer le transfert !';
+          FSOperationPrelevement.BitPrelevementCompteur.Visible:=true;
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+procedure TFSOperationPrelevement.TimerPrelevementCompteurTimer(
+  Sender: TObject);
+var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real;
+begin
+     FSOperationPrelevement.TimerPrelevementCompteur.Enabled:=false;
+
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+          EcartirePrelevementCompteur(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end
+     else
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Double')then
+     begin
+          ControleDoublePrelevementCompteur(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+Procedure EcartirePrelevementUniteFonds(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;
+begin
+     FSOperationPrelevement.ProgressPatienterPrelevementUniteFonds.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds';
+     assignfile(FArchivePrelevementUniteFonds,ChArchivePrelevementUniteFonds);
+     if FileExists(ChArchivePrelevementUniteFonds)then
+     Reset(FArchivePrelevementUniteFonds)
+     else Rewrite(FArchivePrelevementUniteFonds);
+     Seek(FArchivePrelevementUniteFonds,0);
+     i:=0;
+     while not eof(FArchivePrelevementUniteFonds)do
+     begin
+          read(FArchivePrelevementUniteFonds,RArchivePrelevementUniteFonds);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchivePrelevementUniteFonds);
+     FSOperationPrelevement.ProgressPatienterPrelevementUniteFonds.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementUniteFondsCopie:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchivePrelevementUniteFondsCopie,ChArchivePrelevementUniteFondsCopie);
+     if FileExists(ChArchivePrelevementUniteFondsCopie)then
+     Reset(FArchivePrelevementUniteFondsCopie)
+     else Rewrite(FArchivePrelevementUniteFondsCopie);
+     Seek(FArchivePrelevementUniteFondsCopie,0);
+     Truncate(FArchivePrelevementUniteFondsCopie);
+
+     OpenFParc(RParc);
+     ChArchivePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds';
+     assignfile(FArchivePrelevementUniteFonds,ChArchivePrelevementUniteFonds);
+     if FileExists(ChArchivePrelevementUniteFonds)then
+     Reset(FArchivePrelevementUniteFonds)
+     else Rewrite(FArchivePrelevementUniteFonds);
+     Seek(FArchivePrelevementUniteFonds,0);
+     i:=0;
+     while not eof(FArchivePrelevementUniteFonds)do  
+     begin
+          read(FArchivePrelevementUniteFonds,RArchivePrelevementUniteFonds);   Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterPrelevementUniteFonds.StepIt;
+
+          MontantOperation:=0;
+          if(RArchivePrelevementUniteFonds.ValeurPrecise=false)then
+          begin
+               if(RArchivePrelevementUniteFonds.CodeTiers<>'Divers')
+               then MontantOperation:=RArchivePrelevementUniteFonds.ValeurPrelevement;
+          end
+          else
+          begin
+               RUniteFonds:=ChercherUniteFonds(inttostr(RArchivePrelevementUniteFonds.NumUniteFonds));
+               MontantOperation:=RArchivePrelevementUniteFonds.ValeurPrelevement*RUniteFonds.ValeurMonetaireUnitaire;
+          end;
+
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchivePrelevementUniteFonds.NumPrelevement=NumPrelevement)
+          and(RArchivePrelevementUniteFonds.Matricule=Matricule)
+          then
+          begin
+               ValeurEcarter:=ValeurEcarter+MontantOperation;
+          end
+          else
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchivePrelevementUniteFondsCopie,i);
+               write(FArchivePrelevementUniteFondsCopie,RArchivePrelevementUniteFonds);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchivePrelevementUniteFonds);
+     CloseFile(FArchivePrelevementUniteFondsCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPPrelevementUniteFonds.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobalePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterPrelevementUniteFonds.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderPrelevementUniteFonds.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPertePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitPrelevementUniteFonds.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitPrelevementUniteFonds.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitPrelevementUniteFonds.Visible:=false;
+     end;
+end;
+
+procedure TFSOperationPrelevement.TimerPrelevementUniteFondsTimer(
+  Sender: TObject);
+var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real;
+begin
+     FSOperationPrelevement.TimerPrelevementUniteFonds.Enabled:=false;
+
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+          EcartirePrelevementUniteFonds(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end
+     else
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Double')then
+     begin
+          ControleDoublePrelevementUniteFonds(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+procedure TFSOperationPrelevement.TimerLancerTransfertTimer(
+  Sender: TObject);
+var  PositionPrelevement:string;
+begin
+     FSOperationPrelevement.TimerLancerTransfert.Enabled:=false;
+     FSOperationPrelevement.EditNumPrelevementTransfert.Text:=FSListePrelevement.TableauListePrelevement.Cells[2,FSListePrelevement.TableauListePrelevement.Row];
+     FSOperationPrelevement.EditMatriculeTransfert.Text:=FSListePrelevement.TableauListePrelevement.Cells[5,FSListePrelevement.TableauListePrelevement.Row];
+
+     RPrelevement:=ChercherPrelevement(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),ExerciceAnnee,FSOperationPrelevement.EditMatriculeTransfert.Text,PositionPrelevement);
+     FSOperationPrelevement.EditPositionPrelevementTransfert.Text:=PositionPrelevement;
+
+     FSOperationPrelevement.AfficheValiderTransfert.Visible:=false;
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=false;
+
+     FSOperationPrelevement.RBPrelevementCompteur.Checked:=false;
+     FSOperationPrelevement.RBPrelevementUniteFonds.Checked:=false;
+     FSOperationPrelevement.RBPrelevementEffectifEquipe.Checked:=false;
+     FSOperationPrelevement.RBRegistreAffectationEffectifEquipe.Checked:=false;
+     FSOperationPrelevement.RBMoyenTransport.Checked:=false;
+     FSOperationPrelevement.RBDetailArticlePrelevementUniteFonds.Checked:=false;
+     FSOperationPrelevement.RBRegistreEtatStockPrelevement.Checked:=false;
+
+     FSOperationPrelevement.AffichePatienterSVPPrelevementCompteur.Visible:=true;
+     FSOperationPrelevement.AffichePatienterSVPPrelevementUniteFonds.Visible:=true;
+     FSOperationPrelevement.AffichePatienterSVPPrelevementEffectifEquipe.Visible:=true;
+     FSOperationPrelevement.AffichePatienterSVPRegistreAffectationEffectifEquipe.Visible:=true;
+     FSOperationPrelevement.AffichePatienterSVPDetailArticlePrelevementUniteFonds.Visible:=true;
+     FSOperationPrelevement.AffichePatienterSVPRegistreEtatStockPrelevement.Visible:=true;
+     FSOperationPrelevement.AffichePatienterSVPMoyenTransport.Visible:=true;
+
+     FSOperationPrelevement.TimerPrelevementCompteur.Enabled:=true;
+     FSOperationPrelevement.TimerPrelevementUniteFonds.Enabled:=true;
+     FSOperationPrelevement.TimerPrelevementEffectifEquipe.Enabled:=true;
+     FSOperationPrelevement.TimerRegistreAffectationEffectifEquipe.Enabled:=true;
+     FSOperationPrelevement.TimerDetailArticlePrelevementUniteFonds.Enabled:=true;
+     FSOperationPrelevement.TimerRegistreEtatStockPrelevement.Enabled:=true;
+     FSOperationPrelevement.TimerMoyenTransport.Enabled:=true; Application.ProcessMessages; 
+end;
+
+procedure TFSOperationPrelevement.AfficheResultatPrelevementUniteFondsDblClick(
+  Sender: TObject);
+begin
+     if(FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color=clRed)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color:=clYellow;
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Caption:='Forcer le transfert !';
+          FSOperationPrelevement.BitPrelevementUniteFonds.Visible:=true;
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+Procedure EcartirePrelevementEffectifEquipe(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;
+begin
+     FSOperationPrelevement.ProgressPatienterPrelevementEffectifEquipe.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe';
+     assignfile(FArchivePrelevementEffectifEquipe,ChArchivePrelevementEffectifEquipe);
+     if FileExists(ChArchivePrelevementEffectifEquipe)then
+     Reset(FArchivePrelevementEffectifEquipe)
+     else Rewrite(FArchivePrelevementEffectifEquipe);
+     Seek(FArchivePrelevementEffectifEquipe,0);
+     i:=0;
+     while not eof(FArchivePrelevementEffectifEquipe)do
+     begin
+          read(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe); Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchivePrelevementEffectifEquipe);
+     FSOperationPrelevement.ProgressPatienterPrelevementEffectifEquipe.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipeCopie:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchivePrelevementEffectifEquipeCopie,ChArchivePrelevementEffectifEquipeCopie);
+     if FileExists(ChArchivePrelevementEffectifEquipeCopie)then
+     Reset(FArchivePrelevementEffectifEquipeCopie)
+     else Rewrite(FArchivePrelevementEffectifEquipeCopie);
+     Seek(FArchivePrelevementEffectifEquipeCopie,0);
+     Truncate(FArchivePrelevementEffectifEquipeCopie);
+
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe';
+     assignfile(FArchivePrelevementEffectifEquipe,ChArchivePrelevementEffectifEquipe);
+     if FileExists(ChArchivePrelevementEffectifEquipe)then
+     Reset(FArchivePrelevementEffectifEquipe)
+     else Rewrite(FArchivePrelevementEffectifEquipe);
+     Seek(FArchivePrelevementEffectifEquipe,0);
+     i:=0;
+     while not eof(FArchivePrelevementEffectifEquipe)do
+     begin
+          read(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe);  Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterPrelevementEffectifEquipe.StepIt; 
+
+          ValeurGlobale:=ValeurGlobale+1;
+
+          if(RArchivePrelevementEffectifEquipe.NumPrelevement=NumPrelevement)
+          and(RArchivePrelevementEffectifEquipe.Matricule=Matricule)
+          then
+          begin
+               ValeurEcarter:=ValeurEcarter+1;
+          end
+          else
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+1;
+               Seek(FArchivePrelevementEffectifEquipeCopie,i);
+               write(FArchivePrelevementEffectifEquipeCopie,RArchivePrelevementEffectifEquipe);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchivePrelevementEffectifEquipe);
+     CloseFile(FArchivePrelevementEffectifEquipeCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPPrelevementEffectifEquipe.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobalePrelevementEffectifEquipe.Text:=Vergule(floattostr(ValeurGlobale),'0','N','');
+     FSOperationPrelevement.EditValeurEcarterPrelevementEffectifEquipe.Text:=Vergule(floattostr(ValeurEcarter),'0','N','');
+     FSOperationPrelevement.EditValeurSauvgarderPrelevementEffectifEquipe.Text:=Vergule(floattostr(ValeurSauvgarder),'0','N','');
+
+     FSOperationPrelevement.EditValeurPertePrelevementEffectifEquipe.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitPrelevementEffectifEquipe.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitPrelevementEffectifEquipe.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitPrelevementEffectifEquipe.Visible:=false;
+     end;
+end;
+
+procedure TFSOperationPrelevement.TimerPrelevementEffectifEquipeTimer(
+  Sender: TObject);
+var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real;
+begin
+     FSOperationPrelevement.TimerPrelevementEffectifEquipe.Enabled:=false;
+
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+          EcartirePrelevementEffectifEquipe(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end
+     else
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Double')then
+     begin
+          ControleDoublePrelevementEffectifEquipe(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+Procedure EcartireRegistreAffectationEffectifEquipe(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;
+begin
+     FSOperationPrelevement.ProgressPatienterRegistreAffectationEffectifEquipe.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchiveRegistreAffectationEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreAffectationEffectifEquipe';
+     assignfile(FArchiveRegistreAffectationEffectifEquipe,ChArchiveRegistreAffectationEffectifEquipe);
+     if FileExists(ChArchiveRegistreAffectationEffectifEquipe)then
+     Reset(FArchiveRegistreAffectationEffectifEquipe)
+     else Rewrite(FArchiveRegistreAffectationEffectifEquipe);
+     Seek(FArchiveRegistreAffectationEffectifEquipe,0);
+     i:=0;
+     while not eof(FArchiveRegistreAffectationEffectifEquipe)do
+     begin
+          read(FArchiveRegistreAffectationEffectifEquipe,RArchiveRegistreAffectationEffectifEquipe);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchiveRegistreAffectationEffectifEquipe);
+     FSOperationPrelevement.ProgressPatienterRegistreAffectationEffectifEquipe.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchiveRegistreAffectationEffectifEquipeCopie:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreAffectationEffectifEquipe '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveRegistreAffectationEffectifEquipeCopie,ChArchiveRegistreAffectationEffectifEquipeCopie);
+     if FileExists(ChArchiveRegistreAffectationEffectifEquipeCopie)then
+     Reset(FArchiveRegistreAffectationEffectifEquipeCopie)
+     else Rewrite(FArchiveRegistreAffectationEffectifEquipeCopie);
+     Seek(FArchiveRegistreAffectationEffectifEquipeCopie,0);
+     Truncate(FArchiveRegistreAffectationEffectifEquipeCopie);
+
+     OpenFParc(RParc);
+     ChArchiveRegistreAffectationEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreAffectationEffectifEquipe';
+     assignfile(FArchiveRegistreAffectationEffectifEquipe,ChArchiveRegistreAffectationEffectifEquipe);
+     if FileExists(ChArchiveRegistreAffectationEffectifEquipe)then
+     Reset(FArchiveRegistreAffectationEffectifEquipe)
+     else Rewrite(FArchiveRegistreAffectationEffectifEquipe);
+     Seek(FArchiveRegistreAffectationEffectifEquipe,0);
+     i:=0;
+     while not eof(FArchiveRegistreAffectationEffectifEquipe)do
+     begin
+          read(FArchiveRegistreAffectationEffectifEquipe,RArchiveRegistreAffectationEffectifEquipe);  Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterRegistreAffectationEffectifEquipe.StepIt;
+
+          MontantOperation:=RArchiveRegistreAffectationEffectifEquipe.ValeurAffecter*RArchiveRegistreAffectationEffectifEquipe.RUniteFondsAffecter.ValeurMonetaireUnitaire;
+
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchiveRegistreAffectationEffectifEquipe.NumPrelevement=NumPrelevement)
+          and(RArchiveRegistreAffectationEffectifEquipe.Matricule=Matricule)
+          then
+          begin
+               ValeurEcarter:=ValeurEcarter+MontantOperation;
+          end
+          else
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchiveRegistreAffectationEffectifEquipeCopie,i);
+               write(FArchiveRegistreAffectationEffectifEquipeCopie,RArchiveRegistreAffectationEffectifEquipe);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchiveRegistreAffectationEffectifEquipe);
+     CloseFile(FArchiveRegistreAffectationEffectifEquipeCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPRegistreAffectationEffectifEquipe.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobaleRegistreAffectationEffectifEquipe.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterRegistreAffectationEffectifEquipe.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderRegistreAffectationEffectifEquipe.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPerteRegistreAffectationEffectifEquipe.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitRegistreAffectationEffectifEquipe.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitRegistreAffectationEffectifEquipe.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitRegistreAffectationEffectifEquipe.Visible:=false;
+     end;
+end;
+
+procedure TFSOperationPrelevement.TimerRegistreAffectationEffectifEquipeTimer(
+  Sender: TObject);
+var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real;
+begin
+     FSOperationPrelevement.TimerRegistreAffectationEffectifEquipe.Enabled:=false;
+
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+          EcartireRegistreAffectationEffectifEquipe(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end
+     else
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Double')then
+     begin
+          ControleDoubleRegistreAffectationEffectifEquipe(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+Procedure EcartireDetailArticlePrelevementUniteFonds(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;
+begin
+     FSOperationPrelevement.ProgressPatienterDetailArticlePrelevementUniteFonds.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchiveDetailArticlePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds';
+     assignfile(FArchiveDetailArticlePrelevementUniteFonds,ChArchiveDetailArticlePrelevementUniteFonds);
+     if FileExists(ChArchiveDetailArticlePrelevementUniteFonds)then
+     Reset(FArchiveDetailArticlePrelevementUniteFonds)
+     else Rewrite(FArchiveDetailArticlePrelevementUniteFonds);
+     Seek(FArchiveDetailArticlePrelevementUniteFonds,0);
+     i:=0;
+     while not eof(FArchiveDetailArticlePrelevementUniteFonds)do
+     begin
+          read(FArchiveDetailArticlePrelevementUniteFonds,RArchiveDetailArticlePrelevementUniteFonds);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchiveDetailArticlePrelevementUniteFonds);
+     FSOperationPrelevement.ProgressPatienterDetailArticlePrelevementUniteFonds.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchiveDetailArticlePrelevementUniteFondsCopie:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveDetailArticlePrelevementUniteFondsCopie,ChArchiveDetailArticlePrelevementUniteFondsCopie);
+     if FileExists(ChArchiveDetailArticlePrelevementUniteFondsCopie)then
+     Reset(FArchiveDetailArticlePrelevementUniteFondsCopie)
+     else Rewrite(FArchiveDetailArticlePrelevementUniteFondsCopie);
+     Seek(FArchiveDetailArticlePrelevementUniteFondsCopie,0);
+     Truncate(FArchiveDetailArticlePrelevementUniteFondsCopie);
+
+     OpenFParc(RParc);
+     ChArchiveDetailArticlePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds';
+     assignfile(FArchiveDetailArticlePrelevementUniteFonds,ChArchiveDetailArticlePrelevementUniteFonds);
+     if FileExists(ChArchiveDetailArticlePrelevementUniteFonds)then
+     Reset(FArchiveDetailArticlePrelevementUniteFonds)
+     else Rewrite(FArchiveDetailArticlePrelevementUniteFonds);
+     Seek(FArchiveDetailArticlePrelevementUniteFonds,0);
+     i:=0;
+     while not eof(FArchiveDetailArticlePrelevementUniteFonds)do
+     begin
+          read(FArchiveDetailArticlePrelevementUniteFonds,RArchiveDetailArticlePrelevementUniteFonds); Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterDetailArticlePrelevementUniteFonds.StepIt;
+
+          MontantOperation:=RArchiveDetailArticlePrelevementUniteFonds.QuantiteJustifier*RArchiveDetailArticlePrelevementUniteFonds.PrixUnitaire;
+
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchiveDetailArticlePrelevementUniteFonds.NumPrelevement=NumPrelevement)
+          and(RArchiveDetailArticlePrelevementUniteFonds.Matricule=Matricule)
+          then
+          begin
+               ValeurEcarter:=ValeurEcarter+MontantOperation;
+          end
+          else
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchiveDetailArticlePrelevementUniteFondsCopie,i);
+               write(FArchiveDetailArticlePrelevementUniteFondsCopie,RArchiveDetailArticlePrelevementUniteFonds);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchiveDetailArticlePrelevementUniteFonds);
+     CloseFile(FArchiveDetailArticlePrelevementUniteFondsCopie);
+
+     FSOperationPrelevement.AffichePatienterSVPDetailArticlePrelevementUniteFonds.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobaleDetailArticlePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterDetailArticlePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderDetailArticlePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPerteDetailArticlePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitDetailArticlePrelevementUniteFonds.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitDetailArticlePrelevementUniteFonds.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitDetailArticlePrelevementUniteFonds.Visible:=false;
+     end;
+end;
+
+procedure TFSOperationPrelevement.TimerDetailArticlePrelevementUniteFondsTimer(
+  Sender: TObject);
+var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real;
+begin
+     FSOperationPrelevement.TimerDetailArticlePrelevementUniteFonds.Enabled:=false;
+
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+          EcartireDetailArticlePrelevementUniteFonds(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end
+     else
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Double')then
+     begin
+          ControleDoubleDetailArticlePrelevementUniteFonds(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+Procedure EcartireRegistreEtatStockPrelevement(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;
+begin
+     FSOperationPrelevement.ProgressPatienterRegistreEtatStockPrelevement.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchiveRegistreEtatStockPrelevement:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement';
+     assignfile(FArchiveRegistreEtatStockPrelevement,ChArchiveRegistreEtatStockPrelevement);
+     if FileExists(ChArchiveRegistreEtatStockPrelevement)then
+     Reset(FArchiveRegistreEtatStockPrelevement)
+     else Rewrite(FArchiveRegistreEtatStockPrelevement);
+     Seek(FArchiveRegistreEtatStockPrelevement,0);
+     i:=0;
+     while not eof(FArchiveRegistreEtatStockPrelevement)do
+     begin
+          read(FArchiveRegistreEtatStockPrelevement,RArchiveRegistreEtatStockPrelevement);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchiveRegistreEtatStockPrelevement);
+     FSOperationPrelevement.ProgressPatienterRegistreEtatStockPrelevement.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchiveRegistreEtatStockPrelevementCopie:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveRegistreEtatStockPrelevementCopie,ChArchiveRegistreEtatStockPrelevementCopie);
+     if FileExists(ChArchiveRegistreEtatStockPrelevementCopie)then
+     Reset(FArchiveRegistreEtatStockPrelevementCopie)
+     else Rewrite(FArchiveRegistreEtatStockPrelevementCopie);
+     Seek(FArchiveRegistreEtatStockPrelevementCopie,0);
+     Truncate(FArchiveRegistreEtatStockPrelevementCopie);
+
+     OpenFParc(RParc);
+     ChArchiveRegistreEtatStockPrelevement:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement';
+     assignfile(FArchiveRegistreEtatStockPrelevement,ChArchiveRegistreEtatStockPrelevement);
+     if FileExists(ChArchiveRegistreEtatStockPrelevement)then
+     Reset(FArchiveRegistreEtatStockPrelevement)
+     else Rewrite(FArchiveRegistreEtatStockPrelevement);
+     Seek(FArchiveRegistreEtatStockPrelevement,0);
+     i:=0;
+     while not eof(FArchiveRegistreEtatStockPrelevement)do
+     begin
+          read(FArchiveRegistreEtatStockPrelevement,RArchiveRegistreEtatStockPrelevement);  Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterRegistreEtatStockPrelevement.StepIt;
+
+          MontantOperation:=RArchiveRegistreEtatStockPrelevement.QuantiteStock*RArchiveRegistreEtatStockPrelevement.PrixUnitaire;
+
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchiveRegistreEtatStockPrelevement.NumPrelevement=NumPrelevement)
+          and(RArchiveRegistreEtatStockPrelevement.Matricule=Matricule)
+          then
+          begin
+               ValeurEcarter:=ValeurEcarter+MontantOperation;
+          end
+          else
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchiveRegistreEtatStockPrelevementCopie,i);
+               write(FArchiveRegistreEtatStockPrelevementCopie,RArchiveRegistreEtatStockPrelevement);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchiveRegistreEtatStockPrelevement);
+     CloseFile(FArchiveRegistreEtatStockPrelevementCopie);
+
+     FSOperationPrelevement.AffichePatienterSVPRegistreEtatStockPrelevement.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobaleRegistreEtatStockPrelevement.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterRegistreEtatStockPrelevement.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderRegistreEtatStockPrelevement.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPerteRegistreEtatStockPrelevement.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitRegistreEtatStockPrelevement.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitRegistreEtatStockPrelevement.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitRegistreEtatStockPrelevement.Visible:=false;
+     end;
+end;
+
+procedure TFSOperationPrelevement.TimerRegistreEtatStockPrelevementTimer(
+  Sender: TObject);
+var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real;
+begin
+     FSOperationPrelevement.TimerRegistreEtatStockPrelevement.Enabled:=false;
+
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+          EcartireRegistreEtatStockPrelevement(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end
+     else
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Double')then
+     begin
+          ControleDoubleRegistreEtatStockPrelevement(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+procedure TFSOperationPrelevement.AfficheResultatPrelevementEffectifEquipeDblClick(
+  Sender: TObject);
+begin
+     if(FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color=clRed)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color:=clYellow;
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Caption:='Forcer le transfert !';
+          FSOperationPrelevement.BitPrelevementEffectifEquipe.Visible:=true;
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+procedure TFSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipeDblClick(
+  Sender: TObject);
+begin
+     if(FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color=clRed)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color:=clYellow;
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Caption:='Forcer le transfert !';
+          FSOperationPrelevement.BitRegistreAffectationEffectifEquipe.Visible:=true;
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+procedure TFSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFondsDblClick(
+  Sender: TObject);
+begin
+     if(FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color=clRed)then
+     begin
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color:=clYellow;
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Caption:='Forcer le transfert !';
+          FSOperationPrelevement.BitDetailArticlePrelevementUniteFonds.Visible:=true;
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+procedure TFSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevementDblClick(
+  Sender: TObject);
+begin
+     if(FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color=clRed)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color:=clYellow;
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Caption:='Forcer le transfert !';
+          FSOperationPrelevement.BitRegistreEtatStockPrelevement.Visible:=true;
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+Procedure EcartireMoyenTransport(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;
+begin
+     FSOperationPrelevement.ProgressPatienterMoyenTransport.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchiveMoyenTransport:=RParc.Parcours+'\'+Exercice+'FArchiveMoyenTransportPrélèvement';
+     assignfile(FArchiveMoyenTransport,ChArchiveMoyenTransport);
+     if FileExists(ChArchiveMoyenTransport)then
+     Reset(FArchiveMoyenTransport)
+     else Rewrite(FArchiveMoyenTransport);
+     Seek(FArchiveMoyenTransport,0);
+     i:=0;
+     while not eof(FArchiveMoyenTransport)do
+     begin
+          read(FArchiveMoyenTransport,RArchiveMoyenTransport);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchiveMoyenTransport);
+     FSOperationPrelevement.ProgressPatienterMoyenTransport.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchiveMoyenTransportCopie:=RParc.Parcours+'\'+Exercice+'FArchiveMoyenTransportPrélèvement '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveMoyenTransportCopie,ChArchiveMoyenTransportCopie);
+     if FileExists(ChArchiveMoyenTransportCopie)then
+     Reset(FArchiveMoyenTransportCopie)
+     else Rewrite(FArchiveMoyenTransportCopie);
+     Seek(FArchiveMoyenTransportCopie,0);
+     Truncate(FArchiveMoyenTransportCopie);
+
+     OpenFParc(RParc);
+     ChArchiveMoyenTransport:=RParc.Parcours+'\'+Exercice+'FArchiveMoyenTransportPrélèvement';
+     assignfile(FArchiveMoyenTransport,ChArchiveMoyenTransport);
+     if FileExists(ChArchiveMoyenTransport)then
+     Reset(FArchiveMoyenTransport)
+     else Rewrite(FArchiveMoyenTransport);
+     Seek(FArchiveMoyenTransport,0);
+     i:=0;
+     while not eof(FArchiveMoyenTransport)do
+     begin
+          read(FArchiveMoyenTransport,RArchiveMoyenTransport);   Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterMoyenTransport.StepIt;
+
+          ValeurGlobale:=ValeurGlobale+1;
+
+          if(RArchiveMoyenTransport.NumMovementPrelevement=NumPrelevement)
+          and(RArchiveMoyenTransport.MatriculeEffectif=Matricule)
+          then
+          begin
+               ValeurEcarter:=ValeurEcarter+1;
+          end
+          else
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+1;
+               Seek(FArchiveMoyenTransportCopie,i);
+               write(FArchiveMoyenTransportCopie,RArchiveMoyenTransport);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchiveMoyenTransport);
+     CloseFile(FArchiveMoyenTransportCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPMoyenTransport.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobaleMoyenTransport.Text:=Vergule(floattostr(ValeurGlobale),'0','N','');
+     FSOperationPrelevement.EditValeurEcarterMoyenTransport.Text:=Vergule(floattostr(ValeurEcarter),'0','N','');
+     FSOperationPrelevement.EditValeurSauvgarderMoyenTransport.Text:=Vergule(floattostr(ValeurSauvgarder),'0','N','');
+
+     FSOperationPrelevement.EditValeurPerteMoyenTransport.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitMoyenTransport.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitMoyenTransport.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitMoyenTransport.Visible:=false;
+     end;
+end;
+
+procedure TFSOperationPrelevement.TimerMoyenTransportTimer(
+  Sender: TObject);
+var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real;
+begin
+     FSOperationPrelevement.TimerMoyenTransport.Enabled:=false;
+
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+          EcartireMoyenTransport(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end
+     else
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Double')then
+     begin
+          ControleDoubleMoyenTransport(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text,ValeurGlobale,ValeurEcarter,ValeurSauvgarder);
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+procedure TFSOperationPrelevement.AfficheResultatMoyenTransportDblClick(
+  Sender: TObject);
+begin
+     if(FSOperationPrelevement.AfficheResultatMoyenTransport.Color=clRed)then
+     begin
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Color:=clYellow;
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Caption:='Forcer le transfert !';
+          FSOperationPrelevement.BitMoyenTransport.Visible:=true;
+     end;
+
+     FSOperationPrelevement.AffichePrelevementNonArchiver.Visible:=AfficheBitPrelevementNonArchiver;
+end;
+
+procedure TFSOperationPrelevement.BitPrelevementCompteurClick(
+  Sender: TObject);
+begin
+     FSOperationPrelevement.RBPrelevementCompteur.Checked:=true;
+     FSOperationPrelevement.AfficheValiderTransfert.Visible:=AfficheBitValiderTransfert;
+end;
+
+procedure TFSOperationPrelevement.BitPrelevementUniteFondsClick(
+  Sender: TObject);
+begin
+     FSOperationPrelevement.RBPrelevementUniteFonds.Checked:=true;
+     FSOperationPrelevement.AfficheValiderTransfert.Visible:=AfficheBitValiderTransfert;
+end;
+
+procedure TFSOperationPrelevement.BitPrelevementEffectifEquipeClick(
+  Sender: TObject);
+begin
+     FSOperationPrelevement.RBPrelevementEffectifEquipe.Checked:=true;
+     FSOperationPrelevement.AfficheValiderTransfert.Visible:=AfficheBitValiderTransfert;
+end;
+
+procedure TFSOperationPrelevement.BitRegistreAffectationEffectifEquipeClick(
+  Sender: TObject);
+begin
+     FSOperationPrelevement.RBRegistreAffectationEffectifEquipe.Checked:=true;
+     FSOperationPrelevement.AfficheValiderTransfert.Visible:=AfficheBitValiderTransfert;
+end;
+
+procedure TFSOperationPrelevement.BitDetailArticlePrelevementUniteFondsClick(
+  Sender: TObject);
+begin
+     FSOperationPrelevement.RBDetailArticlePrelevementUniteFonds.Checked:=true;
+     FSOperationPrelevement.AfficheValiderTransfert.Visible:=AfficheBitValiderTransfert;
+end;
+
+procedure TFSOperationPrelevement.BitRegistreEtatStockPrelevementClick(
+  Sender: TObject);
+begin
+     FSOperationPrelevement.RBRegistreEtatStockPrelevement.Checked:=true;
+     FSOperationPrelevement.AfficheValiderTransfert.Visible:=AfficheBitValiderTransfert;
+end;
+
+procedure TFSOperationPrelevement.BitMoyenTransportClick(Sender: TObject);
+begin
+     FSOperationPrelevement.RBMoyenTransport.Checked:=true;
+     FSOperationPrelevement.AfficheValiderTransfert.Visible:=AfficheBitValiderTransfert;
+end;
+
+Function AfficheBitValiderTransfert:boolean;
+begin
+     if((FSOperationPrelevement.RBPrelevementCompteur.Checked=true)or(FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color=clAqua))
+     and((FSOperationPrelevement.RBPrelevementUniteFonds.Checked=true)or(FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color=clAqua))
+     and((FSOperationPrelevement.RBPrelevementEffectifEquipe.Checked=true)or(FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color=clAqua))
+     and((FSOperationPrelevement.RBRegistreAffectationEffectifEquipe.Checked=true)or(FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color=clAqua))
+     and((FSOperationPrelevement.RBMoyenTransport.Checked=true)or(FSOperationPrelevement.AfficheResultatMoyenTransport.Color=clAqua))
+     and((FSOperationPrelevement.RBDetailArticlePrelevementUniteFonds.Checked=true)or(FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color=clAqua))
+     and((FSOperationPrelevement.RBRegistreEtatStockPrelevement.Checked=true)or(FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color=clAqua))
+     then AfficheBitValiderTransfert:=true
+     else AfficheBitValiderTransfert:=false;
+end;
+
+Function AfficheBitPrelevementNonArchiver:boolean;
+begin
+     if(FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color=clAqua)
+     and(FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color=clAqua)
+     and(FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color=clAqua)
+     and(FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color=clAqua)
+     and(FSOperationPrelevement.AfficheResultatMoyenTransport.Color=clAqua)
+     and(FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color=clAqua)
+     and(FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color=clAqua)
+     then AfficheBitPrelevementNonArchiver:=true
+     else AfficheBitPrelevementNonArchiver:=false;
+end;
+
+Procedure EnregistrerTransfertPrelevementCompteur(NumPrelevement:integer; Matricule:string);
+var i:integer;
+begin
+     OpenFParc(RParc);
+     ChArchivePrelevementCompteur:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur';
+     assignfile(FArchivePrelevementCompteur,ChArchivePrelevementCompteur);
+     if FileExists(ChArchivePrelevementCompteur)then
+     Reset(FArchivePrelevementCompteur)
+     else Rewrite(FArchivePrelevementCompteur);
+     Seek(FArchivePrelevementCompteur,0);
+     Truncate(FArchivePrelevementCompteur);
+
+     OpenFParc(RParc);
+     ChArchivePrelevementCompteurCopie:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchivePrelevementCompteurCopie,ChArchivePrelevementCompteurCopie);
+     if FileExists(ChArchivePrelevementCompteurCopie)then
+     Reset(FArchivePrelevementCompteurCopie)
+     else Rewrite(FArchivePrelevementCompteurCopie);
+     Seek(FArchivePrelevementCompteurCopie,0);
+     i:=0;
+     while not eof(FArchivePrelevementCompteurCopie)do
+     begin
+          read(FArchivePrelevementCompteurCopie,RArchivePrelevementCompteurCopie);
+          Seek(FArchivePrelevementCompteur,i);
+          Write(FArchivePrelevementCompteur,RArchivePrelevementCompteurCopie);
+          i:=i+1;
+     end;
+     CloseFile(FArchivePrelevementCompteur);
+     CloseFile(FArchivePrelevementCompteurCopie);
+end;
+
+Procedure EnregistrerTransfertDetailArticlePrelevementUniteFonds(NumPrelevement:integer; Matricule:string);
+var i:integer;
+begin
+     OpenFParc(RParc);
+     ChArchiveDetailArticlePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds';
+     assignfile(FArchiveDetailArticlePrelevementUniteFonds,ChArchiveDetailArticlePrelevementUniteFonds);
+     if FileExists(ChArchiveDetailArticlePrelevementUniteFonds)then
+     Reset(FArchiveDetailArticlePrelevementUniteFonds)
+     else Rewrite(FArchiveDetailArticlePrelevementUniteFonds);
+     Seek(FArchiveDetailArticlePrelevementUniteFonds,0);
+     Truncate(FArchiveDetailArticlePrelevementUniteFonds);
+
+     OpenFParc(RParc);
+     ChArchiveDetailArticlePrelevementUniteFondsCopie:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveDetailArticlePrelevementUniteFondsCopie,ChArchiveDetailArticlePrelevementUniteFondsCopie);
+     if FileExists(ChArchiveDetailArticlePrelevementUniteFondsCopie)then
+     Reset(FArchiveDetailArticlePrelevementUniteFondsCopie)
+     else Rewrite(FArchiveDetailArticlePrelevementUniteFondsCopie);
+     Seek(FArchiveDetailArticlePrelevementUniteFondsCopie,0);
+     i:=0;
+     while not eof(FArchiveDetailArticlePrelevementUniteFondsCopie)do
+     begin
+          read(FArchiveDetailArticlePrelevementUniteFondsCopie,RArchiveDetailArticlePrelevementUniteFondsCopie);
+          Seek(FArchiveDetailArticlePrelevementUniteFonds,i);
+          Write(FArchiveDetailArticlePrelevementUniteFonds,RArchiveDetailArticlePrelevementUniteFondsCopie);
+          i:=i+1;
+     end;
+     CloseFile(FArchiveDetailArticlePrelevementUniteFonds);
+     CloseFile(FArchiveDetailArticlePrelevementUniteFondsCopie);
+end;
+
+Procedure EnregistrerTransfertMoyenTransport(NumPrelevement:integer; Matricule:string);
+var i:integer;
+begin
+     OpenFParc(RParc);
+     ChArchiveMoyenTransport:=RParc.Parcours+'\'+Exercice+'FArchiveMoyenTransportPrélèvement';
+     assignfile(FArchiveMoyenTransport,ChArchiveMoyenTransport);
+     if FileExists(ChArchiveMoyenTransport)then
+     Reset(FArchiveMoyenTransport)
+     else Rewrite(FArchiveMoyenTransport);
+     Seek(FArchiveMoyenTransport,0);
+     Truncate(FArchiveMoyenTransport);
+
+     OpenFParc(RParc);
+     ChArchiveMoyenTransportCopie:=RParc.Parcours+'\'+Exercice+'FArchiveMoyenTransportPrélèvement '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveMoyenTransportCopie,ChArchiveMoyenTransportCopie);
+     if FileExists(ChArchiveMoyenTransportCopie)then
+     Reset(FArchiveMoyenTransportCopie)
+     else Rewrite(FArchiveMoyenTransportCopie);
+     Seek(FArchiveMoyenTransportCopie,0);
+     i:=0;
+     while not eof(FArchiveMoyenTransportCopie)do
+     begin
+          read(FArchiveMoyenTransportCopie,RArchiveMoyenTransportCopie);
+          Seek(FArchiveMoyenTransport,i);
+          Write(FArchiveMoyenTransport,RArchiveMoyenTransportCopie);
+          i:=i+1;
+     end;
+     CloseFile(FArchiveMoyenTransport);
+     CloseFile(FArchiveMoyenTransportCopie);
+end;
+
+Procedure EnregistrerTransfertPrelevementEffectifEquipe(NumPrelevement:integer; Matricule:string);
+var i:integer;
+begin
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe';
+     assignfile(FArchivePrelevementEffectifEquipe,ChArchivePrelevementEffectifEquipe);
+     if FileExists(ChArchivePrelevementEffectifEquipe)then
+     Reset(FArchivePrelevementEffectifEquipe)
+     else Rewrite(FArchivePrelevementEffectifEquipe);
+     Seek(FArchivePrelevementEffectifEquipe,0);
+     Truncate(FArchivePrelevementEffectifEquipe);
+
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipeCopie:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchivePrelevementEffectifEquipeCopie,ChArchivePrelevementEffectifEquipeCopie);
+     if FileExists(ChArchivePrelevementEffectifEquipeCopie)then
+     Reset(FArchivePrelevementEffectifEquipeCopie)
+     else Rewrite(FArchivePrelevementEffectifEquipeCopie);
+     Seek(FArchivePrelevementEffectifEquipeCopie,0);
+     i:=0;
+     while not eof(FArchivePrelevementEffectifEquipeCopie)do
+     begin
+          read(FArchivePrelevementEffectifEquipeCopie,RArchivePrelevementEffectifEquipeCopie);
+          Seek(FArchivePrelevementEffectifEquipe,i);
+          Write(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipeCopie);
+          i:=i+1;
+     end;
+     CloseFile(FArchivePrelevementEffectifEquipe);
+     CloseFile(FArchivePrelevementEffectifEquipeCopie);
+end;
+
+Procedure EnregistrerTransfertPrelevementUniteFonds(NumPrelevement:integer; Matricule:string);
+var i:integer;
+begin
+     OpenFParc(RParc);
+     ChArchivePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds';
+     assignfile(FArchivePrelevementUniteFonds,ChArchivePrelevementUniteFonds);
+     if FileExists(ChArchivePrelevementUniteFonds)then
+     Reset(FArchivePrelevementUniteFonds)
+     else Rewrite(FArchivePrelevementUniteFonds);
+     Seek(FArchivePrelevementUniteFonds,0);
+     Truncate(FArchivePrelevementUniteFonds);
+
+     OpenFParc(RParc);
+     ChArchivePrelevementUniteFondsCopie:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchivePrelevementUniteFondsCopie,ChArchivePrelevementUniteFondsCopie);
+     if FileExists(ChArchivePrelevementUniteFondsCopie)then
+     Reset(FArchivePrelevementUniteFondsCopie)
+     else Rewrite(FArchivePrelevementUniteFondsCopie);
+     Seek(FArchivePrelevementUniteFondsCopie,0);
+     i:=0;
+     while not eof(FArchivePrelevementUniteFondsCopie)do
+     begin
+          read(FArchivePrelevementUniteFondsCopie,RArchivePrelevementUniteFondsCopie);
+          Seek(FArchivePrelevementUniteFonds,i);
+          Write(FArchivePrelevementUniteFonds,RArchivePrelevementUniteFondsCopie);
+          i:=i+1;
+     end;
+     CloseFile(FArchivePrelevementUniteFonds);
+     CloseFile(FArchivePrelevementUniteFondsCopie);
+end;
+
+Procedure EnregistrerTransfertRegistreAffectationEffectifEquipe(NumPrelevement:integer; Matricule:string);
+var i:integer;
+begin
+     OpenFParc(RParc);
+     ChArchiveRegistreAffectationEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreAffectationEffectifEquipe';
+     assignfile(FArchiveRegistreAffectationEffectifEquipe,ChArchiveRegistreAffectationEffectifEquipe);
+     if FileExists(ChArchiveRegistreAffectationEffectifEquipe)then
+     Reset(FArchiveRegistreAffectationEffectifEquipe)
+     else Rewrite(FArchiveRegistreAffectationEffectifEquipe);
+     Seek(FArchiveRegistreAffectationEffectifEquipe,0);
+     Truncate(FArchiveRegistreAffectationEffectifEquipe);
+
+     OpenFParc(RParc);
+     ChArchiveRegistreAffectationEffectifEquipeCopie:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreAffectationEffectifEquipe '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveRegistreAffectationEffectifEquipeCopie,ChArchiveRegistreAffectationEffectifEquipeCopie);
+     if FileExists(ChArchiveRegistreAffectationEffectifEquipeCopie)then
+     Reset(FArchiveRegistreAffectationEffectifEquipeCopie)
+     else Rewrite(FArchiveRegistreAffectationEffectifEquipeCopie);
+     Seek(FArchiveRegistreAffectationEffectifEquipeCopie,0);
+     i:=0;
+     while not eof(FArchiveRegistreAffectationEffectifEquipeCopie)do
+     begin
+          read(FArchiveRegistreAffectationEffectifEquipeCopie,RArchiveRegistreAffectationEffectifEquipeCopie);
+          Seek(FArchiveRegistreAffectationEffectifEquipe,i);
+          Write(FArchiveRegistreAffectationEffectifEquipe,RArchiveRegistreAffectationEffectifEquipeCopie);
+          i:=i+1;
+     end;
+     CloseFile(FArchiveRegistreAffectationEffectifEquipe);
+     CloseFile(FArchiveRegistreAffectationEffectifEquipeCopie);
+end;
+
+Procedure EnregistrerTransfertRegistreEtatStockPrelevement(NumPrelevement:integer; Matricule:string);
+var i:integer;
+begin
+     OpenFParc(RParc);
+     ChArchiveRegistreEtatStockPrelevement:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement';
+     assignfile(FArchiveRegistreEtatStockPrelevement,ChArchiveRegistreEtatStockPrelevement);
+     if FileExists(ChArchiveRegistreEtatStockPrelevement)then
+     Reset(FArchiveRegistreEtatStockPrelevement)
+     else Rewrite(FArchiveRegistreEtatStockPrelevement);
+     Seek(FArchiveRegistreEtatStockPrelevement,0);
+     Truncate(FArchiveRegistreEtatStockPrelevement);
+
+     OpenFParc(RParc);
+     ChArchiveRegistreEtatStockPrelevementCopie:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveRegistreEtatStockPrelevementCopie,ChArchiveRegistreEtatStockPrelevementCopie);
+     if FileExists(ChArchiveRegistreEtatStockPrelevementCopie)then
+     Reset(FArchiveRegistreEtatStockPrelevementCopie)
+     else Rewrite(FArchiveRegistreEtatStockPrelevementCopie);
+     Seek(FArchiveRegistreEtatStockPrelevementCopie,0);
+     i:=0;
+     while not eof(FArchiveRegistreEtatStockPrelevementCopie)do
+     begin
+          read(FArchiveRegistreEtatStockPrelevementCopie,RArchiveRegistreEtatStockPrelevementCopie);
+          Seek(FArchiveRegistreEtatStockPrelevement,i);
+          Write(FArchiveRegistreEtatStockPrelevement,RArchiveRegistreEtatStockPrelevementCopie);
+          i:=i+1;
+     end;
+     CloseFile(FArchiveRegistreEtatStockPrelevement);
+     CloseFile(FArchiveRegistreEtatStockPrelevementCopie);
+end;
+
+procedure TFSOperationPrelevement.BitBtn1Click(Sender: TObject);
+begin
+     FSOperationPrelevement.ProgressPatiente.Position:=0;
+     FSOperationPrelevement.ProgressPatiente.Max:=7;
+
+     if((FSOperationPrelevement.RBPrelevementCompteur.Checked=true)or(FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color=clAqua))then EnregistrerTransfertPrelevementCompteur(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text);
+     FSOperationPrelevement.ProgressPatiente.StepIt;
+     if((FSOperationPrelevement.RBDetailArticlePrelevementUniteFonds.Checked=true)or(FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color=clAqua))then EnregistrerTransfertDetailArticlePrelevementUniteFonds(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text);
+     FSOperationPrelevement.ProgressPatiente.StepIt;
+     if((FSOperationPrelevement.RBMoyenTransport.Checked=true)or(FSOperationPrelevement.AfficheResultatMoyenTransport.Color=clAqua))then EnregistrerTransfertMoyenTransport(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text);
+     FSOperationPrelevement.ProgressPatiente.StepIt;
+     if((FSOperationPrelevement.RBPrelevementEffectifEquipe.Checked=true)or(FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color=clAqua))then EnregistrerTransfertPrelevementEffectifEquipe(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text);
+     FSOperationPrelevement.ProgressPatiente.StepIt;
+     if((FSOperationPrelevement.RBPrelevementUniteFonds.Checked=true)or(FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color=clAqua))then EnregistrerTransfertPrelevementUniteFonds(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text);
+     FSOperationPrelevement.ProgressPatiente.StepIt;
+     if((FSOperationPrelevement.RBRegistreAffectationEffectifEquipe.Checked=true)or(FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color=clAqua))then EnregistrerTransfertRegistreAffectationEffectifEquipe(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text);
+     FSOperationPrelevement.ProgressPatiente.StepIt;
+     if((FSOperationPrelevement.RBRegistreEtatStockPrelevement.Checked=true)or(FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color=clAqua))then EnregistrerTransfertRegistreEtatStockPrelevement(strtointeger(FSOperationPrelevement.EditNumPrelevementTransfert.Text),FSOperationPrelevement.EditMatriculeTransfert.Text);
+     FSOperationPrelevement.ProgressPatiente.StepIt;
+
+     FSOperationPrelevement.AfficheValiderTransfert.Visible:=false;
+
+     FSOperationPrelevement.RBPrelevementCompteur.Checked:=false;
+     FSOperationPrelevement.RBPrelevementUniteFonds.Checked:=false;
+     FSOperationPrelevement.RBPrelevementEffectifEquipe.Checked:=false;
+     FSOperationPrelevement.RBRegistreAffectationEffectifEquipe.Checked:=false;
+     FSOperationPrelevement.RBMoyenTransport.Checked:=false;
+     FSOperationPrelevement.RBDetailArticlePrelevementUniteFonds.Checked:=false;
+     FSOperationPrelevement.RBRegistreEtatStockPrelevement.Checked:=false;
+
+     FSOperationPrelevement.BitPrelevementCompteur.Visible:=false;
+     FSOperationPrelevement.BitPrelevementUniteFonds.Visible:=false;
+     FSOperationPrelevement.BitPrelevementEffectifEquipe.Visible:=false;
+     FSOperationPrelevement.BitRegistreAffectationEffectifEquipe.Visible:=false;
+     FSOperationPrelevement.BitRegistreAffectationEffectifEquipe.Visible:=false;
+     FSOperationPrelevement.BitDetailArticlePrelevementUniteFonds.Visible:=false;
+     FSOperationPrelevement.BitRegistreEtatStockPrelevement.Visible:=false;
+
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+           OpenFParc(RParc);
+           ChPrelevement:=RParc.Parcours+'\'+Exercice+'FPrelevement';
+           assignfile(FPrelevement,ChPrelevement);
+           if FileExists(ChPrelevement)then
+           Reset(FPrelevement)
+           else Rewrite(FPrelevement);
+           Seek(FPrelevement,strtointeger(FSOperationPrelevement.EditPositionPrelevementTransfert.Text));
+           if(not eof(FPrelevement))then
+           begin
+                read(FPrelevement,RPrelevement);
+                RPrelevement.Archiver:=false;
+                Seek(FPrelevement,strtointeger(FSOperationPrelevement.EditPositionPrelevementTransfert.Text));
+                write(FPrelevement,RPrelevement);
+           end;
+           CloseFile(FPrelevement);
+     end;
+
+     FSOperationPrelevement.Close;
+
+     MiseAJourPrelevement(FSOperationPrelevement.EditNumPrelevementTransfert.Text,FSOperationPrelevement.EditMatriculeTransfert.Text,MontantPrelevement,MontantFondRoulement,MontantUnitesFonds,SoldePrelevement,true);
+
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,FSOperationPrelevement.EditNumPrelevementTransfert.Text,FSOperationPrelevement.EditMatriculeTransfert.Text,FSListePrelevement.RBAbregerTitreRubrique.Checked)
+end;
+
+procedure TFSOperationPrelevement.BitBtn2Click(Sender: TObject);
+begin
+     if(FSOperationPrelevement.EditTypeAnalyse.Text='Ecartement')then
+     begin
+           OpenFParc(RParc);
+           ChPrelevement:=RParc.Parcours+'\'+Exercice+'FPrelevement';
+           assignfile(FPrelevement,ChPrelevement);
+           if FileExists(ChPrelevement)then
+           Reset(FPrelevement)
+           else Rewrite(FPrelevement);
+           Seek(FPrelevement,strtointeger(FSOperationPrelevement.EditPositionPrelevementTransfert.Text));
+           if(not eof(FPrelevement))then
+           begin
+                read(FPrelevement,RPrelevement);
+                RPrelevement.Archiver:=false;
+                Seek(FPrelevement,strtointeger(FSOperationPrelevement.EditPositionPrelevementTransfert.Text));
+                write(FPrelevement,RPrelevement);
+           end;
+           CloseFile(FPrelevement);             
+     end;
+
+     FSOperationPrelevement.Close;
+     ListePrelevement(FSListePrelevement.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,FSOperationPrelevement.EditNumPrelevementTransfert.Text,FSOperationPrelevement.EditMatriculeTransfert.Text,FSListePrelevement.RBAbregerTitreRubrique.Checked)
+end;
+
+procedure TFSOperationPrelevement.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+
+FSOperationPrelevement.AffichePrelevementNonArchiver.Left:=FSOperationPrelevement.AfficheValiderTransfert.Left;
+FSOperationPrelevement.AffichePrelevementNonArchiver.Top:=FSOperationPrelevement.AfficheValiderTransfert.Top;
+end;
+
+procedure TFSOperationPrelevement.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+Procedure ControleDoublePrelevementCompteur(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;   OKDouble:boolean;
+begin
+     FSOperationPrelevement.ProgressPatienterPrelevementCompteur.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementCompteur:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur';
+     assignfile(FArchivePrelevementCompteur,ChArchivePrelevementCompteur);
+     if FileExists(ChArchivePrelevementCompteur)then
+     Reset(FArchivePrelevementCompteur)
+     else Rewrite(FArchivePrelevementCompteur);
+     Seek(FArchivePrelevementCompteur,0);
+     i:=0;
+     while not eof(FArchivePrelevementCompteur)do
+     begin
+          read(FArchivePrelevementCompteur,RArchivePrelevementCompteur);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchivePrelevementCompteur);
+     FSOperationPrelevement.ProgressPatienterPrelevementCompteur.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementCompteurCopie:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchivePrelevementCompteurCopie,ChArchivePrelevementCompteurCopie);
+     if FileExists(ChArchivePrelevementCompteurCopie)then
+     Reset(FArchivePrelevementCompteurCopie)
+     else Rewrite(FArchivePrelevementCompteurCopie);
+     Seek(FArchivePrelevementCompteurCopie,0);
+     Truncate(FArchivePrelevementCompteurCopie);
+
+     OpenFParc(RParc);
+     ChArchivePrelevementCompteur:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur';
+     assignfile(FArchivePrelevementCompteur,ChArchivePrelevementCompteur);
+     if FileExists(ChArchivePrelevementCompteur)then
+     Reset(FArchivePrelevementCompteur)
+     else Rewrite(FArchivePrelevementCompteur);
+     Seek(FArchivePrelevementCompteur,0);
+     i:=0;
+     while not eof(FArchivePrelevementCompteur)do
+     begin
+          read(FArchivePrelevementCompteur,RArchivePrelevementCompteur); Application.ProcessMessages;
+
+          FSOperationPrelevement.ProgressPatienterPrelevementCompteur.StepIt;
+
+          RCompteur:=ChercherCompteur(RArchivePrelevementCompteur.NumCompteur);
+          CalculeCompteurPrelevement(RCompteur.TypeIndicePrelevement,RArchivePrelevementCompteur.PrixPrelevement,RArchivePrelevementCompteur.ValeurInitiale,RArchivePrelevementCompteur.ValeurMouvement,RArchivePrelevementCompteur.ValeurPrelevement,QteOperation,MontantOperation);
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchivePrelevementCompteur.NumPrelevement=NumPrelevement)
+          and(RArchivePrelevementCompteur.Matricule=Matricule)
+          then
+          begin
+               Seek(FArchivePrelevementCompteurCopie,0);
+               OKDouble:=false;
+               while not eof(FArchivePrelevementCompteurCopie)and(OKDouble=false)do
+               begin
+                    read(FArchivePrelevementCompteurCopie,RArchivePrelevementCompteurCopie); Application.ProcessMessages;
+                    if (RArchivePrelevementCompteur.NumPrelevement=RArchivePrelevementCompteurCopie.NumPrelevement)
+                    and(RArchivePrelevementCompteur.CodeUtilisateur=RArchivePrelevementCompteurCopie.CodeUtilisateur)
+                    and(RArchivePrelevementCompteur.NumEquipe=RArchivePrelevementCompteurCopie.NumEquipe)
+                    and(RArchivePrelevementCompteur.Matricule=RArchivePrelevementCompteurCopie.Matricule)
+                    and(RArchivePrelevementCompteur.NumCompteur=RArchivePrelevementCompteurCopie.NumCompteur)
+                    and(RArchivePrelevementCompteur.CodeArticle=RArchivePrelevementCompteurCopie.CodeArticle)
+                    and(RArchivePrelevementCompteur.CoutUnitaire=RArchivePrelevementCompteurCopie.CoutUnitaire)
+                    and(RArchivePrelevementCompteur.PrixPrelevement=RArchivePrelevementCompteurCopie.PrixPrelevement)
+                    and(RArchivePrelevementCompteur.DateInitiale=RArchivePrelevementCompteurCopie.DateInitiale)
+                    and(RArchivePrelevementCompteur.HeureInitiale=RArchivePrelevementCompteurCopie.HeureInitiale)
+                    and(RArchivePrelevementCompteur.ValeurInitiale=RArchivePrelevementCompteurCopie.ValeurInitiale)
+                    and(RArchivePrelevementCompteur.ValeurMouvement=RArchivePrelevementCompteurCopie.ValeurMouvement)
+                    and(RArchivePrelevementCompteur.DatePrelevement=RArchivePrelevementCompteurCopie.DatePrelevement)
+                    and(RArchivePrelevementCompteur.HeurePrelevement=RArchivePrelevementCompteurCopie.HeurePrelevement)
+                    and(RArchivePrelevementCompteur.ValeurPrelevement=RArchivePrelevementCompteurCopie.ValeurPrelevement)
+                    then
+                    begin
+                         OKDouble:=true;
+                         ValeurEcarter:=ValeurEcarter+MontantOperation;
+                    end;
+               end;
+          end
+          else OKDouble:=false;
+
+          if(OKDouble=false)then
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchivePrelevementCompteurCopie,i);
+               write(FArchivePrelevementCompteurCopie,RArchivePrelevementCompteur);
+          i:=i+1;
+          end;
+     end;
+     CloseFile(FArchivePrelevementCompteur);
+     CloseFile(FArchivePrelevementCompteurCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPPrelevementCompteur.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobalePrelevementCompteur.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterPrelevementCompteur.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderPrelevementCompteur.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPertePrelevementCompteur.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitPrelevementCompteur.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitPrelevementCompteur.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatPrelevementCompteur.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitPrelevementCompteur.Visible:=false;
+     end;
+end;
+
+Procedure ControleDoublePrelevementUniteFonds(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;  OKDouble:boolean;
+begin
+     FSOperationPrelevement.ProgressPatienterPrelevementUniteFonds.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds';
+     assignfile(FArchivePrelevementUniteFonds,ChArchivePrelevementUniteFonds);
+     if FileExists(ChArchivePrelevementUniteFonds)then
+     Reset(FArchivePrelevementUniteFonds)
+     else Rewrite(FArchivePrelevementUniteFonds);
+     Seek(FArchivePrelevementUniteFonds,0);
+     i:=0;
+     while not eof(FArchivePrelevementUniteFonds)do
+     begin
+          read(FArchivePrelevementUniteFonds,RArchivePrelevementUniteFonds);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchivePrelevementUniteFonds);
+     FSOperationPrelevement.ProgressPatienterPrelevementUniteFonds.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementUniteFondsCopie:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchivePrelevementUniteFondsCopie,ChArchivePrelevementUniteFondsCopie);
+     if FileExists(ChArchivePrelevementUniteFondsCopie)then
+     Reset(FArchivePrelevementUniteFondsCopie)
+     else Rewrite(FArchivePrelevementUniteFondsCopie);
+     Seek(FArchivePrelevementUniteFondsCopie,0);
+     Truncate(FArchivePrelevementUniteFondsCopie);
+
+     OpenFParc(RParc);
+     ChArchivePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds';
+     assignfile(FArchivePrelevementUniteFonds,ChArchivePrelevementUniteFonds);
+     if FileExists(ChArchivePrelevementUniteFonds)then
+     Reset(FArchivePrelevementUniteFonds)
+     else Rewrite(FArchivePrelevementUniteFonds);
+     Seek(FArchivePrelevementUniteFonds,0);
+     i:=0;
+     while not eof(FArchivePrelevementUniteFonds)do  
+     begin
+          read(FArchivePrelevementUniteFonds,RArchivePrelevementUniteFonds);   Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterPrelevementUniteFonds.StepIt;
+
+          MontantOperation:=0;
+          if(RArchivePrelevementUniteFonds.ValeurPrecise=false)then
+          begin
+               if(RArchivePrelevementUniteFonds.CodeTiers<>'Divers')
+               then MontantOperation:=RArchivePrelevementUniteFonds.ValeurPrelevement;
+          end
+          else
+          begin
+               RUniteFonds:=ChercherUniteFonds(inttostr(RArchivePrelevementUniteFonds.NumUniteFonds));
+               MontantOperation:=RArchivePrelevementUniteFonds.ValeurPrelevement*RUniteFonds.ValeurMonetaireUnitaire;
+          end;
+
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchivePrelevementUniteFonds.NumPrelevement=NumPrelevement)
+          and(RArchivePrelevementUniteFonds.Matricule=Matricule)
+          then
+          begin
+               Seek(FArchivePrelevementUniteFondsCopie,0);
+               OKDouble:=false;
+               while not eof(FArchivePrelevementUniteFondsCopie)and(OKDouble=false)do
+               begin
+                    read(FArchivePrelevementUniteFondsCopie,RArchivePrelevementUniteFondsCopie); Application.ProcessMessages;
+                    if (RArchivePrelevementUniteFonds.NumPrelevement=RArchivePrelevementUniteFondsCopie.NumPrelevement)
+                    and(RArchivePrelevementUniteFonds.CodeUtilisateur=RArchivePrelevementUniteFondsCopie.CodeUtilisateur)
+                    and(RArchivePrelevementUniteFonds.NumEquipe=RArchivePrelevementUniteFondsCopie.NumEquipe)
+                    and(RArchivePrelevementUniteFonds.Matricule=RArchivePrelevementUniteFondsCopie.Matricule)
+                    and(RArchivePrelevementUniteFonds.NumUniteFonds=RArchivePrelevementUniteFondsCopie.NumUniteFonds)
+                    and(RArchivePrelevementUniteFonds.DatePrelevement=RArchivePrelevementUniteFondsCopie.DatePrelevement)
+                    and(RArchivePrelevementUniteFonds.HeurePrelevement=RArchivePrelevementUniteFondsCopie.HeurePrelevement)
+                    and(RArchivePrelevementUniteFonds.ValeurPrecise=RArchivePrelevementUniteFondsCopie.ValeurPrecise)
+                    and(RArchivePrelevementUniteFonds.TypeProces=RArchivePrelevementUniteFondsCopie.TypeProces)
+                    and(RArchivePrelevementUniteFonds.FichierConcerne=RArchivePrelevementUniteFondsCopie.FichierConcerne)
+                    and(RArchivePrelevementUniteFonds.CodeTiers=RArchivePrelevementUniteFondsCopie.CodeTiers)
+                    and(RArchivePrelevementUniteFonds.ModePaiement=RArchivePrelevementUniteFondsCopie.ModePaiement)
+                    and(RArchivePrelevementUniteFonds.NumPiece=RArchivePrelevementUniteFondsCopie.NumPiece)
+                    and(RArchivePrelevementUniteFonds.Domiciliation=RArchivePrelevementUniteFondsCopie.Domiciliation)
+                    and(RArchivePrelevementUniteFonds.ValeurPrelevement=RArchivePrelevementUniteFondsCopie.ValeurPrelevement)
+                    then
+                    begin
+                         OKDouble:=true;
+                         ValeurEcarter:=ValeurEcarter+MontantOperation;
+                    end;
+               end;
+          end
+          else OKDouble:=false;
+
+          if(OKDouble=false)then
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchivePrelevementUniteFondsCopie,i);
+               write(FArchivePrelevementUniteFondsCopie,RArchivePrelevementUniteFonds);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchivePrelevementUniteFonds);
+     CloseFile(FArchivePrelevementUniteFondsCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPPrelevementUniteFonds.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobalePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterPrelevementUniteFonds.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderPrelevementUniteFonds.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPertePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitPrelevementUniteFonds.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitPrelevementUniteFonds.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatPrelevementUniteFonds.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitPrelevementUniteFonds.Visible:=false;
+     end;
+end;
+
+Procedure ControleDoublePrelevementEffectifEquipe(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;   OKDouble:boolean;
+begin
+     FSOperationPrelevement.ProgressPatienterPrelevementEffectifEquipe.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe';
+     assignfile(FArchivePrelevementEffectifEquipe,ChArchivePrelevementEffectifEquipe);
+     if FileExists(ChArchivePrelevementEffectifEquipe)then
+     Reset(FArchivePrelevementEffectifEquipe)
+     else Rewrite(FArchivePrelevementEffectifEquipe);
+     Seek(FArchivePrelevementEffectifEquipe,0);
+     i:=0;
+     while not eof(FArchivePrelevementEffectifEquipe)do
+     begin
+          read(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe); Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchivePrelevementEffectifEquipe);
+     FSOperationPrelevement.ProgressPatienterPrelevementEffectifEquipe.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipeCopie:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchivePrelevementEffectifEquipeCopie,ChArchivePrelevementEffectifEquipeCopie);
+     if FileExists(ChArchivePrelevementEffectifEquipeCopie)then
+     Reset(FArchivePrelevementEffectifEquipeCopie)
+     else Rewrite(FArchivePrelevementEffectifEquipeCopie);
+     Seek(FArchivePrelevementEffectifEquipeCopie,0);
+     Truncate(FArchivePrelevementEffectifEquipeCopie);
+
+     OpenFParc(RParc);
+     ChArchivePrelevementEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe';
+     assignfile(FArchivePrelevementEffectifEquipe,ChArchivePrelevementEffectifEquipe);
+     if FileExists(ChArchivePrelevementEffectifEquipe)then
+     Reset(FArchivePrelevementEffectifEquipe)
+     else Rewrite(FArchivePrelevementEffectifEquipe);
+     Seek(FArchivePrelevementEffectifEquipe,0);
+     i:=0;
+     while not eof(FArchivePrelevementEffectifEquipe)do
+     begin
+          read(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe);  Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterPrelevementEffectifEquipe.StepIt; 
+
+          ValeurGlobale:=ValeurGlobale+1;
+
+          if(RArchivePrelevementEffectifEquipe.NumPrelevement=NumPrelevement)
+          and(RArchivePrelevementEffectifEquipe.Matricule=Matricule)
+          then
+          begin
+               Seek(FArchivePrelevementEffectifEquipeCopie,0);
+               OKDouble:=false;
+               while not eof(FArchivePrelevementEffectifEquipeCopie)and(OKDouble=false)do
+               begin
+                    read(FArchivePrelevementEffectifEquipeCopie,RArchivePrelevementEffectifEquipeCopie); Application.ProcessMessages;
+                    if (RArchivePrelevementEffectifEquipe.NumPrelevement=RArchivePrelevementEffectifEquipeCopie.NumPrelevement)
+                    and(RArchivePrelevementEffectifEquipe.CodeUtilisateur=RArchivePrelevementEffectifEquipeCopie.CodeUtilisateur)
+                    and(RArchivePrelevementEffectifEquipe.DatePrelevement=RArchivePrelevementEffectifEquipeCopie.DatePrelevement)
+                    and(RArchivePrelevementEffectifEquipe.HeurePrelevement=RArchivePrelevementEffectifEquipeCopie.HeurePrelevement)
+                    and(RArchivePrelevementEffectifEquipe.NumEquipe=RArchivePrelevementEffectifEquipeCopie.NumEquipe)
+                    and(RArchivePrelevementEffectifEquipe.Matricule=RArchivePrelevementEffectifEquipeCopie.Matricule)
+                    then
+                    begin
+                         OKDouble:=true;
+                         ValeurEcarter:=ValeurEcarter+1;
+                    end;
+               end;
+          end
+          else OKDouble:=false;
+
+          if(OKDouble=false)then
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+1;
+               Seek(FArchivePrelevementEffectifEquipeCopie,i);
+               write(FArchivePrelevementEffectifEquipeCopie,RArchivePrelevementEffectifEquipe);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchivePrelevementEffectifEquipe);
+     CloseFile(FArchivePrelevementEffectifEquipeCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPPrelevementEffectifEquipe.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobalePrelevementEffectifEquipe.Text:=Vergule(floattostr(ValeurGlobale),'0','N','');
+     FSOperationPrelevement.EditValeurEcarterPrelevementEffectifEquipe.Text:=Vergule(floattostr(ValeurEcarter),'0','N','');
+     FSOperationPrelevement.EditValeurSauvgarderPrelevementEffectifEquipe.Text:=Vergule(floattostr(ValeurSauvgarder),'0','N','');
+
+     FSOperationPrelevement.EditValeurPertePrelevementEffectifEquipe.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitPrelevementEffectifEquipe.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitPrelevementEffectifEquipe.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatPrelevementEffectifEquipe.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitPrelevementEffectifEquipe.Visible:=false;
+     end;
+end;
+
+Procedure ControleDoubleRegistreAffectationEffectifEquipe(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;  OKDouble:boolean;
+begin
+     FSOperationPrelevement.ProgressPatienterRegistreAffectationEffectifEquipe.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchiveRegistreAffectationEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreAffectationEffectifEquipe';
+     assignfile(FArchiveRegistreAffectationEffectifEquipe,ChArchiveRegistreAffectationEffectifEquipe);
+     if FileExists(ChArchiveRegistreAffectationEffectifEquipe)then
+     Reset(FArchiveRegistreAffectationEffectifEquipe)
+     else Rewrite(FArchiveRegistreAffectationEffectifEquipe);
+     Seek(FArchiveRegistreAffectationEffectifEquipe,0);
+     i:=0;
+     while not eof(FArchiveRegistreAffectationEffectifEquipe)do
+     begin
+          read(FArchiveRegistreAffectationEffectifEquipe,RArchiveRegistreAffectationEffectifEquipe);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchiveRegistreAffectationEffectifEquipe);
+     FSOperationPrelevement.ProgressPatienterRegistreAffectationEffectifEquipe.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchiveRegistreAffectationEffectifEquipeCopie:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreAffectationEffectifEquipe '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveRegistreAffectationEffectifEquipeCopie,ChArchiveRegistreAffectationEffectifEquipeCopie);
+     if FileExists(ChArchiveRegistreAffectationEffectifEquipeCopie)then
+     Reset(FArchiveRegistreAffectationEffectifEquipeCopie)
+     else Rewrite(FArchiveRegistreAffectationEffectifEquipeCopie);
+     Seek(FArchiveRegistreAffectationEffectifEquipeCopie,0);
+     Truncate(FArchiveRegistreAffectationEffectifEquipeCopie);
+
+     OpenFParc(RParc);
+     ChArchiveRegistreAffectationEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreAffectationEffectifEquipe';
+     assignfile(FArchiveRegistreAffectationEffectifEquipe,ChArchiveRegistreAffectationEffectifEquipe);
+     if FileExists(ChArchiveRegistreAffectationEffectifEquipe)then
+     Reset(FArchiveRegistreAffectationEffectifEquipe)
+     else Rewrite(FArchiveRegistreAffectationEffectifEquipe);
+     Seek(FArchiveRegistreAffectationEffectifEquipe,0);
+     i:=0;
+     while not eof(FArchiveRegistreAffectationEffectifEquipe)do
+     begin
+          read(FArchiveRegistreAffectationEffectifEquipe,RArchiveRegistreAffectationEffectifEquipe);  Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterRegistreAffectationEffectifEquipe.StepIt;
+
+          MontantOperation:=RArchiveRegistreAffectationEffectifEquipe.ValeurAffecter*RArchiveRegistreAffectationEffectifEquipe.RUniteFondsAffecter.ValeurMonetaireUnitaire;
+
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchiveRegistreAffectationEffectifEquipe.NumPrelevement=NumPrelevement)
+          and(RArchiveRegistreAffectationEffectifEquipe.Matricule=Matricule)
+          then
+          begin
+               Seek(FArchiveRegistreAffectationEffectifEquipeCopie,0);
+               OKDouble:=false;
+               while not eof(FArchiveRegistreAffectationEffectifEquipeCopie)and(OKDouble=false)do
+               begin
+                    read(FArchiveRegistreAffectationEffectifEquipeCopie,RArchiveRegistreAffectationEffectifEquipeCopie); Application.ProcessMessages;
+                    if(RArchiveRegistreAffectationEffectifEquipe.NumPrelevement=RArchiveRegistreAffectationEffectifEquipeCopie.NumPrelevement)
+                    and(RArchiveRegistreAffectationEffectifEquipe.CodeUtilisateur=RArchiveRegistreAffectationEffectifEquipeCopie.CodeUtilisateur)
+                    and(RArchiveRegistreAffectationEffectifEquipe.NumEquipe=RArchiveRegistreAffectationEffectifEquipeCopie.NumEquipe)
+                    and(RArchiveRegistreAffectationEffectifEquipe.Matricule=RArchiveRegistreAffectationEffectifEquipeCopie.Matricule)
+                    and(RArchiveRegistreAffectationEffectifEquipe.RCompteurAffecter.NumCompteur=RArchiveRegistreAffectationEffectifEquipeCopie.RCompteurAffecter.NumCompteur)
+                    and(RArchiveRegistreAffectationEffectifEquipe.RUniteFondsAffecter.NumUniteFonds=RArchiveRegistreAffectationEffectifEquipeCopie.RUniteFondsAffecter.NumUniteFonds)
+                    and(RArchiveRegistreAffectationEffectifEquipe.ValeurAffecter=RArchiveRegistreAffectationEffectifEquipeCopie.ValeurAffecter)
+                    then
+                    begin
+                         OKDouble:=true;
+                         ValeurEcarter:=ValeurEcarter+MontantOperation;
+                    end;
+               end;
+          end
+          else OKDouble:=false;
+
+          if(OKDouble=false)then
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchiveRegistreAffectationEffectifEquipeCopie,i);
+               write(FArchiveRegistreAffectationEffectifEquipeCopie,RArchiveRegistreAffectationEffectifEquipe);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchiveRegistreAffectationEffectifEquipe);
+     CloseFile(FArchiveRegistreAffectationEffectifEquipeCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPRegistreAffectationEffectifEquipe.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobaleRegistreAffectationEffectifEquipe.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterRegistreAffectationEffectifEquipe.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderRegistreAffectationEffectifEquipe.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPerteRegistreAffectationEffectifEquipe.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitRegistreAffectationEffectifEquipe.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitRegistreAffectationEffectifEquipe.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatRegistreAffectationEffectifEquipe.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitRegistreAffectationEffectifEquipe.Visible:=false;
+     end;
+end;
+
+Procedure ControleDoubleDetailArticlePrelevementUniteFonds(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real; OKDouble:boolean;
+begin
+     FSOperationPrelevement.ProgressPatienterDetailArticlePrelevementUniteFonds.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchiveDetailArticlePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds';
+     assignfile(FArchiveDetailArticlePrelevementUniteFonds,ChArchiveDetailArticlePrelevementUniteFonds);
+     if FileExists(ChArchiveDetailArticlePrelevementUniteFonds)then
+     Reset(FArchiveDetailArticlePrelevementUniteFonds)
+     else Rewrite(FArchiveDetailArticlePrelevementUniteFonds);
+     Seek(FArchiveDetailArticlePrelevementUniteFonds,0);
+     i:=0;
+     while not eof(FArchiveDetailArticlePrelevementUniteFonds)do
+     begin
+          read(FArchiveDetailArticlePrelevementUniteFonds,RArchiveDetailArticlePrelevementUniteFonds);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchiveDetailArticlePrelevementUniteFonds);
+     FSOperationPrelevement.ProgressPatienterDetailArticlePrelevementUniteFonds.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchiveDetailArticlePrelevementUniteFondsCopie:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveDetailArticlePrelevementUniteFondsCopie,ChArchiveDetailArticlePrelevementUniteFondsCopie);
+     if FileExists(ChArchiveDetailArticlePrelevementUniteFondsCopie)then
+     Reset(FArchiveDetailArticlePrelevementUniteFondsCopie)
+     else Rewrite(FArchiveDetailArticlePrelevementUniteFondsCopie);
+     Seek(FArchiveDetailArticlePrelevementUniteFondsCopie,0);
+     Truncate(FArchiveDetailArticlePrelevementUniteFondsCopie);
+
+     OpenFParc(RParc);
+     ChArchiveDetailArticlePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds';
+     assignfile(FArchiveDetailArticlePrelevementUniteFonds,ChArchiveDetailArticlePrelevementUniteFonds);
+     if FileExists(ChArchiveDetailArticlePrelevementUniteFonds)then
+     Reset(FArchiveDetailArticlePrelevementUniteFonds)
+     else Rewrite(FArchiveDetailArticlePrelevementUniteFonds);
+     Seek(FArchiveDetailArticlePrelevementUniteFonds,0);
+     i:=0;
+     while not eof(FArchiveDetailArticlePrelevementUniteFonds)do
+     begin
+          read(FArchiveDetailArticlePrelevementUniteFonds,RArchiveDetailArticlePrelevementUniteFonds); Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterDetailArticlePrelevementUniteFonds.StepIt;
+
+          MontantOperation:=RArchiveDetailArticlePrelevementUniteFonds.QuantiteJustifier*RArchiveDetailArticlePrelevementUniteFonds.PrixUnitaire;
+
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchiveDetailArticlePrelevementUniteFonds.NumPrelevement=NumPrelevement)
+          and(RArchiveDetailArticlePrelevementUniteFonds.Matricule=Matricule)
+          then
+          begin
+               Seek(FArchiveDetailArticlePrelevementUniteFondsCopie,0);
+               OKDouble:=false;
+               while not eof(FArchiveDetailArticlePrelevementUniteFondsCopie)and(OKDouble=false)do
+               begin
+                    read(FArchiveDetailArticlePrelevementUniteFondsCopie,RArchiveDetailArticlePrelevementUniteFondsCopie); Application.ProcessMessages;
+                    if (RArchiveDetailArticlePrelevementUniteFonds.NumPrelevement=RArchiveDetailArticlePrelevementUniteFondsCopie.NumPrelevement)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.NumEquipe=RArchiveDetailArticlePrelevementUniteFondsCopie.NumEquipe)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.Matricule=RArchiveDetailArticlePrelevementUniteFondsCopie.Matricule)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.DatePrelevement=RArchiveDetailArticlePrelevementUniteFondsCopie.DatePrelevement)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.HeurePrelevement=RArchiveDetailArticlePrelevementUniteFondsCopie.HeurePrelevement)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.TypeProces=RArchiveDetailArticlePrelevementUniteFondsCopie.TypeProces)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.FichierConcerne=RArchiveDetailArticlePrelevementUniteFondsCopie.FichierConcerne)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.CodeTiers=RArchiveDetailArticlePrelevementUniteFondsCopie.CodeTiers)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.CodeArticle=RArchiveDetailArticlePrelevementUniteFondsCopie.CodeArticle)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.QuantiteJustifier=RArchiveDetailArticlePrelevementUniteFondsCopie.QuantiteJustifier)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.PrixUnitaire=RArchiveDetailArticlePrelevementUniteFondsCopie.PrixUnitaire)
+                    and(RArchiveDetailArticlePrelevementUniteFonds.CoutUnitaire=RArchiveDetailArticlePrelevementUniteFondsCopie.CoutUnitaire)
+                    then
+                    begin
+                         OKDouble:=true;
+                         ValeurEcarter:=ValeurEcarter+MontantOperation;
+                    end;
+               end;
+          end
+          else OKDouble:=false;
+
+          if(OKDouble=false)then
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchiveDetailArticlePrelevementUniteFondsCopie,i);
+               write(FArchiveDetailArticlePrelevementUniteFondsCopie,RArchiveDetailArticlePrelevementUniteFonds);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchiveDetailArticlePrelevementUniteFonds);
+     CloseFile(FArchiveDetailArticlePrelevementUniteFondsCopie);
+
+     FSOperationPrelevement.AffichePatienterSVPDetailArticlePrelevementUniteFonds.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobaleDetailArticlePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterDetailArticlePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderDetailArticlePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPerteDetailArticlePrelevementUniteFonds.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitDetailArticlePrelevementUniteFonds.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitDetailArticlePrelevementUniteFonds.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatDetailArticlePrelevementUniteFonds.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitDetailArticlePrelevementUniteFonds.Visible:=false;
+     end;
+end;
+
+Procedure ControleDoubleRegistreEtatStockPrelevement(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real;  OKDouble:boolean;
+begin
+     FSOperationPrelevement.ProgressPatienterRegistreEtatStockPrelevement.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchiveRegistreEtatStockPrelevement:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement';
+     assignfile(FArchiveRegistreEtatStockPrelevement,ChArchiveRegistreEtatStockPrelevement);
+     if FileExists(ChArchiveRegistreEtatStockPrelevement)then
+     Reset(FArchiveRegistreEtatStockPrelevement)
+     else Rewrite(FArchiveRegistreEtatStockPrelevement);
+     Seek(FArchiveRegistreEtatStockPrelevement,0);
+     i:=0;
+     while not eof(FArchiveRegistreEtatStockPrelevement)do
+     begin
+          read(FArchiveRegistreEtatStockPrelevement,RArchiveRegistreEtatStockPrelevement);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchiveRegistreEtatStockPrelevement);
+     FSOperationPrelevement.ProgressPatienterRegistreEtatStockPrelevement.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchiveRegistreEtatStockPrelevementCopie:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveRegistreEtatStockPrelevementCopie,ChArchiveRegistreEtatStockPrelevementCopie);
+     if FileExists(ChArchiveRegistreEtatStockPrelevementCopie)then
+     Reset(FArchiveRegistreEtatStockPrelevementCopie)
+     else Rewrite(FArchiveRegistreEtatStockPrelevementCopie);
+     Seek(FArchiveRegistreEtatStockPrelevementCopie,0);
+     Truncate(FArchiveRegistreEtatStockPrelevementCopie);
+
+     OpenFParc(RParc);
+     ChArchiveRegistreEtatStockPrelevement:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement';
+     assignfile(FArchiveRegistreEtatStockPrelevement,ChArchiveRegistreEtatStockPrelevement);
+     if FileExists(ChArchiveRegistreEtatStockPrelevement)then
+     Reset(FArchiveRegistreEtatStockPrelevement)
+     else Rewrite(FArchiveRegistreEtatStockPrelevement);
+     Seek(FArchiveRegistreEtatStockPrelevement,0);
+     i:=0;
+     while not eof(FArchiveRegistreEtatStockPrelevement)do
+     begin
+          read(FArchiveRegistreEtatStockPrelevement,RArchiveRegistreEtatStockPrelevement);  Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterRegistreEtatStockPrelevement.StepIt;
+
+          MontantOperation:=RArchiveRegistreEtatStockPrelevement.QuantiteStock*RArchiveRegistreEtatStockPrelevement.PrixUnitaire;
+
+          ValeurGlobale:=ValeurGlobale+MontantOperation;
+
+          if(RArchiveRegistreEtatStockPrelevement.NumPrelevement=NumPrelevement)
+          and(RArchiveRegistreEtatStockPrelevement.Matricule=Matricule)
+          then
+          begin
+               Seek(FArchiveRegistreEtatStockPrelevementCopie,0);
+               OKDouble:=false;
+               while not eof(FArchiveRegistreEtatStockPrelevementCopie)and(OKDouble=false)do
+               begin
+                    read(FArchiveRegistreEtatStockPrelevementCopie,RArchiveRegistreEtatStockPrelevementCopie); Application.ProcessMessages;
+                    if (RArchiveRegistreEtatStockPrelevement.NumPrelevement=RArchiveRegistreEtatStockPrelevementCopie.NumPrelevement)
+                    and(RArchiveRegistreEtatStockPrelevement.CodeUtilisateur=RArchiveRegistreEtatStockPrelevementCopie.CodeUtilisateur)
+                    and(RArchiveRegistreEtatStockPrelevement.NumEquipe=RArchiveRegistreEtatStockPrelevementCopie.NumEquipe)
+                    and(RArchiveRegistreEtatStockPrelevement.DatePrelevement=RArchiveRegistreEtatStockPrelevementCopie.DatePrelevement)
+                    and(RArchiveRegistreEtatStockPrelevement.HeurePrelevement=RArchiveRegistreEtatStockPrelevementCopie.HeurePrelevement)
+                    and(RArchiveRegistreEtatStockPrelevement.Matricule=RArchiveRegistreEtatStockPrelevementCopie.Matricule)
+                    and(RArchiveRegistreEtatStockPrelevement.CodeStructureStock=RArchiveRegistreEtatStockPrelevementCopie.CodeStructureStock)
+                    and(RArchiveRegistreEtatStockPrelevement.CodeArticle=RArchiveRegistreEtatStockPrelevementCopie.CodeArticle)
+                    and(RArchiveRegistreEtatStockPrelevement.QuantiteInitiale=RArchiveRegistreEtatStockPrelevementCopie.QuantiteInitiale)
+                    and(RArchiveRegistreEtatStockPrelevement.QuantiteEntree=RArchiveRegistreEtatStockPrelevementCopie.QuantiteEntree)
+                    and(RArchiveRegistreEtatStockPrelevement.QuantiteSortie=RArchiveRegistreEtatStockPrelevementCopie.QuantiteSortie)
+                    and(RArchiveRegistreEtatStockPrelevement.QuantiteStock=RArchiveRegistreEtatStockPrelevementCopie.QuantiteStock)
+                    and(RArchiveRegistreEtatStockPrelevement.CoutUnitaire=RArchiveRegistreEtatStockPrelevementCopie.CoutUnitaire)
+                    and(RArchiveRegistreEtatStockPrelevement.PrixUnitaire=RArchiveRegistreEtatStockPrelevementCopie.PrixUnitaire)
+                    then
+                    begin
+                         OKDouble:=true;
+                         ValeurEcarter:=ValeurEcarter+MontantOperation;
+                    end;
+               end;
+          end
+          else OKDouble:=false;
+
+          if(OKDouble=false)then
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+MontantOperation;
+               Seek(FArchiveRegistreEtatStockPrelevementCopie,i);
+               write(FArchiveRegistreEtatStockPrelevementCopie,RArchiveRegistreEtatStockPrelevement);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchiveRegistreEtatStockPrelevement);
+     CloseFile(FArchiveRegistreEtatStockPrelevementCopie);
+
+     FSOperationPrelevement.AffichePatienterSVPRegistreEtatStockPrelevement.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobaleRegistreEtatStockPrelevement.Text:=Vergule(floattostr(ValeurGlobale),'2','C','');
+     FSOperationPrelevement.EditValeurEcarterRegistreEtatStockPrelevement.Text:=Vergule(floattostr(ValeurEcarter),'2','C','');
+     FSOperationPrelevement.EditValeurSauvgarderRegistreEtatStockPrelevement.Text:=Vergule(floattostr(ValeurSauvgarder),'2','C','');
+
+     FSOperationPrelevement.EditValeurPerteRegistreEtatStockPrelevement.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitRegistreEtatStockPrelevement.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitRegistreEtatStockPrelevement.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatRegistreEtatStockPrelevement.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitRegistreEtatStockPrelevement.Visible:=false;
+     end;
+end;
+
+Procedure ControleDoubleMoyenTransport(NumPrelevement:integer; Matricule:string; var ValeurGlobale,ValeurEcarter,ValeurSauvgarder:real);
+var i:integer;  PositionPrelevement:string;   QteOperation,MontantOperation:real; OKDouble:boolean;
+begin
+     FSOperationPrelevement.ProgressPatienterMoyenTransport.Position:=0;
+
+     OpenFParc(RParc);
+     ChArchiveMoyenTransport:=RParc.Parcours+'\'+Exercice+'FArchiveMoyenTransportPrélèvement';
+     assignfile(FArchiveMoyenTransport,ChArchiveMoyenTransport);
+     if FileExists(ChArchiveMoyenTransport)then
+     Reset(FArchiveMoyenTransport)
+     else Rewrite(FArchiveMoyenTransport);
+     Seek(FArchiveMoyenTransport,0);
+     i:=0;
+     while not eof(FArchiveMoyenTransport)do
+     begin
+          read(FArchiveMoyenTransport,RArchiveMoyenTransport);  Application.ProcessMessages;
+          i:=i+1;
+     end;
+     CloseFile(FArchiveMoyenTransport);
+     FSOperationPrelevement.ProgressPatienterMoyenTransport.Max:=i;
+
+     ValeurGlobale:=0;
+     ValeurEcarter:=0;
+     ValeurSauvgarder:=0;
+
+     OpenFParc(RParc);
+     ChArchiveMoyenTransportCopie:=RParc.Parcours+'\'+Exercice+'FArchiveMoyenTransportPrélèvement '+FSOperationPrelevement.EditTypeAnalyse.Text+' Prelevement '+inttostr(NumPrelevement)+' '+Matricule;
+     assignfile(FArchiveMoyenTransportCopie,ChArchiveMoyenTransportCopie);
+     if FileExists(ChArchiveMoyenTransportCopie)then
+     Reset(FArchiveMoyenTransportCopie)
+     else Rewrite(FArchiveMoyenTransportCopie);
+     Seek(FArchiveMoyenTransportCopie,0);
+     Truncate(FArchiveMoyenTransportCopie);
+
+     OpenFParc(RParc);
+     ChArchiveMoyenTransport:=RParc.Parcours+'\'+Exercice+'FArchiveMoyenTransportPrélèvement';
+     assignfile(FArchiveMoyenTransport,ChArchiveMoyenTransport);
+     if FileExists(ChArchiveMoyenTransport)then
+     Reset(FArchiveMoyenTransport)
+     else Rewrite(FArchiveMoyenTransport);
+     Seek(FArchiveMoyenTransport,0);
+     i:=0;
+     while not eof(FArchiveMoyenTransport)do
+     begin
+          read(FArchiveMoyenTransport,RArchiveMoyenTransport);   Application.ProcessMessages;
+          FSOperationPrelevement.ProgressPatienterMoyenTransport.StepIt;
+
+          ValeurGlobale:=ValeurGlobale+1;
+
+          if(RArchiveMoyenTransport.NumMovementPrelevement=NumPrelevement)
+          and(RArchiveMoyenTransport.MatriculeEffectif=Matricule)
+          then
+          begin
+               Seek(FArchiveMoyenTransportCopie,0);
+               OKDouble:=false;
+               while not eof(FArchiveMoyenTransportCopie)and(OKDouble=false)do
+               begin
+                    read(FArchiveMoyenTransportCopie,RArchiveMoyenTransportCopie); Application.ProcessMessages;
+                    if (RArchiveMoyenTransport.TypeFiche=RArchiveMoyenTransportCopie.TypeFiche)
+                    and(RArchiveMoyenTransport.NumMovementPrelevement=RArchiveMoyenTransportCopie.NumMovementPrelevement)
+                    and(RArchiveMoyenTransport.MatriculeEffectif=RArchiveMoyenTransportCopie.MatriculeEffectif)
+                    and(RArchiveMoyenTransport.NumFiche=RArchiveMoyenTransportCopie.NumFiche)
+                    and(RArchiveMoyenTransport.CodeTiers=RArchiveMoyenTransportCopie.CodeTiers)
+                    and(RArchiveMoyenTransport.MoyenTransport=RArchiveMoyenTransportCopie.MoyenTransport)
+                    and(RArchiveMoyenTransport.MatriculeTransport=RArchiveMoyenTransportCopie.MatriculeTransport)
+                    and(RArchiveMoyenTransport.NomChauffeur=RArchiveMoyenTransportCopie.NomChauffeur)
+                    and(RArchiveMoyenTransport.PrenomChauffeur=RArchiveMoyenTransportCopie.PrenomChauffeur)
+                    and(RArchiveMoyenTransport.PieceIdentite=RArchiveMoyenTransportCopie.PieceIdentite)
+                    then
+                    begin
+                         OKDouble:=true;
+                         ValeurEcarter:=ValeurEcarter+1;
+                    end;
+               end;
+          end
+          else OKDouble:=false;
+
+          if(OKDouble=false)then
+          begin
+               ValeurSauvgarder:=ValeurSauvgarder+1;
+               Seek(FArchiveMoyenTransportCopie,i);
+               write(FArchiveMoyenTransportCopie,RArchiveMoyenTransport);
+               i:=i+1;
+          end;
+     end;
+     CloseFile(FArchiveMoyenTransport);
+     CloseFile(FArchiveMoyenTransportCopie);
+     
+     FSOperationPrelevement.AffichePatienterSVPMoyenTransport.Visible:=false;
+
+     FSOperationPrelevement.EditValeurGlobaleMoyenTransport.Text:=Vergule(floattostr(ValeurGlobale),'0','N','');
+     FSOperationPrelevement.EditValeurEcarterMoyenTransport.Text:=Vergule(floattostr(ValeurEcarter),'0','N','');
+     FSOperationPrelevement.EditValeurSauvgarderMoyenTransport.Text:=Vergule(floattostr(ValeurSauvgarder),'0','N','');
+
+     FSOperationPrelevement.EditValeurPerteMoyenTransport.Text:=Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','');
+
+     if(ValeurEcarter=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Color:=clAqua;
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Caption:='Aucun Transfert !';
+          FSOperationPrelevement.BitMoyenTransport.Visible:=false;
+     end
+     else
+     if(ValeurGlobale-ValeurEcarter-ValeurSauvgarder=0)then
+     begin
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Color:=clLime;
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Caption:='Transfert réussi !';
+          FSOperationPrelevement.BitMoyenTransport.Visible:=true;
+     end
+     else
+     begin
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Color:=clRed;
+          FSOperationPrelevement.AfficheResultatMoyenTransport.Caption:='Anomalie ! Perte de '+Vergule(floattostr(ValeurGlobale-ValeurEcarter-ValeurSauvgarder),'2','C','')+' !';
+          FSOperationPrelevement.BitMoyenTransport.Visible:=false;
+     end;
+end;
+
+end.

@@ -1,0 +1,4697 @@
+unit UnitSuppression;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, Grids, StdCtrls, Buttons, ExtCtrls, ComCtrls, Mask, QuickRpt, QRCtrls;
+
+Function SupprimerFFicheTechnique(CodeProjet,NumFicheTechnique:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFRubriqueFicheTechnique(CodeProjet,NumFicheTechnique,NumRubrique:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFDetailRubriqueFicheTechnique(CodeProjet,NumFicheTechnique,NumRubrique,NumDetailRubrique:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFPlanificateur(CodeProjet,NumFicheTechnique,NumRubrique,NumPlanificateur:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFAgence(CodeBanque,CodeAgence:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFBanqueGlobal(CodeBanqueGlobal:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFParametreEcheancier(NumEcheancier:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFormulairePreselection(PositionFormulairePreselection:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerTypeFichierTiers(OrdreTypeFichierTiers:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerBaseAvis(PositionBaseAvis:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerLocalisationGeographique(CodeLocalisationGeographique,FichierLocalisation:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerTempsAlerteAvantAction(TypeProces,ActionSourceAlerte:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerParametreTaxeAjoute(PositionParametreTaxeAjoute:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerBaremeTaxeAjouter(PositionBaremeTaxeAjouter:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Procedure DeleteFEtat(PositionEtat:integer; CodeTypeFormule:string; var Confirme:boolean);
+Procedure DeleteFRubriqueEtat(PositionEtat,PositionRubriqueEtat:integer; CodeTypeFormule:string; var Confirme:boolean);
+Procedure DeleteFAutoImporteFormuleEtat(PositionEtat:integer; TypeFormule:string; var Confirme:boolean);
+Procedure DeleteFListeCompteCP(NumCptPrincipal,NumCptCP:string; var Confirme:boolean);
+Procedure DeleteFCompteTiers(NumCptPrincipal,NumCptTiers:string; var Confirme:boolean);
+Procedure DeleteFDonneesCompteTiers(NumCptTiers,NumDonnees:string; var Confirme:boolean);
+Procedure DeleteFModeleDonneesCteTiers(NumDonnees:integer; var Confirme:boolean);
+Procedure DeleteFMarche(NSMarche:integer; var Confirme:boolean);
+Procedure DeleteFStructureMarche(NSMarche,NStructureMarche:integer; var Confirme:boolean);
+Procedure DeleteFStatistiqueMarche(NSMarche,NStructureMarche,NStatistiqueMarche:string; var Confirme:boolean);
+Procedure DeleteFAttachement(NSMarche,NAttachement:string; var Confirme:boolean);
+Procedure DeleteFDetailAttachement(NSMarche,NDetailAttachement:string; var Confirme:boolean);
+Procedure DeleteFDetailMarche(NSMarche,NDetailMarche:integer; var Confirme:boolean);
+Procedure DeleteFSituationMarche(NSMarche,NSituationMarche,dateSituationMarche:string; var Confirme:boolean);
+Procedure DeleteFFinance(NFinance:integer; var Confirme:boolean);
+Procedure DeleteFOperationFinance(NSMarche,NOperationFinance:integer; var Confirme:boolean);
+Procedure DeleteFFormuleComposition(CodeProduit,CodeMatiere:string; var Confirme:boolean);
+Procedure DeleteFBordereauEnvoi(PositionBordereau:string; var Confirme:boolean);
+Procedure DeleteFDetailBordereauEnvoi(PositionBordereau,PositionDetailBordereauEnvoi:string; var Confirme:boolean);
+Function  SupprimerIdentificateurEnttreprise(PositionIdentificateur:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerOrganismeTutelle(PositionOrganismeTutelle:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerDataIdentificateurEnttreprise(PositionDataIdentificateurEnttreprise:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Procedure DeleteFSeriePieceDomiciliation(PositionSeriePieceDomiciliation:string; var Confirme:boolean);
+Procedure DeleteFGroupeTiers(PositionGroupeTiers,FichierCocerne:string; var Confirme:boolean);
+Procedure DeleteFListeGroupeTiers(PositionGroupeTiers,PositionListeGroupeTiers:string; var Confirme:boolean);
+Procedure DeleteFRegistreAffectationEffectifEquipe(NumPrelevement:integer; Matricule,NumAffectationEffectifEquipe,NumCompteur,NumAffectationCompteur:string; var Confirme:boolean);
+Procedure DeleteFDetailArticlePrelevementUniteFonds(PositionDetailArticlePrelevementUniteFonds,FichierConcerne:string; var Confirme:boolean);
+Procedure DeleteFPiecesComptable(NumPiecesComptable,NumEntite:string; var Confirme:boolean);
+Procedure DeleteFJournalGeneral(NumImputation,NumEntite:string; var Confirme:boolean);
+Procedure DeleteFBaremeComptabilisationCodeParCompte(PositionBaremeCCPC:string; var Confirme:boolean);
+Procedure DeleteFListeValeursFormuleArticle(PositionListeValeursFormuleArticle:string; var Confirme:boolean);
+Procedure DeleteFTitreDataTiers(PositionTitreDataTiers:string; var Confirme:boolean);
+Procedure DeleteFMoyenTransport(PositionMoyenTransport,TypeFiche,NumMovementPrelevement:string; var Confirme:boolean);
+Procedure DeleteFArchivePhotoCommentaire(PositionArchivePhotoCommentaire:string; var Confirme:boolean);
+Procedure DeleteFListeFichierConcernePartageReseaux(NumAdresseProces,FichierConcerne:string; var Confirme:boolean);
+Procedure DeleteFAutorisationPartageRegistre(PositionAPR:string; var Confirme:boolean);
+Procedure DeleteFPublicationReseauxProgrammer(PositionPublicationReseauxProgrammer:string; var Confirme:boolean);
+Procedure DeleteFDetailStructure(PositionDetailStructure:string; var Confirme:boolean);
+Procedure DeleteFArticleDetailStructure(PositionDetailStructure,PositionArticleDetailStructure:string; var Confirme:boolean);
+Function SupprimerFPrelevement(NumPrelevement,Matricule:string; SupprimerUnSeul,AfficherRapport:boolean; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFVehiculePrelevementTare(MatriculeResponsablePrelevement:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFResponsablePrelevement(CodeResponsablePrelevement:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFQteforfaitStock(PositionQteforfaitStock:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Procedure ViderTableau(TableauAVider:TStringGrid; FixedRows:integer);
+Function DeleteFStock(Fichier,CodeStock:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFLastNumDetailMouvementMAJ(DateOperationMAJ,FichierConcerneDetailMouvement,CodeSFamille:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFRubriquesSousMenu(PositionRubriqueSousMenu:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFIntituleImprime(PositionIntituleImprime:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFImprime(PositionImprime:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+Function SupprimerFAffectationMenuRaccourci(NomBoutonRaccourcis:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+
+implementation
+
+Uses UnitInitialisation, UnitShowmessage, UnitFSMenuPrincipal;
+
+Function SupprimerFBanqueGlobal(CodeBanqueGlobal:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;  TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerFBanqueGlobal:=false;
+
+     TypeProces:='Paie';
+     FichierConcerne:='FBanqueGlobal';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OpenFParc(RParc);
+     ChBanqueGlobalCopie:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FBanqueGlobalCopie,ChBanqueGlobalCopie);
+     if FileExists(ChBanqueGlobalCopie)
+     then Reset(FBanqueGlobalCopie)
+     else Rewrite(FBanqueGlobalCopie);
+     Seek(FBanqueGlobalCopie,0);
+     Truncate(FBanqueGlobalCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChBanqueGlobal:=Adresse;
+     assignfile(FBanqueGlobal,ChBanqueGlobal);
+     if FileExists(ChBanqueGlobal)then
+     begin
+          Reset(FBanqueGlobal);
+          Seek(FBanqueGlobal,0);
+          i:=0;
+          while not eof(FBanqueGlobal)do
+          begin
+               read(FBanqueGlobal,RBanqueGlobal);
+               RExistant:=RExistant+1;
+
+               if(CodeBanqueGlobal<>'')then
+               begin
+                    if(RBanqueGlobal.CodeBanque=CodeBanqueGlobal)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FBanqueGlobalCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FBanqueGlobalCopie,RBanqueGlobal);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FBanqueGlobalCopie,0);
+          i:=0;
+          while not eof(FBanqueGlobalCopie)do
+          begin
+               read(FBanqueGlobalCopie,RBanqueGlobalCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FBanqueGlobalCopie,0);
+               Seek(FBanqueGlobal,0);
+               Truncate(FBanqueGlobal);
+               i:=0;
+               while not eof(FBanqueGlobalCopie)do
+               begin
+                    read(FBanqueGlobalCopie,RBanqueGlobalCopie);
+                    Seek(FBanqueGlobal,i);
+                    write(FBanqueGlobal,RBanqueGlobalCopie);
+               i:=i+1;
+               end;
+               SupprimerFBanqueGlobal:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FBanqueGlobal);
+     end
+     else AfficherMessage('Le fichier '+ChBanqueGlobal+' n''éxiste pas !');
+
+     CloseFile(FBanqueGlobalCopie);
+end;
+
+Function SupprimerFAgence(CodeBanque,CodeAgence:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;  TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerFAgence:=false;
+
+     TypeProces:='Paie';
+     FichierConcerne:='FAgence';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChAgenceCopie:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FAgenceCopie,ChAgenceCopie);
+     if FileExists(ChAgenceCopie)
+     then Reset(FAgenceCopie)
+     else Rewrite(FAgenceCopie);
+     Seek(FAgenceCopie,0);
+     Truncate(FAgenceCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChAgence:=Adresse;
+     assignfile(FAgence,ChAgence);
+     if FileExists(ChAgence)then
+     begin
+          Reset(FAgence);
+          Seek(FAgence,0);
+          i:=0;
+          while not eof(FAgence)do
+          begin
+               read(FAgence,RAgence);
+               RExistant:=RExistant+1;
+
+               if(CodeBanque<>'')then
+               begin
+                    if(RAgence.CodeBanque=CodeBanque)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=true)then
+               begin
+                    if(CodeAgence<>'')then
+                    begin
+                         if(RAgence.CodeAgence=CodeAgence)
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end;
+               end;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FAgenceCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FAgenceCopie,RAgence);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FAgenceCopie,0);
+          i:=0;
+          while not eof(FAgenceCopie)do
+          begin
+               read(FAgenceCopie,RAgenceCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FAgenceCopie,0);
+               Seek(FAgence,0);
+               Truncate(FAgence);
+               i:=0;
+               while not eof(FAgenceCopie)do
+               begin
+                    read(FAgenceCopie,RAgenceCopie);
+                    Seek(FAgence,i);
+                    write(FAgence,RAgenceCopie);
+               i:=i+1;
+               end;
+               SupprimerFAgence:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FAgence);
+     end
+     else AfficherMessage('Le fichier '+ChAgence+' n''éxiste pas !');
+
+     CloseFile(FAgenceCopie);
+end;
+
+Function SupprimerFFicheTechnique(CodeProjet,NumFicheTechnique:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerFFicheTechnique:=false;
+     OpenFParc(RParc);
+
+     ChFicheTechniqueSupprime:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FFicheTechniqueSupprime,ChFicheTechniqueSupprime);
+     if FileExists(ChFicheTechniqueSupprime)
+     then Reset(FFicheTechniqueSupprime)
+     else Rewrite(FFicheTechniqueSupprime);
+     Seek(FFicheTechniqueSupprime,0);
+     Truncate(FFicheTechniqueSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChFicheTechnique:=RParc.Parcours+'\'+Exercice+'FFicheTechnique';
+     assignfile(FFicheTechnique,ChFicheTechnique);
+     if FileExists(ChFicheTechnique)then
+     begin
+          Reset(FFicheTechnique);
+          Seek(FFicheTechnique,0);
+          i:=0;
+          while not eof(FFicheTechnique)do
+          begin
+               read(FFicheTechnique,RFicheTechnique);
+               RExistant:=RExistant+1;
+
+               if(CodeProjet<>'')then
+               begin
+                    if(Firstlaters(RFicheTechnique.CodeProjet,longueur(CodeProjet))=CodeProjet)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=true;
+
+               if(OKSuppression=true)then
+               begin
+                    if(NumFicheTechnique<>'')then
+                    begin
+                         if(RFicheTechnique.NumFicheTechnique=strtointeger(NumFicheTechnique))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end
+                    else if(CodeProjet='')then OKSuppression:=false;
+               end;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FFicheTechniqueSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FFicheTechniqueSupprime,RFicheTechnique);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FFicheTechniqueSupprime,0);
+          i:=0;
+          while not eof(FFicheTechniqueSupprime)do
+          begin
+               read(FFicheTechniqueSupprime,RFicheTechniqueSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FFicheTechniqueSupprime,0);
+               Seek(FFicheTechnique,0);
+               Truncate(FFicheTechnique);
+               i:=0;
+               while not eof(FFicheTechniqueSupprime)do
+               begin
+                    read(FFicheTechniqueSupprime,RFicheTechniqueSupprime);
+                    Seek(FFicheTechnique,i);
+                    write(FFicheTechnique,RFicheTechniqueSupprime);
+               i:=i+1;
+               end;
+               SupprimerFFicheTechnique:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FFicheTechnique);
+     end
+     else AfficherMessage('Le fichier '+ChFicheTechnique+' n''éxiste pas !');
+
+     CloseFile(FFicheTechniqueSupprime);
+end;
+
+Function SupprimerFRubriqueFicheTechnique(CodeProjet,NumFicheTechnique,NumRubrique:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerFRubriqueFicheTechnique:=false;
+     OpenFParc(RParc);
+
+     ChRubriqueFicheTechniqueSupprime:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FRubriqueFicheTechniqueSupprime,ChRubriqueFicheTechniqueSupprime);
+     if FileExists(ChRubriqueFicheTechniqueSupprime)
+     then Reset(FRubriqueFicheTechniqueSupprime)
+     else Rewrite(FRubriqueFicheTechniqueSupprime);
+     Seek(FRubriqueFicheTechniqueSupprime,0);
+     Truncate(FRubriqueFicheTechniqueSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChRubriqueFicheTechnique:=RParc.Parcours+'\'+Exercice+'FRubriqueFicheTechnique';
+     assignfile(FRubriqueFicheTechnique,ChRubriqueFicheTechnique);
+     if FileExists(ChRubriqueFicheTechnique)then
+     begin
+          Reset(FRubriqueFicheTechnique);
+          Seek(FRubriqueFicheTechnique,0);
+          i:=0;
+          while not eof(FRubriqueFicheTechnique)do
+          begin
+               read(FRubriqueFicheTechnique,RRubriqueFicheTechnique);
+               RExistant:=RExistant+1;
+
+               RubriqueArborescence('',inttostr(RRubriqueFicheTechnique.NumRubrique),RRubriqueFicheTechniqueCopie,RFicheTechniqueCopie,RTypeAvis);
+
+               if(CodeProjet<>'')then
+               begin
+                    if(Firstlaters(RFicheTechniqueCopie.CodeProjet,longueur(CodeProjet))=CodeProjet)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=true;
+
+               if(OKSuppression=true)then
+               begin
+                    if(NumFicheTechnique<>'')then
+                    begin
+                         if(RRubriqueFicheTechnique.NumFicheTechnique=strtointeger(NumFicheTechnique))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end
+                    else if(CodeProjet='')then OKSuppression:=false;
+               end;
+
+               if(OKSuppression=true)then
+               begin
+                    if(NumRubrique<>'')then
+                    begin
+                         if(RRubriqueFicheTechnique.NumRubrique=strtointeger(NumRubrique))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end
+                    else if((CodeProjet='')and(NumFicheTechnique=''))then OKSuppression:=false;
+               end;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FRubriqueFicheTechniqueSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FRubriqueFicheTechniqueSupprime,RRubriqueFicheTechnique);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FRubriqueFicheTechniqueSupprime,0);
+          i:=0;
+          while not eof(FRubriqueFicheTechniqueSupprime)do
+          begin
+               read(FRubriqueFicheTechniqueSupprime,RRubriqueFicheTechniqueSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FRubriqueFicheTechniqueSupprime,0);
+               Seek(FRubriqueFicheTechnique,0);
+               Truncate(FRubriqueFicheTechnique);
+               i:=0;
+               while not eof(FRubriqueFicheTechniqueSupprime)do
+               begin
+                    read(FRubriqueFicheTechniqueSupprime,RRubriqueFicheTechniqueSupprime);
+                    Seek(FRubriqueFicheTechnique,i);
+                    write(FRubriqueFicheTechnique,RRubriqueFicheTechniqueSupprime);
+               i:=i+1;
+               end;
+               SupprimerFRubriqueFicheTechnique:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FRubriqueFicheTechnique);
+     end
+     else AfficherMessage('Le fichier '+ChRubriqueFicheTechnique+' n''éxiste pas !');
+
+     CloseFile(FRubriqueFicheTechniqueSupprime);
+end;
+
+Function SupprimerFDetailRubriqueFicheTechnique(CodeProjet,NumFicheTechnique,NumRubrique,NumDetailRubrique:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerFDetailRubriqueFicheTechnique:=false;
+     OpenFParc(RParc);
+
+     ChDetailRubriqueFicheTechniqueSupprime:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FDetailRubriqueFicheTechniqueSupprime,ChDetailRubriqueFicheTechniqueSupprime);
+     if FileExists(ChDetailRubriqueFicheTechniqueSupprime)
+     then Reset(FDetailRubriqueFicheTechniqueSupprime)
+     else Rewrite(FDetailRubriqueFicheTechniqueSupprime);
+     Seek(FDetailRubriqueFicheTechniqueSupprime,0);
+     Truncate(FDetailRubriqueFicheTechniqueSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChDetailRubriqueFicheTechnique:=RParc.Parcours+'\'+Exercice+'FDetailRubriqueFicheTechnique';
+     assignfile(FDetailRubriqueFicheTechnique,ChDetailRubriqueFicheTechnique);
+     if FileExists(ChDetailRubriqueFicheTechnique)then
+     begin
+          Reset(FDetailRubriqueFicheTechnique);
+          Seek(FDetailRubriqueFicheTechnique,0);
+          i:=0;
+          while not eof(FDetailRubriqueFicheTechnique)do
+          begin
+               read(FDetailRubriqueFicheTechnique,RDetailRubriqueFicheTechnique);
+               RExistant:=RExistant+1;
+
+               RubriqueArborescence('',inttostr(RDetailRubriqueFicheTechnique.NumRubrique),RRubriqueFicheTechniqueCopie,RFicheTechniqueCopie,RTypeAvis);
+
+               if(CodeProjet<>'')then
+               begin
+                    if(Firstlaters(RFicheTechniqueCopie.CodeProjet,longueur(CodeProjet))=CodeProjet)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=true;
+
+               if(OKSuppression=true)then
+               begin
+                    if(NumFicheTechnique<>'')then
+                    begin
+                         if(RFicheTechniqueCopie.NumFicheTechnique=strtointeger(NumFicheTechnique))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end
+                    else if(CodeProjet<>'')then OKSuppression:=true;
+               end;
+
+               if(OKSuppression=true)then
+               begin
+                    if(NumRubrique<>'')then
+                    begin
+                         if(RDetailRubriqueFicheTechnique.NumRubrique=strtointeger(NumRubrique))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end
+                    else if((CodeProjet<>'')or(NumFicheTechnique<>''))then OKSuppression:=true;
+               end;
+
+               if(OKSuppression=true)then
+               begin
+                    if(NumDetailRubrique<>'')then
+                    begin
+                         if(RDetailRubriqueFicheTechnique.NumDetailRubrique=strtointeger(NumDetailRubrique))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;   
+                    end
+                    else if((CodeProjet<>'')or(NumFicheTechnique<>'')or(NumRubrique<>''))then OKSuppression:=true;
+               end;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FDetailRubriqueFicheTechniqueSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FDetailRubriqueFicheTechniqueSupprime,RDetailRubriqueFicheTechnique);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FDetailRubriqueFicheTechniqueSupprime,0);
+          i:=0;
+          while not eof(FDetailRubriqueFicheTechniqueSupprime)do
+          begin
+               read(FDetailRubriqueFicheTechniqueSupprime,RDetailRubriqueFicheTechniqueSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FDetailRubriqueFicheTechniqueSupprime,0);
+               Seek(FDetailRubriqueFicheTechnique,0);
+               Truncate(FDetailRubriqueFicheTechnique);
+               i:=0;
+               while not eof(FDetailRubriqueFicheTechniqueSupprime)do
+               begin
+                    read(FDetailRubriqueFicheTechniqueSupprime,RDetailRubriqueFicheTechniqueSupprime);
+                    Seek(FDetailRubriqueFicheTechnique,i);
+                    write(FDetailRubriqueFicheTechnique,RDetailRubriqueFicheTechniqueSupprime);
+               i:=i+1;
+               end;
+               SupprimerFDetailRubriqueFicheTechnique:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FDetailRubriqueFicheTechnique);
+     end
+     else AfficherMessage('Le fichier '+ChDetailRubriqueFicheTechnique+' n''éxiste pas !');
+
+     CloseFile(FDetailRubriqueFicheTechniqueSupprime);
+end;
+
+Function SupprimerFPlanificateur(CodeProjet,NumFicheTechnique,NumRubrique,NumPlanificateur:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerFPlanificateur:=false;
+     OpenFParc(RParc);
+
+     ChPlanificateurSupprime:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FPlanificateurSupprime,ChPlanificateurSupprime);
+     if FileExists(ChPlanificateurSupprime)
+     then Reset(FPlanificateurSupprime)
+     else Rewrite(FPlanificateurSupprime);
+     Seek(FPlanificateurSupprime,0);
+     Truncate(FPlanificateurSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChPlanificateur:=RParc.Parcours+'\'+Exercice+'FPlanificateur';
+     assignfile(FPlanificateur,ChPlanificateur);
+     if FileExists(ChPlanificateur)then
+     begin
+          Reset(FPlanificateur);
+          Seek(FPlanificateur,0);
+          i:=0;
+          while not eof(FPlanificateur)do
+          begin
+               read(FPlanificateur,RPlanificateur);
+               RExistant:=RExistant+1;
+
+               RubriqueArborescence('',inttostr(RPlanificateur.NumRubrique),RRubriqueFicheTechniqueCopie,RFicheTechniqueCopie,RTypeAvis);
+
+               if(CodeProjet<>'')then
+               begin
+                    if(Firstlaters(RFicheTechniqueCopie.CodeProjet,longueur(CodeProjet))=CodeProjet)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=true;
+
+               if(OKSuppression=true)then
+               begin
+                    if(NumFicheTechnique<>'')then
+                    begin
+                         if(RFicheTechniqueCopie.NumFicheTechnique=strtointeger(NumFicheTechnique))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end;
+               end;
+
+               if(OKSuppression=true)then
+               begin
+                    if(NumRubrique<>'')then
+                    begin
+                         if(RPlanificateur.NumRubrique=strtointeger(NumRubrique))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end;
+               end;
+
+               if(OKSuppression=true)then
+               begin
+                    if(NumPlanificateur<>'')then
+                    begin
+                         if(RPlanificateur.NumPlanificateur=strtointeger(NumPlanificateur))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end;
+               end;
+
+               if(CodeProjet='')and(NumFicheTechnique='')and(NumRubrique='')and(NumPlanificateur='')then OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FPlanificateurSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FPlanificateurSupprime,RPlanificateur);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FPlanificateurSupprime,0);
+          i:=0;
+          while not eof(FPlanificateurSupprime)do
+          begin
+               read(FPlanificateurSupprime,RPlanificateurSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FPlanificateurSupprime,0);
+               Seek(FPlanificateur,0);
+               Truncate(FPlanificateur);
+               i:=0;
+               while not eof(FPlanificateurSupprime)do
+               begin
+                    read(FPlanificateurSupprime,RPlanificateurSupprime);
+                    Seek(FPlanificateur,i);
+                    write(FPlanificateur,RPlanificateurSupprime);
+               i:=i+1;
+               end;
+               SupprimerFPlanificateur:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FPlanificateur);
+     end
+     else AfficherMessage('Le fichier '+ChPlanificateur+' n''éxiste pas !');
+
+     CloseFile(FPlanificateurSupprime);
+end;
+
+Function SupprimerFParametreEcheancier(NumEcheancier:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;  TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerFParametreEcheancier:=false;
+
+     TypeProces:='Paie';
+     FichierConcerne:='FParametreEcheancier';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OpenFParc(RParc);
+     ChParametreEcheancierCopie:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FParametreEcheancierCopie,ChParametreEcheancierCopie);
+     if FileExists(ChParametreEcheancierCopie)
+     then Reset(FParametreEcheancierCopie)
+     else Rewrite(FParametreEcheancierCopie);
+     Seek(FParametreEcheancierCopie,0);
+     Truncate(FParametreEcheancierCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChParametreEcheancier:=Adresse;
+     assignfile(FParametreEcheancier,ChParametreEcheancier);
+     if FileExists(ChParametreEcheancier)then
+     begin
+          Reset(FParametreEcheancier);
+          Seek(FParametreEcheancier,0);
+          i:=0;
+          while not eof(FParametreEcheancier)do
+          begin
+               read(FParametreEcheancier,RParametreEcheancier);
+               RExistant:=RExistant+1;
+
+               if(NumEcheancier<>'')then
+               begin
+                    if(inttostr(RParametreEcheancier.NumEcheancier)=NumEcheancier)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FParametreEcheancierCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FParametreEcheancierCopie,RParametreEcheancier);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FParametreEcheancierCopie,0);
+          i:=0;
+          while not eof(FParametreEcheancierCopie)do
+          begin
+               read(FParametreEcheancierCopie,RParametreEcheancierCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FParametreEcheancierCopie,0);
+               Seek(FParametreEcheancier,0);
+               Truncate(FParametreEcheancier);
+               i:=0;
+               while not eof(FParametreEcheancierCopie)do
+               begin
+                    read(FParametreEcheancierCopie,RParametreEcheancierCopie);
+                    Seek(FParametreEcheancier,i);
+                    write(FParametreEcheancier,RParametreEcheancierCopie);
+               i:=i+1;
+               end;
+               SupprimerFParametreEcheancier:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FParametreEcheancier);
+     end
+     else AfficherMessage('Le fichier '+ChParametreEcheancier+' n''éxiste pas !');
+
+     CloseFile(FParametreEcheancierCopie);
+end;
+
+Function SupprimerFormulairePreselection(PositionFormulairePreselection:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerFormulairePreselection:=false;
+     OpenFParc(RParc);
+
+     ChFormulairePreselectionSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FFormulairePreselectionSupprime,ChFormulairePreselectionSupprime);
+     if FileExists(ChFormulairePreselectionSupprime)
+     then Reset(FFormulairePreselectionSupprime)
+     else Rewrite(FFormulairePreselectionSupprime);
+     Seek(FFormulairePreselectionSupprime,0);
+     Truncate(FFormulairePreselectionSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChFormulairePreselection:=RParc.Parcours+'\'+Exercice+'FFormulairePreselection';
+     assignfile(FFormulairePreselection,ChFormulairePreselection);
+     if FileExists(ChFormulairePreselection)then
+     begin
+          Reset(FFormulairePreselection);
+          Seek(FFormulairePreselection,0);
+          i:=0;
+          while not eof(FFormulairePreselection)do
+          begin
+               read(FFormulairePreselection,RFormulairePreselection);
+               RExistant:=RExistant+1;
+
+               if(PositionFormulairePreselection<>'')then
+               begin
+                    if(RFormulairePreselection.NumFormulairePreselection=strtointeger(PositionFormulairePreselection))
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FFormulairePreselectionSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FFormulairePreselectionSupprime,RFormulairePreselection);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FFormulairePreselectionSupprime,0);
+          i:=0;
+          while not eof(FFormulairePreselectionSupprime)do
+          begin
+               read(FFormulairePreselectionSupprime,RFormulairePreselectionSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FFormulairePreselectionSupprime,0);
+               Seek(FFormulairePreselection,0);
+               Truncate(FFormulairePreselection);
+               i:=0;
+               while not eof(FFormulairePreselectionSupprime)do
+               begin
+                    read(FFormulairePreselectionSupprime,RFormulairePreselectionSupprime);
+                    Seek(FFormulairePreselection,i);
+                    write(FFormulairePreselection,RFormulairePreselectionSupprime);
+               i:=i+1;
+               end;
+               SupprimerFormulairePreselection:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FFormulairePreselection);
+     end
+     else AfficherMessage('Le fichier '+ChFormulairePreselection+' n''éxiste pas !');
+
+     CloseFile(FFormulairePreselectionSupprime);
+end;
+
+Function SupprimerTypeFichierTiers(OrdreTypeFichierTiers:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;   TypeProces,FichierConserne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerTypeFichierTiers:=false;
+     OpenFParc(RParc);      
+
+     ChTypeFichierTiersSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FTypeFichierTiersSupprime,ChTypeFichierTiersSupprime);
+     if FileExists(ChTypeFichierTiersSupprime)
+     then Reset(FTypeFichierTiersSupprime)
+     else Rewrite(FTypeFichierTiersSupprime);
+     Seek(FTypeFichierTiersSupprime,0);
+     Truncate(FTypeFichierTiersSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     TypeProces:='Business';   FichierConserne:='FTypeFichierTiers';
+     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+     end;
+
+     ChTypeFichierTiers:=Adresse;
+     assignfile(FTypeFichierTiers,ChTypeFichierTiers);
+     if FileExists(ChTypeFichierTiers)then
+     begin
+          Reset(FTypeFichierTiers);
+          Seek(FTypeFichierTiers,0);
+          i:=0;
+          while not eof(FTypeFichierTiers)do
+          begin
+               read(FTypeFichierTiers,RTypeFichierTiers);
+               RExistant:=RExistant+1;
+
+               if(OrdreTypeFichierTiers<>'')then
+               begin
+                    if(RTypeFichierTiers.OrdreTypeFichierTiers=strtointeger(OrdreTypeFichierTiers))
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FTypeFichierTiersSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FTypeFichierTiersSupprime,RTypeFichierTiers);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FTypeFichierTiersSupprime,0);
+          i:=0;
+          while not eof(FTypeFichierTiersSupprime)do
+          begin
+               read(FTypeFichierTiersSupprime,RTypeFichierTiersSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FTypeFichierTiersSupprime,0);
+               Seek(FTypeFichierTiers,0);
+               Truncate(FTypeFichierTiers);
+               i:=0;
+               while not eof(FTypeFichierTiersSupprime)do
+               begin
+                    read(FTypeFichierTiersSupprime,RTypeFichierTiersSupprime);
+                    Seek(FTypeFichierTiers,i);
+                    write(FTypeFichierTiers,RTypeFichierTiersSupprime);
+               i:=i+1;
+               end;
+               SupprimerTypeFichierTiers:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FTypeFichierTiers);
+     end
+     else AfficherMessage('Le fichier '+ChTypeFichierTiers+' n''éxiste pas !');
+
+     CloseFile(FTypeFichierTiersSupprime);
+end;
+
+Function SupprimerBaseAvis(PositionBaseAvis:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;   TypeProces,FichierConserne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerBaseAvis:=false;
+     OpenFParc(RParc);
+     
+     ChBaseAvisSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FBaseAvisSupprime,ChBaseAvisSupprime);
+     if FileExists(ChBaseAvisSupprime)
+     then Reset(FBaseAvisSupprime)
+     else Rewrite(FBaseAvisSupprime);
+     Seek(FBaseAvisSupprime,0);
+     Truncate(FBaseAvisSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     TypeProces:='Business';   FichierConserne:='FBaseAvis';
+     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+     end;
+
+     ChBaseAvis:=Adresse;
+     assignfile(FBaseAvis,ChBaseAvis);
+     if FileExists(ChBaseAvis)then
+     begin
+          Reset(FBaseAvis);
+          Seek(FBaseAvis,0);
+          i:=0;
+          while not eof(FBaseAvis)do
+          begin
+               read(FBaseAvis,RBaseAvis);
+               RExistant:=RExistant+1;
+
+               if(PositionBaseAvis<>'')then
+               begin
+                    if(inttostr(RBaseAvis.PositionBaseAvis)=PositionBaseAvis)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FBaseAvisSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FBaseAvisSupprime,RBaseAvis);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FBaseAvisSupprime,0);
+          i:=0;
+          while not eof(FBaseAvisSupprime)do
+          begin
+               read(FBaseAvisSupprime,RBaseAvisSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FBaseAvisSupprime,0);
+               Seek(FBaseAvis,0);
+               Truncate(FBaseAvis);
+               i:=0;
+               while not eof(FBaseAvisSupprime)do
+               begin
+                    read(FBaseAvisSupprime,RBaseAvisSupprime);
+                    Seek(FBaseAvis,i);
+                    write(FBaseAvis,RBaseAvisSupprime);
+               i:=i+1;
+               end;
+               SupprimerBaseAvis:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FBaseAvis);
+     end
+     else AfficherMessage('Le fichier '+ChBaseAvis+' n''éxiste pas !');
+
+     CloseFile(FBaseAvisSupprime);
+end;
+
+Function SupprimerLocalisationGeographique(CodeLocalisationGeographique,FichierLocalisation:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerLocalisationGeographique:=false;
+     OpenFParc(RParc);
+
+     ChLocalisationGeographiqueSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FLocalisationGeographiqueSupprime,ChLocalisationGeographiqueSupprime);
+     if FileExists(ChLocalisationGeographiqueSupprime)
+     then Reset(FLocalisationGeographiqueSupprime)
+     else Rewrite(FLocalisationGeographiqueSupprime);
+     Seek(FLocalisationGeographiqueSupprime,0);
+     Truncate(FLocalisationGeographiqueSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChLocalisationGeographique:=RParc.Parcours+'\'+Exercice+FichierLocalisation;
+     assignfile(FLocalisationGeographique,ChLocalisationGeographique);
+     if FileExists(ChLocalisationGeographique)then
+     begin
+          Reset(FLocalisationGeographique);
+          Seek(FLocalisationGeographique,0);
+          i:=0;
+          while not eof(FLocalisationGeographique)do
+          begin
+               read(FLocalisationGeographique,RLocalisationGeographique);
+               RExistant:=RExistant+1;
+
+              if(CodeLocalisationGeographique<>'')then
+              begin
+                   if(RLocalisationGeographique.CodeLocalisationGeographique=CodeLocalisationGeographique)
+                   then OKSuppression:=true
+                   else OKSuppression:=false;
+              end
+              else OKSuppression:=false;;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FLocalisationGeographiqueSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FLocalisationGeographiqueSupprime,RLocalisationGeographique);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FLocalisationGeographiqueSupprime,0);
+          i:=0;
+          while not eof(FLocalisationGeographiqueSupprime)do
+          begin
+               read(FLocalisationGeographiqueSupprime,RLocalisationGeographiqueSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FLocalisationGeographiqueSupprime,0);
+               Seek(FLocalisationGeographique,0);
+               Truncate(FLocalisationGeographique);
+               i:=0;
+               while not eof(FLocalisationGeographiqueSupprime)do
+               begin
+                    read(FLocalisationGeographiqueSupprime,RLocalisationGeographiqueSupprime);
+                    Seek(FLocalisationGeographique,i);
+                    write(FLocalisationGeographique,RLocalisationGeographiqueSupprime);
+               i:=i+1;
+               end;
+               SupprimerLocalisationGeographique:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FLocalisationGeographique);
+     end
+     else AfficherMessage('Le fichier '+ChLocalisationGeographique+' n''éxiste pas !');
+
+     CloseFile(FLocalisationGeographiqueSupprime);
+end;
+
+Function SupprimerTempsAlerteAvantAction(TypeProces,ActionSourceAlerte:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerTempsAlerteAvantAction:=false;
+     OpenFParc(RParc);
+
+     ChTempsAlerteAvantActionSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FTempsAlerteAvantActionSupprime,ChTempsAlerteAvantActionSupprime);
+     if FileExists(ChTempsAlerteAvantActionSupprime)
+     then Reset(FTempsAlerteAvantActionSupprime)
+     else Rewrite(FTempsAlerteAvantActionSupprime);
+     Seek(FTempsAlerteAvantActionSupprime,0);
+     Truncate(FTempsAlerteAvantActionSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChTempsAlerteAvantAction:=RParc.Parcours+'\'+Exercice+'TempsAlerteAvantAction';
+     assignfile(FTempsAlerteAvantAction,ChTempsAlerteAvantAction);
+     if FileExists(ChTempsAlerteAvantAction)then
+     begin
+          Reset(FTempsAlerteAvantAction);
+          Seek(FTempsAlerteAvantAction,0);
+          i:=0;
+          while not eof(FTempsAlerteAvantAction)do
+          begin
+               read(FTempsAlerteAvantAction,RTempsAlerteAvantAction);
+               RExistant:=RExistant+1;
+
+               if((TypeProces<>'')and(ActionSourceAlerte<>''))then
+               begin
+                    if((RTempsAlerteAvantAction.TypeProces=TypeProces)
+                    and(RTempsAlerteAvantAction.ActionSourceAlerte=ActionSourceAlerte))
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FTempsAlerteAvantActionSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FTempsAlerteAvantActionSupprime,RTempsAlerteAvantAction);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FTempsAlerteAvantActionSupprime,0);
+          i:=0;
+          while not eof(FTempsAlerteAvantActionSupprime)do
+          begin
+               read(FTempsAlerteAvantActionSupprime,RTempsAlerteAvantActionSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FTempsAlerteAvantActionSupprime,0);
+               Seek(FTempsAlerteAvantAction,0);
+               Truncate(FTempsAlerteAvantAction);
+               i:=0;
+               while not eof(FTempsAlerteAvantActionSupprime)do
+               begin
+                    read(FTempsAlerteAvantActionSupprime,RTempsAlerteAvantActionSupprime);
+                    Seek(FTempsAlerteAvantAction,i);
+                    write(FTempsAlerteAvantAction,RTempsAlerteAvantActionSupprime);
+               i:=i+1;
+               end;
+               SupprimerTempsAlerteAvantAction:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FTempsAlerteAvantAction);
+     end
+     else AfficherMessage('Le fichier '+ChTempsAlerteAvantAction+' n''éxiste pas !');
+
+     CloseFile(FTempsAlerteAvantActionSupprime);
+end;
+
+Function SupprimerIdentificateurEnttreprise(PositionIdentificateur:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerIdentificateurEnttreprise:=false;
+     OpenFParc(RParc);
+
+     ChIdentificateurEnttrepriseSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FIdentificateurEnttrepriseSupprime,ChIdentificateurEnttrepriseSupprime);
+     if FileExists(ChIdentificateurEnttrepriseSupprime)
+     then Reset(FIdentificateurEnttrepriseSupprime)
+     else Rewrite(FIdentificateurEnttrepriseSupprime);
+     Seek(FIdentificateurEnttrepriseSupprime,0);
+     Truncate(FIdentificateurEnttrepriseSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChIdentificateurEnttreprise:=RParc.Parcours+'\'+Exercice+'FIdentificateurEnttreprise';
+     assignfile(FIdentificateurEnttreprise,ChIdentificateurEnttreprise);
+     if FileExists(ChIdentificateurEnttreprise)then
+     begin
+          Reset(FIdentificateurEnttreprise);
+          Seek(FIdentificateurEnttreprise,0);
+          i:=0;
+          while not eof(FIdentificateurEnttreprise)do
+          begin
+               read(FIdentificateurEnttreprise,RIdentificateurEnttreprise);
+               RExistant:=RExistant+1;
+
+               if(PositionIdentificateur<>'')then
+               begin
+                    if(inttostr(RIdentificateurEnttreprise.PositionIdentificateur)=PositionIdentificateur)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FIdentificateurEnttrepriseSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FIdentificateurEnttrepriseSupprime,RIdentificateurEnttreprise);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FIdentificateurEnttrepriseSupprime,0);
+          i:=0;
+          while not eof(FIdentificateurEnttrepriseSupprime)do
+          begin
+               read(FIdentificateurEnttrepriseSupprime,RIdentificateurEnttrepriseSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FIdentificateurEnttrepriseSupprime,0);
+               Seek(FIdentificateurEnttreprise,0);
+               Truncate(FIdentificateurEnttreprise);
+               i:=0;
+               while not eof(FIdentificateurEnttrepriseSupprime)do
+               begin
+                    read(FIdentificateurEnttrepriseSupprime,RIdentificateurEnttrepriseSupprime);
+                    Seek(FIdentificateurEnttreprise,i);
+                    write(FIdentificateurEnttreprise,RIdentificateurEnttrepriseSupprime);
+               i:=i+1;
+               end;
+               SupprimerIdentificateurEnttreprise:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FIdentificateurEnttreprise);
+     end
+     else AfficherMessage('Le fichier '+ChIdentificateurEnttreprise+' n''éxiste pas !');
+
+     CloseFile(FIdentificateurEnttrepriseSupprime);
+end;
+
+Function SupprimerOrganismeTutelle(PositionOrganismeTutelle:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerOrganismeTutelle:=false;
+     OpenFParc(RParc);
+
+     ChOrganismeTutelleSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FOrganismeTutelleSupprime,ChOrganismeTutelleSupprime);
+     if FileExists(ChOrganismeTutelleSupprime)
+     then Reset(FOrganismeTutelleSupprime)
+     else Rewrite(FOrganismeTutelleSupprime);
+     Seek(FOrganismeTutelleSupprime,0);
+     Truncate(FOrganismeTutelleSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChOrganismeTutelle:=RParc.Parcours+'\'+Exercice+'FOrganismeTutelle';
+     assignfile(FOrganismeTutelle,ChOrganismeTutelle);
+     if FileExists(ChOrganismeTutelle)then
+     begin
+          Reset(FOrganismeTutelle);
+          Seek(FOrganismeTutelle,0);
+          i:=0;
+          while not eof(FOrganismeTutelle)do
+          begin
+               read(FOrganismeTutelle,ROrganismeTutelle);
+               RExistant:=RExistant+1;
+
+               if(PositionOrganismeTutelle<>'')then
+               begin
+                    if(inttostr(ROrganismeTutelle.PositionOrganismeTutelle)=PositionOrganismeTutelle)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FOrganismeTutelleSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FOrganismeTutelleSupprime,ROrganismeTutelle);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FOrganismeTutelleSupprime,0);
+          i:=0;
+          while not eof(FOrganismeTutelleSupprime)do
+          begin
+               read(FOrganismeTutelleSupprime,ROrganismeTutelleSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FOrganismeTutelleSupprime,0);
+               Seek(FOrganismeTutelle,0);
+               Truncate(FOrganismeTutelle);
+               i:=0;
+               while not eof(FOrganismeTutelleSupprime)do
+               begin
+                    read(FOrganismeTutelleSupprime,ROrganismeTutelleSupprime);
+                    Seek(FOrganismeTutelle,i);
+                    write(FOrganismeTutelle,ROrganismeTutelleSupprime);
+               i:=i+1;
+               end;
+               SupprimerOrganismeTutelle:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FOrganismeTutelle);
+     end
+     else AfficherMessage('Le fichier '+ChOrganismeTutelle+' n''éxiste pas !');
+
+     CloseFile(FOrganismeTutelleSupprime);
+end;
+
+Function SupprimerDataIdentificateurEnttreprise(PositionDataIdentificateurEnttreprise:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerDataIdentificateurEnttreprise:=false;
+     OpenFParc(RParc);
+
+     ChDataIdentificateurEnttrepriseSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FDataIdentificateurEnttrepriseSupprime,ChDataIdentificateurEnttrepriseSupprime);
+     if FileExists(ChDataIdentificateurEnttrepriseSupprime)
+     then Reset(FDataIdentificateurEnttrepriseSupprime)
+     else Rewrite(FDataIdentificateurEnttrepriseSupprime);
+     Seek(FDataIdentificateurEnttrepriseSupprime,0);
+     Truncate(FDataIdentificateurEnttrepriseSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChDataIdentificateurEnttreprise:=RParc.Parcours+'\'+Exercice+'FDataIdentificateurEnttreprise';
+     assignfile(FDataIdentificateurEnttreprise,ChDataIdentificateurEnttreprise);
+     if FileExists(ChDataIdentificateurEnttreprise)then
+     begin
+          Reset(FDataIdentificateurEnttreprise);
+          Seek(FDataIdentificateurEnttreprise,0);
+          i:=0;
+          while not eof(FDataIdentificateurEnttreprise)do
+          begin
+               read(FDataIdentificateurEnttreprise,RDataIdentificateurEnttreprise);
+               RExistant:=RExistant+1;
+
+               if(PositionDataIdentificateurEnttreprise<>'')then
+               begin
+                    if(inttostr(RDataIdentificateurEnttreprise.PositionDataIdentificateur)=PositionDataIdentificateurEnttreprise)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FDataIdentificateurEnttrepriseSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FDataIdentificateurEnttrepriseSupprime,RDataIdentificateurEnttreprise);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FDataIdentificateurEnttrepriseSupprime,0);
+          i:=0;
+          while not eof(FDataIdentificateurEnttrepriseSupprime)do
+          begin
+               read(FDataIdentificateurEnttrepriseSupprime,RDataIdentificateurEnttrepriseSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FDataIdentificateurEnttrepriseSupprime,0);
+               Seek(FDataIdentificateurEnttreprise,0);
+               Truncate(FDataIdentificateurEnttreprise);
+               i:=0;
+               while not eof(FDataIdentificateurEnttrepriseSupprime)do
+               begin
+                    read(FDataIdentificateurEnttrepriseSupprime,RDataIdentificateurEnttrepriseSupprime);
+                    Seek(FDataIdentificateurEnttreprise,i);
+                    write(FDataIdentificateurEnttreprise,RDataIdentificateurEnttrepriseSupprime);
+               i:=i+1;
+               end;
+               SupprimerDataIdentificateurEnttreprise:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FDataIdentificateurEnttreprise);
+     end
+     else AfficherMessage('Le fichier '+ChDataIdentificateurEnttreprise+' n''éxiste pas !');
+
+     CloseFile(FDataIdentificateurEnttrepriseSupprime);
+end;
+
+Function SupprimerParametreTaxeAjoute(PositionParametreTaxeAjoute:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerParametreTaxeAjoute:=false;
+     OpenFParc(RParc);
+
+     ChParametreTaxeAjouteSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FParametreTaxeAjouteSupprime,ChParametreTaxeAjouteSupprime);
+     if FileExists(ChParametreTaxeAjouteSupprime)
+     then Reset(FParametreTaxeAjouteSupprime)
+     else Rewrite(FParametreTaxeAjouteSupprime);
+     Seek(FParametreTaxeAjouteSupprime,0);
+     Truncate(FParametreTaxeAjouteSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChParametreTaxeAjoute:=RParc.Parcours+'\'+Exercice+'FParametreTaxeAjoute';
+     assignfile(FParametreTaxeAjoute,ChParametreTaxeAjoute);
+     if FileExists(ChParametreTaxeAjoute)then
+     begin
+          Reset(FParametreTaxeAjoute);
+          Seek(FParametreTaxeAjoute,0);
+          i:=0;
+          while not eof(FParametreTaxeAjoute)do
+          begin
+               read(FParametreTaxeAjoute,RParametreTaxeAjoute);
+               RExistant:=RExistant+1;
+
+               if(PositionParametreTaxeAjoute<>'')then
+               begin
+                    if(inttostr(RParametreTaxeAjoute.PositionParametreTaxeAjoute)=PositionParametreTaxeAjoute)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FParametreTaxeAjouteSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FParametreTaxeAjouteSupprime,RParametreTaxeAjoute);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FParametreTaxeAjouteSupprime,0);
+          i:=0;
+          while not eof(FParametreTaxeAjouteSupprime)do
+          begin
+               read(FParametreTaxeAjouteSupprime,RParametreTaxeAjouteSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FParametreTaxeAjouteSupprime,0);
+               Seek(FParametreTaxeAjoute,0);
+               Truncate(FParametreTaxeAjoute);
+               i:=0;
+               while not eof(FParametreTaxeAjouteSupprime)do
+               begin
+                    read(FParametreTaxeAjouteSupprime,RParametreTaxeAjouteSupprime);
+                    Seek(FParametreTaxeAjoute,i);
+                    write(FParametreTaxeAjoute,RParametreTaxeAjouteSupprime);
+               i:=i+1;
+               end;
+               SupprimerParametreTaxeAjoute:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FParametreTaxeAjoute);
+     end
+     else AfficherMessage('Le fichier '+ChParametreTaxeAjoute+' n''éxiste pas !');
+
+     CloseFile(FParametreTaxeAjouteSupprime);
+end;
+
+Function SupprimerBaremeTaxeAjouter(PositionBaremeTaxeAjouter:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerBaremeTaxeAjouter:=false;
+     OpenFParc(RParc);
+
+     ChBaremeTaxeAjouterSupprime:=RParc.Parcours+'\'+Exercice+'FFResultatSuppression';
+     assignfile(FBaremeTaxeAjouterSupprime,ChBaremeTaxeAjouterSupprime);
+     if FileExists(ChBaremeTaxeAjouterSupprime)
+     then Reset(FBaremeTaxeAjouterSupprime)
+     else Rewrite(FBaremeTaxeAjouterSupprime);
+     Seek(FBaremeTaxeAjouterSupprime,0);
+     Truncate(FBaremeTaxeAjouterSupprime);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChBaremeTaxeAjouter:=RParc.Parcours+'\'+Exercice+'FBaremeTaxeAjouter';
+     assignfile(FBaremeTaxeAjouter,ChBaremeTaxeAjouter);
+     if FileExists(ChBaremeTaxeAjouter)then
+     begin
+          Reset(FBaremeTaxeAjouter);
+          Seek(FBaremeTaxeAjouter,0);
+          i:=0;
+          while not eof(FBaremeTaxeAjouter)do
+          begin
+               read(FBaremeTaxeAjouter,RBaremeTaxeAjouter);
+               RExistant:=RExistant+1;
+
+               if(PositionBaremeTaxeAjouter<>'')then
+               begin
+                    if(inttostr(RBaremeTaxeAjouter.PositionBaremeTaxeAjouter)=PositionBaremeTaxeAjouter)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FBaremeTaxeAjouterSupprime,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FBaremeTaxeAjouterSupprime,RBaremeTaxeAjouter);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FBaremeTaxeAjouterSupprime,0);
+          i:=0;
+          while not eof(FBaremeTaxeAjouterSupprime)do
+          begin
+               read(FBaremeTaxeAjouterSupprime,RBaremeTaxeAjouterSupprime);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FBaremeTaxeAjouterSupprime,0);
+               Seek(FBaremeTaxeAjouter,0);
+               Truncate(FBaremeTaxeAjouter);
+               i:=0;
+               while not eof(FBaremeTaxeAjouterSupprime)do
+               begin
+                    read(FBaremeTaxeAjouterSupprime,RBaremeTaxeAjouterSupprime);
+                    Seek(FBaremeTaxeAjouter,i);
+                    write(FBaremeTaxeAjouter,RBaremeTaxeAjouterSupprime);
+               i:=i+1;
+               end;
+               SupprimerBaremeTaxeAjouter:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FBaremeTaxeAjouter);
+     end
+     else AfficherMessage('Le fichier '+ChBaremeTaxeAjouter+' n''éxiste pas !');
+
+     CloseFile(FBaremeTaxeAjouterSupprime);
+end;
+
+{**********************SUPPRIMER Etat****************************}
+Procedure DeleteFEtat(PositionEtat:integer; CodeTypeFormule:string; var Confirme:boolean);
+var i,k,m:integer;  OKEtat,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChEtat:=RParc.Parcours+'\'+Exercice+'FEtat'+CodeTypeFormule;
+assignfile(FEtat,ChEtat);
+if FileExists(ChEtat)then
+Reset(FEtat)
+else Rewrite(FEtat);
+Seek(FEtat,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FEtat)do
+begin//D1
+     read(FEtat,REtat);
+     if(REtat.PositionEtat=PositionEtat)
+     then
+     begin//D2
+          OKEtat:=true
+     end//F2
+     else OKEtat:=false;
+
+     if((OKEtat=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKEtat=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FEtat,k);
+          Write(FEtat,REtat);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FEtat,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FEtat,k);
+     Truncate(FEtat);
+end;
+closefile(FEtat);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER RubriqueEtat****************************}
+Procedure DeleteFRubriqueEtat(PositionEtat,PositionRubriqueEtat:integer; CodeTypeFormule:string; var Confirme:boolean);
+var  i,k,m:integer;   OKRubriqueEtat,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChRubriqueEtat:=RParc.Parcours+'\'+Exercice+'FRubriqueEtat'+CodeTypeFormule;
+assignfile(FRubriqueEtat,ChRubriqueEtat);
+if FileExists(ChRubriqueEtat)then
+Reset(FRubriqueEtat)
+else Rewrite(FRubriqueEtat);
+Seek(FRubriqueEtat,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FRubriqueEtat)do
+begin//D1
+     read(FRubriqueEtat,RRubriqueEtat);
+
+     if(RRubriqueEtat.PositionEtat=PositionEtat)then
+     begin//D2
+          if(RRubriqueEtat.PositionRubriqueEtat=PositionRubriqueEtat)
+          then OKRubriqueEtat:=true
+          else OKRubriqueEtat:=false;
+     end//F2
+     else OKRubriqueEtat:=false;
+
+     if((OKRubriqueEtat=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKRubriqueEtat=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FRubriqueEtat,k);
+          Write(FRubriqueEtat,RRubriqueEtat);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FRubriqueEtat,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FRubriqueEtat,k);
+     Truncate(FRubriqueEtat);
+end;
+closefile(FRubriqueEtat);
+Confirme:=true;
+end;//F0
+
+Procedure DeleteFAutoImporteFormuleEtat(PositionEtat:integer; TypeFormule:string; var Confirme:boolean);
+var i,k,m:integer;  OKAutoImporteFormuleEtat,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChAutoImporteFormuleEtat:=RParc.Parcours+'\'+Exercice+'FAutoImporteFormuleEtat';
+assignfile(FAutoImporteFormuleEtat,ChAutoImporteFormuleEtat);
+if FileExists(ChAutoImporteFormuleEtat)then
+Reset(FAutoImporteFormuleEtat)
+else Rewrite(FAutoImporteFormuleEtat);
+Seek(FAutoImporteFormuleEtat,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FAutoImporteFormuleEtat)do
+begin//D1
+     read(FAutoImporteFormuleEtat,RAutoImporteFormuleEtat);
+     if(RAutoImporteFormuleEtat.PositionEtat=PositionEtat)
+     and(RAutoImporteFormuleEtat.TypeFormule=TypeFormule)
+     then
+     begin//D2
+          OKAutoImporteFormuleEtat:=true
+     end//F2
+     else OKAutoImporteFormuleEtat:=false;
+
+     if((OKAutoImporteFormuleEtat=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKAutoImporteFormuleEtat=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FAutoImporteFormuleEtat,k);
+          Write(FAutoImporteFormuleEtat,RAutoImporteFormuleEtat);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FAutoImporteFormuleEtat,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FAutoImporteFormuleEtat,k);
+     Truncate(FAutoImporteFormuleEtat);
+end;
+closefile(FAutoImporteFormuleEtat);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER FListeCompteCP****************************}
+Procedure DeleteFListeCompteCP(NumCptPrincipal,NumCptCP:string; var Confirme:boolean);
+var i,k,m:integer;   OKListeCompteCP,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChListeCompteCP:=RParc.Parcours+'\'+Exercice+'FListeCompteCP';
+assignfile(FListeCompteCP,ChListeCompteCP);
+if FileExists(ChListeCompteCP)then
+Reset(FListeCompteCP)
+else Rewrite(FListeCompteCP);
+Seek(FListeCompteCP,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FListeCompteCP)do
+begin//D1
+     read(FListeCompteCP,RListeCompteCP);
+
+     OKListeCompteCP:=true;
+     if(RListeCompteCP.NumCptPrincipal=NumCptPrincipal)then
+     begin//D2
+          if(NumCptCP<>'')then
+          begin
+               if(RListeCompteCP.NumCptCP=NumCptCP)then
+               begin
+                    OKListeCompteCP:=true
+               end
+               else OKListeCompteCP:=false;
+          end;
+     end//F2
+     else OKListeCompteCP:=false;
+
+     if((OKListeCompteCP=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKListeCompteCP=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FListeCompteCP,k);
+          Write(FListeCompteCP,RListeCompteCP);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FListeCompteCP,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FListeCompteCP,k);
+     Truncate(FListeCompteCP);
+end;
+closefile(FListeCompteCP);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER CompteTiers****************************}
+Procedure DeleteFCompteTiers(NumCptPrincipal,NumCptTiers:string; var Confirme:boolean);
+var i,k,m:integer;   OKCompteTiers,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChCompteTiers:=RParc.Parcours+'\'+Exercice+'FCompteTiers'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+assignfile(FCompteTiers,ChCompteTiers);
+if FileExists(ChCompteTiers)then
+Reset(FCompteTiers)
+else Rewrite(FCompteTiers);
+Seek(FCompteTiers,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FCompteTiers)do
+begin//D1
+     read(FCompteTiers,RCompteTiers);
+
+     OKCompteTiers:=true;
+     if(Firstlaters(RCompteTiers.NumCptTiers,RCompteTiers.OrdreCptPrincipal)=NumCptPrincipal)then
+     begin//D2
+          if(NumCptTiers<>'')then
+          begin
+               if(RCompteTiers.NumCptTiers=NumCptTiers)then
+               begin
+                    OKCompteTiers:=true
+               end
+               else OKCompteTiers:=false;
+          end;
+     end//F2
+     else OKCompteTiers:=false;
+
+     if((OKCompteTiers=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKCompteTiers=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FCompteTiers,k);
+          Write(FCompteTiers,RCompteTiers);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FCompteTiers,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FCompteTiers,k);
+     Truncate(FCompteTiers);
+end;
+closefile(FCompteTiers);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER DonneesCompteTiers****************************}
+Procedure DeleteFDonneesCompteTiers(NumCptTiers,NumDonnees:string; var Confirme:boolean);
+var i,k,m:integer;   OKDonneesCompteTiers,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChDonneesCompteTiers:=RParc.Parcours+'\'+Exercice+'FDonneesCompteTiers'+FSMenuPrincipal.EditNumEntite.Text;
+assignfile(FDonneesCompteTiers,ChDonneesCompteTiers);
+if FileExists(ChDonneesCompteTiers)then
+Reset(FDonneesCompteTiers)
+else Rewrite(FDonneesCompteTiers);
+Seek(FDonneesCompteTiers,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FDonneesCompteTiers)do
+begin//D1
+     read(FDonneesCompteTiers,RDonneesCompteTiers);
+
+     OKDonneesCompteTiers:=true;
+     if(RDonneesCompteTiers.NumCptTiers=NumCptTiers)then
+     begin//D2
+          if(NumDonnees<>'')then
+          begin
+               if(RDonneesCompteTiers.NumDonnees=strtointeger(NumDonnees))then
+               begin
+                    OKDonneesCompteTiers:=true
+               end
+               else OKDonneesCompteTiers:=false;
+          end;
+     end//F2
+     else OKDonneesCompteTiers:=false;
+
+     if((OKDonneesCompteTiers=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKDonneesCompteTiers=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FDonneesCompteTiers,k);
+          Write(FDonneesCompteTiers,RDonneesCompteTiers);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FDonneesCompteTiers,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FDonneesCompteTiers,k);
+     Truncate(FDonneesCompteTiers);
+end;
+closefile(FDonneesCompteTiers);
+Confirme:=true;
+end;//F0
+
+Procedure DeleteFModeleDonneesCteTiers(NumDonnees:integer; var Confirme:boolean);
+var i,k,m:integer;   OKModeleDonneesCteTiers,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChModeleDonneesCteTiers:=RParc.Parcours+'\'+Exercice+'FModeleDonneesCteTiers';
+assignfile(FModeleDonneesCteTiers,ChModeleDonneesCteTiers);
+if FileExists(ChModeleDonneesCteTiers)then
+Reset(FModeleDonneesCteTiers)
+else Rewrite(FModeleDonneesCteTiers);
+Seek(FModeleDonneesCteTiers,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FModeleDonneesCteTiers)do
+begin//D1
+     read(FModeleDonneesCteTiers,RModeleDonneesCteTiers);
+
+     OKModeleDonneesCteTiers:=true;
+     if(RModeleDonneesCteTiers.NumDonnees=NumDonnees)then
+     begin//D2
+          OKModeleDonneesCteTiers:=true
+     end//F2
+     else OKModeleDonneesCteTiers:=false;
+
+     if((OKModeleDonneesCteTiers=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKModeleDonneesCteTiers=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FModeleDonneesCteTiers,k);
+          Write(FModeleDonneesCteTiers,RModeleDonneesCteTiers);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FModeleDonneesCteTiers,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FModeleDonneesCteTiers,k);
+     Truncate(FModeleDonneesCteTiers);
+end;
+closefile(FModeleDonneesCteTiers);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER Marche****************************}
+Procedure DeleteFMarche(NSMarche:integer; var Confirme:boolean);
+var i,k,m:integer; OKMarche,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChMarche:=RParc.Parcours+'\'+Exercice+'FMarche';
+assignfile(FMarche,ChMarche);
+if FileExists(ChMarche)then
+Reset(FMarche)
+else Rewrite(FMarche);
+Seek(FMarche,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FMarche)do
+begin//D1
+     read(FMarche,RMarche);
+     if(RMarche.NSMarche=NSMarche)
+     or(RMarche.NSMarche=0)
+     then
+     begin//D2
+          OKMarche:=true
+     end//F2
+     else OKMarche:=false;
+
+     if((OKMarche=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKMarche=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FMarche,k);
+          Write(FMarche,RMarche);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FMarche,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FMarche,k);
+     Truncate(FMarche);
+end;
+closefile(FMarche);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER StructureMarche****************************}
+Procedure DeleteFStructureMarche(NSMarche,NStructureMarche:integer; var Confirme:boolean);
+var i,k,m:integer; OKStructureMarche,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChStructureMarche:=RParc.Parcours+'\'+Exercice+'FStructureMarche';
+assignfile(FStructureMarche,ChStructureMarche);
+if FileExists(ChStructureMarche)then
+Reset(FStructureMarche)
+else Rewrite(FStructureMarche);
+Seek(FStructureMarche,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FStructureMarche)do
+begin//D1
+     read(FStructureMarche,RStructureMarche);
+     if(RStructureMarche.NSMarche=0)
+     or(RStructureMarche.NStructureMarche=0)
+     then
+     begin
+          OKStructureMarche:=true;
+     end
+     else
+     if(RStructureMarche.NSMarche=NSMarche)then
+     begin//D2
+          if(NStructureMarche<>0)then
+          begin
+               if(RStructureMarche.NStructureMarche=NStructureMarche)
+               then OKStructureMarche:=true
+               else OKStructureMarche:=false;
+          end
+          else  OKStructureMarche:=true
+     end//F2
+     else OKStructureMarche:=false;
+
+     if((OKStructureMarche=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKStructureMarche=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FStructureMarche,k);
+          Write(FStructureMarche,RStructureMarche);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FStructureMarche,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FStructureMarche,k);
+     Truncate(FStructureMarche);
+end;
+closefile(FStructureMarche);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER StatistiqueMarche****************************}
+Procedure DeleteFStatistiqueMarche(NSMarche,NStructureMarche,NStatistiqueMarche:string; var Confirme:boolean);
+var i,k,m:integer; OKStatistiqueMarche,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChStatistiqueMarche:=RParc.Parcours+'\'+Exercice+'FStatistiqueMarche';
+assignfile(FStatistiqueMarche,ChStatistiqueMarche);
+if FileExists(ChStatistiqueMarche)then
+Reset(FStatistiqueMarche)
+else Rewrite(FStatistiqueMarche);
+Seek(FStatistiqueMarche,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FStatistiqueMarche)do
+begin//D1
+     read(FStatistiqueMarche,RStatistiqueMarche);
+     OKStatistiqueMarche:=false;
+     
+     if(NSMarche<>'')then
+     begin
+          if(RStatistiqueMarche.NSMarche=strtointeger(NSMarche))
+          then OKStatistiqueMarche:=true
+          else OKStatistiqueMarche:=false;
+     end;
+
+     if(OKStatistiqueMarche=true)then
+     begin
+          if(NStructureMarche<>'')then
+          begin
+               if(RStatistiqueMarche.NStructureMarche=NStructureMarche)
+               then OKStatistiqueMarche:=true
+               else OKStatistiqueMarche:=false;
+          end;
+     end;
+
+     if(OKStatistiqueMarche=true)then
+     begin
+          if(NStatistiqueMarche<>'')then
+          begin
+               if(RStatistiqueMarche.NStatistiqueMarche=strtointeger(NStatistiqueMarche))
+               then OKStatistiqueMarche:=true
+               else OKStatistiqueMarche:=false;
+          end;
+     end;
+
+     if((OKStatistiqueMarche=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKStatistiqueMarche=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FStatistiqueMarche,k);
+          Write(FStatistiqueMarche,RStatistiqueMarche);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FStatistiqueMarche,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FStatistiqueMarche,k);
+     Truncate(FStatistiqueMarche);
+end;
+closefile(FStatistiqueMarche);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER Attachement****************************}
+Procedure DeleteFAttachement(NSMarche,NAttachement:string; var Confirme:boolean);
+var i,k,m:integer; OKAttachement,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChLAttachement:=RParc.Parcours+'\'+Exercice+'FAttachement';
+assignfile(FLAttachement,ChLAttachement);
+if FileExists(ChLAttachement)then
+Reset(FLAttachement)
+else Rewrite(FLAttachement);
+Seek(FLAttachement,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FLAttachement)do
+begin//D1
+     read(FLAttachement,RLAttachement);
+     OKAttachement:=false;
+     
+     if(NSMarche<>'')then
+     begin
+          if(RLAttachement.NSMarche=strtointeger(NSMarche))
+          then OKAttachement:=true
+          else OKAttachement:=false;
+     end;
+
+     if(OKAttachement=true)then
+     begin
+          if(NAttachement<>'')then
+          begin
+               if(RLAttachement.NAttachement=strtointeger(NAttachement))
+               then OKAttachement:=true
+               else OKAttachement:=false;
+          end;
+     end;
+
+     if((OKAttachement=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKAttachement=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FLAttachement,k);
+          Write(FLAttachement,RLAttachement);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FLAttachement,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FLAttachement,k);
+     Truncate(FLAttachement);
+end;
+closefile(FLAttachement);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER DetailAttachement****************************}
+Procedure DeleteFDetailAttachement(NSMarche,NDetailAttachement:string; var Confirme:boolean);
+var i,k,m:integer; OKDetailAttachement,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChDetailAttachement:=RParc.Parcours+'\'+Exercice+'FDetailAttachement'+ChercherMarche(strtointeger(NSMarche)).TypeProjet+' '+NSMarche;
+assignfile(FDetailAttachement,ChDetailAttachement);
+if FileExists(ChDetailAttachement)then
+Reset(FDetailAttachement)
+else Rewrite(FDetailAttachement);
+Seek(FDetailAttachement,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FDetailAttachement)do
+begin//D1
+     read(FDetailAttachement,RDetailAttachement);
+     OKDetailAttachement:=false;
+     
+     if(NSMarche<>'')then
+     begin
+          if(DTrie('M',RDetailAttachement.CodeTrie)=NSMarche)
+          then OKDetailAttachement:=true
+          else OKDetailAttachement:=false;
+     end;
+
+     if(OKDetailAttachement=true)then
+     begin
+          if(NDetailAttachement<>'')then
+          begin
+               if(RDetailAttachement.NDetailAttachement=strtointeger(NDetailAttachement))
+               then OKDetailAttachement:=true
+               else OKDetailAttachement:=false;
+          end;
+     end;
+
+     if((OKDetailAttachement=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKDetailAttachement=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FDetailAttachement,k);
+          Write(FDetailAttachement,RDetailAttachement);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FDetailAttachement,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FDetailAttachement,k);
+     Truncate(FDetailAttachement);
+end;
+closefile(FDetailAttachement);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER Detail Marche****************************}
+Procedure DeleteFDetailMarche(NSMarche,NDetailMarche:integer; var Confirme:boolean);
+var i,k,m:integer; OKDetailMarche,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChDetailMarche:=RParc.Parcours+'\'+Exercice+'FDetail'+ChercherMarche(NSMarche).TypeProjet+' '+inttostr(NSMarche);
+assignfile(FDetailMarche,ChDetailMarche);
+if FileExists(ChDetailMarche)then
+Reset(FDetailMarche)
+else Rewrite(FDetailMarche);
+Seek(FDetailMarche,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FDetailMarche)do
+begin//D1
+     read(FDetailMarche,RDetailMarche);
+     if(DTrie('M',RDetailMarche.CodeTrie)='0')
+     or(RDetailMarche.NDetailMarche=0)
+     then
+     begin
+          OKDetailMarche:=true;
+     end
+     else
+     if(strtointeger(DTrie('M',RDetailMarche.CodeTrie))=NSMarche)then
+     begin//D2
+          if(NDetailMarche<>0)then
+          begin
+               if(RDetailMarche.NDetailMarche=NDetailMarche)
+               then OKDetailMarche:=true
+               else OKDetailMarche:=false;
+          end
+          else  OKDetailMarche:=true
+     end//F2
+     else OKDetailMarche:=false;
+
+     if((OKDetailMarche=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKDetailMarche=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FDetailMarche,k);
+          Write(FDetailMarche,RDetailMarche);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FDetailMarche,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FDetailMarche,k);
+     Truncate(FDetailMarche);
+end;
+closefile(FDetailMarche);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER SITUATION****************************}
+Procedure DeleteFSituationMarche(NSMarche,NSituationMarche,dateSituationMarche:string; var Confirme:boolean);
+var i,k,m:integer; OKSituationMarche,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChSituationMarche:=RParc.Parcours+'\'+Exercice+'FSituationMarche';
+assignfile(FSituationMarche,ChSituationMarche);
+if FileExists(ChSituationMarche)then
+Reset(FSituationMarche)
+else Rewrite(FSituationMarche);
+Seek(FSituationMarche,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FSituationMarche)do
+begin//D1
+     read(FSituationMarche,RSituationMarche);
+
+     if(RSituationMarche.NSMarche=strtointeger(NSMarche))then
+     begin//D2
+          if(NSituationMarche<>'')and(dateSituationMarche<>'')then
+          begin
+               if (RSituationMarche.NSituationMarche=strtointeger(NSituationMarche))
+               and(RSituationMarche.DateSituationMarche=dateSituationMarche)
+               then OKSituationMarche:=true
+               else OKSituationMarche:=false;
+          end
+          else  OKSituationMarche:=true;
+     end//F2
+     else OKSituationMarche:=false;
+
+     if((OKSituationMarche=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKSituationMarche=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FSituationMarche,k);
+          Write(FSituationMarche,RSituationMarche);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FSituationMarche,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FSituationMarche,k);
+     Truncate(FSituationMarche);
+end;
+closefile(FSituationMarche);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER Finance****************************}
+Procedure DeleteFFinance(NFinance:integer; var Confirme:boolean);
+var i,k,m:integer;  OKFinance,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChFinance:=RParc.Parcours+'\'+Exercice+'FFinance';
+assignfile(FFinance,ChFinance);
+if FileExists(ChFinance)then
+Reset(FFinance)
+else Rewrite(FFinance);
+Seek(FFinance,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FFinance)do
+begin//D1
+     read(FFinance,RFinance);
+     if(RFinance.NFinance=NFinance)
+     then OKFinance:=true
+     else OKFinance:=false;
+
+     if((OKFinance=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKFinance=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FFinance,k);
+          Write(FFinance,RFinance);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FFinance,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FFinance,k);
+     Truncate(FFinance);
+end;
+closefile(FFinance);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER OperationFinance****************************}
+Procedure DeleteFOperationFinance(NSMarche,NOperationFinance:integer; var Confirme:boolean);
+var i,k,m:integer;  OKOperationFinance,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChOperationFinance:=RParc.Parcours+'\'+Exercice+'FOperationFinance';
+assignfile(FOperationFinance,ChOperationFinance);
+if FileExists(ChOperationFinance)then
+Reset(FOperationFinance)
+else Rewrite(FOperationFinance);
+Seek(FOperationFinance,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FOperationFinance)do
+begin//D1
+     read(FOperationFinance,ROperationFinance);
+     if(ROperationFinance.NSMarche=0)
+     or(ROperationFinance.NOperationFinance=0)
+     then
+     begin
+          OKOperationFinance:=true;
+     end
+     else
+     if(ROperationFinance.NSMarche=NSMarche)then
+     begin//D2
+          if(NOperationFinance<>0)then
+          begin
+               if(ROperationFinance.NOperationFinance=NOperationFinance)
+               then OKOperationFinance:=true
+               else OKOperationFinance:=false;
+          end
+          else  OKOperationFinance:=true
+     end//F2
+     else OKOperationFinance:=false;
+
+     if((OKOperationFinance=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKOperationFinance=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FOperationFinance,k);
+          Write(FOperationFinance,ROperationFinance);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FOperationFinance,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FOperationFinance,k);
+     Truncate(FOperationFinance);
+end;
+closefile(FOperationFinance);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER FormuleComposition****************************}
+Procedure DeleteFFormuleComposition(CodeProduit,CodeMatiere:string; var Confirme:boolean);
+var i,k,m:integer; OKFormuleComposition,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChFormuleComposition:=RParc.Parcours+'\'+Exercice+'FFormuleComposition';
+assignfile(FFormuleComposition,ChFormuleComposition);
+if FileExists(ChFormuleComposition)then
+Reset(FFormuleComposition)
+else Rewrite(FFormuleComposition);
+Seek(FFormuleComposition,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FFormuleComposition)do
+begin//D1
+     read(FFormuleComposition,RFormuleComposition);
+     if(RFormuleComposition.CodeProd='')
+     or(RFormuleComposition.CodeMat='')
+     then
+     begin
+          OKFormuleComposition:=true;
+     end
+     else
+     if(RFormuleComposition.CodeProd=CodeProduit)then
+     begin//D2
+          if(CodeMatiere<>'')then
+          begin
+               if(RFormuleComposition.CodeMat=CodeMatiere)
+               then OKFormuleComposition:=true
+               else OKFormuleComposition:=false;
+          end
+          else  OKFormuleComposition:=true
+     end//F2
+     else OKFormuleComposition:=false;
+
+     if((OKFormuleComposition=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKFormuleComposition=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FFormuleComposition,k);
+          Write(FFormuleComposition,RFormuleComposition);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FFormuleComposition,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FFormuleComposition,k);
+     Truncate(FFormuleComposition);
+end;
+closefile(FFormuleComposition);
+Confirme:=true;
+end;//F0
+
+Procedure DeleteFBordereauEnvoi(PositionBordereau:string; var Confirme:boolean);
+var i,k,m:integer; OKBordereauEnvoi,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChBordereauEnvoi:=RParc.Parcours+'\'+Exercice+'FBordereauEnvoi';
+assignfile(FBordereauEnvoi,ChBordereauEnvoi);
+if FileExists(ChBordereauEnvoi)then
+Reset(FBordereauEnvoi)
+else Rewrite(FBordereauEnvoi);
+Seek(FBordereauEnvoi,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FBordereauEnvoi)do
+begin//D1
+     read(FBordereauEnvoi,RBordereauEnvoi);
+
+     if(PositionBordereau<>'')then
+     begin
+          if(inttostr(RBordereauEnvoi.PositionBordereau)=PositionBordereau)
+          then OKBordereauEnvoi:=true
+          else OKBordereauEnvoi:=false;
+     end
+     else  OKBordereauEnvoi:=false;
+
+     if((OKBordereauEnvoi=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKBordereauEnvoi=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FBordereauEnvoi,k);
+          Write(FBordereauEnvoi,RBordereauEnvoi);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FBordereauEnvoi,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FBordereauEnvoi,k);
+     Truncate(FBordereauEnvoi);
+end;
+closefile(FBordereauEnvoi);
+Confirme:=true;
+end;//F0
+
+Procedure DeleteFDetailBordereauEnvoi(PositionBordereau,PositionDetailBordereauEnvoi:string; var Confirme:boolean);
+var i,k,m:integer; OKDetailBordereauEnvoi,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChDetailBordereauEnvoi:=RParc.Parcours+'\'+Exercice+'FDetailBordereauEnvoi';
+assignfile(FDetailBordereauEnvoi,ChDetailBordereauEnvoi);
+if FileExists(ChDetailBordereauEnvoi)then
+Reset(FDetailBordereauEnvoi)
+else Rewrite(FDetailBordereauEnvoi);
+Seek(FDetailBordereauEnvoi,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FDetailBordereauEnvoi)do
+begin//D1
+     read(FDetailBordereauEnvoi,RDetailBordereauEnvoi);
+
+     if(PositionBordereau<>'')then
+     begin
+          if(inttostr(RDetailBordereauEnvoi.PositionBordereau)=PositionBordereau)
+          then OKDetailBordereauEnvoi:=true
+          else OKDetailBordereauEnvoi:=false;
+     end
+     else  OKDetailBordereauEnvoi:=false;
+
+     if(OKDetailBordereauEnvoi=true)then
+     begin
+           if(PositionDetailBordereauEnvoi='Tous')then OKDetailBordereauEnvoi:=true
+           else
+           if(PositionDetailBordereauEnvoi<>'')then
+           begin
+                if(inttostr(RDetailBordereauEnvoi.PositionDetailBordereau)=PositionDetailBordereauEnvoi)
+                then OKDetailBordereauEnvoi:=true
+                else OKDetailBordereauEnvoi:=false;
+           end
+           else OKDetailBordereauEnvoi:=false;
+           
+     end;
+
+     if((OKDetailBordereauEnvoi=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKDetailBordereauEnvoi=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FDetailBordereauEnvoi,k);
+          Write(FDetailBordereauEnvoi,RDetailBordereauEnvoi);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FDetailBordereauEnvoi,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FDetailBordereauEnvoi,k);
+     Truncate(FDetailBordereauEnvoi);
+end;
+closefile(FDetailBordereauEnvoi);
+Confirme:=true;
+end;//F0
+
+Procedure DeleteFSeriePieceDomiciliation(PositionSeriePieceDomiciliation:string; var Confirme:boolean);
+var i,k,m:integer; OKSeriePieceDomiciliation,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChSeriePieceDomiciliation:=RParc.Parcours+'\'+Exercice+'FSeriePieceDomiciliation';
+assignfile(FSeriePieceDomiciliation,ChSeriePieceDomiciliation);
+if FileExists(ChSeriePieceDomiciliation)then
+Reset(FSeriePieceDomiciliation)
+else Rewrite(FSeriePieceDomiciliation);
+Seek(FSeriePieceDomiciliation,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FSeriePieceDomiciliation)do
+begin//D1
+     read(FSeriePieceDomiciliation,RSeriePieceDomiciliation);
+
+     if(PositionSeriePieceDomiciliation<>'')then
+     begin
+          if(inttostr(RSeriePieceDomiciliation.PositionSeriePieceDomiciliation)=PositionSeriePieceDomiciliation)
+          then OKSeriePieceDomiciliation:=true
+          else OKSeriePieceDomiciliation:=false;
+     end
+     else  OKSeriePieceDomiciliation:=false;
+
+     if((OKSeriePieceDomiciliation=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKSeriePieceDomiciliation=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FSeriePieceDomiciliation,k);
+          Write(FSeriePieceDomiciliation,RSeriePieceDomiciliation);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FSeriePieceDomiciliation,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FSeriePieceDomiciliation,k);
+     Truncate(FSeriePieceDomiciliation);
+end;
+closefile(FSeriePieceDomiciliation);
+Confirme:=true;
+end;//F0
+
+Procedure DeleteFGroupeTiers(PositionGroupeTiers,FichierCocerne:string; var Confirme:boolean);
+var i,k,m:integer; OKGroupeTiers,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChGroupeTiers:=RParc.Parcours+'\'+Exercice+FichierCocerne;
+assignfile(FGroupeTiers,ChGroupeTiers);
+if FileExists(ChGroupeTiers)then
+Reset(FGroupeTiers)
+else Rewrite(FGroupeTiers);
+Seek(FGroupeTiers,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FGroupeTiers)do
+begin//D1
+     read(FGroupeTiers,RGroupeTiers);
+
+     if(PositionGroupeTiers<>'')then
+     begin
+          if(inttostr(RGroupeTiers.PositionGroupeTiers)=PositionGroupeTiers)
+          then OKGroupeTiers:=true
+          else OKGroupeTiers:=false;
+     end
+     else  OKGroupeTiers:=false;
+
+     if((OKGroupeTiers=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKGroupeTiers=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FGroupeTiers,k);
+          Write(FGroupeTiers,RGroupeTiers);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FGroupeTiers,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FGroupeTiers,k);
+     Truncate(FGroupeTiers);
+end;
+closefile(FGroupeTiers);
+Confirme:=true;
+end;//F0
+
+Procedure DeleteFListeGroupeTiers(PositionGroupeTiers,PositionListeGroupeTiers:string; var Confirme:boolean);
+var i,k,m:integer; OKListeGroupeTiers,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChListeGroupeTiers:=RParc.Parcours+'\'+Exercice+'FListeGroupeTiers';
+assignfile(FListeGroupeTiers,ChListeGroupeTiers);
+if FileExists(ChListeGroupeTiers)then
+Reset(FListeGroupeTiers)
+else Rewrite(FListeGroupeTiers);
+Seek(FListeGroupeTiers,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FListeGroupeTiers)do
+begin//D1
+     read(FListeGroupeTiers,RListeGroupeTiers);
+
+     if(PositionGroupeTiers<>'')then
+     begin
+          if(inttostr(RListeGroupeTiers.PositionGroupeTiers)=PositionGroupeTiers)
+          then OKListeGroupeTiers:=true
+          else OKListeGroupeTiers:=false;
+     end
+     else  OKListeGroupeTiers:=false;
+
+     if(OKListeGroupeTiers=true)then
+     begin
+          if(PositionListeGroupeTiers<>'')then
+          begin
+               if(inttostr(RListeGroupeTiers.PositionListeGroupeTiers)=PositionListeGroupeTiers)
+               then OKListeGroupeTiers:=true
+               else OKListeGroupeTiers:=false;
+          end;
+     end;
+
+     if((OKListeGroupeTiers=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKListeGroupeTiers=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FListeGroupeTiers,k);
+          Write(FListeGroupeTiers,RListeGroupeTiers);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FListeGroupeTiers,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FListeGroupeTiers,k);
+     Truncate(FListeGroupeTiers);
+end;
+closefile(FListeGroupeTiers);
+Confirme:=true;
+end;//F0
+
+Procedure DeleteFRegistreAffectationEffectifEquipe(NumPrelevement:integer; Matricule,NumAffectationEffectifEquipe,NumCompteur,NumAffectationCompteur:string; var Confirme:boolean);
+var i,k,m:integer; OKAffectationEffectifEquipe,OKTrie,OKDelete,OKPointerArchive:boolean; PositionPrelevement,FichierConcerne:string;
+begin//D0
+          RPrelevement:=ChercherPrelevement(NumPrelevement,ExerciceAnnee,Matricule,PositionPrelevement);
+          if(RPrelevement.Archiver=false)then
+          begin
+               FichierConcerne:='FRegistreAffectationEffectifEquipe';
+               OKPointerArchive:=false;
+          end
+          else
+          begin
+               FichierConcerne:='FArchiveRegistreAffectationEffectifEquipe';
+               OKPointerArchive:=true;
+          end;
+
+OpenFParc(RParc);
+ChRegistreAffectationEffectifEquipe:=RParc.Parcours+'\'+Exercice+FichierConcerne;
+assignfile(FRegistreAffectationEffectifEquipe,ChRegistreAffectationEffectifEquipe);
+if FileExists(ChRegistreAffectationEffectifEquipe)then
+Reset(FRegistreAffectationEffectifEquipe)
+else Rewrite(FRegistreAffectationEffectifEquipe);
+Seek(FRegistreAffectationEffectifEquipe,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FRegistreAffectationEffectifEquipe)do
+begin//D1
+     read(FRegistreAffectationEffectifEquipe,RRegistreAffectationEffectifEquipe);
+
+     if(NumAffectationEffectifEquipe<>'')then
+     begin
+          if(inttostr(RRegistreAffectationEffectifEquipe.NumAffectationEffectifEquipe)=NumAffectationEffectifEquipe)
+          then OKAffectationEffectifEquipe:=true
+          else OKAffectationEffectifEquipe:=false;
+     end
+     else
+     if(NumCompteur<>'')then
+     begin
+          if(inttostr(RRegistreAffectationEffectifEquipe.RCompteurAffecter.NumCompteur)=NumCompteur)
+          then OKAffectationEffectifEquipe:=true
+          else OKAffectationEffectifEquipe:=false;
+     end
+     else
+     if(NumAffectationCompteur<>'')then
+     begin
+          if(RRegistreAffectationEffectifEquipe.RCompteurAffecter.NumAffectationCompteur=NumAffectationCompteur)
+          then OKAffectationEffectifEquipe:=true
+          else OKAffectationEffectifEquipe:=false;
+     end
+     else OKAffectationEffectifEquipe:=false;
+
+     if((OKAffectationEffectifEquipe=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKAffectationEffectifEquipe=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FRegistreAffectationEffectifEquipe,k);
+          Write(FRegistreAffectationEffectifEquipe,RRegistreAffectationEffectifEquipe);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FRegistreAffectationEffectifEquipe,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FRegistreAffectationEffectifEquipe,k);
+     Truncate(FRegistreAffectationEffectifEquipe);
+end;
+closefile(FRegistreAffectationEffectifEquipe);
+Confirme:=true;
+end;//F0
+
+Procedure DeleteFDetailArticlePrelevementUniteFonds(PositionDetailArticlePrelevementUniteFonds,FichierConcerne:string; var Confirme:boolean);
+var i,k,m:integer; OKDetailArticlePrelevementUniteFonds,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChDetailArticlePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+FichierConcerne;
+assignfile(FDetailArticlePrelevementUniteFonds,ChDetailArticlePrelevementUniteFonds);
+if FileExists(ChDetailArticlePrelevementUniteFonds)then
+Reset(FDetailArticlePrelevementUniteFonds)
+else Rewrite(FDetailArticlePrelevementUniteFonds);
+Seek(FDetailArticlePrelevementUniteFonds,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FDetailArticlePrelevementUniteFonds)do
+begin//D1
+     read(FDetailArticlePrelevementUniteFonds,RDetailArticlePrelevementUniteFonds);
+
+     if(PositionDetailArticlePrelevementUniteFonds<>'')then
+     begin
+          if(inttostr(RDetailArticlePrelevementUniteFonds.PositionDetailArticlePrelevementUniteFonds)=PositionDetailArticlePrelevementUniteFonds)
+          then OKDetailArticlePrelevementUniteFonds:=true
+          else OKDetailArticlePrelevementUniteFonds:=false;
+     end
+     else  OKDetailArticlePrelevementUniteFonds:=false;
+
+     if((OKDetailArticlePrelevementUniteFonds=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKDetailArticlePrelevementUniteFonds=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FDetailArticlePrelevementUniteFonds,k);
+          Write(FDetailArticlePrelevementUniteFonds,RDetailArticlePrelevementUniteFonds);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FDetailArticlePrelevementUniteFonds,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FDetailArticlePrelevementUniteFonds,k);
+     Truncate(FDetailArticlePrelevementUniteFonds);
+end;
+closefile(FDetailArticlePrelevementUniteFonds);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER PiecesComptable****************************}
+Procedure DeleteFPiecesComptable(NumPiecesComptable,NumEntite:string; var Confirme:boolean);
+var i,k,m:integer;   OKPiecesComptable,OKTrie,OKDelete:boolean;   TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin//D0
+TypeProces:='Comptabilité';
+FichierConcerne:='FPiecesComptableTransitoire'+Firstlaters(NumEntite,5);
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+ChPiecesComptable:=Adresse;
+assignfile(FPiecesComptable,ChPiecesComptable);
+if FileExists(ChPiecesComptable)then
+Reset(FPiecesComptable)
+else Rewrite(FPiecesComptable);
+Seek(FPiecesComptable,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FPiecesComptable)do
+begin//D1
+     read(FPiecesComptable,RPiecesComptable);
+     if(RPiecesComptable.NumPiece=NumPiecesComptable)
+     then
+     begin//D2
+          OKPiecesComptable:=true
+     end//F2
+     else OKPiecesComptable:=false;
+
+     if((OKPiecesComptable=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKPiecesComptable=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FPiecesComptable,k);
+          Write(FPiecesComptable,RPiecesComptable);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FPiecesComptable,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FPiecesComptable,k);
+     Truncate(FPiecesComptable);
+end;
+closefile(FPiecesComptable);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER JournalGeneral****************************}
+Procedure DeleteFJournalGeneral(NumImputation,NumEntite:string; var Confirme:boolean);
+var i,k,m:integer;   OKJournalGeneral,OKTrie,OKDelete:boolean;   TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin//D0
+TypeProces:='Comptabilité';
+FichierConcerne:='FJournalGeneralTransitoire'+Firstlaters(NumEntite,5);
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+ChJournalGeneral:=Adresse;
+assignfile(FJournalGeneral,ChJournalGeneral);
+if FileExists(ChJournalGeneral)then
+Reset(FJournalGeneral)
+else Rewrite(FJournalGeneral);
+Seek(FJournalGeneral,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FJournalGeneral)do
+begin//D1
+     read(FJournalGeneral,RJournalGeneral);
+     if(inttostr(RJournalGeneral.NumImputation)=NumImputation)
+     then
+     begin//D2
+          OKJournalGeneral:=true
+     end//F2
+     else OKJournalGeneral:=false;
+
+     if((OKJournalGeneral=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKJournalGeneral=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FJournalGeneral,k);
+          Write(FJournalGeneral,RJournalGeneral);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FJournalGeneral,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FJournalGeneral,k);
+     Truncate(FJournalGeneral);
+end;
+closefile(FJournalGeneral);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER BaremeComptabilisationCodeParCompte****************************}
+Procedure DeleteFBaremeComptabilisationCodeParCompte(PositionBaremeCCPC:string; var Confirme:boolean);
+var i,k,m:integer;   OKBaremeComptabilisationCodeParCompte,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChBaremeComptabilisationCodeParCompte:=RParc.Parcours+'\'+Exercice+'FBaremeComptabilisationCodeParCompte';
+assignfile(FBaremeComptabilisationCodeParCompte,ChBaremeComptabilisationCodeParCompte);
+if FileExists(ChBaremeComptabilisationCodeParCompte)then
+Reset(FBaremeComptabilisationCodeParCompte)
+else Rewrite(FBaremeComptabilisationCodeParCompte);
+Seek(FBaremeComptabilisationCodeParCompte,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FBaremeComptabilisationCodeParCompte)do
+begin//D1
+     read(FBaremeComptabilisationCodeParCompte,RBaremeComptabilisationCodeParCompte);
+     if(inttostr(RBaremeComptabilisationCodeParCompte.PositionBaremeCCPC)=PositionBaremeCCPC)
+     then
+     begin//D2
+          OKBaremeComptabilisationCodeParCompte:=true
+     end//F2
+     else OKBaremeComptabilisationCodeParCompte:=false;
+
+     if((OKBaremeComptabilisationCodeParCompte=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKBaremeComptabilisationCodeParCompte=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FBaremeComptabilisationCodeParCompte,k);
+          Write(FBaremeComptabilisationCodeParCompte,RBaremeComptabilisationCodeParCompte);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FBaremeComptabilisationCodeParCompte,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FBaremeComptabilisationCodeParCompte,k);
+     Truncate(FBaremeComptabilisationCodeParCompte);
+end;
+closefile(FBaremeComptabilisationCodeParCompte);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER ListeValeursFormuleArticle****************************}
+Procedure DeleteFListeValeursFormuleArticle(PositionListeValeursFormuleArticle:string; var Confirme:boolean);
+var i,k,m:integer;   OKListeValeursFormuleArticle,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChListeValeursFormuleArticle:=RParc.Parcours+'\'+Exercice+'FListeValeursFormuleArticle';
+assignfile(FListeValeursFormuleArticle,ChListeValeursFormuleArticle);
+if FileExists(ChListeValeursFormuleArticle)then
+Reset(FListeValeursFormuleArticle)
+else Rewrite(FListeValeursFormuleArticle);
+Seek(FListeValeursFormuleArticle,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FListeValeursFormuleArticle)do
+begin//D1
+     read(FListeValeursFormuleArticle,RListeValeursFormuleArticle);
+     if(inttostr(RListeValeursFormuleArticle.PositionListeValeursFormuleArticle)=PositionListeValeursFormuleArticle)
+     then
+     begin//D2
+          OKListeValeursFormuleArticle:=true
+     end//F2
+     else OKListeValeursFormuleArticle:=false;
+
+     if((OKListeValeursFormuleArticle=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKListeValeursFormuleArticle=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FListeValeursFormuleArticle,k);
+          Write(FListeValeursFormuleArticle,RListeValeursFormuleArticle);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FListeValeursFormuleArticle,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FListeValeursFormuleArticle,k);
+     Truncate(FListeValeursFormuleArticle);
+end;
+closefile(FListeValeursFormuleArticle);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER TitreDataTiers****************************}
+Procedure DeleteFTitreDataTiers(PositionTitreDataTiers:string; var Confirme:boolean);
+var i,k,m:integer;   OKTitreDataTiers,OKTrie,OKDelete:boolean; TypeProcesInt,FichierConcerneInt,Adresse:string;
+begin//D0
+     TypeProcesInt:='Business';
+     FichierConcerneInt:='FTitreDataTiers';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProcesInt,FichierConcerneInt,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerneInt+' recherché !');
+     end;
+
+ChTitreDataTiers:=Adresse;
+assignfile(FTitreDataTiers,ChTitreDataTiers);
+if FileExists(ChTitreDataTiers)then
+Reset(FTitreDataTiers)
+else Rewrite(FTitreDataTiers);
+Seek(FTitreDataTiers,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FTitreDataTiers)do
+begin//D1
+     read(FTitreDataTiers,RTitreDataTiers);
+     if(inttostr(RTitreDataTiers.PositionTitreDataTiers)=PositionTitreDataTiers)
+     then
+     begin//D2
+          OKTitreDataTiers:=true
+     end//F2
+     else OKTitreDataTiers:=false;
+
+     if((OKTitreDataTiers=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKTitreDataTiers=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FTitreDataTiers,k);
+          Write(FTitreDataTiers,RTitreDataTiers);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FTitreDataTiers,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FTitreDataTiers,k);
+     Truncate(FTitreDataTiers);
+end;
+closefile(FTitreDataTiers);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER MoyenTransport****************************}
+Procedure DeleteFMoyenTransport(PositionMoyenTransport,TypeFiche,NumMovementPrelevement:string; var Confirme:boolean);
+var i,k,m:integer;   OKMoyenTransport,OKTrie,OKDelete:boolean; Archive,PositionPrelevement:string;
+begin//D0
+
+Archive:='';
+if(TypeFiche='Prélèvement')then
+begin
+     RPrelevement:=ChercherPrelevement(strtointeger(NumMovementPrelevement),ExerciceAnnee,'',PositionPrelevement);
+     if(RPrelevement.Archiver=true)then Archive:='Archive';
+end;
+
+OpenFParc(RParc);
+ChMoyenTransport:=RParc.Parcours+'\'+Exercice+'F'+Archive+'MoyenTransport'+TypeFiche;
+assignfile(FMoyenTransport,ChMoyenTransport);
+if FileExists(ChMoyenTransport)then
+Reset(FMoyenTransport)
+else Rewrite(FMoyenTransport);
+Seek(FMoyenTransport,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FMoyenTransport)do
+begin//D1
+     read(FMoyenTransport,RMoyenTransport);
+     if(inttostr(RMoyenTransport.PositionMoyenTransport)=PositionMoyenTransport)
+     then
+     begin//D2
+          OKMoyenTransport:=true
+     end//F2
+     else OKMoyenTransport:=false;
+
+     if((OKMoyenTransport=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKMoyenTransport=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FMoyenTransport,k);
+          Write(FMoyenTransport,RMoyenTransport);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FMoyenTransport,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FMoyenTransport,k);
+     Truncate(FMoyenTransport);
+end;
+closefile(FMoyenTransport);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER ArchivePhotoCommentaire****************************}
+Procedure DeleteFArchivePhotoCommentaire(PositionArchivePhotoCommentaire:string; var Confirme:boolean);
+var i,k,m:integer;   OKArchivePhotoCommentaire,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChArchivePhotoCommentaire:=RParc.Parcours+'\'+Exercice+'FArchivePhotoCommentaire';
+assignfile(FArchivePhotoCommentaire,ChArchivePhotoCommentaire);
+if FileExists(ChArchivePhotoCommentaire)then
+Reset(FArchivePhotoCommentaire)
+else Rewrite(FArchivePhotoCommentaire);
+Seek(FArchivePhotoCommentaire,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FArchivePhotoCommentaire)do
+begin//D1
+     read(FArchivePhotoCommentaire,RArchivePhotoCommentaire);
+     if(inttostr(RArchivePhotoCommentaire.PositionArchivePhotoCommentaire)=PositionArchivePhotoCommentaire)
+     then
+     begin//D2
+          OKArchivePhotoCommentaire:=true
+     end//F2
+     else OKArchivePhotoCommentaire:=false;
+
+     if((OKArchivePhotoCommentaire=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKArchivePhotoCommentaire=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FArchivePhotoCommentaire,k);
+          Write(FArchivePhotoCommentaire,RArchivePhotoCommentaire);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FArchivePhotoCommentaire,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FArchivePhotoCommentaire,k);
+     Truncate(FArchivePhotoCommentaire);
+end;
+closefile(FArchivePhotoCommentaire);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER ListeFichierConcernePartageReseaux****************************}
+Procedure DeleteFListeFichierConcernePartageReseaux(NumAdresseProces,FichierConcerne:string; var Confirme:boolean);
+var i,k,m:integer;   OKListeFichierConcernePartageReseaux,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChListeFichierConcernePartageReseaux:=RParc.Parcours+'\'+Exercice+'FListeFichierConcernePartageReseaux'+' '+NumAdresseProces;
+assignfile(FListeFichierConcernePartageReseaux,ChListeFichierConcernePartageReseaux);
+if FileExists(ChListeFichierConcernePartageReseaux)then
+Reset(FListeFichierConcernePartageReseaux)
+else begin Showmessage('Attention ! '+ChListeFichierConcernePartageReseaux+' n''existe pas !'); Exit; end;
+Seek(FListeFichierConcernePartageReseaux,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FListeFichierConcernePartageReseaux)do
+begin//D1
+     read(FListeFichierConcernePartageReseaux,RListeFichierConcernePartageReseaux);
+
+     if(inttostr(RListeFichierConcernePartageReseaux.NumAdresseProces)=NumAdresseProces)then
+     begin//D2
+          if(FichierConcerne<>'')then
+          begin
+               if(RListeFichierConcernePartageReseaux.FichierConcerne=FichierConcerne)
+               then OKListeFichierConcernePartageReseaux:=true
+               else OKListeFichierConcernePartageReseaux:=false;
+          end
+          else OKListeFichierConcernePartageReseaux:=true
+     end//F2
+     else OKListeFichierConcernePartageReseaux:=false;
+
+
+     if((OKListeFichierConcernePartageReseaux=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKListeFichierConcernePartageReseaux=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FListeFichierConcernePartageReseaux,k);
+          Write(FListeFichierConcernePartageReseaux,RListeFichierConcernePartageReseaux);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FListeFichierConcernePartageReseaux,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FListeFichierConcernePartageReseaux,k);
+     Truncate(FListeFichierConcernePartageReseaux);
+end;
+closefile(FListeFichierConcernePartageReseaux);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER AutorisationPartageRegistre****************************}
+Procedure DeleteFAutorisationPartageRegistre(PositionAPR:string; var Confirme:boolean);
+var i,k,m:integer;   OKAutorisationPartageRegistre,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChAutorisationPartageRegistre:=RParc.Parcours+'\'+Exercice+'FAutorisationPartageRegistre';
+assignfile(FAutorisationPartageRegistre,ChAutorisationPartageRegistre);
+if FileExists(ChAutorisationPartageRegistre)then
+Reset(FAutorisationPartageRegistre)
+else Rewrite(FAutorisationPartageRegistre);
+Seek(FAutorisationPartageRegistre,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FAutorisationPartageRegistre)do
+begin//D1
+     read(FAutorisationPartageRegistre,RAutorisationPartageRegistre);
+     if(inttostr(RAutorisationPartageRegistre.PositionAPR)=PositionAPR)
+     then
+     begin//D2
+          OKAutorisationPartageRegistre:=true
+     end//F2
+     else OKAutorisationPartageRegistre:=false;
+
+     if((OKAutorisationPartageRegistre=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKAutorisationPartageRegistre=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FAutorisationPartageRegistre,k);
+          Write(FAutorisationPartageRegistre,RAutorisationPartageRegistre);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FAutorisationPartageRegistre,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FAutorisationPartageRegistre,k);
+     Truncate(FAutorisationPartageRegistre);
+end;
+closefile(FAutorisationPartageRegistre);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER PublicationReseauxProgrammer****************************}
+Procedure DeleteFPublicationReseauxProgrammer(PositionPublicationReseauxProgrammer:string; var Confirme:boolean);
+var i,k,m:integer;   OKPublicationReseauxProgrammer,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChPublicationReseauxProgrammer:=RParc.Parcours+'\'+Exercice+'FPublicationReseauxProgrammer';
+assignfile(FPublicationReseauxProgrammer,ChPublicationReseauxProgrammer);
+if FileExists(ChPublicationReseauxProgrammer)then
+Reset(FPublicationReseauxProgrammer)
+else Rewrite(FPublicationReseauxProgrammer);
+Seek(FPublicationReseauxProgrammer,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FPublicationReseauxProgrammer)do
+begin//D1
+     read(FPublicationReseauxProgrammer,RPublicationReseauxProgrammer);
+     if(inttostr(RPublicationReseauxProgrammer.PositionPublication)=PositionPublicationReseauxProgrammer)
+     then
+     begin//D2
+          OKPublicationReseauxProgrammer:=true
+     end//F2
+     else OKPublicationReseauxProgrammer:=false;
+
+     if((OKPublicationReseauxProgrammer=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKPublicationReseauxProgrammer=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FPublicationReseauxProgrammer,k);
+          Write(FPublicationReseauxProgrammer,RPublicationReseauxProgrammer);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FPublicationReseauxProgrammer,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FPublicationReseauxProgrammer,k);
+     Truncate(FPublicationReseauxProgrammer);
+end;
+closefile(FPublicationReseauxProgrammer);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER DetailStructure****************************}
+Procedure DeleteFDetailStructure(PositionDetailStructure:string; var Confirme:boolean);
+var i,k,m:integer;   OKDetailStructure,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChDetailStructure:=RParc.Parcours+'\'+Exercice+'FDetailStructure';
+assignfile(FDetailStructure,ChDetailStructure);
+if FileExists(ChDetailStructure)then
+Reset(FDetailStructure)
+else Rewrite(FDetailStructure);
+Seek(FDetailStructure,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FDetailStructure)do
+begin//D1
+     read(FDetailStructure,RDetailStructure);
+     if(inttostr(RDetailStructure.PositionDetailStructure)=PositionDetailStructure)
+     then
+     begin//D2
+          OKDetailStructure:=true
+     end//F2
+     else OKDetailStructure:=false;
+
+     if((OKDetailStructure=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKDetailStructure=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FDetailStructure,k);
+          Write(FDetailStructure,RDetailStructure);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FDetailStructure,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FDetailStructure,k);
+     Truncate(FDetailStructure);
+end;
+closefile(FDetailStructure);
+Confirme:=true;
+end;//F0
+
+{**********************SUPPRIMER ArticleDetailStructure****************************}
+Procedure DeleteFArticleDetailStructure(PositionDetailStructure,PositionArticleDetailStructure:string; var Confirme:boolean);
+var i,k,m:integer;   OKArticleDetailStructure,OKTrie,OKDelete:boolean;
+begin//D0
+OpenFParc(RParc);
+ChArticleDetailStructure:=RParc.Parcours+'\'+Exercice+'FArticleDetailStructure';
+assignfile(FArticleDetailStructure,ChArticleDetailStructure);
+if FileExists(ChArticleDetailStructure)then
+Reset(FArticleDetailStructure)
+else Rewrite(FArticleDetailStructure);
+Seek(FArticleDetailStructure,0);
+Confirme:=false;
+OKTrie:=false;
+OKDelete:=false;
+i:=0;
+k:=0;
+m:=0;
+while not eof(FArticleDetailStructure)do
+begin//D1
+     read(FArticleDetailStructure,RArticleDetailStructure);
+
+     if(inttostr(RArticleDetailStructure.PositionDetailStructure)=PositionDetailStructure)
+     then OKArticleDetailStructure:=true
+     else OKArticleDetailStructure:=false;
+
+     if(OKArticleDetailStructure=true)then
+     begin
+          if(PositionArticleDetailStructure<>'')then
+          begin
+               if(inttostr(RArticleDetailStructure.PositionArticleDetailStructure)=PositionArticleDetailStructure)
+               then OKArticleDetailStructure:=true
+               else OKArticleDetailStructure:=false;
+          end;
+     end;
+
+     if((OKArticleDetailStructure=true)and(OKTrie=false))then
+     begin
+          OKTrie:=true;
+          k:=i;
+     end;
+
+     if(OKArticleDetailStructure=false)and(OKTrie=true)then
+     begin
+          OKDelete:=true;
+          Seek(FArticleDetailStructure,k);
+          Write(FArticleDetailStructure,RArticleDetailStructure);
+          Confirme:=true;
+          k:=k+1;
+     end;
+i:=i+1;
+Seek(FArticleDetailStructure,i);
+end;//F1
+if(OKTrie=true)then
+begin
+     Seek(FArticleDetailStructure,k);
+     Truncate(FArticleDetailStructure);
+end;
+closefile(FArticleDetailStructure);
+Confirme:=true;
+end;//F0
+
+Function SupprimerFPrelevement(NumPrelevement,Matricule:string; SupprimerUnSeul,AfficherRapport:boolean; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression,ContinuSpprission:boolean;  TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerFPrelevement:=false;
+
+     TypeProces:='Business';
+     FichierConcerne:='FPrelevement';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChPrelevementCopie:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FPrelevementCopie,ChPrelevementCopie);
+     if FileExists(ChPrelevementCopie)
+     then Reset(FPrelevementCopie)
+     else Rewrite(FPrelevementCopie);
+     Seek(FPrelevementCopie,0);
+     Truncate(FPrelevementCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChPrelevement:=Adresse;
+     assignfile(FPrelevement,ChPrelevement);
+     if FileExists(ChPrelevement)then
+     begin
+          Reset(FPrelevement);
+          Seek(FPrelevement,0);
+          i:=0;
+          ContinuSpprission:=true;
+          while not eof(FPrelevement)do
+          begin
+               read(FPrelevement,RPrelevement);
+               RExistant:=RExistant+1;
+
+               if(ContinuSpprission=true)then
+               begin
+                    if(NumPrelevement<>'')then
+                    begin
+                         if(RPrelevement.NumPrelevement=strtointeger(NumPrelevement))
+                         then OKSuppression:=true
+                         else OKSuppression:=false;
+                    end
+                    else OKSuppression:=false;
+
+                    if(OKSuppression=true)then
+                    begin
+                         if(Matricule<>'')then
+                         begin
+                              if(RPrelevement.Matricule=Matricule)
+                              then OKSuppression:=true
+                              else OKSuppression:=false;
+                         end;
+                    end;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FPrelevementCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FPrelevementCopie,RPrelevement);
+               i:=i+1;
+               end
+               else
+               begin
+                    RSupprimer:=RSupprimer+1;
+                    if(SupprimerUnSeul=true)then ContinuSpprission:=false;
+               end;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FPrelevementCopie,0);
+          i:=0;
+          while not eof(FPrelevementCopie)do
+          begin
+               read(FPrelevementCopie,RPrelevementCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FPrelevementCopie,0);
+               Seek(FPrelevement,0);
+               Truncate(FPrelevement);
+               i:=0;
+               while not eof(FPrelevementCopie)do
+               begin
+                    read(FPrelevementCopie,RPrelevementCopie);
+                    Seek(FPrelevement,i);
+                    write(FPrelevement,RPrelevementCopie);
+               i:=i+1;
+               end;
+               SupprimerFPrelevement:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FPrelevement);
+     end
+     else AfficherMessage('Le fichier '+ChPrelevement+' n''éxiste pas !');
+
+     CloseFile(FPrelevementCopie);
+
+     if(AfficherRapport=true)then
+     begin
+          if(RSupprimer>0)
+          then AfficherMessage('Suppression réussie ! FTotal: '+inttostr(RExistant)+' FSupprimer: '+inttostr(RSupprimer)+' FSauvgarder: '+inttostr(RSauvgarder))
+          else AfficherMessage('Aucun Registre Supprimer ! FTotal: '+inttostr(RExistant)+' FSupprimer: '+inttostr(RSupprimer)+' FSauvgarder: '+inttostr(RSauvgarder));
+     end;
+end;
+
+Function SupprimerFVehiculePrelevementTare(MatriculeResponsablePrelevement:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;  TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerFVehiculePrelevementTare:=false;
+
+     TypeProces:='Business';
+     FichierConcerne:='FVehiculePrelevementTare';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OpenFParc(RParc);
+     ChVehiculePrelevementTareCopie:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FVehiculePrelevementTareCopie,ChVehiculePrelevementTareCopie);
+     if FileExists(ChVehiculePrelevementTareCopie)
+     then Reset(FVehiculePrelevementTareCopie)
+     else Rewrite(FVehiculePrelevementTareCopie);
+     Seek(FVehiculePrelevementTareCopie,0);
+     Truncate(FVehiculePrelevementTareCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChVehiculePrelevementTare:=Adresse;
+     assignfile(FVehiculePrelevementTare,ChVehiculePrelevementTare);
+     if FileExists(ChVehiculePrelevementTare)then
+     begin
+          Reset(FVehiculePrelevementTare);
+          Seek(FVehiculePrelevementTare,0);
+          i:=0;
+          while not eof(FVehiculePrelevementTare)do
+          begin
+               read(FVehiculePrelevementTare,RVehiculePrelevementTare);
+               RExistant:=RExistant+1;
+
+               if(MatriculeResponsablePrelevement<>'')then
+               begin
+                    if(RVehiculePrelevementTare.MatriculeResponsablePrelevement=MatriculeResponsablePrelevement)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else
+               begin
+                    if(RVehiculePrelevementTare.MatriculeResponsablePrelevement='')
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FVehiculePrelevementTareCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FVehiculePrelevementTareCopie,RVehiculePrelevementTare);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FVehiculePrelevementTareCopie,0);
+          i:=0;
+          while not eof(FVehiculePrelevementTareCopie)do
+          begin
+               read(FVehiculePrelevementTareCopie,RVehiculePrelevementTareCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FVehiculePrelevementTareCopie,0);
+               Seek(FVehiculePrelevementTare,0);
+               Truncate(FVehiculePrelevementTare);
+               i:=0;
+               while not eof(FVehiculePrelevementTareCopie)do
+               begin
+                    read(FVehiculePrelevementTareCopie,RVehiculePrelevementTareCopie);
+                    Seek(FVehiculePrelevementTare,i);
+                    write(FVehiculePrelevementTare,RVehiculePrelevementTareCopie);
+               i:=i+1;
+               end;
+               SupprimerFVehiculePrelevementTare:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FVehiculePrelevementTare);
+     end
+     else AfficherMessage('Le fichier '+ChVehiculePrelevementTare+' n''éxiste pas !');
+
+     CloseFile(FVehiculePrelevementTareCopie);
+end;
+
+Function SupprimerFResponsablePrelevement(CodeResponsablePrelevement:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;  TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerFResponsablePrelevement:=false;
+
+     TypeProces:='Business';
+     FichierConcerne:='FResponsablePrelevement';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OpenFParc(RParc);
+     ChResponsablePrelevementCopie:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FResponsablePrelevementCopie,ChResponsablePrelevementCopie);
+     if FileExists(ChResponsablePrelevementCopie)
+     then Reset(FResponsablePrelevementCopie)
+     else Rewrite(FResponsablePrelevementCopie);
+     Seek(FResponsablePrelevementCopie,0);
+     Truncate(FResponsablePrelevementCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChResponsablePrelevement:=Adresse;
+     assignfile(FResponsablePrelevement,ChResponsablePrelevement);
+     if FileExists(ChResponsablePrelevement)then
+     begin
+          Reset(FResponsablePrelevement);
+          Seek(FResponsablePrelevement,0);
+          i:=0;
+          while not eof(FResponsablePrelevement)do
+          begin
+               read(FResponsablePrelevement,RResponsablePrelevement);
+               RExistant:=RExistant+1;
+
+               if(CodeResponsablePrelevement<>'')then
+               begin
+                    if(RResponsablePrelevement.CodeResponsablePrelevement=CodeResponsablePrelevement)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else
+               begin
+                    if(RResponsablePrelevement.CodeResponsablePrelevement='')
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FResponsablePrelevementCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FResponsablePrelevementCopie,RResponsablePrelevement);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FResponsablePrelevementCopie,0);
+          i:=0;
+          while not eof(FResponsablePrelevementCopie)do
+          begin
+               read(FResponsablePrelevementCopie,RResponsablePrelevementCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FResponsablePrelevementCopie,0);
+               Seek(FResponsablePrelevement,0);
+               Truncate(FResponsablePrelevement);
+               i:=0;
+               while not eof(FResponsablePrelevementCopie)do
+               begin
+                    read(FResponsablePrelevementCopie,RResponsablePrelevementCopie);
+                    Seek(FResponsablePrelevement,i);
+                    write(FResponsablePrelevement,RResponsablePrelevementCopie);
+               i:=i+1;
+               end;
+               SupprimerFResponsablePrelevement:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FResponsablePrelevement);
+     end
+     else AfficherMessage('Le fichier '+ChResponsablePrelevement+' n''éxiste pas !');
+
+     CloseFile(FResponsablePrelevementCopie);
+end;
+
+Function SupprimerFQteforfaitStock(PositionQteforfaitStock:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;  TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerFQteforfaitStock:=false;
+
+     TypeProces:='Business';
+     FichierConcerne:='FQteforfaitStock';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OpenFParc(RParc);
+     ChQteforfaitStockCopie:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FQteforfaitStockCopie,ChQteforfaitStockCopie);
+     if FileExists(ChQteforfaitStockCopie)
+     then Reset(FQteforfaitStockCopie)
+     else Rewrite(FQteforfaitStockCopie);
+     Seek(FQteforfaitStockCopie,0);
+     Truncate(FQteforfaitStockCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChQteforfaitStock:=Adresse;
+     assignfile(FQteforfaitStock,ChQteforfaitStock);
+     if FileExists(ChQteforfaitStock)then
+     begin
+          Reset(FQteforfaitStock);
+          Seek(FQteforfaitStock,0);
+          i:=0;
+          while not eof(FQteforfaitStock)do
+          begin
+               read(FQteforfaitStock,RQteforfaitStock);
+               RExistant:=RExistant+1;
+
+               if(PositionQteforfaitStock<>'')then
+               begin
+                    if(RQteforfaitStock.PositionQteforfait=strtointeger(PositionQteforfaitStock))
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FQteforfaitStockCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FQteforfaitStockCopie,RQteforfaitStock);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FQteforfaitStockCopie,0);
+          i:=0;
+          while not eof(FQteforfaitStockCopie)do
+          begin
+               read(FQteforfaitStockCopie,RQteforfaitStockCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FQteforfaitStockCopie,0);
+               Seek(FQteforfaitStock,0);
+               Truncate(FQteforfaitStock);
+               i:=0;
+               while not eof(FQteforfaitStockCopie)do
+               begin
+                    read(FQteforfaitStockCopie,RQteforfaitStockCopie);
+                    Seek(FQteforfaitStock,i);
+                    write(FQteforfaitStock,RQteforfaitStockCopie);
+               i:=i+1;
+               end;
+               SupprimerFQteforfaitStock:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FQteforfaitStock);
+     end
+     else AfficherMessage('Le fichier '+ChQteforfaitStock+' n''éxiste pas !');
+
+     CloseFile(FQteforfaitStockCopie);
+end;
+
+Procedure ViderTableau(TableauAVider:TStringGrid; FixedRows:integer);
+begin
+     TableauAVider.RowCount:=FixedRows+1;
+     TableauAVider.Rows[FixedRows].Text:='';
+end;
+
+{Procedure DeleteFStock(Fichier:string; CodeStock:string; var Confirme:boolean);
+begin
+ChStock:=Fichier;
+assignfile(FStock,ChStock);
+if FileExists(ChStock)then
+Reset(FStock)
+else Rewrite(FStock);
+i:=0;
+Seek(FStock,0);
+while not eof(FStock)do
+begin
+read(FStock,RStock);
+if((RStock.Code=CodeStock)or(RStock.Code=''))then
+begin
+    k:=i;
+    while not eof(FStock)do
+    begin
+    read(FStock,RStock);
+    Seek(FStock,k);
+    Write(FStock,RStock);
+    k:=k+1;
+    Seek(FStock,k+1);
+    end;
+    Seek(FStock,k);
+    Truncate(FStock);
+    Seek(FStock,0);
+    i:=0;
+end
+else i:=i+1;
+end;
+CloseFile(FStock);
+Confirme:=true;
+end; }
+
+Function DeleteFStock(Fichier,CodeStock:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;  TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     DeleteFStock:=false;
+
+     OpenFParc(RParc);
+     ChStockCopie:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FStockCopie,ChStockCopie);
+     if FileExists(ChStockCopie)
+     then Reset(FStockCopie)
+     else Rewrite(FStockCopie);
+     Seek(FStockCopie,0);
+     Truncate(FStockCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChStock:=Fichier;
+     assignfile(FStock,ChStock);
+     if FileExists(ChStock)then
+     begin
+          Reset(FStock);
+          Seek(FStock,0);
+          i:=0;
+          while not eof(FStock)do
+          begin
+               read(FStock,RStock);
+               RExistant:=RExistant+1;
+
+               if(CodeStock<>'')then
+               begin
+                    if(RStock.Code=CodeStock)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else
+               begin
+                    if(RStock.Code='')
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FStockCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FStockCopie,RStock);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FStockCopie,0);
+          i:=0;
+          while not eof(FStockCopie)do
+          begin
+               read(FStockCopie,RStockCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FStockCopie,0);
+               Seek(FStock,0);
+               Truncate(FStock);
+               i:=0;
+               while not eof(FStockCopie)do
+               begin
+                    read(FStockCopie,RStockCopie);
+                    Seek(FStock,i);
+                    write(FStock,RStockCopie);
+               i:=i+1;
+               end;
+               DeleteFStock:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FStock);
+     end
+     else AfficherMessage('Le fichier '+ChStock+' n''éxiste pas !');
+
+     CloseFile(FStockCopie);
+end;
+
+Function SupprimerFLastNumDetailMouvementMAJ(DateOperationMAJ,FichierConcerneDetailMouvement,CodeSFamille:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;  TypeProces,FichierConcerne,Adresse,NomDossierPartageReseauxOut:string;
+begin
+     SupprimerFLastNumDetailMouvementMAJ:=false;
+
+     TypeProces:='Business';
+     FichierConcerne:='FLastNumDetailMouvementMAJ';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OpenFParc(RParc);
+     ChLastNumDetailMouvementMAJCopie:=RParc.Parcours+'\'+Exercice+'FResultatSuppression';
+     assignfile(FLastNumDetailMouvementMAJCopie,ChLastNumDetailMouvementMAJCopie);
+     if FileExists(ChLastNumDetailMouvementMAJCopie)
+     then Reset(FLastNumDetailMouvementMAJCopie)
+     else Rewrite(FLastNumDetailMouvementMAJCopie);
+     Seek(FLastNumDetailMouvementMAJCopie,0);
+     Truncate(FLastNumDetailMouvementMAJCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChLastNumDetailMouvementMAJ:=Adresse;
+     assignfile(FLastNumDetailMouvementMAJ,ChLastNumDetailMouvementMAJ);
+     if FileExists(ChLastNumDetailMouvementMAJ)then
+     begin
+          Reset(FLastNumDetailMouvementMAJ);
+          Seek(FLastNumDetailMouvementMAJ,0);
+          i:=0;
+          while not eof(FLastNumDetailMouvementMAJ)do
+          begin
+               read(FLastNumDetailMouvementMAJ,RLastNumDetailMouvementMAJ);
+               RExistant:=RExistant+1;
+
+               if(DateOperationMAJ<>'')
+               and(FichierConcerneDetailMouvement<>'')
+               then
+               begin
+                    if(RLastNumDetailMouvementMAJ.DateOperationMAJ=DateOperationMAJ)
+                    and(RLastNumDetailMouvementMAJ.FichierConcerneDetailMouvement=FichierConcerneDetailMouvement)
+                    and(RLastNumDetailMouvementMAJ.CodeSFamille=CodeSFamille)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FLastNumDetailMouvementMAJCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FLastNumDetailMouvementMAJCopie,RLastNumDetailMouvementMAJ);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FLastNumDetailMouvementMAJCopie,0);
+          i:=0;
+          while not eof(FLastNumDetailMouvementMAJCopie)do
+          begin
+               read(FLastNumDetailMouvementMAJCopie,RLastNumDetailMouvementMAJCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FLastNumDetailMouvementMAJCopie,0);
+               Seek(FLastNumDetailMouvementMAJ,0);
+               Truncate(FLastNumDetailMouvementMAJ);
+               i:=0;
+               while not eof(FLastNumDetailMouvementMAJCopie)do
+               begin
+                    read(FLastNumDetailMouvementMAJCopie,RLastNumDetailMouvementMAJCopie);
+                    Seek(FLastNumDetailMouvementMAJ,i);
+                    write(FLastNumDetailMouvementMAJ,RLastNumDetailMouvementMAJCopie);
+               i:=i+1;
+               end;
+               SupprimerFLastNumDetailMouvementMAJ:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FLastNumDetailMouvementMAJ);
+     end
+     else AfficherMessage('Le fichier '+ChLastNumDetailMouvementMAJ+' n''éxiste pas !');
+
+     CloseFile(FLastNumDetailMouvementMAJCopie);
+end;
+
+Function SupprimerFRubriquesSousMenu(PositionRubriqueSousMenu:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean; 
+begin
+     SupprimerFRubriquesSousMenu:=false;
+
+     OpenFParc(RParc);
+     ChRubriquesSousMenuCopie:=RParc.Parcours+'\'+Entreprise+'FResultatSuppression';
+     assignfile(FRubriquesSousMenuCopie,ChRubriquesSousMenuCopie);
+     if FileExists(ChRubriquesSousMenuCopie)
+     then Reset(FRubriquesSousMenuCopie)
+     else Rewrite(FRubriquesSousMenuCopie);
+     Seek(FRubriquesSousMenuCopie,0);
+     Truncate(FRubriquesSousMenuCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChRubriquesSousMenu:=RParc.Parcours+'\'+Entreprise+'FRubriquesSousMenu';;
+     assignfile(FRubriquesSousMenu,ChRubriquesSousMenu);
+     if FileExists(ChRubriquesSousMenu)then
+     begin
+          Reset(FRubriquesSousMenu);
+          Seek(FRubriquesSousMenu,0);
+          i:=0;
+          while not eof(FRubriquesSousMenu)do
+          begin
+               read(FRubriquesSousMenu,RRubriquesSousMenu);
+               RExistant:=RExistant+1;
+
+               if(PositionRubriqueSousMenu<>'')then
+               begin
+                    if(RRubriquesSousMenu.PositionRubriqueSousMenu=strtointeger(PositionRubriqueSousMenu))
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FRubriquesSousMenuCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FRubriquesSousMenuCopie,RRubriquesSousMenu);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FRubriquesSousMenuCopie,0);
+          i:=0;
+          while not eof(FRubriquesSousMenuCopie)do
+          begin
+               read(FRubriquesSousMenuCopie,RRubriquesSousMenuCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FRubriquesSousMenuCopie,0);
+               Seek(FRubriquesSousMenu,0);
+               Truncate(FRubriquesSousMenu);
+               i:=0;
+               while not eof(FRubriquesSousMenuCopie)do
+               begin
+                    read(FRubriquesSousMenuCopie,RRubriquesSousMenuCopie);
+                    Seek(FRubriquesSousMenu,i);
+                    write(FRubriquesSousMenu,RRubriquesSousMenuCopie);
+               i:=i+1;
+               end;
+               SupprimerFRubriquesSousMenu:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FRubriquesSousMenu);
+     end
+     else AfficherMessage('Le fichier '+ChRubriquesSousMenu+' n''éxiste pas !');
+
+     CloseFile(FRubriquesSousMenuCopie);
+end;
+
+Function SupprimerFIntituleImprime(PositionIntituleImprime:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean; 
+begin
+     SupprimerFIntituleImprime:=false;
+
+     OpenFParc(RParc);
+     ChIntituleImprimeCopie:=RParc.Parcours+'\'+Entreprise+'FResultatSuppression';
+     assignfile(FIntituleImprimeCopie,ChIntituleImprimeCopie);
+     if FileExists(ChIntituleImprimeCopie)
+     then Reset(FIntituleImprimeCopie)
+     else Rewrite(FIntituleImprimeCopie);
+     Seek(FIntituleImprimeCopie,0);
+     Truncate(FIntituleImprimeCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChIntituleImprime:=RParc.Parcours+'\'+Entreprise+'FIntituleImprime';;
+     assignfile(FIntituleImprime,ChIntituleImprime);
+     if FileExists(ChIntituleImprime)then
+     begin
+          Reset(FIntituleImprime);
+          Seek(FIntituleImprime,0);
+          i:=0;
+          while not eof(FIntituleImprime)do
+          begin
+               read(FIntituleImprime,RIntituleImprime);
+               RExistant:=RExistant+1;
+
+               if(PositionIntituleImprime<>'')then
+               begin
+                    if(RIntituleImprime.PositionIntituleImprime=strtointeger(PositionIntituleImprime))
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FIntituleImprimeCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FIntituleImprimeCopie,RIntituleImprime);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FIntituleImprimeCopie,0);
+          i:=0;
+          while not eof(FIntituleImprimeCopie)do
+          begin
+               read(FIntituleImprimeCopie,RIntituleImprimeCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FIntituleImprimeCopie,0);
+               Seek(FIntituleImprime,0);
+               Truncate(FIntituleImprime);
+               i:=0;
+               while not eof(FIntituleImprimeCopie)do
+               begin
+                    read(FIntituleImprimeCopie,RIntituleImprimeCopie);
+                    Seek(FIntituleImprime,i);
+                    write(FIntituleImprime,RIntituleImprimeCopie);
+               i:=i+1;
+               end;
+               SupprimerFIntituleImprime:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FIntituleImprime);
+     end
+     else AfficherMessage('Le fichier '+ChIntituleImprime+' n''éxiste pas !');
+
+     CloseFile(FIntituleImprimeCopie);
+end;
+
+Function SupprimerFImprime(PositionImprime:string; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerFImprime:=false;
+
+     OpenFParc(RParc);
+     ChImprimeCopie:=RParc.Parcours+'\'+Entreprise+'FResultatSuppression';
+     assignfile(FImprimeCopie,ChImprimeCopie);
+     if FileExists(ChImprimeCopie)
+     then Reset(FImprimeCopie)
+     else Rewrite(FImprimeCopie);
+     Seek(FImprimeCopie,0);
+     Truncate(FImprimeCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChImprime:=RParc.Parcours+'\'+Entreprise+'FImprime';;
+     assignfile(FImprime,ChImprime);
+     if FileExists(ChImprime)then
+     begin
+          Reset(FImprime);
+          Seek(FImprime,0);
+          i:=0;
+          while not eof(FImprime)do
+          begin
+               read(FImprime,RImprime);
+               RExistant:=RExistant+1;
+
+               if(PositionImprime<>'')then
+               begin
+                    if(RImprime.PositionImprime=strtointeger(PositionImprime))
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FImprimeCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FImprimeCopie,RImprime);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FImprimeCopie,0);
+          i:=0;
+          while not eof(FImprimeCopie)do
+          begin
+               read(FImprimeCopie,RImprimeCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FImprimeCopie,0);
+               Seek(FImprime,0);
+               Truncate(FImprime);
+               i:=0;
+               while not eof(FImprimeCopie)do
+               begin
+                    read(FImprimeCopie,RImprimeCopie);
+                    Seek(FImprime,i);
+                    write(FImprime,RImprimeCopie);
+               i:=i+1;
+               end;
+               SupprimerFImprime:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FImprime);
+     end
+     else AfficherMessage('Le fichier '+ChImprime+' n''éxiste pas !');
+
+     CloseFile(FImprimeCopie);
+end;
+
+Function SupprimerFAffectationMenuRaccourci(NomBoutonRaccourcis:String; var RExistant,RSupprimer,RSauvgarder:integer):boolean;
+var  i:integer; OKSuppression:boolean;
+begin
+     SupprimerFAffectationMenuRaccourci:=false;
+
+     OpenFParc(RParc);
+     ChAffectationMenuRaccourciCopie:=RParc.Parcours+'\'+'FResultatSuppression';
+     assignfile(FAffectationMenuRaccourciCopie,ChAffectationMenuRaccourciCopie);
+     if FileExists(ChAffectationMenuRaccourciCopie)
+     then Reset(FAffectationMenuRaccourciCopie)
+     else Rewrite(FAffectationMenuRaccourciCopie);
+     Seek(FAffectationMenuRaccourciCopie,0);
+     Truncate(FAffectationMenuRaccourciCopie);
+
+     RExistant:=0;
+     RSupprimer:=0;
+     RSauvgarder:=0;
+
+     ChAffectationMenuRaccourci:=RParc.Parcours+'\'+'FAffectationMenuRaccourci';;
+     assignfile(FAffectationMenuRaccourci,ChAffectationMenuRaccourci);
+     if FileExists(ChAffectationMenuRaccourci)then
+     begin
+          Reset(FAffectationMenuRaccourci);
+          Seek(FAffectationMenuRaccourci,0);
+          i:=0;
+          while not eof(FAffectationMenuRaccourci)do
+          begin
+               read(FAffectationMenuRaccourci,RAffectationMenuRaccourci);
+               RExistant:=RExistant+1;
+
+               if(NomBoutonRaccourcis<>'')then
+               begin
+                    if(RAffectationMenuRaccourci.NamBoutonRaccourcis=NomBoutonRaccourcis)
+                    then OKSuppression:=true
+                    else OKSuppression:=false;
+               end
+               else OKSuppression:=false;
+
+               if(OKSuppression=false)then
+               begin
+                    Seek(FAffectationMenuRaccourciCopie,i);
+                    RSauvgarder:=RSauvgarder+1;
+                    write(FAffectationMenuRaccourciCopie,RAffectationMenuRaccourci);
+               i:=i+1;
+               end
+               else RSupprimer:=RSupprimer+1;
+          end;
+
+          ////////////////////DEBUT CONTROLE/////////////////////
+          Seek(FAffectationMenuRaccourciCopie,0);
+          i:=0;
+          while not eof(FAffectationMenuRaccourciCopie)do
+          begin
+               read(FAffectationMenuRaccourciCopie,RAffectationMenuRaccourciCopie);
+               i:=i+1;
+          end;
+
+          if(RSauvgarder=i)and(RExistant=RSauvgarder+RSupprimer)then
+          begin
+               Seek(FAffectationMenuRaccourciCopie,0);
+               Seek(FAffectationMenuRaccourci,0);
+               Truncate(FAffectationMenuRaccourci);
+               i:=0;
+               while not eof(FAffectationMenuRaccourciCopie)do
+               begin
+                    read(FAffectationMenuRaccourciCopie,RAffectationMenuRaccourciCopie);
+                    Seek(FAffectationMenuRaccourci,i);
+                    write(FAffectationMenuRaccourci,RAffectationMenuRaccourciCopie);
+               i:=i+1;
+               end;
+               SupprimerFAffectationMenuRaccourci:=true;
+          end
+          else AfficherMessage('Suppression impossible !');
+          ////////////////////FIN CONTROLE/////////////////////
+
+          CloseFile(FAffectationMenuRaccourci);
+     end
+     else AfficherMessage('Le fichier '+ChAffectationMenuRaccourci+' n''éxiste pas !');
+
+     CloseFile(FAffectationMenuRaccourciCopie);
+end;
+
+//                    TBitBtn   TMenuItem
+end.

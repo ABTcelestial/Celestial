@@ -1,0 +1,159 @@
+unit API_LiberationProcessus;
+
+interface
+
+uses PsAPI,TLHelp32,Windows,SysUtils,Forms, ShellAPI, Dialogs;
+
+procedure LibererMemoireProcessus(NomProcessus:string; OptimisationEnCours:boolean);
+function ConvertirTaille(TailleEnOctets:int64):string;
+Function TrouverHandle(NomProcessus:string):THandle;
+procedure RunAsAdmin(const AFileName: string; const AParams: string = '');
+
+const
+     Un_GigaOctet=1073741824;
+     Un_MegaOctet=1048576;
+     Un_KiloOctet=1024;
+
+implementation
+
+Uses UnitInitialisation, UnitFSMenuPrincipal, UnitFSAttente, UnitFSPatienter;
+
+procedure LibererMemoireProcessus(NomProcessus:string; OptimisationEnCours:boolean);
+var
+  HandleCaptureProcessus:THandle;
+  UnProcessus:TProcessEntry32;
+  PIDProcessus:THandle;
+  HandleProcessus:THandle;
+  MemoireProcessus:TProcessMemoryCounters;
+  HandleMemoireProcessus:THandle;
+begin
+     PIDProcessus:=4294967295;
+     // On capture une image de l'ensemble des processus en cours
+     HandleCaptureProcessus:=CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS,0);
+     UnProcessus.dwSize:=SizeOf(TProcessEntry32);
+     // On parcours la liste des processus
+     Process32First(HandleCaptureProcessus,UnProcessus);
+     repeat
+     // On a trouvé un procedure dont le nom d'executable correspond
+     if UnProcessus.szExeFile=NomProcessus then
+     begin
+          // On retiens son PID pour plus tard
+          PIDProcessus:=UnProcessus.th32ProcessID;
+          Break;
+     end;
+     until not Process32Next(HandleCaptureProcessus,UnProcessus);
+     // Aucun processus n'as été trouvé
+     if PIDProcessus=4294967295 then
+     begin
+          if FSMenuPrincipal.Pnl_ProcessusActif.Caption='Oui' then
+          begin
+               FSMenuPrincipal.Pnl_ProcessusActif.Caption:='Non';
+               FSMenuPrincipal.Pnl_ConsoMemoire.Caption:='N/A';
+               FSMenuPrincipal.Pnl_EconomieMemoire.Caption:='N/A';
+          end;
+          // On oublie pas de liberer le handle avant de quitter
+          CloseHandle(HandleCaptureProcessus);
+          exit;
+     end;
+     // Le processus à été trouvé, on lui attribut un handle
+     HandleProcessus:=OpenProcess(PROCESS_ALL_ACCESS,False,PIDProcessus);
+     // On va chercher la mémoire utilisé par le processus
+     GetProcessMemoryInfo(HandleProcessus,@MemoireProcessus,SizeOf(TProcessMemoryCounters));
+     FSMenuPrincipal.Pnl_ProcessusActif.Caption:='Oui';
+     FSMenuPrincipal.Pnl_ConsoMemoire.Caption:=ConvertirTaille(MemoireProcessus.WorkingSetSize);
+
+     if OptimisationEnCours then
+     begin
+          // On libere la mémoire du processus
+          EmptyWorkingSet(HandleProcessus);
+          FSMenuPrincipal.Pnl_EconomieMemoire.Caption:=ConvertirTaille(MemoireProcessus.PagefileUsage);
+     end
+     else
+         FSMenuPrincipal.Pnl_EconomieMemoire.Caption:='N/A';
+         // Ne pas oublier de liberer la mémoire alloué aux handle
+     CloseHandle(HandleCaptureProcessus);
+     CloseHandle(HandleProcessus);
+
+     Application.ProcessMessages;
+end;
+
+function ConvertirTaille(TailleEnOctets:int64):string;
+begin
+     if TailleEnOctets>Un_GigaOctet then
+     begin
+          Result:=IntToStr(TailleEnOctets div Un_GigaOctet)+' Go';
+          exit;
+     end;
+     if TailleEnOctets>Un_MegaOctet then
+     begin
+          Result:=IntToStr(TailleEnOctets div Un_MegaOctet)+' Mo';
+          exit;
+     end;
+
+     Result:=IntToStr(TailleEnOctets div Un_KiloOctet)+' Ko';
+end;
+
+Function TrouverHandle(NomProcessus:string):THandle;
+var
+  HandleCaptureProcessus:THandle;
+  UnProcessus:TProcessEntry32;
+  PIDProcessus:THandle;
+  HandleProcessus:THandle;
+  MemoireProcessus:TProcessMemoryCounters;
+  HandleMemoireProcessus:THandle;
+begin
+     PIDProcessus:=4294967295;
+     // On capture une image de l'ensemble des processus en cours
+     HandleCaptureProcessus:=CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS,0);
+     UnProcessus.dwSize:=SizeOf(TProcessEntry32);
+     // On parcours la liste des processus
+     Process32First(HandleCaptureProcessus,UnProcessus);
+     repeat
+     // On a trouvé un procedure dont le nom d'executable correspond
+     if UnProcessus.szExeFile=ExtractFileName(NomProcessus) then
+     begin
+          // On retiens son PID pour plus tard
+          PIDProcessus:=UnProcessus.th32ProcessID;
+          Break;
+     end;
+     until not Process32Next(HandleCaptureProcessus,UnProcessus);
+     // Aucun processus n'as été trouvé
+     if PIDProcessus=4294967295 then
+     begin
+          if FSMenuPrincipal.Pnl_ProcessusActif.Caption='Oui' then
+          begin
+               FSMenuPrincipal.Pnl_ProcessusActif.Caption:='Non';
+               FSMenuPrincipal.Pnl_ConsoMemoire.Caption:='N/A';
+               FSMenuPrincipal.Pnl_EconomieMemoire.Caption:='N/A';
+          end;
+          // On oublie pas de liberer le handle avant de quitter
+          CloseHandle(HandleCaptureProcessus);
+          exit;
+     end;
+     // Le processus à été trouvé, on lui attribut un handle
+     HandleProcessus:=OpenProcess(PROCESS_ALL_ACCESS,False,PIDProcessus);
+     // On va chercher la mémoire utilisé par le processus
+     TrouverHandle:=HandleProcessus;
+
+     CloseHandle(HandleCaptureProcessus);
+     CloseHandle(HandleProcessus);
+
+     Application.ProcessMessages;
+end;
+
+procedure RunAsAdmin(const AFileName: string; const AParams: string = '');
+var   ZReturn: Cardinal;
+begin
+     ZReturn := ShellExecute(0, 'runas', PChar(AFileName), PChar(AParams), nil, SW_SHOWNORMAL);
+
+     // Vous pouvez ajouter une vérification ici pour vérifier la valeur de ZReturn
+     // si elle est inférieure à 32, cela indique une erreur.
+     if ZReturn < 32 then
+     begin
+          // Gérer l'erreur, par exemple afficher un message à l'utilisateur
+          ShowMessage('Erreur lors du lancement de l''exécutable : ' + IntToStr(ZReturn));
+     end
+     else ShowMessage('lancement de l''exécutable : ' + IntToStr(ZReturn));
+end;
+
+end.

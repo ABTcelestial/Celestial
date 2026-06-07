@@ -1,0 +1,489 @@
+unit UnitFSControleSysteme;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, winsock, ShellCtrls;
+
+type
+  TFSControleSysteme = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    Bevel1: TBevel;
+    Bevel2: TBevel;
+    Panel1: TPanel;
+    Bevel7: TBevel;
+    Bevel6: TBevel;
+    LabelDate: TLabel;
+    Label3: TLabel;
+    EditAnnee: TEdit;
+    EditMois: TEdit;
+    EditJouSemaine: TEdit;
+    EditJour: TEdit;
+    BitChargeDateHeureSysteme: TBitBtn;
+    Panel2: TPanel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label13: TLabel;
+    EditHeureSysteme: TEdit;
+    EditMinutes: TEdit;
+    EditSecondes: TEdit;
+    EditMillisecondes: TEdit;
+    EditHeureReelle: TEdit;
+    BitModifierDateHeureSysteme: TBitBtn;
+    Panel3: TPanel;
+    Bevel3: TBevel;
+    Bevel4: TBevel;
+    AfficheDate: TLabel;
+    AfficheHeure: TLabel;
+    Label11: TLabel;
+    AfficheEcartHeure: TLabel;
+    RBArretTimerDateHeureSysteme: TCheckBox;
+    AfficheDateChargement: TPanel;
+    EditDateChargement: TDateTimePicker;
+    BitBtn2: TBitBtn;
+    TimerDateHeureSysteme: TTimer;
+    PageVerificationReseaux: TTabSheet;
+    Panel4: TPanel;
+    BitBtn1: TBitBtn;
+    TabSheet3: TTabSheet;
+    BitBtn3: TBitBtn;
+    Label2: TLabel;
+    AdresseIP: TLabel;
+    Panel5: TPanel;
+    EditNomReseau: TLabel;
+    EditNomUtilisateur: TLabel;
+    Button2: TButton;
+    Button1: TButton;
+    Panel6: TPanel;
+    Label9: TLabel;
+    EditNewNomReseau: TEdit;
+    Button3: TButton;
+    AfficheActiverPublicationReseaux: TPanel;
+    RadioGroup7: TRadioGroup;
+    RBActiverPublicationReseaux: TRadioButton;
+    RBDesActiverPublicationReseaux: TRadioButton;
+    Panel11: TPanel;
+    RadioGroup8: TRadioGroup;
+    RBTravauxConnexionReseaux: TRadioButton;
+    RBTravauxHorsConnexionReseaux: TRadioButton;
+    BitBtn4: TBitBtn;
+    BitBtn5: TBitBtn;
+    RBAppliqueEnregistrementParametresReseaux: TCheckBox;
+    BitBtn6: TBitBtn;
+    TabSheet2: TTabSheet;
+    BitBtn7: TBitBtn;
+    Bevel5: TBevel;
+    Label1: TLabel;
+    Bevel8: TBevel;
+    EditCible: TEdit;
+    Cible: TShellTreeView;
+    BitBtn8: TBitBtn;
+    Panel7: TPanel;
+    BitBtn9: TBitBtn;
+    procedure BitModifierDateHeureSystemeClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure TimerDateHeureSystemeTimer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure RBArretTimerDateHeureSystemeClick(Sender: TObject);
+    procedure BitChargeDateHeureSystemeClick(Sender: TObject);
+    procedure EditDateChargementChange(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure RBActiverPublicationReseauxClick(Sender: TObject);
+    procedure RBTravauxConnexionReseauxClick(Sender: TObject);
+    procedure RBTravauxHorsConnexionReseauxClick(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure TabSheet1Show(Sender: TObject);
+    procedure TabSheet3Show(Sender: TObject);
+    procedure PageVerificationReseauxShow(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure CibleMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure BitBtn8Click(Sender: TObject);
+    procedure BitBtn9Click(Sender: TObject);
+
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSControleSysteme: TFSControleSysteme;
+  EcartHeures:integer;
+
+implementation
+
+Uses UnitInitialisation, UnitFSMenuPrincipal, UnitFSParametresAvances, UnitFSGenerateurBase,
+  UnitFSDataTransfert, UnitFSDataServeur, UnitFSDataClient;
+
+{$R *.dfm}
+
+{ TSystemTime est déclaré dans l'unité windows sous la forme :
+type
+   TSystemTime = record
+       wYear: Word;
+       wMonth: Word;
+       wDayOfWeek: Word;
+       wDay: Word;
+       wHour: Word;
+       wMinute: Word;
+       wSecond: Word;
+       wMilliseconds: Word;
+   end;
+}
+
+
+
+
+{TDateTime est de type Double; (déclaré dans l'unitéSystem}
+{La partie entière d'une valeur de type TDateTime représente le nombre de jours depuis le 30/12/1899.
+La partie fractionnaire d'une valeur de type TDateTime est la partie des 24 heures écoulée.}
+
+procedure TFSControleSysteme.BitModifierDateHeureSystemeClick(Sender: TObject);
+var DateEtHeure : TSystemTime;
+begin
+  DateEtHeure.wYear  :=StrToInteger(FSControleSysteme.EditAnnee.Text);
+  DateEtHeure.wMonth :=StrToInteger(FSControleSysteme.EditMois.Text);
+  DateEtHeure.wDay   :=StrToInteger(FSControleSysteme.EditJour.Text);
+  DateEtHeure.wHour  :=StrToInteger(FSControleSysteme.EditHeureSysteme.Text);
+  DateEtHeure.wMinute:=StrToInteger(FSControleSysteme.EditMinutes.Text);
+  DateEtHeure.wSecond:=StrToInteger(FSControleSysteme.EditSecondes.Text);
+  DateEtHeure.wMilliseconds:=StrToInteger(FSControleSysteme.EditMillisecondes.Text);
+  SetSystemTime(DateEtHeure); // modifie l'heure système du micro
+  SendMessage(FindWindow('Shell_TrayWnd',nil),WM_TIMECHANGE,0,0);// pour rafraichir
+  //tout de suiste l'affichage dans la barre des tâches
+end;
+
+procedure TFSControleSysteme.FormCreate(Sender: TObject);
+var heure,minute,seconde,milliseconde:word;
+    DateEtHeure : TSystemTime;
+begin
+ DecodeTime(Time,Heure,minute,seconde,Milliseconde); // décompose l'heure réelle du micro de type TDateTime en heure minute etc.
+ GetSystemTime(DateEtHeure); // récupère la date et l'heure système (GMT ?)
+ EcartHeures:=heure-(DateEtHeure.wHour); // calcul de l'écart entre l'heure réelle et l'heure système
+ FSControleSysteme.AfficheEcartHeure.Caption:=IntToStr(EcartHeures)+' heure(s)';
+end;
+
+procedure TFSControleSysteme.TimerDateHeureSystemeTimer(Sender: TObject);
+var DateEtHeure : TSystemTime;
+begin
+     if(FSControleSysteme.RBArretTimerDateHeureSysteme.Checked=true)then exit;
+     GetSystemTime(DateEtHeure); // récupère la date et 'heure système (GMT ?)
+     FSControleSysteme.EditAnnee.Text:=IntToStr(DateEtHeure.wYear);
+     FSControleSysteme.EditMois.Text:=IntToStr(DateEtHeure.wMonth);
+     FSControleSysteme.EditJouSemaine.Text:=IntToStr(DateEtHeure.wDayOfWeek);
+     FSControleSysteme.EditJour.Text:=IntToStr(DateEtHeure.wDay);
+     FSControleSysteme.EditHeureSysteme.Text:=IntToStr(DateEtHeure.wHour); // heure système
+     FSControleSysteme.EditMinutes.Text:=IntToStr(DateEtHeure.wMinute);
+     FSControleSysteme.EditSecondes.Text:=IntToStr(DateEtHeure.wSecond);
+     FSControleSysteme.EditMillisecondes.Text:=IntToStr(DateEtHeure.wMilliseconds);
+     FSControleSysteme.EditHeureReelle.Text:=IntToStr(DateEtHeure.wHour+EcartHeures); // heure réelle
+
+     FSControleSysteme.AfficheDate.Caption := 'Nous sommes aujourd''hui le ' + DateToStr(Date);
+
+     FSControleSysteme.AfficheHeure.Caption := 'il est ' + TimeToStr(Time);
+end;
+
+procedure TFSControleSysteme.FormShow(Sender: TObject);
+begin
+     FSControleSysteme.TimerDateHeureSysteme.Enabled:=true;
+     FSControleSysteme.RBArretTimerDateHeureSysteme.Checked:=false;
+end;
+
+procedure TFSControleSysteme.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+     FSControleSysteme.TimerDateHeureSysteme.Enabled:=false;
+end;
+
+procedure TFSControleSysteme.RBArretTimerDateHeureSystemeClick(
+  Sender: TObject);
+begin
+     FSControleSysteme.BitModifierDateHeureSysteme.Enabled:=FSControleSysteme.RBArretTimerDateHeureSysteme.Checked;
+     BitChargeDateHeureSysteme.Enabled:=FSControleSysteme.RBArretTimerDateHeureSysteme.Checked;
+end;
+
+procedure TFSControleSysteme.BitChargeDateHeureSystemeClick(Sender: TObject);
+begin
+     FSControleSysteme.AfficheDateChargement.Visible:=true;
+end;
+
+procedure TFSControleSysteme.EditDateChargementChange(Sender: TObject);
+var      DateTexte,HeureTexte:string;
+begin
+     FSControleSysteme.AfficheDateChargement.Visible:=false;
+     HeureTexte:=TimeToStr(Time);
+     DateTexte:=datetostr(FSControleSysteme.EditDateChargement.Date);
+     FSControleSysteme.EditAnnee.Text:=Midellaters(DateTexte,7,10);
+     FSControleSysteme.EditMois.Text:=Midellaters(DateTexte,4,5);
+     FSControleSysteme.EditJouSemaine.Text:='';
+     FSControleSysteme.EditJour.Text:=Midellaters(DateTexte,1,2);
+     FSControleSysteme.EditHeureSysteme.Text:=Midellaters(HeureTexte,1,2);
+     FSControleSysteme.EditMinutes.Text:=Midellaters(HeureTexte,4,5);
+     FSControleSysteme.EditSecondes.Text:=Midellaters(HeureTexte,7,8);
+     FSControleSysteme.EditMillisecondes.Text:='';
+     FSControleSysteme.EditHeureReelle.Text:=Midellaters(HeureTexte,1,2);
+
+     FSControleSysteme.AfficheDate.Caption := 'Nous sommes aujourd''hui le ' + DateToStr(Date);
+
+     FSControleSysteme.AfficheHeure.Caption := 'il est ' + TimeToStr(Time);
+end;
+
+procedure TFSControleSysteme.BitBtn2Click(Sender: TObject);
+begin
+     FSControleSysteme.AfficheDateChargement.Visible:=false;
+end;
+
+procedure TFSControleSysteme.BitBtn1Click(Sender: TObject);
+begin
+     FSMenuPrincipal.Close;
+end;
+
+procedure TFSControleSysteme.BitBtn3Click(Sender: TObject);
+var MyError,MyIPAddress : array[0..255] of char;
+begin
+  if checkIP(@MyError,@MyIPAddress) then FSControleSysteme.AdresseIP.caption:=string(MyIpAddress)
+  else FSControleSysteme.AdresseIP.caption:=string(MyError);
+end;
+
+procedure TFSControleSysteme.Button2Click(Sender: TObject);
+begin
+     FSControleSysteme.EditNomReseau.Caption:=NomReseau;
+     FSControleSysteme.EditNewNomReseau.Text:=NomReseau;
+end;
+
+procedure TFSControleSysteme.Button1Click(Sender: TObject);
+begin
+     FSControleSysteme.EditNomUtilisateur.Caption:=NomUtilisateur;
+end;
+
+procedure TFSControleSysteme.Button3Click(Sender: TObject);
+begin
+     if SetComputerName(PChar(FSControleSysteme.EditNewNomReseau.Text)) then
+     ShowMessage('Redémarrer l''ordinateur afin de prendre en compte la modification')
+     else
+     ShowMessage('Erreur : Nom non valide ou vous n''avez pas les droits d''administrateur')
+end;
+
+procedure TFSControleSysteme.RBActiverPublicationReseauxClick(
+  Sender: TObject);
+begin
+     if(FSControleSysteme.RBAppliqueEnregistrementParametresReseaux.Checked=false)then Exit;
+     
+     if(FSControleSysteme.RBAppliqueEnregistrementParametresReseaux.Checked=false)then Exit;
+     
+     OpenFParc(RParc);
+     ChActiverPublicationReseaux:=RParc.Parcours+'\'+Exercice+'FActiverPublicationReseaux';
+     assignfile(FActiverPublicationReseaux,ChActiverPublicationReseaux);
+     if FileExists(ChActiverPublicationReseaux)then
+     Reset(FActiverPublicationReseaux)
+     else Rewrite(FActiverPublicationReseaux);
+     Seek(FActiverPublicationReseaux,0);
+     read(FActiverPublicationReseaux,RActiverPublicationReseaux);
+     RActiverPublicationReseaux.TravauxConnexionReseaux:=FSControleSysteme.RBTravauxConnexionReseaux.Checked;
+     RActiverPublicationReseaux.ActiverPublicationReseaux:=FSControleSysteme.RBActiverPublicationReseaux.Checked;
+     Seek(FActiverPublicationReseaux,0);
+     write(FActiverPublicationReseaux,RActiverPublicationReseaux);
+     CloseFile(FActiverPublicationReseaux);
+
+     ListeAdresseDossierPartageReseaux(FSMenuPrincipal.TableauAdresseDossierPartageReseaux,true,false,True);
+
+     //FSMenuPrincipal.TimerConnxionServeurClient.Enabled:=false;
+
+end;
+
+procedure TFSControleSysteme.RBTravauxConnexionReseauxClick(
+  Sender: TObject);
+begin
+     if(FSControleSysteme.RBAppliqueEnregistrementParametresReseaux.Checked=false)then Exit;
+
+     FSControleSysteme.AfficheActiverPublicationReseaux.Enabled:=true;
+
+     OpenFParc(RParc);
+     ChActiverPublicationReseaux:=RParc.Parcours+'\'+Exercice+'FActiverPublicationReseaux';
+     assignfile(FActiverPublicationReseaux,ChActiverPublicationReseaux);
+     if FileExists(ChActiverPublicationReseaux)then
+     Reset(FActiverPublicationReseaux)
+     else Rewrite(FActiverPublicationReseaux);
+     Seek(FActiverPublicationReseaux,0);
+     read(FActiverPublicationReseaux,RActiverPublicationReseaux);
+     RActiverPublicationReseaux.TravauxConnexionReseaux:=FSControleSysteme.RBTravauxConnexionReseaux.Checked;
+     RActiverPublicationReseaux.ActiverPublicationReseaux:=FSControleSysteme.RBActiverPublicationReseaux.Checked;
+     Seek(FActiverPublicationReseaux,0);
+     write(FActiverPublicationReseaux,RActiverPublicationReseaux);
+     CloseFile(FActiverPublicationReseaux);
+
+     ListeAdresseDossierPartageReseaux(FSMenuPrincipal.TableauAdresseDossierPartageReseaux,true,false,True);
+
+     FSMenuPrincipal.TimerControleConnxionServeurClient.Enabled:=true;
+     FSMenuPrincipal.TimerConnxionServeurClient.Enabled:=true;
+
+     FSMenuPrincipal.TimerAfficheRBConnectiviteReseaux.Enabled:=true;
+end;
+
+procedure TFSControleSysteme.RBTravauxHorsConnexionReseauxClick(
+  Sender: TObject);
+begin
+     if(FSControleSysteme.RBAppliqueEnregistrementParametresReseaux.Checked=false)then Exit;
+     
+     FSControleSysteme.AfficheActiverPublicationReseaux.Enabled:=false;
+     FSControleSysteme.RBDesActiverPublicationReseaux.Checked:=true;
+
+     OpenFParc(RParc);
+     ChActiverPublicationReseaux:=RParc.Parcours+'\'+Exercice+'FActiverPublicationReseaux';
+     assignfile(FActiverPublicationReseaux,ChActiverPublicationReseaux);
+     if FileExists(ChActiverPublicationReseaux)then
+     Reset(FActiverPublicationReseaux)
+     else Rewrite(FActiverPublicationReseaux);
+     Seek(FActiverPublicationReseaux,0);
+     read(FActiverPublicationReseaux,RActiverPublicationReseaux);
+     RActiverPublicationReseaux.TravauxConnexionReseaux:=FSControleSysteme.RBTravauxConnexionReseaux.Checked;
+     RActiverPublicationReseaux.ActiverPublicationReseaux:=FSControleSysteme.RBActiverPublicationReseaux.Checked;
+     Seek(FActiverPublicationReseaux,0);
+     write(FActiverPublicationReseaux,RActiverPublicationReseaux);
+     CloseFile(FActiverPublicationReseaux);
+
+     ListeAdresseDossierPartageReseaux(FSMenuPrincipal.TableauAdresseDossierPartageReseaux,true,false,True);
+
+     FSMenuPrincipal.TimerControleConnxionServeurClient.Enabled:=false;
+     FSMenuPrincipal.TimerConnxionServeurClient.Enabled:=false;
+     FSMenuPrincipal.AfficheRBConnectiviteReseaux.Color:=clBtnFace;
+
+     FSMenuPrincipal.TimerAfficheRBConnectiviteReseaux.Enabled:=false;
+end;
+
+procedure TFSControleSysteme.BitBtn4Click(Sender: TObject);
+begin
+     FSDataServeur.Show;
+     FSControleSysteme.Close;
+     FSDataServeur.EditNomUtilisateurServeur.Text:=NomUtilisateur;
+     FSDataServeur.EditNomDosierPartagerClient.Text:='';
+
+     FSDataServeur.ChercheAdresseIP.Caption:=IndiqueAdresseIPMayMachine;
+
+     FSDataServeur.ListeCommunication.Lines.Text:='';
+     FSDataServeur.EditCommunication.Text:='';
+end;
+
+procedure TFSControleSysteme.BitBtn5Click(Sender: TObject);
+begin
+     FSDataClient.Show;
+     FSControleSysteme.Close;
+     
+     FSDataClient.EditNomUtilisateurClient.Text:=NomUtilisateur;
+     FSDataClient.ListeCommunicationClient.Lines.Text:='';
+     FSDataClient.EditCommunicationClient.Text:='';
+     FSDataClient.EditAdresseIPServeur.Text:='';
+     FSDataClient.EditNomDosierPartager.Text:='';
+     FSDataClient.EditNomUtilisateurServeur.Text:='';
+end;
+
+procedure TFSControleSysteme.TabSheet1Show(Sender: TObject);
+begin
+     if not AccesPrivilegies('FS Contrôleur Date',FSMenuPrincipal.EditCodeUtilisateur.Text,'MC',true)then FSControleSysteme.Close;
+end;
+
+procedure TFSControleSysteme.TabSheet3Show(Sender: TObject);
+begin
+     if not AccesPrivilegies('FS Contrôleur Internet',FSMenuPrincipal.EditCodeUtilisateur.Text,'MC',true)then FSControleSysteme.Close;
+end;
+
+procedure TFSControleSysteme.PageVerificationReseauxShow(Sender: TObject);
+begin
+     if not AccesPrivilegies('FS Contrôleur Système',FSMenuPrincipal.EditCodeUtilisateur.Text,'MC',true)then FSControleSysteme.Close;
+end;
+
+procedure TFSControleSysteme.BitBtn6Click(Sender: TObject);
+begin
+     ControleTimerActivation(FSMenuPrincipal.TimerOptimisation,false);
+     FSControleSysteme.Close;
+end;
+
+procedure TFSControleSysteme.BitBtn7Click(Sender: TObject);
+var  AdresseProces,NomDossierPartageOut,EmlacementLocalOuReseauxOut:string;
+     AdresseSource,AdresseCible,Separator:string; RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression:boolean;
+begin
+     RBPossibleAnnuler:=true;           //Préserver la possibilité d'annuler l'opération.
+     RBChangeNomSiCollision:=false; //Si le fichier cible existe déjà, il le copie sous un nom du style copie (1) de..
+     RBSansConfirmation:=false;         //Pas de demande de confirmation
+     RBSansProgression:=false;           //Ne pas voir la progression se faire (On le la voit que pour les opérations longues)
+
+     if(FSControleSysteme.EditCible.Text<>'')
+     then AdresseProces:=FSControleSysteme.EditCible.Text
+     else AdresseProces:=ProcAdresseDossierPartageReseaux('','Local',NomDossierPartageOut,EmlacementLocalOuReseauxOut);
+
+     if(DirectoryExists(AdresseProces))then
+     begin
+          AdresseSource:=Application.ExeName;
+          AdresseCible:=AdresseProces;
+          if(lastlaters(AdresseCible,1)='\')
+          then Separator:=''
+          else Separator:='\';
+
+          if(AdresseSource<>AdresseCible+Separator+ExtractFileName(AdresseSource))then
+          begin
+               if(not DirectoryExists(AdresseCible+Separator+ExtractFileName(AdresseSource)))then
+               begin
+                    if(nonoui('voulez vous copier '+ExtractFileName(AdresseSource)+' dans '+AdresseCible))then
+                    begin
+                         ProcCopierFichier(AdresseSource,AdresseCible,Handle,RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression)
+                    end;
+               end
+               else
+               begin
+                    if(RBChangeNomSiCollision=true)then
+                    begin
+                         if(nonoui('L''Application '+AdresseCible+Separator+ExtractFileName(AdresseSource)+' existe déjà, voulez vous enregistré une autre copie !')=true)then
+                         begin
+                              ProcCopierFichier(AdresseSource,AdresseCible,Handle,RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression)
+                         end;
+                    end
+                    else
+                    begin
+                         if(nonoui('L''Application '+AdresseCible+Separator+ExtractFileName(AdresseSource)+' existe déjà, voulez vous la remplacer !')=true)then
+                         begin
+                              ProcCopierFichier(AdresseSource,AdresseCible,Handle,RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression)
+                         end;
+                    end;
+               end;
+          end
+          else
+          begin
+               showmessage('Copie impossible pour la même adresse !');
+          end;
+     end
+     else
+     begin
+          showmessage('Attention ! '+AdresseProces+' n''existe pas !');
+     end;
+end;
+
+procedure TFSControleSysteme.CibleMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+     FSControleSysteme.EditCible.Text:=FSControleSysteme.Cible.Path;
+end;
+
+procedure TFSControleSysteme.BitBtn8Click(Sender: TObject);
+begin
+     FSControleSysteme.EditCible.Text:='';
+end;
+
+procedure TFSControleSysteme.BitBtn9Click(Sender: TObject);
+begin
+     FSControleSysteme.Close;
+end;
+
+end.

@@ -1,0 +1,569 @@
+unit UnitFSImporteDetailMarcheExcel;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, ShellCtrls, StdCtrls, ExtCtrls, Grids, Buttons, Mask, DriveOleWord, Clipbrd,ComObj, ExtDlgs;
+
+type
+  TFSImporteDetailMarcheExcel = class(TForm)
+    OuvrireFichier: TOpenDialog;
+    Panel4: TPanel;
+    Bevel1: TBevel;
+    Bevel3: TBevel;
+    Bevel4: TBevel;
+    TableauDonnees: TStringGrid;
+    BitBtn16: TBitBtn;
+    BitBtn15: TBitBtn;
+    BitBtn17: TBitBtn;
+    EditColWidths: TEdit;
+    UpDown5: TUpDown;
+    Label3: TLabel;
+    TableauDetailMarche: TStringGrid;
+    EditEquivalenceColonne: TEdit;
+    Panel1: TPanel;
+    Bevel5: TBevel;
+    Label1: TLabel;
+    Label2: TLabel;
+    EditCBeginIn: TEdit;
+    EditRBeginIn: TEdit;
+    UpDown3: TUpDown;
+    UpDown4: TUpDown;
+    Bevel6: TBevel;
+    BitValiderTransfert: TBitBtn;
+    TableauTransfert: TStringGrid;
+    TableauSelectionStructure: TStringGrid;
+    EditEquivalenceLigne: TEdit;
+    Bevel7: TBevel;
+    Bevel2: TBevel;
+    BitChargerExcel: TBitBtn;
+    BitPreparerTransfert: TBitBtn;
+    BitBtn3: TBitBtn;
+    Bevel8: TBevel;
+    Bevel9: TBevel;
+    EditRBegin: TEdit;
+    EditREnd: TEdit;
+    UpDown1: TUpDown;
+    EditCBegin: TEdit;
+    EditCEnd: TEdit;
+    UpDown2: TUpDown;
+    procedure BitBtn17Click(Sender: TObject);
+    procedure BitBtn15Click(Sender: TObject);
+    procedure BitBtn16Click(Sender: TObject);
+    procedure BitChargerExcelClick(Sender: TObject);
+    procedure TableauDonneesDblClick(Sender: TObject);
+    procedure TableauDetailMarcheDblClick(Sender: TObject);
+    procedure TableauSelectionStructureDblClick(Sender: TObject);
+    procedure TableauSelectionStructureClick(Sender: TObject);
+    procedure BitPreparerTransfertClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure BitValiderTransfertClick(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSImporteDetailMarcheExcel: TFSImporteDetailMarcheExcel;
+
+implementation
+
+Uses  UnitInitialisation, UnitFSMenuPrincipal, UnitFSDetailMarche;
+
+var
+
+OleApplication :variant;
+OleWorkBook    :variant;
+
+{$R *.dfm}
+
+procedure TFSImporteDetailMarcheExcel.BitBtn17Click(Sender: TObject);
+var  R,C,RBegin,REnd,CBegin,CEnd,REndMax,CEndMax:integer;
+begin
+     RBegin:=strtointeger(FSImporteDetailMarcheExcel.EditRBeginIn.Text);
+     CBegin:=strtointeger(FSImporteDetailMarcheExcel.EditCBeginIn.Text);
+
+     ChargerRowColTableauExcel(FSImporteDetailMarcheExcel.OuvrireFichier.FileName,RBegin,CBegin,RBegin,REnd,CBegin,CEnd,false);
+
+     FSImporteDetailMarcheExcel.EditRBegin.Text:=inttostr(RBegin);
+     FSImporteDetailMarcheExcel.EditREnd.Text:=inttostr(REnd);
+
+     FSImporteDetailMarcheExcel.EditCBegin.Text:=inttostr(CBegin);
+     FSImporteDetailMarcheExcel.EditCEnd.Text:=inttostr(CEnd);
+end;
+
+procedure TFSImporteDetailMarcheExcel.BitBtn15Click(Sender: TObject);
+var  OleApplication :variant;
+begin
+     OleApplication.Quit;
+     OleApplication:=Unassigned;//La constante Unassigned est utilisée pour indiquer qu'une variable Variant n'a pas encore été affectée d'une valeur.
+end;
+
+procedure TFSImporteDetailMarcheExcel.BitBtn16Click(Sender: TObject);
+var  C,RBegin,REnd,CBegin,CEnd:integer;
+begin
+     RBegin:=strtointeger(FSImporteDetailMarcheExcel.EditRBegin.Text);
+     REnd:=strtointeger(FSImporteDetailMarcheExcel.EditREnd.Text);
+     CBegin:=strtointeger(FSImporteDetailMarcheExcel.EditCBegin.Text);
+     CEnd:=strtointeger(FSImporteDetailMarcheExcel.EditCEnd.Text);
+     ExcelToTableau(FSImporteDetailMarcheExcel.TableauDonnees,RBegin,REnd,CBegin,CEnd,FSImporteDetailMarcheExcel.OuvrireFichier.FileName,false);
+
+     for C:= 1 to FSImporteDetailMarcheExcel.TableauDonnees.ColCount-1 do
+     begin
+          if(FSImporteDetailMarcheExcel.TableauDonnees.ColWidths[C]>strtointeger(FSImporteDetailMarcheExcel.EditColWidths.Text))
+          then FSImporteDetailMarcheExcel.TableauDonnees.ColWidths[C]:=strtointeger(FSImporteDetailMarcheExcel.EditColWidths.Text);
+     end;
+
+     FSImporteDetailMarcheExcel.TableauDetailMarche.Rows[1].Text:='';
+end;
+
+procedure TFSImporteDetailMarcheExcel.BitChargerExcelClick(Sender: TObject);
+var  R,C,RBegin,REnd,CBegin,CEnd:integer;
+begin
+     FSImporteDetailMarcheExcel.BitPreparerTransfert.Enabled:=false;
+     FSImporteDetailMarcheExcel.BitValiderTransfert.Enabled:=false;
+
+     if(FSImporteDetailMarcheExcel.EditRBeginIn.Text='')then
+     begin
+          showmessage('Indiquer le numéro de la première ligne du tableau Excel SVP !');
+          FSImporteDetailMarcheExcel.EditRBeginIn.SetFocus;
+          Exit;
+     end;
+
+     if FSImporteDetailMarcheExcel.OuvrireFichier.Execute then
+     begin
+          RBegin:=strtointeger(FSImporteDetailMarcheExcel.EditRBeginIn.Text);
+          CBegin:=strtointeger(FSImporteDetailMarcheExcel.EditCBeginIn.Text);
+
+          ChargerRowColTableauExcel(FSImporteDetailMarcheExcel.OuvrireFichier.FileName,RBegin,CBegin,RBegin,REnd,CBegin,CEnd,True);
+
+          FSImporteDetailMarcheExcel.EditRBegin.Text:=inttostr(RBegin);
+          FSImporteDetailMarcheExcel.EditREnd.Text:=inttostr(REnd);
+
+          FSImporteDetailMarcheExcel.EditCBegin.Text:=inttostr(CBegin);
+          FSImporteDetailMarcheExcel.EditCEnd.Text:=inttostr(CEnd);
+
+          ExcelToTableau(FSImporteDetailMarcheExcel.TableauDonnees,RBegin,REnd,CBegin,CEnd,FSImporteDetailMarcheExcel.OuvrireFichier.FileName,false);
+     end;
+
+     for C:= 1 to FSImporteDetailMarcheExcel.TableauDonnees.ColCount-1 do
+     begin
+          if(FSImporteDetailMarcheExcel.TableauDonnees.ColWidths[C]>strtointeger(FSImporteDetailMarcheExcel.EditColWidths.Text))
+          then FSImporteDetailMarcheExcel.TableauDonnees.ColWidths[C]:=strtointeger(FSImporteDetailMarcheExcel.EditColWidths.Text);
+     end;
+
+     FSImporteDetailMarcheExcel.TableauDetailMarche.Rows[1].Text:='';
+
+     FSImporteDetailMarcheExcel.BitPreparerTransfert.Enabled:=true;
+end;
+
+procedure TFSImporteDetailMarcheExcel.TableauDonneesDblClick(
+  Sender: TObject);
+var  C,CSelect,Incriment:integer;
+begin
+     if(FSImporteDetailMarcheExcel.EditEquivalenceColonne.Text<>'')then
+     begin
+          FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[strtointeger(FSImporteDetailMarcheExcel.EditEquivalenceColonne.Text),1]:=inttostr(FSImporteDetailMarcheExcel.TableauDonnees.Col);
+
+          Incriment:=1;
+          CSelect:=strtointeger(FSImporteDetailMarcheExcel.EditEquivalenceColonne.Text)+1;
+          for C:= CSelect to FSImporteDetailMarcheExcel.TableauDetailMarche.ColCount-1 do
+          begin
+               FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[C,1]:=inttostr(FSImporteDetailMarcheExcel.TableauDonnees.Col+Incriment);
+               Incriment:=Incriment+1;
+          end;
+
+          FSImporteDetailMarcheExcel.EditEquivalenceColonne.Text:='';
+     end;
+
+     if(FSImporteDetailMarcheExcel.EditEquivalenceLigne.Text<>'')then
+     begin
+          FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,strtointeger(FSImporteDetailMarcheExcel.EditEquivalenceLigne.Text)]:=inttostr(FSImporteDetailMarcheExcel.TableauDonnees.Row);
+          FSImporteDetailMarcheExcel.EditEquivalenceLigne.Text:='';
+     end;
+end;
+
+procedure TFSImporteDetailMarcheExcel.TableauDetailMarcheDblClick(
+  Sender: TObject);
+begin
+     FSImporteDetailMarcheExcel.EditEquivalenceColonne.Text:=inttostr(FSImporteDetailMarcheExcel.TableauDetailMarche.Col);
+     FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[FSImporteDetailMarcheExcel.TableauDetailMarche.Col,1]:='';
+end;
+
+procedure TFSImporteDetailMarcheExcel.TableauSelectionStructureDblClick(
+  Sender: TObject);
+begin
+     FSImporteDetailMarcheExcel.EditEquivalenceLigne.Text:=inttostr(FSImporteDetailMarcheExcel.TableauSelectionStructure.Row);
+end;
+
+procedure TFSImporteDetailMarcheExcel.TableauSelectionStructureClick(
+  Sender: TObject);
+var   R:integer;  OKStructure:boolean;
+begin
+     if(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,FSImporteDetailMarcheExcel.TableauSelectionStructure.Row]='')then
+     begin
+          R:=1;
+          OKStructure:=false;
+          while(R<=FSImporteDetailMarcheExcel.TableauDonnees.RowCount-1)and(OKStructure=false)do
+          begin
+               if(ExisteCharinString(AnsiUpperCase(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[4,FSImporteDetailMarcheExcel.TableauSelectionStructure.Row]),AnsiUpperCase(FSImporteDetailMarcheExcel.TableauDonnees.Cells[3,R])))
+               or(ExisteCharinString(AnsiUpperCase(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[6,FSImporteDetailMarcheExcel.TableauSelectionStructure.Row]),AnsiUpperCase(FSImporteDetailMarcheExcel.TableauDonnees.Cells[3,R])))
+               then
+               begin
+                    OKStructure:=true;
+                    FSImporteDetailMarcheExcel.TableauDonnees.Row:=R;
+                    FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,FSImporteDetailMarcheExcel.TableauSelectionStructure.Row]:=inttostr(R);
+               end;
+          R:=R+1;
+          end;
+     end
+     else
+     begin
+          FSImporteDetailMarcheExcel.TableauDonnees.Row:=strtointeger(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,FSImporteDetailMarcheExcel.TableauSelectionStructure.Row]);
+     end;
+end;
+
+procedure TFSImporteDetailMarcheExcel.BitPreparerTransfertClick(Sender: TObject);
+var  im,R,RFirst,RNext,C,CVide,ColTransfert,IncrimenteCode,NumDetailMarche:integer;
+     CodeLast:string;  OKStructure,OKValider:boolean;
+begin
+
+     FSImporteDetailMarcheExcel.TableauTransfert.ColCount:=FSImporteDetailMarcheExcel.TableauDetailMarche.ColCount;
+     FSImporteDetailMarcheExcel.TableauTransfert.RowCount:=FSImporteDetailMarcheExcel.TableauDonnees.RowCount;
+
+     OKValider:=false;
+     C:=0;
+     while(C<=FSImporteDetailMarcheExcel.TableauDetailMarche.ColCount-1)and(OKValider=false)do
+     begin
+          if(FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[C,1]<>'')then OKValider:=true;
+     C:=C+1;
+     end;
+
+     if(OKValider=false)then
+     begin
+          C:=0;
+          while(C<=FSImporteDetailMarcheExcel.TableauDetailMarche.ColCount-1)do
+          begin
+               FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[C,1]:=inttostr(C);
+          C:=C+1;
+          end;
+     end;
+
+     for C:=0 to FSImporteDetailMarcheExcel.TableauDetailMarche.ColCount-1 do
+     begin
+          if(FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[C,1]<>'')then
+          begin
+               ColTransfert:=strtointeger(FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[C,1]);
+               for R:=0 to FSImporteDetailMarcheExcel.TableauDonnees.RowCount-1 do
+               FSImporteDetailMarcheExcel.TableauTransfert.Cells[C,R]:=FSImporteDetailMarcheExcel.TableauDonnees.Cells[ColTransfert,R];
+          end;
+     end;
+
+     FSImporteDetailMarcheExcel.TableauTransfert.Rows[0].Text:=FSImporteDetailMarcheExcel.TableauDetailMarche.Rows[0].Text;
+
+     FSImporteDetailMarcheExcel.TableauDonnees.RowCount:=2;
+     FSImporteDetailMarcheExcel.TableauDonnees.Rows[0].Text:='';
+     FSImporteDetailMarcheExcel.TableauDonnees.Rows[1].Text:='';
+     for C:=0 to FSImporteDetailMarcheExcel.TableauTransfert.ColCount-1 do
+     begin
+          for R:=0 to FSImporteDetailMarcheExcel.TableauTransfert.RowCount-1 do
+          begin
+               FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R]:='';
+               FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R]:=FSImporteDetailMarcheExcel.TableauTransfert.Cells[C,R];
+          end;
+     end;
+     FSImporteDetailMarcheExcel.TableauDonnees.ColCount:=FSImporteDetailMarcheExcel.TableauTransfert.ColCount;
+     FSImporteDetailMarcheExcel.TableauDonnees.RowCount:=FSImporteDetailMarcheExcel.TableauTransfert.RowCount;
+
+     im:=1;
+     NumDetailMarche:=0;
+     while(im<=FSImporteDetailMarcheExcel.TableauSelectionStructure.RowCount-1)do
+     begin
+          if(strtointeger(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,im])>0)then
+          begin
+               RFirst:=strtointeger(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,im]);
+               if((im+1<=FSImporteDetailMarcheExcel.TableauSelectionStructure.RowCount-1)and(strtointeger(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,im+1])>0))
+               then RNext:=strtointeger(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,im+1])-1
+               else RNext:=FSImporteDetailMarcheExcel.TableauDonnees.RowCount-1;
+          end;
+
+          //FSImporteDetailMarcheExcel.TableauDonnees.Cells[7,RFirst]:=FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[7,i]+'00.00.00.00';
+          //FSImporteDetailMarcheExcel.TableauDonnees.Cells[1,RFirst]:='';
+          //R:=RFirst+1;
+          R:=RFirst;
+          CodeLast:='00.00.00';
+          IncrimenteCode:=0;
+          while(R<=RNext)do
+          begin
+                if ControleCodeArticleMarche(FSImporteDetailMarcheExcel.TableauDonnees.Cells[2,R],8)
+                then
+                begin
+                     FSImporteDetailMarcheExcel.TableauDonnees.Cells[7,R]:=FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[7,im]+FSImporteDetailMarcheExcel.TableauDonnees.Cells[2,R]+'.00';
+                     CodeLast:=FSImporteDetailMarcheExcel.TableauDonnees.Cells[2,R];
+                     IncrimenteCode:=0;
+                end
+                else
+                begin
+                     IncrimenteCode:=IncrimenteCode+1;
+                     FSImporteDetailMarcheExcel.TableauDonnees.Cells[7,R]:=FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[7,im]+CodeLast+'.'+completezerogauche(inttostr(IncrimenteCode),'2');
+                end;
+                FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R]:='72'+WithoutPoint(Lastlaters(FSImporteDetailMarcheExcel.TableauDonnees.Cells[7,R],11));
+                //FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R]:=NewArticle('72',Lastlaters(FSImporteDetailMarcheExcel.TableauDonnees.Cells[7,R],11),Lastlaters(FSImporteDetailMarcheExcel.TableauDonnees.Cells[7,R],11),FSImporteDetailMarcheExcel.TableauDonnees.Cells[3,R],FSImporteDetailMarcheExcel.TableauDonnees.Cells[4,R],FSImporteDetailMarcheExcel.TableauDonnees.Cells[6,R],FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R]);
+                NumDetailMarche:=NumDetailMarche+1;
+                FSImporteDetailMarcheExcel.TableauDonnees.Cells[1,R]:='';
+           R:=R+1;
+           end;
+     im:=im+1;
+     end; 
+
+     AjusterColWidth(FSImporteDetailMarcheExcel.TableauDonnees,'','');
+
+     for C:= 1 to FSImporteDetailMarcheExcel.TableauDonnees.ColCount-1 do
+     begin
+          if(FSImporteDetailMarcheExcel.TableauDonnees.ColWidths[C]>strtointeger(FSImporteDetailMarcheExcel.EditColWidths.Text))
+          then FSImporteDetailMarcheExcel.TableauDonnees.ColWidths[C]:=strtointeger(FSImporteDetailMarcheExcel.EditColWidths.Text);
+     end;
+
+     for im:=1 to FSImporteDetailMarcheExcel.TableauSelectionStructure.RowCount-1 do
+     begin
+           if(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,im]='')then
+           begin
+                R:=1;
+                OKStructure:=false;
+                while(R<=FSImporteDetailMarcheExcel.TableauDonnees.RowCount-1)and(OKStructure=false)do
+                begin
+                     if(ExisteCharinString(AnsiUpperCase(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[4,im]),AnsiUpperCase(FSImporteDetailMarcheExcel.TableauDonnees.Cells[3,R])))
+                     or(ExisteCharinString(AnsiUpperCase(FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[6,im]),AnsiUpperCase(FSImporteDetailMarcheExcel.TableauDonnees.Cells[3,R])))
+                     then
+                     begin
+                          OKStructure:=true;
+                          FSImporteDetailMarcheExcel.TableauDonnees.Row:=R;
+                          FSImporteDetailMarcheExcel.TableauSelectionStructure.Cells[8,im]:=inttostr(R);
+                     end;
+                R:=R+1;
+                end;
+           end;
+     end;
+
+     for C:= 0 to FSImporteDetailMarcheExcel.TableauDetailMarche.ColCount-1 do
+     begin
+          FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[C,1]:=inttostr(C);
+     end;
+
+     FSImporteDetailMarcheExcel.BitValiderTransfert.Enabled:=true;
+end;
+
+procedure TFSImporteDetailMarcheExcel.FormShow(Sender: TObject);
+begin
+     ActiverNomForm(1,(Sender as TComponent).Name);
+     FSImporteDetailMarcheExcel.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Importer Détail Marché Excel';
+
+     FSImporteDetailMarcheExcel.BitPreparerTransfert.Enabled:=false;
+     FSImporteDetailMarcheExcel.BitValiderTransfert.Enabled:=false;
+end;
+
+procedure TFSImporteDetailMarcheExcel.BitValiderTransfertClick(Sender: TObject);
+var   i,R,C,TailleCode:integer;  TypeComptabilite,TypePCN,TypeProces,FichierConcerne,Adresse:string; OK:boolean;
+begin
+     FSDetailMarche.TableauDetailMarche.ColCount:=FSImporteDetailMarcheExcel.TableauDonnees.ColCount;
+     FSDetailMarche.TableauDetailMarche.RowCount:=FSImporteDetailMarcheExcel.TableauDonnees.RowCount;
+
+     for C:=0 to FSImporteDetailMarcheExcel.TableauDonnees.ColCount-1 do
+     begin
+          for R:=0 to FSImporteDetailMarcheExcel.TableauDonnees.RowCount-1 do
+          begin
+               if(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R]<>'')then
+               begin
+                    FSDetailMarche.TableauDetailMarche.Cells[C,R]:=FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R];
+               end;
+          end;
+     end;
+
+     for C:= 1 to FSDetailMarche.TableauDetailMarche.ColCount-1 do
+     begin
+          if(FSDetailMarche.TableauDetailMarche.ColWidths[C]>strtointeger(FSImporteDetailMarcheExcel.EditColWidths.Text))
+          then FSDetailMarche.TableauDetailMarche.ColWidths[C]:=strtointeger(FSImporteDetailMarcheExcel.EditColWidths.Text);
+     end;
+
+     TypeProces:='Comptabilité'; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+     TypeComptabilite:='Marche';
+     TypePCN:='';
+
+     for R:=1 to FSImporteDetailMarcheExcel.TableauDonnees.RowCount-1 do
+     begin
+          if(FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R]<>'')then
+          begin
+               if(lastlaters(FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R],5)='00000')then
+               begin
+                    FichierConcerne:='FFamille'+TypeComptabilite;
+                    TailleCode:=5;
+               end
+               else
+               if(lastlaters(FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R],4)='0000')then
+               begin
+                    FichierConcerne:='FSousFamille'+TypeComptabilite;
+                    TailleCode:=6;
+               end
+               else
+               begin
+                    FichierConcerne:='FStock'+TypeComptabilite;
+                    TailleCode:=10;
+               end;
+
+               if(FichierConcerne<>'FStock'+TypeComptabilite)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+                     end;
+
+                     ChRegistreCompte:=Adresse;
+                     assignfile(FRegistreCompte,ChRegistreCompte);
+                     if FileExists(ChRegistreCompte)
+                     then Reset(FRegistreCompte)else Rewrite(FRegistreCompte);
+                     Seek(FRegistreCompte,0);
+                     i:=0;
+                     OK:=false;
+                     while not eof(FRegistreCompte)and(OK=false)do
+                     begin
+                          Read(FRegistreCompte,RRegistreCompte);
+                          i:=i+1;
+                          if(RRegistreCompte.CodeCompte=Firstlaters(FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R],TailleCode))then
+                          begin
+                               OK:=true;
+                          end;
+                     end;
+
+                     if(OK=false)then
+                     begin
+                          Seek(FRegistreCompte,i);
+                          RRegistreCompte.CodeCompte:=Firstlaters(FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R],TailleCode);
+                          RRegistreCompte.Designation:=FSImporteDetailMarcheExcel.TableauDonnees.Cells[3,R];
+                          RRegistreCompte.ContrePartie.UsesCompte:=false;
+                          RRegistreCompte.ContrePartie.TypeUses:='Tous';
+                          RRegistreCompte.Specificite:='1';
+                          RRegistreCompte.Tiers:=false;
+                          RRegistreCompte.Active:=true;
+                          Write(FRegistreCompte,RRegistreCompte);
+                     end;
+               end
+               else
+               begin
+                    TypeProces:='Commercial';
+                    if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+                     end;
+
+                     ChStock:=Adresse;
+                     assignfile(FStock,ChStock);
+                     if FileExists(ChStock)
+                     then Reset(FStock)else Rewrite(FStock);
+                     Seek(FStock,0);
+                     i:=0;
+                     OK:=false;
+                     while not eof(FStock)and(OK=false)do
+                     begin
+                          Read(FStock,RStock);
+                          i:=i+1;
+                          if(RStock.Code=Firstlaters(FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R],TailleCode))then
+                          begin
+                               OK:=true;
+                          end;
+                     end;
+
+                     if(OK=false)then
+                     begin
+                          Seek(FStock,i);
+                          RStock.Code:=Firstlaters(FSImporteDetailMarcheExcel.TableauDonnees.Cells[8,R],TailleCode);
+                          RStock.Design:=FSImporteDetailMarcheExcel.TableauDonnees.Cells[3,R];
+                          RStock.Ref:='';
+                          RStock.UM:=FSImporteDetailMarcheExcel.TableauDonnees.Cells[4,R];
+                          RStock.QteEntree:=0;
+                          RStock.QteSortie:=0;
+                          RStock.QteStock:=0;
+                          RStock.QteInitial:=0;
+                          RStock.QteLimite:=0;
+                          RStock.CoutUnitaire:=0;
+                          RStock.PrixVenteDetaille:=strtoreal(FSImporteDetailMarcheExcel.TableauDonnees.Cells[6,R]);
+                          RStock.PrixVenteGros:=0;
+                          RStock.Observ:='';
+                          RStock.Emplace:='';
+                          RStock.FicheStock:='';
+                          RStock.Formule:='';
+                          RStock.enregistrement:=''; 
+                          Write(FStock,RStock);
+                     end;
+               end;
+          end;
+     end;
+
+     FSImporteDetailMarcheExcel.Close;
+
+     FSDetailMarche.BRefaireMarche.Checked:=true;
+     FSDetailMarche.Visible:=true;
+end;
+
+procedure TFSImporteDetailMarcheExcel.BitBtn3Click(Sender: TObject);
+var  R,C:integer;  ColNumRodre,ColCodeArticle,ColDesignation,ColUniteM,ColQte,ColPrix:string;
+begin
+     ColNumRodre:='';
+     ColCodeArticle:='';
+     ColDesignation:='';
+     ColUniteM:='';
+     ColQte:='';
+     ColPrix:='';
+
+     for C:=0 to FSImporteDetailMarcheExcel.TableauDonnees.ColCount-1 do
+     begin
+          if(ColNumRodre='')then ColNumRodre:=inttostr(C);
+          if(ColCodeArticle='')then ColCodeArticle:=inttostr(C);
+          if(ColDesignation='')then ColDesignation:=inttostr(C);
+          if(ColUniteM='')then ColUniteM:=inttostr(C);
+          if(ColQte='')then ColQte:=inttostr(C);
+          if(ColPrix='')then ColPrix:=inttostr(C);
+
+          for R:=1 to FSImporteDetailMarcheExcel.TableauDonnees.RowCount-1 do
+          begin
+               if(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R]<>'')then
+               begin
+                    if(strtointeger(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R])=0)then ColNumRodre:='';
+                    if(strtoreal(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R])=0)and(ColQte<>'')then ColPrix:='';
+                    if(strtoreal(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R])=0)and(ColPrix<>'')then ColQte:='';
+                    if(Longueur(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R])=8)then
+                    begin
+                         if(not(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R][1]in['0'..'9']))
+                         or(not(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R][2]in['0'..'9']))
+                         or(not(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R][4]in['0'..'9']))
+                         or(not(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R][5]in['0'..'9']))
+                         or(not(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R][7]in['0'..'9']))
+                         or(not(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R][8]in['0'..'9']))
+                         or(not(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R][3]in['.']))
+                         or(not(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R][6]in['.']))
+                         then ColCodeArticle:='';
+                    end
+                    else ColCodeArticle:='';
+                    if(strtoreal(FSImporteDetailMarcheExcel.TableauDonnees.Cells[C,R])>0)then begin ColCodeArticle:=''; ColDesignation:=''; ColUniteM:=''; end;
+               end;
+          end;
+     end;
+
+     if(ColNumRodre<>'')then FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[0,1]:=ColNumRodre;
+     if(ColCodeArticle<>'')then FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[2,1]:=ColCodeArticle;
+     if(ColDesignation<>'')then FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[3,1]:=ColDesignation;
+     if(ColUniteM<>'')then FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[4,1]:=ColUniteM;
+     if(ColQte<>'')then FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[5,1]:=ColQte;
+     if(ColPrix<>'')then FSImporteDetailMarcheExcel.TableauDetailMarche.Cells[6,1]:=ColPrix;
+end;
+
+procedure TFSImporteDetailMarcheExcel.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

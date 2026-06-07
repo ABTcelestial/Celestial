@@ -1,0 +1,9154 @@
+unit UnitFSPlanComptable;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, Buttons, Grids, ComCtrls;
+
+type
+  TFSPlanComptable = class(TForm)
+    Panel1: TPanel;
+    AfficheListeFamille: TPanel;
+    TableauFamille: TStringGrid;
+    AfficheFamille: TPanel;
+    Bevel8: TBevel;
+    Label25: TLabel;
+    Label26: TLabel;
+    Bevel9: TBevel;
+    EditCodeModifFamille: TEdit;
+    EditCodeFamille: TEdit;
+    EditDesignFamille: TEdit;
+    BitValiderFamille: TBitBtn;
+    BitBtn100: TBitBtn;
+    AfficheOptionsFamille: TControlBar;
+    BitListeFamille: TBitBtn;
+    BitBtn45: TBitBtn;
+    BitBtn46: TBitBtn;
+    BitBtn48: TBitBtn;
+    AfficheListeSousCategorie: TPanel;
+    TableauSousCategorie: TStringGrid;
+    AfficheSousCategorie: TPanel;
+    Bevel10: TBevel;
+    Label29: TLabel;
+    Label30: TLabel;
+    Bevel11: TBevel;
+    EditCodeModifSousCategorie: TEdit;
+    EditCodeSousCategorie: TEdit;
+    EditDesignSousCategorie: TEdit;
+    BitValiderSousCategorie: TBitBtn;
+    BitBtn9: TBitBtn;
+    AfficheOptionsSousCategorie: TControlBar;
+    BitListeSousCategorie: TBitBtn;
+    BitBtn43: TBitBtn;
+    BitBtn49: TBitBtn;
+    BitBtn50: TBitBtn;
+    AfficheListeCategorie: TPanel;
+    TableauCategorie: TStringGrid;
+    AfficheCategorie: TPanel;
+    Bevel12: TBevel;
+    Label33: TLabel;
+    Label34: TLabel;
+    Bevel13: TBevel;
+    EditCodeModifCategorie: TEdit;
+    EditCodeCategorie: TEdit;
+    EditDesignCategorie: TEdit;
+    BitValiderCategorie: TBitBtn;
+    BitBtn52: TBitBtn;
+    AfficheOptionsCategorie: TControlBar;
+    BitListeCategorie: TBitBtn;
+    BitBtn53: TBitBtn;
+    BitBtn54: TBitBtn;
+    BitBtn55: TBitBtn;
+    AfficheListeSousClasse: TPanel;
+    TableauSousClasse: TStringGrid;
+    AfficheSousClasse: TPanel;
+    Bevel14: TBevel;
+    Label37: TLabel;
+    Label38: TLabel;
+    Bevel15: TBevel;
+    EditCodeModifSousClasse: TEdit;
+    EditCodeSousClasse: TEdit;
+    EditDesignSousClasse: TEdit;
+    BitValiderSousClasse: TBitBtn;
+    BitBtn57: TBitBtn;
+    AfficheOptionsSousClasse: TControlBar;
+    BitListeSousClasse: TBitBtn;
+    BitBtn58: TBitBtn;
+    BitBtn59: TBitBtn;
+    BitBtn60: TBitBtn;
+    AfficheListeClasse: TPanel;
+    TableauClasse: TStringGrid;
+    AfficheClasse: TPanel;
+    Bevel16: TBevel;
+    Label41: TLabel;
+    Label42: TLabel;
+    Bevel17: TBevel;
+    EditCodeModifClasse: TEdit;
+    EditCodeClasse: TEdit;
+    EditDesignClasse: TEdit;
+    BitValiderClasse: TBitBtn;
+    BitBtn62: TBitBtn;
+    AfficheOptionsClasse: TControlBar;
+    BitListeClasse: TBitBtn;
+    BitBtn63: TBitBtn;
+    BitBtn64: TBitBtn;
+    BitBtn65: TBitBtn;
+    AfficheListeSousFamille: TPanel;
+    TableauSousFamille: TStringGrid;
+    AfficheSousFamille: TPanel;
+    Bevel5: TBevel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Bevel6: TBevel;
+    EditCodeModifSousFamille: TEdit;
+    EditCodeSousFamille: TEdit;
+    EditDesignSousFamille: TEdit;
+    BitValiderSousFamille: TBitBtn;
+    BitBtn102: TBitBtn;
+    AfficheOptionsSousFamille: TControlBar;
+    BitListeSousFamille: TBitBtn;
+    BitBtn37: TBitBtn;
+    BitBtn44: TBitBtn;
+    BitBtn47: TBitBtn;
+    RadioGroup1: TRadioGroup;
+    RBAlphSousFamille: TRadioButton;
+    RBNumSousFamille: TRadioButton;
+    RadioGroup2: TRadioGroup;
+    RBAlphFamille: TRadioButton;
+    RBNumFamille: TRadioButton;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Panel2: TPanel;
+    Label44: TLabel;
+    RadioGroup4: TRadioGroup;
+    RBTousClasse: TRadioButton;
+    RBListeComptesClasse: TRadioButton;
+    Panel3: TPanel;
+    Label43: TLabel;
+    RadioGroup3: TRadioGroup;
+    RBAutoriserClasse: TRadioButton;
+    RBNePasAutoriserClasse: TRadioButton;
+    Panel4: TPanel;
+    Label9: TLabel;
+    RadioGroup5: TRadioGroup;
+    RBComptePrecisClasse: TRadioButton;
+    RBCompteSousCompteClasse: TRadioButton;
+    AfficheListeCptContrePartie: TPanel;
+    TableauListeCompteCP: TStringGrid;
+    Bevel1: TBevel;
+    Label10: TLabel;
+    EditNumComptePrincipal: TEdit;
+    EditDesignationComptePrincipal: TEdit;
+    Bevel2: TBevel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    BitBtn4: TBitBtn;
+    Bevel3: TBevel;
+    AfficheOptionCompteCP: TPanel;
+    TableauOptionCompteCP: TStringGrid;
+    Panel6: TPanel;
+    Label11: TLabel;
+    RadioGroup6: TRadioGroup;
+    RBCompteCPPrecisClasse: TRadioButton;
+    RBCompteCPSousCompteClasse: TRadioButton;
+    EditRechercheCompteCP: TEdit;
+    Bevel4: TBevel;
+    Label12: TLabel;
+    EditOptionCompteCP: TEdit;
+    AfficheSupprimerCompteCP: TPanel;
+    BitSupprimerCP: TBitBtn;
+    BitBtn6: TBitBtn;
+    Bevel7: TBevel;
+    BitBtn5: TBitBtn;
+    Bevel18: TBevel;
+    Panel5: TPanel;
+    Label13: TLabel;
+    RadioGroup7: TRadioGroup;
+    RBAutoriserSousClasse: TRadioButton;
+    RBNePasAutoriserSousClasse: TRadioButton;
+    Panel7: TPanel;
+    Label14: TLabel;
+    RadioGroup8: TRadioGroup;
+    RBTousSousClasse: TRadioButton;
+    RBListeComptesSousClasse: TRadioButton;
+    Panel8: TPanel;
+    Label15: TLabel;
+    RadioGroup9: TRadioGroup;
+    RBComptePrecisSousClasse: TRadioButton;
+    RBCompteSousCompteSousClasse: TRadioButton;
+    Panel9: TPanel;
+    Label16: TLabel;
+    RadioGroup10: TRadioGroup;
+    RBAutoriserCategorie: TRadioButton;
+    RBNePasAutoriserCategorie: TRadioButton;
+    Panel10: TPanel;
+    Label17: TLabel;
+    RadioGroup11: TRadioGroup;
+    RBTousCategorie: TRadioButton;
+    RBListeComptesCategorie: TRadioButton;
+    Panel11: TPanel;
+    Label18: TLabel;
+    RadioGroup12: TRadioGroup;
+    RBComptePrecisCategorie: TRadioButton;
+    RBCompteSousCompteCategorie: TRadioButton;
+    Panel12: TPanel;
+    Label19: TLabel;
+    RadioGroup13: TRadioGroup;
+    RBAutoriserSousCategorie: TRadioButton;
+    RBNePasAutoriserSousCategorie: TRadioButton;
+    Panel13: TPanel;
+    Label20: TLabel;
+    RadioGroup14: TRadioGroup;
+    RBTousSousCategorie: TRadioButton;
+    RBListeComptesSousCategorie: TRadioButton;
+    Panel14: TPanel;
+    Label31: TLabel;
+    RadioGroup15: TRadioGroup;
+    RBComptePrecisSousCategorie: TRadioButton;
+    RBCompteSousCompteSousCategorie: TRadioButton;
+    Panel15: TPanel;
+    Label32: TLabel;
+    RadioGroup16: TRadioGroup;
+    RBAutoriserFamille: TRadioButton;
+    RBNePasAutoriserFamille: TRadioButton;
+    Panel16: TPanel;
+    Label35: TLabel;
+    RadioGroup17: TRadioGroup;
+    RBTousFamille: TRadioButton;
+    RBListeComptesFamille: TRadioButton;
+    Panel17: TPanel;
+    Label36: TLabel;
+    RadioGroup18: TRadioGroup;
+    RBComptePrecisFamille: TRadioButton;
+    RBCompteSousCompteFamille: TRadioButton;
+    Panel18: TPanel;
+    Label23: TLabel;
+    RadioGroup19: TRadioGroup;
+    RBAutoriserSousFamille: TRadioButton;
+    RBNePasAutoriserSousFamille: TRadioButton;
+    Panel19: TPanel;
+    Label24: TLabel;
+    RadioGroup20: TRadioGroup;
+    RBTousSousFamille: TRadioButton;
+    RBListeComptesSousFamille: TRadioButton;
+    Panel20: TPanel;
+    Label27: TLabel;
+    RadioGroup21: TRadioGroup;
+    RBComptePrecisSousFamille: TRadioButton;
+    RBCompteSousCompteSousFamille: TRadioButton;
+    Label28: TLabel;
+    Bevel19: TBevel;
+    AfficheInformations: TMemo;
+    AfficheInformationPrincipale: TMemo;
+    Annuler5: TBitBtn;
+    Annuler4: TBitBtn;
+    Annuler3: TBitBtn;
+    Annuler2: TBitBtn;
+    Annuler1: TBitBtn;
+    AfficheControleSpecificite: TPanel;
+    Bevel22: TBevel;
+    EditOrdreControleSpecificite: TEdit;
+    BitValideControleSpecificite: TBitBtn;
+    BitNonControleSpecificite: TBitBtn;
+    TitreAfficheControleSpecificite: TPanel;
+    MessageAfficheControleSpecificite: TPanel;
+    ResultControleSpecificite: TPanel;
+    AfficheRapportControleSpecificite: TPanel;
+    RapportControleSpecificite: TMemo;
+    Bevel20: TBevel;
+    BitBtn7: TBitBtn;
+    BitBtn8: TBitBtn;
+    BitBtn10: TBitBtn;
+    BitBtn11: TBitBtn;
+    TableauListeRapportControleSpecificite: TStringGrid;
+    Panel21: TPanel;
+    Label39: TLabel;
+    RadioGroup22: TRadioGroup;
+    RBTiersClasse: TRadioButton;
+    RBNonTiersClasse: TRadioButton;
+    Panel22: TPanel;
+    Label40: TLabel;
+    RadioGroup23: TRadioGroup;
+    RBTiersSousClasse: TRadioButton;
+    RBNonTiersSousClasse: TRadioButton;
+    Panel23: TPanel;
+    Label45: TLabel;
+    RadioGroup24: TRadioGroup;
+    RBTiersCategorie: TRadioButton;
+    RBNonTiersCategorie: TRadioButton;
+    Panel24: TPanel;
+    Label46: TLabel;
+    RadioGroup25: TRadioGroup;
+    RBTiersSousCategorie: TRadioButton;
+    RBNonTiersSousCategorie: TRadioButton;
+    Panel25: TPanel;
+    Label47: TLabel;
+    RadioGroup26: TRadioGroup;
+    RBTiersFamille: TRadioButton;
+    RBNonTiersFamille: TRadioButton;
+    Panel26: TPanel;
+    Label48: TLabel;
+    RadioGroup27: TRadioGroup;
+    RBTiersSousFamille: TRadioButton;
+    RBNonTiersSousFamille: TRadioButton;
+    AfficheCompteTiers: TPanel;
+    TableauCompteTiers: TStringGrid;
+    Label49: TLabel;
+    Bevel21: TBevel;
+    EditNumCptPrincipalTiers: TEdit;
+    EditDesignationCptPrincipalTiers: TEdit;
+    Bevel23: TBevel;
+    Label50: TLabel;
+    BitBtn12: TBitBtn;
+    BitBtn13: TBitBtn;
+    Bevel24: TBevel;
+    Bevel25: TBevel;
+    BitBtn14: TBitBtn;
+    BitBtn15: TBitBtn;
+    AfficheOperationCptTiers: TPanel;
+    EditNumCompteTiers: TEdit;
+    EditDesignationCptTiers: TEdit;
+    RadioGroup28: TRadioGroup;
+    RBCptTiersAvecDonnees: TRadioButton;
+    RBCptTiersSansDonnees: TRadioButton;
+    Label51: TLabel;
+    Label52: TLabel;
+    Bevel26: TBevel;
+    Bevel27: TBevel;
+    Bevel28: TBevel;
+    BitValideCptTiers: TBitBtn;
+    BitBtn17: TBitBtn;
+    AfficheDonneesCompteTiers: TPanel;
+    TableauDonneesCompteTiers: TStringGrid;
+    Bevel29: TBevel;
+    Label53: TLabel;
+    EditNumCptTiersDonnees: TEdit;
+    EditDesignationCptTiersDonnees: TEdit;
+    Label54: TLabel;
+    Bevel30: TBevel;
+    AfficheOperationDonnesTiers: TPanel;
+    EditTitreDonneeCptTiers: TEdit;
+    Label55: TLabel;
+    BitValideDonneesCptTiers: TBitBtn;
+    Bevel31: TBevel;
+    Label56: TLabel;
+    EditInformationDonneeCptTiers: TEdit;
+    BitBtn19: TBitBtn;
+    Bevel32: TBevel;
+    BitBtn20: TBitBtn;
+    EditNumDonneesCptTiers: TEdit;
+    BitBtn16: TBitBtn;
+    BitBtn18: TBitBtn;
+    BitBtn21: TBitBtn;
+    Bevel35: TBevel;
+    BitBtn22: TBitBtn;
+    Bevel36: TBevel;
+    Bevel34: TBevel;
+    AffichePreferenceCptCP: TPanel;
+    BitBtn23: TBitBtn;
+    Bevel37: TBevel;
+    TableauPreferenceCP: TStringGrid;
+    Panel27: TPanel;
+    Panel28: TPanel;
+    EditResultatCptPrincipal: TPanel;
+    BitBtn24: TBitBtn;
+    TableauPreferenceCptCP: TStringGrid;
+    RBClasseActive: TCheckBox;
+    RBSousClasseActive: TCheckBox;
+    RBCategorieActive: TCheckBox;
+    RBSousCategorieActive: TCheckBox;
+    RBFamilleActive: TCheckBox;
+    RBSousFamilleActive: TCheckBox;
+    AfficheTransfertCompteACompte: TPanel;
+    BitBtn25: TBitBtn;
+    Bevel33: TBevel;
+    EditNumCompteOrigine: TEdit;
+    EditCompteOrigine: TEdit;
+    Label8: TLabel;
+    EditNumCompteDestination: TEdit;
+    EditCompteDestination: TEdit;
+    Bevel38: TBevel;
+    Label57: TLabel;
+    Bevel39: TBevel;
+    BitValiderTransfertCptCpt: TBitBtn;
+    AfficheListeTransfertCompte: TPanel;
+    TableauListeTransfertCompte: TStringGrid;
+    BitBtn26: TBitBtn;
+    AfficheModeleDonnees: TPanel;
+    BitBtn27: TBitBtn;
+    Bevel40: TBevel;
+    TableauModeleDonnees: TStringGrid;
+    AfficheNouveauModele: TPanel;
+    EditModeleDonnee: TEdit;
+    Bevel41: TBevel;
+    BitOperationModeleDonnees: TBitBtn;
+    Bevel42: TBevel;
+    Label7: TLabel;
+    EditNumModele: TEdit;
+    BitBtn28: TBitBtn;
+    RadioGroup29: TRadioGroup;
+    RBPortrait: TRadioButton;
+    RBPaysage: TRadioButton;
+    EditOperation: TLabel;
+    Bevel43: TBevel;
+    Bevel44: TBevel;
+    BitOrdonnerCompteTiers: TBitBtn;
+    EditTypeStock: TComboBox;
+    EditTypeComptabilite: TEdit;
+    TypeProces: TComboBox;
+    AdresseFichierConcerne: TPanel;
+    procedure BitBtn37Click(Sender: TObject);
+    procedure BitValiderSousFamilleClick(Sender: TObject);
+    procedure TableauSousFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure PageSFamilleShow(Sender: TObject);
+    procedure TableauSousFamilleContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure TableauSousFamilleClick(Sender: TObject);
+    procedure AfficheOptionsSousFamilleClick(Sender: TObject);
+    procedure BitListeSousFamilleClick(Sender: TObject);
+    procedure BitBtn44Click(Sender: TObject);
+    procedure BitBtn47Click(Sender: TObject);
+    procedure EditCodeSousFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDesignSousFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauSousFamilleKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn102Click(Sender: TObject);
+    procedure TableauFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauFamilleKeyPress(Sender: TObject; var Key: Char);
+    procedure EditCodeFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDesignFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn100Click(Sender: TObject);
+    procedure BitValiderFamilleClick(Sender: TObject);
+    procedure BitListeFamilleClick(Sender: TObject);
+    procedure BitBtn45Click(Sender: TObject);
+    procedure BitBtn46Click(Sender: TObject);
+    procedure BitBtn48Click(Sender: TObject);
+    procedure TableauFamilleContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure TableauFamilleClick(Sender: TObject);
+    procedure AfficheOptionsFamilleClick(Sender: TObject);
+    procedure Annuler5Click(Sender: TObject);
+    procedure TableauSousCategorieContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure TableauSousCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauSousCategorieKeyPress(Sender: TObject; var Key: Char);
+    procedure EditCodeSousCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDesignSousCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure BitBtn9Click(Sender: TObject);
+    procedure BitValiderSousCategorieClick(Sender: TObject);
+    procedure AfficheOptionsSousCategorieClick(Sender: TObject);
+    procedure BitListeSousCategorieClick(Sender: TObject);
+    procedure BitBtn43Click(Sender: TObject);
+    procedure BitBtn49Click(Sender: TObject);
+    procedure BitBtn50Click(Sender: TObject);
+    procedure TableauSousCategorieClick(Sender: TObject);
+    procedure Annuler4Click(Sender: TObject);
+    procedure BitValiderCategorieClick(Sender: TObject);
+    procedure TableauCategorieContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure TableauCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauCategorieKeyPress(Sender: TObject; var Key: Char);
+    procedure BitListeCategorieClick(Sender: TObject);
+    procedure BitBtn53Click(Sender: TObject);
+    procedure BitBtn54Click(Sender: TObject);
+    procedure BitBtn55Click(Sender: TObject);
+    procedure Annuler3Click(Sender: TObject);
+    procedure EditCodeCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDesignCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn52Click(Sender: TObject);
+    procedure TableauCategorieClick(Sender: TObject);
+    procedure Annuler2Click(Sender: TObject);
+    procedure TableauSousClasseContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure TableauSousClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauSousClasseKeyPress(Sender: TObject; var Key: Char);
+    procedure TableauSousClasseClick(Sender: TObject);
+    procedure BitListeSousClasseClick(Sender: TObject);
+    procedure BitBtn58Click(Sender: TObject);
+    procedure BitBtn59Click(Sender: TObject);
+    procedure BitBtn60Click(Sender: TObject);
+    procedure AfficheOptionsSousClasseClick(Sender: TObject);
+    procedure BitValiderSousClasseClick(Sender: TObject);
+    procedure BitBtn57Click(Sender: TObject);
+    procedure EditCodeSousClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure Annuler1Click(Sender: TObject);
+    procedure TableauClasseContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure TableauClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauClasseKeyPress(Sender: TObject; var Key: Char);
+    procedure TableauClasseClick(Sender: TObject);
+    procedure BitListeClasseClick(Sender: TObject);
+    procedure BitBtn63Click(Sender: TObject);
+    procedure BitBtn64Click(Sender: TObject);
+    procedure BitBtn65Click(Sender: TObject);
+    procedure AfficheOptionsClasseClick(Sender: TObject);
+    procedure EditCodeClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn62Click(Sender: TObject);
+    procedure BitValiderClasseClick(Sender: TObject);
+    procedure RBAlphSousFamilleClick(Sender: TObject);
+    procedure RBNumSousFamilleClick(Sender: TObject);
+    procedure RBAlphFamilleClick(Sender: TObject);
+    procedure RBNumFamilleClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure TableauOptionCompteCPKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure TableauListeCompteCPClick(Sender: TObject);
+    procedure EditRechercheCompteCPKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditRechercheCompteCPKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauListeCompteCPKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauOptionCompteCPKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure RBCompteCPPrecisClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBCompteCPSousCompteClasseKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitSupprimerCPClick(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure TableauOptionCompteCPDblClick(Sender: TObject);
+    procedure EditDesignClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBAutoriserClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNePasAutoriserClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBTousClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBListeComptesClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBComptePrecisClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBCompteSousCompteClasseKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditDesignSousClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBAutoriserSousClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNePasAutoriserSousClasseKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBTousSousClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBListeComptesSousClasseKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBComptePrecisSousClasseKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBCompteSousCompteSousClasseKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBAutoriserCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNePasAutoriserCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBTousCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBListeComptesCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBComptePrecisCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBCompteSousCompteCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure AfficheOptionsCategorieClick(Sender: TObject);
+    procedure RBAutoriserSousCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBNePasAutoriserSousCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBTousSousCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBListeComptesSousCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBComptePrecisSousCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBCompteSousCompteSousCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBAutoriserFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNePasAutoriserFamilleKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBTousFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBListeComptesFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBComptePrecisFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBCompteSousCompteFamilleKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBAutoriserSousFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNePasAutoriserSousFamilleKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBTousSousFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBListeComptesSousFamilleKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBComptePrecisSousFamilleKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBCompteSousCompteSousFamilleKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBComptePrecisClasseContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBCompteSousCompteClasseContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBComptePrecisSousClasseContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBCompteSousCompteSousClasseContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBComptePrecisCategorieContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBCompteSousCompteCategorieContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBComptePrecisSousCategorieContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBCompteSousCompteSousCategorieContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBComptePrecisFamilleContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBCompteSousCompteFamilleContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBComptePrecisSousFamilleContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBCompteSousCompteSousFamilleContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure AfficheListeSousFamilleClick(Sender: TObject);
+    procedure RBCompteCPPrecisClasseContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure RBCompteCPSousCompteClasseContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure AfficheListeCptContrePartieClick(Sender: TObject);
+    procedure TableauOptionCompteCPClick(Sender: TObject);
+    procedure AfficheOptionCompteCPClick(Sender: TObject);
+    procedure BitNonControleSpecificiteClick(Sender: TObject);
+    procedure BitValideControleSpecificiteClick(Sender: TObject);
+    procedure BitBtn10Click(Sender: TObject);
+    procedure BitBtn8Click(Sender: TObject);
+    procedure BitBtn11Click(Sender: TObject);
+    procedure TableauListeRapportControleSpecificiteClick(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure RBTiersClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNonTiersClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBTiersSousClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNonTiersSousClasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBTiersCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNonTiersCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBTiersSousCategorieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNonTiersSousCategorieKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBTiersFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNonTiersFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBTiersSousFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBNonTiersSousFamilleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn12Click(Sender: TObject);
+    procedure BitBtn17Click(Sender: TObject);
+    procedure BitValideCptTiersClick(Sender: TObject);
+    procedure TableauCompteTiersClick(Sender: TObject);
+    procedure BitBtn13Click(Sender: TObject);
+    procedure EditDesignationCptTiersKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure RBCptTiersAvecDonneesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBCptTiersSansDonneesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn14Click(Sender: TObject);
+    procedure BitBtn15Click(Sender: TObject);
+    procedure TableauCompteTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauCompteTiersKeyPress(Sender: TObject; var Key: Char);
+    procedure TableauListeCompteCPKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn19Click(Sender: TObject);
+    procedure BitValideDonneesCptTiersClick(Sender: TObject);
+    procedure TableauDonneesCompteTiersClick(Sender: TObject);
+    procedure BitBtn20Click(Sender: TObject);
+    procedure TableauDonneesCompteTiersKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditTitreDonneeCptTiersKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditInformationDonneeCptTiersKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditNumDonneesCptTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauDonneesCompteTiersKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure BitBtn16Click(Sender: TObject);
+    procedure BitBtn18Click(Sender: TObject);
+    procedure BitBtn21Click(Sender: TObject);
+    procedure BitBtn22Click(Sender: TObject);
+    procedure TableauPreferenceCPKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn23Click(Sender: TObject);
+    procedure BitBtn24Click(Sender: TObject);
+    procedure TableauPreferenceCPClick(Sender: TObject);
+    procedure TableauPreferenceCPDblClick(Sender: TObject);
+    procedure BitBtn25Click(Sender: TObject);
+    procedure BitValiderTransfertCptCptClick(Sender: TObject);
+    procedure EditNumCompteDestinationKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNumCompteDestinationEnter(Sender: TObject);
+    procedure EditNumCompteDestinationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure TableauListeTransfertCompteKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure BitBtn27Click(Sender: TObject);
+    procedure BitBtn26Click(Sender: TObject);
+    procedure TableauModeleDonneesClick(Sender: TObject);
+    procedure TableauModeleDonneesKeyPress(Sender: TObject; var Key: Char);
+    procedure BitOperationModeleDonneesClick(Sender: TObject);
+    procedure EditModeleDonneeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn28Click(Sender: TObject);
+    procedure AfficheListeSousFamilleDblClick(Sender: TObject);
+    procedure AfficheListeFamilleDblClick(Sender: TObject);
+    procedure AfficheListeSousCategorieDblClick(Sender: TObject);
+    procedure AfficheListeCategorieDblClick(Sender: TObject);
+    procedure AfficheListeSousClasseDblClick(Sender: TObject);
+    procedure AfficheListeClasseDblClick(Sender: TObject);
+    procedure EditCodeSousFamilleEnter(Sender: TObject);
+    procedure BitOrdonnerCompteTiersClick(Sender: TObject);
+    procedure EditTypeStockKeyPress(Sender: TObject; var Key: Char);
+    procedure EditTypeStockChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSPlanComptable: TFSPlanComptable;
+
+Procedure ProcAffichePCN(TypePCN,CodePCN,TypeComptabilite:string);
+Function ProcNouveauCode(TypePCN,CodeSource:string):string;
+Procedure ProcListeCompteCP(NumCptPrincipal:string);
+Procedure ListePlanComptableCP(Ordre:integer; Compte,CompteSelect:string);
+Procedure ProcListeCompteTiers(NumCptPrincipal:string);
+Procedure CancelThe(Ordre:integer);
+Procedure ProcListeDonneesCompteTiers(NumCptTiers:string);
+Procedure ListeTransfertCompte(NumCompte:string);
+Function ExisteCompteImputation(NumCpt,DesignationCpt,Operation:string):boolean;
+Procedure SelectFichePlanComptable;
+Procedure ProcAfficheModeleDonnees;
+
+implementation
+
+uses UnitInitialisation, UnitFSMenuPrincipal, UnitPrintRapportControleSpecificite, UnitSuppression;
+
+
+var
+
+
+TableauAlpha:array['A'..'Z']of boolean;
+Alpha:Char;
+
+   RClasse:RRegistreComptes;
+   FClasse:FRegistreComptes;
+   ChClasse:string250;
+
+   RSousClasse:RRegistreComptes;
+   FSousClasse:FRegistreComptes;
+   ChSousClasse:string250;
+   NSousClasse:string[2];
+   IndexSousClasse:string[1];
+
+   RCategorie:RRegistreComptes;
+   FCategorie:FRegistreComptes;
+   ChCategorie:string250;
+
+   RSousCategorie:RRegistreComptes;
+   FSousCategorie:FRegistreComptes;
+   ChSousCategorie:string250;
+
+   RFamille:RRegistreComptes;
+   FFamille:FRegistreComptes;
+   ChFamille:string250;
+
+   RSousFamille:RRegistreComptes;
+   FSousFamille:FRegistreComptes;
+   ChSousFamille:string250;
+
+   TModeleDonneesCteTiers:TModeleDonneesCteTierss;
+   RModeleDonneesCteTiers:RModeleDonneesCteTierss;
+   FModeleDonneesCteTiers:FModeleDonneesCteTierss;
+   ChModeleDonneesCteTiers:string250;
+
+   TCompteTiers:TCompteTierss;
+   RCompteTiers:RCompteTierss;
+   FCompteTiers:FCompteTierss;
+   ChCompteTiers:string250;
+
+   RegistreCompte:RRegistreComptes;
+
+   i,j,m,l,C,R,LGrid:integer;
+
+
+{$R *.dfm}
+
+Procedure ProcAfficheModeleDonnees;
+var  i:integer;
+begin
+     FSPlanComptable.TableauModeleDonnees.RowCount:=2;
+     FSPlanComptable.TableauModeleDonnees.Cols[0].Text:=' N°';
+     FSPlanComptable.TableauModeleDonnees.Cols[1].Text:='          Modèle de données';
+     FSPlanComptable.TableauModeleDonnees.Rows[1].Text:='';
+
+     OpenFParc(RParc);
+     ChModeleDonneesCteTiers:=RParc.Parcours+'\'+Exercice+'FModeleDonneesCteTiers';
+     assignfile(FModeleDonneesCteTiers,ChModeleDonneesCteTiers);
+     if FileExists(ChModeleDonneesCteTiers)
+     then Reset(FModeleDonneesCteTiers)else Rewrite(FModeleDonneesCteTiers);
+     Seek(FModeleDonneesCteTiers,0);
+     i:=0;
+     while not eof(FModeleDonneesCteTiers)do
+     begin
+          Read(FModeleDonneesCteTiers,RModeleDonneesCteTiers);
+          i:=i+1;
+          FSPlanComptable.TableauModeleDonnees.Rows[i].Text:='';
+          FSPlanComptable.TableauModeleDonnees.Cells[0,i]:=inttostr(RModeleDonneesCteTiers.NumDonnees);
+          FSPlanComptable.TableauModeleDonnees.Cells[1,i]:=RModeleDonneesCteTiers.Titre;
+     end;
+     CloseFile(FModeleDonneesCteTiers);
+
+     if(i>0)then FSPlanComptable.TableauModeleDonnees.RowCount:=i+1
+     else
+     begin
+          FSPlanComptable.TableauModeleDonnees.RowCount:=2;
+          FSPlanComptable.TableauModeleDonnees.Rows[1].Text:='';
+     end;
+
+     FSPlanComptable.TableauModeleDonnees.SetFocus;
+end;
+
+Procedure SelectFichePlanComptable;
+begin
+     if(FSPlanComptable.AfficheListeClasse.Visible=true)then FSPlanComptable.TableauClasse.SetFocus;
+     if(FSPlanComptable.AfficheListeSousClasse.Visible=true)then FSPlanComptable.TableauSousClasse.SetFocus;
+     if(FSPlanComptable.AfficheListeCategorie.Visible=true)then FSPlanComptable.TableauCategorie.SetFocus;
+     if(FSPlanComptable.AfficheListeSousCategorie.Visible=true)then FSPlanComptable.TableauSousCategorie.SetFocus;
+     if(FSPlanComptable.AfficheListeFamille.Visible=true)then FSPlanComptable.TableauFamille.SetFocus;
+     if(FSPlanComptable.AfficheListeSousFamille.Visible=true)then FSPlanComptable.TableauSousFamille.SetFocus;
+end;
+
+Function ExisteCompteImputation(NumCpt,DesignationCpt,Operation:string):boolean;
+var   CompteExiste:boolean;
+begin
+     OpenFParc(RParc);
+     ChJournalGeneral:=RParc.Parcours+'\'+Exercice+'FJournalGeneral'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+     assignfile(FJournalGeneral,ChJournalGeneral);
+     if FileExists(ChJournalGeneral)
+     then Reset(FJournalGeneral)else Rewrite(FJournalGeneral);
+     Seek(FJournalGeneral,0);
+     CompteExiste:=false;
+     while not eof(FJournalGeneral)and(CompteExiste=false)do
+     begin
+          Read(FJournalGeneral,RJournalGeneral);
+          if(RJournalGeneral.NumCompte=NumCpt)then
+          begin
+               CompteExiste:=true;
+               FSPlanComptable.AfficheTransfertCompteACompte.Visible:=true;
+               FSPlanComptable.EditNumCompteOrigine.Text:=NumCpt;
+               FSPlanComptable.EditCompteOrigine.Text:=DesignationCpt;
+               FSPlanComptable.EditNumCompteDestination.SetFocus;
+               FSPlanComptable.EditNumCompteDestination.Text:='';
+               FSPlanComptable.EditCompteDestination.Text:='';
+               FSPlanComptable.EditOperation.Caption:=Operation;
+          end;
+     end;
+     CloseFile(FJournalGeneral);
+
+     ExisteCompteImputation:=CompteExiste;
+end;
+
+Procedure CancelThe(Ordre:integer);
+begin
+     case ordre of
+     0:   begin
+               FSPlanComptable.AfficheListeClasse.Visible:=false;
+               FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+               FSPlanComptable.AfficheListeCategorie.Visible:=false;
+               FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+               FSPlanComptable.AfficheListeFamille.Visible:=false;
+               
+               FSPlanComptable.AfficheRapportControleSpecificite.Visible:=false;
+               FSPlanComptable.AfficheControleSpecificite.Visible:=false;
+               FSPlanComptable.AfficheInformationPrincipale.Visible:=false;
+               FSPlanComptable.AfficheListeCptContrePartie.Visible:=false;
+          end;
+
+     1:   begin
+               if(FSPlanComptable.AfficheListeSousClasse.Visible=true)then
+               begin
+                    FSPlanComptable.TableauSousClasse.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeCategorie.Visible=true)then
+               begin
+                    FSPlanComptable.TableauCategorie.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeSousCategorie.Visible=true)then
+               begin
+                    FSPlanComptable.TableauSousCategorie.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeFamille.Visible=true)then
+               begin
+                    FSPlanComptable.TableauFamille.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeSousFamille.Visible=true)then
+               begin
+                    FSPlanComptable.TableauSousFamille.SetFocus;
+               end;
+          FSPlanComptable.AfficheListeClasse.Visible:=false;
+          end;
+     2:   begin
+               if(FSPlanComptable.AfficheListeCategorie.Visible=true)then
+               begin
+                    FSPlanComptable.TableauCategorie.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeSousCategorie.Visible=true)then
+               begin
+                    FSPlanComptable.TableauSousCategorie.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeFamille.Visible=true)then
+               begin
+                    FSPlanComptable.TableauFamille.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeSousFamille.Visible=true)then
+               begin
+                    FSPlanComptable.TableauSousFamille.SetFocus;
+               end;
+          FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+          end;
+     3:   begin
+               if(FSPlanComptable.AfficheListeSousCategorie.Visible=true)then
+               begin
+                    FSPlanComptable.TableauSousCategorie.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeFamille.Visible=true)then
+               begin
+                    FSPlanComptable.TableauFamille.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeSousFamille.Visible=true)then
+               begin
+                    FSPlanComptable.TableauSousFamille.SetFocus;
+               end;
+          FSPlanComptable.AfficheListeCategorie.Visible:=false;
+          end;
+     4:   begin
+               if(FSPlanComptable.AfficheListeFamille.Visible=true)then
+               begin
+                    FSPlanComptable.TableauFamille.SetFocus;
+               end
+               else
+               if(FSPlanComptable.AfficheListeSousFamille.Visible=true)then
+               begin
+                    FSPlanComptable.TableauSousFamille.SetFocus;
+               end;
+          FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+          end;
+     5:   begin
+               if(FSPlanComptable.AfficheListeSousFamille.Visible=true)then
+               begin
+                    FSPlanComptable.TableauSousFamille.SetFocus;
+               end;
+          FSPlanComptable.AfficheListeFamille.Visible:=false;
+          end;
+     end;//CASE.....
+end;
+
+Procedure ListeTransfertCompte(NumCompte:string);
+var ExisteCompte:boolean; Ordre:integer;   TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+Ordre:=longueur(NumCompte);
+
+if(Ordre<=1)then FichierConcerne:='FClasse'+TypeComptabilite;
+if(Ordre<=2)then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(Ordre<=3)then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(Ordre<=4)then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(Ordre<=5)then FichierConcerne:='FFamille'+TypeComptabilite;
+if(Ordre<=6)then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+FSPlanComptable.TableauListeTransfertCompte.Cols[1].Text:='Cd';
+FSPlanComptable.TableauListeTransfertCompte.Cols[2].Text:='Désignation';
+FSPlanComptable.TableauListeTransfertCompte.Cols[3].Text:='C/P';
+FSPlanComptable.TableauListeTransfertCompte.Cols[4].Text:='Cpte';
+FSPlanComptable.TableauListeTransfertCompte.Cols[5].Text:=' !';
+FSPlanComptable.TableauListeTransfertCompte.Cols[6].Text:='Tiers';
+FSPlanComptable.TableauListeTransfertCompte.RowCount:=2;
+FSPlanComptable.TableauListeTransfertCompte.Rows[1].Text:='';
+
+i:=0;
+
+if(Ordre<=1)then
+begin
+{****************affichage******************}
+ChClasse:=Adresse;
+assignfile(FClasse,ChClasse);
+if FileExists(ChClasse)
+then Reset(FClasse)else Rewrite(FClasse);
+Seek(FClasse,0);
+while not eof(FClasse)do
+begin
+     Read(FClasse,RClasse);
+     ExisteCompte:=true;
+
+     if(NumCompte<>'')then
+     begin
+          if(firstlaters(RClasse.CodeCompte,longueur(NumCompte))=NumCompte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+          FSPlanComptable.TableauListeTransfertCompte.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[1,i]:=RClasse.CodeCompte;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[2,i]:=RClasse.Designation;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[3,i]:=booleantostr(RClasse.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[4,i]:=RClasse.ContrePartie.TypeUses;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[5,i]:=RClasse.Specificite;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[6,i]:=booleantostr(RClasse.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre<=2)then
+begin
+{****************affichage******************}
+ChSousClasse:=Adresse;
+assignfile(FSousClasse,ChSousClasse);
+if FileExists(ChSousClasse)
+then Reset(FSousClasse)else Rewrite(FSousClasse);
+Seek(FSousClasse,0);
+while not eof(FSousClasse) do
+begin
+     Read(FSousClasse,RSousClasse);
+     ExisteCompte:=true;
+
+     if(NumCompte<>'')then
+     begin
+          if(firstlaters(RSousClasse.CodeCompte,longueur(NumCompte))=NumCompte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+          FSPlanComptable.TableauListeTransfertCompte.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[1,i]:=RSousClasse.CodeCompte;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[2,i]:=RSousClasse.Designation;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[3,i]:=booleantostr(RSousClasse.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[4,i]:=RSousClasse.ContrePartie.TypeUses;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[5,i]:=RSousClasse.Specificite;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[6,i]:=booleantostr(RSousClasse.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre<=3)then
+begin
+{****************affichage******************}
+ChCategorie:=Adresse;
+assignfile(FCategorie,ChCategorie);
+if FileExists(ChCategorie)
+then Reset(FCategorie)else Rewrite(FCategorie);
+Seek(FCategorie,0);
+while not eof(FCategorie) do
+begin
+     Read(FCategorie,RCategorie);
+     ExisteCompte:=true;
+
+     if(NumCompte<>'')then
+     begin
+          if(firstlaters(RCategorie.CodeCompte,longueur(NumCompte))=NumCompte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+          FSPlanComptable.TableauListeTransfertCompte.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[1,i]:=RCategorie.CodeCompte;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[2,i]:=RCategorie.Designation;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[3,i]:=booleantostr(RCategorie.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[4,i]:=RCategorie.ContrePartie.TypeUses;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[5,i]:=RCategorie.Specificite;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[6,i]:=booleantostr(RCategorie.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre<=4)then
+begin
+{****************affichage******************}
+ChSousCategorie:=Adresse;
+assignfile(FSousCategorie,ChSousCategorie);
+if FileExists(ChSousCategorie)
+then Reset(FSousCategorie)else Rewrite(FSousCategorie);
+Seek(FSousCategorie,0);
+while not eof(FSousCategorie) do
+begin
+     Read(FSousCategorie,RSousCategorie);
+     ExisteCompte:=true;
+
+     if(NumCompte<>'')then
+     begin
+          if(firstlaters(RSousCategorie.CodeCompte,longueur(NumCompte))=NumCompte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+          FSPlanComptable.TableauListeTransfertCompte.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[1,i]:=RSousCategorie.CodeCompte;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[2,i]:=RSousCategorie.Designation;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[3,i]:=booleantostr(RSousCategorie.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[4,i]:=RSousCategorie.ContrePartie.TypeUses;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[5,i]:=RSousCategorie.Specificite;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[6,i]:=booleantostr(RSousCategorie.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre<=5)then
+begin
+{****************affichage******************}
+ChFamille:=Adresse;
+assignfile(FFamille,ChFamille);
+if FileExists(ChFamille)
+then Reset(FFamille)else Rewrite(FFamille);
+Seek(FFamille,0);
+while not eof(FFamille) do
+begin
+     Read(FFamille,RFamille);
+     ExisteCompte:=true;
+
+     if(NumCompte<>'')then
+     begin
+          if(firstlaters(RFamille.CodeCompte,longueur(NumCompte))=NumCompte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+          FSPlanComptable.TableauListeTransfertCompte.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[1,i]:=RFamille.CodeCompte;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[2,i]:=RFamille.Designation;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[3,i]:=booleantostr(RFamille.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[4,i]:=RFamille.ContrePartie.TypeUses;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[5,i]:=RFamille.Specificite;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[6,i]:=booleantostr(RFamille.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre<=6)then
+begin
+{****************affichage******************}
+ChSousFamille:=Adresse;
+assignfile(FSousFamille,ChSousFamille);
+if FileExists(ChSousFamille)
+then Reset(FSousFamille)else Rewrite(FSousFamille);
+Seek(FSousFamille,0);
+while not eof(FSousFamille) do
+begin
+     Read(FSousFamille,RSousFamille);
+     ExisteCompte:=true;
+
+     if(NumCompte<>'')then
+     begin
+          if(firstlaters(RSousFamille.CodeCompte,longueur(NumCompte))=NumCompte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+          FSPlanComptable.TableauListeTransfertCompte.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[1,i]:=RSousFamille.CodeCompte;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[2,i]:=RSousFamille.Designation;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[3,i]:=booleantostr(RSousFamille.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauListeTransfertCompte.Cells[4,i]:=RSousFamille.ContrePartie.TypeUses;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[5,i]:=RSousFamille.Specificite;
+          FSPlanComptable.TableauListeTransfertCompte.Cells[6,i]:=booleantostr(RSousFamille.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(i>0)then
+       begin
+            FSPlanComptable.TableauListeTransfertCompte.RowCount:=i+1;
+       end
+       else FSPlanComptable.TableauListeTransfertCompte.RowCount:=2;
+end;
+
+Procedure ListePlanComptableCP(Ordre:integer; Compte,CompteSelect:string);
+var ExisteCompte:boolean; ARowCP:integer;  TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+
+if(Ordre<=1)then FichierConcerne:='FClasse'+TypeComptabilite;
+if(Ordre<=2)then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(Ordre<=3)then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(Ordre<=4)then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(Ordre<=5)then FichierConcerne:='FFamille'+TypeComptabilite;
+if(Ordre<=6)then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+FSPlanComptable.TableauOptionCompteCP.Cols[1].Text:='Cd';
+FSPlanComptable.TableauOptionCompteCP.Cols[2].Text:='Désignation';
+FSPlanComptable.TableauOptionCompteCP.Cols[3].Text:='C/P';
+FSPlanComptable.TableauOptionCompteCP.Cols[4].Text:='Cpte';
+FSPlanComptable.TableauOptionCompteCP.Cols[5].Text:=' !';
+FSPlanComptable.TableauOptionCompteCP.Cols[6].Text:='Tiers';
+FSPlanComptable.TableauOptionCompteCP.RowCount:=2;
+FSPlanComptable.TableauOptionCompteCP.Rows[1].Text:='';
+
+if(Ordre=6)then
+begin
+{****************affichage******************}
+ChSousFamille:=Adresse;
+assignfile(FSousFamille,ChSousFamille);
+if FileExists(ChSousFamille)
+then Reset(FSousFamille)else Rewrite(FSousFamille);
+Seek(FSousFamille,0);
+i:=0;
+ARowCP:=1;
+while not eof(FSousFamille) do
+begin
+     Read(FSousFamille,RSousFamille);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RSousFamille.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RSousFamille.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauOptionCompteCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauOptionCompteCP.Cells[1,i]:=RSousFamille.CodeCompte;
+          FSPlanComptable.TableauOptionCompteCP.Cells[2,i]:=RSousFamille.Designation;
+          FSPlanComptable.TableauOptionCompteCP.Cells[3,i]:=booleantostr(RSousFamille.ContrePartie.UsesCompte);
+
+          FSPlanComptable.TableauOptionCompteCP.Cells[4,i]:=RSousFamille.ContrePartie.TypeUses;
+
+          FSPlanComptable.TableauOptionCompteCP.Cells[5,i]:=RSousFamille.Specificite;
+          FSPlanComptable.TableauOptionCompteCP.Cells[6,i]:=booleantostr(RSousFamille.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=5)then
+begin
+{****************affichage******************}
+ChFamille:=Adresse;
+assignfile(FFamille,ChFamille);
+if FileExists(ChFamille)
+then Reset(FFamille)else Rewrite(FFamille);
+Seek(FFamille,0);
+i:=0;
+ARowCP:=1;
+while not eof(FFamille) do
+begin
+     Read(FFamille,RFamille);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RFamille.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RFamille.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauOptionCompteCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauOptionCompteCP.Cells[1,i]:=RFamille.CodeCompte;
+          FSPlanComptable.TableauOptionCompteCP.Cells[2,i]:=RFamille.Designation;
+          FSPlanComptable.TableauOptionCompteCP.Cells[3,i]:=booleantostr(RFamille.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauOptionCompteCP.Cells[4,i]:=RFamille.ContrePartie.TypeUses;
+          FSPlanComptable.TableauOptionCompteCP.Cells[5,i]:=RFamille.Specificite;
+          FSPlanComptable.TableauOptionCompteCP.Cells[6,i]:=booleantostr(RFamille.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=4)then
+begin
+{****************affichage******************}
+ChSousCategorie:=Adresse;
+assignfile(FSousCategorie,ChSousCategorie);
+if FileExists(ChSousCategorie)
+then Reset(FSousCategorie)else Rewrite(FSousCategorie);
+Seek(FSousCategorie,0);
+i:=0;
+ARowCP:=1;
+while not eof(FSousCategorie) do
+begin
+     Read(FSousCategorie,RSousCategorie);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RSousCategorie.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RSousCategorie.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauOptionCompteCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauOptionCompteCP.Cells[1,i]:=RSousCategorie.CodeCompte;
+          FSPlanComptable.TableauOptionCompteCP.Cells[2,i]:=RSousCategorie.Designation;
+          FSPlanComptable.TableauOptionCompteCP.Cells[3,i]:=booleantostr(RSousCategorie.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauOptionCompteCP.Cells[4,i]:=RSousCategorie.ContrePartie.TypeUses;
+          FSPlanComptable.TableauOptionCompteCP.Cells[5,i]:=RSousCategorie.Specificite;
+          FSPlanComptable.TableauOptionCompteCP.Cells[6,i]:=booleantostr(RSousCategorie.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=3)then
+begin
+{****************affichage******************}
+ChCategorie:=Adresse;
+assignfile(FCategorie,ChCategorie);
+if FileExists(ChCategorie)
+then Reset(FCategorie)else Rewrite(FCategorie);
+Seek(FCategorie,0);
+i:=0;
+ARowCP:=1;
+while not eof(FCategorie) do
+begin
+     Read(FCategorie,RCategorie);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RCategorie.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RCategorie.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauOptionCompteCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauOptionCompteCP.Cells[1,i]:=RCategorie.CodeCompte;
+          FSPlanComptable.TableauOptionCompteCP.Cells[2,i]:=RCategorie.Designation;
+          FSPlanComptable.TableauOptionCompteCP.Cells[3,i]:=booleantostr(RCategorie.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauOptionCompteCP.Cells[4,i]:=RCategorie.ContrePartie.TypeUses;
+          FSPlanComptable.TableauOptionCompteCP.Cells[5,i]:=RCategorie.Specificite;
+          FSPlanComptable.TableauOptionCompteCP.Cells[6,i]:=booleantostr(RCategorie.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=2)then
+begin
+{****************affichage******************}
+ChSousClasse:=Adresse;
+assignfile(FSousClasse,ChSousClasse);
+if FileExists(ChSousClasse)
+then Reset(FSousClasse)else Rewrite(FSousClasse);
+Seek(FSousClasse,0);
+i:=0;
+ARowCP:=1;
+while not eof(FSousClasse) do
+begin
+     Read(FSousClasse,RSousClasse);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RSousClasse.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RSousClasse.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauOptionCompteCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauOptionCompteCP.Cells[1,i]:=RSousClasse.CodeCompte;
+          FSPlanComptable.TableauOptionCompteCP.Cells[2,i]:=RSousClasse.Designation;
+          FSPlanComptable.TableauOptionCompteCP.Cells[3,i]:=booleantostr(RSousClasse.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauOptionCompteCP.Cells[4,i]:=RSousClasse.ContrePartie.TypeUses;
+          FSPlanComptable.TableauOptionCompteCP.Cells[5,i]:=RSousClasse.Specificite;
+          FSPlanComptable.TableauOptionCompteCP.Cells[6,i]:=booleantostr(RSousClasse.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=1)then
+begin
+{****************affichage******************}
+ChClasse:=Adresse;
+assignfile(FClasse,ChClasse);
+if FileExists(ChClasse)
+then Reset(FClasse)else Rewrite(FClasse);
+Seek(FClasse,0);
+i:=0;
+ARowCP:=1;
+while not eof(FClasse)do
+begin
+     Read(FClasse,RClasse);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RClasse.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RClasse.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauOptionCompteCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauOptionCompteCP.Cells[1,i]:=RClasse.CodeCompte;
+          FSPlanComptable.TableauOptionCompteCP.Cells[2,i]:=RClasse.Designation;
+          FSPlanComptable.TableauOptionCompteCP.Cells[3,i]:=booleantostr(RClasse.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauOptionCompteCP.Cells[4,i]:=RClasse.ContrePartie.TypeUses;
+          FSPlanComptable.TableauOptionCompteCP.Cells[5,i]:=RClasse.Specificite;
+          FSPlanComptable.TableauOptionCompteCP.Cells[6,i]:=booleantostr(RClasse.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(i>0)then
+       begin
+            FSPlanComptable.TableauOptionCompteCP.RowCount:=i+1;
+            FSPlanComptable.TableauOptionCompteCP.Row:=ARowCP;
+       end
+       else FSPlanComptable.TableauOptionCompteCP.RowCount:=2;
+end;
+
+Procedure ListePlanComptablePreferenceCP(Ordre:integer; Compte,CompteSelect:string);
+var ExisteCompte:boolean; ARowCP:integer;  TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+
+if(Ordre<=1)then FichierConcerne:='FClasse'+TypeComptabilite;
+if(Ordre<=2)then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(Ordre<=3)then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(Ordre<=4)then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(Ordre<=5)then FichierConcerne:='FFamille'+TypeComptabilite;
+if(Ordre<=6)then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+FSPlanComptable.TableauPreferenceCP.Cols[1].Text:='Cd';
+FSPlanComptable.TableauPreferenceCP.Cols[2].Text:='Désignation';
+FSPlanComptable.TableauPreferenceCP.Cols[3].Text:='C/P';
+FSPlanComptable.TableauPreferenceCP.Cols[4].Text:='Cpte';
+FSPlanComptable.TableauPreferenceCP.Cols[5].Text:=' !';
+FSPlanComptable.TableauPreferenceCP.Cols[6].Text:='Tiers';
+FSPlanComptable.TableauPreferenceCP.RowCount:=2;
+FSPlanComptable.TableauPreferenceCP.Rows[1].Text:='';
+
+if(Ordre=6)then
+begin
+{****************affichage******************}
+ChSousFamille:=Adresse;
+assignfile(FSousFamille,ChSousFamille);
+if FileExists(ChSousFamille)
+then Reset(FSousFamille)else Rewrite(FSousFamille);
+Seek(FSousFamille,0);
+i:=0;
+ARowCP:=1;
+while not eof(FSousFamille) do
+begin
+     Read(FSousFamille,RSousFamille);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RSousFamille.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RSousFamille.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauPreferenceCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauPreferenceCP.Cells[1,i]:=RSousFamille.CodeCompte;
+          FSPlanComptable.TableauPreferenceCP.Cells[2,i]:=RSousFamille.Designation;
+          FSPlanComptable.TableauPreferenceCP.Cells[3,i]:=booleantostr(RSousFamille.ContrePartie.UsesCompte);
+
+          FSPlanComptable.TableauPreferenceCP.Cells[4,i]:=RSousFamille.ContrePartie.TypeUses;
+
+          FSPlanComptable.TableauPreferenceCP.Cells[5,i]:=RSousFamille.Specificite;
+          FSPlanComptable.TableauPreferenceCP.Cells[6,i]:=booleantostr(RSousFamille.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=5)then
+begin
+{****************affichage******************}
+ChFamille:=Adresse;
+assignfile(FFamille,ChFamille);
+if FileExists(ChFamille)
+then Reset(FFamille)else Rewrite(FFamille);
+Seek(FFamille,0);
+i:=0;
+ARowCP:=1;
+while not eof(FFamille) do
+begin
+     Read(FFamille,RFamille);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RFamille.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RFamille.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauPreferenceCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauPreferenceCP.Cells[1,i]:=RFamille.CodeCompte;
+          FSPlanComptable.TableauPreferenceCP.Cells[2,i]:=RFamille.Designation;
+          FSPlanComptable.TableauPreferenceCP.Cells[3,i]:=booleantostr(RFamille.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauPreferenceCP.Cells[4,i]:=RFamille.ContrePartie.TypeUses;
+          FSPlanComptable.TableauPreferenceCP.Cells[5,i]:=RFamille.Specificite;
+          FSPlanComptable.TableauPreferenceCP.Cells[6,i]:=booleantostr(RFamille.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=4)then
+begin
+{****************affichage******************}
+ChSousCategorie:=Adresse;
+assignfile(FSousCategorie,ChSousCategorie);
+if FileExists(ChSousCategorie)
+then Reset(FSousCategorie)else Rewrite(FSousCategorie);
+Seek(FSousCategorie,0);
+i:=0;
+ARowCP:=1;
+while not eof(FSousCategorie) do
+begin
+     Read(FSousCategorie,RSousCategorie);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RSousCategorie.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RSousCategorie.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauPreferenceCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauPreferenceCP.Cells[1,i]:=RSousCategorie.CodeCompte;
+          FSPlanComptable.TableauPreferenceCP.Cells[2,i]:=RSousCategorie.Designation;
+          FSPlanComptable.TableauPreferenceCP.Cells[3,i]:=booleantostr(RSousCategorie.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauPreferenceCP.Cells[4,i]:=RSousCategorie.ContrePartie.TypeUses;
+          FSPlanComptable.TableauPreferenceCP.Cells[5,i]:=RSousCategorie.Specificite;
+          FSPlanComptable.TableauPreferenceCP.Cells[6,i]:=booleantostr(RSousCategorie.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=3)then
+begin
+{****************affichage******************}
+ChCategorie:=Adresse;
+assignfile(FCategorie,ChCategorie);
+if FileExists(ChCategorie)
+then Reset(FCategorie)else Rewrite(FCategorie);
+Seek(FCategorie,0);
+i:=0;
+ARowCP:=1;
+while not eof(FCategorie) do
+begin
+     Read(FCategorie,RCategorie);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RCategorie.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RCategorie.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauPreferenceCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauPreferenceCP.Cells[1,i]:=RCategorie.CodeCompte;
+          FSPlanComptable.TableauPreferenceCP.Cells[2,i]:=RCategorie.Designation;
+          FSPlanComptable.TableauPreferenceCP.Cells[3,i]:=booleantostr(RCategorie.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauPreferenceCP.Cells[4,i]:=RCategorie.ContrePartie.TypeUses;
+          FSPlanComptable.TableauPreferenceCP.Cells[5,i]:=RCategorie.Specificite;
+          FSPlanComptable.TableauPreferenceCP.Cells[6,i]:=booleantostr(RCategorie.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=2)then
+begin
+{****************affichage******************}
+ChSousClasse:=Adresse;
+assignfile(FSousClasse,ChSousClasse);
+if FileExists(ChSousClasse)
+then Reset(FSousClasse)else Rewrite(FSousClasse);
+Seek(FSousClasse,0);
+i:=0;
+ARowCP:=1;
+while not eof(FSousClasse) do
+begin
+     Read(FSousClasse,RSousClasse);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RSousClasse.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RSousClasse.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauPreferenceCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauPreferenceCP.Cells[1,i]:=RSousClasse.CodeCompte;
+          FSPlanComptable.TableauPreferenceCP.Cells[2,i]:=RSousClasse.Designation;
+          FSPlanComptable.TableauPreferenceCP.Cells[3,i]:=booleantostr(RSousClasse.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauPreferenceCP.Cells[4,i]:=RSousClasse.ContrePartie.TypeUses;
+          FSPlanComptable.TableauPreferenceCP.Cells[5,i]:=RSousClasse.Specificite;
+          FSPlanComptable.TableauPreferenceCP.Cells[6,i]:=booleantostr(RSousClasse.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(Ordre=1)then
+begin
+{****************affichage******************}
+ChClasse:=Adresse;
+assignfile(FClasse,ChClasse);
+if FileExists(ChClasse)
+then Reset(FClasse)else Rewrite(FClasse);
+Seek(FClasse,0);
+i:=0;
+ARowCP:=1;
+while not eof(FClasse)do
+begin
+     Read(FClasse,RClasse);
+     ExisteCompte:=true;
+
+     if(Compte<>'')then
+     begin
+          if(firstlaters(RClasse.CodeCompte,longueur(Compte))=Compte)
+          then ExisteCompte:=true
+          else ExisteCompte:=false;
+     end;
+
+     if(ExisteCompte=true)then
+     begin
+          i:=i+1;
+
+          if(CompteSelect<>'')then
+          begin
+               if(RClasse.CodeCompte=CompteSelect)
+               then ARowCP:=i;
+          end;
+
+          FSPlanComptable.TableauPreferenceCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauPreferenceCP.Cells[1,i]:=RClasse.CodeCompte;
+          FSPlanComptable.TableauPreferenceCP.Cells[2,i]:=RClasse.Designation;
+          FSPlanComptable.TableauPreferenceCP.Cells[3,i]:=booleantostr(RClasse.ContrePartie.UsesCompte);
+          FSPlanComptable.TableauPreferenceCP.Cells[4,i]:=RClasse.ContrePartie.TypeUses;
+          FSPlanComptable.TableauPreferenceCP.Cells[5,i]:=RClasse.Specificite;
+          FSPlanComptable.TableauPreferenceCP.Cells[6,i]:=booleantostr(RClasse.Tiers);
+     end;
+end;
+{****************Fin de l'affichage*****************}
+end;
+
+if(i>0)then
+       begin
+            FSPlanComptable.TableauPreferenceCP.RowCount:=i+1;
+            FSPlanComptable.TableauPreferenceCP.Row:=ARowCP;
+       end
+       else FSPlanComptable.TableauPreferenceCP.RowCount:=2;
+end;
+
+Procedure ProcListeCompteCP(NumCptPrincipal:string);
+var  UniM:string;
+begin
+if(FSPlanComptable.AfficheListeCptContrePartie.Visible=false)
+then FSPlanComptable.AfficheListeCptContrePartie.Visible:=true;
+
+FSPlanComptable.EditNumComptePrincipal.Text:=NumCptPrincipal;
+FSPlanComptable.EditDesignationComptePrincipal.Text:=DesigCompte('',NumCptPrincipal,UniM);
+
+FSPlanComptable.TableauListeCompteCP.RowCount:=2;
+FSPlanComptable.TableauListeCompteCP.Rows[1].Text:='';
+FSPlanComptable.TableauListeCompteCP.Cols[0].Text:='Ordre';
+FSPlanComptable.TableauListeCompteCP.Cols[1].Text:='NumCptPrincipal';
+FSPlanComptable.TableauListeCompteCP.Cols[2].Text:='NumCptCP';
+FSPlanComptable.TableauListeCompteCP.Cols[3].Text:='                   Désignation';
+FSPlanComptable.TableauListeCompteCP.Cols[4].Text:='Spécificité';
+
+OpenFParc(RParc);
+ChListeCompteCP:=RParc.Parcours+'\'+Exercice+'FListeCompteCP';
+assignfile(FListeCompteCP,ChListeCompteCP);
+if FileExists(ChListeCompteCP)
+then Reset(FListeCompteCP)else Rewrite(FListeCompteCP);
+Seek(FListeCompteCP,0);
+i:=0;
+while not eof(FListeCompteCP)do
+begin
+     Read(FListeCompteCP,RListeCompteCP);
+     if(RListeCompteCP.NumCptPrincipal=NumCptPrincipal)then
+     begin
+          i:=i+1;
+          FSPlanComptable.TableauListeCompteCP.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauListeCompteCP.Cells[1,i]:=NumCptPrincipal;
+          FSPlanComptable.TableauListeCompteCP.Cells[2,i]:=RListeCompteCP.NumCptCP;
+          FSPlanComptable.TableauListeCompteCP.Cells[3,i]:=DesigCompte('',RListeCompteCP.NumCptCP,UniM);
+          FSPlanComptable.TableauListeCompteCP.Cells[4,i]:=RListeCompteCP.Specificite;
+     end;
+end;
+CloseFile(FListeCompteCP);
+
+if(i>0)then FSPlanComptable.TableauListeCompteCP.RowCount:=i+1
+       else FSPlanComptable.TableauListeCompteCP.RowCount:=2;
+
+FSPlanComptable.TableauListeCompteCP.SetFocus;
+
+end;
+
+Procedure ProcListeCompteTiers(NumCptPrincipal:string);
+var UniM:string;
+begin
+if(FSPlanComptable.AfficheCompteTiers.Visible=false)
+then FSPlanComptable.AfficheCompteTiers.Visible:=true;
+
+FSPlanComptable.EditNumCptPrincipalTiers.Text:=NumCptPrincipal;
+FSPlanComptable.EditDesignationCptPrincipalTiers.Text:=DesigCompte('',NumCptPrincipal,UniM);
+
+FSPlanComptable.TableauCompteTiers.RowCount:=2;
+FSPlanComptable.TableauCompteTiers.Rows[1].Text:='';
+FSPlanComptable.TableauCompteTiers.Cols[0].Text:='Ordre';
+FSPlanComptable.TableauCompteTiers.Cols[1].Text:='OrdreCptPrincipal';
+FSPlanComptable.TableauCompteTiers.Cols[2].Text:='NumCptTiers';
+FSPlanComptable.TableauCompteTiers.Cols[3].Text:='                   Désignation';
+FSPlanComptable.TableauCompteTiers.Cols[4].Text:='Avec Données';
+
+OpenFParc(RParc);
+ChCompteTiers:=RParc.Parcours+'\'+Exercice+'FCompteTiers'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+assignfile(FCompteTiers,ChCompteTiers);
+if FileExists(ChCompteTiers)
+then Reset(FCompteTiers)else Rewrite(FCompteTiers);
+Seek(FCompteTiers,0);
+i:=0;
+while not eof(FCompteTiers)do
+begin
+     Read(FCompteTiers,RCompteTiers);
+     if(firstlaters(RCompteTiers.NumCptTiers,longueur(NumCptPrincipal))=NumCptPrincipal)then
+     begin
+          i:=i+1;
+          FSPlanComptable.TableauCompteTiers.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauCompteTiers.Cells[1,i]:=inttostr(RCompteTiers.OrdreCptPrincipal);
+          FSPlanComptable.TableauCompteTiers.Cells[2,i]:=RCompteTiers.NumCptTiers;
+          FSPlanComptable.TableauCompteTiers.Cells[3,i]:=RCompteTiers.Designation;
+          FSPlanComptable.TableauCompteTiers.Cells[4,i]:=booleantostr(RCompteTiers.AvecDonnees);
+     end;
+end;
+CloseFile(FCompteTiers);
+
+if(i>0)then FSPlanComptable.TableauCompteTiers.RowCount:=i+1
+       else FSPlanComptable.TableauCompteTiers.RowCount:=2;
+
+TrierTableauARowSpecial(FSPlanComptable.TableauCompteTiers,1,FSPlanComptable.TableauCompteTiers.RowCount-1,1,'2','','+');
+
+FSPlanComptable.TableauCompteTiers.SetFocus;
+
+end;
+
+Procedure ProcListeDonneesCompteTiers(NumCptTiers:string);
+begin
+
+if strtoboolean(FSPlanComptable.TableauCompteTiers.Cells[4,FSPlanComptable.TableauCompteTiers.Row])then
+begin
+if(FSPlanComptable.AfficheDonneesCompteTiers.Visible=false)
+then FSPlanComptable.AfficheDonneesCompteTiers.Visible:=true;
+
+FSPlanComptable.EditNumCptTiersDonnees.Text:=FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row];
+FSPlanComptable.EditDesignationCptTiersDonnees.Text:=FSPlanComptable.TableauCompteTiers.Cells[3,FSPlanComptable.TableauCompteTiers.Row];
+
+FSPlanComptable.TableauDonneesCompteTiers.RowCount:=2;
+FSPlanComptable.TableauDonneesCompteTiers.Rows[1].Text:='';
+FSPlanComptable.TableauDonneesCompteTiers.Cols[0].Text:='Num';
+FSPlanComptable.TableauDonneesCompteTiers.Cols[1].Text:='Ordre';
+FSPlanComptable.TableauDonneesCompteTiers.Cols[2].Text:='     Titre';
+FSPlanComptable.TableauDonneesCompteTiers.Cols[3].Text:='              Information';
+
+OpenFParc(RParc);
+ChDonneesCompteTiers:=RParc.Parcours+'\'+Exercice+'FDonneesCompteTiers'+FSMenuPrincipal.EditNumEntite.Text;
+assignfile(FDonneesCompteTiers,ChDonneesCompteTiers);
+if FileExists(ChDonneesCompteTiers)
+then Reset(FDonneesCompteTiers)else Rewrite(FDonneesCompteTiers);
+Seek(FDonneesCompteTiers,0);
+i:=0;
+while not eof(FDonneesCompteTiers)do
+begin
+     Read(FDonneesCompteTiers,RDonneesCompteTiers);
+     if(RDonneesCompteTiers.NumCptTiers=NumCptTiers)then
+     begin
+          i:=i+1;
+          FSPlanComptable.TableauDonneesCompteTiers.Rows[i].Text:=inttostr(i);
+          FSPlanComptable.TableauDonneesCompteTiers.Cells[1,i]:=inttostr(RDonneesCompteTiers.NumDonnees);
+          FSPlanComptable.TableauDonneesCompteTiers.Cells[2,i]:=RDonneesCompteTiers.Titre;
+          FSPlanComptable.TableauDonneesCompteTiers.Cells[3,i]:=RDonneesCompteTiers.Information;
+     end;
+end;
+CloseFile(FDonneesCompteTiers);
+
+if(i>0)then FSPlanComptable.TableauDonneesCompteTiers.RowCount:=i+1
+       else FSPlanComptable.TableauDonneesCompteTiers.RowCount:=2;
+
+FSPlanComptable.TableauDonneesCompteTiers.SetFocus;
+end
+else
+begin
+     showmessage('Pas de données pour le compte sélectionné!');
+     FSPlanComptable.TableauCompteTiers.SetFocus;
+end;
+
+end;
+
+Function ProcNouveauCode(TypePCN,CodeSource:string):string;
+var i:integer; OK:boolean;    TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+if(TypePCN='2')then
+begin
+if(CodeSource<>'')
+then
+begin
+     ChSousClasse:=Adresse;
+     assignfile(FSousClasse,ChSousClasse);
+     if FileExists(ChSousClasse)
+     then Reset(FSousClasse)else Rewrite(FSousClasse);
+     Seek(FSousClasse,0);
+     m:=0;
+     while not eof(FSousClasse)do
+     begin
+          Read(FSousClasse,RSousClasse);
+          if(FirstLaters(RSousClasse.CodeCompte,Longueur(CodeSource))=CodeSource)then
+          begin
+               OK:=true;
+               for i:=Longueur(CodeSource)+1 to strtoint(TypePCN)do
+               if not(RSousClasse.CodeCompte[i]in['0'..'9'])then OK:=false;
+               if(OK=true)then
+               if(strtoint(LastLaters(RSousClasse.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))>=m)then m:=strtoint(LastLaters(RSousClasse.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))+1;
+          end;
+     end;
+
+FSPlanComptable.AfficheListeSousClasse.Visible:=true;
+FSPlanComptable.AfficheSousClasse.Visible:=true;
+FSPlanComptable.BitValiderSousClasse.Kind:=bkAll;
+FSPlanComptable.BitValiderSousClasse.Caption:='Valider';
+FSPlanComptable.EditCodeSousClasse.Text:=CodeSource+CompleteZeroGauche(inttostr(m),inttostr(strtoint(TypePCN)-Longueur(CodeSource)));
+FSPlanComptable.EditDesignSousClasse.Text:='';
+FSPlanComptable.RBAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBTousSousClasse.Checked:=false;
+FSPlanComptable.RBListeComptesSousClasse.Checked:=false;
+FSPlanComptable.RBComptePrecisSousClasse.Checked:=false;
+FSPlanComptable.RBCompteSousCompteClasse.Checked:=false;
+FSPlanComptable.RBTiersSousClasse.Checked:=false;
+FSPlanComptable.RBNonTiersSousClasse.Checked:=false;
+ProcAffichePCN(TypePCN,CodeSource,FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.EditDesignSousClasse.SetFocus;
+end;
+end;
+
+if(TypePCN='3')then
+begin
+if(CodeSource<>'')
+then
+begin
+     ChCategorie:=Adresse;
+     assignfile(FCategorie,ChCategorie);
+     if FileExists(ChCategorie)
+     then Reset(FCategorie)else Rewrite(FCategorie);
+     Seek(FCategorie,0);
+     m:=0;
+     while not eof(FCategorie)do
+     begin
+          Read(FCategorie,RCategorie);
+          if(FirstLaters(RCategorie.CodeCompte,Longueur(CodeSource))=CodeSource)then
+          begin
+               OK:=true;
+               for i:=Longueur(CodeSource)+1 to strtoint(TypePCN)do
+               if not(RCategorie.CodeCompte[i]in['0'..'9'])then OK:=false;
+               if(OK=true)then
+               if(strtoint(LastLaters(RCategorie.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))>=m)then m:=strtoint(LastLaters(RCategorie.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))+1;
+          end;
+     end;
+
+FSPlanComptable.AfficheListeCategorie.Visible:=true;
+FSPlanComptable.AfficheCategorie.Visible:=true;
+FSPlanComptable.BitValiderCategorie.Kind:=bkAll;
+FSPlanComptable.BitValiderCategorie.Caption:='Valider';
+FSPlanComptable.EditCodeCategorie.Text:=CodeSource+CompleteZeroGauche(inttostr(m),inttostr(strtoint(TypePCN)-Longueur(CodeSource)));
+FSPlanComptable.EditDesignCategorie.Text:='';
+FSPlanComptable.RBAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBTousSousClasse.Checked:=false;
+FSPlanComptable.RBListeComptesSousClasse.Checked:=false;
+FSPlanComptable.RBComptePrecisSousClasse.Checked:=false;
+FSPlanComptable.RBCompteSousCompteClasse.Checked:=false;
+FSPlanComptable.RBTiersCategorie.Checked:=false;
+FSPlanComptable.RBNonTiersCategorie.Checked:=false;
+ProcAffichePCN(TypePCN,CodeSource,FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.EditDesignCategorie.SetFocus;
+end;
+end;
+
+if(TypePCN='4')then
+begin
+if(CodeSource<>'')
+then
+begin
+     ChSousCategorie:=Adresse;
+     assignfile(FSousCategorie,ChSousCategorie);
+     if FileExists(ChSousCategorie)
+     then Reset(FSousCategorie)else Rewrite(FSousCategorie);
+     Seek(FSousCategorie,0);
+     m:=0;
+     while not eof(FSousCategorie)do
+     begin
+          Read(FSousCategorie,RSousCategorie);
+          if(FirstLaters(RSousCategorie.CodeCompte,Longueur(CodeSource))=CodeSource)then
+          begin
+               OK:=true;
+               for i:=Longueur(CodeSource)+1 to strtoint(TypePCN)do
+               if not(RSousCategorie.CodeCompte[i]in['0'..'9'])then OK:=false;
+               if(OK=true)then
+               if(strtoint(LastLaters(RSousCategorie.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))>=m)then m:=strtoint(LastLaters(RSousCategorie.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))+1;
+          end;
+     end;
+
+FSPlanComptable.AfficheListeSousCategorie.Visible:=true;
+FSPlanComptable.AfficheSousCategorie.Visible:=true;
+FSPlanComptable.BitValiderSousCategorie.Kind:=bkAll;
+FSPlanComptable.BitValiderSousCategorie.Caption:='Valider';
+FSPlanComptable.EditCodeSousCategorie.Text:=CodeSource+CompleteZeroGauche(inttostr(m),inttostr(strtoint(TypePCN)-Longueur(CodeSource)));
+FSPlanComptable.EditDesignSousCategorie.Text:='';
+FSPlanComptable.RBAutoriserCategorie.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousCategorie.Checked:=false;
+FSPlanComptable.RBTousSousCategorie.Checked:=false;
+FSPlanComptable.RBListeComptesSousCategorie.Checked:=false;
+FSPlanComptable.RBComptePrecisSousCategorie.Checked:=false;
+FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=false;
+FSPlanComptable.RBTiersSousCategorie.Checked:=false;
+FSPlanComptable.RBNonTiersSousCategorie.Checked:=false;
+ProcAffichePCN(TypePCN,CodeSource,FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.EditDesignSousCategorie.SetFocus;
+end;
+end;
+
+if(TypePCN='5')then
+begin
+if(CodeSource<>'')
+then
+begin
+m:=0;
+for Alpha:='A' to 'Z' do
+begin
+    TableauAlpha[Alpha]:=false;
+end;
+     ChFamille:=Adresse;
+     assignfile(FFamille,ChFamille);
+     if FileExists(ChFamille)
+     then Reset(FFamille)else Rewrite(FFamille);
+     Seek(FFamille,0);
+     m:=0;
+     while not eof(FFamille)do
+     begin
+          Read(FFamille,RFamille);
+          if(FirstLaters(RFamille.CodeCompte,Longueur(CodeSource))=CodeSource)then
+          begin
+               OK:=true;
+               for i:=Longueur(CodeSource)+1 to strtoint(TypePCN)do
+               if not(RFamille.CodeCompte[i]in['0'..'9'])then OK:=false;
+               if(OK=true)then
+               begin
+                    if(strtoint(LastLaters(RFamille.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))>=m)
+                    then m:=strtoint(LastLaters(RFamille.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))+1
+               end
+               else
+               begin
+                    if(RFamille.CodeCompte[strtoint(TypePCN)]in['A'..'Z'])then
+                    begin
+                         TableauAlpha[RFamille.CodeCompte[strtoint(TypePCN)]]:=true;
+                    end;
+               end;
+          end;
+     end;
+
+FSPlanComptable.AfficheListeFamille.Visible:=true;
+FSPlanComptable.AfficheFamille.Visible:=true;
+FSPlanComptable.BitValiderFamille.Kind:=bkAll;
+FSPlanComptable.BitValiderFamille.Caption:='Valider';
+if(FSPlanComptable.RBAlphFamille.Checked=true)
+then
+begin
+Alpha:='A';
+while(TableauAlpha[Alpha]=true)and(Alpha<='z')do Inc(Alpha);
+if(TableauAlpha[Alpha]=false)then
+FSPlanComptable.EditCodeFamille.Text:=CodeSource+CompleteZeroGauche(Alpha,inttostr(strtoint(TypePCN)-Longueur(CodeSource)))
+else showmessage('Exception dans le chargement des données!');
+end
+else FSPlanComptable.EditCodeFamille.Text:=CodeSource+CompleteZeroGauche(inttostr(m),inttostr(strtoint(TypePCN)-Longueur(CodeSource)));
+FSPlanComptable.EditDesignFamille.Text:='';
+FSPlanComptable.RBAutoriserFamille.Checked:=false;
+FSPlanComptable.RBNePasAutoriserFamille.Checked:=false;
+FSPlanComptable.RBTousFamille.Checked:=false;
+FSPlanComptable.RBListeComptesFamille.Checked:=false;
+FSPlanComptable.RBComptePrecisFamille.Checked:=false;
+FSPlanComptable.RBCompteSousCompteFamille.Checked:=false;
+FSPlanComptable.RBTiersFamille.Checked:=false;
+FSPlanComptable.RBNonTiersFamille.Checked:=false;
+ProcAffichePCN(TypePCN,CodeSource,FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.EditDesignFamille.SetFocus;
+end;
+end;
+
+if(TypePCN='6')then
+begin
+if(CodeSource<>'')
+then
+begin
+m:=0;
+for Alpha:='A' to 'Z' do
+begin
+    TableauAlpha[Alpha]:=false;
+end;
+     ChSousFamille:=Adresse;
+     assignfile(FSousFamille,ChSousFamille);
+     if FileExists(ChSousFamille)
+     then Reset(FSousFamille)else Rewrite(FSousFamille);
+     Seek(FSousFamille,0);
+     m:=0;
+     while not eof(FSousFamille)do
+     begin
+          Read(FSousFamille,RSousFamille);
+          if(FirstLaters(RSousFamille.CodeCompte,Longueur(CodeSource))=CodeSource)then
+          begin
+               OK:=true;
+               for i:=Longueur(CodeSource)+1 to strtoint(TypePCN)do
+               if not(RSousFamille.CodeCompte[i]in['0'..'9'])then OK:=false;
+               if(OK=true)then
+               begin
+                    if(strtoint(LastLaters(RSousFamille.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))>=m)
+                    then m:=strtoint(LastLaters(RSousFamille.CodeCompte,strtoint(TypePCN)-Longueur(CodeSource)))+1
+               end
+               else
+               begin
+                    if(RSousFamille.CodeCompte[strtoint(TypePCN)]in['A'..'Z'])then
+                    begin
+                         TableauAlpha[RSousFamille.CodeCompte[strtoint(TypePCN)]]:=true;
+                    end;
+               end;
+          end;
+     end;
+
+FSPlanComptable.AfficheListeSousFamille.Visible:=true;
+FSPlanComptable.AfficheSousFamille.Visible:=true;
+FSPlanComptable.BitValiderSousFamille.Kind:=bkAll;
+FSPlanComptable.BitValiderSousFamille.Caption:='Valider';
+if(FSPlanComptable.RBAlphSousFamille.Checked=true)
+then
+begin
+Alpha:='A';
+while(TableauAlpha[Alpha]=true)and(Alpha<='z')do Inc(Alpha);
+if(TableauAlpha[Alpha]=false)then
+FSPlanComptable.EditCodeSousFamille.Text:=CodeSource+CompleteZeroGauche(Alpha,inttostr(strtoint(TypePCN)-Longueur(CodeSource)))
+else showmessage('Exception dans le chargement des données!');
+end
+else FSPlanComptable.EditCodeSousFamille.Text:=CodeSource+CompleteZeroGauche(inttostr(m),inttostr(strtoint(TypePCN)-Longueur(CodeSource)));
+FSPlanComptable.EditDesignSousFamille.Text:='';
+FSPlanComptable.RBAutoriserSousFamille.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=false;
+FSPlanComptable.RBTousSousFamille.Checked:=false;
+FSPlanComptable.RBListeComptesSousFamille.Checked:=false;
+FSPlanComptable.RBComptePrecisSousFamille.Checked:=false;
+FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=false;
+FSPlanComptable.RBTiersSousFamille.Checked:=false;
+FSPlanComptable.RBNonTiersSousFamille.Checked:=false;
+ProcAffichePCN(TypePCN,CodeSource,FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.EditDesignSousFamille.SetFocus;
+end;
+end;
+
+end;
+
+Procedure ProcAffichePCN(TypePCN,CodePCN,TypeComptabilite:string);
+var OKPCN:boolean; Code,TypeProces,FichierConcerne,Adresse:string;
+begin
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+FSPlanComptable.AdresseFichierConcerne.Caption:=Adresse;
+
+if(inttostr(Longueur(CodePCN))=TypePcn)then CodePCN:='';
+
+if(TypePCN='6')then
+begin
+FSPlanComptable.AfficheListeSousFamille.Visible:=true;
+{****************affichage******************}
+FSPlanComptable.TableauSousFamille.Cols[0].Text:='N°';
+FSPlanComptable.TableauSousFamille.Cols[1].Text:='Compte';
+FSPlanComptable.TableauSousFamille.Cols[2].Text:='Désignation';
+FSPlanComptable.TableauSousFamille.Cols[3].Text:='C/Partie';
+FSPlanComptable.TableauSousFamille.Cols[4].Text:='Liste C/P';
+FSPlanComptable.TableauSousFamille.Cols[5].Text:='Spécif.';
+FSPlanComptable.TableauSousFamille.Cols[6].Text:='Tiers';
+FSPlanComptable.TableauSousFamille.Cols[7].Text:='Active';
+FSPlanComptable.TableauSousFamille.RowCount:=2;
+FSPlanComptable.TableauSousFamille.Rows[1].Text:='';
+
+ChSousFamille:=Adresse;
+assignfile(FSousFamille,ChSousFamille);
+if FileExists(ChSousFamille)
+then Reset(FSousFamille)else Rewrite(FSousFamille);
+Seek(FSousFamille,0);
+i:=0;
+while not eof(FSousFamille) do
+begin
+Read(FSousFamille,RSousFamille);
+OKPCN:=true;
+if(CodePCN<>'')then
+begin
+     Code:='';
+     for j:=1 to Longueur(CodePCN)do
+     begin
+          Code:=Code+RSousFamille.CodeCompte[j];
+     end;
+     if(Code<>CodePCN)then OKPCN:=false;
+end;
+
+if(OKPCN=true)then
+begin
+     i:=i+1;
+     FSPlanComptable.TableauSousFamille.Rows[i].Text:=inttostr(i);
+     FSPlanComptable.TableauSousFamille.Cells[1,i]:=RSousFamille.CodeCompte;
+     FSPlanComptable.TableauSousFamille.Cells[2,i]:=RSousFamille.Designation;
+     FSPlanComptable.TableauSousFamille.Cells[3,i]:=booleantostr(RSousFamille.ContrePartie.UsesCompte);
+     FSPlanComptable.TableauSousFamille.Cells[4,i]:=RSousFamille.ContrePartie.TypeUses;
+     FSPlanComptable.TableauSousFamille.Cells[5,i]:=RSousFamille.Specificite;
+     FSPlanComptable.TableauSousFamille.Cells[6,i]:=booleantostr(RSousFamille.Tiers);
+     FSPlanComptable.TableauSousFamille.Cells[7,i]:=booleantostr(RSousFamille.Active);
+end;
+end;
+if(i>1)then FSPlanComptable.TableauSousFamille.RowCount:=i+1
+       else FSPlanComptable.TableauSousFamille.RowCount:=2;
+FSPlanComptable.TableauSousFamille.SetFocus;
+TrierTableauARowSpecial(FSPlanComptable.TableauSousFamille,1,i,1,'1','','+');
+AjusterColWidth(FSPlanComptable.TableauSousFamille,'','');
+{****************Fin de l'affichage*****************}
+end;
+
+if(TypePCN='5')then
+begin
+FSPlanComptable.AfficheListeFamille.Visible:=true;
+{****************affichage******************}
+FSPlanComptable.TableauFamille.Cols[0].Text:='N°';
+FSPlanComptable.TableauFamille.Cols[1].Text:='Compte';
+FSPlanComptable.TableauFamille.Cols[2].Text:='Désignation';
+FSPlanComptable.TableauFamille.Cols[3].Text:='C/Partie';
+FSPlanComptable.TableauFamille.Cols[4].Text:='Liste C/P';
+FSPlanComptable.TableauFamille.Cols[5].Text:='Spécif.';
+FSPlanComptable.TableauFamille.Cols[6].Text:='Tiers';
+FSPlanComptable.TableauFamille.Cols[7].Text:='Active';
+FSPlanComptable.TableauFamille.RowCount:=2;
+FSPlanComptable.TableauFamille.Rows[1].Text:='';
+
+ChFamille:=Adresse;
+assignfile(FFamille,ChFamille);
+if FileExists(ChFamille)
+then Reset(FFamille)else Rewrite(FFamille);
+Seek(FFamille,0);
+i:=0;
+while not eof(FFamille) do
+begin
+Read(FFamille,RFamille);
+OKPCN:=true;
+if(CodePCN<>'')then
+begin
+     Code:='';
+     for j:=1 to Longueur(CodePCN)do
+     begin
+          Code:=Code+RFamille.CodeCompte[j];
+     end;
+     if(Code<>CodePCN)then OKPCN:=false;
+end;
+
+if(OKPCN=true)then
+begin
+     i:=i+1;
+     FSPlanComptable.TableauFamille.Rows[i].Text:=inttostr(i);
+     FSPlanComptable.TableauFamille.Cells[1,i]:=RFamille.CodeCompte;
+     FSPlanComptable.TableauFamille.Cells[2,i]:=RFamille.Designation;
+     FSPlanComptable.TableauFamille.Cells[3,i]:=booleantostr(RFamille.ContrePartie.UsesCompte);
+     FSPlanComptable.TableauFamille.Cells[4,i]:=RFamille.ContrePartie.TypeUses;
+     FSPlanComptable.TableauFamille.Cells[5,i]:=RFamille.Specificite;
+     FSPlanComptable.TableauFamille.Cells[6,i]:=booleantostr(RFamille.Tiers);
+     FSPlanComptable.TableauFamille.Cells[7,i]:=booleantostr(RFamille.Active);
+end;
+end;
+if(i>1)then FSPlanComptable.TableauFamille.RowCount:=i+1
+       else FSPlanComptable.TableauFamille.RowCount:=2;
+FSPlanComptable.TableauFamille.SetFocus;
+TrierTableauARowSpecial(FSPlanComptable.TableauFamille,1,i,1,'1','','+');
+AjusterColWidth(FSPlanComptable.TableauFamille,'','');
+{****************Fin de l'affichage*****************}
+end;
+
+if(TypePCN='4')then
+begin
+FSPlanComptable.AfficheListeSousCategorie.Visible:=true;
+{****************affichage******************}
+FSPlanComptable.TableauSousCategorie.Cols[0].Text:='N°';
+FSPlanComptable.TableauSousCategorie.Cols[1].Text:='Compte';
+FSPlanComptable.TableauSousCategorie.Cols[2].Text:='Désignation';
+FSPlanComptable.TableauSousCategorie.Cols[3].Text:='C/Partie';
+FSPlanComptable.TableauSousCategorie.Cols[4].Text:='Liste C/P';
+FSPlanComptable.TableauSousCategorie.Cols[5].Text:='Spécif.';
+FSPlanComptable.TableauSousCategorie.Cols[6].Text:='Tiers';
+FSPlanComptable.TableauSousCategorie.Cols[7].Text:='Active';
+FSPlanComptable.TableauSousCategorie.RowCount:=2;
+FSPlanComptable.TableauSousCategorie.Rows[1].Text:='';
+
+ChSousCategorie:=Adresse;
+assignfile(FSousCategorie,ChSousCategorie);
+if FileExists(ChSousCategorie)
+then Reset(FSousCategorie)else Rewrite(FSousCategorie);
+Seek(FSousCategorie,0);
+i:=0;
+while not eof(FSousCategorie) do
+begin
+Read(FSousCategorie,RSousCategorie);
+OKPCN:=true;
+if(CodePCN<>'')then
+begin
+     Code:='';
+     for j:=1 to Longueur(CodePCN)do
+     begin
+          Code:=Code+RSousCategorie.CodeCompte[j];
+     end;
+     if(Code<>CodePCN)then OKPCN:=false;
+end;
+
+if(OKPCN=true)then
+begin
+     i:=i+1;
+     FSPlanComptable.TableauSousCategorie.Rows[i].Text:=inttostr(i);
+     FSPlanComptable.TableauSousCategorie.Cells[1,i]:=RSousCategorie.CodeCompte;
+     FSPlanComptable.TableauSousCategorie.Cells[2,i]:=RSousCategorie.Designation;
+     FSPlanComptable.TableauSousCategorie.Cells[3,i]:=booleantostr(RSousCategorie.ContrePartie.UsesCompte);
+     FSPlanComptable.TableauSousCategorie.Cells[4,i]:=RSousCategorie.ContrePartie.TypeUses;
+     FSPlanComptable.TableauSousCategorie.Cells[5,i]:=RSousCategorie.Specificite;
+     FSPlanComptable.TableauSousCategorie.Cells[6,i]:=booleantostr(RSousCategorie.Tiers);
+     FSPlanComptable.TableauSousCategorie.Cells[7,i]:=booleantostr(RSousCategorie.Active);
+end;
+end;
+if(i>1)then FSPlanComptable.TableauSousCategorie.RowCount:=i+1
+       else FSPlanComptable.TableauSousCategorie.RowCount:=2;
+FSPlanComptable.TableauSousCategorie.SetFocus;
+TrierTableauARowSpecial(FSPlanComptable.TableauSousCategorie,1,i,1,'1','','+');
+AjusterColWidth(FSPlanComptable.TableauSousCategorie,'','');
+{****************Fin de l'affichage*****************}
+end;
+
+if(TypePCN='3')then
+begin
+FSPlanComptable.AfficheListeCategorie.Visible:=true;
+{****************affichage******************}
+FSPlanComptable.TableauCategorie.Cols[0].Text:='N°';
+FSPlanComptable.TableauCategorie.Cols[1].Text:='Compte';
+FSPlanComptable.TableauCategorie.Cols[2].Text:='Désignation';
+FSPlanComptable.TableauCategorie.Cols[3].Text:='C/Partie';
+FSPlanComptable.TableauCategorie.Cols[4].Text:='Liste C/P';
+FSPlanComptable.TableauCategorie.Cols[5].Text:='Spécif.';
+FSPlanComptable.TableauCategorie.Cols[6].Text:='Tiers';
+FSPlanComptable.TableauCategorie.Cols[7].Text:='Active';
+FSPlanComptable.TableauCategorie.RowCount:=2;
+FSPlanComptable.TableauCategorie.Rows[1].Text:='';
+
+ChCategorie:=Adresse;
+assignfile(FCategorie,ChCategorie);
+if FileExists(ChCategorie)
+then Reset(FCategorie)else Rewrite(FCategorie);
+Seek(FCategorie,0);
+i:=0;
+while not eof(FCategorie) do
+begin
+Read(FCategorie,RCategorie);
+OKPCN:=true;
+if(CodePCN<>'')then
+begin
+     Code:='';
+     for j:=1 to Longueur(CodePCN)do
+     begin
+          Code:=Code+RCategorie.CodeCompte[j];
+     end;
+     if(Code<>CodePCN)then OKPCN:=false;
+end;
+
+if(OKPCN=true)then
+begin
+     i:=i+1;
+     FSPlanComptable.TableauCategorie.Rows[i].Text:=inttostr(i);
+     FSPlanComptable.TableauCategorie.Cells[1,i]:=RCategorie.CodeCompte;
+     FSPlanComptable.TableauCategorie.Cells[2,i]:=RCategorie.Designation;
+     FSPlanComptable.TableauCategorie.Cells[3,i]:=booleantostr(RCategorie.ContrePartie.UsesCompte);
+     FSPlanComptable.TableauCategorie.Cells[4,i]:=RCategorie.ContrePartie.TypeUses;
+     FSPlanComptable.TableauCategorie.Cells[5,i]:=RCategorie.Specificite;
+     FSPlanComptable.TableauCategorie.Cells[6,i]:=booleantostr(RCategorie.Tiers);
+     FSPlanComptable.TableauCategorie.Cells[7,i]:=booleantostr(RCategorie.Active);
+end;
+end;
+if(i>1)then FSPlanComptable.TableauCategorie.RowCount:=i+1
+       else FSPlanComptable.TableauCategorie.RowCount:=2;
+FSPlanComptable.TableauCategorie.SetFocus;
+TrierTableauARowSpecial(FSPlanComptable.TableauCategorie,1,i,1,'1','','+');
+AjusterColWidth(FSPlanComptable.TableauCategorie,'','');
+{****************Fin de l'affichage*****************}
+end;
+
+if(TypePCN='2')then
+begin
+FSPlanComptable.AfficheListeSousClasse.Visible:=true;
+{****************affichage******************}
+FSPlanComptable.TableauSousClasse.Cols[0].Text:='N°';
+FSPlanComptable.TableauSousClasse.Cols[1].Text:='Compte';
+FSPlanComptable.TableauSousClasse.Cols[2].Text:='Désignation';
+FSPlanComptable.TableauSousClasse.Cols[3].Text:='C/Partie';
+FSPlanComptable.TableauSousClasse.Cols[4].Text:='Liste C/P';
+FSPlanComptable.TableauSousClasse.Cols[5].Text:='Spécif.';
+FSPlanComptable.TableauSousClasse.Cols[6].Text:='Tiers';
+FSPlanComptable.TableauSousClasse.Cols[7].Text:='Active';
+FSPlanComptable.TableauSousClasse.RowCount:=2;
+FSPlanComptable.TableauSousClasse.Rows[1].Text:='';
+
+ChSousClasse:=Adresse;
+assignfile(FSousClasse,ChSousClasse);
+if FileExists(ChSousClasse)
+then Reset(FSousClasse)else Rewrite(FSousClasse);
+Seek(FSousClasse,0);
+i:=0;
+while not eof(FSousClasse) do
+begin
+Read(FSousClasse,RSousClasse);
+OKPCN:=true;
+if(CodePCN<>'')then
+begin
+     Code:='';
+     for j:=1 to Longueur(CodePCN)do
+     begin
+          Code:=Code+RSousClasse.CodeCompte[j];
+     end;
+     if(Code<>CodePCN)then OKPCN:=false;
+end;
+
+if(OKPCN=true)then
+begin
+     i:=i+1;
+     FSPlanComptable.TableauSousClasse.Rows[i].Text:=inttostr(i);
+     FSPlanComptable.TableauSousClasse.Cells[1,i]:=RSousClasse.CodeCompte;
+     FSPlanComptable.TableauSousClasse.Cells[2,i]:=RSousClasse.Designation;
+     FSPlanComptable.TableauSousClasse.Cells[3,i]:=booleantostr(RSousClasse.ContrePartie.UsesCompte);
+     FSPlanComptable.TableauSousClasse.Cells[4,i]:=RSousClasse.ContrePartie.TypeUses;
+     FSPlanComptable.TableauSousClasse.Cells[5,i]:=RSousClasse.Specificite;
+     FSPlanComptable.TableauSousClasse.Cells[6,i]:=booleantostr(RSousClasse.Tiers);
+     FSPlanComptable.TableauSousClasse.Cells[7,i]:=booleantostr(RSousClasse.Active);
+end;
+end;
+if(i>1)then FSPlanComptable.TableauSousClasse.RowCount:=i+1
+       else FSPlanComptable.TableauSousClasse.RowCount:=2;
+FSPlanComptable.TableauSousClasse.SetFocus;
+TrierTableauARowSpecial(FSPlanComptable.TableauSousClasse,1,i,1,'1','','+');
+AjusterColWidth(FSPlanComptable.TableauSousClasse,'','');
+{****************Fin de l'affichage*****************}
+end;
+
+if(TypePCN='1')then
+begin
+FSPlanComptable.AfficheListeClasse.Visible:=true;
+{****************affichage******************}
+FSPlanComptable.TableauClasse.Cols[0].Text:='N°';
+FSPlanComptable.TableauClasse.Cols[1].Text:='Compte';
+FSPlanComptable.TableauClasse.Cols[2].Text:='Désignation';
+FSPlanComptable.TableauClasse.Cols[3].Text:='C/Partie';
+FSPlanComptable.TableauClasse.Cols[4].Text:='Liste C/P';
+FSPlanComptable.TableauClasse.Cols[5].Text:='Spécif.';
+FSPlanComptable.TableauClasse.Cols[6].Text:='Tiers';
+FSPlanComptable.TableauClasse.Cols[7].Text:='Active';
+FSPlanComptable.TableauClasse.RowCount:=2;
+FSPlanComptable.TableauClasse.Rows[1].Text:='';
+
+ChClasse:=Adresse;
+assignfile(FClasse,ChClasse);
+if FileExists(ChClasse)
+then Reset(FClasse)else Rewrite(FClasse);
+Seek(FClasse,0);
+i:=0;
+while not eof(FClasse) do
+begin
+Read(FClasse,RClasse);
+OKPCN:=true;
+if(CodePCN<>'')then
+begin
+     Code:='';
+     for j:=1 to Longueur(CodePCN)do
+     begin
+          Code:=Code+RClasse.CodeCompte[j];
+     end;
+     if(Code<>CodePCN)then OKPCN:=false;
+end;
+
+if(OKPCN=true)then
+begin
+     i:=i+1;
+     FSPlanComptable.TableauClasse.Rows[i].Text:=inttostr(i);
+     FSPlanComptable.TableauClasse.Cells[1,i]:=RClasse.CodeCompte;
+     FSPlanComptable.TableauClasse.Cells[2,i]:=RClasse.Designation;
+     FSPlanComptable.TableauClasse.Cells[3,i]:=booleantostr(RClasse.ContrePartie.UsesCompte);
+     FSPlanComptable.TableauClasse.Cells[4,i]:=RClasse.ContrePartie.TypeUses;
+     FSPlanComptable.TableauClasse.Cells[5,i]:=RClasse.Specificite;
+     FSPlanComptable.TableauClasse.Cells[6,i]:=booleantostr(RClasse.Tiers);
+     FSPlanComptable.TableauClasse.Cells[7,i]:=booleantostr(RClasse.Active);
+
+end;
+end;
+if(i>1)then FSPlanComptable.TableauClasse.RowCount:=i+1
+       else FSPlanComptable.TableauClasse.RowCount:=2;
+FSPlanComptable.TableauClasse.SetFocus;
+TrierTableauARowSpecial(FSPlanComptable.TableauClasse,1,i,1,'1','','+');
+AjusterColWidth(FSPlanComptable.TableauClasse,'','');
+{****************Fin de l'affichage*****************}
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn37Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheSousFamille.Visible:=true;
+FSPlanComptable.EditCodeSousFamille.Text:='';
+FSPlanComptable.EditCodeModifSousFamille.Text:='';
+FSPlanComptable.EditDesignSousFamille.Text:='';
+FSPlanComptable.RBAutoriserSousFamille.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=false;
+FSPlanComptable.RBTousSousFamille.Checked:=false;
+FSPlanComptable.RBListeComptesSousFamille.Checked:=false;
+FSPlanComptable.RBComptePrecisSousFamille.Checked:=false;
+FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=false;
+FSPlanComptable.RBTiersSousFamille.Checked:=false;
+FSPlanComptable.RBNonTiersSousFamille.Checked:=false;
+FSPlanComptable.RBSousFamilleActive.Checked:=true;
+FSPlanComptable.BitValiderSousFamille.Kind:=bkAll;
+FSPlanComptable.BitValiderSousFamille.Caption:='Valider';
+FSPlanComptable.EditCodeSousFamille.SetFocus;
+FSPlanComptable.AfficheOptionsSousFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitValiderSousFamilleClick(Sender: TObject);
+var OK:boolean; k:integer;  TypePCN,TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+if(FSPlanComptable.EditCodeSousFamille.Text='')
+or(FSPlanComptable.EditDesignSousFamille.Text='')
+then
+begin
+    showmessage('Saisissez les données de la Sous Famille.');
+    FSPlanComptable.EditCodeSousFamille.SetFocus;
+    exit;
+end;
+
+if((FSPlanComptable.BitValiderSousFamille.Caption='Valider')or(FSPlanComptable.BitValiderSousFamille.Caption='Modifier'))
+and(ControleSpecificite(FSPlanComptable.EditCodeSousFamille.Text,ResultCompte))then
+begin
+     OK:=false;
+     if(FSPlanComptable.RBAutoriserSousFamille.Checked<>ResultCompte.ContrePartie.UsesCompte)then OK:=true;
+     if(FSPlanComptable.RBTousSousFamille.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Tous')then OK:=true;
+     if(FSPlanComptable.RBListeComptesSousFamille.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Liste')then OK:=true;
+     if(FSPlanComptable.RBComptePrecisSousFamille.Checked=false)and(ResultCompte.Specificite='1')then OK:=true;
+     if(FSPlanComptable.RBCompteSousCompteSousFamille.Checked=false)and(ResultCompte.Specificite='N')then OK:=true;
+
+     if(OK=true)then
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=true;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='6';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Correction !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=clRed;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeSousFamille.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='Appliquer les condition du compte principal!';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='Appliquer';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+          Exit;
+     end
+     else
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=false;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='6';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Confirmation !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=$0000D900;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeSousFamille.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='les condition du compte principal sont appliquer sur le sous compte !';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='OK';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+     end;
+end;
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='6';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+if(FSPlanComptable.BitValiderSousFamille.Kind=bkAll)
+and(FSPlanComptable.BitValiderSousFamille.Caption='Valider')
+then
+begin
+ChSousFamille:=Adresse;
+assignfile(FSousFamille,ChSousFamille);
+if FileExists(ChSousFamille)
+then Reset(FSousFamille)else Rewrite(FSousFamille);
+Seek(FSousFamille,0);
+i:=0;
+OK:=false;
+while not eof(FSousFamille)and(OK=false)do
+begin
+     Read(FSousFamille,RSousFamille);
+     i:=i+1;
+     if(RSousFamille.CodeCompte=FSPlanComptable.EditCodeSousFamille.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Sous Famille existe déjas');
+          FSPlanComptable.EditCodeSousFamille.SetFocus;
+     end;
+end;
+
+if(OK=false)then
+begin
+Seek(FSousFamille,i);
+Truncate(FSousFamille);
+RSousFamille.CodeCompte:=FSPlanComptable.EditCodeSousFamille.Text;
+RSousFamille.Designation:=FSPlanComptable.EditDesignSousFamille.Text;
+
+RSousFamille.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserSousFamille.Checked;
+
+if(FSPlanComptable.RBTousSousFamille.Checked=true)then RSousFamille.ContrePartie.TypeUses:='Tous';
+if(FSPlanComptable.RBListeComptesSousFamille.Checked=true)then RSousFamille.ContrePartie.TypeUses:='Liste';
+
+if(FSPlanComptable.RBComptePrecisSousFamille.Checked=true)then RSousFamille.Specificite:='1';
+if(FSPlanComptable.RBCompteSousCompteSousFamille.Checked=true)then RSousFamille.Specificite:='N';
+
+RSousFamille.Tiers:=FSPlanComptable.RBTiersSousFamille.Checked;
+RSousFamille.Active:=FSPlanComptable.RBSousFamilleActive.Checked;
+
+Write(FSousFamille,RSousFamille);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheSousFamille.Visible:=false;
+end;
+Closefile(FSousFamille);
+end;
+
+if(FSPlanComptable.BitValiderSousFamille.Kind=bkRetry)
+and(FSPlanComptable.BitValiderSousFamille.Caption='Modifier')
+then
+begin
+ChSousFamille:=Adresse;
+assignfile(FSousFamille,ChSousFamille);
+if FileExists(ChSousFamille)
+then Reset(FSousFamille)else Rewrite(FSousFamille);
+OK:=false;
+
+if(FSPlanComptable.EditCodeSousFamille.Text<>FSPlanComptable.EditCodeModifSousFamille.Text)then
+begin
+Seek(FSousFamille,0);
+i:=0;
+while not eof(FSousFamille)and(OK=false)do
+begin
+     Read(FSousFamille,RSousFamille);
+     i:=i+1;
+     if(RSousFamille.CodeCompte=FSPlanComptable.EditCodeSousFamille.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Sous Famille existe déjas');
+          FSPlanComptable.EditCodeSousFamille.SetFocus;
+     end;
+end;
+end;
+
+if(OK=false)then
+begin
+i:=0;
+Seek(FSousFamille,0);
+while not eof(FSousFamille)do
+begin
+read(FSousFamille,RSousFamille);
+if(RSousFamille.CodeCompte=FSPlanComptable.EditCodeModifSousFamille.Text)then
+begin
+     Seek(FSousFamille,i);
+     RSousFamille.CodeCompte:=FSPlanComptable.EditCodeSousFamille.Text;
+     RSousFamille.Designation:=FSPlanComptable.EditDesignSousFamille.Text;
+
+     RSousFamille.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserSousFamille.Checked;
+
+     if(FSPlanComptable.RBTousSousFamille.Checked=true)then RSousFamille.ContrePartie.TypeUses:='Tous';
+     if(FSPlanComptable.RBListeComptesSousFamille.Checked=true)then RSousFamille.ContrePartie.TypeUses:='Liste';
+
+     if(FSPlanComptable.RBComptePrecisSousFamille.Checked=true)then RSousFamille.Specificite:='1';
+     if(FSPlanComptable.RBCompteSousCompteSousFamille.Checked=true)then RSousFamille.Specificite:='N';
+
+     RSousFamille.Tiers:=FSPlanComptable.RBTiersSousFamille.Checked;
+     RSousFamille.Active:=FSPlanComptable.RBSousFamilleActive.Checked;
+     
+     Write(FSousFamille,RSousFamille);
+end;
+i:=i+1;
+end;
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheSousFamille.Visible:=false;
+end;
+ CloseFile(FSousFamille);
+end;
+
+if(FSPlanComptable.BitValiderSousFamille.Kind=bkCancel)
+and(FSPlanComptable.BitValiderSousFamille.Caption='Supprimer')
+then
+begin
+ChSousFamille:=Adresse;
+assignfile(FSousFamille,ChSousFamille);
+if FileExists(ChSousFamille)then
+Reset(FSousFamille)
+else Rewrite(FSousFamille);
+i:=0;
+Seek(FSousFamille,0);
+while not eof(FSousFamille)do
+begin
+read(FSousFamille,RSousFamille);
+if((RSousFamille.CodeCompte=FSPlanComptable.EditCodeModifSousFamille.Text)or(RSousFamille.CodeCompte=''))then
+begin
+    k:=i;
+    while not eof(FSousFamille)do
+    begin
+    read(FSousFamille,RSousFamille);
+    Seek(FSousFamille,k);
+    Write(FSousFamille,RSousFamille);
+    k:=k+1;
+    Seek(FSousFamille,k+1);
+    end;
+    Seek(FSousFamille,k);
+    Truncate(FSousFamille);
+    Seek(FSousFamille,0);
+    i:=0;
+end
+else i:=i+1;
+end;
+closefile(FSousFamille);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheSousFamille.Visible:=false;
+end;
+
+FSPlanComptable.TableauSousFamille.SetFocus;
+
+if(TypePCN='1')then PublierDansLeReseaux('FClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='2')then PublierDansLeReseaux('FSousClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='3')then PublierDansLeReseaux('FCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='4')then PublierDansLeReseaux('FSousCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='5')then PublierDansLeReseaux('FFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='6')then PublierDansLeReseaux('FSousFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+end;
+
+procedure TFSPlanComptable.TableauSousFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key=VK_INSERT then
+begin
+FSPlanComptable.AfficheSousFamille.Visible:=true;
+FSPlanComptable.EditCodeSousFamille.Text:='';
+FSPlanComptable.EditCodeModifSousFamille.Text:='';
+FSPlanComptable.EditDesignSousFamille.Text:='';
+FSPlanComptable.RBAutoriserSousFamille.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=false;
+FSPlanComptable.RBTousSousFamille.Checked:=false;
+FSPlanComptable.RBListeComptesSousFamille.Checked:=false;
+FSPlanComptable.RBComptePrecisSousFamille.Checked:=false;
+FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=false;
+FSPlanComptable.RBTiersSousFamille.Checked:=false;
+FSPlanComptable.RBNonTiersSousFamille.Checked:=false;
+FSPlanComptable.RBSousFamilleActive.Checked:=true;
+FSPlanComptable.BitValiderSousFamille.Kind:=bkAll;
+FSPlanComptable.BitValiderSousFamille.Caption:='Valider';
+FSPlanComptable.EditCodeSousFamille.SetFocus;
+end;
+
+if(key=VK_DELETE)
+and(not ExisteCompteImputation(FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row],FSPlanComptable.TableauSousFamille.Cells[2,FSPlanComptable.TableauSousFamille.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheSousFamille.Visible:=true;
+FSPlanComptable.EditCodeSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+FSPlanComptable.EditCodeModifSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+FSPlanComptable.EditDesignSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[2,FSPlanComptable.TableauSousFamille.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[3,FSPlanComptable.TableauSousFamille.Row])
+then FSPlanComptable.RBAutoriserSousFamille.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=true;
+
+if(FSPlanComptable.TableauSousFamille.Cells[4,FSPlanComptable.TableauSousFamille.Row]='Tous')
+then FSPlanComptable.RBTousSousFamille.Checked:=true
+else FSPlanComptable.RBListeComptesSousFamille.Checked:=true;
+
+if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='1')
+then FSPlanComptable.RBComptePrecisSousFamille.Checked:=true;
+
+if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[6,FSPlanComptable.TableauSousFamille.Row])
+then FSPlanComptable.RBTiersSousFamille.Checked:=true
+else FSPlanComptable.RBNonTiersSousFamille.Checked:=true;
+
+FSPlanComptable.RBSousFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauSousFamille.Cells[7,FSPlanComptable.TableauSousFamille.Row]);
+
+FSPlanComptable.BitValiderSousFamille.Kind:=bkCancel;
+FSPlanComptable.BitValiderSousFamille.Caption:='Supprimer';
+FSPlanComptable.BitValiderSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.PageSFamilleShow(Sender: TObject);
+begin
+ProcAffichePCN('6','',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.TableauSousFamille.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauSousFamilleContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheOptionsSousFamille.Visible:=true;
+
+if MousePos.X<(FSPlanComptable.TableauSousFamille.Width-FSPlanComptable.AfficheOptionsSousFamille.Width)
+then FSPlanComptable.AfficheOptionsSousFamille.Left:=(MousePos.X+FSPlanComptable.TableauSousFamille.Left)
+else FSPlanComptable.AfficheOptionsSousFamille.Left:=(FSPlanComptable.TableauSousFamille.Width-
+     FSPlanComptable.AfficheOptionsSousFamille.Width+FSPlanComptable.TableauSousFamille.Left);
+
+if MousePos.Y<(FSPlanComptable.TableauSousFamille.Height-FSPlanComptable.AfficheOptionsSousFamille.Height)
+then FSPlanComptable.AfficheOptionsSousFamille.Top:=(MousePos.Y+FSPlanComptable.TableauSousFamille.Top)
+else FSPlanComptable.AfficheOptionsSousFamille.Top:=(FSPlanComptable.TableauSousFamille.Height-
+     FSPlanComptable.AfficheOptionsSousFamille.Height)+FSPlanComptable.TableauSousFamille.Top;
+
+FSPlanComptable.BitListeSousFamille.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauSousFamilleClick(Sender: TObject);
+begin
+
+if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[7,FSPlanComptable.TableauSousFamille.Row])
+then FSPlanComptable.TableauSousFamille.FixedColor:=FSPlanComptable.AfficheListeSousFamille.Color
+else FSPlanComptable.TableauSousFamille.FixedColor:=ClRed;
+
+FSPlanComptable.AfficheInformationPrincipale.Visible:=false;
+FSPlanComptable.AfficheOptionsSousFamille.Visible:=false;
+FSPlanComptable.AfficheSousFamille.Visible:=false;
+
+FSPlanComptable.AfficheListeClasse.Visible:=false;
+FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+FSPlanComptable.AfficheListeCategorie.Visible:=false;
+FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+FSPlanComptable.AfficheListeFamille.Visible:=false;
+FSPlanComptable.AfficheTransfertCompteACompte.Visible:=false;
+FSPlanComptable.AfficheListeTransfertCompte.Visible:=false;
+end;
+
+procedure TFSPlanComptable.AfficheOptionsSousFamilleClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheOptionsSousFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitListeSousFamilleClick(Sender: TObject);
+begin
+ProcAffichePCN('6','',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.TableauSousFamille.SetFocus;
+FSPlanComptable.AfficheOptionsSousFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn44Click(Sender: TObject);
+begin
+
+
+     FSPlanComptable.AfficheSousFamille.Visible:=true;
+     FSPlanComptable.EditCodeSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+     FSPlanComptable.EditCodeModifSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+     FSPlanComptable.EditDesignSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[2,FSPlanComptable.TableauSousFamille.Row];
+
+     if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[3,FSPlanComptable.TableauSousFamille.Row])
+     then FSPlanComptable.RBAutoriserSousFamille.Checked:=true
+     else FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=true;
+
+     if(FSPlanComptable.TableauSousFamille.Cells[4,FSPlanComptable.TableauSousFamille.Row]='Tous')
+     then FSPlanComptable.RBTousSousFamille.Checked:=true
+     else FSPlanComptable.RBListeComptesSousFamille.Checked:=true;
+
+     if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='1')
+     then FSPlanComptable.RBComptePrecisSousFamille.Checked:=true;
+
+     if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='N')
+     then FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=true;
+
+     if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[6,FSPlanComptable.TableauSousFamille.Row])
+     then FSPlanComptable.RBTiersSousFamille.Checked:=true
+     else FSPlanComptable.RBNonTiersSousFamille.Checked:=true;
+
+     FSPlanComptable.RBSousFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauSousFamille.Cells[7,FSPlanComptable.TableauSousFamille.Row]);
+
+     FSPlanComptable.BitValiderSousFamille.Kind:=bkRetry;
+     FSPlanComptable.BitValiderSousFamille.Caption:='Modifier';
+     FSPlanComptable.EditCodeSousFamille.SetFocus;
+
+FSPlanComptable.AfficheOptionsSousFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn47Click(Sender: TObject);
+begin
+
+if(not ExisteCompteImputation(FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row],FSPlanComptable.TableauSousFamille.Cells[2,FSPlanComptable.TableauSousFamille.Row],'Supprimer'))then
+begin
+     FSPlanComptable.AfficheSousFamille.Visible:=true;
+     FSPlanComptable.EditCodeSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+     FSPlanComptable.EditCodeModifSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+     FSPlanComptable.EditDesignSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[2,FSPlanComptable.TableauSousFamille.Row];
+
+     if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[3,FSPlanComptable.TableauSousFamille.Row])
+     then FSPlanComptable.RBAutoriserSousFamille.Checked:=true
+     else FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=true;
+
+     if(FSPlanComptable.TableauSousFamille.Cells[4,FSPlanComptable.TableauSousFamille.Row]='Tous')
+     then FSPlanComptable.RBTousSousFamille.Checked:=true
+     else FSPlanComptable.RBListeComptesSousFamille.Checked:=true;
+
+     if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='1')
+     then FSPlanComptable.RBComptePrecisSousFamille.Checked:=true;
+
+     if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='N')
+     then FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=true;
+
+     if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[6,FSPlanComptable.TableauSousFamille.Row])
+     then FSPlanComptable.RBTiersSousFamille.Checked:=true
+     else FSPlanComptable.RBNonTiersSousFamille.Checked:=true;
+
+     FSPlanComptable.RBSousFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauSousFamille.Cells[7,FSPlanComptable.TableauSousFamille.Row]);
+
+     FSPlanComptable.BitValiderSousFamille.Kind:=bkCancel;
+     FSPlanComptable.BitValiderSousFamille.Caption:='Supprimer';
+     FSPlanComptable.BitValiderSousFamille.SetFocus;
+     end;
+     
+FSPlanComptable.AfficheOptionsSousFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.EditCodeSousFamilleKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditCodeSousFamille.Text='')then
+     begin
+          FSPlanComptable.AfficheListeFamille.Visible:=true;
+          ProcAffichePCN('5','',FSPlanComptable.EditTypeComptabilite.Text);
+          FSPlanComptable.TableauFamille.Cells[0,0]:='6';
+          FSPlanComptable.TableauFamille.SetFocus;
+     end
+     else FSPlanComptable.EditDesignSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.EditDesignSousFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditDesignSousFamille.Text='')then
+     begin
+          showmessage('Saisissez le Code SVP!');
+          FSPlanComptable.EditDesignSousFamille.SetFocus;
+     end
+     else
+     begin
+          if(FSPlanComptable.RBNePasAutoriserSousFamille.Checked=true)
+          then FSPlanComptable.RBNePasAutoriserSousFamille.SetFocus
+          else FSPlanComptable.RBAutoriserSousFamille.SetFocus;
+     end;
+end;
+end;
+
+procedure TFSPlanComptable.TableauSousFamilleKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['6']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.TableauSousFamille.Cells[0,0]:=key;
+end;
+
+if key in['1'..'5']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     case key of
+     '1': begin FSPlanComptable.AfficheListeClasse.Visible:=true;        FSPlanComptable.TableauClasse.Cells[0,0]:='6';        ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);  FSPlanComptable.TableauClasse.SetFocus;        end;
+     '2': begin FSPlanComptable.AfficheListeSousClasse.Visible:=true;    FSPlanComptable.TableauSousClasse.Cells[0,0]:='6';    ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);  FSPlanComptable.TableauSousClasse.SetFocus;    end;
+     '3': begin FSPlanComptable.AfficheListeCategorie.Visible:=true;     FSPlanComptable.TableauCategorie.Cells[0,0]:='6';     ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);  FSPlanComptable.TableauCategorie.SetFocus;     end;
+     '4': begin FSPlanComptable.AfficheListeSousCategorie.Visible:=true; FSPlanComptable.TableauSousCategorie.Cells[0,0]:='6'; ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);  FSPlanComptable.TableauSousCategorie.SetFocus; end;
+     '5': begin FSPlanComptable.AfficheListeFamille.Visible:=true;       FSPlanComptable.TableauFamille.Cells[0,0]:='6';       ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);  FSPlanComptable.TableauFamille.SetFocus;       end;
+     end;
+end;
+
+if key in['l','L']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     ProcAffichePCN(FSPlanComptable.TableauSousFamille.Cells[0,0],FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row],FSPlanComptable.EditTypeComptabilite.Text);
+end;
+
+if key in['n','N','+']then
+begin
+FSPlanComptable.AfficheSousFamille.Visible:=true;
+FSPlanComptable.EditCodeSousFamille.Text:='';
+FSPlanComptable.EditCodeModifSousFamille.Text:='';
+FSPlanComptable.EditDesignSousFamille.Text:='';
+FSPlanComptable.RBAutoriserSousFamille.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=false;
+FSPlanComptable.RBTousSousFamille.Checked:=false;
+FSPlanComptable.RBListeComptesSousFamille.Checked:=false;
+FSPlanComptable.RBComptePrecisSousFamille.Checked:=false;
+FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=false;
+FSPlanComptable.RBTiersSousFamille.Checked:=false;
+FSPlanComptable.RBNonTiersSousFamille.Checked:=false;
+FSPlanComptable.RBSousFamilleActive.Checked:=true;
+FSPlanComptable.BitValiderSousFamille.Kind:=bkAll;
+FSPlanComptable.BitValiderSousFamille.Caption:='Valider';
+FSPlanComptable.EditCodeSousFamille.SetFocus;
+end;
+
+if(key in['m','M'])then
+begin
+FSPlanComptable.AfficheSousFamille.Visible:=true;
+FSPlanComptable.EditCodeSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+FSPlanComptable.EditCodeModifSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+FSPlanComptable.EditDesignSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[2,FSPlanComptable.TableauSousFamille.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[3,FSPlanComptable.TableauSousFamille.Row])
+then FSPlanComptable.RBAutoriserSousFamille.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=true;
+
+if(FSPlanComptable.TableauSousFamille.Cells[4,FSPlanComptable.TableauSousFamille.Row]='Tous')
+then FSPlanComptable.RBTousSousFamille.Checked:=true
+else FSPlanComptable.RBListeComptesSousFamille.Checked:=true;
+
+if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='1')
+then FSPlanComptable.RBComptePrecisSousFamille.Checked:=true;
+
+if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[6,FSPlanComptable.TableauSousFamille.Row])
+then FSPlanComptable.RBTiersSousFamille.Checked:=true
+else FSPlanComptable.RBNonTiersSousFamille.Checked:=true;
+
+FSPlanComptable.RBSousFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauSousFamille.Cells[7,FSPlanComptable.TableauSousFamille.Row]);
+
+FSPlanComptable.BitValiderSousFamille.Kind:=bkRetry;
+FSPlanComptable.BitValiderSousFamille.Caption:='Modifier';
+
+FSPlanComptable.EditCodeSousFamille.SetFocus;
+end;
+
+if(key in['s','S','-'])
+and(not ExisteCompteImputation(FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row],FSPlanComptable.TableauSousFamille.Cells[2,FSPlanComptable.TableauSousFamille.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheSousFamille.Visible:=true;
+FSPlanComptable.EditCodeSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+FSPlanComptable.EditCodeModifSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row];
+FSPlanComptable.EditDesignSousFamille.Text:=FSPlanComptable.TableauSousFamille.Cells[2,FSPlanComptable.TableauSousFamille.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[3,FSPlanComptable.TableauSousFamille.Row])
+then FSPlanComptable.RBAutoriserSousFamille.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=true;
+
+if(FSPlanComptable.TableauSousFamille.Cells[4,FSPlanComptable.TableauSousFamille.Row]='Tous')
+then FSPlanComptable.RBTousSousFamille.Checked:=true
+else FSPlanComptable.RBListeComptesSousFamille.Checked:=true;
+
+if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='1')
+then FSPlanComptable.RBComptePrecisSousFamille.Checked:=true;
+
+if(FSPlanComptable.TableauSousFamille.Cells[5,FSPlanComptable.TableauSousFamille.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[6,FSPlanComptable.TableauSousFamille.Row])
+then FSPlanComptable.RBTiersSousFamille.Checked:=true
+else FSPlanComptable.RBNonTiersSousFamille.Checked:=true;
+
+FSPlanComptable.RBSousFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauSousFamille.Cells[7,FSPlanComptable.TableauSousFamille.Row]);
+
+FSPlanComptable.BitValiderSousFamille.Kind:=bkCancel;
+FSPlanComptable.BitValiderSousFamille.Caption:='Supprimer';
+FSPlanComptable.BitValiderSousFamille.SetFocus;
+end;
+
+if key in['c','C']then
+begin
+     if(FSPlanComptable.TableauSousFamille.Cells[4,FSPlanComptable.TableauSousFamille.Row]='Liste')then
+     begin
+          ProcListeCompteCP(FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row]);
+          FSPlanComptable.TableauListeCompteCP.SetFocus;
+          FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de contre partie n''est enregistrée !');
+     end;
+end;
+
+if key in['t','T']then
+begin
+     if strtoboolean(FSPlanComptable.TableauSousFamille.Cells[6,FSPlanComptable.TableauSousFamille.Row])then
+     begin
+          ProcListeCompteTiers(FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row]);
+          FSPlanComptable.TableauCompteTiers.SetFocus;
+          FSPlanComptable.AfficheOperationCptTiers.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de Compte Tiers n''est enregistrée !');
+     end;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn102Click(Sender: TObject);
+begin
+FSPlanComptable.TableauSousFamille.SetFocus;
+FSPlanComptable.AfficheSousFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key=VK_INSERT then
+begin
+FSPlanComptable.AfficheFamille.Visible:=true;
+FSPlanComptable.EditCodeFamille.Text:='';
+FSPlanComptable.EditCodeModifFamille.Text:='';
+FSPlanComptable.EditDesignFamille.Text:='';
+FSPlanComptable.RBAutoriserFamille.Checked:=false;
+FSPlanComptable.RBNePasAutoriserFamille.Checked:=false;
+FSPlanComptable.RBTousFamille.Checked:=false;
+FSPlanComptable.RBListeComptesFamille.Checked:=false;
+FSPlanComptable.RBComptePrecisFamille.Checked:=false;
+FSPlanComptable.RBCompteSousCompteFamille.Checked:=false;
+FSPlanComptable.RBTiersFamille.Checked:=false;
+FSPlanComptable.RBNonTiersFamille.Checked:=false;
+FSPlanComptable.RBFamilleActive.Checked:=true;
+FSPlanComptable.BitValiderFamille.Kind:=bkAll;
+FSPlanComptable.BitValiderFamille.Caption:='Valider';
+FSPlanComptable.EditCodeFamille.SetFocus;
+end;
+
+if(key=VK_DELETE)
+and(not ExisteCompteImputation(FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row],FSPlanComptable.TableauFamille.Cells[2,FSPlanComptable.TableauFamille.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheFamille.Visible:=true;
+FSPlanComptable.EditCodeFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditCodeModifFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditDesignFamille.Text:=FSPlanComptable.TableauFamille.Cells[2,FSPlanComptable.TableauFamille.Row];
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[3,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBAutoriserFamille.Checked:=true
+else FSPlanComptable.RBNePasAutoriserFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[4,FSPlanComptable.TableauFamille.Row]='Tous')
+then FSPlanComptable.RBTousFamille.Checked:=true
+else FSPlanComptable.RBListeComptesFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='1')
+then FSPlanComptable.RBComptePrecisFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='N')
+then FSPlanComptable.RBCompteSousCompteFamille.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[6,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBTiersFamille.Checked:=true
+else FSPlanComptable.RBNonTiersFamille.Checked:=true;
+
+FSPlanComptable.RBFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauFamille.Cells[7,FSPlanComptable.TableauFamille.Row]);
+
+FSPlanComptable.BitValiderFamille.Kind:=bkCancel;
+FSPlanComptable.BitValiderFamille.Caption:='Supprimer';
+FSPlanComptable.BitValiderFamille.SetFocus;
+end;
+
+if key=VK_RETURN then
+begin
+ProcNouveauCode(FSPlanComptable.TableauFamille.Cells[0,0],FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row]);
+FSPlanComptable.AfficheListeFamille.Visible:=false;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauFamilleKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['5'..'6']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.TableauFamille.Cells[0,0]:=key;
+end;
+
+if key in['l','L']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     ProcAffichePCN(FSPlanComptable.TableauFamille.Cells[0,0],FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row],FSPlanComptable.EditTypeComptabilite.Text);
+end;
+
+if key in['1'..'4']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     case key of
+     '1': begin FSPlanComptable.AfficheListeClasse.Visible:=true;        FSPlanComptable.TableauClasse.Cells[0,0]:='5';        ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauClasse.SetFocus;        end;
+     '2': begin FSPlanComptable.AfficheListeSousClasse.Visible:=true;    FSPlanComptable.TableauSousClasse.Cells[0,0]:='5';    ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauSousClasse.SetFocus;    end;
+     '3': begin FSPlanComptable.AfficheListeCategorie.Visible:=true;     FSPlanComptable.TableauCategorie.Cells[0,0]:='5';     ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauCategorie.SetFocus;     end;
+     '4': begin FSPlanComptable.AfficheListeSousCategorie.Visible:=true; FSPlanComptable.TableauSousCategorie.Cells[0,0]:='5'; ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauSousCategorie.SetFocus; end;
+     end;
+end;
+
+if key in['n','N','+']then
+begin
+FSPlanComptable.AfficheFamille.Visible:=true;
+FSPlanComptable.EditCodeFamille.Text:='';
+FSPlanComptable.EditCodeModifFamille.Text:='';
+FSPlanComptable.EditDesignFamille.Text:='';
+FSPlanComptable.RBAutoriserFamille.Checked:=false;
+FSPlanComptable.RBNePasAutoriserFamille.Checked:=false;
+FSPlanComptable.RBTousFamille.Checked:=false;
+FSPlanComptable.RBListeComptesFamille.Checked:=false;
+FSPlanComptable.RBComptePrecisFamille.Checked:=false;
+FSPlanComptable.RBCompteSousCompteFamille.Checked:=false;
+FSPlanComptable.RBTiersFamille.Checked:=false;
+FSPlanComptable.RBNonTiersFamille.Checked:=false;
+FSPlanComptable.RBFamilleActive.Checked:=true;
+FSPlanComptable.BitValiderFamille.Kind:=bkAll;
+FSPlanComptable.BitValiderFamille.Caption:='Valider';
+FSPlanComptable.EditCodeFamille.SetFocus;
+end;
+
+if key in['m','M']then
+begin
+FSPlanComptable.AfficheFamille.Visible:=true;
+FSPlanComptable.EditCodeFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditCodeModifFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditDesignFamille.Text:=FSPlanComptable.TableauFamille.Cells[2,FSPlanComptable.TableauFamille.Row];
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[3,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBAutoriserFamille.Checked:=true
+else FSPlanComptable.RBNePasAutoriserFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[4,FSPlanComptable.TableauFamille.Row]='Tous')
+then FSPlanComptable.RBTousFamille.Checked:=true
+else FSPlanComptable.RBListeComptesFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='1')
+then FSPlanComptable.RBComptePrecisFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='N')
+then FSPlanComptable.RBCompteSousCompteFamille.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[6,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBTiersFamille.Checked:=true
+else FSPlanComptable.RBNonTiersFamille.Checked:=true;
+
+FSPlanComptable.RBFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauFamille.Cells[7,FSPlanComptable.TableauFamille.Row]);
+
+FSPlanComptable.BitValiderFamille.Kind:=bkRetry;
+FSPlanComptable.BitValiderFamille.Caption:='Modifier';
+FSPlanComptable.EditCodeFamille.SetFocus;
+end;
+
+if(key in['s','S','-'])
+and(not ExisteCompteImputation(FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row],FSPlanComptable.TableauFamille.Cells[2,FSPlanComptable.TableauFamille.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheFamille.Visible:=true;
+FSPlanComptable.EditCodeFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditCodeModifFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditDesignFamille.Text:=FSPlanComptable.TableauFamille.Cells[2,FSPlanComptable.TableauFamille.Row];
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[3,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBAutoriserFamille.Checked:=true
+else FSPlanComptable.RBNePasAutoriserFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[4,FSPlanComptable.TableauFamille.Row]='Tous')
+then FSPlanComptable.RBTousFamille.Checked:=true
+else FSPlanComptable.RBListeComptesFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='1')
+then FSPlanComptable.RBComptePrecisFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='N')
+then FSPlanComptable.RBCompteSousCompteFamille.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[6,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBTiersFamille.Checked:=true
+else FSPlanComptable.RBNonTiersFamille.Checked:=true;
+
+FSPlanComptable.RBFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauFamille.Cells[7,FSPlanComptable.TableauFamille.Row]);
+
+FSPlanComptable.BitValiderFamille.Kind:=bkCancel;
+FSPlanComptable.BitValiderFamille.Caption:='Supprimer';
+FSPlanComptable.BitValiderFamille.SetFocus;
+end;
+
+if key in['c','C']then
+begin
+     if(FSPlanComptable.TableauFamille.Cells[4,FSPlanComptable.TableauFamille.Row]='Liste')then
+     begin
+          ProcListeCompteCP(FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row]);
+          FSPlanComptable.TableauListeCompteCP.SetFocus;
+          FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de contre partie n''est enregistrée !');
+     end;
+end;
+
+if key in['t','T']then
+begin
+     if strtoboolean(FSPlanComptable.TableauFamille.Cells[6,FSPlanComptable.TableauFamille.Row])then
+     begin
+          ProcListeCompteTiers(FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row]);
+          FSPlanComptable.TableauCompteTiers.SetFocus;
+          FSPlanComptable.AfficheOperationCptTiers.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de Compte Tiers n''est enregistrée !');
+     end;
+end;
+
+end;
+
+procedure TFSPlanComptable.EditCodeFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditCodeFamille.Text='')then
+     begin
+          FSPlanComptable.AfficheListeSousCategorie.Visible:=true;
+          ProcAffichePCN('4','',FSPlanComptable.EditTypeComptabilite.Text);
+          FSPlanComptable.TableauSousCategorie.Cells[0,0]:='5';
+          FSPlanComptable.TableauSousCategorie.SetFocus;
+     end
+     else FSPlanComptable.EditDesignFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.EditDesignFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditDesignFamille.Text='')then
+     begin
+          showmessage('Saisissez le Code SVP!');
+          FSPlanComptable.EditDesignFamille.SetFocus;
+     end
+     else
+     begin
+          if(FSPlanComptable.RBNePasAutoriserFamille.Checked=true)
+          then FSPlanComptable.RBNePasAutoriserFamille.SetFocus
+          else FSPlanComptable.RBAutoriserFamille.SetFocus;
+     end;
+end;
+end;
+
+procedure TFSPlanComptable.BitBtn100Click(Sender: TObject);
+begin
+FSPlanComptable.TableauFamille.SetFocus;
+FSPlanComptable.AfficheFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitValiderFamilleClick(Sender: TObject);
+var OK:boolean; k:integer; TypePCN,TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+if(FSPlanComptable.EditCodeFamille.Text='')
+or(FSPlanComptable.EditDesignFamille.Text='')
+then
+begin
+    showmessage('Saisissez les données de la Famille.');
+    FSPlanComptable.EditCodeFamille.SetFocus;
+    exit;
+end;
+
+if((FSPlanComptable.BitValiderFamille.Caption='Valider')or(FSPlanComptable.BitValiderFamille.Caption='Modifier'))
+and(ControleSpecificite(FSPlanComptable.EditCodeFamille.Text, ResultCompte))then
+begin
+     OK:=false;
+     if(FSPlanComptable.RBAutoriserFamille.Checked<>ResultCompte.ContrePartie.UsesCompte)then OK:=true;
+     if(FSPlanComptable.RBTousFamille.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Tous')then OK:=true;
+     if(FSPlanComptable.RBListeComptesFamille.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Liste')then OK:=true;
+     if(FSPlanComptable.RBComptePrecisFamille.Checked=false)and(ResultCompte.Specificite='1')then OK:=true;
+     if(FSPlanComptable.RBCompteSousCompteFamille.Checked=false)and(ResultCompte.Specificite='N')then OK:=true;
+
+     if(OK=true)then
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=true;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='5';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Correction !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=clRed;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeFamille.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='Appliquer les condition du compte principal!';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='Appliquer';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+          Exit;
+     end
+     else
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=false;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='5';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Confirmation !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=$0000D900;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeFamille.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='les condition du compte principal sont appliquer sur le sous compte !';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='OK';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+     end;
+end;
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='5';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+if(FSPlanComptable.BitValiderFamille.Kind=bkAll)
+and(FSPlanComptable.BitValiderFamille.Caption='Valider')
+then
+begin
+ChFamille:=Adresse;
+assignfile(FFamille,ChFamille);
+if FileExists(ChFamille)
+then Reset(FFamille)else Rewrite(FFamille);
+Seek(FFamille,0);
+i:=0;
+OK:=false;
+while not eof(FFamille)and(OK=false)do
+begin
+     Read(FFamille,RFamille);
+     i:=i+1;
+     if(RFamille.CodeCompte=FSPlanComptable.EditCodeFamille.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Famille existe déjas');
+          FSPlanComptable.EditCodeFamille.SetFocus;
+     end;
+end;
+
+if(OK=false)then
+begin
+Seek(FFamille,i);
+Truncate(FFamille);
+RFamille.CodeCompte:=FSPlanComptable.EditCodeFamille.Text;
+RFamille.Designation:=FSPlanComptable.EditDesignFamille.Text;
+
+RFamille.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserFamille.Checked;
+
+if(FSPlanComptable.RBTousFamille.Checked=true)then RFamille.ContrePartie.TypeUses:='Tous';
+if(FSPlanComptable.RBListeComptesFamille.Checked=true)then RFamille.ContrePartie.TypeUses:='Liste';
+
+if(FSPlanComptable.RBComptePrecisFamille.Checked=true)then RFamille.Specificite:='1';
+if(FSPlanComptable.RBCompteSousCompteFamille.Checked=true)then RFamille.Specificite:='N';
+
+RFamille.Tiers:=FSPlanComptable.RBTiersFamille.Checked;
+RFamille.Active:=FSPlanComptable.RBFamilleActive.Checked;
+
+Write(FFamille,RFamille);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheFamille.Visible:=false;
+end;
+Closefile(FFamille);
+end;
+
+if(FSPlanComptable.BitValiderFamille.Kind=bkRetry)
+and(FSPlanComptable.BitValiderFamille.Caption='Modifier')
+then
+begin
+ChFamille:=Adresse;
+assignfile(FFamille,ChFamille);
+if FileExists(ChFamille)
+then Reset(FFamille)else Rewrite(FFamille);
+OK:=false;
+
+if(FSPlanComptable.EditCodeFamille.Text<>FSPlanComptable.EditCodeModifFamille.Text)then
+begin
+Seek(FFamille,0);
+i:=0;
+while not eof(FFamille)and(OK=false)do
+begin
+     Read(FFamille,RFamille);
+     i:=i+1;
+     if(RFamille.CodeCompte=FSPlanComptable.EditCodeFamille.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Sous Famille existe déjas');
+          FSPlanComptable.EditCodeFamille.SetFocus;
+     end;
+end;
+end;
+
+if(OK=false)then
+begin
+i:=0;
+Seek(FFamille,0);
+while not eof(FFamille)do
+begin
+read(FFamille,RFamille);
+if(RFamille.CodeCompte=FSPlanComptable.EditCodeModifFamille.Text)then
+begin
+     Seek(FFamille,i);
+     RFamille.CodeCompte:=FSPlanComptable.EditCodeFamille.Text;
+     RFamille.Designation:=FSPlanComptable.EditDesignFamille.Text;
+
+     RFamille.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserFamille.Checked;
+
+     if(FSPlanComptable.RBTousFamille.Checked=true)then RFamille.ContrePartie.TypeUses:='Tous';
+     if(FSPlanComptable.RBListeComptesFamille.Checked=true)then RFamille.ContrePartie.TypeUses:='Liste';
+
+     if(FSPlanComptable.RBComptePrecisFamille.Checked=true)then RFamille.Specificite:='1';
+     if(FSPlanComptable.RBCompteSousCompteFamille.Checked=true)then RFamille.Specificite:='N';
+
+     RFamille.Tiers:=FSPlanComptable.RBTiersFamille.Checked;
+     RFamille.Active:=FSPlanComptable.RBFamilleActive.Checked;
+     
+     Write(FFamille,RFamille);
+end;
+i:=i+1;
+end;
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheFamille.Visible:=false;
+end;
+ CloseFile(FFamille);
+end;
+
+if(FSPlanComptable.BitValiderFamille.Kind=bkCancel)
+and(FSPlanComptable.BitValiderFamille.Caption='Supprimer')
+then
+begin
+ChFamille:=Adresse;
+assignfile(FFamille,ChFamille);
+if FileExists(ChFamille)then
+Reset(FFamille)
+else Rewrite(FFamille);
+i:=0;
+Seek(FFamille,0);
+while not eof(FFamille)do
+begin
+read(FFamille,RFamille);
+if((RFamille.CodeCompte=FSPlanComptable.EditCodeModifFamille.Text)or(RFamille.CodeCompte=''))then
+begin
+    k:=i;
+    while not eof(FFamille)do
+    begin
+    read(FFamille,RFamille);
+    Seek(FFamille,k);
+    Write(FFamille,RFamille);
+    k:=k+1;
+    Seek(FFamille,k+1);
+    end;
+    Seek(FFamille,k);
+    Truncate(FFamille);
+    Seek(FFamille,0);
+    i:=0;
+end
+else i:=i+1;
+end;
+closefile(FFamille);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheFamille.Visible:=false;
+end;
+
+FSPlanComptable.TableauFamille.SetFocus;
+
+if(TypePCN='1')then PublierDansLeReseaux('FClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='2')then PublierDansLeReseaux('FSousClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='3')then PublierDansLeReseaux('FCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='4')then PublierDansLeReseaux('FSousCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='5')then PublierDansLeReseaux('FFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='6')then PublierDansLeReseaux('FSousFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+end;
+
+procedure TFSPlanComptable.BitListeFamilleClick(Sender: TObject);
+begin
+ProcAffichePCN('5','',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.TableauFamille.SetFocus;
+FSPlanComptable.AfficheOptionsFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn45Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheFamille.Visible:=true;
+FSPlanComptable.EditCodeFamille.Text:='';
+FSPlanComptable.EditCodeModifFamille.Text:='';
+FSPlanComptable.EditDesignFamille.Text:='';
+FSPlanComptable.RBAutoriserFamille.Checked:=false;
+FSPlanComptable.RBNePasAutoriserFamille.Checked:=false;
+FSPlanComptable.RBTousFamille.Checked:=false;
+FSPlanComptable.RBListeComptesFamille.Checked:=false;
+FSPlanComptable.RBComptePrecisFamille.Checked:=false;
+FSPlanComptable.RBCompteSousCompteFamille.Checked:=false;
+FSPlanComptable.RBTiersFamille.Checked:=false;
+FSPlanComptable.RBNonTiersFamille.Checked:=false;
+FSPlanComptable.RBFamilleActive.Checked:=true;
+FSPlanComptable.BitValiderFamille.Kind:=bkAll;
+FSPlanComptable.BitValiderFamille.Caption:='Valider';
+FSPlanComptable.EditCodeFamille.SetFocus;
+FSPlanComptable.AfficheOptionsFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn46Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheFamille.Visible:=true;
+FSPlanComptable.EditCodeFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditCodeModifFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditDesignFamille.Text:=FSPlanComptable.TableauFamille.Cells[2,FSPlanComptable.TableauFamille.Row];
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[3,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBAutoriserFamille.Checked:=true
+else FSPlanComptable.RBNePasAutoriserFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[4,FSPlanComptable.TableauFamille.Row]='Tous')
+then FSPlanComptable.RBTousFamille.Checked:=true
+else FSPlanComptable.RBListeComptesFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='1')
+then FSPlanComptable.RBComptePrecisFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='N')
+then FSPlanComptable.RBCompteSousCompteFamille.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[6,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBTiersFamille.Checked:=true
+else FSPlanComptable.RBNonTiersFamille.Checked:=true;
+
+FSPlanComptable.RBFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauFamille.Cells[7,FSPlanComptable.TableauFamille.Row]);
+
+FSPlanComptable.BitValiderFamille.Kind:=bkRetry;
+FSPlanComptable.BitValiderFamille.Caption:='Modifier';
+FSPlanComptable.EditCodeFamille.SetFocus;
+FSPlanComptable.AfficheOptionsFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn48Click(Sender: TObject);
+begin
+
+if(not ExisteCompteImputation(FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row],FSPlanComptable.TableauFamille.Cells[2,FSPlanComptable.TableauFamille.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheFamille.Visible:=true;
+FSPlanComptable.EditCodeFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditCodeModifFamille.Text:=FSPlanComptable.TableauFamille.Cells[1,FSPlanComptable.TableauFamille.Row];
+FSPlanComptable.EditDesignFamille.Text:=FSPlanComptable.TableauFamille.Cells[2,FSPlanComptable.TableauFamille.Row];
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[3,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBAutoriserFamille.Checked:=true
+else FSPlanComptable.RBNePasAutoriserFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[4,FSPlanComptable.TableauFamille.Row]='Tous')
+then FSPlanComptable.RBTousFamille.Checked:=true
+else FSPlanComptable.RBListeComptesFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='1')
+then FSPlanComptable.RBComptePrecisFamille.Checked:=true;
+
+if(FSPlanComptable.TableauFamille.Cells[5,FSPlanComptable.TableauFamille.Row]='N')
+then FSPlanComptable.RBCompteSousCompteFamille.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[6,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.RBTiersFamille.Checked:=true
+else FSPlanComptable.RBNonTiersFamille.Checked:=true;
+
+FSPlanComptable.RBFamilleActive.Checked:=strtoboolean(FSPlanComptable.TableauFamille.Cells[7,FSPlanComptable.TableauFamille.Row]);
+
+FSPlanComptable.BitValiderFamille.Kind:=bkCancel;
+FSPlanComptable.BitValiderFamille.Caption:='Supprimer';
+FSPlanComptable.BitValiderFamille.SetFocus;
+end;
+FSPlanComptable.AfficheOptionsFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauFamilleContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheOptionsFamille.Visible:=true;
+
+if MousePos.X<(FSPlanComptable.TableauFamille.Width-FSPlanComptable.AfficheOptionsFamille.Width)
+then FSPlanComptable.AfficheOptionsFamille.Left:=(MousePos.X+FSPlanComptable.TableauFamille.Left)
+else FSPlanComptable.AfficheOptionsFamille.Left:=(FSPlanComptable.TableauFamille.Width-
+     FSPlanComptable.AfficheOptionsFamille.Width+FSPlanComptable.TableauFamille.Left);
+
+if MousePos.Y<(FSPlanComptable.TableauFamille.Height-FSPlanComptable.AfficheOptionsFamille.Height)
+then FSPlanComptable.AfficheOptionsFamille.Top:=(MousePos.Y+FSPlanComptable.TableauFamille.Top)
+else FSPlanComptable.AfficheOptionsFamille.Top:=(FSPlanComptable.TableauFamille.Height-
+     FSPlanComptable.AfficheOptionsFamille.Height)+FSPlanComptable.TableauFamille.Top;
+
+FSPlanComptable.BitListeFamille.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauFamilleClick(Sender: TObject);
+begin
+
+if strtoboolean(FSPlanComptable.TableauFamille.Cells[7,FSPlanComptable.TableauFamille.Row])
+then FSPlanComptable.TableauFamille.FixedColor:=FSPlanComptable.AfficheListeFamille.Color
+else FSPlanComptable.TableauFamille.FixedColor:=ClRed;
+
+FSPlanComptable.AfficheInformationPrincipale.Visible:=false;
+FSPlanComptable.AfficheOptionsFamille.Visible:=false;
+FSPlanComptable.AfficheFamille.Visible:=false;
+
+FSPlanComptable.AfficheListeClasse.Visible:=false;
+FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+FSPlanComptable.AfficheListeCategorie.Visible:=false;
+FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+FSPlanComptable.AfficheTransfertCompteACompte.Visible:=false;
+FSPlanComptable.AfficheListeTransfertCompte.Visible:=false;
+end;
+
+procedure TFSPlanComptable.AfficheOptionsFamilleClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheOptionsFamille.Visible:=false;
+end;
+
+procedure TFSPlanComptable.Annuler5Click(Sender: TObject);
+begin
+CancelThe(5);
+end;
+
+procedure TFSPlanComptable.TableauSousCategorieContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheOptionsSousCategorie.Visible:=true;
+
+if MousePos.X<(FSPlanComptable.TableauSousCategorie.Width-FSPlanComptable.AfficheOptionsSousCategorie.Width)
+then FSPlanComptable.AfficheOptionsSousCategorie.Left:=(MousePos.X+FSPlanComptable.TableauSousCategorie.Left)
+else FSPlanComptable.AfficheOptionsSousCategorie.Left:=(FSPlanComptable.TableauSousCategorie.Width-
+     FSPlanComptable.AfficheOptionsSousCategorie.Width+FSPlanComptable.TableauSousCategorie.Left);
+
+if MousePos.Y<(FSPlanComptable.TableauSousCategorie.Height-FSPlanComptable.AfficheOptionsSousCategorie.Height)
+then FSPlanComptable.AfficheOptionsSousCategorie.Top:=(MousePos.Y+FSPlanComptable.TableauSousCategorie.Top)
+else FSPlanComptable.AfficheOptionsSousCategorie.Top:=(FSPlanComptable.TableauSousCategorie.Height-
+     FSPlanComptable.AfficheOptionsSousCategorie.Height)+FSPlanComptable.TableauSousCategorie.Top;
+
+FSPlanComptable.BitListeSousCategorie.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauSousCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key=VK_INSERT then
+begin
+FSPlanComptable.AfficheSousCategorie.Visible:=true;
+FSPlanComptable.EditCodeSousCategorie.Text:='';
+FSPlanComptable.EditCodeModifSousCategorie.Text:='';
+FSPlanComptable.EditDesignSousCategorie.Text:='';
+FSPlanComptable.RBAutoriserSousCategorie.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousCategorie.Checked:=false;
+FSPlanComptable.RBTousSousCategorie.Checked:=false;
+FSPlanComptable.RBListeComptesSousCategorie.Checked:=false;
+FSPlanComptable.RBComptePrecisSousCategorie.Checked:=false;
+FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=false;
+FSPlanComptable.RBTiersSousCategorie.Checked:=false;
+FSPlanComptable.RBNonTiersSousCategorie.Checked:=false;
+FSPlanComptable.RBSousCategorieActive.Checked:=true;
+FSPlanComptable.BitValiderSousCategorie.Kind:=bkAll;
+FSPlanComptable.BitValiderSousCategorie.Caption:='Valider';
+FSPlanComptable.EditCodeSousCategorie.SetFocus;
+end;
+
+if(key=VK_DELETE)
+and(not ExisteCompteImputation(FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row],FSPlanComptable.TableauSousCategorie.Cells[2,FSPlanComptable.TableauSousCategorie.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheSousCategorie.Visible:=true;
+FSPlanComptable.EditCodeSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditCodeModifSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditDesignSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[2,FSPlanComptable.TableauSousCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[3,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBAutoriserSousCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[4,FSPlanComptable.TableauSousCategorie.Row]='Tous')
+then FSPlanComptable.RBTousSousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[6,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBTiersSousCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersSousCategorie.Checked:=true;
+
+FSPlanComptable.RBSousCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[7,FSPlanComptable.TableauSousCategorie.Row]);
+
+FSPlanComptable.BitValiderSousCategorie.Kind:=bkCancel;
+FSPlanComptable.BitValiderSousCategorie.Caption:='Supprimer';
+FSPlanComptable.BitValiderSousCategorie.SetFocus;
+end;
+
+if key=VK_RETURN then
+begin
+ProcNouveauCode(FSPlanComptable.TableauSousCategorie.Cells[0,0],FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row]);
+FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauSousCategorieKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['4'..'6']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     FSPlanComptable.TableauSousCategorie.Cells[0,0]:=key;
+end;
+
+if key in['l','L']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     ProcAffichePCN(FSPlanComptable.TableauSousCategorie.Cells[0,0],FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row],FSPlanComptable.EditTypeComptabilite.Text);
+end;
+
+if key in['1'..'3']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     case key of
+     '1': begin FSPlanComptable.AfficheListeClasse.Visible:=true;        FSPlanComptable.TableauClasse.Cells[0,0]:='4';        ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauClasse.SetFocus;        end;
+     '2': begin FSPlanComptable.AfficheListeSousClasse.Visible:=true;    FSPlanComptable.TableauSousClasse.Cells[0,0]:='4';    ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauSousClasse.SetFocus;    end;
+     '3': begin FSPlanComptable.AfficheListeCategorie.Visible:=true;     FSPlanComptable.TableauCategorie.Cells[0,0]:='4';     ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauCategorie.SetFocus;     end;
+     end;
+end;
+
+if key in['n','N','+']then
+begin
+FSPlanComptable.AfficheSousCategorie.Visible:=true;
+FSPlanComptable.EditCodeSousCategorie.Text:='';
+FSPlanComptable.EditCodeModifSousCategorie.Text:='';
+FSPlanComptable.EditDesignSousCategorie.Text:='';
+FSPlanComptable.RBAutoriserSousCategorie.Checked:=false;
+FSPlanComptable.RBNePasAutoriserCategorie.Checked:=false;
+FSPlanComptable.RBTousSousCategorie.Checked:=false;
+FSPlanComptable.RBListeComptesSousCategorie.Checked:=false;
+FSPlanComptable.RBComptePrecisSousCategorie.Checked:=false;
+FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=false;
+FSPlanComptable.RBTiersSousCategorie.Checked:=false;
+FSPlanComptable.RBNonTiersSousCategorie.Checked:=false;
+FSPlanComptable.RBSousCategorieActive.Checked:=true;
+FSPlanComptable.BitValiderSousCategorie.Kind:=bkAll;
+FSPlanComptable.BitValiderSousCategorie.Caption:='Valider';
+FSPlanComptable.EditCodeSousCategorie.SetFocus;
+end;
+
+if key in['m','M']then
+begin
+FSPlanComptable.AfficheSousCategorie.Visible:=true;
+FSPlanComptable.EditCodeSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditCodeModifSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditDesignSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[2,FSPlanComptable.TableauSousCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[3,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBAutoriserSousCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[4,FSPlanComptable.TableauSousCategorie.Row]='Tous')
+then FSPlanComptable.RBTousSousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[6,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBTiersSousCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersSousCategorie.Checked:=true;
+
+FSPlanComptable.RBSousCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[7,FSPlanComptable.TableauSousCategorie.Row]);
+
+FSPlanComptable.BitValiderSousCategorie.Kind:=bkRetry;
+FSPlanComptable.BitValiderSousCategorie.Caption:='Modifier';
+FSPlanComptable.EditCodeSousCategorie.SetFocus;
+end;
+
+if(key in['s','S','-'])
+and(not ExisteCompteImputation(FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row],FSPlanComptable.TableauSousCategorie.Cells[2,FSPlanComptable.TableauSousCategorie.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheSousCategorie.Visible:=true;
+FSPlanComptable.EditCodeSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditCodeModifSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditDesignSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[2,FSPlanComptable.TableauSousCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[3,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBAutoriserSousCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[4,FSPlanComptable.TableauSousCategorie.Row]='Tous')
+then FSPlanComptable.RBTousSousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[6,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBTiersSousCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersSousCategorie.Checked:=true;
+
+FSPlanComptable.RBSousCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[7,FSPlanComptable.TableauSousCategorie.Row]);
+
+FSPlanComptable.BitValiderSousCategorie.Kind:=bkCancel;
+FSPlanComptable.BitValiderSousCategorie.Caption:='Supprimer';
+FSPlanComptable.BitValiderSousCategorie.SetFocus;
+end;
+
+if key in['c','C']then
+begin
+     if(FSPlanComptable.TableauSousCategorie.Cells[4,FSPlanComptable.TableauSousCategorie.Row]='Liste')then
+     begin
+          ProcListeCompteCP(FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row]);
+          FSPlanComptable.TableauListeCompteCP.SetFocus;
+          FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de contre partie n''est enregistrée !');
+     end;
+end;
+
+if key in['t','T']then
+begin
+     if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[6,FSPlanComptable.TableauSousCategorie.Row])then
+     begin
+          ProcListeCompteTiers(FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row]);
+          FSPlanComptable.TableauCompteTiers.SetFocus;
+          FSPlanComptable.AfficheOperationCptTiers.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de Compte Tiers n''est enregistrée !');
+     end;
+end;
+
+end;
+
+procedure TFSPlanComptable.EditCodeSousCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditCodeSousCategorie.Text='')then
+     begin
+          FSPlanComptable.AfficheListeCategorie.Visible:=true;
+          ProcAffichePCN('3','',FSPlanComptable.EditTypeComptabilite.Text);
+          FSPlanComptable.TableauCategorie.Cells[0,0]:='4';
+          FSPlanComptable.TableauCategorie.SetFocus;
+     end
+     else FSPlanComptable.EditDesignSousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.EditDesignSousCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditDesignSousCategorie.Text='')then
+     begin
+          showmessage('Saisissez le Code SVP!');
+          FSPlanComptable.EditDesignSousCategorie.SetFocus;
+     end
+     else
+     begin
+          if(FSPlanComptable.RBNePasAutoriserSousCategorie.Checked=true)
+          then FSPlanComptable.RBNePasAutoriserSousCategorie.SetFocus
+          else FSPlanComptable.RBAutoriserSousCategorie.SetFocus;
+     end;
+end;
+end;
+
+procedure TFSPlanComptable.BitBtn9Click(Sender: TObject);
+begin
+FSPlanComptable.TableauSousCategorie.SetFocus;
+FSPlanComptable.AfficheSousCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitValiderSousCategorieClick(Sender: TObject);
+var OK:boolean; k:integer;  TypePCN,TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+if(FSPlanComptable.EditCodeSousCategorie.Text='')
+or(FSPlanComptable.EditDesignSousCategorie.Text='')
+then
+begin
+    showmessage('Saisissez les données de la Sous Catégorie.');
+    FSPlanComptable.EditCodeSousCategorie.SetFocus;
+    exit;
+end;
+
+if((FSPlanComptable.BitValiderSousCategorie.Caption='Valider')or(FSPlanComptable.BitValiderSousCategorie.Caption='Modifier'))
+and(ControleSpecificite(FSPlanComptable.EditCodeSousCategorie.Text, ResultCompte))then
+begin
+     OK:=false;
+     if(FSPlanComptable.RBAutoriserSousCategorie.Checked<>ResultCompte.ContrePartie.UsesCompte)then OK:=true;
+     if(FSPlanComptable.RBTousSousCategorie.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Tous')then OK:=true;
+     if(FSPlanComptable.RBListeComptesSousCategorie.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Liste')then OK:=true;
+     if(FSPlanComptable.RBComptePrecisSousCategorie.Checked=false)and(ResultCompte.Specificite='1')then OK:=true;
+     if(FSPlanComptable.RBCompteSousCompteSousCategorie.Checked=false)and(ResultCompte.Specificite='N')then OK:=true;
+
+     if(OK=true)then
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=true;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='4';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Correction !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=clRed;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeSousCategorie.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='Appliquer les condition du compte principal!';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='Appliquer';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+          Exit;
+     end
+     else
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=false;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='4';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Confirmation !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=$0000D900;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeSousCategorie.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='les condition du compte principal sont appliquer sur le sous compte !';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='OK';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+     end;
+end;
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='4';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+if(FSPlanComptable.BitValiderSousCategorie.Kind=bkAll)
+and(FSPlanComptable.BitValiderSousCategorie.Caption='Valider')
+then
+begin
+ChSousCategorie:=Adresse;
+assignfile(FSousCategorie,ChSousCategorie);
+if FileExists(ChSousCategorie)
+then Reset(FSousCategorie)else Rewrite(FSousCategorie);
+Seek(FSousCategorie,0);
+i:=0;
+OK:=false;
+while not eof(FSousCategorie)and(OK=false)do
+begin
+     Read(FSousCategorie,RSousCategorie);
+     i:=i+1;
+     if(RSousCategorie.CodeCompte=FSPlanComptable.EditCodeSouscategorie.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la SouSousCategoriegorie existe déjas');
+          FSPlanComptable.EditCodeSousCategorie.SetFocus;
+     end;
+end;
+
+if(OK=false)then
+begin
+Seek(FSousCategorie,i);
+Truncate(FSousCategorie);
+RSousCategorie.CodeCompte:=FSPlanComptable.EditCodeSousCategorie.Text;
+RSousCategorie.Designation:=FSPlanComptable.EditDesignSousCategorie.Text;
+
+RSousCategorie.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserSousCategorie.Checked;
+
+if(FSPlanComptable.RBTousSousCategorie.Checked=true)then RSousCategorie.ContrePartie.TypeUses:='Tous';
+if(FSPlanComptable.RBListeComptesSousCategorie.Checked=true)then RSousCategorie.ContrePartie.TypeUses:='Liste';
+
+if(FSPlanComptable.RBComptePrecisSousCategorie.Checked=true)then RSousCategorie.Specificite:='1';
+if(FSPlanComptable.RBCompteSousCompteSousCategorie.Checked=true)then RSousCategorie.Specificite:='N';
+
+RSousCategorie.Tiers:=FSPlanComptable.RBTiersSousCategorie.Checked;
+RSousCategorie.Active:=FSPlanComptable.RBSousCategorieActive.Checked;
+
+Write(FSousCategorie,RSousCategorie);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheSousCategorie.Visible:=false;
+end;
+Closefile(FSousCategorie);
+end;
+
+if(FSPlanComptable.BitValiderSousCategorie.Kind=bkRetry)
+and(FSPlanComptable.BitValiderSousCategorie.Caption='Modifier')
+then
+begin
+ChSousCategorie:=Adresse;
+assignfile(FSousCategorie,ChSousCategorie);
+if FileExists(ChSousCategorie)
+then Reset(FSousCategorie)else Rewrite(FSousCategorie);
+OK:=false;
+
+if(FSPlanComptable.EditCodeSousCategorie.Text<>FSPlanComptable.EditCodeModifSousCategorie.Text)then
+begin
+Seek(FSousCategorie,0);
+i:=0;
+while not eof(FSousCategorie)and(OK=false)do
+begin
+     Read(FSousCategorie,RSousCategorie);
+     i:=i+1;
+     if(RSousCategorie.CodeCompte=FSPlanComptable.EditCodeSousCategorie.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Sous SouSousCategoriegorie existe déjas');
+          FSPlanComptable.EditCodeSousCategorie.SetFocus;
+     end;
+end;
+end;
+
+if(OK=false)then
+begin
+i:=0;
+Seek(FSousCategorie,0);
+while not eof(FSousCategorie)do
+begin
+read(FSousCategorie,RSousCategorie);
+if(RSousCategorie.CodeCompte=FSPlanComptable.EditCodeModifSousCategorie.Text)then
+begin
+     Seek(FSousCategorie,i);
+     RSousCategorie.CodeCompte:=FSPlanComptable.EditCodeSousCategorie.Text;
+     RSousCategorie.Designation:=FSPlanComptable.EditDesignSousCategorie.Text;
+
+     RSousCategorie.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserSousCategorie.Checked;
+
+     if(FSPlanComptable.RBTousSousCategorie.Checked=true)then RSousCategorie.ContrePartie.TypeUses:='Tous';
+     if(FSPlanComptable.RBListeComptesSousCategorie.Checked=true)then RSousCategorie.ContrePartie.TypeUses:='Liste';
+
+     if(FSPlanComptable.RBComptePrecisSousCategorie.Checked=true)then RSousCategorie.Specificite:='1';
+     if(FSPlanComptable.RBCompteSousCompteSousCategorie.Checked=true)then RSousCategorie.Specificite:='N';
+
+     RSousCategorie.Tiers:=FSPlanComptable.RBTiersSousCategorie.Checked;
+     RSousCategorie.Active:=FSPlanComptable.RBSousCategorieActive.Checked;
+     
+     Write(FSousCategorie,RSousCategorie);
+end;
+i:=i+1;
+end;
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheSousCategorie.Visible:=false;
+end;
+ CloseFile(FSousCategorie);
+end;
+
+if(FSPlanComptable.BitValiderSousCategorie.Kind=bkCancel)
+and(FSPlanComptable.BitValiderSousCategorie.Caption='Supprimer')
+then
+begin
+ChSousCategorie:=Adresse;
+assignfile(FSousCategorie,ChSousCategorie);
+if FileExists(ChSousCategorie)then
+Reset(FSousCategorie)
+else Rewrite(FSousCategorie);
+i:=0;
+Seek(FSousCategorie,0);
+while not eof(FSousCategorie)do
+begin
+read(FSousCategorie,RSousCategorie);
+if((RSousCategorie.CodeCompte=FSPlanComptable.EditCodeModifSousCategorie.Text)or(RSousCategorie.CodeCompte=''))then
+begin
+    k:=i;
+    while not eof(FSousCategorie)do
+    begin
+    read(FSousCategorie,RSousCategorie);
+    Seek(FSousCategorie,k);
+    Write(FSousCategorie,RSousCategorie);
+    k:=k+1;
+    Seek(FSousCategorie,k+1);
+    end;
+    Seek(FSousCategorie,k);
+    Truncate(FSousCategorie);
+    Seek(FSousCategorie,0);
+    i:=0;
+end
+else i:=i+1;
+end;
+closefile(FSousCategorie);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheSousCategorie.Visible:=false;
+end;
+
+FSPlanComptable.TableauSousCategorie.SetFocus;
+
+if(TypePCN='1')then PublierDansLeReseaux('FClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='2')then PublierDansLeReseaux('FSousClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='3')then PublierDansLeReseaux('FCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='4')then PublierDansLeReseaux('FSousCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='5')then PublierDansLeReseaux('FFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='6')then PublierDansLeReseaux('FSousFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+end;
+
+procedure TFSPlanComptable.AfficheOptionsSousCategorieClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheOptionsSousCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitListeSousCategorieClick(Sender: TObject);
+begin
+ProcAffichePCN('4','',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.TableauSousCategorie.SetFocus;
+FSPlanComptable.AfficheOptionsSousCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn43Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheSousCategorie.Visible:=true;
+FSPlanComptable.EditCodeSousCategorie.Text:='';
+FSPlanComptable.EditCodeModifSousCategorie.Text:='';
+FSPlanComptable.EditDesignSousCategorie.Text:='';
+FSPlanComptable.RBAutoriserSousCategorie.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousCategorie.Checked:=false;
+FSPlanComptable.RBTousSousCategorie.Checked:=false;
+FSPlanComptable.RBListeComptesSousCategorie.Checked:=false;
+FSPlanComptable.RBComptePrecisSousCategorie.Checked:=false;
+FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=false;
+FSPlanComptable.RBTiersSousCategorie.Checked:=false;
+FSPlanComptable.RBNonTiersSousCategorie.Checked:=false;
+FSPlanComptable.RBSousCategorieActive.Checked:=true;
+FSPlanComptable.BitValiderSousCategorie.Kind:=bkAll;
+FSPlanComptable.BitValiderSousCategorie.Caption:='Valider';
+FSPlanComptable.EditCodeSousCategorie.SetFocus;
+FSPlanComptable.AfficheOptionsSousCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn49Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheSousCategorie.Visible:=true;
+FSPlanComptable.EditCodeSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditCodeModifSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditDesignSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[2,FSPlanComptable.TableauSousCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[3,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBAutoriserSousCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[4,FSPlanComptable.TableauSousCategorie.Row]='Tous')
+then FSPlanComptable.RBTousSousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[6,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBTiersSousCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersSousCategorie.Checked:=true;
+
+FSPlanComptable.RBSousCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[7,FSPlanComptable.TableauSousCategorie.Row]);
+
+FSPlanComptable.BitValiderSousCategorie.Kind:=bkRetry;
+FSPlanComptable.BitValiderSousCategorie.Caption:='Modifier';
+FSPlanComptable.EditCodeSousCategorie.SetFocus;
+FSPlanComptable.AfficheOptionsSousCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn50Click(Sender: TObject);
+begin
+
+if(not ExisteCompteImputation(FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row],FSPlanComptable.TableauSousCategorie.Cells[2,FSPlanComptable.TableauSousCategorie.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheSousCategorie.Visible:=true;
+FSPlanComptable.EditCodeSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditCodeModifSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[1,FSPlanComptable.TableauSousCategorie.Row];
+FSPlanComptable.EditDesignSousCategorie.Text:=FSPlanComptable.TableauSousCategorie.Cells[2,FSPlanComptable.TableauSousCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[3,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBAutoriserSousCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[4,FSPlanComptable.TableauSousCategorie.Row]='Tous')
+then FSPlanComptable.RBTousSousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisSousCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauSousCategorie.Cells[5,FSPlanComptable.TableauSousCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[6,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.RBTiersSousCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersSousCategorie.Checked:=true;
+
+FSPlanComptable.RBSousCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[7,FSPlanComptable.TableauSousCategorie.Row]);
+
+FSPlanComptable.BitValiderSousCategorie.Kind:=bkCancel;
+FSPlanComptable.BitValiderSousCategorie.Caption:='Supprimer';
+FSPlanComptable.BitValiderSousCategorie.SetFocus;
+end;
+FSPlanComptable.AfficheOptionsSousCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauSousCategorieClick(Sender: TObject);
+begin
+
+if strtoboolean(FSPlanComptable.TableauSousCategorie.Cells[7,FSPlanComptable.TableauSousCategorie.Row])
+then FSPlanComptable.TableauSousCategorie.FixedColor:=FSPlanComptable.AfficheListeSousCategorie.Color
+else FSPlanComptable.TableauSousCategorie.FixedColor:=ClRed;
+
+FSPlanComptable.AfficheInformationPrincipale.Visible:=false;
+FSPlanComptable.AfficheOptionsSousCategorie.Visible:=false;
+FSPlanComptable.AfficheSousCategorie.Visible:=false;
+
+FSPlanComptable.AfficheListeClasse.Visible:=false;
+FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+FSPlanComptable.AfficheListeCategorie.Visible:=false;
+FSPlanComptable.AfficheTransfertCompteACompte.Visible:=false;
+FSPlanComptable.AfficheListeTransfertCompte.Visible:=false;
+end;
+
+procedure TFSPlanComptable.Annuler4Click(Sender: TObject);
+begin
+CancelThe(4);
+end;
+
+procedure TFSPlanComptable.BitValiderCategorieClick(Sender: TObject);
+var OK:boolean; k:integer;  TypePCN,TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+if(FSPlanComptable.EditCodeCategorie.Text='')
+or(FSPlanComptable.EditDesignCategorie.Text='')
+then
+begin
+    showmessage('Saisissez les données de la Sous Catégorie.');
+    FSPlanComptable.EditCodeCategorie.SetFocus;
+    exit;
+end;
+
+if((FSPlanComptable.BitValiderCategorie.Caption='Valider')or(FSPlanComptable.BitValiderCategorie.Caption='Modifier'))
+and(ControleSpecificite(FSPlanComptable.EditCodeCategorie.Text, ResultCompte))then
+begin
+     OK:=false;
+     if(FSPlanComptable.RBAutoriserCategorie.Checked<>ResultCompte.ContrePartie.UsesCompte)then OK:=true;
+     if(FSPlanComptable.RBTousCategorie.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Tous')then OK:=true;
+     if(FSPlanComptable.RBListeComptesCategorie.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Liste')then OK:=true;
+     if(FSPlanComptable.RBComptePrecisCategorie.Checked=false)and(ResultCompte.Specificite='1')then OK:=true;
+     if(FSPlanComptable.RBCompteSousCompteCategorie.Checked=false)and(ResultCompte.Specificite='N')then OK:=true;
+
+     if(OK=true)then
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=true;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='3';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Correction !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=clRed;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeCategorie.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='Appliquer les condition du compte principal!';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='Appliquer';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+          Exit;
+     end
+     else
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=false;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='3';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Confirmation !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=$0000D900;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeCategorie.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='les condition du compte principal sont appliquer sur le sous compte !';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='OK';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+     end;
+end;
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='3';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+if(FSPlanComptable.BitValiderCategorie.Kind=bkAll)
+and(FSPlanComptable.BitValiderCategorie.Caption='Valider')
+then
+begin
+ChCategorie:=Adresse;
+assignfile(FCategorie,ChCategorie);
+if FileExists(ChCategorie)
+then Reset(FCategorie)else Rewrite(FCategorie);
+Seek(FCategorie,0);
+i:=0;
+OK:=false;
+while not eof(FCategorie)and(OK=false)do
+begin
+     Read(FCategorie,RCategorie);
+     i:=i+1;
+     if(RCategorie.CodeCompte=FSPlanComptable.EditCodeCategorie.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Categorie existe déjas');
+          FSPlanComptable.EditCodeCategorie.SetFocus;
+     end;
+end;
+
+if(OK=false)then
+begin
+Seek(FCategorie,i);
+Truncate(FCategorie);
+RCategorie.CodeCompte:=FSPlanComptable.EditCodeCategorie.Text;
+RCategorie.Designation:=FSPlanComptable.EditDesignCategorie.Text;
+
+RCategorie.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserCategorie.Checked;
+
+if(FSPlanComptable.RBTousCategorie.Checked=true)then RCategorie.ContrePartie.TypeUses:='Tous';
+if(FSPlanComptable.RBListeComptesCategorie.Checked=true)then RCategorie.ContrePartie.TypeUses:='Liste';
+
+if(FSPlanComptable.RBComptePrecisCategorie.Checked=true)then RCategorie.Specificite:='1';
+if(FSPlanComptable.RBCompteSousCompteCategorie.Checked=true)then RCategorie.Specificite:='N';
+
+RCategorie.Tiers:=FSPlanComptable.RBTiersCategorie.Checked;
+RCategorie.Active:=FSPlanComptable.RBCategorieActive.Checked;
+
+Write(FCategorie,RCategorie);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheCategorie.Visible:=false;
+end;
+Closefile(FCategorie);
+end;
+
+if(FSPlanComptable.BitValiderCategorie.Kind=bkRetry)
+and(FSPlanComptable.BitValiderCategorie.Caption='Modifier')
+then
+begin
+ChCategorie:=Adresse;
+assignfile(FCategorie,ChCategorie);
+if FileExists(ChCategorie)
+then Reset(FCategorie)else Rewrite(FCategorie);
+OK:=false;
+
+if(FSPlanComptable.EditCodeCategorie.Text<>FSPlanComptable.EditCodeModifCategorie.Text)then
+begin
+Seek(FCategorie,0);
+i:=0;
+while not eof(FCategorie)and(OK=false)do
+begin
+     Read(FCategorie,RCategorie);
+     i:=i+1;
+     if(RCategorie.CodeCompte=FSPlanComptable.EditCodeCategorie.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Sous Categorie existe déjas');
+          FSPlanComptable.EditCodeCategorie.SetFocus;
+     end;
+end;
+end;
+
+if(OK=false)then
+begin
+i:=0;
+Seek(FCategorie,0);
+while not eof(FCategorie)do
+begin
+read(FCategorie,RCategorie);
+if(RCategorie.CodeCompte=FSPlanComptable.EditCodeModifCategorie.Text)then
+begin
+     Seek(FCategorie,i);
+     RCategorie.CodeCompte:=FSPlanComptable.EditCodeCategorie.Text;
+     RCategorie.Designation:=FSPlanComptable.EditDesignCategorie.Text;
+
+     RCategorie.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserCategorie.Checked;
+
+     if(FSPlanComptable.RBTousCategorie.Checked=true)then RCategorie.ContrePartie.TypeUses:='Tous';
+     if(FSPlanComptable.RBListeComptesCategorie.Checked=true)then RCategorie.ContrePartie.TypeUses:='Liste';
+
+     if(FSPlanComptable.RBComptePrecisCategorie.Checked=true)then RCategorie.Specificite:='1';
+     if(FSPlanComptable.RBCompteSousCompteCategorie.Checked=true)then RCategorie.Specificite:='N';
+
+     RCategorie.Tiers:=FSPlanComptable.RBTiersCategorie.Checked;
+     RCategorie.Active:=FSPlanComptable.RBCategorieActive.Checked;
+     
+     Write(FCategorie,RCategorie);
+end;
+i:=i+1;
+end;
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheCategorie.Visible:=false;
+end;
+ CloseFile(FCategorie);
+end;
+
+if(FSPlanComptable.BitValiderCategorie.Kind=bkCancel)
+and(FSPlanComptable.BitValiderCategorie.Caption='Supprimer')
+then
+begin
+ChCategorie:=Adresse;
+assignfile(FCategorie,ChCategorie);
+if FileExists(ChCategorie)then
+Reset(FCategorie)
+else Rewrite(FCategorie);
+i:=0;
+Seek(FCategorie,0);
+while not eof(FCategorie)do
+begin
+read(FCategorie,RCategorie);
+if((RCategorie.CodeCompte=FSPlanComptable.EditCodeModifCategorie.Text)or(RCategorie.CodeCompte=''))then
+begin
+    k:=i;
+    while not eof(FCategorie)do
+    begin
+    read(FCategorie,RCategorie);
+    Seek(FCategorie,k);
+    Write(FCategorie,RCategorie);
+    k:=k+1;
+    Seek(FCategorie,k+1);
+    end;
+    Seek(FCategorie,k);
+    Truncate(FCategorie);
+    Seek(FCategorie,0);
+    i:=0;
+end
+else i:=i+1;
+end;
+closefile(FCategorie);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheCategorie.Visible:=false;
+end;
+
+FSPlanComptable.TableauCategorie.SetFocus;
+
+if(TypePCN='1')then PublierDansLeReseaux('FClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='2')then PublierDansLeReseaux('FSousClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='3')then PublierDansLeReseaux('FCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='4')then PublierDansLeReseaux('FSousCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='5')then PublierDansLeReseaux('FFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='6')then PublierDansLeReseaux('FSousFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+end;
+
+procedure TFSPlanComptable.TableauCategorieContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheOptionsCategorie.Visible:=true;
+
+if MousePos.X<(FSPlanComptable.TableauCategorie.Width-FSPlanComptable.AfficheOptionsCategorie.Width)
+then FSPlanComptable.AfficheOptionsCategorie.Left:=(MousePos.X+FSPlanComptable.TableauCategorie.Left)
+else FSPlanComptable.AfficheOptionsCategorie.Left:=(FSPlanComptable.TableauCategorie.Width-
+     FSPlanComptable.AfficheOptionsCategorie.Width+FSPlanComptable.TableauCategorie.Left);
+
+if MousePos.Y<(FSPlanComptable.TableauCategorie.Height-FSPlanComptable.AfficheOptionsCategorie.Height)
+then FSPlanComptable.AfficheOptionsCategorie.Top:=(MousePos.Y+FSPlanComptable.TableauCategorie.Top)
+else FSPlanComptable.AfficheOptionsCategorie.Top:=(FSPlanComptable.TableauCategorie.Height-
+     FSPlanComptable.AfficheOptionsCategorie.Height)+FSPlanComptable.TableauCategorie.Top;
+
+FSPlanComptable.BitListeCategorie.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key=VK_INSERT then
+begin
+FSPlanComptable.AfficheCategorie.Visible:=true;
+FSPlanComptable.EditCodeCategorie.Text:='';
+FSPlanComptable.EditCodeModifCategorie.Text:='';
+FSPlanComptable.EditDesignCategorie.Text:='';
+FSPlanComptable.RBAutoriserCategorie.Checked:=false;
+FSPlanComptable.RBNePasAutoriserCategorie.Checked:=false;
+FSPlanComptable.RBTousCategorie.Checked:=false;
+FSPlanComptable.RBListeComptesCategorie.Checked:=false;
+FSPlanComptable.RBComptePrecisCategorie.Checked:=false;
+FSPlanComptable.RBCompteSousCompteCategorie.Checked:=false;
+FSPlanComptable.RBTiersCategorie.Checked:=false;
+FSPlanComptable.RBNonTiersCategorie.Checked:=false;
+FSPlanComptable.RBCategorieActive.Checked:=true;
+FSPlanComptable.BitValiderCategorie.Kind:=bkAll;
+FSPlanComptable.BitValiderCategorie.Caption:='Valider';
+FSPlanComptable.EditCodeCategorie.SetFocus;
+end;
+
+if(key=VK_DELETE)
+and(not ExisteCompteImputation(FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row],FSPlanComptable.TableauCategorie.Cells[2,FSPlanComptable.TableauCategorie.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheCategorie.Visible:=true;
+FSPlanComptable.EditCodeCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditCodeModifCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditDesignCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[2,FSPlanComptable.TableauCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[3,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBAutoriserCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[4,FSPlanComptable.TableauCategorie.Row]='Tous')
+then FSPlanComptable.RBTousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[6,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBTiersCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersCategorie.Checked:=true;
+
+FSPlanComptable.RBCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauCategorie.Cells[7,FSPlanComptable.TableauCategorie.Row]);
+
+FSPlanComptable.BitValiderCategorie.Kind:=bkCancel;
+FSPlanComptable.BitValiderCategorie.Caption:='Supprimer';
+FSPlanComptable.BitValiderCategorie.SetFocus;
+end;
+
+if key=VK_RETURN then
+begin
+ProcNouveauCode(FSPlanComptable.TableauCategorie.Cells[0,0],FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row]);
+FSPlanComptable.AfficheListeCategorie.Visible:=false;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauCategorieKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['3'..'6']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     FSPlanComptable.TableauCategorie.Cells[0,0]:=key;
+end;
+
+if key in['l','L']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     ProcAffichePCN(FSPlanComptable.TableauCategorie.Cells[0,0],FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row],FSPlanComptable.EditTypeComptabilite.Text);
+end;
+
+if key in['1'..'2']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     case key of
+     '1': begin FSPlanComptable.AfficheListeClasse.Visible:=true;        FSPlanComptable.TableauClasse.Cells[0,0]:='3';        ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauClasse.SetFocus;        end;
+     '2': begin FSPlanComptable.AfficheListeSousClasse.Visible:=true;    FSPlanComptable.TableauSousClasse.Cells[0,0]:='3';    ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauSousClasse.SetFocus;    end;
+     end;
+end;
+
+if key in['n','N','+']then
+begin
+FSPlanComptable.AfficheCategorie.Visible:=true;
+FSPlanComptable.EditCodeCategorie.Text:='';
+FSPlanComptable.EditCodeModifCategorie.Text:='';
+FSPlanComptable.EditDesignCategorie.Text:='';
+FSPlanComptable.RBAutoriserCategorie.Checked:=false;
+FSPlanComptable.RBNePasAutoriserCategorie.Checked:=false;
+FSPlanComptable.RBTousCategorie.Checked:=false;
+FSPlanComptable.RBListeComptesCategorie.Checked:=false;
+FSPlanComptable.RBComptePrecisCategorie.Checked:=false;
+FSPlanComptable.RBCompteSousCompteCategorie.Checked:=false;
+FSPlanComptable.RBTiersCategorie.Checked:=false;
+FSPlanComptable.RBNonTiersCategorie.Checked:=false;
+FSPlanComptable.RBCategorieActive.Checked:=true;
+FSPlanComptable.BitValiderCategorie.Kind:=bkAll;
+FSPlanComptable.BitValiderCategorie.Caption:='Valider';
+FSPlanComptable.EditCodeCategorie.SetFocus;
+end;
+
+if key in['m','M']then
+begin
+FSPlanComptable.AfficheCategorie.Visible:=true;
+FSPlanComptable.EditCodeCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditCodeModifCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditDesignCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[2,FSPlanComptable.TableauCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[3,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBAutoriserCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[4,FSPlanComptable.TableauCategorie.Row]='Tous')
+then FSPlanComptable.RBTousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[6,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBTiersCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersCategorie.Checked:=true;
+
+FSPlanComptable.RBCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauCategorie.Cells[7,FSPlanComptable.TableauCategorie.Row]);
+
+FSPlanComptable.BitValiderCategorie.Kind:=bkRetry;
+FSPlanComptable.BitValiderCategorie.Caption:='Modifier';
+FSPlanComptable.EditCodeCategorie.SetFocus;
+end;
+
+if(key in['s','S','-'])
+and(not ExisteCompteImputation(FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row],FSPlanComptable.TableauCategorie.Cells[2,FSPlanComptable.TableauCategorie.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheCategorie.Visible:=true;
+FSPlanComptable.EditCodeCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditCodeModifCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditDesignCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[2,FSPlanComptable.TableauCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[3,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBAutoriserCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[4,FSPlanComptable.TableauCategorie.Row]='Tous')
+then FSPlanComptable.RBTousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[6,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBTiersCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersCategorie.Checked:=true;
+
+FSPlanComptable.RBCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauCategorie.Cells[7,FSPlanComptable.TableauCategorie.Row]);
+
+FSPlanComptable.BitValiderCategorie.Kind:=bkCancel;
+FSPlanComptable.BitValiderCategorie.Caption:='Supprimer';
+FSPlanComptable.BitValiderCategorie.SetFocus;
+end;
+
+if key in['c','C']then
+begin
+     if(FSPlanComptable.TableauCategorie.Cells[4,FSPlanComptable.TableauCategorie.Row]='Liste')then
+     begin
+          ProcListeCompteCP(FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row]);
+          FSPlanComptable.TableauListeCompteCP.SetFocus;
+          FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de contre partie n''est enregistrée !');
+     end;
+end;
+
+if key in['t','T']then
+begin
+     if strtoboolean(FSPlanComptable.TableauCategorie.Cells[6,FSPlanComptable.TableauCategorie.Row])then
+     begin
+          ProcListeCompteTiers(FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row]);
+          FSPlanComptable.TableauCompteTiers.SetFocus;
+          FSPlanComptable.AfficheOperationCptTiers.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de Compte Tiers n''est enregistrée !');
+     end;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitListeCategorieClick(Sender: TObject);
+begin
+ProcAffichePCN('3','',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.TableauCategorie.SetFocus;
+FSPlanComptable.AfficheOptionsSousCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn53Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheCategorie.Visible:=true;
+FSPlanComptable.EditCodeCategorie.Text:='';
+FSPlanComptable.EditCodeModifCategorie.Text:='';
+FSPlanComptable.EditDesignCategorie.Text:='';
+FSPlanComptable.RBAutoriserCategorie.Checked:=false;
+FSPlanComptable.RBNePasAutoriserCategorie.Checked:=false;
+FSPlanComptable.RBTousCategorie.Checked:=false;
+FSPlanComptable.RBListeComptesCategorie.Checked:=false;
+FSPlanComptable.RBComptePrecisCategorie.Checked:=false;
+FSPlanComptable.RBCompteSousCompteCategorie.Checked:=false;
+FSPlanComptable.RBTiersCategorie.Checked:=false;
+FSPlanComptable.RBNonTiersCategorie.Checked:=false;
+FSPlanComptable.RBCategorieActive.Checked:=true;
+FSPlanComptable.BitValiderCategorie.Kind:=bkAll;
+FSPlanComptable.BitValiderCategorie.Caption:='Valider';
+FSPlanComptable.EditCodeCategorie.SetFocus;
+FSPlanComptable.AfficheOptionsCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn54Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheCategorie.Visible:=true;
+FSPlanComptable.EditCodeCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditCodeModifCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditDesignCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[2,FSPlanComptable.TableauCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[3,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBAutoriserCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[4,FSPlanComptable.TableauCategorie.Row]='Tous')
+then FSPlanComptable.RBTousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[6,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBTiersCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersCategorie.Checked:=true;
+
+FSPlanComptable.RBCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauCategorie.Cells[7,FSPlanComptable.TableauCategorie.Row]);
+
+FSPlanComptable.BitValiderCategorie.Kind:=bkRetry;
+FSPlanComptable.BitValiderCategorie.Caption:='Modifier';
+FSPlanComptable.EditCodeCategorie.SetFocus;
+FSPlanComptable.AfficheOptionsCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn55Click(Sender: TObject);
+begin
+
+if(not ExisteCompteImputation(FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row],FSPlanComptable.TableauCategorie.Cells[2,FSPlanComptable.TableauCategorie.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheCategorie.Visible:=true;
+FSPlanComptable.EditCodeCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditCodeModifCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[1,FSPlanComptable.TableauCategorie.Row];
+FSPlanComptable.EditDesignCategorie.Text:=FSPlanComptable.TableauCategorie.Cells[2,FSPlanComptable.TableauCategorie.Row];
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[3,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBAutoriserCategorie.Checked:=true
+else FSPlanComptable.RBNePasAutoriserCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[4,FSPlanComptable.TableauCategorie.Row]='Tous')
+then FSPlanComptable.RBTousCategorie.Checked:=true
+else FSPlanComptable.RBListeComptesCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='1')
+then FSPlanComptable.RBComptePrecisCategorie.Checked:=true;
+
+if(FSPlanComptable.TableauCategorie.Cells[5,FSPlanComptable.TableauCategorie.Row]='N')
+then FSPlanComptable.RBCompteSousCompteCategorie.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[6,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.RBTiersCategorie.Checked:=true
+else FSPlanComptable.RBNonTiersCategorie.Checked:=true;
+
+FSPlanComptable.RBCategorieActive.Checked:=strtoboolean(FSPlanComptable.TableauCategorie.Cells[7,FSPlanComptable.TableauCategorie.Row]);
+
+FSPlanComptable.BitValiderCategorie.Kind:=bkCancel;
+FSPlanComptable.BitValiderCategorie.Caption:='Supprimer';
+FSPlanComptable.BitValiderCategorie.SetFocus;
+end;
+FSPlanComptable.AfficheOptionsCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.Annuler3Click(Sender: TObject);
+begin
+CancelThe(3);
+end;
+
+procedure TFSPlanComptable.EditCodeCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditCodeCategorie.Text='')then
+     begin
+          FSPlanComptable.AfficheListeSousClasse.Visible:=true;
+          ProcAffichePCN('2','',FSPlanComptable.EditTypeComptabilite.Text);
+          FSPlanComptable.TableauSousClasse.Cells[0,0]:='3';
+          FSPlanComptable.TableauSousClasse.SetFocus;
+     end
+     else FSPlanComptable.EditDesignCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.EditDesignCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditDesignCategorie.Text='')then
+     begin
+          showmessage('Saisissez le Code SVP!');
+          FSPlanComptable.EditDesignCategorie.SetFocus;
+     end
+     else
+     begin
+          if(FSPlanComptable.RBNePasAutoriserCategorie.Checked=true)
+          then FSPlanComptable.RBNePasAutoriserCategorie.SetFocus
+          else FSPlanComptable.RBAutoriserCategorie.SetFocus;
+     end;
+end;
+end;
+
+procedure TFSPlanComptable.BitBtn52Click(Sender: TObject);
+begin
+FSPlanComptable.TableauCategorie.SetFocus;
+FSPlanComptable.AfficheCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauCategorieClick(Sender: TObject);
+begin
+
+if strtoboolean(FSPlanComptable.TableauCategorie.Cells[7,FSPlanComptable.TableauCategorie.Row])
+then FSPlanComptable.TableauCategorie.FixedColor:=FSPlanComptable.AfficheListeCategorie.Color
+else FSPlanComptable.TableauCategorie.FixedColor:=ClRed;
+
+FSPlanComptable.AfficheInformationPrincipale.Visible:=false;
+FSPlanComptable.AfficheOptionsCategorie.Visible:=false;
+FSPlanComptable.AfficheCategorie.Visible:=false;
+
+FSPlanComptable.AfficheListeClasse.Visible:=false;
+FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+FSPlanComptable.AfficheTransfertCompteACompte.Visible:=false;
+FSPlanComptable.AfficheListeTransfertCompte.Visible:=false;
+end;
+
+procedure TFSPlanComptable.Annuler2Click(Sender: TObject);
+begin
+CancelThe(2);
+end;
+
+procedure TFSPlanComptable.TableauSousClasseContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheOptionsSousClasse.Visible:=true;
+
+if MousePos.X<(FSPlanComptable.TableauSousClasse.Width-FSPlanComptable.AfficheOptionsSousClasse.Width)
+then FSPlanComptable.AfficheOptionsSousClasse.Left:=(MousePos.X+FSPlanComptable.TableauSousClasse.Left)
+else FSPlanComptable.AfficheOptionsSousClasse.Left:=(FSPlanComptable.TableauSousClasse.Width-
+     FSPlanComptable.AfficheOptionsSousClasse.Width+FSPlanComptable.TableauSousClasse.Left);
+
+if MousePos.Y<(FSPlanComptable.TableauSousClasse.Height-FSPlanComptable.AfficheOptionsSousClasse.Height)
+then FSPlanComptable.AfficheOptionsSousClasse.Top:=(MousePos.Y+FSPlanComptable.TableauSousClasse.Top)
+else FSPlanComptable.AfficheOptionsSousClasse.Top:=(FSPlanComptable.TableauSousClasse.Height-
+     FSPlanComptable.AfficheOptionsSousClasse.Height)+FSPlanComptable.TableauSousClasse.Top;
+
+FSPlanComptable.BitListeSousClasse.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauSousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key=VK_INSERT then
+begin
+FSPlanComptable.AfficheSousClasse.Visible:=true;
+FSPlanComptable.EditCodeSousClasse.Text:='';
+FSPlanComptable.EditCodeModifSousClasse.Text:='';
+FSPlanComptable.EditDesignSousClasse.Text:='';
+FSPlanComptable.RBAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBTousSousClasse.Checked:=false;
+FSPlanComptable.RBListeComptesSousClasse.Checked:=false;
+FSPlanComptable.RBComptePrecisSousClasse.Checked:=false;
+FSPlanComptable.RBCompteSousCompteClasse.Checked:=false;
+FSPlanComptable.RBTiersSousClasse.Checked:=false;
+FSPlanComptable.RBNonTiersSousClasse.Checked:=false;
+FSPlanComptable.RBSousClasseActive.Checked:=true;
+FSPlanComptable.BitValiderSousClasse.Kind:=bkAll;
+FSPlanComptable.BitValiderSousClasse.Caption:='Valider';
+FSPlanComptable.EditCodeSousClasse.SetFocus;
+end;
+
+if(key=VK_DELETE)
+and(not ExisteCompteImputation(FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row],FSPlanComptable.TableauSousClasse.Cells[2,FSPlanComptable.TableauSousClasse.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheSousClasse.Visible:=true;
+FSPlanComptable.EditCodeSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditCodeModifSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditDesignSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[2,FSPlanComptable.TableauSousClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[3,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBAutoriserSousClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[4,FSPlanComptable.TableauSousClasse.Row]='Tous')
+then FSPlanComptable.RBTousSousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[6,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBTiersSousClasse.Checked:=true
+else FSPlanComptable.RBNonTiersSousClasse.Checked:=true;
+
+FSPlanComptable.RBSousClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauSousClasse.Cells[7,FSPlanComptable.TableauSousClasse.Row]);
+
+FSPlanComptable.BitValiderSousClasse.Kind:=bkCancel;
+FSPlanComptable.BitValiderSousClasse.Caption:='Supprimer';
+FSPlanComptable.BitValiderSousClasse.SetFocus;
+end;
+
+if key=VK_RETURN then
+begin
+ProcNouveauCode(FSPlanComptable.TableauSousClasse.Cells[0,0],FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row]);
+FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauSousClasseKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['2'..'6']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     FSPlanComptable.TableauSousClasse.Cells[0,0]:=key;
+end;
+
+if key in['l','L']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     ProcAffichePCN(FSPlanComptable.TableauSousClasse.Cells[0,0],FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row],FSPlanComptable.EditTypeComptabilite.Text);
+end;
+
+if key in['1']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     case key of
+     '1': begin FSPlanComptable.AfficheListeClasse.Visible:=true;   FSPlanComptable.TableauClasse.Cells[0,0]:='2';   ProcAffichePCN(key,'',FSPlanComptable.EditTypeComptabilite.Text);   FSPlanComptable.TableauClasse.SetFocus; end;
+     end;
+end;
+
+if key in['n','N','+']then
+begin
+FSPlanComptable.AfficheSousClasse.Visible:=true;
+FSPlanComptable.EditCodeSousClasse.Text:='';
+FSPlanComptable.EditCodeModifSousClasse.Text:='';
+FSPlanComptable.EditDesignSousClasse.Text:='';
+FSPlanComptable.RBAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBTousSousClasse.Checked:=false;
+FSPlanComptable.RBListeComptesSousClasse.Checked:=false;
+FSPlanComptable.RBComptePrecisSousClasse.Checked:=false;
+FSPlanComptable.RBCompteSousCompteClasse.Checked:=false;
+FSPlanComptable.RBTiersSousClasse.Checked:=false;
+FSPlanComptable.RBNonTiersSousClasse.Checked:=false;
+FSPlanComptable.RBSousClasseActive.Checked:=true;
+FSPlanComptable.BitValiderSousClasse.Kind:=bkAll;
+FSPlanComptable.BitValiderSousClasse.Caption:='Valider';
+FSPlanComptable.EditCodeSousClasse.SetFocus;
+end;
+
+if key in['m','M']then
+begin
+FSPlanComptable.AfficheSousClasse.Visible:=true;
+FSPlanComptable.EditCodeSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditCodeModifSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditDesignSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[2,FSPlanComptable.TableauSousClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[3,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBAutoriserSousClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[4,FSPlanComptable.TableauSousClasse.Row]='Tous')
+then FSPlanComptable.RBTousSousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[6,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBTiersSousClasse.Checked:=true
+else FSPlanComptable.RBNonTiersSousClasse.Checked:=true;
+
+FSPlanComptable.RBSousClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauSousClasse.Cells[7,FSPlanComptable.TableauSousClasse.Row]);
+
+FSPlanComptable.BitValiderSousClasse.Kind:=bkRetry;
+FSPlanComptable.BitValiderSousClasse.Caption:='Modifier';
+FSPlanComptable.EditCodeSousClasse.SetFocus;
+end;
+
+if(key in['s','S','-'])
+and(not ExisteCompteImputation(FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row],FSPlanComptable.TableauSousClasse.Cells[2,FSPlanComptable.TableauSousClasse.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheSousClasse.Visible:=true;
+FSPlanComptable.EditCodeSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditCodeModifSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditDesignSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[2,FSPlanComptable.TableauSousClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[3,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBAutoriserSousClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[4,FSPlanComptable.TableauSousClasse.Row]='Tous')
+then FSPlanComptable.RBTousSousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[6,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBTiersSousClasse.Checked:=true
+else FSPlanComptable.RBNonTiersSousClasse.Checked:=true;
+
+FSPlanComptable.RBSousClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauSousClasse.Cells[7,FSPlanComptable.TableauSousClasse.Row]);
+
+FSPlanComptable.BitValiderSousClasse.Kind:=bkCancel;
+FSPlanComptable.BitValiderSousClasse.Caption:='Supprimer';
+FSPlanComptable.BitValiderSousClasse.SetFocus;
+end;
+
+if key in['c','C']then
+begin
+     if(FSPlanComptable.TableauSousClasse.Cells[4,FSPlanComptable.TableauSousClasse.Row]='Liste')then
+     begin
+          ProcListeCompteCP(FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row]);
+          FSPlanComptable.TableauListeCompteCP.SetFocus;
+          FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de contre partie n''est enregistrée !');
+     end;
+end;
+
+if key in['t','T']then
+begin
+     if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[6,FSPlanComptable.TableauSousClasse.Row])then
+     begin
+          ProcListeCompteTiers(FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row]);
+          FSPlanComptable.TableauCompteTiers.SetFocus;
+          FSPlanComptable.AfficheOperationCptTiers.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de Compte Tiers n''est enregistrée !');
+     end;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauSousClasseClick(Sender: TObject);
+begin
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[7,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.TableauSousClasse.FixedColor:=FSPlanComptable.AfficheListeSousClasse.Color
+else FSPlanComptable.TableauSousClasse.FixedColor:=ClRed;
+
+FSPlanComptable.AfficheInformationPrincipale.Visible:=false;
+FSPlanComptable.AfficheOptionsSousClasse.Visible:=false;
+FSPlanComptable.AfficheSousClasse.Visible:=false;
+
+FSPlanComptable.AfficheListeClasse.Visible:=false;
+FSPlanComptable.AfficheTransfertCompteACompte.Visible:=false;
+FSPlanComptable.AfficheListeTransfertCompte.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitListeSousClasseClick(Sender: TObject);
+begin
+ProcAffichePCN('2','',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.TableauSousClasse.SetFocus;
+FSPlanComptable.AfficheOptionsSousClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn58Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheSousClasse.Visible:=true;
+FSPlanComptable.EditCodeSousClasse.Text:='';
+FSPlanComptable.EditCodeModifSousClasse.Text:='';
+FSPlanComptable.EditDesignSousClasse.Text:='';
+FSPlanComptable.RBAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=false;
+FSPlanComptable.RBTousSousClasse.Checked:=false;
+FSPlanComptable.RBListeComptesSousClasse.Checked:=false;
+FSPlanComptable.RBComptePrecisSousClasse.Checked:=false;
+FSPlanComptable.RBCompteSousCompteClasse.Checked:=false;
+FSPlanComptable.RBTiersSousClasse.Checked:=false;
+FSPlanComptable.RBNonTiersSousClasse.Checked:=false;
+FSPlanComptable.RBSousClasseActive.Checked:=true;
+FSPlanComptable.BitValiderSousClasse.Kind:=bkAll;
+FSPlanComptable.BitValiderSousClasse.Caption:='Valider';
+FSPlanComptable.EditCodeSousClasse.SetFocus;
+FSPlanComptable.AfficheOptionsSousClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn59Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheSousClasse.Visible:=true;
+FSPlanComptable.EditCodeSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditCodeModifSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditDesignSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[2,FSPlanComptable.TableauSousClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[3,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBAutoriserSousClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[4,FSPlanComptable.TableauSousClasse.Row]='Tous')
+then FSPlanComptable.RBTousSousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[6,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBTiersSousClasse.Checked:=true
+else FSPlanComptable.RBNonTiersSousClasse.Checked:=true;
+
+FSPlanComptable.RBSousClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauSousClasse.Cells[7,FSPlanComptable.TableauSousClasse.Row]);
+
+FSPlanComptable.BitValiderSousClasse.Kind:=bkRetry;
+FSPlanComptable.BitValiderSousClasse.Caption:='Modifier';
+FSPlanComptable.EditCodeSousClasse.SetFocus;
+FSPlanComptable.AfficheOptionsSousClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn60Click(Sender: TObject);
+begin
+
+if(not ExisteCompteImputation(FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row],FSPlanComptable.TableauSousClasse.Cells[2,FSPlanComptable.TableauSousClasse.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheSousClasse.Visible:=true;
+FSPlanComptable.EditCodeSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditCodeModifSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[1,FSPlanComptable.TableauSousClasse.Row];
+FSPlanComptable.EditDesignSousClasse.Text:=FSPlanComptable.TableauSousClasse.Cells[2,FSPlanComptable.TableauSousClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[3,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBAutoriserSousClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[4,FSPlanComptable.TableauSousClasse.Row]='Tous')
+then FSPlanComptable.RBTousSousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisSousClasse.Checked:=true;
+
+if(FSPlanComptable.TableauSousClasse.Cells[5,FSPlanComptable.TableauSousClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteSousClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauSousClasse.Cells[6,FSPlanComptable.TableauSousClasse.Row])
+then FSPlanComptable.RBTiersSousClasse.Checked:=true
+else FSPlanComptable.RBNonTiersSousClasse.Checked:=true;
+
+FSPlanComptable.RBSousClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauSousClasse.Cells[7,FSPlanComptable.TableauSousClasse.Row]);
+
+FSPlanComptable.BitValiderSousClasse.Kind:=bkCancel;
+FSPlanComptable.BitValiderSousClasse.Caption:='Supprimer';
+FSPlanComptable.BitValiderSousClasse.SetFocus;
+end;
+FSPlanComptable.AfficheOptionsSousClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.AfficheOptionsSousClasseClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheOptionsSousClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitValiderSousClasseClick(Sender: TObject);
+var OK:boolean; k:integer; TypePCN,TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+if(FSPlanComptable.EditCodeSousClasse.Text='')
+or(FSPlanComptable.EditDesignSousClasse.Text='')
+then
+begin
+    showmessage('Saisissez les données de la Sous Classe.');
+    FSPlanComptable.EditCodeSousClasse.SetFocus;
+    exit;
+end;
+
+if((FSPlanComptable.BitValiderSousClasse.Caption='Valider')or(FSPlanComptable.BitValiderSousClasse.Caption='Modifier'))
+and(ControleSpecificite(FSPlanComptable.EditCodeSousClasse.Text, ResultCompte))then
+begin
+     OK:=false;
+     if(FSPlanComptable.RBAutoriserSousClasse.Checked<>ResultCompte.ContrePartie.UsesCompte)then OK:=true;
+     if(FSPlanComptable.RBTousSousClasse.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Tous')then OK:=true;
+     if(FSPlanComptable.RBListeComptesSousClasse.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Liste')then OK:=true;
+     if(FSPlanComptable.RBComptePrecisSousClasse.Checked=false)and(ResultCompte.Specificite='1')then OK:=true;
+     if(FSPlanComptable.RBCompteSousCompteSousClasse.Checked=false)and(ResultCompte.Specificite='N')then OK:=true;
+
+     if(OK=true)then
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=true;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='2';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Correction !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=clRed;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeSousClasse.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='Appliquer les condition du compte principal!';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='Appliquer';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+          Exit;
+     end
+     else
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=false;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='2';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Confirmation !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=$0000D900;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeSousClasse.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='les condition du compte principal sont appliquer sur le sous compte !';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='OK';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+     end;
+end;
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='2';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+if(FSPlanComptable.BitValiderSousClasse.Kind=bkAll)
+and(FSPlanComptable.BitValiderSousClasse.Caption='Valider')
+then
+begin
+ChSousClasse:=Adresse;
+assignfile(FSousClasse,ChSousClasse);
+if FileExists(ChSousClasse)
+then Reset(FSousClasse)else Rewrite(FSousClasse);
+Seek(FSousClasse,0);
+i:=0;
+OK:=false;
+while not eof(FSousClasse)and(OK=false)do
+begin
+     Read(FSousClasse,RSousClasse);
+     i:=i+1;
+     if(RSousClasse.CodeCompte=FSPlanComptable.EditCodeSousClasse.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Sous Classe existe déjas');
+          FSPlanComptable.EditCodeSousClasse.SetFocus;
+     end;
+end;
+
+if(OK=false)then
+begin
+Seek(FSousClasse,i);
+Truncate(FSousClasse);
+RSousClasse.CodeCompte:=FSPlanComptable.EditCodeSousClasse.Text;
+RSousClasse.Designation:=FSPlanComptable.EditDesignSousClasse.Text;
+
+RSousClasse.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserSousClasse.Checked;
+
+if(FSPlanComptable.RBTousSousClasse.Checked=true)then RSousClasse.ContrePartie.TypeUses:='Tous';
+if(FSPlanComptable.RBListeComptesSousClasse.Checked=true)then RSousClasse.ContrePartie.TypeUses:='Liste';
+
+if(FSPlanComptable.RBComptePrecisSousClasse.Checked=true)then RSousClasse.Specificite:='1';
+if(FSPlanComptable.RBCompteSousCompteSousClasse.Checked=true)then RSousClasse.Specificite:='N';
+
+RSousClasse.Tiers:=FSPlanComptable.RBTiersSousClasse.Checked;
+RSousClasse.Active:=FSPlanComptable.RBSousClasseActive.Checked;
+
+Write(FSousClasse,RSousClasse);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheSousClasse.Visible:=false;
+end;
+Closefile(FSousClasse);
+end;
+
+if(FSPlanComptable.BitValiderSousClasse.Kind=bkRetry)
+and(FSPlanComptable.BitValiderSousClasse.Caption='Modifier')
+then
+begin
+ChSousClasse:=Adresse;
+assignfile(FSousClasse,ChSousClasse);
+if FileExists(ChSousClasse)
+then Reset(FSousClasse)else Rewrite(FSousClasse);
+OK:=false;
+
+if(FSPlanComptable.EditCodeSousClasse.Text<>FSPlanComptable.EditCodeModifSousClasse.Text)then
+begin
+Seek(FSousClasse,0);
+i:=0;
+while not eof(FSousClasse)and(OK=false)do
+begin
+     Read(FSousClasse,RSousClasse);
+     i:=i+1;
+     if(RSousClasse.CodeCompte=FSPlanComptable.EditCodeSousClasse.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Sous Classe existe déjas');
+          FSPlanComptable.EditCodeSousClasse.SetFocus;
+     end;
+end;
+end;
+
+if(OK=false)then
+begin
+i:=0;
+Seek(FSousClasse,0);
+while not eof(FSousClasse)do
+begin
+read(FSousClasse,RSousClasse);
+if(RSousClasse.CodeCompte=FSPlanComptable.EditCodeModifSousClasse.Text)then
+begin
+     Seek(FSousClasse,i);
+     RSousClasse.CodeCompte:=FSPlanComptable.EditCodeSousClasse.Text;
+     RSousClasse.Designation:=FSPlanComptable.EditDesignSousClasse.Text;
+
+     RSousClasse.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserSousClasse.Checked;
+
+     if(FSPlanComptable.RBTousSousClasse.Checked=true)then RSousClasse.ContrePartie.TypeUses:='Tous';
+     if(FSPlanComptable.RBListeComptesSousClasse.Checked=true)then RSousClasse.ContrePartie.TypeUses:='Liste';
+
+     if(FSPlanComptable.RBComptePrecisSousClasse.Checked=true)then RSousClasse.Specificite:='1';
+     if(FSPlanComptable.RBCompteSousCompteSousClasse.Checked=true)then RSousClasse.Specificite:='N';
+
+     RSousClasse.Tiers:=FSPlanComptable.RBTiersSousClasse.Checked;
+     RSousClasse.Active:=FSPlanComptable.RBSousClasseActive.Checked;
+
+     Write(FSousClasse,RSousClasse);
+end;
+i:=i+1;
+end;
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheSousClasse.Visible:=false;
+end;
+ CloseFile(FSousClasse);
+end;
+
+if(FSPlanComptable.BitValiderSousClasse.Kind=bkCancel)
+and(FSPlanComptable.BitValiderSousClasse.Caption='Supprimer')
+then
+begin
+ChSousClasse:=Adresse;
+assignfile(FSousClasse,ChSousClasse);
+if FileExists(ChSousClasse)then
+Reset(FSousClasse)
+else Rewrite(FSousClasse);
+i:=0;
+Seek(FSousClasse,0);
+while not eof(FSousClasse)do
+begin
+read(FSousClasse,RSousClasse);
+if((RSousClasse.CodeCompte=FSPlanComptable.EditCodeModifSousClasse.Text)or(RSousClasse.CodeCompte=''))then
+begin
+    k:=i;
+    while not eof(FSousClasse)do
+    begin
+    read(FSousClasse,RSousClasse);
+    Seek(FSousClasse,k);
+    Write(FSousClasse,RSousClasse);
+    k:=k+1;
+    Seek(FSousClasse,k+1);
+    end;
+    Seek(FSousClasse,k);
+    Truncate(FSousClasse);
+    Seek(FSousClasse,0);
+    i:=0;
+end
+else i:=i+1;
+end;
+closefile(FSousClasse);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheSousClasse.Visible:=false;
+end;
+
+FSPlanComptable.TableauSousClasse.SetFocus;
+
+if(TypePCN='1')then PublierDansLeReseaux('FClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='2')then PublierDansLeReseaux('FSousClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='3')then PublierDansLeReseaux('FCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='4')then PublierDansLeReseaux('FSousCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='5')then PublierDansLeReseaux('FFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='6')then PublierDansLeReseaux('FSousFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+end;
+
+procedure TFSPlanComptable.BitBtn57Click(Sender: TObject);
+begin
+FSPlanComptable.TableauSousClasse.SetFocus;
+FSPlanComptable.AfficheSousClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.EditCodeSousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditCodeSousClasse.Text='')then
+     begin
+          FSPlanComptable.AfficheListeClasse.Visible:=true;
+          ProcAffichePCN('1','',FSPlanComptable.EditTypeComptabilite.Text);
+          FSPlanComptable.TableauClasse.Cells[0,0]:='2';
+          FSPlanComptable.TableauClasse.SetFocus;
+     end
+     else FSPlanComptable.EditDesignSousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.Annuler1Click(Sender: TObject);
+begin
+CancelThe(1);
+end;
+
+procedure TFSPlanComptable.TableauClasseContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheOptionsClasse.Visible:=true;
+
+if MousePos.X<(FSPlanComptable.TableauClasse.Width-FSPlanComptable.AfficheOptionsClasse.Width)
+then FSPlanComptable.AfficheOptionsClasse.Left:=(MousePos.X+FSPlanComptable.TableauClasse.Left)
+else FSPlanComptable.AfficheOptionsClasse.Left:=(FSPlanComptable.TableauClasse.Width-
+     FSPlanComptable.AfficheOptionsClasse.Width+FSPlanComptable.TableauClasse.Left);
+
+if MousePos.Y<(FSPlanComptable.TableauClasse.Height-FSPlanComptable.AfficheOptionsClasse.Height)
+then FSPlanComptable.AfficheOptionsClasse.Top:=(MousePos.Y+FSPlanComptable.TableauClasse.Top)
+else FSPlanComptable.AfficheOptionsClasse.Top:=(FSPlanComptable.TableauClasse.Height-
+     FSPlanComptable.AfficheOptionsClasse.Height)+FSPlanComptable.TableauClasse.Top;
+
+FSPlanComptable.BitListeClasse.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+
+begin
+
+if key=VK_INSERT then
+begin
+FSPlanComptable.AfficheClasse.Visible:=true;
+FSPlanComptable.EditCodeClasse.Text:='';
+FSPlanComptable.EditCodeModifClasse.Text:='';
+FSPlanComptable.EditDesignClasse.Text:='';
+FSPlanComptable.RBAutoriserClasse.Checked:=false;
+FSPlanComptable.RBNePasAutoriserClasse.Checked:=false;
+FSPlanComptable.RBComptePrecisClasse.Checked:=false;
+FSPlanComptable.RBCompteSousCompteClasse.Checked:=false;
+FSPlanComptable.RBTousClasse.Checked:=false;
+FSPlanComptable.RBListeComptesClasse.Checked:=false;
+FSPlanComptable.RBClasseActive.Checked:=true;
+
+FSPlanComptable.RBTiersClasse.Checked:=false;
+FSPlanComptable.RBNonTiersClasse.Checked:=false;
+FSPlanComptable.BitValiderClasse.Kind:=bkAll;
+FSPlanComptable.BitValiderClasse.Caption:='Valider';
+FSPlanComptable.EditCodeClasse.SetFocus;
+end;
+
+if(key=VK_DELETE)
+and(not ExisteCompteImputation(FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row],FSPlanComptable.TableauClasse.Cells[2,FSPlanComptable.TableauClasse.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheClasse.Visible:=true;
+FSPlanComptable.EditCodeClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditCodeModifClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditDesignClasse.Text:=FSPlanComptable.TableauClasse.Cells[2,FSPlanComptable.TableauClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[3,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBAutoriserClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[4,FSPlanComptable.TableauClasse.Row]='Tous')
+then FSPlanComptable.RBTousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[6,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBTiersClasse.Checked:=true
+else FSPlanComptable.RBNonTiersClasse.Checked:=true;
+
+FSPlanComptable.RBClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauClasse.Cells[7,FSPlanComptable.TableauClasse.Row]);
+
+FSPlanComptable.BitValiderClasse.Kind:=bkCancel;
+FSPlanComptable.BitValiderClasse.Caption:='Supprimer';
+FSPlanComptable.BitValiderClasse.SetFocus;
+end;
+
+if key=VK_RETURN then
+begin
+ProcNouveauCode(FSPlanComptable.TableauClasse.Cells[0,0],FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row]);
+FSPlanComptable.AfficheListeClasse.Visible:=false;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauClasseKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['1'..'6']then
+begin
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     FSPlanComptable.TableauClasse.Cells[0,0]:=key;
+end;
+
+if key in['l','L']then
+begin
+     FSPlanComptable.AfficheListeClasse.Visible:=false;
+     FSPlanComptable.AfficheListeSousClasse.Visible:=false;
+     FSPlanComptable.AfficheListeCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeSousCategorie.Visible:=false;
+     FSPlanComptable.AfficheListeFamille.Visible:=false;
+     ProcAffichePCN(FSPlanComptable.TableauClasse.Cells[0,0],FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row],FSPlanComptable.EditTypeComptabilite.Text);
+end;
+
+if key in['n','N','+']then
+begin
+FSPlanComptable.AfficheClasse.Visible:=true;
+FSPlanComptable.EditCodeClasse.Text:='';
+FSPlanComptable.EditCodeModifClasse.Text:='';
+FSPlanComptable.EditDesignClasse.Text:='';
+FSPlanComptable.RBAutoriserClasse.Checked:=false;
+FSPlanComptable.RBNePasAutoriserClasse.Checked:=false;
+FSPlanComptable.RBTousClasse.Checked:=false;
+FSPlanComptable.RBListeComptesClasse.Checked:=false;
+FSPlanComptable.RBComptePrecisClasse.Checked:=false;
+FSPlanComptable.RBCompteSousCompteClasse.Checked:=false;
+FSPlanComptable.RBTiersClasse.Checked:=false;
+FSPlanComptable.RBNonTiersClasse.Checked:=false;
+FSPlanComptable.RBClasseActive.Checked:=true;
+FSPlanComptable.BitValiderClasse.Kind:=bkAll;
+FSPlanComptable.BitValiderClasse.Caption:='Valider';
+FSPlanComptable.EditCodeClasse.SetFocus;
+end;
+
+if key in['m','M']then
+begin
+FSPlanComptable.AfficheClasse.Visible:=true;
+FSPlanComptable.EditCodeClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditCodeModifClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditDesignClasse.Text:=FSPlanComptable.TableauClasse.Cells[2,FSPlanComptable.TableauClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[3,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBAutoriserClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[4,FSPlanComptable.TableauClasse.Row]='Tous')
+then FSPlanComptable.RBTousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[6,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBTiersClasse.Checked:=true
+else FSPlanComptable.RBNonTiersClasse.Checked:=true;
+
+FSPlanComptable.RBClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauClasse.Cells[7,FSPlanComptable.TableauClasse.Row]);
+
+FSPlanComptable.BitValiderClasse.Kind:=bkRetry;
+FSPlanComptable.BitValiderClasse.Caption:='Modifier';
+FSPlanComptable.EditCodeClasse.SetFocus;
+end;
+
+if(key in['s','S','-'])
+and(not ExisteCompteImputation(FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row],FSPlanComptable.TableauClasse.Cells[2,FSPlanComptable.TableauClasse.Row],'Supprimer'))
+then
+begin
+FSPlanComptable.AfficheClasse.Visible:=true;
+FSPlanComptable.EditCodeClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditCodeModifClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditDesignClasse.Text:=FSPlanComptable.TableauClasse.Cells[2,FSPlanComptable.TableauClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[3,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBAutoriserClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[4,FSPlanComptable.TableauClasse.Row]='Tous')
+then FSPlanComptable.RBTousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[6,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBTiersClasse.Checked:=true
+else FSPlanComptable.RBNonTiersClasse.Checked:=true;
+
+FSPlanComptable.RBClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauClasse.Cells[7,FSPlanComptable.TableauClasse.Row]);
+
+FSPlanComptable.BitValiderClasse.Kind:=bkCancel;
+FSPlanComptable.BitValiderClasse.Caption:='Supprimer';
+FSPlanComptable.BitValiderClasse.SetFocus;
+end;
+
+if key in['c','C']then
+begin
+     if(FSPlanComptable.TableauClasse.Cells[4,FSPlanComptable.TableauClasse.Row]='Liste')then
+     begin
+          ProcListeCompteCP(FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row]);
+          FSPlanComptable.TableauListeCompteCP.SetFocus;
+          FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de contre partie n''est enregistrée !');
+     end;
+end;
+
+if key in['t','T']then
+begin
+     if strtoboolean(FSPlanComptable.TableauClasse.Cells[6,FSPlanComptable.TableauClasse.Row])then
+     begin
+          ProcListeCompteTiers(FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row]);
+          FSPlanComptable.TableauCompteTiers.SetFocus;
+          FSPlanComptable.AfficheOperationCptTiers.Visible:=false;
+     end
+     else
+     begin
+          showmessage('Aucune Liste de Compte Tiers n''est enregistrée !');
+     end;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauClasseClick(Sender: TObject);
+begin
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[7,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.TableauClasse.FixedColor:=FSPlanComptable.AfficheListeClasse.Color
+else FSPlanComptable.TableauClasse.FixedColor:=ClRed;
+
+
+FSPlanComptable.AfficheInformationPrincipale.Visible:=false;
+FSPlanComptable.AfficheOptionsClasse.Visible:=false;
+FSPlanComptable.AfficheClasse.Visible:=false;
+
+FSPlanComptable.AfficheTransfertCompteACompte.Visible:=false;
+FSPlanComptable.AfficheListeTransfertCompte.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitListeClasseClick(Sender: TObject);
+begin
+ProcAffichePCN('1','',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.TableauClasse.SetFocus;
+FSPlanComptable.AfficheOptionsClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn63Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheClasse.Visible:=true;
+FSPlanComptable.EditCodeClasse.Text:='';
+FSPlanComptable.EditCodeModifClasse.Text:='';
+FSPlanComptable.EditDesignClasse.Text:='';
+FSPlanComptable.RBAutoriserClasse.Checked:=false;
+FSPlanComptable.RBNePasAutoriserClasse.Checked:=false;
+FSPlanComptable.RBTousClasse.Checked:=false;
+FSPlanComptable.RBListeComptesClasse.Checked:=false;
+FSPlanComptable.RBComptePrecisClasse.Checked:=false;
+FSPlanComptable.RBCompteSousCompteClasse.Checked:=false;
+FSPlanComptable.RBTiersClasse.Checked:=false;
+FSPlanComptable.RBNonTiersClasse.Checked:=false;
+FSPlanComptable.RBClasseActive.Checked:=true;
+FSPlanComptable.BitValiderClasse.Kind:=bkAll;
+FSPlanComptable.BitValiderClasse.Caption:='Valider';
+FSPlanComptable.EditCodeClasse.SetFocus;
+FSPlanComptable.AfficheOptionsClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn64Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheClasse.Visible:=true;
+FSPlanComptable.EditCodeClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditCodeModifClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditDesignClasse.Text:=FSPlanComptable.TableauClasse.Cells[2,FSPlanComptable.TableauClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[3,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBAutoriserClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[4,FSPlanComptable.TableauClasse.Row]='Tous')
+then FSPlanComptable.RBTousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[6,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBTiersClasse.Checked:=true
+else FSPlanComptable.RBNonTiersClasse.Checked:=true;
+
+FSPlanComptable.RBClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauClasse.Cells[7,FSPlanComptable.TableauClasse.Row]);
+
+FSPlanComptable.BitValiderClasse.Kind:=bkRetry;
+FSPlanComptable.BitValiderClasse.Caption:='Modifier';
+FSPlanComptable.EditCodeClasse.SetFocus;
+FSPlanComptable.AfficheOptionsClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn65Click(Sender: TObject);
+begin
+
+if(not ExisteCompteImputation(FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row],FSPlanComptable.TableauClasse.Cells[2,FSPlanComptable.TableauClasse.Row],'Supprimer'))then
+begin
+FSPlanComptable.AfficheClasse.Visible:=true;
+FSPlanComptable.EditCodeClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditCodeModifClasse.Text:=FSPlanComptable.TableauClasse.Cells[1,FSPlanComptable.TableauClasse.Row];
+FSPlanComptable.EditDesignClasse.Text:=FSPlanComptable.TableauClasse.Cells[2,FSPlanComptable.TableauClasse.Row];
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[3,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBAutoriserClasse.Checked:=true
+else FSPlanComptable.RBNePasAutoriserClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[4,FSPlanComptable.TableauClasse.Row]='Tous')
+then FSPlanComptable.RBTousClasse.Checked:=true
+else FSPlanComptable.RBListeComptesClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='1')
+then FSPlanComptable.RBComptePrecisClasse.Checked:=true;
+
+if(FSPlanComptable.TableauClasse.Cells[5,FSPlanComptable.TableauClasse.Row]='N')
+then FSPlanComptable.RBCompteSousCompteClasse.Checked:=true;
+
+if strtoboolean(FSPlanComptable.TableauClasse.Cells[6,FSPlanComptable.TableauClasse.Row])
+then FSPlanComptable.RBTiersClasse.Checked:=true
+else FSPlanComptable.RBNonTiersClasse.Checked:=true;
+
+FSPlanComptable.RBClasseActive.Checked:=strtoboolean(FSPlanComptable.TableauClasse.Cells[7,FSPlanComptable.TableauClasse.Row]);
+
+FSPlanComptable.BitValiderClasse.Kind:=bkCancel;
+FSPlanComptable.BitValiderClasse.Caption:='Supprimer';
+FSPlanComptable.BitValiderClasse.SetFocus;
+FSPlanComptable.AfficheOptionsClasse.Visible:=false;
+end;
+
+end;
+
+procedure TFSPlanComptable.AfficheOptionsClasseClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheOptionsClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.EditCodeClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditCodeClasse.Text='')then
+     begin
+          showmessage('Saisissez le Code SVP!');
+          FSPlanComptable.EditCodeClasse.SetFocus;
+     end
+     else FSPlanComptable.EditDesignClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.BitBtn62Click(Sender: TObject);
+begin
+FSPlanComptable.TableauClasse.SetFocus;
+FSPlanComptable.AfficheClasse.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitValiderClasseClick(Sender: TObject);
+var OK:boolean; k:integer;  TypePCN,TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+if(FSPlanComptable.EditCodeClasse.Text='')
+or(FSPlanComptable.EditDesignClasse.Text='')
+then
+begin
+    showmessage('Saisissez les données de la Classe.');
+    FSPlanComptable.EditCodeClasse.SetFocus;
+    exit;
+end;
+
+if((FSPlanComptable.BitValiderClasse.Caption='Valider')or(FSPlanComptable.BitValiderClasse.Caption='Modifier'))
+and(ControleSpecificite(FSPlanComptable.EditCodeClasse.Text, ResultCompte))then
+begin
+     OK:=false;
+     if(FSPlanComptable.RBAutoriserClasse.Checked<>ResultCompte.ContrePartie.UsesCompte)then OK:=true;
+     if(FSPlanComptable.RBTousClasse.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Tous')then OK:=true;
+     if(FSPlanComptable.RBListeComptesClasse.Checked=false)and(ResultCompte.ContrePartie.TypeUses='Liste')then OK:=true;
+     if(FSPlanComptable.RBComptePrecisClasse.Checked=false)and(ResultCompte.Specificite='1')then OK:=true;
+     if(FSPlanComptable.RBCompteSousCompteClasse.Checked=false)and(ResultCompte.Specificite='N')then OK:=true;
+     
+     if(OK=true)then
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=true;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='1';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Correction !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=clRed;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeClasse.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='Appliquer les condition du compte principal!';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='Appliquer';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+          Exit;
+     end
+     else
+     begin
+          FSPlanComptable.AfficheControleSpecificite.Visible:=true;
+          FSPlanComptable.BitNonControleSpecificite.Enabled:=false;
+          FSPlanComptable.EditOrdreControleSpecificite.Text:='1';
+          FSPlanComptable.TitreAfficheControleSpecificite.Caption:='Confirmation !';
+          FSPlanComptable.TitreAfficheControleSpecificite.Font.Color:=$0000D900;
+          FSPlanComptable.MessageAfficheControleSpecificite.Caption:='Le compte: '+FSPlanComptable.EditCodeClasse.Text+' est soumis au même conditions que le Compte: '+ResultCompte.CodeCompte+': '+ResultCompte.Designation;
+          FSPlanComptable.ResultControleSpecificite.Caption:='les condition du compte principal sont appliquer sur le sous compte !';
+          FSPlanComptable.BitValideControleSpecificite.Caption:='OK';
+          FSPlanComptable.BitValideControleSpecificite.SetFocus;
+     end;
+end;
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='1';                   
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+
+if(FSPlanComptable.RBComptePrecisClasse.Checked=true)
+or(FSPlanComptable.RBCompteSousCompteClasse.Checked=true)
+then
+begin
+if(FSPlanComptable.BitValiderClasse.Kind=bkAll)
+and(FSPlanComptable.BitValiderClasse.Caption='Valider')
+then
+begin
+ChClasse:=Adresse;
+assignfile(FClasse,ChClasse);
+if FileExists(ChClasse)
+then Reset(FClasse)else Rewrite(FClasse);
+Seek(FClasse,0);
+i:=0;
+OK:=false;
+while not eof(FClasse)and(OK=false)do
+begin
+     Read(FClasse,RClasse);
+     i:=i+1;
+     if(RClasse.CodeCompte=FSPlanComptable.EditCodeClasse.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Classe existe déjas');
+          FSPlanComptable.EditCodeClasse.SetFocus;
+     end;
+end;
+
+if(OK=false)then
+begin
+Seek(FClasse,i);
+Truncate(FClasse);
+RClasse.CodeCompte:=FSPlanComptable.EditCodeClasse.Text;
+RClasse.Designation:=FSPlanComptable.EditDesignClasse.Text;
+
+RClasse.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserClasse.Checked;
+
+if(FSPlanComptable.RBTousClasse.Checked=true)then RClasse.ContrePartie.TypeUses:='Tous';
+if(FSPlanComptable.RBListeComptesClasse.Checked=true)then RClasse.ContrePartie.TypeUses:='Liste';
+
+if(FSPlanComptable.RBComptePrecisClasse.Checked=true)then RClasse.Specificite:='1';
+if(FSPlanComptable.RBCompteSousCompteClasse.Checked=true)then RClasse.Specificite:='N';
+
+RClasse.Tiers:=FSPlanComptable.RBTiersClasse.Checked;
+RClasse.Active:=FSPlanComptable.RBClasseActive.Checked;
+
+
+Write(FClasse,RClasse);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheClasse.Visible:=false;
+end;
+Closefile(FClasse);
+end;
+
+if(FSPlanComptable.BitValiderClasse.Kind=bkRetry)
+and(FSPlanComptable.BitValiderClasse.Caption='Modifier')
+then
+begin
+ChClasse:=Adresse;
+assignfile(FClasse,ChClasse);
+if FileExists(ChClasse)
+then Reset(FClasse)else Rewrite(FClasse);
+OK:=false;
+
+if(FSPlanComptable.EditCodeClasse.Text<>FSPlanComptable.EditCodeModifClasse.Text)then
+begin
+Seek(FClasse,0);
+i:=0;
+while not eof(FClasse)and(OK=false)do
+begin
+     Read(FClasse,RClasse);
+     i:=i+1;
+     if(RClasse.CodeCompte=FSPlanComptable.EditCodeClasse.Text)then
+     begin
+          OK:=true;
+          showmessage('Le Code de la Classe existe déjas');
+          FSPlanComptable.EditCodeClasse.SetFocus;
+     end;
+end;
+end;
+
+if(OK=false)then
+begin
+i:=0;
+Seek(FClasse,0);
+while not eof(FClasse)do
+begin
+read(FClasse,RClasse);
+if(RClasse.CodeCompte=FSPlanComptable.EditCodeModifClasse.Text)then
+begin
+     Seek(FClasse,i);
+     RClasse.CodeCompte:=FSPlanComptable.EditCodeClasse.Text;
+     RClasse.Designation:=FSPlanComptable.EditDesignClasse.Text;
+
+     RClasse.ContrePartie.UsesCompte:=FSPlanComptable.RBAutoriserClasse.Checked;
+
+     if(FSPlanComptable.RBTousClasse.Checked=true)then RClasse.ContrePartie.TypeUses:='Tous';
+     if(FSPlanComptable.RBListeComptesClasse.Checked=true)then RClasse.ContrePartie.TypeUses:='Liste';
+
+     if(FSPlanComptable.RBComptePrecisClasse.Checked=true)then RClasse.Specificite:='1';
+     if(FSPlanComptable.RBCompteSousCompteClasse.Checked=true)then RClasse.Specificite:='N';
+
+     RClasse.Tiers:=FSPlanComptable.RBTiersClasse.Checked;
+     RClasse.Active:=FSPlanComptable.RBClasseActive.Checked;
+
+     Write(FClasse,RClasse);
+end;
+i:=i+1;
+end;
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheClasse.Visible:=false;
+end;
+ CloseFile(FClasse);
+end;
+end
+else
+begin
+     showmessage('Sélectionner la spécificité du compte désigné');
+     FSPlanComptable.RBComptePrecisClasse.SetFocus;
+end;
+
+if(FSPlanComptable.BitValiderClasse.Kind=bkCancel)
+and(FSPlanComptable.BitValiderClasse.Caption='Supprimer')
+then
+begin
+ChClasse:=Adresse;
+assignfile(FClasse,ChClasse);
+if FileExists(ChClasse)then
+Reset(FClasse)
+else Rewrite(FClasse);
+i:=0;
+Seek(FClasse,0);
+while not eof(FClasse)do
+begin
+read(FClasse,RClasse);
+if((RClasse.CodeCompte=FSPlanComptable.EditCodeModifClasse.Text)or(RClasse.CodeCompte=''))then
+begin
+    k:=i;
+    while not eof(FClasse)do
+    begin
+    read(FClasse,RClasse);
+    Seek(FClasse,k);
+    Write(FClasse,RClasse);
+    k:=k+1;
+    Seek(FClasse,k+1);
+    end;
+    Seek(FClasse,k);
+    Truncate(FClasse);
+    Seek(FClasse,0);
+    i:=0;
+end
+else i:=i+1;
+end;
+closefile(FClasse);
+ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+FSPlanComptable.AfficheClasse.Visible:=false;
+end;
+
+FSPlanComptable.TableauClasse.SetFocus;
+
+if(TypePCN='1')then PublierDansLeReseaux('FClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='2')then PublierDansLeReseaux('FSousClasse',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='3')then PublierDansLeReseaux('FCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='4')then PublierDansLeReseaux('FSousCategorie',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='5')then PublierDansLeReseaux('FFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+if(TypePCN='6')then PublierDansLeReseaux('FSousFamille',TypeComptabilite,'',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+end;
+
+procedure TFSPlanComptable.RBAlphSousFamilleClick(Sender: TObject);
+begin
+ProcNouveauCode('6',FirstLaters(FSPlanComptable.EditCodeSousFamille.Text,Longueur(FSPlanComptable.EditCodeSousFamille.Text)-1));
+end;
+
+procedure TFSPlanComptable.RBNumSousFamilleClick(Sender: TObject);
+begin
+ProcNouveauCode('6',FirstLaters(FSPlanComptable.EditCodeSousFamille.Text,Longueur(FSPlanComptable.EditCodeSousFamille.Text)-1));
+end;
+
+procedure TFSPlanComptable.RBAlphFamilleClick(Sender: TObject);
+begin
+ProcNouveauCode('5',FirstLaters(FSPlanComptable.EditCodeFamille.Text,Longueur(FSPlanComptable.EditCodeFamille.Text)-1));
+end;
+
+procedure TFSPlanComptable.RBNumFamilleClick(Sender: TObject);
+begin
+ProcNouveauCode('5',FirstLaters(FSPlanComptable.EditCodeFamille.Text,Longueur(FSPlanComptable.EditCodeFamille.Text)-1));
+end;
+
+procedure TFSPlanComptable.BitBtn1Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheListeCptContrePartie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauOptionCompteCPKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['r','R']
+then
+begin
+     FSPlanComptable.EditRechercheCompteCP.Text:='';
+     FSPlanComptable.EditRechercheCompteCP.SetFocus;
+end;
+
+if key in['0'..'9']then
+begin
+     if key in['1'..'6']then
+     begin
+          ListePlanComptableCP(strtointeger(key),'','')
+     end
+     else
+     begin
+          showmessage('Aucune liste ne porte l''ordre sélectionné !');
+          FSPlanComptable.TableauOptionCompteCP.SetFocus;
+     end;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn2Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=false;
+FSPlanComptable.AfficheOptionCompteCP.Visible:=true;
+FSPlanComptable.EditOptionCompteCP.Text:='Nouveau';
+
+FSPlanComptable.RBCompteCPPrecisClasse.Checked:=true;
+
+ListePlanComptableCP(1,'','');
+
+FSPlanComptable.TableauOptionCompteCP.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauListeCompteCPClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheInformations.Visible:=false;
+FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=false;
+end;
+
+procedure TFSPlanComptable.EditRechercheCompteCPKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+ListePlanComptableCP(Longueur(FSPlanComptable.EditRechercheCompteCP.Text),FSPlanComptable.EditRechercheCompteCP.Text,'')
+end;
+
+procedure TFSPlanComptable.EditRechercheCompteCPKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.EditRechercheCompteCP.Text:='';
+     FSPlanComptable.TableauOptionCompteCP.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauListeCompteCPKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.AfficheOptionCompteCP.Visible:=true;
+     FSPlanComptable.EditOptionCompteCP.Text:='Nouveau';
+     ListePlanComptableCP(1,'','');
+     FSPlanComptable.TableauOptionCompteCP.SetFocus;
+end;
+
+if key in[VK_INSERT]then
+begin
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=false;
+FSPlanComptable.AfficheOptionCompteCP.Visible:=true;
+FSPlanComptable.EditOptionCompteCP.Text:='Nouveau';
+
+FSPlanComptable.RBCompteCPPrecisClasse.Checked:=true;
+
+ListePlanComptableCP(1,'','');
+
+FSPlanComptable.TableauOptionCompteCP.SetFocus;
+end;
+
+if key in[VK_DELETE]then
+begin
+FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=true;
+FSPlanComptable.AfficheSupprimerCompteCP.Caption:='Supprimer';
+FSPlanComptable.BitSupprimerCP.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauOptionCompteCPKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var   iModif:integer; OperationExiste,OperationTrouver:boolean; CompteCPNew,CompteCPModif,Option:string;
+begin
+if key in[VK_RETURN]then
+begin
+if(FSPlanComptable.RBCompteCPPrecisClasse.Checked=true)
+or(FSPlanComptable.RBCompteCPSousCompteClasse.Checked=true)
+then
+begin
+Option:=FSPlanComptable.EditOptionCompteCP.Text;
+CompteCPModif:=FSPlanComptable.TableauListeCompteCP.Cells[2,FSPlanComptable.TableauListeCompteCP.Row];
+CompteCPNew:=FSPlanComptable.TableauOptionCompteCP.Cells[1,FSPlanComptable.TableauOptionCompteCP.Row];
+
+     OpenFParc(RParc);
+     ChListeCompteCP:=RParc.Parcours+'\'+Exercice+'FListeCompteCP';
+     assignfile(FListeCompteCP,ChListeCompteCP);
+     if FileExists(ChListeCompteCP)
+     then Reset(FListeCompteCP)else Rewrite(FListeCompteCP);
+     Seek(FListeCompteCP,0);
+     i:=0;
+     iModif:=0;
+     OperationExiste:=false;
+     OperationTrouver:=false;
+     while not eof(FListeCompteCP)and(OperationExiste=false)do
+     begin
+          Read(FListeCompteCP,RListeCompteCP);
+
+          if(RListeCompteCP.NumCptPrincipal=FSPlanComptable.EditNumComptePrincipal.Text)then
+          begin
+               if(Option='Modifier')then
+               begin
+                    if(RListeCompteCP.NumCptCP=CompteCPModif)
+                    then
+                    begin
+                         OperationTrouver:=true;
+                         iModif:=i;
+                         i:=i-1;
+                    end;
+
+                    if(CompteCPModif<>CompteCPNew)
+                    and(RListeCompteCP.NumCptCP=CompteCPNew)
+                    then
+                    begin
+                         OperationExiste:=true;
+                         i:=i-1;
+                    end;
+               end;
+
+               if(Option='Nouveau')then
+               begin
+                    if(RListeCompteCP.NumCptCP=CompteCPNew)
+                    then
+                    begin
+                         OperationExiste:=true;
+                         i:=i-1;
+                    end;
+               end;
+          end;
+     i:=i+1;
+     end;
+
+     if(OperationExiste=true)
+     then
+     begin
+          showmessage('Le registre est déjà enregistré !');
+     end
+     else
+     begin
+
+          if(OperationTrouver=true)then
+          begin
+               i:=iModif;
+          end
+          else Truncate(FListeCompteCP);
+
+          Seek(FListeCompteCP,i);
+          RListeCompteCP.NumCptPrincipal:=FSPlanComptable.EditNumComptePrincipal.Text;
+          RListeCompteCP.NumCptCP:=FSPlanComptable.TableauOptionCompteCP.Cells[1,FSPlanComptable.TableauOptionCompteCP.Row];
+
+          if(FSPlanComptable.RBCompteCPPrecisClasse.Checked=true)
+          then RListeCompteCP.Specificite:='1';
+
+          if(FSPlanComptable.RBCompteCPSousCompteClasse.Checked=true)
+          then RListeCompteCP.Specificite:='N';
+
+          write(FListeCompteCP,RListeCompteCP);
+          closefile(FListeCompteCP);
+
+          ProcListeCompteCP(FSPlanComptable.EditNumComptePrincipal.Text);
+          FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+     end;
+end
+else
+begin
+     showmessage('Sélectionner la spécificité du compte désigné');
+     FSPlanComptable.RBCompteCPPrecisClasse.SetFocus;
+end;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn3Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=false;
+FSPlanComptable.AfficheOptionCompteCP.Visible:=true;
+FSPlanComptable.EditOptionCompteCP.Text:='Modifier';
+
+if(FSPlanComptable.TableauListeCompteCP.Cells[4,FSPlanComptable.TableauListeCompteCP.Row]='N')
+then FSPlanComptable.RBCompteCPSousCompteClasse.Checked:=true
+else FSPlanComptable.RBCompteCPPrecisClasse.Checked:=true;
+
+ListePlanComptableCP(longueur(FSPlanComptable.TableauListeCompteCP.Cells[2,FSPlanComptable.TableauListeCompteCP.Row]),FSPlanComptable.TableauListeCompteCP.Cells[2,FSPlanComptable.TableauListeCompteCP.Row],FSPlanComptable.TableauListeCompteCP.Cells[2,FSPlanComptable.TableauListeCompteCP.Row]);
+
+FSPlanComptable.TableauOptionCompteCP.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBCompteCPPrecisClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.TableauOptionCompteCP.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.RBCompteCPSousCompteClasseKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.TableauOptionCompteCP.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn4Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=true;
+FSPlanComptable.AfficheSupprimerCompteCP.Caption:='Supprimer';
+FSPlanComptable.BitSupprimerCP.SetFocus;
+end;
+
+procedure TFSPlanComptable.BitSupprimerCPClick(Sender: TObject);
+var  Confirme:boolean;
+begin
+DeleteFListeCompteCP(FSPlanComptable.TableauListeCompteCP.Cells[1,FSPlanComptable.TableauListeCompteCP.Row],FSPlanComptable.TableauListeCompteCP.Cells[2,FSPlanComptable.TableauListeCompteCP.Row],Confirme);
+ProcListeCompteCP(FSPlanComptable.EditNumComptePrincipal.Text);
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn6Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn5Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauOptionCompteCPDblClick(Sender: TObject);
+var   iModif:integer; OperationExiste,OperationTrouver:boolean; CompteCPNew,CompteCPModif,Option:string;
+begin
+
+if(FSPlanComptable.RBCompteCPPrecisClasse.Checked=true)
+or(FSPlanComptable.RBCompteCPSousCompteClasse.Checked=true)
+then
+begin
+Option:=FSPlanComptable.EditOptionCompteCP.Text;
+CompteCPModif:=FSPlanComptable.TableauListeCompteCP.Cells[2,FSPlanComptable.TableauListeCompteCP.Row];
+CompteCPNew:=FSPlanComptable.TableauOptionCompteCP.Cells[1,FSPlanComptable.TableauOptionCompteCP.Row];
+
+     OpenFParc(RParc);
+     ChListeCompteCP:=RParc.Parcours+'\'+Exercice+'FListeCompteCP';
+     assignfile(FListeCompteCP,ChListeCompteCP);
+     if FileExists(ChListeCompteCP)
+     then Reset(FListeCompteCP)else Rewrite(FListeCompteCP);
+     Seek(FListeCompteCP,0);
+     i:=0;
+     iModif:=0;
+     OperationExiste:=false;
+     OperationTrouver:=false;
+     while not eof(FListeCompteCP)and(OperationExiste=false)do
+     begin
+          Read(FListeCompteCP,RListeCompteCP);
+
+          if(RListeCompteCP.NumCptPrincipal=FSPlanComptable.EditNumComptePrincipal.Text)then
+          begin
+               if(Option='Modifier')then
+               begin
+                    if(RListeCompteCP.NumCptCP=CompteCPModif)
+                    then
+                    begin
+                         OperationTrouver:=true;
+                         iModif:=i;
+                         i:=i-1;
+                    end;
+
+                    if(CompteCPModif<>CompteCPNew)
+                    and(RListeCompteCP.NumCptCP=CompteCPNew)
+                    then
+                    begin
+                         OperationExiste:=true;
+                         i:=i-1;
+                    end;
+               end;
+
+               if(Option='Nouveau')then
+               begin
+                    if(RListeCompteCP.NumCptCP=CompteCPNew)
+                    then
+                    begin
+                         OperationExiste:=true;
+                         i:=i-1;
+                    end;
+               end;
+          end;
+     i:=i+1;
+     end;
+
+     if(OperationExiste=true)
+     then
+     begin
+          showmessage('Le registre est déjà enregistré !');
+     end
+     else
+     begin
+
+          if(OperationTrouver=true)then
+          begin
+               i:=iModif;
+          end
+          else Truncate(FListeCompteCP);
+
+          Seek(FListeCompteCP,i);
+          RListeCompteCP.NumCptPrincipal:=FSPlanComptable.EditNumComptePrincipal.Text;
+          RListeCompteCP.NumCptCP:=FSPlanComptable.TableauOptionCompteCP.Cells[1,FSPlanComptable.TableauOptionCompteCP.Row];
+
+          if(FSPlanComptable.RBCompteCPPrecisClasse.Checked=true)
+          then RListeCompteCP.Specificite:='1';
+
+          if(FSPlanComptable.RBCompteCPSousCompteClasse.Checked=true)
+          then RListeCompteCP.Specificite:='N';
+
+          write(FListeCompteCP,RListeCompteCP);
+          closefile(FListeCompteCP);
+
+          ProcListeCompteCP(FSPlanComptable.EditNumComptePrincipal.Text);
+          FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+     end;
+end
+else
+begin
+     showmessage('Sélectionner la spécificité du compte désigné');
+     FSPlanComptable.RBCompteCPPrecisClasse.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.EditDesignClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditDesignClasse.Text='')then
+     begin
+          showmessage('Saisissez le Code SVP!');
+          FSPlanComptable.EditDesignClasse.SetFocus;
+     end
+     else
+     begin
+          if(FSPlanComptable.RBNePasAutoriserClasse.Checked=true)
+          then FSPlanComptable.RBNePasAutoriserClasse.SetFocus
+          else FSPlanComptable.RBAutoriserClasse.SetFocus;
+     end;
+end;
+end;
+
+procedure TFSPlanComptable.RBAutoriserClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesClasse.Checked=true)
+     then FSPlanComptable.RBListeComptesClasse.SetFocus
+     else FSPlanComptable.RBTousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNePasAutoriserClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesClasse.Checked=true)
+     then FSPlanComptable.RBListeComptesClasse.SetFocus
+     else FSPlanComptable.RBTousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteClasse.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteClasse.SetFocus
+     else FSPlanComptable.RBComptePrecisClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBListeComptesClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteClasse.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteClasse.SetFocus
+     else FSPlanComptable.RBComptePrecisClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersClasse.Checked=true)
+     then FSPlanComptable.RBNonTiersClasse.SetFocus
+     else FSPlanComptable.RBTiersClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersClasse.Checked=true)
+     then FSPlanComptable.RBNonTiersClasse.SetFocus
+     else FSPlanComptable.RBTiersClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.EditDesignSousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.EditDesignSousClasse.Text='')then
+     begin
+          showmessage('Saisissez le Code SVP!');
+          FSPlanComptable.EditDesignSousClasse.SetFocus;
+     end
+     else
+     begin
+          if(FSPlanComptable.RBNePasAutoriserSousClasse.Checked=true)
+          then FSPlanComptable.RBNePasAutoriserSousClasse.SetFocus
+          else FSPlanComptable.RBAutoriserSousClasse.SetFocus;
+     end;
+end;
+end;
+
+procedure TFSPlanComptable.RBAutoriserSousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesSousClasse.Checked=true)
+     then FSPlanComptable.RBListeComptesSousClasse.SetFocus
+     else FSPlanComptable.RBTousSousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNePasAutoriserSousClasseKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesSousClasse.Checked=true)
+     then FSPlanComptable.RBListeComptesSousClasse.SetFocus
+     else FSPlanComptable.RBTousSousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTousSousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteSousClasse.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteSousClasse.SetFocus
+     else FSPlanComptable.RBComptePrecisSousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBListeComptesSousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteSousClasse.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteSousClasse.SetFocus
+     else FSPlanComptable.RBComptePrecisSousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisSousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersSousClasse.Checked=true)
+     then FSPlanComptable.RBNonTiersSousClasse.SetFocus
+     else FSPlanComptable.RBTiersSousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteSousClasseKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersSousClasse.Checked=true)
+     then FSPlanComptable.RBNonTiersSousClasse.SetFocus
+     else FSPlanComptable.RBTiersSousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBAutoriserCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesCategorie.Checked=true)
+     then FSPlanComptable.RBListeComptesCategorie.SetFocus
+     else FSPlanComptable.RBTousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNePasAutoriserCategorieKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesCategorie.Checked=true)
+     then FSPlanComptable.RBListeComptesCategorie.SetFocus
+     else FSPlanComptable.RBTousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTousCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteCategorie.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteCategorie.SetFocus
+     else FSPlanComptable.RBComptePrecisCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBListeComptesCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteCategorie.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteCategorie.SetFocus
+     else FSPlanComptable.RBComptePrecisCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersCategorie.Checked=true)
+     then FSPlanComptable.RBNonTiersCategorie.SetFocus
+     else FSPlanComptable.RBTiersCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteCategorieKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersCategorie.Checked=true)
+     then FSPlanComptable.RBNonTiersCategorie.SetFocus
+     else FSPlanComptable.RBTiersCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.AfficheOptionsCategorieClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheOptionsCategorie.Visible:=false;
+end;
+
+procedure TFSPlanComptable.RBAutoriserSousCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesSousCategorie.Checked=true)
+     then FSPlanComptable.RBListeComptesSousCategorie.SetFocus
+     else FSPlanComptable.RBTousSousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNePasAutoriserSousCategorieKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesSousCategorie.Checked=true)
+     then FSPlanComptable.RBListeComptesSousCategorie.SetFocus
+     else FSPlanComptable.RBTousSousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTousSousCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteSousCategorie.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteSousCategorie.SetFocus
+     else FSPlanComptable.RBComptePrecisSousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBListeComptesSousCategorieKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteSousCategorie.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteSousCategorie.SetFocus
+     else FSPlanComptable.RBComptePrecisSousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisSousCategorieKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersSousCategorie.Checked=true)
+     then FSPlanComptable.RBNonTiersSousCategorie.SetFocus
+     else FSPlanComptable.RBTiersSousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteSousCategorieKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderSousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBAutoriserFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesFamille.Checked=true)
+     then FSPlanComptable.RBListeComptesFamille.SetFocus
+     else FSPlanComptable.RBTousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNePasAutoriserFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesFamille.Checked=true)
+     then FSPlanComptable.RBListeComptesFamille.SetFocus
+     else FSPlanComptable.RBTousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTousFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteFamille.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteFamille.SetFocus
+     else FSPlanComptable.RBComptePrecisFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBListeComptesFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteFamille.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteFamille.SetFocus
+     else FSPlanComptable.RBComptePrecisFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersFamille.Checked=true)
+     then FSPlanComptable.RBNonTiersFamille.SetFocus
+     else FSPlanComptable.RBTiersFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteFamilleKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersFamille.Checked=true)
+     then FSPlanComptable.RBNonTiersFamille.SetFocus
+     else FSPlanComptable.RBTiersFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBAutoriserSousFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesSousFamille.Checked=true)
+     then FSPlanComptable.RBListeComptesSousFamille.SetFocus
+     else FSPlanComptable.RBTousSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNePasAutoriserSousFamilleKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBListeComptesSousFamille.Checked=true)
+     then FSPlanComptable.RBListeComptesSousFamille.SetFocus
+     else FSPlanComptable.RBTousSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTousSousFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteSousFamille.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteSousFamille.SetFocus
+     else FSPlanComptable.RBComptePrecisSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBListeComptesSousFamilleKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBCompteSousCompteSousFamille.Checked=true)
+     then FSPlanComptable.RBCompteSousCompteSousFamille.SetFocus
+     else FSPlanComptable.RBComptePrecisSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisSousFamilleKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersSousFamille.Checked=true)
+     then FSPlanComptable.RBNonTiersSousFamille.SetFocus
+     else FSPlanComptable.RBTiersSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteSousFamilleKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     if(FSPlanComptable.RBNonTiersSousFamille.Checked=true)
+     then FSPlanComptable.RBNonTiersSousFamille.SetFocus
+     else FSPlanComptable.RBTiersSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisClasseContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteClasseContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisSousClasseContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteSousClasseContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisCategorieContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteCategorieContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisSousCategorieContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteSousCategorieContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisFamilleContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteFamilleContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBComptePrecisSousFamilleContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBCompteSousCompteSousFamilleContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=true;
+FSPlanComptable.AfficheInformationPrincipale.SetFocus;
+end;
+
+procedure TFSPlanComptable.AfficheListeSousFamilleClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheInformationPrincipale.Visible:=false;
+end;
+
+procedure TFSPlanComptable.RBCompteCPPrecisClasseContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformations.Visible:=true;
+FSPlanComptable.AfficheInformations.SetFocus;
+end;
+
+procedure TFSPlanComptable.RBCompteCPSousCompteClasseContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+FSPlanComptable.AfficheInformations.Visible:=true;
+FSPlanComptable.AfficheInformations.SetFocus;
+end;
+
+procedure TFSPlanComptable.AfficheListeCptContrePartieClick(
+  Sender: TObject);
+begin
+FSPlanComptable.AfficheInformations.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauOptionCompteCPClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheInformations.Visible:=false;
+end;
+
+procedure TFSPlanComptable.AfficheOptionCompteCPClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheInformations.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitNonControleSpecificiteClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheControleSpecificite.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitValideControleSpecificiteClick(
+  Sender: TObject);
+begin
+
+if(FSPlanComptable.EditOrdreControleSpecificite.Text='6')then
+begin
+     if(FSPlanComptable.BitValideControleSpecificite.Caption='Appliquer')then
+     begin
+          if(ResultCompte.ContrePartie.UsesCompte=true)
+          then FSPlanComptable.RBAutoriserSousFamille.Checked:=true
+          else FSPlanComptable.RBNePasAutoriserSousFamille.Checked:=true;
+
+          if(ResultCompte.ContrePartie.TypeUses='Tous')
+          then FSPlanComptable.RBTousSousFamille.Checked:=true
+          else FSPlanComptable.RBListeComptesSousFamille.Checked:=true;
+
+          if(ResultCompte.Specificite='1')
+          then FSPlanComptable.RBComptePrecisSousFamille.Checked:=true
+          else FSPlanComptable.RBCompteSousCompteSousFamille.Checked:=true;
+
+          {if(ResultCompte.Tiers=true)
+          then FSPlanComptable.RBTiersClasse.Checked:=true
+          else FSPlanComptable.RBNonTiersClasse.Checked:=true;}
+
+          FSPlanComptable.BitValiderSousFamille.SetFocus;
+     end
+     else FSPlanComptable.TableauSousFamille.SetFocus;
+end;
+
+if(FSPlanComptable.EditOrdreControleSpecificite.Text='5')then
+begin
+     if(FSPlanComptable.BitValideControleSpecificite.Caption='Appliquer')then
+     begin
+          if(ResultCompte.ContrePartie.UsesCompte=true)
+          then FSPlanComptable.RBAutoriserFamille.Checked:=true
+          else FSPlanComptable.RBNePasAutoriserFamille.Checked:=true;
+
+          if(ResultCompte.ContrePartie.TypeUses='Tous')
+          then FSPlanComptable.RBTousFamille.Checked:=true
+          else FSPlanComptable.RBListeComptesFamille.Checked:=true;
+
+          if(ResultCompte.Specificite='1')
+          then FSPlanComptable.RBComptePrecisFamille.Checked:=true
+          else FSPlanComptable.RBCompteSousCompteFamille.Checked:=true;
+
+          {if(ResultCompte.Tiers=true)
+          then FSPlanComptable.RBTiersSousClasse.Checked:=true
+          else FSPlanComptable.RBNonTiersSousClasse.Checked:=true;}
+
+          FSPlanComptable.BitValiderFamille.SetFocus;
+     end
+     else FSPlanComptable.TableauFamille.SetFocus;
+end;
+
+if(FSPlanComptable.EditOrdreControleSpecificite.Text='4')then
+begin
+     if(FSPlanComptable.BitValideControleSpecificite.Caption='Appliquer')then
+     begin
+          if(ResultCompte.ContrePartie.UsesCompte=true)
+          then FSPlanComptable.RBAutoriserSousCategorie.Checked:=true
+          else FSPlanComptable.RBNePasAutoriserSousCategorie.Checked:=true;
+
+          if(ResultCompte.ContrePartie.TypeUses='Tous')
+          then FSPlanComptable.RBTousSousCategorie.Checked:=true
+          else FSPlanComptable.RBListeComptesSousCategorie.Checked:=true;
+
+          if(ResultCompte.Specificite='1')
+          then FSPlanComptable.RBComptePrecisSousCategorie.Checked:=true
+          else FSPlanComptable.RBCompteSousCompteSousCategorie.Checked:=true;
+
+          {if(ResultCompte.Tiers=true)
+          then FSPlanComptable.RBTiersClasse.Checked:=true
+          else FSPlanComptable.RBNonTiersClasse.Checked:=true;}
+
+          FSPlanComptable.BitValiderSousCategorie.SetFocus;
+     end
+     else FSPlanComptable.TableauSousCategorie.SetFocus;
+end;
+
+if(FSPlanComptable.EditOrdreControleSpecificite.Text='3')then
+begin
+     if(FSPlanComptable.BitValideControleSpecificite.Caption='Appliquer')then
+     begin
+          if(ResultCompte.ContrePartie.UsesCompte=true)
+          then FSPlanComptable.RBAutoriserCategorie.Checked:=true
+          else FSPlanComptable.RBNePasAutoriserCategorie.Checked:=true;
+
+          if(ResultCompte.ContrePartie.TypeUses='Tous')
+          then FSPlanComptable.RBTousCategorie.Checked:=true
+          else FSPlanComptable.RBListeComptesCategorie.Checked:=true;
+
+          if(ResultCompte.Specificite='1')
+          then FSPlanComptable.RBComptePrecisCategorie.Checked:=true
+          else FSPlanComptable.RBCompteSousCompteCategorie.Checked:=true;
+
+          {if(ResultCompte.Tiers=true)
+          then FSPlanComptable.RBTiersClasse.Checked:=true
+          else FSPlanComptable.RBNonTiersClasse.Checked:=true;}
+
+          FSPlanComptable.BitValiderCategorie.SetFocus;
+     end
+     else FSPlanComptable.TableauCategorie.SetFocus;
+end;
+
+if(FSPlanComptable.EditOrdreControleSpecificite.Text='2')then
+begin
+     if(FSPlanComptable.BitValideControleSpecificite.Caption='Appliquer')then
+     begin
+          if(ResultCompte.ContrePartie.UsesCompte=true)
+          then FSPlanComptable.RBAutoriserSousClasse.Checked:=true
+          else FSPlanComptable.RBNePasAutoriserSousClasse.Checked:=true;
+
+          if(ResultCompte.ContrePartie.TypeUses='Tous')
+          then FSPlanComptable.RBTousSousClasse.Checked:=true
+          else FSPlanComptable.RBListeComptesSousClasse.Checked:=true;
+
+          if(ResultCompte.Specificite='1')
+          then FSPlanComptable.RBComptePrecisSousClasse.Checked:=true
+          else FSPlanComptable.RBCompteSousCompteSousClasse.Checked:=true;
+
+          {if(ResultCompte.Tiers=true)
+          then FSPlanComptable.RBTiersClasse.Checked:=true
+          else FSPlanComptable.RBNonTiersClasse.Checked:=true;}
+
+          FSPlanComptable.BitValiderSousClasse.SetFocus;
+     end
+     else FSPlanComptable.TableauSousClasse.SetFocus;
+end;
+
+if(FSPlanComptable.EditOrdreControleSpecificite.Text='1')then
+begin
+     if(FSPlanComptable.BitValideControleSpecificite.Caption='Appliquer')then
+     begin
+          if(ResultCompte.ContrePartie.UsesCompte=true)
+          then FSPlanComptable.RBAutoriserClasse.Checked:=true
+          else FSPlanComptable.RBNePasAutoriserClasse.Checked:=true;
+
+          if(ResultCompte.ContrePartie.TypeUses='Tous')
+          then FSPlanComptable.RBTousClasse.Checked:=true
+          else FSPlanComptable.RBListeComptesClasse.Checked:=true;
+
+          if(ResultCompte.Specificite='1')
+          then FSPlanComptable.RBComptePrecisClasse.Checked:=true
+          else FSPlanComptable.RBCompteSousCompteClasse.Checked:=true;
+
+          {if(ResultCompte.Tiers=true)
+          then FSPlanComptable.RBTiersClasse.Checked:=true
+          else FSPlanComptable.RBNonTiersClasse.Checked:=true;}
+
+          FSPlanComptable.BitValiderClasse.SetFocus;
+     end
+     else FSPlanComptable.TableauClasse.SetFocus;
+end;
+
+
+FSPlanComptable.AfficheControleSpecificite.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn10Click(Sender: TObject);
+var  NumRapport,IRap:integer;   TypePCN,TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+CancelThe(0);
+OpenFParc(RParc); 
+ChListeRapportSpecificiteCompte:=RParc.Parcours+'\'+Exercice+'FListeRapportSpecificiteCompte';
+assignfile(FListeRapportSpecificiteCompte,ChListeRapportSpecificiteCompte);
+if FileExists(ChListeRapportSpecificiteCompte)
+then Reset(FListeRapportSpecificiteCompte)else Rewrite(FListeRapportSpecificiteCompte);
+Seek(FListeRapportSpecificiteCompte,0);
+NumRapport:=1;
+IRap:=0;
+while not eof(FListeRapportSpecificiteCompte)do
+begin
+     Read(FListeRapportSpecificiteCompte,RListeRapportSpecificiteCompte);
+     if(RListeRapportSpecificiteCompte.NumRapport>=NumRapport)then NumRapport:=RListeRapportSpecificiteCompte.NumRapport+1;
+IRap:=IRap+1;
+end;
+
+Seek(FListeRapportSpecificiteCompte,IRap);
+RListeRapportSpecificiteCompte.NumRapport:=NumRapport;
+RListeRapportSpecificiteCompte.DateRapport:=datetostr(date);
+RListeRapportSpecificiteCompte.CodeUtilisateur:=FSMenuPrincipal.EditCodeUtilisateur.Text;
+Write(FListeRapportSpecificiteCompte,RListeRapportSpecificiteCompte);
+CloseFile(FListeRapportSpecificiteCompte);
+
+OpenFParc(RParc);
+ChRapportSpecificiteCompte:=RParc.Parcours+'\'+Exercice+'FRapportSpecificite N° '+inttostr(NumRapport);
+assignfile(FRapportSpecificiteCompte,ChRapportSpecificiteCompte);
+if FileExists(ChRapportSpecificiteCompte)
+then Reset(FRapportSpecificiteCompte)else Rewrite(FRapportSpecificiteCompte);
+Seek(FRapportSpecificiteCompte,0);
+Truncate(FRapportSpecificiteCompte);
+IRap:=0;
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='2';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+ChSousClasse:=Adresse;
+assignfile(FSousClasse,ChSousClasse);
+if FileExists(ChSousClasse)
+then Reset(FSousClasse)else Rewrite(FSousClasse);
+Seek(FSousClasse,0);
+i:=0;
+while not eof(FSousClasse)do
+begin
+     Read(FSousClasse,RSousClasse);
+     if(ControleSpecificite(RSousClasse.CodeCompte,ResultCompte))then
+     begin
+          Seek(FSousClasse,i);
+          RSousClasse.ContrePartie.UsesCompte:=ResultCompte.ContrePartie.UsesCompte;
+          RSousClasse.ContrePartie.TypeUses:=ResultCompte.ContrePartie.TypeUses;
+          RSousClasse.Specificite:=ResultCompte.Specificite;
+          //RSousClasse.Tiers:=ResultCompte.Tiers;
+          Write(FSousClasse,RSousClasse);
+
+          //////////////////////////////////
+          Seek(FRapportSpecificiteCompte,IRap);
+          RRapportSpecificiteCompte:='Mise à jour des conditions du compte: "'+RSousClasse.CodeCompte+'" '+RSousClasse.Designation+
+                                     ', par celles du compte: "'+ResultCompte.CodeCompte+'" '+ResultCompte.Designation+'. {'+
+                                     booleantostr(RSousClasse.ContrePartie.UsesCompte)+'}.{'+RSousClasse.ContrePartie.TypeUses+'}.{'+
+                                     RSousClasse.Specificite+'}.{'+booleantostr(RSousClasse.Tiers)+'}.';
+          Write(FRapportSpecificiteCompte,RRapportSpecificiteCompte);
+          IRap:=IRap+1;
+          //////////////////////////////////
+          if not eof(FSousClasse)then Seek(FSousClasse,i+1);
+     end;
+i:=i+1;
+end;
+CloseFile(FSousClasse);
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='3';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+ChCategorie:=Adresse;
+assignfile(FCategorie,ChCategorie);
+if FileExists(ChCategorie)
+then Reset(FCategorie)else Rewrite(FCategorie);
+Seek(FCategorie,0);
+i:=0;
+while not eof(FCategorie)do
+begin
+     Read(FCategorie,RCategorie);
+     if(ControleSpecificite(RCategorie.CodeCompte,ResultCompte))then
+     begin
+          Seek(FCategorie,i);
+          RCategorie.ContrePartie.UsesCompte:=ResultCompte.ContrePartie.UsesCompte;
+          RCategorie.ContrePartie.TypeUses:=ResultCompte.ContrePartie.TypeUses;
+          RCategorie.Specificite:=ResultCompte.Specificite;
+          //RCategorie.Tiers:=ResultCompte.Tiers;
+          Write(FCategorie,RCategorie);
+
+          //////////////////////////////////
+          Seek(FRapportSpecificiteCompte,IRap);
+          RRapportSpecificiteCompte:='Mise à jour des conditions du compte: "'+RCategorie.CodeCompte+'" '+RCategorie.Designation+
+                                     ', par celles du compte: "'+ResultCompte.CodeCompte+'" '+ResultCompte.Designation+'. {'+
+                                     booleantostr(RCategorie.ContrePartie.UsesCompte)+'}.{'+RCategorie.ContrePartie.TypeUses+'}.{'+
+                                     RCategorie.Specificite+'}.{'+booleantostr(RCategorie.Tiers)+'}.';
+          Write(FRapportSpecificiteCompte,RRapportSpecificiteCompte);
+          IRap:=IRap+1;
+          //////////////////////////////////
+          if not eof(FCategorie)then Seek(FCategorie,i+1);
+     end;
+i:=i+1;
+end;
+CloseFile(FCategorie);
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='4';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+ChSousCategorie:=Adresse;
+assignfile(FSousCategorie,ChSousCategorie);
+if FileExists(ChSousCategorie)
+then Reset(FSousCategorie)else Rewrite(FSousCategorie);
+Seek(FSousCategorie,0);
+i:=0;
+while not eof(FSousCategorie)do
+begin
+     Read(FSousCategorie,RSousCategorie);
+     if(ControleSpecificite(RSousCategorie.CodeCompte,ResultCompte))then
+     begin
+          Seek(FSousCategorie,i);
+          RSousCategorie.ContrePartie.UsesCompte:=ResultCompte.ContrePartie.UsesCompte;
+          RSousCategorie.ContrePartie.TypeUses:=ResultCompte.ContrePartie.TypeUses;
+          RSousCategorie.Specificite:=ResultCompte.Specificite;
+          //RSousCategorie.Tiers:=ResultCompte.Tiers;
+          Write(FSousCategorie,RSousCategorie);
+
+          //////////////////////////////////
+          Seek(FRapportSpecificiteCompte,IRap);
+          RRapportSpecificiteCompte:='Mise à jour des conditions du compte: "'+RSousCategorie.CodeCompte+'" '+RSousCategorie.Designation+
+                                     ', par celles du compte: "'+ResultCompte.CodeCompte+'" '+ResultCompte.Designation+'. {'+
+                                     booleantostr(RSousCategorie.ContrePartie.UsesCompte)+'}.{'+RSousCategorie.ContrePartie.TypeUses+'}.{'+
+                                     RSousCategorie.Specificite+'}.{'+booleantostr(RSousCategorie.Tiers)+'}.';
+          Write(FRapportSpecificiteCompte,RRapportSpecificiteCompte);
+          IRap:=IRap+1;
+          //////////////////////////////////
+          if not eof(FSousCategorie)then Seek(FSousCategorie,i+1);
+     end;
+i:=i+1;
+end;
+CloseFile(FSousCategorie);
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='5';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+ChFamille:=Adresse;
+assignfile(FFamille,ChFamille);
+if FileExists(ChFamille)
+then Reset(FFamille)else Rewrite(FFamille);
+Seek(FFamille,0);
+i:=0;
+while not eof(FFamille)do
+begin
+     Read(FFamille,RFamille);
+     if(ControleSpecificite(RFamille.CodeCompte,ResultCompte))then
+     begin
+          Seek(FFamille,i);
+          RFamille.ContrePartie.UsesCompte:=ResultCompte.ContrePartie.UsesCompte;
+          RFamille.ContrePartie.TypeUses:=ResultCompte.ContrePartie.TypeUses;
+          RFamille.Specificite:=ResultCompte.Specificite;
+          //RFamille.Tiers:=ResultCompte.Tiers;
+          Write(FFamille,RFamille);
+
+          //////////////////////////////////
+          Seek(FRapportSpecificiteCompte,IRap);
+          RRapportSpecificiteCompte:='Mise à jour des conditions du compte: "'+RFamille.CodeCompte+'" '+RFamille.Designation+
+                                     ', par celles du compte: "'+ResultCompte.CodeCompte+'" '+ResultCompte.Designation+'. {'+
+                                     booleantostr(RFamille.ContrePartie.UsesCompte)+'}.{'+RFamille.ContrePartie.TypeUses+'}.{'+
+                                     RFamille.Specificite+'}.{'+booleantostr(RFamille.Tiers)+'}.';
+          Write(FRapportSpecificiteCompte,RRapportSpecificiteCompte);
+          IRap:=IRap+1;
+          //////////////////////////////////
+          if not eof(FFamille)then Seek(FFamille,i+1);
+     end;
+i:=i+1;
+end;
+CloseFile(FFamille);
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='6';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+ChSousFamille:=Adresse;
+assignfile(FSousFamille,ChSousFamille);
+if FileExists(ChSousFamille)
+then Reset(FSousFamille)else Rewrite(FSousFamille);
+Seek(FSousFamille,0);
+i:=0;
+while not eof(FSousFamille)do
+begin
+     Read(FSousFamille,RSousFamille);
+     if(ControleSpecificite(RSousFamille.CodeCompte,ResultCompte))then
+     begin
+          Seek(FSousFamille,i);
+          RSousFamille.ContrePartie.UsesCompte:=ResultCompte.ContrePartie.UsesCompte;
+          RSousFamille.ContrePartie.TypeUses:=ResultCompte.ContrePartie.TypeUses;
+          RSousFamille.Specificite:=ResultCompte.Specificite;
+          //RSousFamille.Tiers:=ResultCompte.Tiers;
+          Write(FSousFamille,RSousFamille);
+
+          //////////////////////////////////
+          Seek(FRapportSpecificiteCompte,IRap);
+          RRapportSpecificiteCompte:='Mise à jour des conditions du compte: "'+RSousFamille.CodeCompte+'" '+RSousFamille.Designation+
+                                     ', par celles du compte: "'+ResultCompte.CodeCompte+'" '+ResultCompte.Designation+'. {'+
+                                     booleantostr(RSousFamille.ContrePartie.UsesCompte)+'}.{'+RSousFamille.ContrePartie.TypeUses+'}.{'+
+                                     RSousFamille.Specificite+'}.{'+booleantostr(RSousFamille.Tiers)+'}.';
+          Write(FRapportSpecificiteCompte,RRapportSpecificiteCompte);
+          IRap:=IRap+1;
+          //////////////////////////////////
+          if not eof(FSousFamille)then Seek(FSousFamille,i+1);
+     end;
+i:=i+1;
+end;
+CloseFile(FSousFamille);
+
+ProcAffichePCN('6','',FSPlanComptable.EditTypeComptabilite.Text);
+
+CloseFile(FRapportSpecificiteCompte);
+end;
+
+procedure TFSPlanComptable.BitBtn8Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheRapportControleSpecificite.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn11Click(Sender: TObject);
+var  NumRapport:integer;
+begin
+FSPlanComptable.AfficheRapportControleSpecificite.Visible:=true;
+FSPlanComptable.TableauListeRapportControleSpecificite.RowCount:=2;
+FSPlanComptable.TableauListeRapportControleSpecificite.Rows[1].Text:='';
+FSPlanComptable.TableauListeRapportControleSpecificite.Cols[0].Text:='Num';
+FSPlanComptable.TableauListeRapportControleSpecificite.Cols[1].Text:='Date';
+FSPlanComptable.TableauListeRapportControleSpecificite.Cols[2].Text:='          Utilisateur.';
+
+OpenFParc(RParc);
+ChListeRapportSpecificiteCompte:=RParc.Parcours+'\'+Exercice+'FListeRapportSpecificiteCompte';
+assignfile(FListeRapportSpecificiteCompte,ChListeRapportSpecificiteCompte);
+if FileExists(ChListeRapportSpecificiteCompte)
+then Reset(FListeRapportSpecificiteCompte)else Rewrite(FListeRapportSpecificiteCompte);
+Seek(FListeRapportSpecificiteCompte,0);
+NumRapport:=1;
+i:=0;
+while not eof(FListeRapportSpecificiteCompte)do
+begin
+     Read(FListeRapportSpecificiteCompte,RListeRapportSpecificiteCompte);
+     i:=i+1;
+     FSPlanComptable.TableauListeRapportControleSpecificite.Rows[i].Text:=inttostr(i);
+     FSPlanComptable.TableauListeRapportControleSpecificite.Cells[0,i]:=inttostr(RListeRapportSpecificiteCompte.NumRapport);
+     FSPlanComptable.TableauListeRapportControleSpecificite.Cells[1,i]:=RListeRapportSpecificiteCompte.DateRapport;
+     FSPlanComptable.TableauListeRapportControleSpecificite.Cells[2,i]:=RListeRapportSpecificiteCompte.CodeUtilisateur+': '+
+                                                                        ChercherUtilisateur(RListeRapportSpecificiteCompte.CodeUtilisateur).Nom+' '+
+                                                                        ChercherUtilisateur(RListeRapportSpecificiteCompte.CodeUtilisateur).Prenom;
+end;
+CloseFile(FListeRapportSpecificiteCompte);
+
+if(i>0)then FSPlanComptable.TableauListeRapportControleSpecificite.RowCount:=i+1
+       else FSPlanComptable.TableauListeRapportControleSpecificite.RowCount:=2;
+end;
+
+procedure TFSPlanComptable.TableauListeRapportControleSpecificiteClick(
+  Sender: TObject);
+begin
+OpenFParc(RParc);
+ChRapportSpecificiteCompte:=RParc.Parcours+'\'+Exercice+'FRapportSpecificite N° '+FSPlanComptable.TableauListeRapportControleSpecificite.Cells[0,FSPlanComptable.TableauListeRapportControleSpecificite.Row];
+assignfile(FRapportSpecificiteCompte,ChRapportSpecificiteCompte);
+if FileExists(ChRapportSpecificiteCompte)
+then Reset(FRapportSpecificiteCompte)else Rewrite(FRapportSpecificiteCompte);
+Seek(FRapportSpecificiteCompte,0);
+FSPlanComptable.RapportControleSpecificite.Text:='';
+FSPlanComptable.RapportControleSpecificite.Lines.Add('Rapport:');
+FSPlanComptable.RapportControleSpecificite.Lines.Add('');
+while not eof(FRapportSpecificiteCompte)do
+begin
+     Read(FRapportSpecificiteCompte,RRapportSpecificiteCompte);
+     FSPlanComptable.RapportControleSpecificite.Lines.Add(RRapportSpecificiteCompte);
+     FSPlanComptable.RapportControleSpecificite.Lines.Add('');
+end;
+CloseFile(FRapportSpecificiteCompte);
+
+end;
+
+procedure TFSPlanComptable.BitBtn7Click(Sender: TObject);
+begin
+PrintRapportControleSpecificite.TitreEtat.Caption:='Rapport de mise à jour N° '+Completezerogauche(FSPlanComptable.TableauListeRapportControleSpecificite.Cells[0,FSPlanComptable.TableauListeRapportControleSpecificite.Row],'2')
+                                                  +' du '+FSPlanComptable.TableauListeRapportControleSpecificite.Cells[1,FSPlanComptable.TableauListeRapportControleSpecificite.Row];
+PrintRapportControleSpecificite.Utilisateur.Caption:='Exécuter par: '+FSPlanComptable.TableauListeRapportControleSpecificite.Cells[2,FSPlanComptable.TableauListeRapportControleSpecificite.Row];
+PrintRapportControleSpecificite.TexteRapport.Lines.Text:=FSPlanComptable.RapportControleSpecificite.Text;
+PrintRapportControleSpecificite.Preview;
+FSPlanComptable.AfficheRapportControleSpecificite.Visible:=false;
+end;
+
+procedure TFSPlanComptable.RBTiersClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNonTiersClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTiersSousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderSousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNonTiersSousClasseKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderSousClasse.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTiersCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNonTiersCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTiersSousCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderSousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNonTiersSousCategorieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderSousCategorie.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTiersFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNonTiersFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBTiersSousFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.RBNonTiersSousFamilleKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if key in[VK_RETURN,VK_DOWN]then
+begin
+     FSPlanComptable.BitValiderSousFamille.SetFocus;
+end;
+end;
+
+procedure TFSPlanComptable.BitBtn12Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheCompteTiers.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn17Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitValideCptTiersClick(Sender: TObject);
+var  OKCptTiers,Confirme:boolean;
+begin
+
+if(FSPlanComptable.BitValideCptTiers.Caption='Valider')then
+begin
+OpenFParc(RParc);
+ChCompteTiers:=RParc.Parcours+'\'+Exercice+'FCompteTiers'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+assignfile(FCompteTiers,ChCompteTiers);
+if FileExists(ChCompteTiers)
+then Reset(FCompteTiers)else Rewrite(FCompteTiers);
+Seek(FCompteTiers,0);
+i:=0;
+OKCptTiers:=false;
+while not eof(FCompteTiers)and(OKCptTiers=false)do
+begin
+     Read(FCompteTiers,RCompteTiers);
+     if(RCompteTiers.NumCptTiers=FSPlanComptable.EditNumCompteTiers.Text)then
+     begin
+          OKCptTiers:=true;
+          i:=i-1;
+     end;
+i:=i+1;
+end;
+
+Seek(FCompteTiers,i);
+if(OKCptTiers=false)then Truncate(FCompteTiers);
+RCompteTiers.OrdreCptPrincipal:=longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text);
+RCompteTiers.NumCptTiers:=FSPlanComptable.EditNumCompteTiers.Text;
+RCompteTiers.Designation:=FSPlanComptable.EditDesignationCptTiers.Text;
+RCompteTiers.AvecDonnees:=FSPlanComptable.RBCptTiersAvecDonnees.Checked;
+
+Write(FCompteTiers,RCompteTiers);
+end;
+
+if(FSPlanComptable.BitValideCptTiers.Caption='Supprimer')then
+begin
+     DeleteFCompteTiers(FSPlanComptable.EditNumCptPrincipalTiers.Text,FSPlanComptable.EditNumCompteTiers.Text,Confirme);
+end;
+
+ProcListeCompteTiers(FSPlanComptable.EditNumCptPrincipalTiers.Text);
+
+FSPlanComptable.AfficheOperationCptTiers.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauCompteTiersClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=false;
+FSPlanComptable.AfficheDonneesCompteTiers.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn13Click(Sender: TObject);
+var  Sequence:integer;
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=true;
+
+OpenFParc(RParc);
+ChCompteTiers:=RParc.Parcours+'\'+Exercice+'FCompteTiers'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+assignfile(FCompteTiers,ChCompteTiers);
+if FileExists(ChCompteTiers)
+then Reset(FCompteTiers)else Rewrite(FCompteTiers);
+Seek(FCompteTiers,0);
+i:=0;
+Sequence:=0;
+while not eof(FCompteTiers)do
+begin
+     Read(FCompteTiers,RCompteTiers);
+     if(Firstlaters(RCompteTiers.NumCptTiers,longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text))=FSPlanComptable.EditNumCptPrincipalTiers.Text)then
+     begin
+          if(strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)))>=Sequence)then
+          Sequence:=strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)))+1;
+     end;
+end;
+
+FSPlanComptable.EditNumCompteTiers.Text:=FSPlanComptable.EditNumCptPrincipalTiers.Text+completezerogauche(inttostr(Sequence),inttostr(10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)));
+FSPlanComptable.EditDesignationCptTiers.Text:='';
+FSPlanComptable.RBCptTiersAvecDonnees.Checked:=false;
+FSPlanComptable.RBCptTiersSansDonnees.Checked:=false;
+
+FSPlanComptable.BitValideCptTiers.Kind:=bkAll;
+FSPlanComptable.BitValideCptTiers.Caption:='Valider';
+FSPlanComptable.EditDesignationCptTiers.SetFocus;
+end;
+
+procedure TFSPlanComptable.EditDesignationCptTiersKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     if(FSPlanComptable.RBCptTiersSansDonnees.Checked)
+     then FSPlanComptable.RBCptTiersSansDonnees.SetFocus
+     else FSPlanComptable.RBCptTiersAvecDonnees.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.RBCptTiersAvecDonneesKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.BitValideCptTiers.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.RBCptTiersSansDonneesKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.BitValideCptTiers.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn14Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=true;
+
+FSPlanComptable.EditNumCompteTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row];
+FSPlanComptable.EditDesignationCptTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[3,FSPlanComptable.TableauCompteTiers.Row];
+if strtoboolean(FSPlanComptable.TableauCompteTiers.Cells[4,FSPlanComptable.TableauCompteTiers.Row])
+then FSPlanComptable.RBCptTiersAvecDonnees.Checked:=true
+else FSPlanComptable.RBCptTiersSansDonnees.Checked:=true;
+
+FSPlanComptable.BitValideCptTiers.Kind:=bkAll;
+FSPlanComptable.BitValideCptTiers.Caption:='Valider';
+FSPlanComptable.EditDesignationCptTiers.SetFocus;
+end;
+
+procedure TFSPlanComptable.BitBtn15Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=true;
+
+FSPlanComptable.EditNumCompteTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row];
+FSPlanComptable.EditDesignationCptTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[3,FSPlanComptable.TableauCompteTiers.Row];
+if strtoboolean(FSPlanComptable.TableauCompteTiers.Cells[4,FSPlanComptable.TableauCompteTiers.Row])
+then FSPlanComptable.RBCptTiersAvecDonnees.Checked:=true
+else FSPlanComptable.RBCptTiersSansDonnees.Checked:=true;
+
+FSPlanComptable.BitValideCptTiers.Kind:=bkCancel;
+FSPlanComptable.BitValideCptTiers.Caption:='Supprimer';
+FSPlanComptable.BitValideCptTiers.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauCompteTiersKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var  Sequence:integer;
+begin
+
+if key in[VK_RETURN]then
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=true;
+
+OpenFParc(RParc);
+ChCompteTiers:=RParc.Parcours+'\'+Exercice+'FCompteTiers'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+assignfile(FCompteTiers,ChCompteTiers);
+if FileExists(ChCompteTiers)
+then Reset(FCompteTiers)else Rewrite(FCompteTiers);
+Seek(FCompteTiers,0);
+i:=0;
+Sequence:=0;
+while not eof(FCompteTiers)do
+begin
+     Read(FCompteTiers,RCompteTiers);
+     if(Firstlaters(RCompteTiers.NumCptTiers,longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text))=FSPlanComptable.EditNumCptPrincipalTiers.Text)then
+     begin
+          if(strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)))>=Sequence)then
+          Sequence:=strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)))+1;
+     end;
+end;
+
+FSPlanComptable.EditNumCompteTiers.Text:=FSPlanComptable.EditNumCptPrincipalTiers.Text+completezerogauche(inttostr(Sequence),inttostr(10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)));
+FSPlanComptable.EditDesignationCptTiers.Text:='';
+FSPlanComptable.RBCptTiersAvecDonnees.Checked:=false;
+FSPlanComptable.RBCptTiersSansDonnees.Checked:=false;
+
+FSPlanComptable.BitValideCptTiers.Kind:=bkAll;
+FSPlanComptable.BitValideCptTiers.Caption:='Valider';
+FSPlanComptable.EditDesignationCptTiers.SetFocus;
+end;
+
+if key in[VK_INSERT]then
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=true;
+
+OpenFParc(RParc);
+ChCompteTiers:=RParc.Parcours+'\'+Exercice+'FCompteTiers'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+assignfile(FCompteTiers,ChCompteTiers);
+if FileExists(ChCompteTiers)
+then Reset(FCompteTiers)else Rewrite(FCompteTiers);
+Seek(FCompteTiers,0);
+i:=0;
+Sequence:=0;
+while not eof(FCompteTiers)do
+begin
+     Read(FCompteTiers,RCompteTiers);
+     if(Firstlaters(RCompteTiers.NumCptTiers,longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text))=FSPlanComptable.EditNumCptPrincipalTiers.Text)then
+     begin
+          if(strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)))>=Sequence)then
+          Sequence:=strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)))+1;
+     end;
+end;
+
+FSPlanComptable.EditNumCompteTiers.Text:=FSPlanComptable.EditNumCptPrincipalTiers.Text+completezerogauche(inttostr(Sequence),inttostr(10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)));
+FSPlanComptable.EditDesignationCptTiers.Text:='';
+FSPlanComptable.RBCptTiersAvecDonnees.Checked:=false;
+FSPlanComptable.RBCptTiersSansDonnees.Checked:=false;
+
+FSPlanComptable.BitValideCptTiers.Kind:=bkAll;
+FSPlanComptable.BitValideCptTiers.Caption:='Valider';
+FSPlanComptable.EditDesignationCptTiers.SetFocus;
+end;
+
+if key in[VK_DELETE]then
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=true;
+
+FSPlanComptable.EditNumCompteTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row];
+FSPlanComptable.EditDesignationCptTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[3,FSPlanComptable.TableauCompteTiers.Row];
+if strtoboolean(FSPlanComptable.TableauCompteTiers.Cells[4,FSPlanComptable.TableauCompteTiers.Row])
+then FSPlanComptable.RBCptTiersAvecDonnees.Checked:=true
+else FSPlanComptable.RBCptTiersSansDonnees.Checked:=true;
+
+FSPlanComptable.BitValideCptTiers.Kind:=bkCancel;
+FSPlanComptable.BitValideCptTiers.Caption:='Supprimer';
+FSPlanComptable.BitValideCptTiers.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauCompteTiersKeyPress(Sender: TObject;
+  var Key: Char);
+var  Sequence:integer;
+begin
+
+if key in['n','N']then
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=true;
+
+OpenFParc(RParc);
+ChCompteTiers:=RParc.Parcours+'\'+Exercice+'FCompteTiers'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+assignfile(FCompteTiers,ChCompteTiers);
+if FileExists(ChCompteTiers)
+then Reset(FCompteTiers)else Rewrite(FCompteTiers);
+Seek(FCompteTiers,0);
+i:=0;
+Sequence:=0;
+while not eof(FCompteTiers)do
+begin
+     Read(FCompteTiers,RCompteTiers);
+     if(Firstlaters(RCompteTiers.NumCptTiers,longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text))=FSPlanComptable.EditNumCptPrincipalTiers.Text)then
+     begin
+          if(strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)))>=Sequence)then
+          Sequence:=strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)))+1;
+     end;
+end;
+
+FSPlanComptable.EditNumCompteTiers.Text:=FSPlanComptable.EditNumCptPrincipalTiers.Text+completezerogauche(inttostr(Sequence),inttostr(10-longueur(FSPlanComptable.EditNumCptPrincipalTiers.Text)));
+FSPlanComptable.EditDesignationCptTiers.Text:='';
+FSPlanComptable.RBCptTiersAvecDonnees.Checked:=false;
+FSPlanComptable.RBCptTiersSansDonnees.Checked:=false;
+
+FSPlanComptable.BitValideCptTiers.Kind:=bkAll;
+FSPlanComptable.BitValideCptTiers.Caption:='Valider';
+FSPlanComptable.EditDesignationCptTiers.SetFocus;
+end;
+
+if key in['m','M']then
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=true;
+
+FSPlanComptable.EditNumCompteTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row];
+FSPlanComptable.EditDesignationCptTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[3,FSPlanComptable.TableauCompteTiers.Row];
+if strtoboolean(FSPlanComptable.TableauCompteTiers.Cells[4,FSPlanComptable.TableauCompteTiers.Row])
+then FSPlanComptable.RBCptTiersAvecDonnees.Checked:=true
+else FSPlanComptable.RBCptTiersSansDonnees.Checked:=true;
+
+FSPlanComptable.BitValideCptTiers.Kind:=bkAll;
+FSPlanComptable.BitValideCptTiers.Caption:='Valider';
+FSPlanComptable.EditDesignationCptTiers.SetFocus;
+end;
+
+if key in['s','S']then
+begin
+FSPlanComptable.AfficheOperationCptTiers.Visible:=true;
+
+FSPlanComptable.EditNumCompteTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row];
+FSPlanComptable.EditDesignationCptTiers.Text:=FSPlanComptable.TableauCompteTiers.Cells[3,FSPlanComptable.TableauCompteTiers.Row];
+if strtoboolean(FSPlanComptable.TableauCompteTiers.Cells[4,FSPlanComptable.TableauCompteTiers.Row])
+then FSPlanComptable.RBCptTiersAvecDonnees.Checked:=true
+else FSPlanComptable.RBCptTiersSansDonnees.Checked:=true;
+
+FSPlanComptable.BitValideCptTiers.Kind:=bkCancel;
+FSPlanComptable.BitValideCptTiers.Caption:='Supprimer';
+FSPlanComptable.BitValideCptTiers.SetFocus;
+end;
+
+if key in['d','D']then
+begin
+ProcListeDonneesCompteTiers(FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row]);
+FSPlanComptable.AfficheOperationDonnesTiers.Visible:=false;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauListeCompteCPKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['n','N']then
+begin
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=false;
+FSPlanComptable.AfficheOptionCompteCP.Visible:=true;
+FSPlanComptable.EditOptionCompteCP.Text:='Nouveau';
+
+FSPlanComptable.RBCompteCPPrecisClasse.Checked:=true;
+
+ListePlanComptableCP(1,'','');
+
+FSPlanComptable.TableauOptionCompteCP.SetFocus;
+end;
+
+if key in['m','M']then
+begin
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=false;
+FSPlanComptable.AfficheOptionCompteCP.Visible:=true;
+FSPlanComptable.EditOptionCompteCP.Text:='Modifier';
+
+if(FSPlanComptable.TableauListeCompteCP.Cells[4,FSPlanComptable.TableauListeCompteCP.Row]='N')
+then FSPlanComptable.RBCompteCPSousCompteClasse.Checked:=true
+else FSPlanComptable.RBCompteCPPrecisClasse.Checked:=true;
+
+ListePlanComptableCP(longueur(FSPlanComptable.TableauListeCompteCP.Cells[2,FSPlanComptable.TableauListeCompteCP.Row]),FSPlanComptable.TableauListeCompteCP.Cells[2,FSPlanComptable.TableauListeCompteCP.Row],FSPlanComptable.TableauListeCompteCP.Cells[2,FSPlanComptable.TableauListeCompteCP.Row]);
+
+FSPlanComptable.TableauOptionCompteCP.SetFocus;
+end;
+
+if key in['s','S']then
+begin
+FSPlanComptable.AfficheOptionCompteCP.Visible:=false;
+FSPlanComptable.AfficheSupprimerCompteCP.Visible:=true;
+FSPlanComptable.AfficheSupprimerCompteCP.Caption:='Supprimer';
+FSPlanComptable.BitSupprimerCP.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn19Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheOperationDonnesTiers.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitValideDonneesCptTiersClick(Sender: TObject);
+var  OKDonneesCptTiers,Confirme:boolean; NumDonnees:integer;
+begin
+
+if(FSPlanComptable.BitValideDonneesCptTiers.Caption='Valider')then
+begin
+OpenFParc(RParc);
+ChDonneesCompteTiers:=RParc.Parcours+'\'+Exercice+'FDonneesCompteTiers'+FSMenuPrincipal.EditNumEntite.Text;
+assignfile(FDonneesCompteTiers,ChDonneesCompteTiers);
+if FileExists(ChDonneesCompteTiers)
+then Reset(FDonneesCompteTiers)else Rewrite(FDonneesCompteTiers);
+Seek(FDonneesCompteTiers,0);
+i:=0;
+NumDonnees:=1;
+OKDonneesCptTiers:=false;
+while not eof(FDonneesCompteTiers)and(OKDonneesCptTiers=false)do
+begin
+     Read(FDonneesCompteTiers,RDonneesCompteTiers);
+
+     if(RDonneesCompteTiers.NumCptTiers=FSPlanComptable.EditNumCptTiersDonnees.Text)
+     and(RDonneesCompteTiers.NumDonnees>=NumDonnees)
+     then NumDonnees:= RDonneesCompteTiers.NumDonnees+1;
+
+     if(RDonneesCompteTiers.NumCptTiers=FSPlanComptable.EditNumCptTiersDonnees.Text)
+     and(RDonneesCompteTiers.NumDonnees=strtointeger(FSPlanComptable.EditNumDonneesCptTiers.Text))then
+     begin
+          OKDonneesCptTiers:=true;
+          NumDonnees:=RDonneesCompteTiers.NumDonnees;
+          i:=i-1;
+     end;
+i:=i+1;
+end;
+
+Seek(FDonneesCompteTiers,i);
+if(OKDonneesCptTiers=false)then Truncate(FDonneesCompteTiers);
+RDonneesCompteTiers.NumDonnees:=NumDonnees;
+RDonneesCompteTiers.NumCptTiers:=FSPlanComptable.EditNumCptTiersDonnees.Text;
+RDonneesCompteTiers.Titre:=FSPlanComptable.EditTitreDonneeCptTiers.Text;
+RDonneesCompteTiers.Information:=FSPlanComptable.EditInformationDonneeCptTiers.Text;
+
+Write(FDonneesCompteTiers,RDonneesCompteTiers);
+end;
+
+if(FSPlanComptable.BitValideDonneesCptTiers.Caption='Supprimer')then
+begin
+     DeleteFDonneesCompteTiers(FSPlanComptable.EditNumCptTiersDonnees.Text,FSPlanComptable.EditNumDonneesCptTiers.Text,Confirme);
+end;
+
+ProcListeDonneesCompteTiers(FSPlanComptable.EditNumCptTiersDonnees.Text);
+
+FSPlanComptable.AfficheOperationDonnesTiers.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauDonneesCompteTiersClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheOperationDonnesTiers.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn20Click(Sender: TObject);
+begin
+ProcListeDonneesCompteTiers(FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row]);
+FSPlanComptable.AfficheOperationDonnesTiers.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauDonneesCompteTiersKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+
+if key in['n','N']then
+begin
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+     FSPlanComptable.EditNumDonneesCptTiers.Text:='';
+     FSPlanComptable.EditTitreDonneeCptTiers.Text:='';
+     FSPlanComptable.EditInformationDonneeCptTiers.Text:='';
+     FSPlanComptable.EditTitreDonneeCptTiers.SetFocus;
+
+     FSPlanComptable.BitValideDonneesCptTiers.Kind:=bkAll;
+     FSPlanComptable.BitValideDonneesCptTiers.Caption:='Valider';
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+end;
+
+if key in['m','M']then
+begin
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+     FSPlanComptable.EditNumDonneesCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[1,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditTitreDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[2,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditInformationDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[3,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditTitreDonneeCptTiers.SetFocus;
+
+     FSPlanComptable.BitValideDonneesCptTiers.Kind:=bkAll;
+     FSPlanComptable.BitValideDonneesCptTiers.Caption:='Valider';
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+end;
+
+if key in['s','S']then
+begin
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+     FSPlanComptable.EditNumDonneesCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[1,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditTitreDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[2,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditInformationDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[3,FSPlanComptable.TableauDonneesCompteTiers.Row];
+
+     FSPlanComptable.BitValideDonneesCptTiers.Kind:=bkCancel;
+     FSPlanComptable.BitValideDonneesCptTiers.Caption:='Supprimer';
+     FSPlanComptable.BitValideDonneesCptTiers.SetFocus;
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+end;
+
+end;
+
+procedure TFSPlanComptable.EditTitreDonneeCptTiersKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.EditInformationDonneeCptTiers.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.EditInformationDonneeCptTiersKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.BitValideDonneesCptTiers.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.EditNumDonneesCptTiersKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.EditTitreDonneeCptTiers.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauDonneesCompteTiersKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_INSERT]then
+begin
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+     FSPlanComptable.EditNumDonneesCptTiers.Text:='';
+     FSPlanComptable.EditTitreDonneeCptTiers.Text:='';
+     FSPlanComptable.EditInformationDonneeCptTiers.Text:='';
+     FSPlanComptable.EditTitreDonneeCptTiers.SetFocus;
+
+     FSPlanComptable.BitValideDonneesCptTiers.Kind:=bkAll;
+     FSPlanComptable.BitValideDonneesCptTiers.Caption:='Valider';
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+end;
+
+if key in[VK_DELETE]then
+begin
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+     FSPlanComptable.EditNumDonneesCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[1,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditTitreDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[2,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditInformationDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[3,FSPlanComptable.TableauDonneesCompteTiers.Row];
+
+     FSPlanComptable.BitValideDonneesCptTiers.Kind:=bkCancel;
+     FSPlanComptable.BitValideDonneesCptTiers.Caption:='Supprimer';
+     FSPlanComptable.BitValideDonneesCptTiers.SetFocus;
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn16Click(Sender: TObject);
+begin
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+     FSPlanComptable.EditNumDonneesCptTiers.Text:='';
+     FSPlanComptable.EditTitreDonneeCptTiers.Text:='';
+     FSPlanComptable.EditInformationDonneeCptTiers.Text:='';
+     FSPlanComptable.EditTitreDonneeCptTiers.SetFocus;
+
+     FSPlanComptable.BitValideDonneesCptTiers.Kind:=bkAll;
+     FSPlanComptable.BitValideDonneesCptTiers.Caption:='Valider';
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+end;
+
+procedure TFSPlanComptable.BitBtn18Click(Sender: TObject);
+begin
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+     FSPlanComptable.EditNumDonneesCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[1,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditTitreDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[2,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditInformationDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[3,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditTitreDonneeCptTiers.SetFocus;
+
+     FSPlanComptable.BitValideDonneesCptTiers.Kind:=bkAll;
+     FSPlanComptable.BitValideDonneesCptTiers.Caption:='Valider';
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+end;
+
+procedure TFSPlanComptable.BitBtn21Click(Sender: TObject);
+begin
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+     FSPlanComptable.EditNumDonneesCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[1,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditTitreDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[2,FSPlanComptable.TableauDonneesCompteTiers.Row];
+     FSPlanComptable.EditInformationDonneeCptTiers.Text:=FSPlanComptable.TableauDonneesCompteTiers.Cells[3,FSPlanComptable.TableauDonneesCompteTiers.Row];
+
+     FSPlanComptable.BitValideDonneesCptTiers.Kind:=bkCancel;
+     FSPlanComptable.BitValideDonneesCptTiers.Caption:='Supprimer';
+     FSPlanComptable.BitValideDonneesCptTiers.SetFocus;
+     FSPlanComptable.AfficheOperationDonnesTiers.Visible:=true;
+end;
+
+procedure TFSPlanComptable.BitBtn22Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheDonneesCompteTiers.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauPreferenceCPKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['0'..'9']then
+begin
+     if key in['1'..'6']then
+     begin
+          ListePlanComptablePreferenceCP(strtointeger(key),'','')
+     end
+     else
+     begin
+          showmessage('Aucune liste ne porte l''ordre sélectionné !');
+          FSPlanComptable.TableauPreferenceCP.SetFocus;
+     end;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn23Click(Sender: TObject);
+begin
+FSPlanComptable.AffichePreferenceCptCP.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn24Click(Sender: TObject);
+begin
+CancelThe(0);
+FSPlanComptable.AffichePreferenceCptCP.Visible:=true;
+ListePlanComptablePreferenceCP(1,'','');
+FSPlanComptable.TableauPreferenceCP.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauPreferenceCPClick(Sender: TObject);
+begin
+
+if(FSPlanComptable.TableauPreferenceCP.Cells[0,0]<>inttostr(FSPlanComptable.TableauPreferenceCP.Row))then
+begin
+FSPlanComptable.TableauPreferenceCptCP.RowCount:=2;
+FSPlanComptable.TableauPreferenceCptCP.Rows[1].Text:='';
+FSPlanComptable.TableauPreferenceCptCP.Cols[0].Text:='Ordre';
+FSPlanComptable.TableauPreferenceCptCP.Cols[1].Text:='NumCpt.';
+FSPlanComptable.TableauPreferenceCptCP.Cols[2].Text:='         Désignation';
+FSPlanComptable.TableauPreferenceCptCP.Cols[3].Text:='Spécif.';
+FSPlanComptable.TableauPreferenceCptCP.Cols[4].Text:='Préfer.';
+
+FSPlanComptable.EditResultatCptPrincipal.Color:=clBtnFace;
+FSPlanComptable.EditResultatCptPrincipal.Caption:='';
+
+FSPlanComptable.TableauPreferenceCP.Cells[0,0]:=inttostr(FSPlanComptable.TableauPreferenceCP.Row);
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauPreferenceCPDblClick(Sender: TObject);
+var NumCptPrincipal,UniM:string; TailleTab:integer;
+begin
+FSPlanComptable.TableauPreferenceCptCP.RowCount:=2;
+FSPlanComptable.TableauPreferenceCptCP.Rows[1].Text:='';
+FSPlanComptable.TableauPreferenceCptCP.Cols[0].Text:='Ordre';
+FSPlanComptable.TableauPreferenceCptCP.Cols[1].Text:='NumCpt.';
+FSPlanComptable.TableauPreferenceCptCP.Cols[2].Text:='         Désignation';
+FSPlanComptable.TableauPreferenceCptCP.Cols[3].Text:='Spécif.';
+FSPlanComptable.TableauPreferenceCptCP.Cols[4].Text:='Préfer.';
+
+FSPlanComptable.EditResultatCptPrincipal.Color:=clBtnFace;
+FSPlanComptable.EditResultatCptPrincipal.Caption:='';
+
+SetLength(TCompteCPPreference,0);
+TailleTab:=0;
+PreferenceContrePartie(FSPlanComptable.TableauPreferenceCP.Cells[1,FSPlanComptable.TableauPreferenceCP.Row],NumCptPrincipal,TCompteCPPreference,TailleTab);
+if(TailleTab>0)then
+begin;
+
+if(NumCptPrincipal=FSPlanComptable.TableauPreferenceCP.Cells[1,FSPlanComptable.TableauPreferenceCP.Row])
+then FSPlanComptable.EditResultatCptPrincipal.Color:=$0097FF97
+else  FSPlanComptable.EditResultatCptPrincipal.Color:=$004AA5FF;
+FSPlanComptable.EditResultatCptPrincipal.caption:='Contre Partie du compte principal: '+NumCptPrincipal;
+
+i:=0;
+Setlength(TCompteCPPreference,TailleTab);
+while(i<TailleTab)do
+begin
+     i:=i+1;
+     FSPlanComptable.TableauPreferenceCptCP.Rows[i].Text:=inttostr(i);
+     FSPlanComptable.TableauPreferenceCptCP.Cells[1,i]:=TCompteCPPreference[i-1].NumCptCP;
+     FSPlanComptable.TableauPreferenceCptCP.Cells[2,i]:=DesigCompte('',TCompteCPPreference[i-1].NumCptCP,UniM);
+     FSPlanComptable.TableauPreferenceCptCP.Cells[3,i]:=TCompteCPPreference[i-1].Specificite;
+     FSPlanComptable.TableauPreferenceCptCP.Cells[4,i]:=booleantostr(TCompteCPPreference[i-1].Preference);
+end;
+
+if(i>0)then FSPlanComptable.TableauPreferenceCptCP.RowCount:=i+1
+       else FSPlanComptable.TableauPreferenceCptCP.RowCount:=2;
+end///////////////////////NOT PREFERENCE
+else
+begin
+     FSPlanComptable.EditResultatCptPrincipal.caption:='Le compte '+FSPlanComptable.TableauPreferenceCP.Cells[1,FSPlanComptable.TableauPreferenceCP.Row]+' na pas de compte contre partie!';
+     FSPlanComptable.EditResultatCptPrincipal.Color:=clBtnFace;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn25Click(Sender: TObject);
+begin
+SelectFichePlanComptable;
+FSPlanComptable.AfficheTransfertCompteACompte.Visible:=false;
+FSPlanComptable.AfficheListeTransfertCompte.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitValiderTransfertCptCptClick(Sender: TObject);
+var  i,k:integer; OK:boolean;  TypePCN,TypeComptabilite,TypeProces,FichierConcerne,Adresse:string;
+begin
+
+if(FSPlanComptable.EditNumCompteOrigine.Text<>'')
+and(FSPlanComptable.EditNumCompteDestination.Text<>'')
+then
+begin
+     {*************************MODIFICATION FJournalGeneral********************}
+     OpenFParc(RParc);
+     ChJournalGeneral:=RParc.Parcours+'\'+Exercice+'FJournalGeneral'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+     assignfile(FJournalGeneral,ChJournalGeneral);
+     if FileExists(ChJournalGeneral)
+     then Reset(FJournalGeneral)else Rewrite(FJournalGeneral);
+     Seek(FJournalGeneral,0);
+     i:=0;
+     while not eof(FJournalGeneral)do
+     begin
+          Read(FJournalGeneral,RJournalGeneral);
+          if(RJournalGeneral.NumCompte=FSPlanComptable.EditNumCompteOrigine.Text)then
+          begin
+               Seek(FJournalGeneral,i);
+               RJournalGeneral.NumCompte:=FSPlanComptable.EditNumCompteDestination.Text;
+               RJournalGeneral.CodeTiers:=FSPlanComptable.EditNumCompteDestination.Text+lastlaters(RJournalGeneral.CodeTiers,longueur(RJournalGeneral.CodeTiers)-longueur(FSPlanComptable.EditNumCompteOrigine.Text));
+               write(FJournalGeneral,RJournalGeneral);
+          end;
+          i:=i+1;
+          Seek(FJournalGeneral,i);
+     end;
+     CloseFile(FJournalGeneral);
+     {*************************************************************************}
+
+     {*****************************MODIFICATION FCompteTiers*******************}
+     OpenFParc(RParc);
+     ChCompteTiers:=RParc.Parcours+'\'+Exercice+'FCompteTiers'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+     assignfile(FCompteTiers,ChCompteTiers);
+     if FileExists(ChCompteTiers)
+     then Reset(FCompteTiers)else Rewrite(FCompteTiers);
+     Seek(FCompteTiers,0);
+     i:=0;
+     while not eof(FCompteTiers)do
+     begin
+          Read(FCompteTiers,RCompteTiers);
+          if(Firstlaters(RCompteTiers.NumCptTiers,longueur(FSPlanComptable.EditNumCompteOrigine.Text))=FSPlanComptable.EditNumCompteOrigine.Text)then
+          begin
+               Seek(FCompteTiers,i);
+               RCompteTiers.NumCptTiers:=FSPlanComptable.EditNumCompteDestination.Text+lastlaters(RCompteTiers.NumCptTiers,longueur(RCompteTiers.NumCptTiers)-longueur(FSPlanComptable.EditNumCompteOrigine.Text));
+               write(FCompteTiers,RCompteTiers);
+          end;
+          i:=i+1;
+          Seek(FCompteTiers,i);
+     end;
+     CloseFile(FCompteTiers);
+     {*************************************************************************}
+
+     {****************************MODIFICATION DonneesCompteTiers*********************************************}
+     OpenFParc(RParc);
+     ChDonneesCompteTiers:=RParc.Parcours+'\'+Exercice+'FDonneesCompteTiers'+FSMenuPrincipal.EditNumEntite.Text;
+     assignfile(FDonneesCompteTiers,ChDonneesCompteTiers);
+     if FileExists(ChDonneesCompteTiers)
+     then Reset(FDonneesCompteTiers)else Rewrite(FDonneesCompteTiers);
+     Seek(FDonneesCompteTiers,0);
+     i:=0;
+     while not eof(FDonneesCompteTiers)do
+     begin
+          Read(FDonneesCompteTiers,RDonneesCompteTiers);
+          if(Firstlaters(RDonneesCompteTiers.NumCptTiers,longueur(FSPlanComptable.EditNumCompteOrigine.Text))=FSPlanComptable.EditNumCompteOrigine.Text)then
+          begin
+               Seek(FDonneesCompteTiers,i);
+               RDonneesCompteTiers.NumCptTiers:=FSPlanComptable.EditNumCompteDestination.Text+lastlaters(RDonneesCompteTiers.NumCptTiers,longueur(RDonneesCompteTiers.NumCptTiers)-longueur(FSPlanComptable.EditNumCompteOrigine.Text));
+               write(FDonneesCompteTiers,RDonneesCompteTiers);
+          end;
+          i:=i+1;
+          Seek(FDonneesCompteTiers,i);
+     end;
+     CloseFile(FDonneesCompteTiers);
+     {*************************************************************************}
+end;
+
+TypeProces:=FSPlanComptable.TypeProces.Text; //TypePCN,TypeProces,FichierConcerne,Adresse:string;
+TypeComptabilite:=FSPlanComptable.EditTypeComptabilite.Text;
+TypePCN:='6';
+
+if(TypePCN='1')then FichierConcerne:='FClasse'+TypeComptabilite;
+if(TypePCN='2')then FichierConcerne:='FSousClasse'+TypeComptabilite;
+if(TypePCN='3')then FichierConcerne:='FCategorie'+TypeComptabilite;
+if(TypePCN='4')then FichierConcerne:='FSousCategorie'+TypeComptabilite;
+if(TypePCN='5')then FichierConcerne:='FFamille'+TypeComptabilite;
+if(TypePCN='6')then FichierConcerne:='FSousFamille'+TypeComptabilite;
+
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+end;
+
+if(FSPlanComptable.EditOperation.Caption='Supprimer')then
+begin
+     if(longueur(FSPlanComptable.EditNumCompteOrigine.Text)=6)then
+     begin
+          ChSousFamille:=Adresse;
+          assignfile(FSousFamille,ChSousFamille);
+          if FileExists(ChSousFamille)then
+          Reset(FSousFamille)
+          else Rewrite(FSousFamille);
+          i:=0;
+          Seek(FSousFamille,0);
+          while not eof(FSousFamille)do
+          begin
+          read(FSousFamille,RSousFamille);
+          if((RSousFamille.CodeCompte=FSPlanComptable.EditCodeModifSousFamille.Text)or(RSousFamille.CodeCompte=''))then
+          begin
+              k:=i;
+              while not eof(FSousFamille)do
+              begin
+              read(FSousFamille,RSousFamille);
+              Seek(FSousFamille,k);
+              Write(FSousFamille,RSousFamille);
+              k:=k+1;
+              Seek(FSousFamille,k+1);
+              end;
+              Seek(FSousFamille,k);
+              Truncate(FSousFamille);
+              Seek(FSousFamille,0);
+              i:=0;
+          end
+          else i:=i+1;
+          end;
+          closefile(FSousFamille);
+          ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+     end;
+end;
+
+if(FSPlanComptable.EditOperation.Caption='Modifier')then
+begin
+     if(longueur(FSPlanComptable.EditNumCompteOrigine.Text)=6)then
+     begin
+          ChSousFamille:=Adresse;
+          assignfile(FSousFamille,ChSousFamille);
+          if FileExists(ChSousFamille)
+          then Reset(FSousFamille)else Rewrite(FSousFamille);
+          OK:=false;
+
+          if(FSPlanComptable.EditNumCompteOrigine.Text<>FSPlanComptable.EditNumCompteDestination.Text)then
+          begin
+          Seek(FSousFamille,0);
+          i:=0;
+          while not eof(FSousFamille)and(OK=false)do
+          begin
+               Read(FSousFamille,RSousFamille);
+               i:=i+1;
+               if(RSousFamille.CodeCompte=FSPlanComptable.EditNumCompteDestination.Text)then
+               begin
+                    OK:=true;
+                    showmessage('Le Code de la Sous Famille existe déjas');
+                    FSPlanComptable.EditCodeSousFamille.SetFocus;
+               end;
+          end;
+          end;
+
+          if(OK=false)then
+          begin
+          i:=0;
+          Seek(FSousFamille,0);
+          while not eof(FSousFamille)do
+          begin
+          read(FSousFamille,RSousFamille);
+          if(RSousFamille.CodeCompte=FSPlanComptable.EditNumCompteOrigine.Text)then
+          begin
+               Seek(FSousFamille,i);
+               RSousFamille.CodeCompte:=FSPlanComptable.EditNumCompteDestination.Text;
+               Write(FSousFamille,RSousFamille);
+          end;
+          i:=i+1;
+          end;
+          ProcAffichePCN(TypePCN,'',FSPlanComptable.EditTypeComptabilite.Text);
+     end;
+end;
+end;
+
+SelectFichePlanComptable;
+FSPlanComptable.AfficheTransfertCompteACompte.Visible:=false;
+FSPlanComptable.AfficheListeTransfertCompte.Visible:=false;
+end;
+
+procedure TFSPlanComptable.EditNumCompteDestinationKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+ListeTransfertCompte(FSPlanComptable.EditNumCompteDestination.Text);
+end;
+
+procedure TFSPlanComptable.EditNumCompteDestinationEnter(Sender: TObject);
+begin
+FSPlanComptable.AfficheListeTransfertCompte.Visible:=true;
+end;
+
+procedure TFSPlanComptable.EditNumCompteDestinationKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     if(FSPlanComptable.TableauListeTransfertCompte.Cells[1,1]<>'')then
+     FSPlanComptable.TableauListeTransfertCompte.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.TableauListeTransfertCompteKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.EditNumCompteDestination.Text:=FSPlanComptable.TableauListeTransfertCompte.Cells[1,FSPlanComptable.TableauListeTransfertCompte.Row];
+     FSPlanComptable.EditCompteDestination.Text:=FSPlanComptable.TableauListeTransfertCompte.Cells[2,FSPlanComptable.TableauListeTransfertCompte.Row];
+     FSPlanComptable.BitValiderTransfertCptCpt.SetFocus;
+     FSPlanComptable.AfficheListeTransfertCompte.Visible:=false;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn27Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheModeleDonnees.Visible:=false;
+end;
+
+procedure TFSPlanComptable.BitBtn26Click(Sender: TObject);
+begin
+FSPlanComptable.AfficheModeleDonnees.Visible:=true;
+FSPlanComptable.AfficheNouveauModele.Visible:=false;
+ProcAfficheModeleDonnees;
+FSPlanComptable.TableauModeleDonnees.SetFocus;
+end;
+
+procedure TFSPlanComptable.TableauModeleDonneesClick(Sender: TObject);
+begin
+FSPlanComptable.AfficheNouveauModele.Visible:=false;
+end;
+
+procedure TFSPlanComptable.TableauModeleDonneesKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if key in['n','N']then
+begin
+     FSPlanComptable.AfficheNouveauModele.Visible:=true;
+     FSPlanComptable.EditNumModele.Text:='';
+     FSPlanComptable.EditModeleDonnee.Text:='';
+     FSPlanComptable.EditModeleDonnee.SetFocus;
+     FSPlanComptable.BitOperationModeleDonnees.Kind:=bkAll;
+     FSPlanComptable.BitOperationModeleDonnees.Caption:='Valider';
+end;
+
+if key in['m','M']then
+begin
+     FSPlanComptable.AfficheNouveauModele.Visible:=true;
+     FSPlanComptable.EditNumModele.Text:=FSPlanComptable.TableauModeleDonnees.Cells[0,FSPlanComptable.TableauModeleDonnees.Row];
+     FSPlanComptable.EditModeleDonnee.Text:=FSPlanComptable.TableauModeleDonnees.Cells[1,FSPlanComptable.TableauModeleDonnees.Row];
+     FSPlanComptable.EditModeleDonnee.SetFocus;
+     FSPlanComptable.BitOperationModeleDonnees.Kind:=bkAll;
+     FSPlanComptable.BitOperationModeleDonnees.Caption:='Valider';
+end;
+
+if key in['s','S']then
+begin
+     FSPlanComptable.AfficheNouveauModele.Visible:=true;
+     FSPlanComptable.EditNumModele.Text:=FSPlanComptable.TableauModeleDonnees.Cells[0,FSPlanComptable.TableauModeleDonnees.Row];
+     FSPlanComptable.EditModeleDonnee.Text:=FSPlanComptable.TableauModeleDonnees.Cells[1,FSPlanComptable.TableauModeleDonnees.Row];
+     FSPlanComptable.EditModeleDonnee.SetFocus;
+     FSPlanComptable.BitOperationModeleDonnees.Kind:=bkCancel;
+     FSPlanComptable.BitOperationModeleDonnees.Caption:='Supprimer';
+     FSPlanComptable.BitOperationModeleDonnees.Cancel:=false;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitOperationModeleDonneesClick(Sender: TObject);
+var i,NumModele:integer; OKModeleDonneesCteTiers,Confirme:boolean;
+begin
+
+if(FSPlanComptable.BitOperationModeleDonnees.Caption='Valider')then
+begin
+     OpenFParc(RParc);
+     ChModeleDonneesCteTiers:=RParc.Parcours+'\'+Exercice+'FModeleDonneesCteTiers';
+     assignfile(FModeleDonneesCteTiers,ChModeleDonneesCteTiers);
+     if FileExists(ChModeleDonneesCteTiers)
+     then Reset(FModeleDonneesCteTiers)else Rewrite(FModeleDonneesCteTiers);
+     Seek(FModeleDonneesCteTiers,0);
+     i:=0;
+     NumModele:=1;
+     OKModeleDonneesCteTiers:=false;
+     while not eof(FModeleDonneesCteTiers)and(OKModeleDonneesCteTiers=false)do
+     begin
+          Read(FModeleDonneesCteTiers,RModeleDonneesCteTiers);
+          if(NumModele<=RModeleDonneesCteTiers.NumDonnees)then NumModele:=RModeleDonneesCteTiers.NumDonnees+1;
+          if(RModeleDonneesCteTiers.NumDonnees=strtointeger(FSPlanComptable.EditNumModele.Text))then
+          begin
+               OKModeleDonneesCteTiers:=true;
+               NumModele:=RModeleDonneesCteTiers.NumDonnees;
+          end
+          else i:=i+1;
+     end;
+
+     Seek(FModeleDonneesCteTiers,i);
+     RModeleDonneesCteTiers.NumDonnees:=NumModele;
+     RModeleDonneesCteTiers.Titre:=FSPlanComptable.EditModeleDonnee.Text;
+     write(FModeleDonneesCteTiers,RModeleDonneesCteTiers);
+     CloseFile(FModeleDonneesCteTiers);
+end;
+
+if(FSPlanComptable.BitOperationModeleDonnees.Caption='Supprimer')then
+begin
+     DeleteFModeleDonneesCteTiers(strtointeger(FSPlanComptable.EditNumModele.Text),Confirme);
+end;
+
+ProcAfficheModeleDonnees;
+FSPlanComptable.AfficheNouveauModele.Visible:=false;
+
+end;
+
+procedure TFSPlanComptable.EditModeleDonneeKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSPlanComptable.BitOperationModeleDonnees.SetFocus;
+end;
+
+end;
+
+procedure TFSPlanComptable.BitBtn28Click(Sender: TObject);
+var  i,j:integer;  OKCompteTiers:boolean;
+begin
+OpenFParc(RParc);
+ChDonneesCompteTiers:=RParc.Parcours+'\'+Exercice+'FDonneesCompteTiers'+FSMenuPrincipal.EditNumEntite.Text;
+assignfile(FDonneesCompteTiers,ChDonneesCompteTiers);
+if FileExists(ChDonneesCompteTiers)
+then Reset(FDonneesCompteTiers)else Rewrite(FDonneesCompteTiers);
+Seek(FDonneesCompteTiers,0);
+i:=0;
+OKCompteTiers:=false;
+while not eof(FDonneesCompteTiers)and(OKCompteTiers=false)do
+begin
+     Read(FDonneesCompteTiers,RDonneesCompteTiers);
+     if(RDonneesCompteTiers.NumCptTiers=FSPlanComptable.EditNumCptTiersDonnees.Text)then
+     begin
+          OKCompteTiers:=true;
+     end
+     else i:=i+1;
+end;
+
+
+if(OKCompteTiers=false)then
+begin
+     OpenFParc(RParc); 
+     ChModeleDonneesCteTiers:=RParc.Parcours+'\'+Exercice+'FModeleDonneesCteTiers';
+     assignfile(FModeleDonneesCteTiers,ChModeleDonneesCteTiers);
+     if FileExists(ChModeleDonneesCteTiers)
+     then Reset(FModeleDonneesCteTiers)else Rewrite(FModeleDonneesCteTiers);
+     Seek(FModeleDonneesCteTiers,0);
+     j:=1;
+     while not eof(FModeleDonneesCteTiers)do
+     begin
+          Read(FModeleDonneesCteTiers,RModeleDonneesCteTiers);
+
+          Seek(FDonneesCompteTiers,i);
+          RDonneesCompteTiers.NumDonnees:=j;
+          RDonneesCompteTiers.NumCptTiers:=FSPlanComptable.EditNumCptTiersDonnees.Text;
+          RDonneesCompteTiers.Titre:=RModeleDonneesCteTiers.Titre;
+          RDonneesCompteTiers.Information:='';
+          write(FDonneesCompteTiers,RDonneesCompteTiers);
+          i:=i+1;
+          j:=j+1;
+     end;
+     CloseFile(FModeleDonneesCteTiers);
+end
+else
+begin
+     showmessage('Veuillez Supprimer toutes les données affecté au tiers sélectionner SVP!');
+     FSPlanComptable.TableauDonneesCompteTiers.SetFocus;
+end;
+CloseFile(FDonneesCompteTiers);
+ProcListeDonneesCompteTiers(FSPlanComptable.EditNumCptTiersDonnees.Text);
+FSPlanComptable.AfficheModeleDonnees.Visible:=false;
+end;
+
+procedure TFSPlanComptable.AfficheListeSousFamilleDblClick(
+  Sender: TObject);
+var   R:integer;  Orientation:string;
+begin
+
+if(FSPlanComptable.RBPortrait.Checked)
+then Orientation:='Portrait'
+else Orientation:='';
+
+OptionsImpression(FSPlanComptable.TableauSousFamille,'Center',1,1,'Plan Comptable Six chiffres ',true,Orientation,'0','0','','0;1;3-7','','',true,R,FSMenuPrincipal.ImageCodebarre,true,R);
+end;
+
+procedure TFSPlanComptable.AfficheListeFamilleDblClick(Sender: TObject);
+var   Orientation:string;
+begin
+
+if(FSPlanComptable.RBPortrait.Checked)
+then Orientation:='Portrait'
+else Orientation:='';
+
+OptionsImpression(FSPlanComptable.TableauFamille,'Center',1,1,'Plan Comptable Cinq chiffres ',true,Orientation,'0','0','','0;1;3-7','','',true,R,FSMenuPrincipal.ImageCodebarre,true,R)
+end;
+
+procedure TFSPlanComptable.AfficheListeSousCategorieDblClick(
+  Sender: TObject);
+var   Orientation:string;
+begin
+
+if(FSPlanComptable.RBPortrait.Checked)
+then Orientation:='Portrait'
+else Orientation:='';
+
+OptionsImpression(FSPlanComptable.TableauSousCategorie,'Center',1,1,'Plan Comptable Quatre chiffres ',true,Orientation,'0','0','','0;1;3-7','','',true,R,FSMenuPrincipal.ImageCodebarre,true,R)
+end;
+
+procedure TFSPlanComptable.AfficheListeCategorieDblClick(Sender: TObject);
+var   Orientation:string;
+begin
+
+if(FSPlanComptable.RBPortrait.Checked)
+then Orientation:='Portrait'
+else Orientation:='';
+
+OptionsImpression(FSPlanComptable.TableauCategorie,'Center',1,1,'Plan Comptable Trois chiffres ',true,Orientation,'0','0','','0;1;3-7','','',true,R,FSMenuPrincipal.ImageCodebarre,true,R);
+end;
+
+procedure TFSPlanComptable.AfficheListeSousClasseDblClick(Sender: TObject);
+var   Orientation:string;
+begin
+
+if(FSPlanComptable.RBPortrait.Checked)
+then Orientation:='Portrait'
+else Orientation:='';
+
+OptionsImpression(FSPlanComptable.TableauSousClasse,'Center',1,1,'Plan Comptable Deux chiffres ',true,Orientation,'0','0','','0;1;3-7','','',true,R,FSMenuPrincipal.ImageCodebarre,true,R);
+end;
+
+procedure TFSPlanComptable.AfficheListeClasseDblClick(Sender: TObject);
+var   Orientation:string;
+begin
+
+if(FSPlanComptable.RBPortrait.Checked)
+then Orientation:='Portrait'
+else Orientation:='';
+
+OptionsImpression(FSPlanComptable.TableauClasse,'Center',1,1,'Plan Comptable Un chiffre ',true,Orientation,'0','0','','0;1;3-7','','',true,R,FSMenuPrincipal.ImageCodebarre,true,R);
+end;
+
+procedure TFSPlanComptable.EditCodeSousFamilleEnter(Sender: TObject);
+begin
+
+ExisteCompteImputation(FSPlanComptable.TableauSousFamille.Cells[1,FSPlanComptable.TableauSousFamille.Row],FSPlanComptable.TableauSousFamille.Cells[2,FSPlanComptable.TableauSousFamille.Row],'Modifier');
+
+end;
+
+procedure TFSPlanComptable.BitOrdonnerCompteTiersClick(Sender: TObject);
+var  i,PCompteTiers,Sequence,NbrExisteCompte:integer;  OKCompteTiers:boolean;
+begin
+
+if(FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row]<>'')then
+begin
+     OpenFParc(RParc);
+     ChCompteTiers:=RParc.Parcours+'\'+Exercice+'FCompteTiers'+Firstlaters(FSMenuPrincipal.EditNumEntite.Text,5);
+     assignfile(FCompteTiers,ChCompteTiers);
+     if FileExists(ChCompteTiers)
+     then Reset(FCompteTiers)else Rewrite(FCompteTiers);
+     Seek(FCompteTiers,0);
+     i:=0;
+     PCompteTiers:=i;
+     Sequence:=0;
+     NbrExisteCompte:=0;
+     OKCompteTiers:=false;
+     while not eof(FCompteTiers)do
+     begin
+          Read(FCompteTiers,RCompteTiers);
+          if(RCompteTiers.NumCptTiers=FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row])then
+          begin
+               NbrExisteCompte:=NbrExisteCompte+1;
+
+               if(RCompteTiers.Designation=FSPlanComptable.TableauCompteTiers.Cells[3,FSPlanComptable.TableauCompteTiers.Row])then
+               begin
+                    PCompteTiers:=i;
+                    OKCompteTiers:=true;
+               end;
+          end;
+
+          if(Firstlaters(RCompteTiers.NumCptTiers,strtointeger(FSPlanComptable.TableauCompteTiers.Cells[1,FSPlanComptable.TableauCompteTiers.Row]))=Firstlaters(FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row],strtointeger(FSPlanComptable.TableauCompteTiers.Cells[1,FSPlanComptable.TableauCompteTiers.Row])))then
+          begin
+               if(strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-strtointeger(FSPlanComptable.TableauCompteTiers.Cells[1,FSPlanComptable.TableauCompteTiers.Row])))>=Sequence)then
+               Sequence:=strtointeger(lastlaters(RCompteTiers.NumCptTiers,10-strtointeger(FSPlanComptable.TableauCompteTiers.Cells[1,FSPlanComptable.TableauCompteTiers.Row])))+1;
+          end;
+
+          i:=i+1;
+     end;
+
+     if(NbrExisteCompte<2)then
+     begin
+          showmessage('Le numéro du compte sélectionné n''est pas doublé');
+          FSPlanComptable.TableauCompteTiers.SetFocus;
+     end
+     else
+     begin
+          if(OKCompteTiers=true)then
+          begin
+               Seek(FCompteTiers,PCompteTiers);
+               Read(FCompteTiers,RCompteTiers);
+               RCompteTiers.NumCptTiers:=Firstlaters(FSPlanComptable.TableauCompteTiers.Cells[2,FSPlanComptable.TableauCompteTiers.Row],strtointeger(FSPlanComptable.TableauCompteTiers.Cells[1,FSPlanComptable.TableauCompteTiers.Row]))+completezerogauche(inttostr(Sequence),inttostr(10-strtointeger(FSPlanComptable.TableauCompteTiers.Cells[1,FSPlanComptable.TableauCompteTiers.Row])));
+               Seek(FCompteTiers,PCompteTiers);
+               write(FCompteTiers,RCompteTiers);
+          end;
+
+          ProcListeCompteTiers(FSPlanComptable.EditNumCptPrincipalTiers.Text);
+     end;
+
+     CloseFile(FCompteTiers);
+end;
+
+end;
+
+procedure TFSPlanComptable.EditTypeStockKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSPlanComptable.EditTypeStockChange(Sender: TObject);
+begin
+      if(FSPlanComptable.EditTypeStock.Text='Marche')
+     then FSPlanComptable.EditTypeComptabilite.Text:=FSPlanComptable.EditTypeStock.Text
+     else FSPlanComptable.EditTypeComptabilite.Text:='PlanComptable';
+
+     ProcAffichePCN('6','',FSPlanComptable.EditTypeComptabilite.Text);
+    
+end;
+
+procedure TFSPlanComptable.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+     FSPlanComptable.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Plan Comptable';
+end;
+
+procedure TFSPlanComptable.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

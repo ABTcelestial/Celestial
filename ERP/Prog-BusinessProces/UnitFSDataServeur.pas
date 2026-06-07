@@ -1,0 +1,532 @@
+unit UnitFSDataServeur;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ActnList, ScktComp, StdCtrls, ExtCtrls, Buttons, Grids, StdActns,
+  ComCtrls, Math, Gauges;
+
+  const MaxLength = 4000;
+
+type
+
+    TBloc = packed record
+    case bOperation: Byte of
+       1: (fName: ShortString;
+           fSize: Integer);
+
+       2: (bReaden: Integer;
+           bProgress: Integer;                                                                         bDatas: array[0..MaxLength - 1] of Char );
+
+       3: ();
+    end;
+
+    TFSDataServeur = class(TForm)
+    GroupBox3: TGroupBox;
+    Bevel1: TBevel;
+    EditCommunication: TEdit;
+    GroupBox2: TGroupBox;
+    Label1: TLabel;
+    ListeCommunication: TMemo;
+    EditNomUtilisateurServeur: TEdit;
+    ServerSocket1: TServerSocket;
+    ActionList1: TActionList;
+    EditNomDosierPartagerClient: TEdit;
+    Label2: TLabel;
+    ChercheAdresseIP: TLabel;
+    EditPort: TEdit;
+    Label3: TLabel;
+    EditHost: TEdit;
+    Label4: TLabel;
+    AfficheAdresseDossierPartageReseaux: TPanel;
+    TableauAdresseDossierPartageReseaux: TStringGrid;
+    BitBtn1: TBitBtn;
+    SpeedButton3: TSpeedButton;
+    BitDeconnecter: TSpeedButton;
+    BitConnecter: TSpeedButton;
+    Button1: TButton;
+    Panel1: TPanel;
+    EditServeur_Fichier: TEdit;
+    BoutonServeur_FichierSelection: TButton;
+    BoutonServeur_Fichier: TButton;
+    Panel2: TPanel;
+    ListeClients: TListBox;
+    StatusBarServeur: TStatusBar;
+    EditHandle: TEdit;
+    OpenDialog1: TOpenDialog;
+    procedure Button1Click(Sender: TObject);
+    procedure ServerSocket1ClientConnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ServerSocket1ClientDisconnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ServerSocket1ClientError(Sender: TObject;
+      Socket: TCustomWinSocket; ErrorEvent: TErrorEvent;
+      var ErrorCode: Integer);
+    procedure ServerSocket1ClientRead(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ServerSocket1ClientWrite(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure FormCreate(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure EditNomDosierPartagerClientEnter(Sender: TObject);
+    procedure TableauAdresseDossierPartageReseauxDblClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BitDeconnecterClick(Sender: TObject);
+    procedure BitConnecterClick(Sender: TObject);
+    procedure BoutonServeur_FichierSelectionClick(Sender: TObject);
+    procedure BoutonServeur_FichierClick(Sender: TObject);
+    procedure ListeClientsClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+
+  private
+    isTransfExecuted, CloseApplication: Boolean;
+    ftSaveAs: String;
+    OldSize: Integer;
+    procedure SaveTransferedFile;
+    procedure UpdateGauges(Value: Integer);
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+  const EOL: AnsiString=#13#10; // Marqueur de fin de ligne
+      //AUTOCONNECT='/c';
+
+var
+  FSDataServeur: TFSDataServeur;
+
+  procedure AjouterLog(Log: TMemo ; Texte: string);
+  function MessageErreurSocket(ErrorEvent: TErrorEvent; Var ErrorCode: Integer):String;
+
+implementation
+
+uses UnitInitialisation, UnitFSGenerateurBase, API_LiberationProcessus, UnitFSConfirmationSaveSocket,
+  UnitFSMenuPrincipal; //, UnitFSSocket
+
+type
+    TArrayOfChar = array of Ansichar;
+
+    TIntegerObject = class(TObject)
+    SocketHandle: integer;
+    end;
+
+    TSocketState=(ssText, ssFile);
+
+    TSocketData = class(TObject)
+    Buffer: array of TArrayOfChar;
+    State: TSocketState;
+    File_Size: cardinal;
+    File_Name: string;
+    File_Stream: TFileStream;
+  public
+   // constructor Create;
+   // destructor Destroy; override;
+  end;
+
+{$R *.dfm}
+
+resourcestring
+
+  sWaitingForRecipientsConfirmation = 'Waiting for recepient''s confirmation ...';
+  sDoYouWantToReceiveFile           = 'Do you want to receive %s (%s Bytes) from %s ?';
+  sOperationAccepted                = 'Operation accepted';
+  sWaitingForRemoteData             = 'Waiting for remote data';
+  sReceivedProgress                 = 'Received %d of %d bytes';
+  sTransferComplete                 = 'File transferred completely';
+  sClose                            = 'Close : ';
+  sAborted                          = 'Operation aborted';
+  sTransferNotComplete              = 'File transferred not completely terminated';
+  sTransferBegin                    = 'Contact me at : tdjprog@yahoo.fr';
+
+Var
+  Fichier: TFileStream; //TMemoryStream;
+                                                                                            {
+
+           NOTE:-----------------------------------------------
+                           If the size of file that you want to
+                             receive is > 5 MB, it's recomonded
+                                       to use TFileStream; else
+                       you can use TFileStream or TMemoryStream                             }
+
+procedure TFSDataServeur.Button1Click(Sender: TObject);
+Var
+i:integer;
+begin
+
+if(EditCommunication.text='')then Exit;
+
+ListeCommunication.Lines.Add(' '+EditNomUtilisateurServeur.text+' dit : '+EditCommunication.text );
+if (Serversocket1.Socket.ActiveConnections > 0) then
+begin
+for i := 0 to Serversocket1.Socket.ActiveConnections-1 do
+begin
+Serversocket1.Socket.Connections[i].sendtext(' '+EditNomUtilisateurServeur.text+' dit : '+EditCommunication.text);
+EditCommunication.Clear;
+end;
+end;
+end;
+
+procedure TFSDataServeur.ServerSocket1ClientConnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+var ClientData: TSocketData;
+    IntegerObject: TIntegerObject;
+begin
+     FSDataServeur.Caption:='chat(server )';
+
+     ClientData:=TSocketData.Create;
+     Socket.Data:=ClientData;
+     IntegerObject:=TIntegerObject.Create;
+     IntegerObject.SocketHandle:=Socket.SocketHandle;
+     ListeClients.AddItem('Handle '+inttostr(Socket.SocketHandle), IntegerObject);
+     if ListeClients.Count=1 then
+     begin
+          ListeClients.Selected[0]:=true;
+          ListeClientsClick(nil);
+     end;
+     AjouterLog(ListeCommunication, 'Connexion du client : '+inttostr(Socket.SocketHandle));
+end;
+
+procedure TFSDataServeur.ServerSocket1ClientDisconnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+var i: integer;
+begin
+     FSDataServeur.Caption:='chat(server)Déconnecter';
+
+     i:=0; while (i<ListeClients.Count) do if TIntegerObject(ListeClients.Items.Objects[i]).SocketHandle=Socket.SocketHandle then ListeClients.Items.Delete(i) else Inc(i);
+     TSocketData(Socket.Data).Free;
+     Socket.Data:=nil;
+     ListeClientsClick(nil);
+     AjouterLog(ListeCommunication, 'Déconnexion du client : '+inttostr(Socket.SocketHandle));
+end;
+
+procedure TFSDataServeur.ServerSocket1ClientError(Sender: TObject;
+  Socket: TCustomWinSocket; ErrorEvent: TErrorEvent;
+  var ErrorCode: Integer);
+begin
+FSDataServeur.Caption:='chat(server )Erreur Connection';
+AjouterLog(ListeCommunication, MessageErreurSocket(ErrorEvent, ErrorCode));
+end;
+
+procedure TFSDataServeur.ServerSocket1ClientRead(Sender: TObject;
+  Socket: TCustomWinSocket);
+Var Buffer: TBloc;
+    Received : Integer;
+    EmptyChar: Byte;
+    ConfirmRecive: TFSConfirmationSaveSocket;
+begin
+     ListeCommunication.lines.add(Socket.ReceiveText);
+end;
+
+procedure TFSDataServeur.ServerSocket1ClientWrite(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+ ListeCommunication.Lines.add(Socket.ReceiveText);
+end;
+
+procedure TFSDataServeur.FormCreate(Sender: TObject);
+begin
+FSDataServeur.caption:='chat (server )';
+ListeCommunication.Clear;
+EditCommunication.Clear;
+end;
+
+procedure TFSDataServeur.BitBtn1Click(Sender: TObject);
+begin
+     AfficheAdresseDossierPartageReseaux.Visible:=false;
+end;
+
+procedure TFSDataServeur.EditNomDosierPartagerClientEnter(Sender: TObject);
+begin
+     FSDataServeur.AfficheAdresseDossierPartageReseaux.Visible:=true;
+     ListeAdresseDossierPartageReseaux(FSDataServeur.TableauAdresseDossierPartageReseaux,false,true,True);// Contrôle connéctivité réseaux
+end;
+
+procedure TFSDataServeur.TableauAdresseDossierPartageReseauxDblClick(
+  Sender: TObject);
+begin
+     FSDataServeur.EditNomDosierPartagerClient.Text:=FSDataServeur.TableauAdresseDossierPartageReseaux.Cells[2,FSDataServeur.TableauAdresseDossierPartageReseaux.Row];
+     AfficheAdresseDossierPartageReseaux.Visible:=false;
+
+     if(FSDataServeur.EditPort.Text<>'')then
+     begin
+          FSDataServeur.serversocket1.Port:=strtointeger(FSDataServeur.EditPort.Text);
+     end
+     else
+     begin
+          FSDataServeur.EditPort.Text:=inttostr(FSDataServeur.serversocket1.Port);
+     end;
+
+     FSDataServeur.serversocket1.Active:=true;
+     FSDataServeur.BitDeConnecter.Enabled:=true;
+     FSDataServeur.Bitconnecter.Enabled:=false;
+
+     IndiquerAdresseIPAuxClientReseaux(FSDataServeur.EditNomDosierPartagerClient.Text,'','');
+
+     FSDataServeur.EditCommunication.SetFocus;
+
+     //(Sender as TButton).Enabled:=false;
+     {try
+        ServerSocket1.Active:=not ServerSocket1.Active;
+     except
+       on E: Exception do AjouterLog(ListeCommunication, E.Message);
+     end;
+     //(Sender as TButton).Enabled:=true;
+     ListeClients.Clear;
+     ListeClientsClick(nil);}
+     if ServerSocket1.Active then StatusBarServeur.SimpleText:='Serveur actif' else StatusBarServeur.SimpleText:='Serveur stoppé';
+     AjouterLog(ListeCommunication, StatusBarServeur.SimpleText);
+end;
+
+procedure TFSDataServeur.FormShow(Sender: TObject);
+begin
+     FSDataServeur.AfficheAdresseDossierPartageReseaux.Left:=FSDataServeur.GroupBox3.Left;
+     FSDataServeur.AfficheAdresseDossierPartageReseaux.Top:=FSDataServeur.GroupBox3.Top;
+
+     FSDataServeur.EditCommunication.SetFocus;
+
+end;
+
+procedure TFSDataServeur.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+     FSDataServeur.BitDeconnecter.Enabled:=false;
+     FSDataServeur.serversocket1.Active:=false;
+     FSDataServeur.Bitconnecter.Enabled:=true;
+     FSDataServeur.EditNomDosierPartagerClient.Text:='';
+
+     IndiquerAdresseIPAuxClientReseaux('','','');
+end;
+
+procedure TFSDataServeur.BitDeconnecterClick(Sender: TObject);
+begin
+FSDataServeur.BitDeconnecter.Enabled:=false;
+FSDataServeur.serversocket1.Active:=false;
+FSDataServeur.Bitconnecter.Enabled:=true;
+FSDataServeur.EditNomDosierPartagerClient.Text:='';
+
+if ServerSocket1.Active then StatusBarServeur.SimpleText:='Serveur actif' else StatusBarServeur.SimpleText:='Serveur stoppé';
+AjouterLog(ListeCommunication, StatusBarServeur.SimpleText);
+
+IndiquerAdresseIPAuxClientReseaux('','','');
+end;
+
+procedure TFSDataServeur.BitConnecterClick(Sender: TObject);
+begin
+     if(FSDataServeur.EditPort.Text<>'')then
+     begin
+          FSDataServeur.serversocket1.Port:=strtointeger(FSDataServeur.EditPort.Text);
+     end
+     else
+     begin
+          FSDataServeur.EditPort.Text:=inttostr(FSDataServeur.serversocket1.Port);
+     end;
+
+     if(FSDataServeur.EditHost.Text<>'')then
+     begin
+          //FSDataServeur.serversocket1:=FSDataServeur.EditHost.Text;
+     end
+     else
+     begin
+          //FSDataServeur.EditHost.Text:=FSDataServeur.serversocket1.Port;
+     end;
+
+     if(FSDataServeur.EditNomDosierPartagerClient.Text<>'')then
+     begin
+          FSDataServeur.serversocket1.Service:=FSDataServeur.ChercheAdresseIP.Caption;
+          FSDataServeur.serversocket1.Active:=true;
+          FSDataServeur.BitDeConnecter.Enabled:=true;
+          FSDataServeur.Bitconnecter.Enabled:=false;
+     end
+     else FSDataServeur.EditNomDosierPartagerClient.SetFocus;
+end;
+
+procedure TFSDataServeur.BoutonServeur_FichierSelectionClick(
+  Sender: TObject);
+begin
+     if OpenDialog1.Execute then
+          if Sender=BoutonServeur_FichierSelection then EditServeur_Fichier.Text:=OpenDialog1.FileName;
+                                                   //else EditClient_Fichier.Text:=OpenDialog1.FileName;
+
+    FSDataServeur.EditHandle.Text:='Handle '+inttostr(TrouverHandle(OpenDialog1.FileName));
+end;
+
+procedure TFSDataServeur.BoutonServeur_FichierClick(Sender: TObject);
+var i, j: integer;
+    FS: TFileStream;
+begin
+     if ServerSocket1.Active and FileExists(EditServeur_Fichier.Text) then
+     for i:=0 to ListeClients.Count-1 do
+     if ListeClients.Selected[i] then
+     for j:=0 to ServerSocket1.Socket.ActiveConnections-1 do
+     begin                                                                          
+          if ServerSocket1.Socket.Connections[j].SocketHandle=TIntegerObject(ListeClients.Items.Objects[i]).SocketHandle then
+          begin
+               FS:=TFileStream.Create(EditServeur_Fichier.Text, fmOpenRead or fmShareDenyNone);
+               ServerSocket1.Socket.Connections[j].SendText('FIL'+EOL+AnsiString(inttostr(FS.Size))+EOL+AnsiString(ExtractFileName(EditServeur_Fichier.Text))+EOL);
+               AjouterLog(ListeCommunication, 'Envoi au client '+inttostr(ServerSocket1.Socket.Connections[j].SocketHandle)+' du fichier '+ExtractFileName(EditServeur_Fichier.Text)+' ('+inttostr(FS.Size)+' octets)');
+               FS.Position:=0;
+               ServerSocket1.Socket.Connections[j].SendStream(FS);
+          end;
+     end;
+end;
+
+procedure AjouterLog(Log: TMemo ; Texte: string);
+begin
+     Log.Lines.Add(FormatDateTime('(hh:nn:ss:zzzz) ', Now)+Texte);
+end;
+
+procedure TFSDataServeur.ListeClientsClick(Sender: TObject);
+var Trouve: bool;
+    i: integer;
+begin
+     i:=0; Trouve:=false; while (i<ListeClients.Count) and not Trouve do if ListeClients.Selected[i] then Trouve:=true else Inc(i);
+end;
+
+//  Affichage en clair des erreurs socket
+//  merci à djtexas & nono40
+function MessageErreurSocket(ErrorEvent: TErrorEvent; Var ErrorCode: Integer):String;
+var ErrorMsg: String;
+begin
+     // définition du message d'erreur en fonction du code d'erreur
+     case ErrorCode Of
+         10004 : ErrorMsg := 'Interrupted Function call.';
+         10013 : ErrorMsg := 'Permission Refusée.';
+         10014 : ErrorMsg := 'Mauvaise adresse.';
+         10022 : ErrorMsg := 'Arguments Invalides.';
+         10024 : ErrorMsg := 'Trop de fichiers ouverts.';
+         10035 : ErrorMsg := 'Resource temporarily unavailable.';
+         10036 : ErrorMsg := 'Operation en cours.';
+         10037 : ErrorMsg := 'Operation déjà en cours.';
+         10038 : ErrorMsg := 'Socket operation On non-socket.';
+         10039 : ErrorMsg := 'Destination address required.';
+         10040 : ErrorMsg := 'Message trop long.';
+         10041 : ErrorMsg := 'Protocol wrong Type For socket.';
+         10042 : ErrorMsg := 'Bad protocol option.';
+         10043 : ErrorMsg := 'Protocol Not supported.';
+         10044 : ErrorMsg := 'Socket Type Not supported.';
+         10045 : ErrorMsg := 'Operation Not supported.';
+         10046 : ErrorMsg := 'Protocol family Not supported.';
+         10047 : ErrorMsg := 'Address family Not supported by protocol family.';
+         10048 : ErrorMsg := 'Address already In use.';
+         10049 : ErrorMsg := 'Cannot assign requested address.';
+         10050 : ErrorMsg := 'Network Is down.';
+         10051 : ErrorMsg := 'Network Is unreachable.';
+         10052 : ErrorMsg := 'Network dropped connection On reset.';
+         10053 : ErrorMsg := 'Software caused connection abort.';
+         10054 : ErrorMsg := 'Connection reset by peer.';
+         10055 : ErrorMsg := 'No buffer space available.';
+         10056 : ErrorMsg := 'Socket Is already connected.';
+         10057 : ErrorMsg := 'Socket Is Not connected.';
+         10058 : ErrorMsg := 'Cannot send after socket shutdown.';
+         10060 : ErrorMsg := 'Connection timed Out.';
+         10061 : ErrorMsg := 'Connection refused.';
+         10064 : ErrorMsg := 'Host Is down.';
+         10065 : ErrorMsg := 'No route To host.';
+         10067 : ErrorMsg := 'Too many processes.';
+         10091 : ErrorMsg := 'Network subsystem Is unavailable.';
+         10092 : ErrorMsg := 'WINSOCK.DLL version Out Of range.';
+         10093 : ErrorMsg := 'Successful WSAStartup Not yet performed.';
+         10094 : ErrorMsg := 'Graceful shutdown In progress.';
+         11001 : ErrorMsg := 'Host Not found.';
+         11002 : ErrorMsg := 'Non-authoritative host Not found.';
+         11003 : ErrorMsg := 'This Is a non-recoverable error.';
+         11004 : ErrorMsg := 'Valid name, no data Record Of requested Type.';
+     else
+         // erreur inconnue
+         ErrorMsg := 'Unknown socket error.';
+     end;
+     // mise en forme de la signification de l'erreur
+     ErrorMsg := 'Socket Error n°' + IntToStr(ErrorCode) + ' : ' + ErrorMsg;
+     // l'erreur est traitée
+     ErrorCode := 0;
+     // définition du type d'erreur
+     case ErrorEvent Of
+         eeSend       : ErrorMsg := 'Writing '       + ErrorMsg;
+         eeReceive    : ErrorMsg := 'Reading '       + ErrorMsg;
+         eeConnect    : ErrorMsg := 'Connecting '    + ErrorMsg;
+         eeDisconnect : ErrorMsg := 'Disconnecting ' + ErrorMsg;
+         eeAccept     : ErrorMsg := 'Accepting '     + ErrorMsg;
+     else
+         // erreur inconnue
+         ErrorMsg := 'Unknown ' + ErrorMsg;
+     end;
+     Result:=ErrorMsg;
+end;
+
+// Traitement des données reçues
+procedure Buffer_Process(Socket: TCustomWinSocket);
+var Buffer_Temp: TArrayOfChar;
+    i, Index, Size: integer;
+begin
+     with TSocketData(Socket.Data) do
+     begin
+          if length(Buffer)=0 then
+          begin
+               Setlength(Buffer, 1);
+               Setlength(Buffer[0], 0);
+          end;
+          if Socket.ReceiveLength>0 then
+          begin
+               case TSocketData(Socket.Data).State of
+               ssText:
+               begin
+                    Setlength(Buffer_Temp, Socket.ReceiveLength);
+                    Socket.ReceiveBuf(Buffer_Temp[0], Socket.Receivelength);
+                    with TSocketData(Socket.Data) do
+                    begin
+                         Index:=length(Buffer)-1;
+                         Size:=length(Buffer[Index]);
+                         for i:=0 to length(Buffer_Temp)-1 do
+                         begin
+                              Inc(Size);
+                              Setlength(Buffer[Index], Size);
+                              Buffer[Index][Size-1]:=Buffer_Temp[i];
+                              if (Size>=length(EOL)) and (Buffer[Index][Size-length(EOL)]+Buffer[Index][Size-1]=EOL) then
+                              begin
+                                   Inc(Index); Size:=0;
+                                   Setlength(Buffer, Index+1);
+                                   Setlength(Buffer[Index], 0);
+                              end;
+                         end;
+                    end;
+                    Finalize(Buffer_Temp);
+               end;
+               ssFile:
+               begin
+                    Size:=Min(File_Size-File_Stream.Size, Socket.ReceiveLength);
+                    Setlength(Buffer[0], Size);
+                    Socket.ReceiveBuf(Buffer[0][0], Size);
+               end;
+               end;
+          end;
+     end;
+end;
+
+procedure TFSDataServeur.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+begin
+if isTransfExecuted then
+  begin
+    CloseApplication:= True;
+    CanClose:= False;
+  end;
+end;
+
+procedure TFSDataServeur.SaveTransferedFile;
+begin
+  isTransfExecuted:= False;
+
+  ShowMessage('File saved as : '+ ftSaveAs+ #13+ 'Total size : '+ FormatFloat('0.00 K Bytes', Fichier.Size / 1024));
+  Fichier.Free;
+end;
+
+procedure TFSDataServeur.UpdateGauges(Value: Integer);
+begin
+
+end;
+
+end.
+
+

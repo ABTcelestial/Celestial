@@ -1,0 +1,2119 @@
+unit UnitFSTransfertMagnetiqueDonnesCommerciales;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, Buttons;
+
+type
+  TFSTransfertMagnetiqueDonnesCommerciales = class(TForm)
+    PagePrincipale: TPageControl;
+    PageGenererFichierMagnetique: TTabSheet;
+    PageImportationFichierMagnetique: TTabSheet;
+    TableauMouvement: TStringGrid;
+    AfficheSelectData: TPanel;
+    Bevel44: TBevel;
+    Bevel36: TBevel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label27: TLabel;
+    EditDateFin: TDateTimePicker;
+    EditDateDebut: TDateTimePicker;
+    EditExercice: TComboBox;
+    TableauListeTransfertMagnetique: TStringGrid;
+    EditMois: TComboBox;
+    Bevel1: TBevel;
+    RBAfficheMouvementPrelevement: TCheckBox;
+    PageControl2: TPageControl;
+    PageTransfertDetail: TTabSheet;
+    PageTransfertMouvement: TTabSheet;
+    TableauTransfertMagnetiqueArticle: TStringGrid;
+    TableauTransfertMagnetiqueMouvement: TStringGrid;
+    Panel1: TPanel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    Bevel2: TBevel;
+    Bevel3: TBevel;
+    OuvrireUnFichier: TOpenDialog;
+    EnregistrerUnFichier: TSaveDialog;
+    EditAdresseTransfertDetail: TEdit;
+    EditAdresseTransfertMouvement: TEdit;
+    EditAdresseMouvement: TEdit;
+    EditAdresseDetail: TEdit;
+    EditNomFichierMouvement: TEdit;
+    EditNomFichierDetail: TEdit;
+    PageControl3: TPageControl;
+    PageImportMouvement: TTabSheet;
+    TableauImportMagnetiqueMouvement: TStringGrid;
+    PageImportDetail: TTabSheet;
+    TableauImportMagnetiqueArticle: TStringGrid;
+    TableauListeImportMagnetique: TStringGrid;
+    AfficheSuportOperation: TPanel;
+    BitBtn3: TBitBtn;
+    Bevel5: TBevel;
+    EditAdresseListe: TEdit;
+    EditNomFichierListe: TEdit;
+    EditAdresseTransfertListe: TEdit;
+    Label54: TLabel;
+    EditTiersCodeTiers: TEdit;
+    EditTiersNomTiers: TEdit;
+    Bevel4: TBevel;
+    TableauTiersListeTiers: TStringGrid;
+    Label53: TLabel;
+    TitreEditTiersFichierConserne: TLabel;
+    EditTiersFichierConserne: TComboBox;
+    EditTiersTypeProces: TComboBox;
+    RBCumulerMemeArticle: TCheckBox;
+    BitBtn4: TBitBtn;
+    AffichePatienterSVP: TPanel;
+    TimerAffichage: TTimer;
+    TimerImporter: TTimer;
+    AfficheImportation: TPanel;
+    BitBtn5: TBitBtn;
+    BitBtn6: TBitBtn;
+    BitBtn7: TBitBtn;
+    Bevel6: TBevel;
+    Bevel7: TBevel;
+    Bevel8: TBevel;
+    Bevel9: TBevel;
+    TimerImporterReseaux: TTimer;
+    RadioGroup1: TRadioGroup;
+    RBSousResaux: TRadioButton;
+    RBClasique: TRadioButton;
+    TabSheet1: TTabSheet;
+    TableauListePosteReseauxTransfertMagnitique: TStringGrid;
+    Panel2: TPanel;
+    RBChoisPosteReseauxAffiche: TCheckBox;
+    Panel7: TPanel;
+    RBAutoSelectMouvementMemeType: TCheckBox;
+    LabelTypeProces: TLabel;
+    LabelFichierConcerne: TLabel;
+    EditRowFirstSelectDebitCredit: TEdit;
+    EditDebitCreditPositif: TComboBox;
+    EditTiersFichierConserneTableauBohr: TComboBox;
+    TitreEditTiersFichierConserneTableauBohr: TLabel;
+    EditExtentionFichier: TEdit;
+    BitBtn8: TBitBtn;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure EditMoisSelect(Sender: TObject);
+    procedure TableauListeTransfertMagnetiqueClick(Sender: TObject);
+    procedure TableauMouvementClick(Sender: TObject);
+    procedure TableauTransfertMagnetiqueMouvementDblClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure PageImportationFichierMagnetiqueShow(Sender: TObject);
+    procedure TableauListeImportMagnetiqueClick(Sender: TObject);
+    procedure EditTiersNomTiersEnter(Sender: TObject);
+    procedure EditTiersNomTiersKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditTiersNomTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauTiersListeTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauImportMagnetiqueMouvementDblClick(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure TimerAffichageTimer(Sender: TObject);
+    procedure TimerImporterTimer(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure TimerImporterReseauxTimer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure TableauMouvementDblClick(Sender: TObject);
+    procedure EditExerciceSelect(Sender: TObject);
+    procedure BitBtn8Click(Sender: TObject);
+    procedure TableauMouvementContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSTransfertMagnetiqueDonnesCommerciales: TFSTransfertMagnetiqueDonnesCommerciales;
+
+  Procedure AfficherTransfertListeMagnetique(TableauListeTransfertMagnetique:TStringGrid; PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,TypeTransfertImport:string);
+  Procedure AfficherTransfertDetailMagnetique(TableauTransfertMagnetiqueArticle:TStringGrid; PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,TypeProces,FichierTiersConserne,CodeTiers,PositionTransfertMouvement,TypeTransfertImport,PositionBegin,PositionEnd:string; CumulerMemeArticle:boolean);
+  Procedure AfficherTransfertMouvementMagnetique(TableauTransfertMagnetiqueMouvement:TStringGrid; PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,TypeProces,FichierTiersConserne,CodeTiers,TypeTransfertImport,PositionBegin,PositionEnd:string);
+  Procedure AfficherListePosteReseauxTransfertMagnitique(TableauListePosteReseauxTransfertMagnitique:TStringGrid);
+
+implementation
+
+Uses UnitInitialisation, UnitFSTiers, UnitFSFicheSaisie, UnitFSMenuPrincipal, UnitFSGenerateurMouvement;
+
+{$R *.dfm}
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.BitBtn1Click(
+  Sender: TObject);
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.AffichePatienterSVP.Visible:=true;
+     FSTransfertMagnetiqueDonnesCommerciales.TimerAffichage.Enabled:=true;
+end;
+
+Procedure AfficherTransfertDetailMagnetique(TableauTransfertMagnetiqueArticle:TStringGrid; PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,TypeProces,FichierTiersConserne,CodeTiers,PositionTransfertMouvement,TypeTransfertImport,PositionBegin,PositionEnd:string; CumulerMemeArticle:boolean);
+var  R,l,C,i:integer;  OKTransfert:boolean;  MontantGlobal:real;  ChRegistreReseaux,ExerciceReseauxSource,Extension,Adresse,FichierConcerne,AdresseReseauxSource,NomDossierPartageOut,EmlacementLocalOuReseauxOut:string;  TableauPointeurData:TableauPointeurDatas;
+begin
+     Extension:=' '+WithoutChar(Firstlaters(DateDebut,6)+Firstlaters(DateFin,6)+lastlaters(DateFin,4),'/');
+
+     setlength(TableauPointeurData,0);
+
+     if(PositionBegin='')then PositionBegin:='0';
+     if(PositionEnd='')then PositionEnd:='999999999';
+
+     TableauTransfertMagnetiqueArticle.ColCount:=19;
+     TableauTransfertMagnetiqueArticle.Cols[0].Text:='P°';
+     TableauTransfertMagnetiqueArticle.Cols[1].Text:='P°M';
+     TableauTransfertMagnetiqueArticle.Cols[2].Text:='P°TS';
+     TableauTransfertMagnetiqueArticle.Cols[3].Text:='P°S';
+     TableauTransfertMagnetiqueArticle.Cols[4].Text:='Source';
+     TableauTransfertMagnetiqueArticle.Cols[5].Text:='Date';
+     TableauTransfertMagnetiqueArticle.Cols[6].Text:='Proces';
+     TableauTransfertMagnetiqueArticle.Cols[7].Text:='Fichier Tires';
+     TableauTransfertMagnetiqueArticle.Cols[8].Text:='Code Tires';
+     TableauTransfertMagnetiqueArticle.Cols[9].Text:='Nom et prénom';
+     TableauTransfertMagnetiqueArticle.Cols[10].Text:='Débit/Crédit';
+     TableauTransfertMagnetiqueArticle.Cols[11].Text:='Code Article';
+     TableauTransfertMagnetiqueArticle.Cols[12].Text:='Désignation';
+     TableauTransfertMagnetiqueArticle.Cols[13].Text:='Réf';
+     TableauTransfertMagnetiqueArticle.Cols[14].Text:='U.M';
+     TableauTransfertMagnetiqueArticle.Cols[15].Text:='Coût U';
+     TableauTransfertMagnetiqueArticle.Cols[16].Text:='Quantité';
+     TableauTransfertMagnetiqueArticle.Cols[17].Text:='Prix';
+     TableauTransfertMagnetiqueArticle.Cols[18].Text:='Montant';
+
+     TableauTransfertMagnetiqueArticle.RowCount:=2;
+     TableauTransfertMagnetiqueArticle.Rows[1].Text:='';
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBSousResaux.Checked=true)then
+     begin
+          if(FSTransfertMagnetiqueDonnesCommerciales.RBChoisPosteReseauxAffiche.Checked=true)then
+          begin
+               FichierConcerne:='F'+TypeTransfertImport+'DetailMagnetique';
+               AdresseReseauxSource:=ProcAdresseDossierPartageReseaux('','Local',NomDossierPartageOut,EmlacementLocalOuReseauxOut);
+               NomDossierPartageReseauxOut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Row];
+               ExerciceReseauxSource:=FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Row];
+               if(ExerciceReseauxSource='Auto')then
+               begin
+                    ChRegistreReseaux:=AdresseReseauxSource+'\WinBus'+DataIdentificateurReseaux+'.File';
+                    assignfile(FRegistre,ChRegistreReseaux);
+                    if FileExists(ChRegistreReseaux)then
+                    begin
+                         Reset(FRegistre);
+                         Seek(FRegistre,0);
+                         read(FRegistre,RRegistre);
+                         ExerciceReseauxSource:=RRegistre.Exercice;
+                    end
+                    else ExerciceReseauxSource:=ExerciceAnnee;
+               end;
+
+               Adresse:=AdresseReseauxSource+'\Enregistrement Réseaux'+DataIdentificateurReseaux+'-'+ExerciceReseauxSource+FichierConcerne+' '+NomDossierPartageReseauxOut;
+               ChTransfertDetailMagnetique:=Adresse;
+               FSTransfertMagnetiqueDonnesCommerciales.EditAdresseDetail.Text:=ChTransfertDetailMagnetique;
+               FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierDetail.Text:='F'+TypeTransfertImport+'DetailMagnetique';
+          end
+          else
+          begin
+                TypeProces:='Business';   FichierConcerne:='F'+TypeTransfertImport+'DetailMagnetique';
+                if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                begin
+                     //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+                end;
+
+                if(TypeProcesReseaux='Réseaux')
+                then ChTransfertDetailMagnetique:=Adresse+' '+NomDossierPartageReseauxOut
+                else ChTransfertDetailMagnetique:=Adresse;
+                FSTransfertMagnetiqueDonnesCommerciales.EditAdresseDetail.Text:=ChTransfertDetailMagnetique;
+                FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierDetail.Text:='F'+TypeTransfertImport+'DetailMagnetique';
+          end;
+     end
+     else
+     begin
+          OpenFParc(RParc);
+          ChTransfertDetailMagnetique:=RParc.Parcours+'\'+Exercice+'F'+TypeTransfertImport+'DetailMagnetique';
+          FSTransfertMagnetiqueDonnesCommerciales.EditAdresseDetail.Text:=ChTransfertDetailMagnetique;
+          FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierDetail.Text:='F'+TypeTransfertImport+'DetailMagnetique';
+     end;
+
+     assignfile(FTransfertDetailMagnetique,ChTransfertDetailMagnetique);
+     if FileExists(ChTransfertDetailMagnetique)then
+     begin
+          Reset(FTransfertDetailMagnetique);
+          Seek(FTransfertDetailMagnetique,strtointeger(PositionBegin));
+          R:=0;
+          MontantGlobal:=0;
+          i:=0;
+          while not eof(FTransfertDetailMagnetique)and(i<=strtointeger(PositionEnd))do
+          begin
+               read(FTransfertDetailMagnetique,RTransfertDetailMagnetique);
+
+               if(PositionTypeSourceDonnees<>'')then
+               begin
+                    if(RTransfertDetailMagnetique.PositionTypeSourceDonnees=PositionTypeSourceDonnees)
+                    then OKTransfert:=true
+                    else OKTransfert:=false;
+               end
+               else OKTransfert:=true;
+
+
+               if(OKTransfert=true)then
+               begin
+                    if(PositionSourceDonnees<>'')then
+                    begin
+                         if(RTransfertDetailMagnetique.PositionSourceDonnees=PositionSourceDonnees)
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    if(SourceDonnees<>'')then
+                    begin
+                         if(RTransfertDetailMagnetique.SourceDonnees=SourceDonnees)
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    if(PositionTransfertMouvement<>'')then
+                    begin
+                         if(strtointeger(RTransfertDetailMagnetique.PositionTransfertMouvement)=strtointeger(PositionTransfertMouvement))
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then   
+               begin
+                    if(TypeProces<>'')and(FichierTiersConserne<>'')and(CodeTiers<>'')then
+                    begin
+                         if((RTransfertDetailMagnetique.TypeProces=TypeProces)or(TypeProces='Business'))
+                         and(FunctionFichierInclu(RTransfertDetailMagnetique.FichierTiersConserne,FichierTiersConserne)or FunctionFichierInclu(FichierTiersConserne,RTransfertDetailMagnetique.FichierTiersConserne))
+                         and(RTransfertDetailMagnetique.RTiers.CodeTiers=CodeTiers)
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    if(DateCorrecte(DateDebut)=true)and((DateCorrecte(DateFin)=true))and(DateCorrecte(RTransfertMouvementMagnetique.DateMouvement)=true)then
+                    begin
+                         if(strtodate(RTransfertDetailMagnetique.DateDetail)>=strtodate(DateDebut))
+                         and(strtodate(RTransfertDetailMagnetique.DateDetail)<=strtodate(DateFin))
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    if(CumulerMemeArticle=true)then
+                    begin
+                         l:=1;
+                         while(l<=R)and(OKTransfert=true)do
+                         begin
+                              if(RTransfertDetailMagnetique.CodeArticle=TableauPointeurData[l-1].Data1)then
+                              begin
+                                   OKTransfert:=false;
+                                   TableauTransfertMagnetiqueArticle.Cells[16,l]:=Vergule(floattostr(strtoreal(TableauTransfertMagnetiqueArticle.Cells[16,l])+RTransfertDetailMagnetique.Quantite),'2','C','');
+                                   //TableauTransfertMagnetiqueArticle.Cells[17,l]:=Vergule(floattostr(RTransfertDetail.PrixUnitaire),'2','C','');
+                                   TableauTransfertMagnetiqueArticle.Cells[18,l]:=Vergule(floattostr(strtoreal(TableauTransfertMagnetiqueArticle.Cells[18,l])+(RTransfertDetailMagnetique.Quantite*RTransfertDetailMagnetique.PrixUnitaire)),'2','C','');
+
+                                   MontantGlobal:=MontantGlobal+(RTransfertDetailMagnetique.Quantite*RTransfertDetailMagnetique.PrixUnitaire);
+                              end
+                              else l:=l+1;
+                         end;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    R:=R+1;
+                    TableauTransfertMagnetiqueArticle.Rows[R].Text:=inttostr(RTransfertDetailMagnetique.PositionTransfertDetail);
+                    TableauTransfertMagnetiqueArticle.Cells[1,R]:=RTransfertDetailMagnetique.PositionTransfertMouvement;
+                    TableauTransfertMagnetiqueArticle.Cells[2,R]:=RTransfertDetailMagnetique.PositionTypeSourceDonnees;
+                    TableauTransfertMagnetiqueArticle.Cells[3,R]:=RTransfertDetailMagnetique.PositionSourceDonnees;
+                    TableauTransfertMagnetiqueArticle.Cells[4,R]:=RTransfertDetailMagnetique.SourceDonnees;
+                    TableauTransfertMagnetiqueArticle.Cells[5,R]:=RTransfertDetailMagnetique.DateDetail;
+                    TableauTransfertMagnetiqueArticle.Cells[6,R]:=RTransfertDetailMagnetique.TypeProces;
+                    TableauTransfertMagnetiqueArticle.Cells[7,R]:=RTransfertDetailMagnetique.FichierTiersConserne;
+                    TableauTransfertMagnetiqueArticle.Cells[8,R]:=RTransfertDetailMagnetique.RTiers.CodeTiers;
+                    TableauTransfertMagnetiqueArticle.Cells[9,R]:=RTransfertDetailMagnetique.RTiers.NomTiers+' '+RTransfertDetailMagnetique.RTiers.PrenomTiers;
+                    TableauTransfertMagnetiqueArticle.Cells[10,R]:=RTransfertDetailMagnetique.DebitCredit;
+                    TableauTransfertMagnetiqueArticle.Cells[11,R]:=RTransfertDetailMagnetique.CodeArticle;
+                    TableauTransfertMagnetiqueArticle.Cells[12,R]:=RTransfertDetailMagnetique.DesignationArticle;
+                    TableauTransfertMagnetiqueArticle.Cells[13,R]:=RTransfertDetailMagnetique.ReferenceArticle;
+                    TableauTransfertMagnetiqueArticle.Cells[14,R]:=RTransfertDetailMagnetique.UMArticle;
+                    TableauTransfertMagnetiqueArticle.Cells[15,R]:=Vergule(floattostr(RTransfertDetailMagnetique.CoutUnitaireArticle),'2','C','');
+                    TableauTransfertMagnetiqueArticle.Cells[16,R]:=Vergule(floattostr(RTransfertDetailMagnetique.Quantite),'2','C','');
+                    TableauTransfertMagnetiqueArticle.Cells[17,R]:=Vergule(floattostr(RTransfertDetailMagnetique.PrixUnitaire),'2','C','');
+                    TableauTransfertMagnetiqueArticle.Cells[18,R]:=Vergule(floattostr(RTransfertDetailMagnetique.Quantite*RTransfertDetailMagnetique.PrixUnitaire),'2','C','');
+
+                    MontantGlobal:=MontantGlobal+(RTransfertDetailMagnetique.Quantite*RTransfertDetailMagnetique.PrixUnitaire);
+
+                    setlength(TableauPointeurData,R);
+                    TableauPointeurData[R-1].Data1:=RTransfertDetailMagnetique.CodeArticle;
+                    TableauPointeurData[R-1].RowPointeur:=R;
+               end;
+          i:=i+1;
+          end;
+          CloseFile(FTransfertDetailMagnetique);
+
+          for l:=1 to R do
+          begin
+               if(strtoreal(TableauTransfertMagnetiqueArticle.Cells[16,R])<>0)
+               then TableauTransfertMagnetiqueArticle.Cells[17,R]:=Vergule(floattostr(strtoreal(TableauTransfertMagnetiqueArticle.Cells[18,R])/strtoreal(TableauTransfertMagnetiqueArticle.Cells[16,R])),'2','C','');
+          end;
+
+          if(R>0)then
+          begin
+               TableauTransfertMagnetiqueArticle.RowCount:=R+3;
+               TableauTransfertMagnetiqueArticle.Rows[R+1].Text:='';
+               TableauTransfertMagnetiqueArticle.Rows[R+2].Text:='';
+
+               TableauTransfertMagnetiqueArticle.Cells[17,R+2]:='Total';
+               TableauTransfertMagnetiqueArticle.Cells[18,R+2]:=Vergule(floattostr(MontantGlobal),'2','C','');;
+          end
+          else TableauTransfertMagnetiqueArticle.RowCount:=2;
+     end;      
+
+     AjusterColWidth(TableauTransfertMagnetiqueArticle,'','');
+end;
+
+Procedure AfficherTransfertMouvementMagnetique(TableauTransfertMagnetiqueMouvement:TStringGrid; PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,TypeProces,FichierTiersConserne,CodeTiers,TypeTransfertImport,PositionBegin,PositionEnd:string);
+var  R,C,i:integer;  OKTransfert:boolean;  MontantGlobal:real;  ChRegistreReseaux,ExerciceReseauxSource,Extension,Adresse,FichierConcerne,AdresseReseauxSource,NomDossierPartageOut,EmlacementLocalOuReseauxOut:string;
+begin
+     Extension:=' '+WithoutChar(Firstlaters(DateDebut,6)+Firstlaters(DateFin,6)+lastlaters(DateFin,4),'/');
+
+     if(PositionBegin='')then PositionBegin:='0';
+     if(PositionEnd='')then PositionEnd:='999999999';
+
+     TableauTransfertMagnetiqueMouvement.ColCount:=11;
+     TableauTransfertMagnetiqueMouvement.Cols[0].Text:='P°';
+     TableauTransfertMagnetiqueMouvement.Cols[1].Text:='P°TS';
+     TableauTransfertMagnetiqueMouvement.Cols[2].Text:='P°S';
+     TableauTransfertMagnetiqueMouvement.Cols[3].Text:='Source';
+     TableauTransfertMagnetiqueMouvement.Cols[4].Text:='Date';
+     TableauTransfertMagnetiqueMouvement.Cols[5].Text:='Proces';
+     TableauTransfertMagnetiqueMouvement.Cols[6].Text:='Fichier Tires';
+     TableauTransfertMagnetiqueMouvement.Cols[7].Text:='Code Tires';
+     TableauTransfertMagnetiqueMouvement.Cols[8].Text:='Nom et prénom';
+     TableauTransfertMagnetiqueMouvement.Cols[9].Text:='Débit/Crédit';
+     TableauTransfertMagnetiqueMouvement.Cols[10].Text:='Montant';
+
+     TableauTransfertMagnetiqueMouvement.RowCount:=2;
+     TableauTransfertMagnetiqueMouvement.Rows[1].Text:='';
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBSousResaux.Checked=true)then
+     begin
+          if(FSTransfertMagnetiqueDonnesCommerciales.RBChoisPosteReseauxAffiche.Checked=true)then
+          begin
+               FichierConcerne:='F'+TypeTransfertImport+'MouvementMagnetique';
+               AdresseReseauxSource:=ProcAdresseDossierPartageReseaux('','Local',NomDossierPartageOut,EmlacementLocalOuReseauxOut);
+               NomDossierPartageReseauxOut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Row];
+               ExerciceReseauxSource:=FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Row];
+               if(ExerciceReseauxSource='Auto')then
+               begin
+                    ChRegistreReseaux:=AdresseReseauxSource+'\WinBus'+DataIdentificateurReseaux+'.File';
+                    assignfile(FRegistre,ChRegistreReseaux);
+                    if FileExists(ChRegistreReseaux)then
+                    begin
+                         Reset(FRegistre);
+                         Seek(FRegistre,0);
+                         read(FRegistre,RRegistre);
+                         ExerciceReseauxSource:=RRegistre.Exercice;
+                    end
+                    else ExerciceReseauxSource:=ExerciceAnnee;
+               end;
+               Adresse:=AdresseReseauxSource+'\Enregistrement Réseaux'+DataIdentificateurReseaux+'-'+ExerciceReseauxSource+FichierConcerne+' '+NomDossierPartageReseauxOut;
+               ChTransfertMouvementMagnetique:=Adresse;
+               FSTransfertMagnetiqueDonnesCommerciales.EditAdresseMouvement.Text:=ChTransfertMouvementMagnetique;
+               FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierMouvement.Text:='F'+TypeTransfertImport+'MouvementMagnetique';
+          end
+          else
+          begin
+               TypeProces:='Business';   FichierConcerne:='F'+TypeTransfertImport+'MouvementMagnetique';
+               if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+               end;
+
+               if(TypeProcesReseaux='Réseaux')
+               then ChTransfertMouvementMagnetique:=Adresse+' '+NomDossierPartageReseauxOut
+               else ChTransfertMouvementMagnetique:=Adresse;
+               FSTransfertMagnetiqueDonnesCommerciales.EditAdresseMouvement.Text:=ChTransfertMouvementMagnetique;
+               FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierMouvement.Text:='F'+TypeTransfertImport+'MouvementMagnetique';
+          end;
+     end
+     else
+     begin
+          OpenFParc(RParc);
+          ChTransfertMouvementMagnetique:=RParc.Parcours+'\'+Exercice+'F'+TypeTransfertImport+'MouvementMagnetique';
+          FSTransfertMagnetiqueDonnesCommerciales.EditAdresseMouvement.Text:=ChTransfertMouvementMagnetique;
+          FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierMouvement.Text:='F'+TypeTransfertImport+'MouvementMagnetique';
+     end;
+
+     assignfile(FTransfertMouvementMagnetique,ChTransfertMouvementMagnetique);
+     if FileExists(ChTransfertMouvementMagnetique)then
+     begin
+          Reset(FTransfertMouvementMagnetique);
+          Seek(FTransfertMouvementMagnetique,strtointeger(PositionBegin));
+          R:=0;
+          MontantGlobal:=0;
+          i:=0;
+          while not eof(FTransfertMouvementMagnetique)and(i<=strtointeger(PositionEnd))do
+          begin
+               read(FTransfertMouvementMagnetique,RTransfertMouvementMagnetique);
+
+               if(PositionTypeSourceDonnees<>'')then
+               begin
+                    if(RTransfertMouvementMagnetique.PositionTypeSourceDonnees=PositionTypeSourceDonnees)
+                    then OKTransfert:=true
+                    else OKTransfert:=false;
+               end
+               else OKTransfert:=true;
+
+               if(OKTransfert=true)then
+               begin
+                    if(PositionSourceDonnees<>'')then
+                    begin
+                         if(RTransfertMouvementMagnetique.PositionSourceDonnees=PositionSourceDonnees)
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    if(SourceDonnees<>'')then
+                    begin
+                         if(RTransfertMouvementMagnetique.SourceDonnees=SourceDonnees)
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    if(DateCorrecte(DateDebut)=true)and((DateCorrecte(DateFin)=true))and(DateCorrecte(RTransfertMouvementMagnetique.DateMouvement)=true)then
+                    begin
+                         if(strtodate(RTransfertMouvementMagnetique.DateMouvement)>=strtodate(DateDebut))
+                         and(strtodate(RTransfertMouvementMagnetique.DateMouvement)<=strtodate(DateFin))
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    if(TypeProces<>'')and(FichierTiersConserne<>'')and(CodeTiers<>'')then
+                    begin
+                         if((RTransfertMouvementMagnetique.TypeProces=TypeProces)or(TypeProces='Business'))
+                         and(FunctionFichierInclu(RTransfertMouvementMagnetique.FichierTiersConserne,FichierTiersConserne)or FunctionFichierInclu(FichierTiersConserne,RTransfertMouvementMagnetique.FichierTiersConserne))
+                         and(RTransfertMouvementMagnetique.RTiers.CodeTiers=CodeTiers)
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    R:=R+1;
+                    TableauTransfertMagnetiqueMouvement.Rows[R].Text:=inttostr(RTransfertMouvementMagnetique.PositionTransfertMouvement);
+                    TableauTransfertMagnetiqueMouvement.Cells[1,R]:=RTransfertMouvementMagnetique.PositionTypeSourceDonnees;
+                    TableauTransfertMagnetiqueMouvement.Cells[2,R]:=RTransfertMouvementMagnetique.PositionSourceDonnees;
+                    TableauTransfertMagnetiqueMouvement.Cells[3,R]:=RTransfertMouvementMagnetique.SourceDonnees;
+                    TableauTransfertMagnetiqueMouvement.Cells[4,R]:=RTransfertMouvementMagnetique.DateMouvement;
+                    TableauTransfertMagnetiqueMouvement.Cells[5,R]:=RTransfertMouvementMagnetique.TypeProces;
+                    TableauTransfertMagnetiqueMouvement.Cells[6,R]:=RTransfertMouvementMagnetique.FichierTiersConserne;
+                    TableauTransfertMagnetiqueMouvement.Cells[7,R]:=RTransfertMouvementMagnetique.RTiers.CodeTiers;
+                    TableauTransfertMagnetiqueMouvement.Cells[8,R]:=RTransfertMouvementMagnetique.RTiers.NomTiers+' '+RTransfertMouvementMagnetique.RTiers.PrenomTiers;
+                    TableauTransfertMagnetiqueMouvement.Cells[9,R]:=RTransfertMouvementMagnetique.DebitCredit;
+                    TableauTransfertMagnetiqueMouvement.Cells[10,R]:=Vergule(floattostr(RTransfertMouvementMagnetique.ValeurMouvement),'2','C','');
+
+                    MontantGlobal:=MontantGlobal+RTransfertMouvementMagnetique.ValeurMouvement;
+               end;
+          i:=i+1;
+          end;
+          CloseFile(FTransfertMouvementMagnetique);
+
+          if(R>0)then
+          begin
+               TableauTransfertMagnetiqueMouvement.RowCount:=R+3;
+               TableauTransfertMagnetiqueMouvement.Rows[R+1].Text:='';
+               TableauTransfertMagnetiqueMouvement.Rows[R+2].Text:='';
+
+               TableauTransfertMagnetiqueMouvement.Cells[9,R+2]:='Total';
+               TableauTransfertMagnetiqueMouvement.Cells[10,R+2]:=Vergule(floattostr(MontantGlobal),'2','C','');;
+          end
+          else TableauTransfertMagnetiqueMouvement.RowCount:=2;
+     end;
+
+     AjusterColWidth(TableauTransfertMagnetiqueMouvement,'','');
+end;
+
+Procedure AfficherTransfertListeMagnetique(TableauListeTransfertMagnetique:TStringGrid; PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,TypeTransfertImport:string);
+var  R,C:integer;  OKTransfert:boolean;  DebitCreditTypeMouvement,ChRegistreReseaux,ExerciceReseauxSource,Adresse,TypeProces,FichierConcerne,AdresseReseauxSource,NomDossierPartageOut,EmlacementLocalOuReseauxOut:string; MontantMouvement:real;
+begin
+     TableauListeTransfertMagnetique.ColCount:=12;
+     TableauListeTransfertMagnetique.Cols[0].Text:='P°';
+     TableauListeTransfertMagnetique.Cols[1].Text:='P°TS';
+     TableauListeTransfertMagnetique.Cols[2].Text:='P°S';
+     TableauListeTransfertMagnetique.Cols[3].Text:='Source';
+     TableauListeTransfertMagnetique.Cols[4].Text:='Date Début';
+     TableauListeTransfertMagnetique.Cols[5].Text:='Date Fin';
+     TableauListeTransfertMagnetique.Cols[6].Text:='Proces';
+     TableauListeTransfertMagnetique.Cols[7].Text:='Fichier Tiers';
+     TableauListeTransfertMagnetique.Cols[8].Text:='P°Movement Begin';
+     TableauListeTransfertMagnetique.Cols[9].Text:='P°Movement End';
+     TableauListeTransfertMagnetique.Cols[10].Text:='P°Détail Begin';
+     TableauListeTransfertMagnetique.Cols[11].Text:='P°Détail End';
+
+     TableauListeTransfertMagnetique.RowCount:=2;
+     TableauListeTransfertMagnetique.Rows[1].Text:='';
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBSousResaux.Checked=true)then
+     begin
+          if(FSTransfertMagnetiqueDonnesCommerciales.RBChoisPosteReseauxAffiche.Checked=true)then
+          begin
+               FichierConcerne:='F'+TypeTransfertImport+'ListeMagnetique';
+               AdresseReseauxSource:=ProcAdresseDossierPartageReseaux('','Local',NomDossierPartageOut,EmlacementLocalOuReseauxOut);
+               NomDossierPartageReseauxOut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Row];
+               ExerciceReseauxSource:=FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique.Row];
+               if(ExerciceReseauxSource='Auto')then
+               begin
+                    ChRegistreReseaux:=AdresseReseauxSource+'\WinBus'+DataIdentificateurReseaux+'.File';
+                    assignfile(FRegistre,ChRegistreReseaux);
+                    if FileExists(ChRegistreReseaux)then
+                    begin
+                         Reset(FRegistre);
+                         Seek(FRegistre,0);
+                         read(FRegistre,RRegistre);
+                         ExerciceReseauxSource:=RRegistre.Exercice;
+                    end
+                    else ExerciceReseauxSource:=ExerciceAnnee;
+               end;
+
+               Adresse:=AdresseReseauxSource+'\Enregistrement Réseaux'+DataIdentificateurReseaux+'-'+ExerciceReseauxSource+FichierConcerne+' '+NomDossierPartageReseauxOut;
+               ChTransfertListeMagnetique:=Adresse;
+               FSTransfertMagnetiqueDonnesCommerciales.EditAdresseListe.Text:=ChTransfertListeMagnetique;
+               FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierListe.Text:='F'+TypeTransfertImport+'ListeMagnetique';
+          end
+          else
+          begin
+                TypeProces:='Business';   FichierConcerne:='F'+TypeTransfertImport+'ListeMagnetique';
+                if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                begin
+                     //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+                end;
+
+                if(TypeProcesReseaux='Réseaux')
+                then ChTransfertListeMagnetique:=Adresse+' '+NomDossierPartageReseauxOut
+                else ChTransfertListeMagnetique:=Adresse;
+                FSTransfertMagnetiqueDonnesCommerciales.EditAdresseListe.Text:=ChTransfertListeMagnetique;
+                FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierListe.Text:='F'+TypeTransfertImport+'ListeMagnetique';
+          end;
+     end
+     else
+     begin
+          OpenFParc(RParc);
+          ChTransfertListeMagnetique:=RParc.Parcours+'\'+Exercice+'F'+TypeTransfertImport+'ListeMagnetique';
+          FSTransfertMagnetiqueDonnesCommerciales.EditAdresseListe.Text:=ChTransfertListeMagnetique;
+          FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierListe.Text:='F'+TypeTransfertImport+'ListeMagnetique';
+     end;
+
+     assignfile(FTransfertListeMagnetique,ChTransfertListeMagnetique);
+     if FileExists(ChTransfertListeMagnetique)then
+     begin
+          Reset(FTransfertListeMagnetique);
+          Seek(FTransfertListeMagnetique,0);
+          R:=0;
+          while not eof(FTransfertListeMagnetique)do
+          begin
+               read(FTransfertListeMagnetique,RTransfertListeMagnetique);
+
+               if(PositionTypeSourceDonnees<>'')then
+               begin
+                    if(RTransfertListeMagnetique.PositionTypeSourceDonnees=PositionTypeSourceDonnees)
+                    then OKTransfert:=true
+                    else OKTransfert:=false;
+               end
+               else OKTransfert:=true;
+
+               if(OKTransfert=true)then
+               begin
+                    if(PositionSourceDonnees<>'')then
+                    begin
+                         if(RTransfertListeMagnetique.PositionSourceDonnees=PositionSourceDonnees)
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    if(SourceDonnees<>'')then
+                    begin
+                         if(RTransfertListeMagnetique.SourceDonnees=SourceDonnees)
+                         then OKTransfert:=true
+                         else OKTransfert:=false;
+                    end;
+               end;
+
+               if(OKTransfert=true)then
+               begin
+                    R:=R+1;
+                    TableauListeTransfertMagnetique.Rows[R].Text:=inttostr(RTransfertListeMagnetique.PositionListeTransfert);
+                    TableauListeTransfertMagnetique.Cells[1,R]:=RTransfertListeMagnetique.PositionTypeSourceDonnees;
+                    TableauListeTransfertMagnetique.Cells[2,R]:=RTransfertListeMagnetique.PositionSourceDonnees;
+                    TableauListeTransfertMagnetique.Cells[3,R]:=RTransfertListeMagnetique.SourceDonnees;
+                    TableauListeTransfertMagnetique.Cells[4,R]:=RTransfertListeMagnetique.DateDebutTransfert;
+                    TableauListeTransfertMagnetique.Cells[5,R]:=RTransfertListeMagnetique.DateFinTransfert;
+                    TableauListeTransfertMagnetique.Cells[6,R]:=RTransfertListeMagnetique.TypeProces;
+                    TableauListeTransfertMagnetique.Cells[7,R]:=RTransfertListeMagnetique.FichierTiersConserne;
+                    TableauListeTransfertMagnetique.Cells[8,R]:=inttostr(RTransfertListeMagnetique.PositionTransfertMouvementBegin);
+                    TableauListeTransfertMagnetique.Cells[9,R]:=inttostr(RTransfertListeMagnetique.PositionTransfertMouvementEnd);
+                    TableauListeTransfertMagnetique.Cells[10,R]:=inttostr(RTransfertListeMagnetique.PositionTransfertDetailBegin);
+                    TableauListeTransfertMagnetique.Cells[11,R]:=inttostr(RTransfertListeMagnetique.PositionTransfertDetailEnd);
+               end;
+          end;
+          CloseFile(FTransfertListeMagnetique);
+
+     if(R>0)then TableauListeTransfertMagnetique.RowCount:=R+1
+            else TableauListeTransfertMagnetique.RowCount:=2;
+
+     AjusterColWidth(TableauListeTransfertMagnetique,'','');
+     
+     end;
+
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.EditMoisSelect(
+  Sender: TObject);
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date:=strtodate('01/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateFin.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date))),'2')+'/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetiqueClick(
+  Sender: TObject);
+var  PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,PBegin,PEnd:string;
+begin
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBAfficheMouvementPrelevement.Checked=false)then
+     begin
+          PositionTypeSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[1,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row];
+          PositionSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[2,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row];
+          SourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row];
+     end
+     else
+     begin
+          PositionTypeSourceDonnees:='';
+          PositionSourceDonnees:='';
+          SourceDonnees:='';
+     end;
+
+     DateDebut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row];
+     DateFin:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row];
+
+     PBegin:='';
+     PEnd:='';
+     AfficherTransfertMouvementMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,'','','','Transfert',PBegin,PEnd);
+     AfficheRTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueArticle,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,'','','','','Transfert',PBegin,PEnd,FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TableauMouvementClick(
+  Sender: TObject);
+var R:integer;   PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,PBegin,PEnd,ListeFichierNonInclu,ListeFichierTiers:string;   OKAutoSelect,OKInitialiseDebitCredit:boolean;
+begin
+     if(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text='')then FSTransfertMagnetiqueDonnesCommerciales.EditMois.ItemIndex:=0;
+     
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBAutoSelectMouvementMemeType.Checked=true)then
+     begin
+           OKAutoSelect:=false;
+           FSTransfertMagnetiqueDonnesCommerciales.LabelFichierConcerne.Caption:='';
+           if(not FunctionFichierIncluImbriquer(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row],FSTransfertMagnetiqueDonnesCommerciales.LabelFichierConcerne.Caption,ListeFichierNonInclu))
+           or(strtoboolean(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[13,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row])=false)then
+           begin
+                if(strtoboolean(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[13,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row])=true)then OKAutoSelect:=true;
+                R:=1;
+                while(R<=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.RowCount-1)do
+                begin
+                     FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,R]:='';
+                R:=R+1;
+                end;
+           end
+           else
+           begin
+                if(strtoboolean(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[13,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row])=true)then
+                begin
+                     R:=1;
+                     OKAutoSelect:=true;
+                     while(R<=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.RowCount-1)and(OKAutoSelect=true)do
+                     begin
+                          if(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,R]='OK')then OKAutoSelect:=false;
+                     R:=R+1;
+                     end;
+                end;
+           end;
+     end
+     else
+     begin
+          R:=1;
+          OKAutoSelect:=true;
+          while(R<=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.RowCount-1)and(OKAutoSelect=true)do
+          begin
+               if(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,R]='OK')then OKAutoSelect:=false;
+          R:=R+1;
+          end;
+     end;
+
+     if(OKAutoSelect=true)then
+     begin
+          FSTransfertMagnetiqueDonnesCommerciales.LabelTypeProces.Caption:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+          FSTransfertMagnetiqueDonnesCommerciales.LabelFichierConcerne.Caption:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+          ListeTypeFichierTiersBox(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row],FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row],'',FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserneTableauBohr,FSTransfertMagnetiqueDonnesCommerciales.TitreEditTiersFichierConserneTableauBohr);
+     end;      
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBAutoSelectMouvementMemeType.Checked=true)and(OKAutoSelect=true)and(strtoboolean(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[13,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row])=true)then
+     begin
+          ListeFichierTiers:='';
+          FSTransfertMagnetiqueDonnesCommerciales.EditDebitCreditPositif.Text:='';
+          for R:=1 to FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.RowCount-1 do
+          begin
+               if(FunctionFichierInclu(FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserneTableauBohr.Text,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[5,R]))
+               and(strtoboolean(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[13,R])=true)
+               then
+               begin
+                    FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,R]:='OK';
+                    if(ListeFichierTiers='')
+                    then ListeFichierTiers:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[5,R]
+                    else
+                    begin
+                         if(Not FunctionFichierIncluImbriquer(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[5,R],ListeFichierTiers,ListeFichierNonInclu))
+                         then ListeFichierTiers:=ListeFichierTiers+';'+FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[5,R]
+                         else
+                         if(ListeFichierNonInclu<>'')then ListeFichierTiers:=ListeFichierTiers+';'+ListeFichierNonInclu;
+                    end;
+               end;
+          end;
+     end;
+
+     if(ListeFichierTiers<>'')then
+     begin
+          ListeTypeFichierTiersBox(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row],ListeFichierTiers,'',FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserneTableauBohr,FSTransfertMagnetiqueDonnesCommerciales.TitreEditTiersFichierConserneTableauBohr);
+          FSTransfertMagnetiqueDonnesCommerciales.LabelFichierConcerne.Caption:=ListeFichierTiers;
+     end;
+
+     OKInitialiseDebitCredit:=true;
+     R:=1;
+     while(R<=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.RowCount-1)and(OKInitialiseDebitCredit=true)do
+     begin
+          if(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,R]<>'')then
+          begin
+               OKInitialiseDebitCredit:=false;
+               if(FSTransfertMagnetiqueDonnesCommerciales.EditDebitCreditPositif.Text='')then
+               begin
+                    FSTransfertMagnetiqueDonnesCommerciales.EditDebitCreditPositif.Text:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[19,R];
+                    FSTransfertMagnetiqueDonnesCommerciales.EditRowFirstSelectDebitCredit.Text:=inttostr(R);
+               end;
+          end;
+     R:=R+1;
+     end;
+
+     if(OKInitialiseDebitCredit=true)then
+     begin
+          FSTransfertMagnetiqueDonnesCommerciales.EditDebitCreditPositif.Text:='';
+          FSTransfertMagnetiqueDonnesCommerciales.EditRowFirstSelectDebitCredit.Text:='';
+     end;
+     
+     if(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[18,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row]='Marche')
+     then FSTransfertMagnetiqueDonnesCommerciales.EditExtentionFichier.Text:='Marche'
+     else FSTransfertMagnetiqueDonnesCommerciales.EditExtentionFichier.Text:='PlanComptable';
+     
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBAfficheMouvementPrelevement.Checked=false)then
+     begin
+          PositionTypeSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[0,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+          PositionSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[1,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+          SourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+     end
+     else
+     begin
+          PositionTypeSourceDonnees:='';
+          PositionSourceDonnees:='';
+          SourceDonnees:='';
+     end;
+
+     AfficherTransfertListeMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,'Transfert');
+     if DateCorrecte(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row])
+     then FSTransfertMagnetiqueDonnesCommerciales.EditMois.ItemIndex:=(strtointeger(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row],4,5))-1);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date:=strtodate('01/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateFin.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date))),'2')+'/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+     
+     DateDebut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row];
+     DateFin:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row];
+
+     PBegin:='';
+     PEnd:='';
+     AfficheRTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueArticle,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,'','','','','Transfert',PBegin,PEnd,FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+     AfficherTransfertMouvementMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,'','','','Transfert',PBegin,PEnd);
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvementDblClick(
+  Sender: TObject);
+var  PositionTransfertMouvement,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,PBegin,PEnd:string;
+begin
+     PositionTransfertMouvement:=FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement.Cells[0,FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement.Row];
+     PositionTypeSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement.Cells[1,FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement.Row];
+     PositionSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement.Cells[2,FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement.Row];
+     SourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement.Row];
+
+     DateDebut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row];
+     DateFin:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row];
+
+     PBegin:='';
+     PEnd:='';
+     AfficherTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueArticle,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,'','','',PositionTransfertMouvement,'Transfert',PBegin,PEnd,FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+     FSTransfertMagnetiqueDonnesCommerciales.PageTransfertDetail.Show;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.BitBtn2Click(
+  Sender: TObject);
+var  i:integer;   AdresseRepertoir,NomFichier:string;
+begin
+
+if(FSTransfertMagnetiqueDonnesCommerciales.RBSousResaux.Checked=true)then
+begin  
+     PublierDansLeReseaux('FTransfertMagnetique','','',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+end
+else
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.EnregistrerUnFichier.FileName:=FSTransfertMagnetiqueDonnesCommerciales.EditAdresseMouvement.Text;
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.EnregistrerUnFichier.Execute)then
+     begin
+          AdresseRepertoir:=ExtractFilePath(FSTransfertMagnetiqueDonnesCommerciales.EnregistrerUnFichier.FileName);
+
+          //////////////////////////////////////////////////////////////////////
+          NomFichier:=FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierListe.Text;
+          FSTransfertMagnetiqueDonnesCommerciales.EditAdresseTransfertListe.Text:=AdresseRepertoir+NomFichier;
+
+          ChTransfertListeMagnetiqueCopie:=FSTransfertMagnetiqueDonnesCommerciales.EditAdresseTransfertListe.Text;
+          assignfile(FTransfertListeMagnetiqueCopie,ChTransfertListeMagnetiqueCopie);
+          if FileExists(ChTransfertListeMagnetiqueCopie)
+          then Reset(FTransfertListeMagnetiqueCopie)
+          else Rewrite(FTransfertListeMagnetiqueCopie);
+          Seek(FTransfertListeMagnetiqueCopie,0);
+          Truncate(FTransfertListeMagnetiqueCopie);
+
+          ChTransfertListeMagnetique:=FSTransfertMagnetiqueDonnesCommerciales.EditAdresseListe.Text;
+          assignfile(FTransfertListeMagnetique,ChTransfertListeMagnetique);
+          if FileExists(ChTransfertListeMagnetique)then
+          begin
+               Reset(FTransfertListeMagnetique);
+               Seek(FTransfertListeMagnetique,0);
+               i:=0;
+               while not eof(FTransfertListeMagnetique)do
+               begin
+                    read(FTransfertListeMagnetique,RTransfertListeMagnetique);
+                    Seek(FTransfertListeMagnetiqueCopie,i);
+                    write(FTransfertListeMagnetiqueCopie,RTransfertListeMagnetique);
+               i:=i+1;
+               end;
+               CloseFile(FTransfertListeMagnetique);
+          end;
+          //////////////////////////////////////////////////////////////////////
+
+          //////////////////////////////////////////////////////////////////////
+          NomFichier:=FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierMouvement.Text;
+          FSTransfertMagnetiqueDonnesCommerciales.EditAdresseTransfertMouvement.Text:=AdresseRepertoir+NomFichier;
+
+          ChTransfertMouvementMagnetiqueCopie:=FSTransfertMagnetiqueDonnesCommerciales.EditAdresseTransfertMouvement.Text;
+          assignfile(FTransfertMouvementMagnetiqueCopie,ChTransfertMouvementMagnetiqueCopie);
+          if FileExists(ChTransfertMouvementMagnetiqueCopie)
+          then Reset(FTransfertMouvementMagnetiqueCopie)
+          else Rewrite(FTransfertMouvementMagnetiqueCopie);
+          Seek(FTransfertMouvementMagnetiqueCopie,0);
+          Truncate(FTransfertMouvementMagnetiqueCopie);
+
+          ChTransfertMouvementMagnetique:=FSTransfertMagnetiqueDonnesCommerciales.EditAdresseMouvement.Text;
+          assignfile(FTransfertMouvementMagnetique,ChTransfertMouvementMagnetique);
+          if FileExists(ChTransfertMouvementMagnetique)then
+          begin
+               Reset(FTransfertMouvementMagnetique);
+               Seek(FTransfertMouvementMagnetique,0);
+               i:=0;
+               while not eof(FTransfertMouvementMagnetique)do
+               begin
+                    read(FTransfertMouvementMagnetique,RTransfertMouvementMagnetique);
+                    Seek(FTransfertMouvementMagnetiqueCopie,i);
+                    write(FTransfertMouvementMagnetiqueCopie,RTransfertMouvementMagnetique);
+               i:=i+1;
+               end;
+               CloseFile(FTransfertMouvementMagnetique);
+          end;
+
+          ///////////////////////////////////////////////////////////////////////
+          NomFichier:=FSTransfertMagnetiqueDonnesCommerciales.EditNomFichierDetail.Text;
+          FSTransfertMagnetiqueDonnesCommerciales.EditAdresseTransfertDetail.Text:=AdresseRepertoir+NomFichier;
+
+          ChTransfertDetailMagnetiqueCopie:=FSTransfertMagnetiqueDonnesCommerciales.EditAdresseTransfertDetail.Text;
+          assignfile(FTransfertDetailMagnetiqueCopie,ChTransfertDetailMagnetiqueCopie);
+          if FileExists(ChTransfertDetailMagnetiqueCopie)
+          then Reset(FTransfertDetailMagnetiqueCopie)
+          else Rewrite(FTransfertDetailMagnetiqueCopie);
+          Seek(FTransfertDetailMagnetiqueCopie,0);
+          Truncate(FTransfertDetailMagnetiqueCopie);
+
+          ChTransfertDetailMagnetique:=FSTransfertMagnetiqueDonnesCommerciales.EditAdresseDetail.Text;
+          assignfile(FTransfertDetailMagnetique,ChTransfertDetailMagnetique);
+          if FileExists(ChTransfertDetailMagnetique)then
+          begin
+               Reset(FTransfertDetailMagnetique);
+               Seek(FTransfertDetailMagnetique,0);
+               i:=0;
+               while not eof(FTransfertDetailMagnetique)do
+               begin
+                    read(FTransfertDetailMagnetique,RTransfertDetailMagnetique);
+                    Seek(FTransfertDetailMagnetiqueCopie,i);
+                    write(FTransfertDetailMagnetiqueCopie,RTransfertDetailMagnetique);
+               i:=i+1;
+               end;
+               CloseFile(FTransfertDetailMagnetique);
+          end;
+          //////////////////////////////////////////////////////////////////////
+     end;
+end;
+
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.BitBtn3Click(
+  Sender: TObject);
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.AfficheImportation.Visible:=true;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.PageImportationFichierMagnetiqueShow(
+  Sender: TObject);
+var  PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,PBeginMouvement,PEndMouvement,PBeginDetail,PEndDetail:string;
+begin
+     if(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text='')then FSTransfertMagnetiqueDonnesCommerciales.EditMois.ItemIndex:=0;
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBAfficheMouvementPrelevement.Checked=false)then
+     begin
+          PositionTypeSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[2,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+          PositionSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[2,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+          SourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     end
+     else
+     begin
+          PositionTypeSourceDonnees:='';
+          PositionSourceDonnees:='';
+          SourceDonnees:='';
+     end;
+
+     if DateCorrecte(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row])
+     then FSTransfertMagnetiqueDonnesCommerciales.EditMois.ItemIndex:=(strtointeger(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row],4,5))-1);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date:=strtodate('01/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateFin.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date))),'2')+'/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+
+     DateDebut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     DateFin:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[6,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row]<>'')
+     then FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[6,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[7,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row]<>'')
+     then ListeTypeFichierTiersBox(FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[7,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row],'',FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne,FSTransfertMagnetiqueDonnesCommerciales.TitreEditTiersFichierConserne);
+
+     PBeginDetail:='';//FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[10,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     PEndDetail:='';//FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[11,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     AfficheRTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text,'','Transfert',PBeginDetail,PEndDetail,FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+
+     PBeginMouvement:='';//FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[8,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     PEndMouvement:='';//FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[9,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     AfficherTransfertMouvementMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text,'Transfert',PBeginMouvement,PEndMouvement);
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetiqueClick(
+  Sender: TObject);
+var  PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,PBeginMouvement,PEndMouvement,PBeginDetail,PEndDetail:string;
+Begin
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBAfficheMouvementPrelevement.Checked=false)then
+     begin
+          PositionTypeSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[1,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+          PositionSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[2,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+          SourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     end
+     else
+     begin
+          PositionTypeSourceDonnees:='';
+          PositionSourceDonnees:='';
+          SourceDonnees:='';
+     end;
+
+     if DateCorrecte(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row])
+     then FSTransfertMagnetiqueDonnesCommerciales.EditMois.ItemIndex:=(strtointeger(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row],4,5))-1);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date:=strtodate('01/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateFin.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date))),'2')+'/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+
+     DateDebut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     DateFin:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[6,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row]<>'')
+     then FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[6,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[7,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row]<>'')
+     then ListeTypeFichierTiersBox(FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[7,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row],'',FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne,FSTransfertMagnetiqueDonnesCommerciales.TitreEditTiersFichierConserne);
+
+     PBeginDetail:='';//FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[10,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     PEndDetail:='';//FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[11,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     AfficheRTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text,'','Transfert',PBeginDetail,PEndDetail,FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+
+     PBeginMouvement:='';//FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[8,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     PEndMouvement:='';//FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[9,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     AfficherTransfertMouvementMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text,'Transfert',PBeginMouvement,PEndMouvement);
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiersEnter(
+  Sender: TObject);
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Visible:=true;
+     FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Top:=FSTransfertMagnetiqueDonnesCommerciales.PagePrincipale.Top+FSTransfertMagnetiqueDonnesCommerciales.AfficheSuportOperation.Top+FSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiers.Top+FSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiers.Height+3;
+     FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Left:=FSTransfertMagnetiqueDonnesCommerciales.PagePrincipale.Left+FSTransfertMagnetiqueDonnesCommerciales.AfficheSuportOperation.Left+FSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiers.Left;
+     ListeTiers(FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers,FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne.Text,'','',FSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiers.Text,true);
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiersKeyUp(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     ListeTiers(FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers,FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne.Text,'','',FSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiers.Text,true);
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiersKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          if(FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Visible=true)then FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.SetFocus;
+     end;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiersKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+var  PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,PBeginMouvement,PEndMouvement,PBeginDetail,PEndDetail:string;
+Begin
+
+     if key in[VK_RETURN,VK_ESCAPE]then
+     begin
+          if key in[VK_RETURN]then
+          begin
+               FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text:=FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Cells[1,FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Row];
+               FSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiers.Text:=FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Cells[2,FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Row];
+               FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Visible:=false;
+          end;
+
+          if key in[VK_ESCAPE]then
+          begin
+               FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text:='';
+               FSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiers.Text:='';
+               FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Visible:=false;
+          end;
+
+          if(FSTransfertMagnetiqueDonnesCommerciales.RBAfficheMouvementPrelevement.Checked=false)then
+          begin
+               PositionTypeSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[2,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+               PositionSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[2,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+               SourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+          end
+          else
+          begin
+               PositionTypeSourceDonnees:='';
+               PositionSourceDonnees:='';
+               SourceDonnees:='';
+          end;
+
+          DateDebut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+          DateFin:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+
+          PBeginDetail:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[10,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+          PEndDetail:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[11,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+          AfficheRTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text,'','Transfert',PBeginDetail,PEndDetail,FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+
+          PBeginMouvement:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[8,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+          PEndMouvement:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[9,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+
+          AfficherTransfertMouvementMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne.Text,FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text,'Transfert',PBeginMouvement,PEndMouvement);
+     end;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvementDblClick(
+  Sender: TObject);
+var  PositionTransfertMouvement,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,PBeginDetail,PEndDetail:string;
+begin
+     PositionTransfertMouvement:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement.Cells[0,FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement.Row];
+     PositionTypeSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement.Cells[1,FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement.Row];
+     PositionSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement.Cells[2,FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement.Row];
+     SourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement.Row];
+
+     DateDebut:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     DateFin:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+
+     PBeginDetail:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[10,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     PEndDetail:=FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Cells[11,FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique.Row];
+     AfficheRTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,DateDebut,DateFin,'','','',PositionTransfertMouvement,'Transfert',PBeginDetail,PEndDetail,FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+     FSTransfertMagnetiqueDonnesCommerciales.PageImportDetail.Show;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.BitBtn4Click(
+  Sender: TObject);
+var R:integer;
+begin
+     if(FSFicheSaisie.Showing=true)then
+     begin
+          if(FSTransfertMagnetiqueDonnesCommerciales.EditTiersTypeProces.Text=FSFicheSaisie.EditTypeProces.Text)
+          and(FSTransfertMagnetiqueDonnesCommerciales.EditTiersFichierConserne.Text=FSFicheSaisie.EditFichierTiersConserne.Text)
+          and(FSFicheSaisie.EditCodeTiersConserne.Text=FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text)
+          then
+          begin
+               for R:=1 to FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle.RowCount-3 do
+               begin
+                    FSFicheSaisie.TableauDetaiMouvement.Cells[0,R+5]:='';
+                    FSFicheSaisie.TableauDetaiMouvement.Cells[1,R+5]:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle.Cells[11,R];
+                    FSFicheSaisie.TableauDetaiMouvement.Cells[2,R+5]:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle.Cells[12,R];
+                    FSFicheSaisie.TableauDetaiMouvement.Cells[3,R+5]:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle.Cells[13,R];
+                    FSFicheSaisie.TableauDetaiMouvement.Cells[4,R+5]:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle.Cells[14,R];
+                    FSFicheSaisie.TableauDetaiMouvement.Cells[5,R+5]:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle.Cells[15,R];
+                    FSFicheSaisie.TableauDetaiMouvement.Cells[6,R+5]:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle.Cells[16,R];
+                    FSFicheSaisie.TableauDetaiMouvement.Cells[7,R+5]:=FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle.Cells[17,R];
+                    CalculeFicheSaisie(FSFicheSaisie.TableauFormules,FSFicheSaisie.TableauVariable,FSFicheSaisie.TableauDetaiMouvement,FSFicheSaisie.EditModePayement.Text,FSFicheSaisie.EditNbrChiffreApresVergulePrix.Text,R+5,FSFicheSaisie.EditCodeTypeFormuleAfficher,false);
+               end;
+
+               FSFicheSaisie.TableauDetaiMouvement.RowCount:=R+5;
+
+               AfficherRecapeFicheSaisie(FSFicheSaisie.TableauDetaiMouvement,FSFicheSaisie.TableauFormules,FSFicheSaisie.EditChiffreEnLettres,FSFicheSaisie.EditTitreChiffreEnLettres,FSFicheSaisie.EditMontantMouvement);
+               FSFicheSaisie.EditOrdreListeMouvementAppartenantSauvgarde.Text:=FSFicheSaisie.EditOrdreListeMouvementAppartenant.Text;
+          end
+          else showmessage('Tières non attendu !');
+     end
+     else showmessage('Opération non attendu !');
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TimerAffichageTimer(
+  Sender: TObject);
+var  R,m,l,i,s:integer;  OKNew,OKMouvement,OKTransfert,OKDate,OKTransfertListeMagnetique:boolean;  DebitCreditTypeMouvement,DateDebut,DateFin,Extension,PositionTypeSourceDonnees,PositionSourceDonnees,SourceDonnees,TypeProces,FichierTiersConserne,TypeProcesListeMouvement,FichierConserneListeMouvement,AdresseListeMouvement,TypeProcesDetailMouvement,FichierConserneDetailMouvement,AdresseDetailMouvement,PBegin,PEnd,RubriqueRecherche:string;
+     TableauPointeurData:TableauPointeurDatas;
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.TimerAffichage.Enabled:=false;
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBAfficheMouvementPrelevement.Checked=false)then
+     begin
+          PositionTypeSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[0,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+          PositionSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[1,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+          SourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+     end
+     else
+     begin
+          PositionTypeSourceDonnees:='';
+          PositionSourceDonnees:='';
+          SourceDonnees:='';
+     end;
+
+     DateDebut:=datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date);
+     DateFin:=datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateFin.Date);
+     TypeProces:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[4,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+     FichierTiersConserne:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row];
+
+     OpenFParc(RParc);
+     ChTransfertListeMagnetique:=RParc.Parcours+'\'+Exercice+'FTransfertListeMagnetique';
+     assignfile(FTransfertListeMagnetique,ChTransfertListeMagnetique);
+     if FileExists(ChTransfertListeMagnetique)then
+     Reset(FTransfertListeMagnetique)
+     else Rewrite(FTransfertListeMagnetique);
+     Seek(FTransfertListeMagnetique,0);
+     Truncate(FTransfertListeMagnetique);
+     i:=0;
+
+     Extension:=' '+WithoutChar(Firstlaters(DateDebut,6)+Firstlaters(DateFin,6)+lastlaters(DateFin,4),'/');
+
+     OpenFParc(RParc);
+     ChTransfertMouvementMagnetique:=RParc.Parcours+'\'+Exercice+'FTransfertMouvementMagnetique';
+     assignfile(FTransfertMouvementMagnetique,ChTransfertMouvementMagnetique);
+     if FileExists(ChTransfertMouvementMagnetique)then
+     Reset(FTransfertMouvementMagnetique)
+     else Rewrite(FTransfertMouvementMagnetique);
+     Seek(FTransfertMouvementMagnetique,0);
+     Truncate(FTransfertMouvementMagnetique);
+     m:=0;
+
+     OpenFParc(RParc);
+     ChTransfertDetailMagnetique:=RParc.Parcours+'\'+Exercice+'FTransfertDetailMagnetique';
+     assignfile(FTransfertDetailMagnetique,ChTransfertDetailMagnetique);
+     if FileExists(ChTransfertDetailMagnetique)then
+     Reset(FTransfertDetailMagnetique)
+     else Rewrite(FTransfertDetailMagnetique);
+     Seek(FTransfertDetailMagnetique,0);
+     Truncate(FTransfertDetailMagnetique);
+     l:=0;
+
+     TypeProcesListeMouvement:='Business';   FichierConserneListeMouvement:='FListeMouvement';
+     if not(FunctionAdresseProces(TypeProcesListeMouvement,FichierConserneListeMouvement,'',AdresseListeMouvement,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserneListeMouvement+' recherché !');
+     end;
+
+     ChListeMouvement:=AdresseListeMouvement;
+     assignfile(FListeMouvement,ChListeMouvement);
+     if FileExists(ChListeMouvement)then
+     begin
+          Reset(FListeMouvement);
+          Seek(FListeMouvement,0);
+          while not eof(FListeMouvement)do
+          begin
+               read(FListeMouvement,RListeMouvement);
+
+               if(RListeMouvement.OKExecution=true)
+               and(RListeMouvement.TypeProces=TypeProces)
+               and(FunctionFichierInclu(RListeMouvement.FichierTiersConserne,FichierTiersConserne))
+               then OKMouvement:=true
+               else OKMouvement:=false;
+
+               if(OKMouvement=true)then
+               begin
+                    if(DateCorrecte(RListeMouvement.DateMouvement)and(DateCorrecte(RListeMouvement.DateMouvement))and(DateCorrecte(DateDebut))and(DateCorrecte(DateFin)))then
+                    begin
+                         if(strtodate(RListeMouvement.DateMouvement)>=strtodate(DateDebut))
+                         and(strtodate(RListeMouvement.DateMouvement)<=strtodate(DateFin))
+                         then OKMouvement:=true
+                         else OKMouvement:=false;
+                    end
+                    else OKMouvement:=false;
+               end;
+
+               if(OKMouvement=true)then
+               begin
+                    R:=1;
+                    OKMouvement:=false;
+                    while(R<=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.RowCount-1)and(OKMouvement=false)do
+                    begin
+                         if(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[1,R]<>'Pr')
+                         and(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[1,R]<>'ST')
+                         and(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,R]='OK')
+                         and(RListeMouvement.PositionTypeMouvement=strtointeger(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[0,R]))
+                         and(RListeMouvement.PositionMouvement=strtointeger(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[1,R]))
+                         then
+                         begin
+                              OKMouvement:=true;
+                              PositionTypeSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[0,R];
+                              PositionSourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[1,R];
+                              SourceDonnees:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[3,R];
+                
+                              s:=0;
+                              OKNew:=false;
+                              while(s<i)and(OKNew=false)do
+                              begin
+                                   if(PositionTypeSourceDonnees=TableauPointeurData[s].Data1)
+                                   and(PositionSourceDonnees=TableauPointeurData[s].Data2)
+                                   and(SourceDonnees=TableauPointeurData[s].Data3)
+                                   then
+                                   begin
+                                        OKNew:=true;
+                                   end;
+                              s:=s+1;
+                              end;
+
+                              if(OKNew=false)then
+                              begin
+                                   i:=i+1;
+                                   RTransfertListeMagnetique.PositionListeTransfert:=i-1;
+                                   RTransfertListeMagnetique.PositionTypeSourceDonnees:=PositionTypeSourceDonnees;
+                                   RTransfertListeMagnetique.PositionSourceDonnees:=PositionSourceDonnees;
+                                   RTransfertListeMagnetique.SourceDonnees:=SourceDonnees;
+                                   RTransfertListeMagnetique.DateDebutTransfert:=DateDebut;
+                                   RTransfertListeMagnetique.DateFinTransfert:=DateFin;
+                                   RTransfertListeMagnetique.TypeProces:=TypeProces;
+                                   RTransfertListeMagnetique.FichierTiersConserne:=FichierTiersConserne;
+                                   RTransfertListeMagnetique.PositionTransfertDetailBegin:=0;
+                                   RTransfertListeMagnetique.PositionTransfertDetailEnd:=0;
+                                   RTransfertListeMagnetique.PositionTransfertMouvementBegin:=0;
+                                   RTransfertListeMagnetique.PositionTransfertMouvementEnd:=0;
+                                   Seek(FTransfertListeMagnetique,i-1);
+                                   write(FTransfertListeMagnetique,RTransfertListeMagnetique);
+
+                                   setlength(TableauPointeurData,i);
+                                   TableauPointeurData[i-1].Data1:=PositionTypeSourceDonnees;
+                                   TableauPointeurData[i-1].Data2:=PositionSourceDonnees;
+                                   TableauPointeurData[i-1].Data3:=SourceDonnees;
+                              end;
+                         end;
+                    R:=R+1;
+                    end;
+               end;
+
+               if(OKMouvement=true)then
+               begin
+                    RTypeMouvement:=ChercherTypeMouvement(RListeMouvement.PositionTypeMouvement,ExerciceAnnee,AdresseFichierConcerne);
+                    RMouvement:=ChercherMouvement(inttostr(RListeMouvement.PositionTypeMouvement),RListeMouvement.PositionMouvement,AdresseFichierConcerne);
+
+                    if(RMouvement.DebitCredit<>'')then
+                    begin
+                         DebitCreditTypeMouvement:=RMouvement.DebitCredit;
+                    end
+                    else
+                    begin
+                         if(RTypeMouvement.SigneTypeMouvement='+')
+                         then DebitCreditTypeMouvement:='Débit'
+                         else DebitCreditTypeMouvement:='Crédit';
+                    end;
+
+                    ////////////////////////////////////////////////////////////
+                    RTransfertMouvementMagnetique.PositionTransfertMouvement:=m;
+                    RTransfertMouvementMagnetique.PositionTypeSourceDonnees:=PositionTypeSourceDonnees;
+                    RTransfertMouvementMagnetique.PositionSourceDonnees:=PositionSourceDonnees;
+                    RTransfertMouvementMagnetique.SourceDonnees:=SourceDonnees;
+                    RTransfertMouvementMagnetique.DateMouvement:=RListeMouvement.DateMouvement;
+                    RTransfertMouvementMagnetique.TypeProces:=RListeMouvement.TypeProces;
+                    RTransfertMouvementMagnetique.FichierTiersConserne:=RListeMouvement.FichierTiersConserne;
+                    RTransfertMouvementMagnetique.RTiers:=chercherTiers(RListeMouvement.TypeProces,RListeMouvement.FichierTiersConserne,RListeMouvement.CodeTiers,'');
+                    RTransfertMouvementMagnetique.DebitCredit:=DebitCreditTypeMouvement;
+                    RTransfertMouvementMagnetique.ValeurMouvement:=RListeMouvement.MontantMouvement;
+                    Seek(FTransfertMouvementMagnetique,m);
+                    write(FTransfertMouvementMagnetique,RTransfertMouvementMagnetique);
+                    m:=m+1;
+                    ////////////////////////////////////////////////////////////
+
+                    TypeProcesDetailMouvement:='Business';   FichierConserneDetailMouvement:='DétailMouvement '+RTypeMouvement.DesignationTypeMouvement;
+                    if not(FunctionAdresseProces(TypeProcesDetailMouvement,FichierConserneDetailMouvement,'',AdresseDetailMouvement,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                    begin
+                         AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserneDetailMouvement+' recherché !');
+                    end;
+                    ChDetailMouvement:=AdresseDetailMouvement;
+                    assignfile(FDetailMouvement,ChDetailMouvement);
+                    if FileExists(ChDetailMouvement)then
+                    Reset(FDetailMouvement)
+                    else Rewrite(FDetailMouvement);
+                    Seek(FDetailMouvement,0);
+                    while not eof(FDetailMouvement)do
+                    begin
+                         read(FDetailMouvement,RDetailMouvement);
+
+                         if(Datecorrecte(RDetailMouvement.DateMouvement)and Datecorrecte(RListeMouvement.DateMouvement))then
+                         begin
+                              if(strtodate(RDetailMouvement.DateMouvement)=strtodate(RListeMouvement.DateMouvement))
+                              then OKDate:=true
+                              else OKDate:=false;
+                         end
+                         else OKDate:=false;
+
+                         if (OKDate=true)
+                         and(RDetailMouvement.OrdreListeMouvement=RListeMouvement.OrdreListeMouvement)
+                         then OKMouvement:=true
+                         else OKMouvement:=false;
+
+                         if(OKMouvement=true)then
+                         begin
+                              RTransfertDetailMagnetique.PositionTransfertDetail:=l;
+                              RTransfertDetailMagnetique.PositionTransfertMouvement:=inttostr(RTransfertMouvementMagnetique.PositionTransfertMouvement);
+                              RTransfertDetailMagnetique.PositionTypeSourceDonnees:=PositionTypeSourceDonnees;
+                              RTransfertDetailMagnetique.PositionSourceDonnees:=PositionSourceDonnees;
+                              RTransfertDetailMagnetique.SourceDonnees:=SourceDonnees;
+                              RTransfertDetailMagnetique.DateDetail:=RDetailMouvement.DateMouvement;
+                              RTransfertDetailMagnetique.TypeProces:=RListeMouvement.TypeProces;
+                              RTransfertDetailMagnetique.FichierTiersConserne:=RListeMouvement.FichierTiersConserne;
+                              RTransfertDetailMagnetique.RTiers:=chercherTiers(RListeMouvement.TypeProces,RListeMouvement.FichierTiersConserne,RListeMouvement.CodeTiers,'');
+                              RTransfertDetailMagnetique.DebitCredit:=DebitCreditTypeMouvement;
+                              RTransfertDetailMagnetique.CodeArticle:=RDetailMouvement.CodeArticle;
+                              RTransfertDetailMagnetique.DesignationArticle:=RDetailMouvement.DesignationArticle;
+                              RTransfertDetailMagnetique.ReferenceArticle:=RDetailMouvement.ReferenceArticle;
+                              RTransfertDetailMagnetique.UMArticle:=RDetailMouvement.UMArticle;
+                              RTransfertDetailMagnetique.CoutUnitaireArticle:=RDetailMouvement.CoutUnitaireArticle;
+                              RTransfertDetailMagnetique.Quantite:=RDetailMouvement.Quantite;
+                              RTransfertDetailMagnetique.PrixUnitaire:=RDetailMouvement.PrixUnitaire;
+                              Seek(FTransfertDetailMagnetique,l);
+                              write(FTransfertDetailMagnetique,RTransfertDetailMagnetique);
+                         l:=l+1;
+                         end;
+                    end;
+                    CloseFile(FDetailMouvement);
+               end;
+          end;
+          CloseFile(FListeMouvement);
+     end;
+
+     R:=1;
+     OKMouvement:=false;
+     PositionTypeSourceDonnees:='';
+     PositionSourceDonnees:='';
+     SourceDonnees:='';
+     while(R<=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.RowCount-1)and(OKMouvement=false)do
+     begin
+          if(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[1,R]='Pr')
+          and(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,R]='OK')
+          then
+          begin
+               OKMouvement:=true;
+               PositionTypeSourceDonnees:='';
+               PositionSourceDonnees:='Pr';
+               SourceDonnees:='Prélèvement';
+          end;
+     R:=R+1;
+     end;
+
+     if(OKMouvement=true)then
+     begin
+           i:=i+1;
+           RTransfertListeMagnetique.PositionListeTransfert:=i;
+           RTransfertListeMagnetique.PositionTypeSourceDonnees:=PositionTypeSourceDonnees;
+           RTransfertListeMagnetique.PositionSourceDonnees:=PositionSourceDonnees;
+           RTransfertListeMagnetique.SourceDonnees:=SourceDonnees;
+           RTransfertListeMagnetique.DateDebutTransfert:=DateDebut;
+           RTransfertListeMagnetique.DateFinTransfert:=DateFin;
+           RTransfertListeMagnetique.TypeProces:=TypeProces;
+           RTransfertListeMagnetique.FichierTiersConserne:=FichierTiersConserne;
+           RTransfertListeMagnetique.PositionTransfertDetailBegin:=0;
+           RTransfertListeMagnetique.PositionTransfertDetailEnd:=0;
+           RTransfertListeMagnetique.PositionTransfertMouvementBegin:=0;
+           RTransfertListeMagnetique.PositionTransfertMouvementEnd:=0;
+           Seek(FTransfertListeMagnetique,i);
+           write(FTransfertListeMagnetique,RTransfertListeMagnetique);
+
+           setlength(TableauPointeurData,i);
+           TableauPointeurData[i-1].Data1:=PositionTypeSourceDonnees;
+           TableauPointeurData[i-1].Data2:=PositionSourceDonnees;
+           TableauPointeurData[i-1].Data3:=SourceDonnees;
+
+           OpenFParc(RParc);
+           ChPrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds';
+           assignfile(FPrelevementUniteFonds,ChPrelevementUniteFonds);
+           if FileExists(ChPrelevementUniteFonds)then
+           begin
+                Reset(FPrelevementUniteFonds);
+                Seek(FPrelevementUniteFonds,0);
+                while not eof(FPrelevementUniteFonds)do
+                begin
+                     read(FPrelevementUniteFonds,RPrelevementUniteFonds);
+
+                     if(RPrelevementUniteFonds.ValeurPrecise=false)
+                     and(RPrelevementUniteFonds.TypeProces=TypeProces)
+                     and(FunctionFichierInclu(RPrelevementUniteFonds.FichierConcerne,FichierTiersConserne))
+                     then OKMouvement:=true
+                     else OKMouvement:=false;
+
+                     if(OKMouvement=true)then
+                     begin
+                          if(DateCorrecte(RPrelevementUniteFonds.DatePrelevement)and DateCorrecte(RPrelevementUniteFonds.DatePrelevement)and DateCorrecte(DateDebut)and DateCorrecte(DateFin))then
+                          begin
+                               if(strtodate(RPrelevementUniteFonds.DatePrelevement)>=strtodate(DateDebut))
+                               and(strtodate(RPrelevementUniteFonds.DatePrelevement)<=strtodate(DateFin))
+                               then OKMouvement:=true
+                               else OKMouvement:=false;
+                          end
+                          else OKMouvement:=false;
+                     end;
+
+                     if(OKMouvement=true)then
+                     begin
+                          DebitCreditTypeMouvement:='Débit';
+
+                          ////////////////////////////////////////////////////////////
+                          RTransfertMouvementMagnetique.PositionTransfertMouvement:=m;
+                          RTransfertMouvementMagnetique.PositionTypeSourceDonnees:=PositionTypeSourceDonnees;
+                          RTransfertMouvementMagnetique.PositionSourceDonnees:=PositionSourceDonnees;
+                          RTransfertMouvementMagnetique.SourceDonnees:=SourceDonnees;
+                          RTransfertMouvementMagnetique.DateMouvement:=RPrelevementUniteFonds.DatePrelevement;
+                          RTransfertMouvementMagnetique.TypeProces:=RPrelevementUniteFonds.TypeProces;
+                          RTransfertMouvementMagnetique.FichierTiersConserne:=RPrelevementUniteFonds.FichierConcerne;
+                          RTransfertMouvementMagnetique.RTiers:=chercherTiers(RPrelevementUniteFonds.TypeProces,RPrelevementUniteFonds.FichierConcerne,RPrelevementUniteFonds.CodeTiers,'');
+                          RTransfertMouvementMagnetique.DebitCredit:=DebitCreditTypeMouvement;
+                          RTransfertMouvementMagnetique.ValeurMouvement:=RPrelevementUniteFonds.ValeurPrelevement;
+                          Seek(FTransfertMouvementMagnetique,m);
+                          write(FTransfertMouvementMagnetique,RTransfertMouvementMagnetique);
+                          m:=m+1;
+                          ////////////////////////////////////////////////////////////
+
+                          OpenFParc(RParc);
+                          ChDetailArticlePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds';
+                          assignfile(FDetailArticlePrelevementUniteFonds,ChDetailArticlePrelevementUniteFonds);
+                          if FileExists(ChDetailArticlePrelevementUniteFonds)then
+                          Reset(FDetailArticlePrelevementUniteFonds)
+                          else Rewrite(FDetailArticlePrelevementUniteFonds);
+                          Seek(FDetailArticlePrelevementUniteFonds,0);
+                          while not eof(FDetailArticlePrelevementUniteFonds)do
+                          begin
+                               read(FDetailArticlePrelevementUniteFonds,RDetailArticlePrelevementUniteFonds);
+
+                               if(RDetailArticlePrelevementUniteFonds.NumPrelevementUniteFonds=RPrelevementUniteFonds.NumPrelevementUniteFonds)then
+                               begin
+                                    if(DateCorrecte(RDetailArticlePrelevementUniteFonds.DatePrelevement)and DateCorrecte(RPrelevementUniteFonds.DatePrelevement))then
+                                    begin
+                                         if(strtodate(RDetailArticlePrelevementUniteFonds.DatePrelevement)=strtodate(RPrelevementUniteFonds.DatePrelevement))
+                                         then OKMouvement:=true
+                                         else OKMouvement:=false;
+                                    end
+                                    else OKMouvement:=false;
+                               end
+                               else OKMouvement:=false;
+
+                               if(OKMouvement=true)then
+                               begin
+                                    RTransfertDetailMagnetique.PositionTransfertDetail:=l;
+                                    RTransfertDetailMagnetique.PositionTransfertMouvement:=inttostr(RTransfertMouvementMagnetique.PositionTransfertMouvement);
+                                    RTransfertDetailMagnetique.PositionTypeSourceDonnees:=PositionTypeSourceDonnees;
+                                    RTransfertDetailMagnetique.PositionSourceDonnees:=PositionSourceDonnees;
+                                    RTransfertDetailMagnetique.SourceDonnees:=SourceDonnees;
+                                    RTransfertDetailMagnetique.DateDetail:=RDetailArticlePrelevementUniteFonds.DatePrelevement;
+                                    RTransfertDetailMagnetique.TypeProces:=RPrelevementUniteFonds.TypeProces;
+                                    RTransfertDetailMagnetique.FichierTiersConserne:=RPrelevementUniteFonds.FichierConcerne;
+                                    RTransfertDetailMagnetique.RTiers:=chercherTiers(RPrelevementUniteFonds.TypeProces,RPrelevementUniteFonds.FichierConcerne,RPrelevementUniteFonds.CodeTiers,'');
+                                    RTransfertDetailMagnetique.DebitCredit:=DebitCreditTypeMouvement;
+                                    RTransfertDetailMagnetique.CodeArticle:=RDetailArticlePrelevementUniteFonds.CodeArticle;
+                                    RStockArticle:=chercherStockArticle('Article','',RDetailArticlePrelevementUniteFonds.CodeArticle,'',OKStockRecherche,RubriqueRecherche);
+                                    RTransfertDetailMagnetique.DesignationArticle:=RStockArticle.Design;
+                                    RTransfertDetailMagnetique.ReferenceArticle:=RStockArticle.Ref;
+                                    RTransfertDetailMagnetique.UMArticle:=RStockArticle.UM;
+                                    RTransfertDetailMagnetique.CoutUnitaireArticle:=RDetailArticlePrelevementUniteFonds.CoutUnitaire;
+                                    RTransfertDetailMagnetique.Quantite:=RDetailArticlePrelevementUniteFonds.QuantiteJustifier;
+                                    RTransfertDetailMagnetique.PrixUnitaire:=RDetailArticlePrelevementUniteFonds.PrixUnitaire;
+                                    Seek(FTransfertDetailMagnetique,l);
+                                    write(FTransfertDetailMagnetique,RTransfertDetailMagnetique);
+                               l:=l+1;
+                               end;
+                          end;
+                          CloseFile(FDetailArticlePrelevementUniteFonds);
+                     end;
+                end;
+                CloseFile(FPrelevementUniteFonds);
+           end;
+     end;
+
+
+     R:=1;
+     OKMouvement:=false;
+     PositionTypeSourceDonnees:='';
+     PositionSourceDonnees:='';
+     SourceDonnees:='';
+     while(R<=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.RowCount-1)and(OKMouvement=false)do
+     begin
+          if(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[1,R]='ST')
+          and(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,R]='OK')
+          then
+          begin
+               OKMouvement:=true;
+               PositionTypeSourceDonnees:='';
+               PositionSourceDonnees:='ST';
+               SourceDonnees:='Situation';
+          end;
+     R:=R+1;
+     end;
+
+     if(OKMouvement=true)then
+     begin
+           OpenFParc(RParc);
+           ChTransfertListeMagnetique:=RParc.Parcours+'\'+Exercice+'FTransfertListeMagnetique';
+           assignfile(FTransfertListeMagnetique,ChTransfertListeMagnetique);
+           if FileExists(ChTransfertListeMagnetique)then
+           Reset(FTransfertListeMagnetique)
+           else Rewrite(FTransfertListeMagnetique);
+           Seek(FTransfertListeMagnetique,i);
+
+           i:=i+1;
+           RTransfertListeMagnetique.PositionListeTransfert:=i;
+           RTransfertListeMagnetique.PositionTypeSourceDonnees:=PositionTypeSourceDonnees;
+           RTransfertListeMagnetique.PositionSourceDonnees:=PositionSourceDonnees;
+           RTransfertListeMagnetique.SourceDonnees:=SourceDonnees;
+           RTransfertListeMagnetique.DateDebutTransfert:=DateDebut;
+           RTransfertListeMagnetique.DateFinTransfert:=DateFin;
+           RTransfertListeMagnetique.TypeProces:=TypeProces;
+           RTransfertListeMagnetique.FichierTiersConserne:=FichierTiersConserne;
+           RTransfertListeMagnetique.PositionTransfertDetailBegin:=0;
+           RTransfertListeMagnetique.PositionTransfertDetailEnd:=0;
+           RTransfertListeMagnetique.PositionTransfertMouvementBegin:=0;
+           RTransfertListeMagnetique.PositionTransfertMouvementEnd:=0;
+           Seek(FTransfertListeMagnetique,i);
+           write(FTransfertListeMagnetique,RTransfertListeMagnetique);
+
+           setlength(TableauPointeurData,i);
+           TableauPointeurData[i-1].Data1:=PositionTypeSourceDonnees;
+           TableauPointeurData[i-1].Data2:=PositionSourceDonnees;
+           TableauPointeurData[i-1].Data3:=SourceDonnees;
+
+           OpenFParc(RParc);
+           ChSituationMarche:=RParc.Parcours+'\'+Exercice+'FSituationMarche';
+           assignfile(FSituationMarche,ChSituationMarche);
+           if FileExists(ChSituationMarche)then
+           begin
+                Reset(FSituationMarche);
+                Seek(FSituationMarche,0);
+                while not eof(FSituationMarche)do
+                begin
+                     read(FSituationMarche,RSituationMarche);
+                     RMarcheCopie:=ChercherMarche(RSituationMarche.NSMarche);
+
+                     if(RSituationMarche.ValiditeSituation=true)
+                     and(RMarcheCopie.TypeProces=TypeProces)
+                     and(FunctionFichierInclu(RMarcheCopie.FichierConcerneTiers,FichierTiersConserne))
+                     then OKMouvement:=true
+                     else OKMouvement:=false;
+
+                     if(OKMouvement=true)then
+                     begin
+                          if(DateCorrecte(RSituationMarche.DateSituationMarche)and DateCorrecte(DateDebut)and DateCorrecte(DateFin))then
+                          begin
+                               if(strtodate(RSituationMarche.DateSituationMarche)>=strtodate(DateDebut))
+                               and(strtodate(RSituationMarche.DateSituationMarche)<=strtodate(DateFin))
+                               then OKMouvement:=true
+                               else OKMouvement:=false;
+                          end
+                          else OKMouvement:=false;
+                     end;
+
+                     if(OKMouvement=true)then
+                     begin
+                          DebitCreditTypeMouvement:='Débit';
+
+                          ////////////////////////////////////////////////////////////
+                          RTransfertMouvementMagnetique.PositionTransfertMouvement:=m;
+                          RTransfertMouvementMagnetique.PositionTypeSourceDonnees:=PositionTypeSourceDonnees;
+                          RTransfertMouvementMagnetique.PositionSourceDonnees:=PositionSourceDonnees;
+                          RTransfertMouvementMagnetique.SourceDonnees:=SourceDonnees;
+                          RTransfertMouvementMagnetique.DateMouvement:=RSituationMarche.DateSituationMarche;
+                          RTransfertMouvementMagnetique.TypeProces:=RMarcheCopie.TypeProces;
+                          RTransfertMouvementMagnetique.FichierTiersConserne:=RMarcheCopie.FichierConcerneTiers;
+                          RTransfertMouvementMagnetique.RTiers:=chercherTiers(RMarcheCopie.TypeProces,RMarcheCopie.FichierConcerneTiers,RMarcheCopie.CodeMaitreOuvrage,'');
+                          RTransfertMouvementMagnetique.DebitCredit:=DebitCreditTypeMouvement;
+                          RTransfertMouvementMagnetique.ValeurMouvement:=RSituationMarche.MontantSituationTTCNet;
+                          Seek(FTransfertMouvementMagnetique,m);
+                          write(FTransfertMouvementMagnetique,RTransfertMouvementMagnetique);
+                          m:=m+1;
+                          ////////////////////////////////////////////////////////////
+
+                          OpenFParc(RParc);
+                          ChDetailAttachement:=RParc.Parcours+'\'+Exercice+'FDetailAttachement';
+                          assignfile(FDetailAttachement,ChDetailAttachement);
+                          if FileExists(ChDetailAttachement)then
+                          Reset(FDetailAttachement)
+                          else Rewrite(FDetailAttachement);
+                          Seek(FDetailAttachement,0);
+                          while not eof(FDetailAttachement)do
+                          begin
+                               read(FDetailAttachement,RDetailAttachement);
+
+                               RLAttachementCopie:=ChercherAttachement(RMarcheCopie.NSMarche,RDetailAttachement.NAttachement);
+
+                               if(inttostr(RDetailAttachement.NAttachement)=RSituationMarche.NAttachement)then
+                               begin
+                                    if(DateCorrecte(RLAttachementCopie.Date))then
+                                    begin
+                                         if(strtodate(RLAttachementCopie.Date)=strtodate(RSituationMarche.DateSituationMarche))
+                                         then OKMouvement:=true
+                                         else OKMouvement:=false;
+                                    end
+                                    else OKMouvement:=false;
+                               end
+                               else OKMouvement:=false;
+
+                               if(OKMouvement=true)then
+                               begin
+                                    RTransfertDetailMagnetique.PositionTransfertDetail:=l;
+                                    RTransfertDetailMagnetique.PositionTransfertMouvement:=inttostr(RTransfertMouvementMagnetique.PositionTransfertMouvement);
+                                    RTransfertDetailMagnetique.PositionTypeSourceDonnees:=PositionTypeSourceDonnees;
+                                    RTransfertDetailMagnetique.PositionSourceDonnees:=PositionSourceDonnees;
+                                    RTransfertDetailMagnetique.SourceDonnees:=SourceDonnees;
+                                    RTransfertDetailMagnetique.DateDetail:=RLAttachementCopie.Date;
+                                    RTransfertDetailMagnetique.TypeProces:=RMarcheCopie.TypeProces;
+                                    RTransfertDetailMagnetique.FichierTiersConserne:=RMarcheCopie.FichierConcerneTiers;
+                                    RTransfertDetailMagnetique.RTiers:=chercherTiers(RMarcheCopie.TypeProces,RMarcheCopie.FichierConcerneTiers,RMarcheCopie.CodeMaitreOuvrage,'');
+                                    RTransfertDetailMagnetique.DebitCredit:=DebitCreditTypeMouvement;
+                                    RTransfertDetailMagnetique.CodeArticle:=RDetailAttachement.CodeStock;
+                                    RStockArticle:=chercherStockArticle('Marche','',RDetailAttachement.CodeStock,'',OKStockRecherche,RubriqueRecherche);
+                                    RTransfertDetailMagnetique.DesignationArticle:=RStockArticle.Design;
+                                    RTransfertDetailMagnetique.ReferenceArticle:=RStockArticle.Ref;
+                                    RTransfertDetailMagnetique.UMArticle:=RStockArticle.UM;
+                                    RTransfertDetailMagnetique.CoutUnitaireArticle:=0;
+                                    RTransfertDetailMagnetique.Quantite:=RDetailAttachement.QuantiteAttachementRealise;
+                                    RTransfertDetailMagnetique.PrixUnitaire:=RDetailAttachement.PrixUnitaire;
+                                    Seek(FTransfertDetailMagnetique,l);
+                                    write(FTransfertDetailMagnetique,RTransfertDetailMagnetique);
+                               l:=l+1;
+                               end;
+                          end;
+                          CloseFile(FDetailAttachement);
+                     end;
+                end;
+                CloseFile(FSituationMarche);
+           end;
+     end;
+
+     CloseFile(FTransfertDetailMagnetique);
+
+     AfficherTransfertListeMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[0,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row],FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[1,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row],FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[3,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row],'Transfert');
+     if DateCorrecte(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row])
+     then FSTransfertMagnetiqueDonnesCommerciales.EditMois.ItemIndex:=(strtointeger(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row],4,5))-1);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date:=strtodate('01/'+MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3)+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateFin.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date))),'2')+'/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+
+     
+     PBegin:='';
+     PEnd:='';
+     AfficheRTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueArticle,'','','',DateDebut,DateFin,'','','','','Transfert',PBegin,PEnd,FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+     AfficherTransfertMouvementMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauTransfertMagnetiqueMouvement,'','','',DateDebut,DateFin,'','','','Transfert',PBegin,PEnd);
+
+     PublierDansLeReseaux('FTransfertMagnetique','Local','',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+
+     FSTransfertMagnetiqueDonnesCommerciales.AffichePatienterSVP.Visible:=false;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TimerImporterTimer(
+  Sender: TObject);
+var   m,l,mSelect,PBeginMouvement,PEndMouvement,PBeginDetail,PEndDetail:integer; Adresse,NomFichier:string;  OKMouvement,OKImport,OKDtaeMouvement,OKTransfert,OKDate:boolean;
+      DebitCreditTypeMouvement,DateDebut,DateFin,Extension,PositionSourceDonnees,SourceDonnees,TypeProces,FichierTiersConserne:string;
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.TimerImporter.Enabled:=false;
+
+     DebitCreditTypeMouvement:='';
+     DateDebut:='31/12/9999';
+     DateFin:='01/01/2000';
+     Extension:='';
+     PositionSourceDonnees:='';
+     SourceDonnees:='';
+     TypeProces:='';
+     FichierTiersConserne:='';
+     PBeginMouvement:=0;
+     PEndMouvement:=0;
+     PBeginDetail:=0;
+     PEndDetail:=0;
+
+
+     if(FSTransfertMagnetiqueDonnesCommerciales.OuvrireUnFichier.Execute)then
+     begin
+          Adresse:=ExtractFilePath(FSTransfertMagnetiqueDonnesCommerciales.OuvrireUnFichier.FileName);
+
+          OpenFParc(RParc);
+          ChTransfertMouvementMagnetique:=RParc.Parcours+'\'+Exercice+'FTransfertMouvementMagnetique';
+          assignfile(FTransfertMouvementMagnetique,ChTransfertMouvementMagnetique);
+          if FileExists(ChTransfertMouvementMagnetique)then
+          Reset(FTransfertMouvementMagnetique)
+          else Rewrite(FTransfertMouvementMagnetique);
+          Seek(FTransfertMouvementMagnetique,0);
+          Truncate(FTransfertMouvementMagnetique);
+          m:=0;
+          PBeginMouvement:=m;
+
+          ChTransfertMouvementMagnetiqueCopie:=Adresse+'FTransfertMouvementMagnetique';
+          assignfile(FTransfertMouvementMagnetiqueCopie,ChTransfertMouvementMagnetiqueCopie);
+          if FileExists(ChTransfertMouvementMagnetiqueCopie)then
+          begin
+               Reset(FTransfertMouvementMagnetiqueCopie);
+               Seek(FTransfertMouvementMagnetiqueCopie,0);
+               while not eof(FTransfertMouvementMagnetiqueCopie)do
+               begin
+                    read(FTransfertMouvementMagnetiqueCopie,RTransfertMouvementMagnetiqueCopie);
+                    Seek(FTransfertMouvementMagnetique,m);
+                    write(FTransfertMouvementMagnetique,RTransfertMouvementMagnetiqueCopie);
+               m:=m+1;
+               end;
+               CloseFile(FTransfertMouvementMagnetiqueCopie);
+          end;
+          CloseFile(FTransfertMouvementMagnetique);
+
+          PEndMouvement:=m-1;
+
+          ChTransfertDetailMagnetique:=RParc.Parcours+'\'+Exercice+'FTransfertDetailMagnetique';
+          assignfile(FTransfertDetailMagnetique,ChTransfertDetailMagnetique);
+          if FileExists(ChTransfertDetailMagnetique)then
+          Reset(FTransfertDetailMagnetique)
+          else Rewrite(FTransfertDetailMagnetique);
+          Seek(FTransfertDetailMagnetique,0);
+          Truncate(FTransfertDetailMagnetique);
+          l:=0;
+          PBeginDetail:=l;
+
+          ChTransfertDetailMagnetiqueCopie:=Adresse+'FTransfertDetailMagnetique';
+          assignfile(FTransfertDetailMagnetiqueCopie,ChTransfertDetailMagnetiqueCopie);
+          if FileExists(ChTransfertDetailMagnetiqueCopie)then
+          begin
+               Reset(FTransfertDetailMagnetiqueCopie);
+               Seek(FTransfertDetailMagnetiqueCopie,0);
+               while not eof(FTransfertDetailMagnetiqueCopie)do
+               begin
+                    read(FTransfertDetailMagnetiqueCopie,RTransfertDetailMagnetiqueCopie);
+                    Seek(FTransfertDetailMagnetique,l);
+                    write(FTransfertDetailMagnetique,RTransfertDetailMagnetiqueCopie);
+               l:=l+1;
+               end;
+               CloseFile(FTransfertDetailMagnetiqueCopie);
+          end;
+          CloseFile(FTransfertDetailMagnetique);
+
+          PEndDetail:=l-1;
+
+          OpenFParc(RParc);
+          ChTransfertListeMagnetique:=RParc.Parcours+'\'+Exercice+'FTransfertListeMagnetique';
+          assignfile(FTransfertListeMagnetique,ChTransfertListeMagnetique);
+          if FileExists(ChTransfertListeMagnetique)then
+          Reset(FTransfertListeMagnetique)
+          else Rewrite(FTransfertListeMagnetique);
+          Seek(FTransfertListeMagnetique,0);
+          Truncate(FTransfertListeMagnetique);
+          m:=0;
+
+          ChTransfertListeMagnetiqueCopie:=Adresse+'FTransfertListeMagnetique';
+          assignfile(FTransfertListeMagnetiqueCopie,ChTransfertListeMagnetiqueCopie);
+          if FileExists(ChTransfertListeMagnetiqueCopie)then
+          Reset(FTransfertListeMagnetiqueCopie)
+          else Rewrite(FTransfertListeMagnetiqueCopie);
+          Seek(FTransfertListeMagnetiqueCopie,0);
+          while not eof(FTransfertListeMagnetiqueCopie)do
+          begin
+               read(FTransfertListeMagnetiqueCopie,RTransfertListeMagnetiqueCopie);
+               DateDebut:=RTransfertListeMagnetiqueCopie.DateDebutTransfert;
+               DateFin:=RTransfertListeMagnetiqueCopie.DateFinTransfert;
+               PositionSourceDonnees:=RTransfertListeMagnetiqueCopie.PositionSourceDonnees;
+               SourceDonnees:=RTransfertListeMagnetiqueCopie.SourceDonnees;
+               TypeProces:=RTransfertListeMagnetiqueCopie.TypeProces;
+               FichierTiersConserne:=RTransfertListeMagnetiqueCopie.FichierTiersConserne;
+
+               RTransfertListeMagnetiqueCopie.PositionTransfertDetailBegin:=PBeginDetail;
+               RTransfertListeMagnetiqueCopie.PositionTransfertDetailEnd:=PEndDetail;
+               RTransfertListeMagnetiqueCopie.PositionTransfertMouvementBegin:=PBeginMouvement;
+               RTransfertListeMagnetiqueCopie.PositionTransfertMouvementEnd:=PEndMouvement;
+
+               Seek(FTransfertListeMagnetique,m);
+               write(FTransfertListeMagnetique,RTransfertListeMagnetiqueCopie);
+          m:=m+1;
+          end;
+     CloseFile(FTransfertListeMagnetiqueCopie);
+     CloseFile(FTransfertListeMagnetique);
+     end;     
+
+     AfficherTransfertListeMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique,'','','','Transfert');
+     if DateCorrecte(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row])
+     then FSTransfertMagnetiqueDonnesCommerciales.EditMois.ItemIndex:=(strtointeger(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row],4,5))-1);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date:=strtodate('01/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateFin.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date))),'2')+'/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+
+     AfficherTransfertMouvementMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement,'','','','','','','','','Transfert',inttostr(PBeginMouvement),inttostr(PEndMouvement));
+     AfficheRTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle,'','','','','','','','','','Transfert',inttostr(PBeginDetail),inttostr(PEndDetail),FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+
+     FSTransfertMagnetiqueDonnesCommerciales.AffichePatienterSVP.Visible:=false;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.BitBtn7Click(
+  Sender: TObject);
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.AfficheImportation.Visible:=false;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.BitBtn6Click(
+  Sender: TObject);
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.RBClasique.Checked:=true;
+
+     FSTransfertMagnetiqueDonnesCommerciales.AffichePatienterSVP.Visible:=true;
+     FSTransfertMagnetiqueDonnesCommerciales.TimerImporter.Enabled:=true;
+
+     FSTransfertMagnetiqueDonnesCommerciales.AfficheImportation.Visible:=false;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.BitBtn5Click(
+  Sender: TObject);
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.RBSousResaux.Checked:=true;
+
+     FSTransfertMagnetiqueDonnesCommerciales.AffichePatienterSVP.Visible:=true;
+     PublierDansLeReseaux('FTransfertMagnetique','','',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+     FSTransfertMagnetiqueDonnesCommerciales.TimerImporterReseaux.Enabled:=true;
+
+     FSTransfertMagnetiqueDonnesCommerciales.AfficheImportation.Visible:=false;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TimerImporterReseauxTimer(
+  Sender: TObject);
+var   m,l,mSelect,PBeginMouvement,PEndMouvement,PBeginDetail,PEndDetail:integer; Adresse,NomFichier,NomDossierPartageOut,EmlacementLocalOuReseauxOut:string;  OKMouvement,OKImport,OKDtaeMouvement,OKTransfert,OKDate:boolean;
+      DebitCreditTypeMouvement,DateDebut,DateFin,Extension,PositionSourceDonnees,SourceDonnees,TypeProces,FichierTiersConserne:string;
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.TimerImporterReseaux.Enabled:=false;
+
+     AfficherTransfertListeMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauListeImportMagnetique,'','','','Transfert');
+     if DateCorrecte(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row])
+     then FSTransfertMagnetiqueDonnesCommerciales.EditMois.ItemIndex:=(strtointeger(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauListeTransfertMagnetique.Row],4,5))-1);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date:=strtodate('01/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateFin.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date))),'2')+'/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+
+     AfficherTransfertMouvementMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueMouvement,'','','','','','','','','Transfert',inttostr(PBeginMouvement),inttostr(PEndMouvement));
+     AfficheRTransfertDetailMagnetique(FSTransfertMagnetiqueDonnesCommerciales.TableauImportMagnetiqueArticle,'','','','','','','','','','Transfert',inttostr(PBeginDetail),inttostr(PEndDetail),FSTransfertMagnetiqueDonnesCommerciales.RBCumulerMemeArticle.Checked);
+
+     FSTransfertMagnetiqueDonnesCommerciales.AffichePatienterSVP.Visible:=false;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.FormShow(
+  Sender: TObject);
+begin
+     ActiverNomForm(1,(Sender as TComponent).Name);
+     FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text:=ExerciceAnnee;
+     AfficherListePosteReseauxTransfertMagnitique(FSTransfertMagnetiqueDonnesCommerciales.TableauListePosteReseauxTransfertMagnitique);
+end;
+
+Procedure AfficherListePosteReseauxTransfertMagnitique(TableauListePosteReseauxTransfertMagnitique:TStringGrid);
+var  R:integer; FichierConcerne:string; OKPoste:boolean;
+     TableauListeFPR:ArrayListeFichierPartageReseaux; TailTFPR:integer;
+begin
+          TableauListePosteReseauxTransfertMagnitique.ColCount:=7;
+          TableauListePosteReseauxTransfertMagnitique.Cols[0].Text:='Ordre';
+          TableauListePosteReseauxTransfertMagnitique.Cols[1].Text:='Num';
+          TableauListePosteReseauxTransfertMagnitique.Cols[2].Text:='Nom du Proces';
+          TableauListePosteReseauxTransfertMagnitique.Cols[3].Text:='Répertoire';
+          TableauListePosteReseauxTransfertMagnitique.Cols[4].Text:='           Adresse du proces';
+          TableauListePosteReseauxTransfertMagnitique.Cols[5].Text:='Exercice';
+          TableauListePosteReseauxTransfertMagnitique.Cols[6].Text:='Fichier Concerné';
+          R:=0;
+
+          ChAdresseDossierPartageReseauxCopie:=RParc.Parcours+'\'+Exercice+'FAdresseDossierPartageReseaux';
+          assignfile(FAdresseDossierPartageReseauxCopie,ChAdresseDossierPartageReseauxCopie);
+          if FileExists(ChAdresseDossierPartageReseauxCopie)then
+          begin
+                Reset(FAdresseDossierPartageReseauxCopie);
+                Seek(FAdresseDossierPartageReseauxCopie,0);
+                OKPoste:=false;
+                while not eof(FAdresseDossierPartageReseauxCopie)and(OKPoste=false)do
+                begin
+                     read(FAdresseDossierPartageReseauxCopie,RAdresseDossierPartageReseauxCopie);
+
+                     if(RAdresseDossierPartageReseauxCopie.EmlacementLocalOuReseaux='Local')then
+                     begin
+                          OKPoste:=true;
+                          R:=R+1;
+                          TableauListePosteReseauxTransfertMagnitique.Rows[R].Text:=inttostr(R);
+                          TableauListePosteReseauxTransfertMagnitique.Cells[1,R]:=inttostr(RAdresseDossierPartageReseauxCopie.NumAdresseDossierPartageReseaux);
+                          TableauListePosteReseauxTransfertMagnitique.Cells[2,R]:=RAdresseDossierPartageReseauxCopie.EmlacementLocalOuReseaux;// TypeProces;
+                          TableauListePosteReseauxTransfertMagnitique.Cells[3,R]:=ExtractFileName(RAdresseDossierPartageReseauxCopie.AdresseDossierPartageReseaux);// Repertoire;
+                          TableauListePosteReseauxTransfertMagnitique.Cells[4,R]:=RAdresseDossierPartageReseauxCopie.AdresseDossierPartageReseaux;
+                          TableauListePosteReseauxTransfertMagnitique.Cells[5,R]:=ExerciceAnnee;
+                          TableauListePosteReseauxTransfertMagnitique.Cells[6,R]:='';//FichierConcerne;
+                     end;
+                end;
+                CloseFile(FAdresseDossierPartageReseauxCopie);
+          end;/////////////////////////////////////////////////
+
+          FichierConcerne:='FTransfertMagnetique';
+
+          OpenFParc(RParc);
+          ChAdresseProces:=RParc.Parcours+'\'+Exercice+'FAdresseProces';
+          assignfile(FAdresseProces,ChAdresseProces);
+          if FileExists(ChAdresseProces)then
+          begin
+                Reset(FAdresseProces);
+                Seek(FAdresseProces,0);
+                while not eof(FAdresseProces)do
+                begin
+                     read(FAdresseProces,RAdresseProces);
+
+                     if(RAdresseProces.TypeProces='Réseaux')then
+                     begin
+                          if ExisteFichierConcernePartageReseauxInListeServeur(inttostr(RAdresseProces.NumAdresseProces),FichierConcerne,RListeFichierConcernePartageReseauxCopie,TableauListeFPR,TailTFPR)
+                          then OKPoste:=true
+                          else OKPoste:=false;
+                     end
+                     else OKPoste:=true;
+
+                     if(OKPoste=true)then
+                     begin
+                          R:=R+1;
+                          TableauListePosteReseauxTransfertMagnitique.Rows[R].Text:=inttostr(R);
+                          TableauListePosteReseauxTransfertMagnitique.Cells[1,R]:=inttostr(RAdresseProces.NumAdresseProces);
+                          TableauListePosteReseauxTransfertMagnitique.Cells[2,R]:=RAdresseProces.TypeProces;
+                          TableauListePosteReseauxTransfertMagnitique.Cells[3,R]:=RAdresseProces.Repertoire;
+                          TableauListePosteReseauxTransfertMagnitique.Cells[4,R]:=RAdresseProces.AdresseProces;
+                          TableauListePosteReseauxTransfertMagnitique.Cells[5,R]:=RAdresseProces.Exercice;
+                          TableauListePosteReseauxTransfertMagnitique.Cells[6,R]:=RAdresseProces.FichierConcerne;
+                     end;
+                end;
+                Closefile(FAdresseProces);
+          end;
+
+          if(R>0)then TableauListePosteReseauxTransfertMagnitique.RowCount:=R+1
+                 else TableauListePosteReseauxTransfertMagnitique.RowCount:=2;
+
+          AjusterColWidth(TableauListePosteReseauxTransfertMagnitique,'','1');
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TableauMouvementDblClick(
+  Sender: TObject);
+var R:integer; OKInitialiseDebitCredit:boolean;   ListeFichierNonInclu:string;
+begin
+     if(FSTransfertMagnetiqueDonnesCommerciales.RBAutoSelectMouvementMemeType.Checked=false)then
+     begin
+           if(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row]='OK')then
+           begin
+                FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row]:='';
+
+                if(FSTransfertMagnetiqueDonnesCommerciales.EditRowFirstSelectDebitCredit.Text=inttostr(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row))then
+                begin
+                     FSTransfertMagnetiqueDonnesCommerciales.EditRowFirstSelectDebitCredit.Text:='';
+                     FSTransfertMagnetiqueDonnesCommerciales.EditDebitCreditPositif.Text:='';
+                end;
+           end
+           else
+           begin
+                if(FunctionFichierIncluImbriquer(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[5,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row],FSTransfertMagnetiqueDonnesCommerciales.LabelFichierConcerne.Caption,ListeFichierNonInclu)=true)
+                then FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Row]:='OK'
+                else showmessage('Fichier Tièrs incompatible !');
+           end;
+
+           OKInitialiseDebitCredit:=true;
+           R:=1;
+           while(R<=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.RowCount-1)and(OKInitialiseDebitCredit=true)do
+           begin
+                if(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[20,R]<>'')then
+                begin
+                     OKInitialiseDebitCredit:=false;
+                     if(FSTransfertMagnetiqueDonnesCommerciales.EditDebitCreditPositif.Text='')then
+                     begin
+                          FSTransfertMagnetiqueDonnesCommerciales.EditDebitCreditPositif.Text:=FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement.Cells[19,R];
+                          FSTransfertMagnetiqueDonnesCommerciales.EditRowFirstSelectDebitCredit.Text:=inttostr(R);
+                     end;
+                end;
+           R:=R+1;
+           end;
+
+           if(OKInitialiseDebitCredit=true)then
+           begin
+                FSTransfertMagnetiqueDonnesCommerciales.EditDebitCreditPositif.Text:='';
+                FSTransfertMagnetiqueDonnesCommerciales.EditRowFirstSelectDebitCredit.Text:='';
+           end;
+     end;
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.EditExerciceSelect(
+  Sender: TObject);
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date:=strtodate('01/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+     FSTransfertMagnetiqueDonnesCommerciales.EditDateFin.Date:=strtodate(Completezerogauche(inttostr(LastDay(datetostr(FSTransfertMagnetiqueDonnesCommerciales.EditDateDebut.Date))),'2')+'/'+Completezerogauche(MidelLaters(FSTransfertMagnetiqueDonnesCommerciales.EditMois.Text,2,3),'2')+'/'+FSTransfertMagnetiqueDonnesCommerciales.EditExercice.Text);
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.BitBtn8Click(
+  Sender: TObject);
+begin
+     FSTransfertMagnetiqueDonnesCommerciales.TableauTiersListeTiers.Visible:=false;
+     FSTransfertMagnetiqueDonnesCommerciales.EditTiersCodeTiers.Text:='';
+     FSTransfertMagnetiqueDonnesCommerciales.EditTiersNomTiers.Text:='';
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.TableauMouvementContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+     AjusterColWidth(FSTransfertMagnetiqueDonnesCommerciales.TableauMouvement,'','');
+end;
+
+procedure TFSTransfertMagnetiqueDonnesCommerciales.FormClose(
+  Sender: TObject; var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

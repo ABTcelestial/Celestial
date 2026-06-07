@@ -1,0 +1,136 @@
+unit UnitFSResultatsAutocontroleAlerteExecution;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, Grids, StdCtrls, Buttons;
+
+type
+  TFSResultatsAutocontroleAlerteExecution = class(TForm)
+    TableauAnalyseListeMouvement: TStringGrid;
+    Panel1: TPanel;
+    BitBtn1: TBitBtn;
+    RBOrientationPapierLocalisationGeoStratigique: TComboBox;
+    EditTitreEtatLocalisation: TMemo;
+    RadioGroup8: TRadioGroup;
+    RBMouvementsExecutes: TRadioButton;
+    RBMouvementsNonExecutes: TRadioButton;
+    RBMouvementsExecutesEtNonExecutes: TRadioButton;
+    EditOKExecution: TEdit;
+    RBAfficherValeursMonetaires: TCheckBox;
+    RBAfficherTotalListeMouvement: TCheckBox;
+    RadioGroup1: TRadioGroup;
+    AfficherInfoAlerte: TPanel;
+    Bevel1: TBevel;
+    Bevel2: TBevel;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure RBMouvementsExecutesClick(Sender: TObject);
+    procedure RBMouvementsNonExecutesClick(Sender: TObject);
+    procedure RBMouvementsExecutesEtNonExecutesClick(Sender: TObject);
+    procedure RBAfficherValeursMonetairesClick(Sender: TObject);
+    procedure RBAfficherTotalListeMouvementClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSResultatsAutocontroleAlerteExecution: TFSResultatsAutocontroleAlerteExecution;
+
+implementation
+
+Uses UnitInitialisation, UnitFSFicheSaisie, UnitFSMenuPrincipal;
+
+{$R *.dfm}
+
+procedure TFSResultatsAutocontroleAlerteExecution.BitBtn1Click(
+  Sender: TObject);
+var  DebutRow,EcartTableau:integer;
+     TitreEtat,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol:string;
+     ImprimeEtat:boolean;
+begin
+FSResultatsAutocontroleAlerteExecution.EditTitreEtatLocalisation.Text:='';
+FSResultatsAutocontroleAlerteExecution.EditTitreEtatLocalisation.Lines.Add('Localisation GéoStratégique: ');
+FSResultatsAutocontroleAlerteExecution.EditTitreEtatLocalisation.Lines.Add(FSResultatsAutocontroleAlerteExecution.AfficherInfoAlerte.Caption);
+TitreEtat:=FSResultatsAutocontroleAlerteExecution.EditTitreEtatLocalisation.Text;
+
+GrasARow:='0';
+GrasACol:='0';
+CenterARow:='0';
+CenterACol:='0;5;9;12;22';
+RightARow:='';
+RightACol:='11';
+
+EcartTableau:=2;
+DebutRow:=0;
+ImprimeEtat:=true;
+OptionsImpression(FSResultatsAutocontroleAlerteExecution.TableauAnalyseListeMouvement,'Center',DebutRow,1,TitreEtat,true,FSResultatsAutocontroleAlerteExecution.RBOrientationPapierLocalisationGeoStratigique.Text,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol,ImprimeEtat,EcartTableau,FSMenuPrincipal.ImageCodebarre,true,DebutRow);
+end;
+
+procedure TFSResultatsAutocontroleAlerteExecution.RBMouvementsExecutesClick(
+  Sender: TObject);
+var  ValeurAlerte:integer; UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue:string;
+begin
+     FSResultatsAutocontroleAlerteExecution.EditOKExecution.Text:=booleantostr(FSResultatsAutocontroleAlerteExecution.RBMouvementsExecutes.Checked);
+     ControleDateExecutionAlerte(FSResultatsAutocontroleAlerteExecution.TableauAnalyseListeMouvement,'BusinessProces','Fiche de Saisie commerciale',FSResultatsAutocontroleAlerteExecution.EditOKExecution.Text,FSResultatsAutocontroleAlerteExecution.RBAfficherValeursMonetaires.Checked,FSResultatsAutocontroleAlerteExecution.RBAfficherTotalListeMouvement.Checked,ValeurAlerte,UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue);
+     FSResultatsAutocontroleAlerteExecution.AfficherInfoAlerte.Caption:='Alerte ! '+inttostr(ValeurAlerte)+' '+UniteDureeAlerte+' avant la date d''exécution au :'+DateExecutionPrevue;
+end;
+
+procedure TFSResultatsAutocontroleAlerteExecution.RBMouvementsNonExecutesClick(
+  Sender: TObject);
+var  ValeurAlerte:integer; UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue:string;
+begin
+     FSResultatsAutocontroleAlerteExecution.EditOKExecution.Text:=booleantostr(FSResultatsAutocontroleAlerteExecution.RBMouvementsExecutes.Checked);
+     ControleDateExecutionAlerte(FSResultatsAutocontroleAlerteExecution.TableauAnalyseListeMouvement,'BusinessProces','Fiche de Saisie commerciale',FSResultatsAutocontroleAlerteExecution.EditOKExecution.Text,FSResultatsAutocontroleAlerteExecution.RBAfficherValeursMonetaires.Checked,FSResultatsAutocontroleAlerteExecution.RBAfficherTotalListeMouvement.Checked,ValeurAlerte,UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue);
+     FSResultatsAutocontroleAlerteExecution.AfficherInfoAlerte.Caption:='Alerte ! '+inttostr(ValeurAlerte)+' '+UniteDureeAlerte+' avant la date d''exécution au :'+DateExecutionPrevue;
+end;
+
+procedure TFSResultatsAutocontroleAlerteExecution.RBMouvementsExecutesEtNonExecutesClick(
+  Sender: TObject);
+var  ValeurAlerte:integer; UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue:string;
+begin
+     FSResultatsAutocontroleAlerteExecution.EditOKExecution.Text:='Tous';
+     ControleDateExecutionAlerte(FSResultatsAutocontroleAlerteExecution.TableauAnalyseListeMouvement,'BusinessProces','Fiche de Saisie commerciale',FSResultatsAutocontroleAlerteExecution.EditOKExecution.Text,FSResultatsAutocontroleAlerteExecution.RBAfficherValeursMonetaires.Checked,FSResultatsAutocontroleAlerteExecution.RBAfficherTotalListeMouvement.Checked,ValeurAlerte,UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue);
+     FSResultatsAutocontroleAlerteExecution.AfficherInfoAlerte.Caption:='Alerte ! '+inttostr(ValeurAlerte)+' '+UniteDureeAlerte+' avant la date d''exécution au :'+DateExecutionPrevue;
+end;
+
+procedure TFSResultatsAutocontroleAlerteExecution.RBAfficherValeursMonetairesClick(
+  Sender: TObject);
+var  ValeurAlerte:integer; UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue:string;
+begin
+     if(FSResultatsAutocontroleAlerteExecution.RBAfficherValeursMonetaires.Checked=false)then FSResultatsAutocontroleAlerteExecution.RBAfficherTotalListeMouvement.Checked:=false;
+     ControleDateExecutionAlerte(FSResultatsAutocontroleAlerteExecution.TableauAnalyseListeMouvement,'BusinessProces','Fiche de Saisie commerciale',FSResultatsAutocontroleAlerteExecution.EditOKExecution.Text,FSResultatsAutocontroleAlerteExecution.RBAfficherValeursMonetaires.Checked,FSResultatsAutocontroleAlerteExecution.RBAfficherTotalListeMouvement.Checked,ValeurAlerte,UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue);
+     FSResultatsAutocontroleAlerteExecution.AfficherInfoAlerte.Caption:='Alerte ! '+inttostr(ValeurAlerte)+' '+UniteDureeAlerte+' avant la date d''exécution au :'+DateExecutionPrevue;
+end;
+
+procedure TFSResultatsAutocontroleAlerteExecution.RBAfficherTotalListeMouvementClick(
+  Sender: TObject);
+var  ValeurAlerte:integer; UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue:string;
+begin
+     if(FSResultatsAutocontroleAlerteExecution.RBAfficherValeursMonetaires.Checked=false)then
+     begin
+          FSResultatsAutocontroleAlerteExecution.RBAfficherValeursMonetaires.Checked:=FSResultatsAutocontroleAlerteExecution.RBAfficherTotalListeMouvement.Checked;
+     end;
+
+     ControleDateExecutionAlerte(FSResultatsAutocontroleAlerteExecution.TableauAnalyseListeMouvement,'BusinessProces','Fiche de Saisie commerciale',FSResultatsAutocontroleAlerteExecution.EditOKExecution.Text,FSResultatsAutocontroleAlerteExecution.RBAfficherValeursMonetaires.Checked,FSResultatsAutocontroleAlerteExecution.RBAfficherTotalListeMouvement.Checked,ValeurAlerte,UniteDureeAlerte,DateExecutionPrevue,HeureExecutionPrevue);
+     FSResultatsAutocontroleAlerteExecution.AfficherInfoAlerte.Caption:='Alerte ! '+inttostr(ValeurAlerte)+' '+UniteDureeAlerte+' avant la date d''exécution au :'+DateExecutionPrevue;
+end;
+
+procedure TFSResultatsAutocontroleAlerteExecution.FormShow(
+  Sender: TObject);
+begin
+     ActiverNomForm(1,(Sender as TComponent).Name);
+     FSResultatsAutocontroleAlerteExecution.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Résultats Autocontrôle Alerte Exécution !';
+end;
+
+procedure TFSResultatsAutocontroleAlerteExecution.FormClose(
+  Sender: TObject; var Action: TCloseAction);
+begin
+      ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

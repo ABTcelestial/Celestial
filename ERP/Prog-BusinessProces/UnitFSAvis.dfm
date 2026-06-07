@@ -1,0 +1,3732 @@
+object FSAvis: TFSAvis
+  Left = -8
+  Top = -8
+  Width = 1382
+  Height = 754
+  Caption = 'Saisie des Avis'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object PagePrincipale: TPageControl
+    Left = 0
+    Top = 0
+    Width = 1345
+    Height = 689
+    ActivePage = PageSaisieAvis
+    TabIndex = 0
+    TabOrder = 0
+    object PageSaisieAvis: TTabSheet
+      Caption = '     Saisie financi'#232're     '
+      object Label7: TLabel
+        Left = 872
+        Top = 611
+        Width = 50
+        Height = 13
+        Caption = 'Signataire:'
+      end
+      object CadreEditDateExecutionAvis: TBevel
+        Left = 873
+        Top = 344
+        Width = 136
+        Height = 41
+      end
+      object CadreEditLongueureSeriePiece: TBevel
+        Left = 873
+        Top = 392
+        Width = 136
+        Height = 41
+      end
+      object CadreBitAnnuler: TBevel
+        Left = 872
+        Top = 512
+        Width = 137
+        Height = 49
+      end
+      object CadreBitValiderAvis: TBevel
+        Left = 873
+        Top = 200
+        Width = 136
+        Height = 41
+      end
+      object CadreBitImprimeAvis: TBevel
+        Left = 873
+        Top = 248
+        Width = 136
+        Height = 41
+      end
+      object CadreBitNouveau: TBevel
+        Left = 873
+        Top = 152
+        Width = 136
+        Height = 41
+      end
+      object CadreBitSupprimerAvis: TBevel
+        Left = 873
+        Top = 296
+        Width = 136
+        Height = 41
+      end
+      object Label11: TLabel
+        Left = 877
+        Top = 359
+        Width = 56
+        Height = 13
+        Caption = 'Ex'#233'cuter le:'
+      end
+      object CadreBitComptabiliser: TBevel
+        Left = 873
+        Top = 448
+        Width = 136
+        Height = 57
+      end
+      object Label72: TLabel
+        Left = 880
+        Top = 403
+        Width = 17
+        Height = 13
+        Caption = 'CB:'
+      end
+      object Label73: TLabel
+        Left = 872
+        Top = 569
+        Width = 29
+        Height = 13
+        Caption = 'Fait '#224':'
+      end
+      object EditSignataire: TComboBox
+        Left = 872
+        Top = 630
+        Width = 137
+        Height = 21
+        BevelInner = bvLowered
+        BevelKind = bkFlat
+        ItemHeight = 13
+        ItemIndex = 0
+        TabOrder = 17
+        Text = 'Le Directeur'
+        OnEnter = EditSignataireEnter
+        Items.Strings = (
+          'Le Directeur'
+          'Le G'#233'rant')
+      end
+      object Panel2: TPanel
+        Left = 0
+        Top = 480
+        Width = 865
+        Height = 193
+        BevelInner = bvLowered
+        TabOrder = 18
+        object Bevel17: TBevel
+          Left = 8
+          Top = 8
+          Width = 377
+          Height = 137
+        end
+        object Label18: TLabel
+          Left = 16
+          Top = 43
+          Width = 93
+          Height = 13
+          Caption = 'Document de base:'
+        end
+        object Label19: TLabel
+          Left = 16
+          Top = 67
+          Width = 108
+          Height = 13
+          Caption = 'N'#176' Document de base:'
+        end
+        object Label20: TLabel
+          Left = 16
+          Top = 91
+          Width = 119
+          Height = 13
+          Caption = 'Date Document de base:'
+        end
+        object Label21: TLabel
+          Left = 16
+          Top = 115
+          Width = 162
+          Height = 13
+          Caption = 'Intitul'#233' Op'#233'ration Document Base:'
+        end
+        object Label22: TLabel
+          Left = 16
+          Top = 16
+          Width = 177
+          Height = 13
+          Caption = 'Document Objet de l'#39'op'#233'ration:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Bevel1: TBevel
+          Left = 8
+          Top = 149
+          Width = 377
+          Height = 28
+        end
+        object Label38: TLabel
+          Left = 16
+          Top = 156
+          Width = 45
+          Height = 13
+          Caption = 'Largeure:'
+        end
+        object Label40: TLabel
+          Left = 136
+          Top = 156
+          Width = 54
+          Height = 13
+          Caption = 'Longueure:'
+        end
+        object EditDateDocumentBase: TMaskEdit
+          Left = 184
+          Top = 88
+          Width = 73
+          Height = 19
+          Ctl3D = False
+          EditMask = '!99/99/9999;1;_'
+          MaxLength = 10
+          ParentCtl3D = False
+          TabOrder = 4
+          Text = '  /  /    '
+          OnDblClick = EditDateDocumentBaseDblClick
+          OnKeyDown = EditDateDocumentBaseKeyDown
+        end
+        object EditDesignationDocumentBase: TEdit
+          Left = 184
+          Top = 40
+          Width = 185
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 0
+          OnEnter = EditDesignationDocumentBaseEnter
+          OnKeyDown = EditDesignationDocumentBaseKeyDown
+        end
+        object EditNumeroDocumentBase: TEdit
+          Left = 184
+          Top = 64
+          Width = 185
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 1
+          OnEnter = EditNumeroDocumentBaseEnter
+          OnKeyDown = EditNumeroDocumentBaseKeyDown
+        end
+        object EditIntituleOperationBase: TEdit
+          Left = 184
+          Top = 112
+          Width = 185
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 2
+          OnEnter = EditIntituleOperationBaseEnter
+          OnKeyDown = EditIntituleOperationBaseKeyDown
+        end
+        object ChargerEditDateDocumentBase: TDateTimePicker
+          Left = 184
+          Top = 88
+          Width = 186
+          Height = 21
+          BevelKind = bkFlat
+          CalAlignment = dtaLeft
+          Date = 42080.6546694097
+          Time = 42080.6546694097
+          DateFormat = dfLong
+          DateMode = dmComboBox
+          Kind = dtkDate
+          ParseInput = False
+          TabOrder = 3
+          Visible = False
+          OnChange = ChargerEditDateDocumentBaseChange
+          OnEnter = ChargerEditDateDocumentBaseEnter
+        end
+        object AfficheChargementDomiciliation: TPanel
+          Left = 456
+          Top = 8
+          Width = 401
+          Height = 81
+          BevelInner = bvLowered
+          Color = 12058623
+          TabOrder = 5
+          object Label15: TLabel
+            Left = 8
+            Top = 12
+            Width = 60
+            Height = 13
+            Caption = 'D'#233'bit/Cr'#233'dit:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label26: TLabel
+            Left = 32
+            Top = 36
+            Width = 39
+            Height = 13
+            Caption = 'Compte:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label28: TLabel
+            Left = 8
+            Top = 60
+            Width = 63
+            Height = 13
+            Caption = 'Type Compte'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object EditNumCompteDomiciliation: TEdit
+            Left = 88
+            Top = 32
+            Width = 305
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 0
+            OnEnter = EditDebitCreditDomiciliationEnter
+          end
+          object EditCompteDomiciliation: TEdit
+            Left = 88
+            Top = 56
+            Width = 305
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 1
+            OnEnter = EditDebitCreditDomiciliationEnter
+          end
+          object EditDebitCreditDomiciliation: TEdit
+            Left = 88
+            Top = 6
+            Width = 121
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 2
+            OnEnter = EditDebitCreditDomiciliationEnter
+          end
+        end
+        object AfficheChargementDomiciliationCP: TPanel
+          Left = 456
+          Top = 96
+          Width = 401
+          Height = 81
+          BevelInner = bvLowered
+          Color = 12058623
+          TabOrder = 6
+          object Label35: TLabel
+            Left = 16
+            Top = 12
+            Width = 60
+            Height = 13
+            Caption = 'D'#233'bit/Cr'#233'dit:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label36: TLabel
+            Left = 16
+            Top = 36
+            Width = 59
+            Height = 13
+            Caption = 'Compte C.P:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label37: TLabel
+            Left = 8
+            Top = 60
+            Width = 66
+            Height = 13
+            Caption = 'Type Compte:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object EditDebitCreditCP: TEdit
+            Left = 88
+            Top = 6
+            Width = 121
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 0
+          end
+          object EditNumCompteDomiciliationCP: TEdit
+            Left = 88
+            Top = 30
+            Width = 305
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 1
+          end
+          object EditCompteDomiciliationCP: TEdit
+            Left = 88
+            Top = 54
+            Width = 305
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 2
+          end
+        end
+        object EditValeurSeizeHeight: TEdit
+          Left = 80
+          Top = 153
+          Width = 25
+          Height = 19
+          Color = clSilver
+          Ctl3D = False
+          ParentCtl3D = False
+          ReadOnly = True
+          TabOrder = 7
+          Text = '65'
+        end
+        object UpDown1: TUpDown
+          Left = 105
+          Top = 153
+          Width = 16
+          Height = 19
+          Associate = EditValeurSeizeHeight
+          Min = 1
+          Max = 1000
+          Position = 65
+          TabOrder = 8
+          Wrap = False
+          OnClick = UpDown1Click
+        end
+        object UpDown3: TUpDown
+          Left = 217
+          Top = 153
+          Width = 16
+          Height = 19
+          Associate = EditValeurSeizeWidth
+          Min = 1
+          Max = 1000
+          Position = 20
+          TabOrder = 9
+          Wrap = False
+          OnClick = UpDown3Click
+        end
+        object EditValeurSeizeWidth: TEdit
+          Left = 192
+          Top = 153
+          Width = 25
+          Height = 19
+          Color = clSilver
+          Ctl3D = False
+          ParentCtl3D = False
+          ReadOnly = True
+          TabOrder = 10
+          Text = '20'
+        end
+      end
+      object EditDateExecutionAvis: TMaskEdit
+        Left = 935
+        Top = 355
+        Width = 69
+        Height = 19
+        Color = clSilver
+        Ctl3D = False
+        EditMask = '!99/99/9999;1;_'
+        MaxLength = 10
+        ParentCtl3D = False
+        ReadOnly = True
+        TabOrder = 13
+        Text = '  /  /    '
+      end
+      object PanelDataAvis: TPanel
+        Left = 0
+        Top = 56
+        Width = 865
+        Height = 417
+        BevelInner = bvLowered
+        TabOrder = 8
+        object Bevel13: TBevel
+          Left = 8
+          Top = 40
+          Width = 625
+          Height = 57
+        end
+        object Bevel16: TBevel
+          Left = 640
+          Top = 8
+          Width = 217
+          Height = 185
+        end
+        object AfficheMontant: TPanel
+          Left = 8
+          Top = 192
+          Width = 625
+          Height = 121
+          BevelInner = bvLowered
+          Color = 13041606
+          TabOrder = 0
+          object Label3: TLabel
+            Left = 8
+            Top = 8
+            Width = 42
+            Height = 13
+            Caption = 'Montant:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label4: TLabel
+            Left = 8
+            Top = 36
+            Width = 82
+            Height = 13
+            Caption = 'En Toute Lettres:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Bevel7: TBevel
+            Left = 8
+            Top = 72
+            Width = 121
+            Height = 42
+          end
+          object EditMontantChiffre: TEdit
+            Left = 136
+            Top = 8
+            Width = 145
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            TabOrder = 0
+            OnEnter = EditMontantChiffreEnter
+            OnExit = EditMontantChiffreExit
+            OnKeyDown = EditMontantChiffreKeyDown
+            OnKeyPress = EditMontantChiffreKeyPress
+          end
+          object EditMontantLettres: TMemo
+            Left = 136
+            Top = 32
+            Width = 481
+            Height = 81
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 1
+            OnEnter = EditMontantLettresEnter
+          end
+          object BitBtn3: TBitBtn
+            Left = 16
+            Top = 80
+            Width = 105
+            Height = 25
+            Caption = 'Nature'
+            TabOrder = 2
+            OnClick = BitBtn3Click
+            Kind = bkHelp
+          end
+        end
+        object AfficheBeneficiaireDepense: TPanel
+          Left = 8
+          Top = 320
+          Width = 625
+          Height = 89
+          BevelInner = bvLowered
+          Color = 16764622
+          TabOrder = 1
+          object TitreIdentiteFichierConcerne: TLabel
+            Left = 8
+            Top = 12
+            Width = 73
+            Height = 13
+            Caption = 'Le B'#233'n'#233'ficiaire:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object TitreNatureAvisFinance: TLabel
+            Left = 8
+            Top = 36
+            Width = 105
+            Height = 13
+            Caption = 'Nature de la d'#233'pense:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object EditChargementCodeFichierConcerneMemoire: TEdit
+            Left = 136
+            Top = 6
+            Width = 73
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 4
+          end
+          object RBPlusieurLigne: TCheckBox
+            Left = 120
+            Top = 32
+            Width = 17
+            Height = 17
+            Caption = 'Plusieurs lignes'
+            TabOrder = 3
+          end
+          object EditBenificiaire: TEdit
+            Left = 136
+            Top = 6
+            Width = 481
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            TabOrder = 0
+            OnEnter = EditBenificiaireEnter
+            OnExit = EditBenificiaireExit
+            OnKeyDown = EditBenificiaireKeyDown
+            OnKeyPress = EditBenificiaireKeyPress
+            OnKeyUp = EditBenificiaireKeyUp
+          end
+          object EditNatureDepences: TMemo
+            Left = 136
+            Top = 32
+            Width = 481
+            Height = 49
+            Ctl3D = False
+            ParentCtl3D = False
+            TabOrder = 1
+            WantReturns = False
+            OnEnter = EditNatureDepencesEnter
+            OnKeyDown = EditNatureDepencesKeyDown
+            OnKeyUp = EditNatureDepencesKeyUp
+          end
+          object RBAfficherListeNatures: TCheckBox
+            Left = 9
+            Top = 67
+            Width = 120
+            Height = 17
+            Caption = 'Afficher les Natures.'
+            TabOrder = 2
+            OnClick = RBAfficherListeNaturesClick
+          end
+          object BitBtn15: TBitBtn
+            Left = 107
+            Top = 5
+            Width = 23
+            Height = 25
+            Caption = '.'
+            TabOrder = 5
+            OnClick = BitBtn15Click
+            Kind = bkNo
+            Margin = 0
+          end
+        end
+        object AfficheProjet: TPanel
+          Left = 8
+          Top = 8
+          Width = 625
+          Height = 89
+          BevelInner = bvLowered
+          Color = 16777177
+          TabOrder = 2
+          object Label48: TLabel
+            Left = 56
+            Top = 8
+            Width = 30
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Projet:'
+          end
+          object Label6: TLabel
+            Left = 5
+            Top = 29
+            Width = 83
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Fiche Technique:'
+          end
+          object Label12: TLabel
+            Left = 42
+            Top = 50
+            Width = 46
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Rubrique:'
+          end
+          object Label39: TLabel
+            Left = 27
+            Top = 70
+            Width = 61
+            Height = 13
+            Caption = 'Planificateur:'
+          end
+          object Bevel10: TBevel
+            Left = 491
+            Top = 27
+            Width = 129
+            Height = 38
+          end
+          object EditPositionPlanificateur: TEdit
+            Left = 96
+            Top = 67
+            Width = 49
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 15
+          end
+          object EditPositionRubrique: TEdit
+            Left = 96
+            Top = 47
+            Width = 49
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 14
+          end
+          object EditPositionFiche: TEdit
+            Left = 96
+            Top = 26
+            Width = 49
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 13
+          end
+          object EditPositionProjet: TEdit
+            Left = 96
+            Top = 4
+            Width = 97
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 12
+          end
+          object EditNumProjet: TEdit
+            Left = 96
+            Top = 4
+            Width = 97
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 1
+            OnEnter = EditNumProjetEnter
+            OnKeyDown = EditNumProjetKeyDown
+          end
+          object EditNomProjet: TEdit
+            Left = 192
+            Top = 4
+            Width = 297
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 0
+            OnEnter = EditNomProjetEnter
+          end
+          object BitAfficheFicheTechnique: TBitBtn
+            Left = 4
+            Top = 2
+            Width = 36
+            Height = 23
+            Caption = '.'
+            TabOrder = 2
+            OnClick = BitAfficheFicheTechniqueClick
+            Kind = bkRetry
+          end
+          object EditNumFiche: TEdit
+            Left = 96
+            Top = 26
+            Width = 49
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 3
+            OnEnter = EditNumFicheEnter
+            OnKeyDown = EditNumFicheKeyDown
+          end
+          object EditDesignationFiche: TEdit
+            Left = 144
+            Top = 26
+            Width = 345
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 4
+          end
+          object EditNumRubrique: TEdit
+            Left = 96
+            Top = 47
+            Width = 49
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 5
+            OnEnter = EditNumRubriqueEnter
+            OnKeyDown = EditNumRubriqueKeyDown
+          end
+          object EditDesignationRubrique: TEdit
+            Left = 144
+            Top = 47
+            Width = 345
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 6
+          end
+          object EditNumPlanificateur: TEdit
+            Left = 96
+            Top = 67
+            Width = 49
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 7
+            OnEnter = EditNumPlanificateurEnter
+            OnKeyDown = EditNumPlanificateurKeyDown
+          end
+          object EditDesignationPlanificateur: TEdit
+            Left = 144
+            Top = 67
+            Width = 345
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 8
+          end
+          object RBFicheProjetPrecis: TCheckBox
+            Left = 495
+            Top = 4
+            Width = 123
+            Height = 17
+            Caption = 'Afficher Fiche Projet !'
+            TabOrder = 9
+          end
+          object EditTableauSelection: TEdit
+            Left = 493
+            Top = 67
+            Width = 124
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 10
+          end
+          object BitBtn4: TBitBtn
+            Left = 496
+            Top = 34
+            Width = 121
+            Height = 25
+            Caption = 'Avis non affecter !'
+            ModalResult = 7
+            TabOrder = 11
+            OnClick = BitBtn4Click
+            Glyph.Data = {
+              DE010000424DDE01000000000000760000002800000024000000120000000100
+              0400000000006801000000000000000000001000000000000000000000000000
+              80000080000000808000800000008000800080800000C0C0C000808080000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+              3333333333333FFFFF333333000033333388888833333333333F888888FFF333
+              000033338811111188333333338833FFF388FF33000033381119999111833333
+              38F338888F338FF30000339119933331111833338F388333383338F300003391
+              13333381111833338F8F3333833F38F3000039118333381119118338F38F3338
+              33F8F38F000039183333811193918338F8F333833F838F8F0000391833381119
+              33918338F8F33833F8338F8F000039183381119333918338F8F3833F83338F8F
+              000039183811193333918338F8F833F83333838F000039118111933339118338
+              F3833F83333833830000339111193333391833338F33F8333FF838F300003391
+              11833338111833338F338FFFF883F83300003339111888811183333338FF3888
+              83FF83330000333399111111993333333388FFFFFF8833330000333333999999
+              3333333333338888883333330000333333333333333333333333333333333333
+              0000}
+            NumGlyphs = 2
+          end
+        end
+        object AfficheModePaiement: TPanel
+          Left = 8
+          Top = 104
+          Width = 625
+          Height = 81
+          BevelInner = bvLowered
+          Color = 12058623
+          TabOrder = 3
+          object AfficheDomiciliation: TPanel
+            Left = 120
+            Top = 8
+            Width = 497
+            Height = 33
+            BevelInner = bvLowered
+            TabOrder = 0
+            object Label8: TLabel
+              Left = 331
+              Top = 12
+              Width = 55
+              Height = 13
+              Caption = 'N'#176' Pi'#232'ce:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object Label61: TLabel
+              Left = 9
+              Top = 12
+              Width = 117
+              Height = 13
+              Caption = 'Domiciliation: Pi'#232'ce:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object EditNumPiece: TEdit
+              Left = 392
+              Top = 6
+              Width = 99
+              Height = 19
+              Ctl3D = False
+              ParentCtl3D = False
+              TabOrder = 0
+              OnEnter = EditNumPieceEnter
+              OnExit = EditNumPieceExit
+              OnKeyDown = EditNumPieceKeyDown
+            end
+            object EditNumDomiciliationPiece: TEdit
+              Left = 136
+              Top = 6
+              Width = 121
+              Height = 19
+              Ctl3D = False
+              ParentCtl3D = False
+              TabOrder = 1
+            end
+            object EditDomiciliationPiece: TComboBox
+              Left = 128
+              Top = 6
+              Width = 193
+              Height = 21
+              BevelInner = bvLowered
+              BevelKind = bkFlat
+              ItemHeight = 13
+              TabOrder = 2
+              OnChange = EditDomiciliationPieceChange
+              OnEnter = EditDomiciliationPieceEnter
+              OnExit = EditDomiciliationPieceExit
+              OnKeyDown = EditDomiciliationPieceKeyDown
+              OnKeyPress = EditDomiciliationPieceKeyPress
+            end
+          end
+          object Panel6: TPanel
+            Left = 120
+            Top = 43
+            Width = 497
+            Height = 33
+            BevelInner = bvLowered
+            Caption = '.'
+            TabOrder = 1
+            object Label2: TLabel
+              Left = 9
+              Top = 12
+              Width = 109
+              Height = 13
+              Caption = 'Domiciliation: Avis:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object EditNumDomiciliationAvis: TEdit
+              Left = 136
+              Top = 6
+              Width = 121
+              Height = 19
+              Ctl3D = False
+              ParentCtl3D = False
+              TabOrder = 0
+            end
+            object EditDomiciliationAvis: TComboBox
+              Left = 128
+              Top = 6
+              Width = 193
+              Height = 21
+              BevelInner = bvLowered
+              BevelKind = bkFlat
+              ItemHeight = 13
+              TabOrder = 1
+              OnChange = EditDomiciliationAvisChange
+              OnEnter = EditDomiciliationAvisEnter
+              OnExit = EditDomiciliationAvisExit
+              OnKeyDown = EditDomiciliationAvisKeyDown
+              OnKeyPress = EditDomiciliationAvisKeyPress
+            end
+            object RBBoxListeAutres: TCheckBox
+              Left = 384
+              Top = 8
+              Width = 105
+              Height = 17
+              Caption = 'Liste Box Autres !'
+              TabOrder = 2
+            end
+          end
+          object Panel7: TPanel
+            Left = 8
+            Top = 8
+            Width = 105
+            Height = 65
+            BevelInner = bvLowered
+            Caption = '.'
+            TabOrder = 2
+            object Label1: TLabel
+              Left = 8
+              Top = 4
+              Width = 66
+              Height = 13
+              Caption = 'Paiement Par:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+            end
+            object EditPositionModePaiement: TEdit
+              Left = 24
+              Top = 24
+              Width = 57
+              Height = 19
+              Ctl3D = False
+              ParentCtl3D = False
+              ReadOnly = True
+              TabOrder = 1
+            end
+            object EditModePaiement: TComboBox
+              Left = 8
+              Top = 22
+              Width = 89
+              Height = 21
+              BevelInner = bvLowered
+              BevelKind = bkFlat
+              ItemHeight = 13
+              TabOrder = 0
+              Text = 'Ch'#232'que'
+              OnEnter = EditModePaiementEnter
+              OnExit = EditModePaiementExit
+              OnKeyDown = EditModePaiementKeyDown
+              OnKeyPress = EditModePaiementKeyPress
+              OnSelect = EditModePaiementSelect
+              Items.Strings = (
+                'Ch'#232'que'
+                'Esp'#232'ce'
+                'Virement'
+                'Bon'
+                'Frais'
+                'Non Acquitt'#233)
+            end
+          end
+        end
+        object Panel4: TPanel
+          Left = 640
+          Top = 352
+          Width = 217
+          Height = 57
+          BevelInner = bvLowered
+          Color = 12058623
+          TabOrder = 4
+          object Label16: TLabel
+            Left = 8
+            Top = 12
+            Width = 36
+            Height = 13
+            Caption = 'Origine:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label14: TLabel
+            Left = 8
+            Top = 36
+            Width = 90
+            Height = 13
+            Caption = 'Compte imputation:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object EditOrigine: TEdit
+            Left = 48
+            Top = 6
+            Width = 161
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 0
+            OnDblClick = EditOrigineDblClick
+            OnEnter = EditOrigineEnter
+            OnKeyDown = EditOrigineKeyDown
+          end
+          object EditCompteImputation: TEdit
+            Left = 120
+            Top = 30
+            Width = 89
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 1
+            OnEnter = EditCompteImputationEnter
+          end
+        end
+        object Panel5: TPanel
+          Left = 640
+          Top = 288
+          Width = 217
+          Height = 57
+          BevelInner = bvLowered
+          Color = 12058623
+          TabOrder = 5
+          object Label23: TLabel
+            Left = 8
+            Top = 12
+            Width = 63
+            Height = 13
+            Caption = 'Type Proces:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object TitreEditChargementFichierConcerne: TLabel
+            Left = 8
+            Top = 36
+            Width = 58
+            Height = 13
+            Caption = 'Fichier sible:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object EditChargementTypeProces: TEdit
+            Left = 88
+            Top = 8
+            Width = 121
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 0
+            OnEnter = EditChargementTypeProcesEnter
+          end
+          object EditChargementFichierConcerne: TComboBox
+            Left = 88
+            Top = 32
+            Width = 121
+            Height = 21
+            BevelKind = bkFlat
+            ItemHeight = 13
+            TabOrder = 1
+            OnEnter = EditChargementFichierConcerneEnter
+          end
+        end
+        object AfficheModePaiementCP: TPanel
+          Left = 640
+          Top = 8
+          Width = 217
+          Height = 185
+          BevelInner = bvLowered
+          Color = 12058623
+          TabOrder = 6
+          Visible = False
+          object Bevel18: TBevel
+            Left = 4
+            Top = 40
+            Width = 208
+            Height = 105
+          end
+          object Label30: TLabel
+            Left = 24
+            Top = 73
+            Width = 47
+            Height = 13
+            Caption = 'Paiement:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label31: TLabel
+            Left = 9
+            Top = 97
+            Width = 62
+            Height = 13
+            Caption = 'Domiciliation:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label32: TLabel
+            Left = 19
+            Top = 122
+            Width = 45
+            Height = 13
+            Caption = 'N'#176' Pi'#232'ce:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label33: TLabel
+            Left = 48
+            Top = 8
+            Width = 122
+            Height = 24
+            Caption = 'Contre Partie'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clRed
+            Font.Height = -19
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Label34: TLabel
+            Left = 35
+            Top = 50
+            Width = 38
+            Height = 13
+            Caption = 'Avis N'#176':'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Bevel19: TBevel
+            Left = 8
+            Top = 152
+            Width = 201
+            Height = 25
+          end
+          object EditNumDomiciliationAvisCP: TEdit
+            Left = 80
+            Top = 96
+            Width = 121
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            TabOrder = 4
+          end
+          object EditModePaiementCP: TComboBox
+            Left = 76
+            Top = 70
+            Width = 105
+            Height = 21
+            BevelInner = bvLowered
+            BevelKind = bkFlat
+            ItemHeight = 13
+            ItemIndex = 0
+            TabOrder = 0
+            Text = 'Ch'#232'que'
+            OnExit = EditModePaiementCPExit
+            OnKeyDown = EditModePaiementCPKeyDown
+            OnSelect = EditModePaiementCPSelect
+            Items.Strings = (
+              'Ch'#232'que'
+              'Esp'#232'ce'
+              'Virement'
+              'Bon')
+          end
+          object EditDomiciliationAvisCP: TComboBox
+            Left = 76
+            Top = 94
+            Width = 133
+            Height = 21
+            BevelInner = bvLowered
+            BevelKind = bkFlat
+            ItemHeight = 13
+            TabOrder = 1
+            OnChange = EditDomiciliationAvisCPChange
+            OnExit = EditDomiciliationAvisCPExit
+            OnKeyDown = EditDomiciliationAvisCPKeyDown
+          end
+          object EditNumPieceCP: TEdit
+            Left = 77
+            Top = 120
+            Width = 105
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            TabOrder = 2
+            OnKeyDown = EditNumPieceCPKeyDown
+          end
+          object EditNumAvisCP: TEdit
+            Left = 76
+            Top = 48
+            Width = 105
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 3
+          end
+        end
+        object AfficheSignataire: TPanel
+          Left = 640
+          Top = 200
+          Width = 217
+          Height = 81
+          BevelInner = bvLowered
+          Color = 12058623
+          TabOrder = 7
+          object Label24: TLabel
+            Left = 8
+            Top = 36
+            Width = 65
+            Height = 13
+            Caption = 'Compte Tiers:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label27: TLabel
+            Left = 8
+            Top = 12
+            Width = 60
+            Height = 13
+            Caption = 'D'#233'bit/Cr'#233'dit:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label29: TLabel
+            Left = 8
+            Top = 60
+            Width = 63
+            Height = 13
+            Caption = 'Type Compte'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object EditChargementCodeFichierConcerne: TEdit
+            Left = 88
+            Top = 32
+            Width = 89
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 0
+            OnEnter = EditChargementCodeFichierConcerneEnter
+          end
+          object EditDebitCreditTiers: TEdit
+            Left = 88
+            Top = 8
+            Width = 121
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 1
+            OnEnter = EditChargementCodeFichierConcerneEnter
+          end
+          object EditCompteTiers: TEdit
+            Left = 88
+            Top = 56
+            Width = 121
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 2
+            OnEnter = EditDebitCreditDomiciliationEnter
+          end
+          object EditChargementPositionFichierConcerne: TEdit
+            Left = 177
+            Top = 32
+            Width = 33
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 3
+          end
+        end
+        object AfficheAutresAgenceBanque: TPanel
+          Left = 8
+          Top = 184
+          Width = 649
+          Height = 209
+          BevelInner = bvLowered
+          Color = 8454143
+          TabOrder = 8
+          Visible = False
+          object Bevel4: TBevel
+            Left = 8
+            Top = 8
+            Width = 633
+            Height = 33
+          end
+          object Label41: TLabel
+            Left = 16
+            Top = 16
+            Width = 102
+            Height = 13
+            Caption = 'Recherche par Code:'
+          end
+          object Label42: TLabel
+            Left = 280
+            Top = 16
+            Width = 99
+            Height = 13
+            Caption = 'Recherche par Nom:'
+          end
+          object Bevel5: TBevel
+            Left = 472
+            Top = 48
+            Width = 169
+            Height = 153
+          end
+          object TableauAutresAgenceBanque: TStringGrid
+            Left = 8
+            Top = 48
+            Width = 457
+            Height = 153
+            ColCount = 3
+            Ctl3D = False
+            RowCount = 2
+            Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+            ParentCtl3D = False
+            TabOrder = 0
+            Visible = False
+            OnKeyDown = TableauAutresAgenceBanqueKeyDown
+          end
+          object EditRechercheCodeAgence: TEdit
+            Left = 122
+            Top = 13
+            Width = 121
+            Height = 19
+            Ctl3D = False
+            MaxLength = 8
+            ParentCtl3D = False
+            TabOrder = 1
+            OnKeyDown = EditRechercheCodeAgenceKeyDown
+            OnKeyUp = EditRechercheCodeAgenceKeyUp
+          end
+          object EditEditRechercheLibelleAgence: TEdit
+            Left = 386
+            Top = 13
+            Width = 247
+            Height = 19
+            Ctl3D = False
+            ParentCtl3D = False
+            TabOrder = 2
+            OnKeyDown = EditEditRechercheLibelleAgenceKeyDown
+            OnKeyUp = EditEditRechercheLibelleAgenceKeyUp
+          end
+          object BitBtn2: TBitBtn
+            Left = 480
+            Top = 168
+            Width = 153
+            Height = 25
+            TabOrder = 3
+            OnClick = BitBtn2Click
+            Kind = bkCancel
+          end
+          object EditSourceDomiciliation: TEdit
+            Left = 480
+            Top = 56
+            Width = 153
+            Height = 19
+            Color = clSilver
+            Ctl3D = False
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 4
+          end
+          object AfficheAgence: TPanel
+            Left = 8
+            Top = 48
+            Width = 457
+            Height = 153
+            BevelOuter = bvLowered
+            Color = 8454016
+            TabOrder = 5
+            Visible = False
+            object Bevel34: TBevel
+              Left = 8
+              Top = 8
+              Width = 441
+              Height = 129
+            end
+            object Label62: TLabel
+              Left = 16
+              Top = 19
+              Width = 54
+              Height = 13
+              Caption = 'P'#176' Agence:'
+            end
+            object Label63: TLabel
+              Left = 16
+              Top = 43
+              Width = 68
+              Height = 13
+              Caption = 'Code Agence:'
+            end
+            object Label64: TLabel
+              Left = 16
+              Top = 67
+              Width = 73
+              Height = 13
+              Caption = 'Libell'#233' Agence:'
+            end
+            object Bevel35: TBevel
+              Left = 184
+              Top = 16
+              Width = 153
+              Height = 41
+            end
+            object Label65: TLabel
+              Left = 16
+              Top = 91
+              Width = 81
+              Height = 13
+              Caption = 'Adresse Agence:'
+            end
+            object Label66: TLabel
+              Left = 16
+              Top = 115
+              Width = 94
+              Height = 13
+              Caption = 'T'#233'l'#233'phone Agence:'
+            end
+            object Bevel36: TBevel
+              Left = 352
+              Top = 16
+              Width = 89
+              Height = 41
+            end
+            object EditPositionAgence: TEdit
+              Left = 112
+              Top = 16
+              Width = 65
+              Height = 19
+              Color = clSilver
+              Ctl3D = False
+              ParentCtl3D = False
+              ReadOnly = True
+              TabOrder = 0
+            end
+            object EditCodeAgence: TEdit
+              Left = 112
+              Top = 40
+              Width = 65
+              Height = 19
+              Ctl3D = False
+              MaxLength = 5
+              ParentCtl3D = False
+              TabOrder = 1
+              OnKeyDown = EditCodeAgenceKeyDown
+            end
+            object EditLibelleAgence: TEdit
+              Left = 112
+              Top = 64
+              Width = 329
+              Height = 19
+              Ctl3D = False
+              ParentCtl3D = False
+              TabOrder = 2
+              OnKeyDown = EditLibelleAgenceKeyDown
+            end
+            object BitBtn1: TBitBtn
+              Left = 360
+              Top = 24
+              Width = 75
+              Height = 25
+              TabOrder = 3
+              OnClick = BitBtn1Click
+              Kind = bkCancel
+            end
+            object BitOperationAgence: TBitBtn
+              Left = 192
+              Top = 24
+              Width = 137
+              Height = 25
+              Caption = 'Valider'
+              TabOrder = 4
+              OnClick = BitOperationAgenceClick
+              Kind = bkAll
+            end
+            object EditAdresseAgence: TEdit
+              Left = 112
+              Top = 88
+              Width = 329
+              Height = 19
+              Ctl3D = False
+              ParentCtl3D = False
+              TabOrder = 5
+              OnKeyDown = EditAdresseAgenceKeyDown
+            end
+            object EditTelephoneAgence: TEdit
+              Left = 112
+              Top = 112
+              Width = 329
+              Height = 19
+              Ctl3D = False
+              ParentCtl3D = False
+              TabOrder = 6
+              OnKeyDown = EditTelephoneAgenceKeyDown
+            end
+          end
+          object BitBtn12: TBitBtn
+            Left = 480
+            Top = 80
+            Width = 153
+            Height = 25
+            Caption = 'Nouvelle agence'
+            TabOrder = 6
+            OnClick = BitBtn12Click
+            Kind = bkAll
+          end
+        end
+      end
+      object BitAnnuler: TBitBtn
+        Left = 880
+        Top = 520
+        Width = 121
+        Height = 33
+        Caption = 'Annuler'
+        ModalResult = 7
+        TabOrder = 0
+        OnClick = BitAnnulerClick
+        Glyph.Data = {
+          DE010000424DDE01000000000000760000002800000024000000120000000100
+          0400000000006801000000000000000000001000000000000000000000000000
+          80000080000000808000800000008000800080800000C0C0C000808080000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+          3333333333333FFFFF333333000033333388888833333333333F888888FFF333
+          000033338811111188333333338833FFF388FF33000033381119999111833333
+          38F338888F338FF30000339119933331111833338F388333383338F300003391
+          13333381111833338F8F3333833F38F3000039118333381119118338F38F3338
+          33F8F38F000039183333811193918338F8F333833F838F8F0000391833381119
+          33918338F8F33833F8338F8F000039183381119333918338F8F3833F83338F8F
+          000039183811193333918338F8F833F83333838F000039118111933339118338
+          F3833F83333833830000339111193333391833338F33F8333FF838F300003391
+          11833338111833338F338FFFF883F83300003339111888811183333338FF3888
+          83FF83330000333399111111993333333388FFFFFF8833330000333333999999
+          3333333333338888883333330000333333333333333333333333333333333333
+          0000}
+        NumGlyphs = 2
+      end
+      object BitImprimeAvis: TBitBtn
+        Left = 880
+        Top = 256
+        Width = 121
+        Height = 25
+        Caption = 'Imprimer'
+        TabOrder = 1
+        OnClick = BitImprimeAvisClick
+        Kind = bkHelp
+      end
+      object BitValiderAvis: TBitBtn
+        Left = 880
+        Top = 208
+        Width = 121
+        Height = 25
+        Caption = 'Valider l'#39'Avis'
+        TabOrder = 2
+        OnClick = BitValiderAvisClick
+        Kind = bkAll
+      end
+      object Panel1: TPanel
+        Left = 600
+        Top = 0
+        Width = 201
+        Height = 49
+        BevelInner = bvLowered
+        Ctl3D = True
+        ParentCtl3D = False
+        TabOrder = 3
+        object Label9: TLabel
+          Left = 8
+          Top = 17
+          Width = 48
+          Height = 13
+          Caption = 'Num Avis:'
+        end
+        object EditNumAvis: TComboBox
+          Left = 64
+          Top = 14
+          Width = 129
+          Height = 21
+          BevelKind = bkFlat
+          ItemHeight = 13
+          TabOrder = 0
+          OnEnter = EditNumAvisEnter
+          OnSelect = EditNumAvisSelect
+        end
+      end
+      object AfficheValiditeAvis: TPanel
+        Left = 872
+        Top = 56
+        Width = 137
+        Height = 89
+        BevelInner = bvLowered
+        Color = 8454143
+        TabOrder = 4
+        object TitreAfficheValiditeAvis: TRadioGroup
+          Left = 8
+          Top = 8
+          Width = 122
+          Height = 73
+          Caption = 'Validit'#233' de l'#39'Avis:'
+          TabOrder = 0
+        end
+        object RBPieceMaitenue: TRadioButton
+          Left = 16
+          Top = 32
+          Width = 105
+          Height = 17
+          Caption = 'Pi'#232'ce maintenue.'
+          TabOrder = 1
+        end
+        object RBPieceAnnulee: TRadioButton
+          Left = 16
+          Top = 56
+          Width = 105
+          Height = 17
+          Caption = 'Pi'#232'ce annul'#233'e.'
+          TabOrder = 2
+        end
+      end
+      object BitNouveau: TBitBtn
+        Left = 880
+        Top = 160
+        Width = 121
+        Height = 25
+        Caption = 'Nouveau'
+        TabOrder = 5
+        OnClick = BitNouveauClick
+        Kind = bkAll
+      end
+      object BitSupprimerAvis: TBitBtn
+        Left = 880
+        Top = 304
+        Width = 121
+        Height = 25
+        Caption = 'Supprimer'
+        ModalResult = 2
+        TabOrder = 6
+        OnClick = BitSupprimerAvisClick
+        Glyph.Data = {
+          DE010000424DDE01000000000000760000002800000024000000120000000100
+          0400000000006801000000000000000000001000000000000000000000000000
+          80000080000000808000800000008000800080800000C0C0C000808080000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+          333333333333333333333333000033338833333333333333333F333333333333
+          0000333911833333983333333388F333333F3333000033391118333911833333
+          38F38F333F88F33300003339111183911118333338F338F3F8338F3300003333
+          911118111118333338F3338F833338F3000033333911111111833333338F3338
+          3333F8330000333333911111183333333338F333333F83330000333333311111
+          8333333333338F3333383333000033333339111183333333333338F333833333
+          00003333339111118333333333333833338F3333000033333911181118333333
+          33338333338F333300003333911183911183333333383338F338F33300003333
+          9118333911183333338F33838F338F33000033333913333391113333338FF833
+          38F338F300003333333333333919333333388333338FFF830000333333333333
+          3333333333333333333888330000333333333333333333333333333333333333
+          0000}
+        NumGlyphs = 2
+      end
+      object TableauNatureDepenses: TStringGrid
+        Left = 1176
+        Top = 554
+        Width = 497
+        Height = 212
+        ColCount = 2
+        Ctl3D = False
+        DefaultColWidth = 30
+        DefaultRowHeight = 18
+        RowCount = 11
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+        ParentCtl3D = False
+        TabOrder = 9
+        Visible = False
+        OnDrawCell = TableauNatureDepensesDrawCell
+        OnKeyDown = TableauNatureDepensesKeyDown
+        ColWidths = (
+          30
+          444)
+        RowHeights = (
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18)
+      end
+      object TableauTiers: TStringGrid
+        Left = 1248
+        Top = 514
+        Width = 497
+        Height = 191
+        ColCount = 10
+        Ctl3D = False
+        DefaultColWidth = 40
+        DefaultRowHeight = 18
+        RowCount = 20
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+        ParentCtl3D = False
+        TabOrder = 10
+        Visible = False
+        OnDrawCell = TableauTiersDrawCell
+        OnExit = TableauTiersExit
+        OnKeyDown = TableauTiersKeyDown
+        ColWidths = (
+          40
+          70
+          363
+          245
+          242
+          205
+          200
+          212
+          213
+          206)
+        RowHeights = (
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18)
+      end
+      object AfficheSeriePieceAvis: TPanel
+        Left = 640
+        Top = 64
+        Width = 217
+        Height = 400
+        HelpType = htKeyword
+        BevelInner = bvLowered
+        BevelWidth = 6
+        Color = 14738629
+        TabOrder = 11
+        object Bevel23: TBevel
+          Left = 16
+          Top = 290
+          Width = 185
+          Height = 41
+        end
+        object Bevel27: TBevel
+          Left = 16
+          Top = 338
+          Width = 185
+          Height = 41
+        end
+        object TableauSeriePieceAvis: TStringGrid
+          Left = 16
+          Top = 16
+          Width = 185
+          Height = 265
+          ColCount = 2
+          Ctl3D = False
+          DefaultColWidth = 80
+          DefaultRowHeight = 20
+          FixedCols = 0
+          RowCount = 10
+          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect]
+          ParentCtl3D = False
+          TabOrder = 0
+          OnContextPopup = TableauSeriePieceAvisContextPopup
+          OnDblClick = TableauSeriePieceAvisDblClick
+          OnDrawCell = TableauSeriePieceAvisDrawCell
+          OnKeyDown = TableauSeriePieceAvisKeyDown
+          OnKeyPress = TableauSeriePieceAvisKeyPress
+          ColWidths = (
+            75
+            82)
+        end
+        object BitValiderSeriePieceAvis: TBitBtn
+          Left = 24
+          Top = 298
+          Width = 169
+          Height = 25
+          Caption = 'Valider'
+          TabOrder = 1
+          OnClick = BitValiderSeriePieceAvisClick
+          Kind = bkAll
+        end
+        object BitBtn17: TBitBtn
+          Left = 24
+          Top = 346
+          Width = 169
+          Height = 25
+          TabOrder = 2
+          OnClick = BitBtn17Click
+          Kind = bkNo
+        end
+      end
+      object AfficheDate: TPanel
+        Left = 808
+        Top = 0
+        Width = 201
+        Height = 49
+        BevelInner = bvLowered
+        TabOrder = 12
+        object EditDate: TDateTimePicker
+          Left = 7
+          Top = 14
+          Width = 186
+          Height = 21
+          CalAlignment = dtaLeft
+          Date = 40373.4603944213
+          Time = 40373.4603944213
+          DateFormat = dfLong
+          DateMode = dmComboBox
+          Kind = dtkDate
+          ParseInput = False
+          TabOrder = 0
+          OnChange = EditDateChange
+          OnEnter = EditDateEnter
+          OnExit = EditDateExit
+          OnKeyDown = EditDateKeyDown
+        end
+      end
+      object TableauSelections: TStringGrid
+        Left = 1120
+        Top = 603
+        Width = 393
+        Height = 256
+        Ctl3D = False
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+        ParentCtl3D = False
+        TabOrder = 14
+        Visible = False
+        OnDrawCell = TableauSelectionsDrawCell
+        OnKeyDown = TableauSelectionsKeyDown
+        RowHeights = (
+          24
+          24
+          24
+          24
+          24)
+      end
+      object AfficheOptionImpression: TPanel
+        Left = 640
+        Top = 64
+        Width = 217
+        Height = 401
+        HelpType = htKeyword
+        BevelInner = bvLowered
+        BevelWidth = 6
+        Color = 14738629
+        TabOrder = 16
+        Visible = False
+        OnExit = AfficheOptionImpressionExit
+        object Bevel3: TBevel
+          Left = 16
+          Top = 16
+          Width = 185
+          Height = 89
+        end
+        object Bevel8: TBevel
+          Left = 16
+          Top = 112
+          Width = 185
+          Height = 89
+        end
+        object Bevel9: TBevel
+          Left = 16
+          Top = 336
+          Width = 113
+          Height = 41
+        end
+        object Label17: TLabel
+          Left = 24
+          Top = 174
+          Width = 50
+          Height = 13
+          Caption = 'Nbr Copie:'
+        end
+        object Bevel2: TBevel
+          Left = 16
+          Top = 208
+          Width = 185
+          Height = 89
+        end
+        object TableauAgenceBanque: TStringGrid
+          Left = 24
+          Top = 125
+          Width = 137
+          Height = 20
+          ColCount = 3
+          Ctl3D = False
+          RowCount = 2
+          ParentCtl3D = False
+          TabOrder = 4
+          Visible = False
+        end
+        object BitPrintAvis: TBitBtn
+          Left = 24
+          Top = 24
+          Width = 169
+          Height = 25
+          Caption = 'Avis de tirage !'
+          TabOrder = 0
+          OnClick = BitPrintAvisClick
+          Kind = bkHelp
+        end
+        object BitPrintType: TBitBtn
+          Left = 24
+          Top = 120
+          Width = 169
+          Height = 25
+          Caption = 'Type impression'
+          TabOrder = 1
+          OnClick = BitPrintTypeClick
+          Kind = bkHelp
+        end
+        object BitBtn6: TBitBtn
+          Left = 24
+          Top = 344
+          Width = 99
+          Height = 25
+          Caption = 'Quitter'
+          TabOrder = 2
+          OnClick = BitBtn6Click
+          Kind = bkCancel
+        end
+        object RBImageChequeVisible: TCheckBox
+          Left = 22
+          Top = 152
+          Width = 129
+          Height = 17
+          Caption = 'Voir l'#39'image du ch'#232'que'
+          TabOrder = 3
+        end
+        object EditOperationEffectuerPar: TEdit
+          Left = 16
+          Top = 312
+          Width = 185
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 5
+        end
+        object EditNombreCopie: TEdit
+          Left = 80
+          Top = 171
+          Width = 17
+          Height = 19
+          Color = clWhite
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 6
+          Text = '1'
+        end
+        object UpDown2: TUpDown
+          Left = 97
+          Top = 171
+          Width = 16
+          Height = 19
+          Associate = EditNombreCopie
+          Min = 1
+          Max = 3
+          Position = 1
+          TabOrder = 7
+          Wrap = False
+        end
+        object RBImpressionDouble: TCheckBox
+          Left = 24
+          Top = 52
+          Width = 121
+          Height = 17
+          Caption = 'Impression Double'
+          TabOrder = 8
+        end
+        object BitPieceComptable: TBitBtn
+          Left = 24
+          Top = 216
+          Width = 169
+          Height = 25
+          Caption = 'Pi'#232'ce Comptable'
+          TabOrder = 9
+          Kind = bkHelp
+        end
+        object BitBtn11: TBitBtn
+          Left = 24
+          Top = 72
+          Width = 169
+          Height = 25
+          Caption = 'Avis bancaire'
+          TabOrder = 10
+          OnClick = BitBtn11Click
+          Kind = bkHelp
+        end
+      end
+      object AfficheTitreEtat: TPanel
+        Left = 0
+        Top = 0
+        Width = 593
+        Height = 49
+        BevelInner = bvLowered
+        TabOrder = 19
+        object EditTypeAvis: TComboBox
+          Left = 8
+          Top = 6
+          Width = 577
+          Height = 37
+          BevelKind = bkFlat
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -24
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ItemHeight = 29
+          ParentFont = False
+          TabOrder = 0
+          OnEnter = EditTypeAvisEnter
+          OnExit = EditTypeAvisExit
+          OnKeyDown = EditTypeAvisKeyDown
+          OnSelect = EditTypeAvisSelect
+        end
+      end
+      object BitComptabiliser: TBitBtn
+        Left = 880
+        Top = 456
+        Width = 121
+        Height = 41
+        Caption = 'Comptabiliser !'
+        TabOrder = 20
+        OnClick = BitComptabiliserClick
+        Kind = bkHelp
+      end
+      object AfficheOperationAvis: TPanel
+        Left = 88
+        Top = 194
+        Width = 497
+        Height = 73
+        BevelInner = bvLowered
+        BevelWidth = 5
+        Color = 8454143
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -19
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 7
+        Visible = False
+        object Bevel15: TBevel
+          Left = 16
+          Top = 16
+          Width = 465
+          Height = 41
+        end
+        object BitOperationAvis: TBitBtn
+          Left = 360
+          Top = 24
+          Width = 115
+          Height = 25
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          OnClick = BitOperationAvisClick
+          Kind = bkAll
+        end
+        object BitBtn9: TBitBtn
+          Left = 24
+          Top = 24
+          Width = 105
+          Height = 25
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 1
+          OnClick = BitBtn9Click
+          Kind = bkNo
+        end
+      end
+      object AfficheTaxesAvisBanque: TPanel
+        Left = 640
+        Top = 64
+        Width = 345
+        Height = 305
+        BevelInner = bvLowered
+        Color = 16777153
+        TabOrder = 21
+        Visible = False
+        OnExit = AfficheTaxesAvisBanqueExit
+        object Bevel21: TBevel
+          Left = 8
+          Top = 8
+          Width = 193
+          Height = 137
+        end
+        object Label54: TLabel
+          Left = 16
+          Top = 22
+          Width = 51
+          Height = 13
+          Caption = 'Montant   :'
+        end
+        object Label55: TLabel
+          Left = 16
+          Top = 54
+          Width = 51
+          Height = 13
+          Caption = 'Commis.   :'
+        end
+        object Label56: TLabel
+          Left = 16
+          Top = 86
+          Width = 53
+          Height = 13
+          Caption = 'Taxes       :'
+        end
+        object Label57: TLabel
+          Left = 16
+          Top = 118
+          Width = 54
+          Height = 13
+          Caption = 'Total         :'
+        end
+        object Bevel22: TBevel
+          Left = 8
+          Top = 256
+          Width = 329
+          Height = 41
+        end
+        object Bevel28: TBevel
+          Left = 208
+          Top = 40
+          Width = 129
+          Height = 73
+        end
+        object Label58: TLabel
+          Left = 224
+          Top = 50
+          Width = 12
+          Height = 16
+          Caption = '%'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label59: TLabel
+          Left = 224
+          Top = 82
+          Width = 12
+          Height = 16
+          Caption = '%'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+        end
+        object EtatPrintType: TLabel
+          Left = 216
+          Top = 8
+          Width = 27
+          Height = 13
+          Caption = '.........'
+        end
+        object Bevel29: TBevel
+          Left = 8
+          Top = 152
+          Width = 329
+          Height = 33
+        end
+        object Label60: TLabel
+          Left = 16
+          Top = 163
+          Width = 74
+          Height = 13
+          Caption = 'Date de Valeur:'
+        end
+        object Bevel30: TBevel
+          Left = 8
+          Top = 192
+          Width = 329
+          Height = 57
+        end
+        object EditMontantAvis: TMemo
+          Left = 72
+          Top = 16
+          Width = 121
+          Height = 25
+          Alignment = taRightJustify
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 0
+          OnEnter = EditMontantAvisEnter
+          OnExit = EditMontantAvisExit
+          OnKeyDown = EditMontantAvisKeyDown
+          OnKeyPress = EditMontantAvisKeyPress
+        end
+        object EditCommissionAvis: TMemo
+          Left = 72
+          Top = 48
+          Width = 121
+          Height = 25
+          Alignment = taRightJustify
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 1
+          OnEnter = EditCommissionAvisEnter
+          OnExit = EditCommissionAvisExit
+          OnKeyDown = EditCommissionAvisKeyDown
+          OnKeyPress = EditCommissionAvisKeyPress
+        end
+        object EditTaxesAvis: TMemo
+          Left = 72
+          Top = 80
+          Width = 121
+          Height = 25
+          Alignment = taRightJustify
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 2
+          OnEnter = EditTaxesAvisEnter
+          OnExit = EditTaxesAvisExit
+          OnKeyDown = EditTaxesAvisKeyDown
+          OnKeyPress = EditTaxesAvisKeyPress
+        end
+        object EditTotalAvis: TMemo
+          Left = 72
+          Top = 112
+          Width = 121
+          Height = 25
+          Alignment = taRightJustify
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 3
+          OnEnter = EditTotalAvisEnter
+          OnExit = EditTotalAvisExit
+          OnKeyDown = EditTotalAvisKeyDown
+          OnKeyPress = EditTotalAvisKeyPress
+        end
+        object BitValider: TBitBtn
+          Left = 256
+          Top = 264
+          Width = 75
+          Height = 25
+          Caption = 'Valider'
+          TabOrder = 4
+          OnClick = BitValiderClick
+          Kind = bkAll
+        end
+        object BitBtn13: TBitBtn
+          Left = 16
+          Top = 264
+          Width = 75
+          Height = 25
+          TabOrder = 5
+          OnClick = BitBtn13Click
+          Kind = bkCancel
+        end
+        object EditPourcentageCommission: TEdit
+          Left = 240
+          Top = 48
+          Width = 89
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 6
+          OnExit = EditPourcentageCommissionExit
+        end
+        object EditPourcentageTaxes: TEdit
+          Left = 240
+          Top = 80
+          Width = 89
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 7
+          OnExit = EditPourcentageTaxesExit
+        end
+        object RBActivePourcentage: TCheckBox
+          Left = 208
+          Top = 120
+          Width = 129
+          Height = 17
+          Caption = 'Activer le Pourcentage'
+          TabOrder = 8
+          OnClick = RBActivePourcentageClick
+        end
+        object EditDateValeur: TDateTimePicker
+          Left = 96
+          Top = 160
+          Width = 186
+          Height = 21
+          BevelKind = bkFlat
+          CalAlignment = dtaLeft
+          Date = 42739.5203964815
+          Time = 42739.5203964815
+          DateFormat = dfShort
+          DateMode = dmComboBox
+          Kind = dtkDate
+          ParseInput = False
+          TabOrder = 9
+        end
+        object RBAfficherLogoBanque: TCheckBox
+          Left = 16
+          Top = 200
+          Width = 161
+          Height = 17
+          Caption = 'Afficher le Logo Principal !'
+          Checked = True
+          State = cbChecked
+          TabOrder = 10
+        end
+        object RBAfficherLogoBanqueLong: TCheckBox
+          Left = 16
+          Top = 224
+          Width = 161
+          Height = 17
+          Caption = 'Afficher le logo marge !'
+          Checked = True
+          State = cbChecked
+          TabOrder = 11
+        end
+      end
+      object AffichePrelevementUniteFonds: TPanel
+        Left = 160
+        Top = 89
+        Width = 385
+        Height = 584
+        BevelInner = bvLowered
+        BevelWidth = 6
+        Color = 14738629
+        TabOrder = 15
+        Visible = False
+        object Bevel11: TBevel
+          Left = 16
+          Top = 512
+          Width = 353
+          Height = 50
+        end
+        object Bevel12: TBevel
+          Left = 16
+          Top = 16
+          Width = 353
+          Height = 41
+        end
+        object Label5: TLabel
+          Left = 191
+          Top = 536
+          Width = 30
+          Height = 13
+          Caption = 'D'#233'tail:'
+        end
+        object Label13: TLabel
+          Left = 24
+          Top = 536
+          Width = 53
+          Height = 13
+          Caption = 'Versement:'
+        end
+        object Bevel33: TBevel
+          Left = 16
+          Top = 64
+          Width = 353
+          Height = 65
+        end
+        object TableauUniteFonds: TStringGrid
+          Left = 16
+          Top = 136
+          Width = 353
+          Height = 369
+          Color = 13041663
+          Ctl3D = False
+          DefaultColWidth = 30
+          DefaultRowHeight = 20
+          FixedColor = clYellow
+          RowCount = 2
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clMaroon
+          Font.Height = -13
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goEditing]
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 0
+          OnClick = TableauUniteFondsClick
+          OnDrawCell = TableauUniteFondsDrawCell
+          OnKeyPress = TableauUniteFondsKeyPress
+          OnKeyUp = TableauUniteFondsKeyUp
+          ColWidths = (
+            30
+            30
+            30
+            30
+            30)
+          RowHeights = (
+            20
+            20)
+        end
+        object BitVersementEspece: TBitBtn
+          Left = 208
+          Top = 24
+          Width = 155
+          Height = 25
+          Caption = 'Valider'
+          TabOrder = 1
+          OnClick = BitVersementEspeceClick
+          Kind = bkAll
+        end
+        object BitBtn7: TBitBtn
+          Left = 24
+          Top = 24
+          Width = 75
+          Height = 25
+          TabOrder = 2
+          OnClick = BitBtn7Click
+          Kind = bkCancel
+        end
+        object EditMontantUniteFonds: TMemo
+          Left = 224
+          Top = 520
+          Width = 137
+          Height = 33
+          Alignment = taRightJustify
+          Color = clRed
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentCtl3D = False
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 3
+        end
+        object EditMontantAVersser: TMemo
+          Left = 80
+          Top = 533
+          Width = 89
+          Height = 17
+          Alignment = taRightJustify
+          Color = clLime
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentCtl3D = False
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 4
+        end
+        object RBRubriqueTrieTableauUniteFond: TCheckBox
+          Left = 29
+          Top = 73
+          Width = 172
+          Height = 17
+          Caption = 'Triers / Rubrique s'#233'lectionner !'
+          TabOrder = 5
+        end
+        object EditRubriqueTrie: TEdit
+          Left = 202
+          Top = 72
+          Width = 23
+          Height = 19
+          Color = clSilver
+          Ctl3D = False
+          ParentCtl3D = False
+          ReadOnly = True
+          TabOrder = 6
+          Text = '1'
+        end
+        object TypeTrie: TRadioGroup
+          Left = 24
+          Top = 98
+          Width = 225
+          Height = 26
+          Caption = '+'
+          TabOrder = 7
+        end
+        object RadioButton1: TRadioButton
+          Left = 144
+          Top = 104
+          Width = 97
+          Height = 17
+          Caption = 'Descendant (-)'
+          TabOrder = 8
+          OnClick = RadioButton1Click
+        end
+        object RadioButton2: TRadioButton
+          Left = 48
+          Top = 104
+          Width = 89
+          Height = 17
+          Caption = 'Ascendant (+)'
+          Checked = True
+          TabOrder = 9
+          TabStop = True
+          OnClick = RadioButton2Click
+        end
+      end
+      object AfficheNouveauTiers: TPanel
+        Left = 16
+        Top = 270
+        Width = 625
+        Height = 123
+        BevelInner = bvLowered
+        BevelOuter = bvNone
+        Color = 8454143
+        TabOrder = 22
+        Visible = False
+        object Bevel24: TBevel
+          Left = 8
+          Top = 8
+          Width = 369
+          Height = 105
+        end
+        object Label45: TLabel
+          Left = 40
+          Top = 43
+          Width = 25
+          Height = 13
+          Caption = 'Nom:'
+        end
+        object Label46: TLabel
+          Left = 24
+          Top = 67
+          Width = 39
+          Height = 13
+          Caption = 'Pr'#233'nom:'
+        end
+        object Label47: TLabel
+          Left = 24
+          Top = 91
+          Width = 41
+          Height = 13
+          Caption = 'Adresse:'
+        end
+        object Bevel25: TBevel
+          Left = 512
+          Top = 8
+          Width = 105
+          Height = 41
+        end
+        object Bevel26: TBevel
+          Left = 384
+          Top = 8
+          Width = 121
+          Height = 105
+        end
+        object Label49: TLabel
+          Left = 40
+          Top = 19
+          Width = 28
+          Height = 13
+          Caption = 'Code:'
+        end
+        object Label50: TLabel
+          Left = 240
+          Top = 19
+          Width = 62
+          Height = 13
+          Caption = 'Sous Famille:'
+        end
+        object EditNomTiers: TEdit
+          Left = 72
+          Top = 40
+          Width = 297
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 0
+          OnKeyDown = EditNomTiersKeyDown
+        end
+        object EditPrenomTiers: TEdit
+          Left = 72
+          Top = 64
+          Width = 297
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 1
+          OnKeyDown = EditPrenomTiersKeyDown
+        end
+        object EditAdresseTiers: TEdit
+          Left = 72
+          Top = 88
+          Width = 297
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 3
+          OnKeyDown = EditAdresseTiersKeyDown
+        end
+        object BitBtn8: TBitBtn
+          Left = 520
+          Top = 16
+          Width = 91
+          Height = 25
+          TabOrder = 4
+          OnClick = BitBtn8Click
+          Kind = bkCancel
+        end
+        object BitValiderNouveauTiers: TBitBtn
+          Left = 392
+          Top = 16
+          Width = 105
+          Height = 89
+          Caption = 'Valider'
+          TabOrder = 5
+          OnClick = BitValiderNouveauTiersClick
+          Kind = bkAll
+        end
+        object EditCompteTiersRecherche: TEdit
+          Left = 304
+          Top = 16
+          Width = 65
+          Height = 19
+          Color = clSilver
+          Ctl3D = False
+          ParentCtl3D = False
+          ReadOnly = True
+          TabOrder = 6
+        end
+        object EditCodeTiers: TEdit
+          Left = 72
+          Top = 16
+          Width = 121
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 7
+          OnKeyDown = EditCodeTiersKeyDown
+        end
+        object TableauCompteTiers: TStringGrid
+          Left = 8
+          Top = 8
+          Width = 497
+          Height = 105
+          Ctl3D = False
+          ParentCtl3D = False
+          TabOrder = 2
+          Visible = False
+          OnDrawCell = TableauCompteTiersDrawCell
+          OnKeyDown = TableauCompteTiersKeyDown
+          ColWidths = (
+            64
+            64
+            97
+            64
+            64)
+          RowHeights = (
+            24
+            24
+            24
+            24
+            24)
+        end
+      end
+      object AfficheDatePlus: TPanel
+        Left = 1016
+        Top = 0
+        Width = 321
+        Height = 49
+        BevelInner = bvLowered
+        TabOrder = 23
+        object Label25: TLabel
+          Left = 8
+          Top = 10
+          Width = 61
+          Height = 13
+          Caption = 'P'#176' TypeAvis:'
+        end
+        object Label67: TLabel
+          Left = 33
+          Top = 30
+          Width = 34
+          Height = 13
+          Caption = 'P'#176'Avis:'
+        end
+        object EditPositionTypeAvis: TEdit
+          Left = 72
+          Top = 5
+          Width = 33
+          Height = 19
+          Color = clSilver
+          Ctl3D = False
+          ParentCtl3D = False
+          ReadOnly = True
+          TabOrder = 0
+        end
+        object EditPositionAvis: TEdit
+          Left = 72
+          Top = 27
+          Width = 33
+          Height = 19
+          Color = clSilver
+          Ctl3D = False
+          ParentCtl3D = False
+          ReadOnly = True
+          TabOrder = 1
+        end
+      end
+      object EditChercheCodebarre: TEdit
+        Left = 904
+        Top = 400
+        Width = 97
+        Height = 19
+        Ctl3D = False
+        ParentCtl3D = False
+        PasswordChar = '*'
+        TabOrder = 24
+        OnEnter = EditChercheCodebarreEnter
+        OnExit = EditChercheCodebarreExit
+        OnKeyDown = EditChercheCodebarreKeyDown
+      end
+      object EditFaitA: TComboBox
+        Left = 872
+        Top = 584
+        Width = 137
+        Height = 21
+        BevelKind = bkFlat
+        Ctl3D = False
+        ItemHeight = 13
+        ItemIndex = 0
+        ParentCtl3D = False
+        TabOrder = 25
+        Text = 'AKBOU'
+        Items.Strings = (
+          'AKBOU')
+      end
+    end
+    object PageOptionsAvis: TTabSheet
+      Caption = '     Options     '
+      ImageIndex = 1
+      OnShow = PageOptionsAvisShow
+      object Bevel37: TBevel
+        Left = 1016
+        Top = 520
+        Width = 249
+        Height = 41
+      end
+      object Bevel31: TBevel
+        Left = 1016
+        Top = 576
+        Width = 273
+        Height = 65
+      end
+      object Label10: TLabel
+        Left = 1024
+        Top = 619
+        Width = 77
+        Height = 13
+        Caption = 'Contr'#244'le Pi'#232'ces:'
+      end
+      object Bevel32: TBevel
+        Left = 0
+        Top = 80
+        Width = 273
+        Height = 33
+      end
+      object TitreEditBaseAvis: TLabel
+        Left = 1026
+        Top = 531
+        Width = 50
+        Height = 13
+        Caption = 'Base Avis:'
+      end
+      object Bevel38: TBevel
+        Left = 280
+        Top = 80
+        Width = 177
+        Height = 33
+      end
+      object RBAfficheControleSerie: TCheckBox
+        Left = 1024
+        Top = 592
+        Width = 185
+        Height = 17
+        Caption = 'Affichage contr'#244'le S'#233'rie !'
+        Checked = True
+        State = cbChecked
+        TabOrder = 0
+      end
+      object EditLongueureSeriePiece: TEdit
+        Left = 1112
+        Top = 616
+        Width = 25
+        Height = 19
+        Ctl3D = False
+        ParentCtl3D = False
+        ReadOnly = True
+        TabOrder = 1
+        Text = '3'
+      end
+      object IncrimentEditLongueureSeriePiece: TUpDown
+        Left = 1137
+        Top = 616
+        Width = 16
+        Height = 19
+        Associate = EditLongueureSeriePiece
+        Min = 1
+        Max = 10
+        Position = 3
+        TabOrder = 2
+        Wrap = False
+        OnClick = IncrimentEditLongueureSeriePieceClick
+      end
+      object RBActiveSoldeDomiciliation: TCheckBox
+        Left = 16
+        Top = 88
+        Width = 249
+        Height = 17
+        Caption = 'Activer le message contr'#244'le solde domiciliation ?'
+        TabOrder = 3
+      end
+      object TableauListeMouvementAssocierAvis: TStringGrid
+        Left = 328
+        Top = 120
+        Width = 681
+        Height = 529
+        Ctl3D = False
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+        ParentCtl3D = False
+        TabOrder = 4
+        OnDrawCell = TableauListeMouvementAssocierAvisDrawCell
+      end
+      object TableauMouvement: TStringGrid
+        Left = 0
+        Top = 120
+        Width = 320
+        Height = 177
+        Ctl3D = False
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+        ParentCtl3D = False
+        TabOrder = 5
+        OnClick = TableauMouvementClick
+        OnDrawCell = TableauMouvementDrawCell
+      end
+      object TableauListeNumAvis: TStringGrid
+        Left = 0
+        Top = 336
+        Width = 320
+        Height = 313
+        Ctl3D = False
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+        ParentCtl3D = False
+        TabOrder = 6
+        OnClick = TableauListeNumAvisClick
+        RowHeights = (
+          24
+          24
+          24
+          24
+          24)
+      end
+      object TableauListeNumAvisMouvement: TStringGrid
+        Left = 1016
+        Top = 120
+        Width = 320
+        Height = 345
+        Ctl3D = False
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+        ParentCtl3D = False
+        TabOrder = 7
+        OnDrawCell = TableauListeNumAvisMouvementDrawCell
+      end
+      object BitBtn14: TBitBtn
+        Left = 8
+        Top = 304
+        Width = 305
+        Height = 25
+        Caption = 'Afficher tous les avis comptabilis'#233's !'
+        TabOrder = 8
+        OnClick = BitBtn14Click
+        Kind = bkHelp
+      end
+      object EditBaseAvis: TComboBox
+        Left = 1080
+        Top = 528
+        Width = 177
+        Height = 21
+        BevelKind = bkFlat
+        ItemHeight = 13
+        TabOrder = 9
+        Text = 'FAvis'
+        OnSelect = EditBaseAvisSelect
+      end
+      object RBChargerPointeur: TCheckBox
+        Left = 288
+        Top = 92
+        Width = 161
+        Height = 17
+        Caption = 'Chargement des pointeurs'
+        Checked = True
+        State = cbChecked
+        TabOrder = 10
+        Visible = False
+      end
+      object AfficherAdresseAvis: TEdit
+        Left = 464
+        Top = 80
+        Width = 865
+        Height = 22
+        Color = clSilver
+        Ctl3D = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentCtl3D = False
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 11
+      end
+      object AfficheDataTiers: TPanel
+        Left = 3
+        Top = 5
+        Width = 1334
+        Height = 60
+        BevelInner = bvLowered
+        Color = 8454143
+        TabOrder = 12
+        object TitreEditTiersFichierConserne: TLabel
+          Left = 16
+          Top = 35
+          Width = 81
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Fichier consern'#233':'
+        end
+        object Label68: TLabel
+          Left = 16
+          Top = 11
+          Width = 78
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Type de Proces:'
+        end
+        object Label69: TLabel
+          Left = 296
+          Top = 19
+          Width = 26
+          Height = 13
+          Caption = 'Tiers:'
+        end
+        object Label70: TLabel
+          Left = 850
+          Top = 7
+          Width = 66
+          Height = 13
+          Caption = 'P'#233'riode du:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label71: TLabel
+          Left = 1110
+          Top = 7
+          Width = 19
+          Height = 13
+          Caption = 'au:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object BitBtn34: TBitBtn
+          Left = 324
+          Top = 12
+          Width = 293
+          Height = 25
+          Caption = '.'
+          TabOrder = 6
+          Kind = bkHelp
+          Margin = 260
+        end
+        object EditTiersFichierConserneAfficher: TEdit
+          Left = 120
+          Top = 32
+          Width = 121
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          ReadOnly = True
+          TabOrder = 4
+        end
+        object EditTiersFichierConserne: TComboBox
+          Left = 104
+          Top = 31
+          Width = 161
+          Height = 21
+          BevelKind = bkFlat
+          Ctl3D = True
+          ItemHeight = 13
+          ItemIndex = 0
+          ParentCtl3D = False
+          TabOrder = 0
+          Text = 'FFournisseur'
+          Items.Strings = (
+            'FFournisseur'
+            'FClient'
+            'FPersonnel')
+        end
+        object EditTiersTypeProces: TComboBox
+          Left = 104
+          Top = 7
+          Width = 161
+          Height = 21
+          BevelKind = bkFlat
+          ItemHeight = 13
+          TabOrder = 1
+          Text = 'Commercial'
+          Items.Strings = (
+            'Business'
+            'Commercial'
+            'Paie'
+            'Comptabilit'#233
+            'Social')
+        end
+        object EditTiersCodeTiers: TEdit
+          Left = 352
+          Top = 15
+          Width = 89
+          Height = 19
+          Ctl3D = False
+          ParentCtl3D = False
+          ReadOnly = True
+          TabOrder = 2
+        end
+        object EditTiersNomTiers: TEdit
+          Left = 328
+          Top = 15
+          Width = 257
+          Height = 19
+          Color = clBlack
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 3
+          OnEnter = EditTiersNomTiersEnter
+          OnKeyDown = EditTiersNomTiersKeyDown
+          OnKeyUp = EditTiersNomTiersKeyUp
+        end
+        object RBFichierConcerneChoisiTiers: TCheckBox
+          Left = 272
+          Top = 8
+          Width = 17
+          Height = 17
+          Enabled = False
+          TabOrder = 5
+        end
+        object EditTiersDateDebut: TDateTimePicker
+          Left = 920
+          Top = 7
+          Width = 186
+          Height = 21
+          BevelInner = bvNone
+          BevelKind = bkFlat
+          CalAlignment = dtaLeft
+          Date = 40375.6004302199
+          Time = 40375.6004302199
+          DateFormat = dfLong
+          DateMode = dmComboBox
+          Kind = dtkDate
+          ParseInput = False
+          TabOrder = 7
+        end
+        object EditTiersDateFin: TDateTimePicker
+          Left = 1136
+          Top = 7
+          Width = 186
+          Height = 21
+          BevelInner = bvNone
+          BevelKind = bkFlat
+          CalAlignment = dtaLeft
+          Date = 40375.6004302199
+          Time = 40375.6004302199
+          DateFormat = dfLong
+          DateMode = dmComboBox
+          Kind = dtkDate
+          ParseInput = False
+          TabOrder = 8
+        end
+      end
+      object TableauTiersListeTiers: TStringGrid
+        Left = 1200
+        Top = 490
+        Width = 993
+        Height = 482
+        Color = 16777158
+        ColCount = 10
+        Ctl3D = False
+        DefaultColWidth = 40
+        DefaultRowHeight = 18
+        FixedColor = 16777088
+        RowCount = 20
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+        ParentCtl3D = False
+        TabOrder = 13
+        Visible = False
+        OnDblClick = TableauTiersListeTiersDblClick
+        OnDrawCell = TableauTiersListeTiersDrawCell
+        OnKeyDown = TableauTiersListeTiersKeyDown
+        ColWidths = (
+          40
+          70
+          363
+          245
+          242
+          205
+          200
+          212
+          213
+          206)
+        RowHeights = (
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18
+          18)
+      end
+    end
+    object TabSheet1: TTabSheet
+      Caption = '     R'#233'gles     '
+      ImageIndex = 2
+      object ImageCodebarre: TImage
+        Left = 1120
+        Top = 0
+        Width = 209
+        Height = 89
+        AutoSize = True
+      end
+      object DataSommeEnLettres: TMemo
+        Left = 8
+        Top = 8
+        Width = 297
+        Height = 73
+        Ctl3D = False
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial Narrow'
+        Font.Style = []
+        ParentCtl3D = False
+        ParentFont = False
+        TabOrder = 0
+      end
+      object AfficherAdresseAvisR: TEdit
+        Left = 8
+        Top = 104
+        Width = 865
+        Height = 22
+        Color = clSilver
+        Ctl3D = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentCtl3D = False
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 1
+      end
+      object BitBtn16: TBitBtn
+        Left = 8
+        Top = 136
+        Width = 249
+        Height = 25
+        Caption = 'Publier dans le r'#233'seaux'
+        TabOrder = 2
+        OnClick = BitBtn16Click
+        Kind = bkAll
+      end
+      object TableauRecapitulatifDetailMouvements: TStringGrid
+        Left = 16
+        Top = 192
+        Width = 665
+        Height = 225
+        Ctl3D = False
+        ParentCtl3D = False
+        TabOrder = 3
+      end
+    end
+  end
+  object AfficheChargementNature: TPanel
+    Left = -763
+    Top = 584
+    Width = 860
+    Height = 409
+    BevelInner = bvLowered
+    Color = 8454143
+    TabOrder = 1
+    Visible = False
+    object Bevel6: TBevel
+      Left = 8
+      Top = 8
+      Width = 97
+      Height = 41
+    end
+    object Label43: TLabel
+      Left = 8
+      Top = 248
+      Width = 54
+      Height = 13
+      Caption = 'Op'#233'rations:'
+    end
+    object Label44: TLabel
+      Left = 488
+      Top = 20
+      Width = 109
+      Height = 13
+      Caption = 'Mouvement avec Avis:'
+    end
+    object Bevel14: TBevel
+      Left = 752
+      Top = 8
+      Width = 97
+      Height = 41
+    end
+    object Bevel20: TBevel
+      Left = 480
+      Top = 8
+      Width = 257
+      Height = 41
+    end
+    object Label51: TLabel
+      Left = 648
+      Top = 248
+      Width = 75
+      Height = 13
+      Caption = 'Montant Global:'
+    end
+    object Label52: TLabel
+      Left = 592
+      Top = 272
+      Width = 129
+      Height = 13
+      Caption = 'ListeOrdreListeMouvement:'
+    end
+    object Label53: TLabel
+      Left = 504
+      Top = 299
+      Width = 75
+      Height = 13
+      Caption = 'Montant Global:'
+    end
+    object TableauPositionMouvement: TStringGrid
+      Left = 443
+      Top = 272
+      Width = 37
+      Height = 49
+      ColCount = 1
+      Ctl3D = False
+      FixedCols = 0
+      RowCount = 10
+      ParentCtl3D = False
+      ScrollBars = ssNone
+      TabOrder = 8
+      ColWidths = (
+        35)
+    end
+    object EditOrdreListeMouvementAppartenant: TEdit
+      Left = 728
+      Top = 270
+      Width = 121
+      Height = 19
+      Color = clSilver
+      Ctl3D = False
+      ParentCtl3D = False
+      ReadOnly = True
+      TabOrder = 9
+    end
+    object BitBtn5: TBitBtn
+      Left = 16
+      Top = 16
+      Width = 75
+      Height = 25
+      Caption = 'Valider'
+      TabOrder = 0
+      OnClick = BitBtn5Click
+      Kind = bkAll
+    end
+    object BitBtn10: TBitBtn
+      Left = 760
+      Top = 16
+      Width = 81
+      Height = 25
+      TabOrder = 1
+      OnClick = BitBtn10Click
+      Kind = bkCancel
+    end
+    object TableauListeMouvement: TStringGrid
+      Left = 8
+      Top = 56
+      Width = 481
+      Height = 185
+      Ctl3D = False
+      FixedColor = 8454143
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentCtl3D = False
+      ParentFont = False
+      TabOrder = 2
+      OnDblClick = TableauListeMouvementDblClick
+      OnDrawCell = TableauListeMouvementDrawCell
+      RowHeights = (
+        24
+        24
+        24
+        24
+        24)
+    end
+    object EditNatureOperationMouvement: TMemo
+      Left = 8
+      Top = 264
+      Width = 481
+      Height = 137
+      Ctl3D = False
+      ParentCtl3D = False
+      TabOrder = 3
+    end
+    object RBOperationNatureAvie: TCheckBox
+      Left = 376
+      Top = 245
+      Width = 113
+      Height = 17
+      Alignment = taLeftJustify
+      Caption = 'Op'#233'ration courte !'
+      TabOrder = 4
+      OnClick = RBOperationNatureAvieClick
+    end
+    object EditAvisEtabli: TComboBox
+      Left = 608
+      Top = 16
+      Width = 65
+      Height = 21
+      BevelKind = bkFlat
+      Ctl3D = False
+      ItemHeight = 13
+      ItemIndex = 0
+      ParentCtl3D = False
+      TabOrder = 5
+      Text = 'Non'
+      OnChange = EditAvisEtabliChange
+      OnKeyPress = EditAvisEtabliKeyPress
+      Items.Strings = (
+        'Non'
+        'Oui'
+        'Tous')
+    end
+    object EditPositionTypeMouvement: TEdit
+      Left = 680
+      Top = 16
+      Width = 49
+      Height = 19
+      Color = clSilver
+      Ctl3D = False
+      ParentCtl3D = False
+      ReadOnly = True
+      TabOrder = 6
+    end
+    object TableauDetaiMouvementAppartenanceMouvemant: TStringGrid
+      Left = 496
+      Top = 56
+      Width = 353
+      Height = 185
+      Ctl3D = False
+      RowCount = 2
+      ParentCtl3D = False
+      TabOrder = 7
+      OnDrawCell = TableauDetaiMouvementAppartenanceMouvemantDrawCell
+    end
+    object EditMontantGlobalAuto: TEdit
+      Left = 728
+      Top = 248
+      Width = 121
+      Height = 19
+      Ctl3D = False
+      ParentCtl3D = False
+      ReadOnly = True
+      TabOrder = 10
+    end
+    object EditCodeTiersTeste: TEdit
+      Left = 584
+      Top = 296
+      Width = 73
+      Height = 19
+      Ctl3D = False
+      ParentCtl3D = False
+      ReadOnly = True
+      TabOrder = 11
+    end
+    object EditTiersTeste: TEdit
+      Left = 656
+      Top = 296
+      Width = 193
+      Height = 19
+      Ctl3D = False
+      ParentCtl3D = False
+      ReadOnly = True
+      TabOrder = 12
+    end
+    object RadioGroup1: TRadioGroup
+      Left = 112
+      Top = 8
+      Width = 361
+      Height = 41
+      Caption = 'Option Affichage Nature:'
+      TabOrder = 13
+    end
+    object RBNatureDetailler: TRadioButton
+      Left = 264
+      Top = 24
+      Width = 81
+      Height = 17
+      Caption = 'D'#233'tailler !'
+      TabOrder = 14
+      OnClick = RBNatureDetaillerClick
+    end
+    object RBNatureCummuler: TRadioButton
+      Left = 376
+      Top = 24
+      Width = 81
+      Height = 17
+      Caption = 'Cummuler !'
+      Checked = True
+      TabOrder = 15
+      TabStop = True
+      OnClick = RBNatureCummulerClick
+    end
+    object TableauDesignationMouvement: TStringGrid
+      Left = 496
+      Top = 320
+      Width = 177
+      Height = 80
+      ColCount = 1
+      Ctl3D = False
+      DefaultColWidth = 300
+      FixedCols = 0
+      RowCount = 2
+      ParentCtl3D = False
+      TabOrder = 16
+      OnDrawCell = TableauDesignationMouvementDrawCell
+      ColWidths = (
+        167)
+    end
+    object TableauDestination: TStringGrid
+      Left = 680
+      Top = 320
+      Width = 169
+      Height = 80
+      ColCount = 1
+      Ctl3D = False
+      DefaultColWidth = 300
+      FixedCols = 0
+      RowCount = 2
+      ParentCtl3D = False
+      TabOrder = 17
+      OnDrawCell = TableauDestinationDrawCell
+      ColWidths = (
+        159)
+    end
+  end
+  object TimerAlerteValiditeAvis: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = TimerAlerteValiditeAvisTimer
+    Left = 1144
+    Top = 16
+  end
+  object TimerAfficheTiers: TTimer
+    Enabled = False
+    Interval = 50
+    OnTimer = TimerAfficheTiersTimer
+    Left = 1168
+    Top = 16
+  end
+  object TimerLancerAfficheTiers: TTimer
+    Enabled = False
+    Interval = 200
+    OnTimer = TimerLancerAfficheTiersTimer
+    Left = 1200
+    Top = 16
+  end
+end

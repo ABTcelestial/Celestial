@@ -1,0 +1,1046 @@
+unit UnitFSAgenceBanque;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, StdCtrls, Buttons, ExtCtrls, DB, DBTables, ExtDlgs;
+
+type
+  TFSAgenceBanque = class(TForm)
+    TableauBanque: TStringGrid;
+    TableauAgence: TStringGrid;
+    AfficheBanque: TPanel;
+    EditPositionBanque: TEdit;
+    EditCodeBanque: TEdit;
+    EditLibelleBanque: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Bevel1: TBevel;
+    BitBtn1: TBitBtn;
+    Bevel2: TBevel;
+    BitOperationBanque: TBitBtn;
+    AfficheAgence: TPanel;
+    Bevel3: TBevel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Bevel4: TBevel;
+    EditPositionAgence: TEdit;
+    EditCodeAgence: TEdit;
+    EditLibelleAgence: TEdit;
+    BitBtn3: TBitBtn;
+    BitOperationAgence: TBitBtn;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    BitBtn5: TBitBtn;
+    Bevel5: TBevel;
+    Bevel6: TBevel;
+    BitBtn6: TBitBtn;
+    Bevel7: TBevel;
+    BitBtn7: TBitBtn;
+    Bevel8: TBevel;
+    BitBtn8: TBitBtn;
+    Bevel9: TBevel;
+    BitBtn9: TBitBtn;
+    Bevel10: TBevel;
+    BitBtn10: TBitBtn;
+    EditAdresseBanque: TEdit;
+    Label7: TLabel;
+    EditTelephoneBanque: TEdit;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    EditAdresseAgence: TEdit;
+    EditTelephoneAgence: TEdit;
+    Panel3: TPanel;
+    Bevel11: TBevel;
+    Panel4: TPanel;
+    Bevel12: TBevel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Bevel14: TBevel;
+    BitBtn2: TBitBtn;
+    EditTrier: TEdit;
+    EditTypeTrie: TComboBox;
+    Photo: TImage;
+    Label11: TLabel;
+    AfficheNewPhoto: TPanel;
+    NouvellePhoto: TImage;
+    Bevel15: TBevel;
+    Bevel16: TBevel;
+    Bevel17: TBevel;
+    BitOuvrirPhoto: TBitBtn;
+    BitValiderPhoto: TBitBtn;
+    OuvrirPhotos: TOpenPictureDialog;
+    LibelleBanqueNew: TLabel;
+    LibelleBanque: TLabel;
+    BitBtn4: TBitBtn;
+    BitBtn11: TBitBtn;
+    Image1: TImage;
+    Label12: TLabel;
+    EditAdresseLogoBanque: TEdit;
+    EditFichiersource: TEdit;
+    EditAdresseLogoBanqueCree: TEdit;
+    BitBtn12: TBitBtn;
+    Bevel18: TBevel;
+    Bevel19: TBevel;
+    Bevel20: TBevel;
+    Bevel13: TBevel;
+    Bevel21: TBevel;
+    LogoBanqueLong: TImage;
+    EditLogoBanque: TComboBox;
+    Label13: TLabel;
+    EditAdresseLogoBanqueLong: TEdit;
+    BitBtn13: TBitBtn;
+    BitBtn14: TBitBtn;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure TableauAgenceClick(Sender: TObject);
+    procedure TableauBanqueClick(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure BitBtn8Click(Sender: TObject);
+    procedure BitBtn9Click(Sender: TObject);
+    procedure BitBtn10Click(Sender: TObject);
+    procedure BitOperationBanqueClick(Sender: TObject);
+    procedure BitOperationAgenceClick(Sender: TObject);
+    procedure EditCodeBanqueKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditLibelleBanqueKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditAdresseBanqueKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditTelephoneBanqueKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCodeAgenceKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditLibelleAgenceKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditAdresseAgenceKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditTelephoneAgenceKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure TableauAgenceDblClick(Sender: TObject);
+    procedure BitOuvrirPhotoClick(Sender: TObject);
+    procedure BitValiderPhotoClick(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitBtn11Click(Sender: TObject);
+    procedure EditAdresseLogoBanqueDblClick(Sender: TObject);
+    procedure BitBtn12Click(Sender: TObject);
+    procedure EditLogoBanqueKeyPress(Sender: TObject; var Key: Char);
+    procedure TableauBanqueDblClick(Sender: TObject);
+    procedure BitBtn13Click(Sender: TObject);
+    procedure BitBtn14Click(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSAgenceBanque: TFSAgenceBanque;
+
+procedure ListeBanque(TableauBanque:TStringGrid; CodeBanque,CodeBanqueSelect:string);
+procedure ListeAgence(TableauAgence:TStringGrid; CodeBanque,CodeAgenceSelect:string);
+Procedure ProcAffichePhoto(CodeBanqueGlobal,AdresseFichierCible,LogoBanque:string; var AdresseFichierCibleOut:string);
+
+implementation
+
+Uses UnitInitialisation, UnitSuppression, UnitFSMenuPrincipal, UnitFSAvis,
+     UnitPrintOrdreVirement, UnitPrintOrdreVersementEspece,
+  UnitPrintAvisBanque1, UnitPrintRemiseCheque;
+
+var
+
+RBanqueGlobal,RBanqueGlobalCopie:RBanqueGlobals;
+FBanqueGlobal,FBanqueGlobalCopie:FBanqueGlobals;
+ChBanqueGlobal,ChBanqueGlobalCopie:string;
+
+RAgence,RAgenceCopie:RAgences;
+FAgence,FAgenceCopie:FAgences;
+ChAgence,ChAgenceCopie:string;
+
+{$R *.dfm}
+
+procedure TFSAgenceBanque.BitBtn1Click(Sender: TObject);
+begin
+FSAgenceBanque.AfficheBanque.Visible:=false;
+FSAgenceBanque.TableauBanque.SetFocus;
+end;
+
+procedure TFSAgenceBanque.BitBtn3Click(Sender: TObject);
+begin
+FSAgenceBanque.AfficheAgence.Visible:=false;
+FSAgenceBanque.TableauAgence.SetFocus;
+end;
+
+procedure TFSAgenceBanque.TableauAgenceClick(Sender: TObject);
+var  R:integer; TypeData,TypeTrie:string;
+begin
+FSAgenceBanque.AfficheNewPhoto.Visible:=false;
+if(FSAgenceBanque.EditTrier.Text='OK')then
+begin
+     FSAgenceBanque.EditTrier.Text:='';
+     TypeData:='';
+     TypeTrie:=FSAgenceBanque.EditTypeTrie.Text;
+     TrierTableauARowSpecial(FSAgenceBanque.TableauAgence,1,FSAgenceBanque.TableauAgence.RowCount-1,1,inttostr(FSAgenceBanque.TableauAgence.Col),TypeData,TypeTrie);
+end;
+
+FSAgenceBanque.AfficheAgence.Visible:=false;
+
+for R:=1 to FSAgenceBanque.TableauAgence.RowCount-1 do
+begin
+     if(R=FSAgenceBanque.TableauAgence.Row)
+     then FSAgenceBanque.TableauAgence.RowHeights[R]:=30
+     else FSAgenceBanque.TableauAgence.RowHeights[R]:=20;
+end;
+end;
+
+procedure TFSAgenceBanque.TableauBanqueClick(Sender: TObject);
+var R:integer;   TypeData,TypeTrie,AdresseLogoBanque:string;
+begin
+FSAgenceBanque.AfficheNewPhoto.Visible:=false;
+if(FSAgenceBanque.EditTrier.Text='OK')then
+begin
+     FSAgenceBanque.EditTrier.Text:='';
+     TypeData:='';
+     TypeTrie:=FSAgenceBanque.EditTypeTrie.Text;
+     TrierTableauARowSpecial(FSAgenceBanque.TableauBanque,1,FSAgenceBanque.TableauBanque.RowCount-1,1,inttostr(FSAgenceBanque.TableauBanque.Col),TypeData,TypeTrie);
+end;
+
+FSAgenceBanque.AfficheBanque.Visible:=false;
+FSAgenceBanque.AfficheAgence.Visible:=false;
+ListeAgence(FSAgenceBanque.TableauAgence,FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],'');
+
+ProcAffichePhoto(FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],FSAgenceBanque.TableauBanque.Cells[6,FSAgenceBanque.TableauBanque.Row],'LogoBanque',AdresseLogoBanque);
+ProcAffichePhoto(FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],FSAgenceBanque.TableauBanque.Cells[7,FSAgenceBanque.TableauBanque.Row],'LogoBanqueLong',AdresseLogoBanque);
+
+
+for R:=1 to FSAgenceBanque.TableauBanque.RowCount-1 do
+begin
+     if(R=FSAgenceBanque.TableauBanque.Row)
+     then FSAgenceBanque.TableauBanque.RowHeights[R]:=30
+     else FSAgenceBanque.TableauBanque.RowHeights[R]:=20;
+end;
+
+end;
+
+procedure TFSAgenceBanque.BitBtn5Click(Sender: TObject);
+var i,CodeBanque:integer;   TypeProces,FichierConcerne,Adresse:string;
+begin
+     TypeProces:='Paie';
+     FichierConcerne:='FBanqueGlobal';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChBanqueGlobal:=Adresse;
+     assignfile(FBanqueGlobal,ChBanqueGlobal);
+     if FileExists(ChBanqueGlobal)
+     then Reset(FBanqueGlobal)
+     else Rewrite(FBanqueGlobal);
+     Seek(FBanqueGlobal,0);
+     i:=0;
+     CodeBanque:=1;
+     while not eof(FBanqueGlobal)do
+     begin
+          read(FBanqueGlobal,RBanqueGlobal);
+          if(CodeBanque<=strtointeger(RBanqueGlobal.CodeBanque))then CodeBanque:=strtointeger(RBanqueGlobal.CodeBanque)+1;
+          i:=i+1;
+     end;
+     CloseFile(FBanqueGlobal);
+
+     FSAgenceBanque.AfficheBanque.Visible:=true;
+     FSAgenceBanque.BitOperationBanque.Kind:=bkAll;
+     FSAgenceBanque.BitOperationBanque.Caption:='Valider';
+     FSAgenceBanque.EditPositionBanque.Text:=inttostr(i);
+     FSAgenceBanque.EditCodeBanque.Text:=Completezerogauche(inttostr(CodeBanque),'3');
+     FSAgenceBanque.EditLibelleBanque.Text:='';
+     FSAgenceBanque.EditAdresseBanque.Text:='';
+     FSAgenceBanque.EditTelephoneBanque.Text:='';
+     FSAgenceBanque.EditAdresseLogoBanque.Text:='';
+     FSAgenceBanque.EditAdresseLogoBanquelong.Text:='';
+     FSAgenceBanque.EditCodeBanque.SetFocus;
+end;
+
+procedure TFSAgenceBanque.BitBtn6Click(Sender: TObject);
+begin
+     FSAgenceBanque.AfficheBanque.Visible:=true;
+     FSAgenceBanque.BitOperationBanque.Kind:=bkRetry;
+     FSAgenceBanque.BitOperationBanque.Caption:='Valider';
+     FSAgenceBanque.EditPositionBanque.Text:=FSAgenceBanque.TableauBanque.Cells[1,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditCodeBanque.Text:=FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditLibelleBanque.Text:=FSAgenceBanque.TableauBanque.Cells[3,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditAdresseBanque.Text:=FSAgenceBanque.TableauBanque.Cells[4,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditTelephoneBanque.Text:=FSAgenceBanque.TableauBanque.Cells[5,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditAdresseLogoBanque.Text:=FSAgenceBanque.TableauBanque.Cells[6,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditAdresseLogoBanquelong.Text:=FSAgenceBanque.TableauBanque.Cells[7,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.BitOperationBanque.SetFocus;
+end;
+
+procedure TFSAgenceBanque.BitBtn7Click(Sender: TObject);
+begin
+     FSAgenceBanque.AfficheBanque.Visible:=true;
+     FSAgenceBanque.BitOperationBanque.Kind:=bkCancel;
+     FSAgenceBanque.BitOperationBanque.Caption:='Supprimer';
+     FSAgenceBanque.EditPositionBanque.Text:=FSAgenceBanque.TableauBanque.Cells[1,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditCodeBanque.Text:=FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditLibelleBanque.Text:=FSAgenceBanque.TableauBanque.Cells[3,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditAdresseBanque.Text:=FSAgenceBanque.TableauBanque.Cells[4,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditTelephoneBanque.Text:=FSAgenceBanque.TableauBanque.Cells[5,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditAdresseLogoBanque.Text:=FSAgenceBanque.TableauBanque.Cells[6,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.EditAdresseLogoBanquelong.Text:=FSAgenceBanque.TableauBanque.Cells[7,FSAgenceBanque.TableauBanque.Row];
+     FSAgenceBanque.BitOperationBanque.SetFocus;
+end;
+
+procedure TFSAgenceBanque.BitBtn8Click(Sender: TObject);
+var  i,CodeAgence:integer;  TypeProces,FichierConcerne,Adresse:string;
+begin
+     TypeProces:='Paie';
+     FichierConcerne:='FAgence';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChAgence:=Adresse;
+     assignfile(FAgence,ChAgence);
+     if FileExists(ChAgence)
+     then Reset(FAgence)
+     else Rewrite(FAgence);
+     Seek(FAgence,0);
+     i:=0;
+     CodeAgence:=1;
+     while not eof(FAgence)do
+     begin
+          read(FAgence,RAgence);
+          if(RAgence.CodeBanque=FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row])then
+          if(CodeAgence<=strtointeger(RAgence.CodeAgence))then CodeAgence:=strtointeger(RAgence.CodeAgence)+1;
+          i:=i+1;
+     end;
+     CloseFile(FAgence);
+     FSAgenceBanque.AfficheAgence.Visible:=true;
+     FSAgenceBanque.BitOperationAgence.Kind:=bkAll;
+     FSAgenceBanque.BitOperationAgence.Caption:='Valider';
+     FSAgenceBanque.EditPositionAgence.Text:=inttostr(i);
+     FSAgenceBanque.EditCodeAgence.Text:=Completezerogauche(inttostr(CodeAgence),'5');
+     FSAgenceBanque.EditLibelleAgence.Text:='';
+     FSAgenceBanque.EditAdresseAgence.Text:='';
+     FSAgenceBanque.EditTelephoneAgence.Text:='';
+     FSAgenceBanque.EditCodeAgence.SetFocus;
+end;
+
+procedure TFSAgenceBanque.BitBtn9Click(Sender: TObject);
+begin
+     FSAgenceBanque.AfficheAgence.Visible:=true;
+     FSAgenceBanque.BitOperationAgence.Kind:=bkRetry;
+     FSAgenceBanque.BitOperationAgence.Caption:='Valider';
+     FSAgenceBanque.EditPositionAgence.Text:=FSAgenceBanque.TableauAgence.Cells[1,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.EditCodeAgence.Text:=FSAgenceBanque.TableauAgence.Cells[3,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.EditLibelleAgence.Text:=FSAgenceBanque.TableauAgence.Cells[4,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.EditAdresseAgence.Text:=FSAgenceBanque.TableauAgence.Cells[5,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.EditTelephoneAgence.Text:=FSAgenceBanque.TableauAgence.Cells[6,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.BitOperationAgence.SetFocus;
+end;
+
+procedure TFSAgenceBanque.BitBtn10Click(Sender: TObject);
+begin
+     FSAgenceBanque.AfficheAgence.Visible:=true;
+     FSAgenceBanque.BitOperationAgence.Kind:=bkCancel;
+     FSAgenceBanque.BitOperationAgence.Caption:='Supprimer';
+     FSAgenceBanque.EditPositionAgence.Text:=FSAgenceBanque.TableauAgence.Cells[1,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.EditCodeAgence.Text:=FSAgenceBanque.TableauAgence.Cells[3,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.EditLibelleAgence.Text:=FSAgenceBanque.TableauAgence.Cells[4,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.EditAdresseAgence.Text:=FSAgenceBanque.TableauAgence.Cells[5,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.EditTelephoneAgence.Text:=FSAgenceBanque.TableauAgence.Cells[6,FSAgenceBanque.TableauAgence.Row];
+     FSAgenceBanque.BitOperationAgence.SetFocus;
+end;
+
+procedure TFSAgenceBanque.BitOperationBanqueClick(Sender: TObject);
+var RExistant,RSupprimer,RSauvgarder:integer;  OKRemise:boolean; CodeBanqueSelect,TypeProces,FichierConcerne,Adresse:string;
+begin
+     if(FSAgenceBanque.BitOperationBanque.Caption='Valider')then
+     begin
+          TypeProces:='Paie';
+          FichierConcerne:='FBanqueGlobal';
+          Adresse:='';
+          if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+               //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+          end;
+
+          ChBanqueGlobal:=Adresse;
+          assignfile(FBanqueGlobal,ChBanqueGlobal);
+          if FileExists(ChBanqueGlobal)
+          then Reset(FBanqueGlobal)
+          else Rewrite(FBanqueGlobal);
+          RBanqueGlobal.PositionBanque:=strtointeger(FSAgenceBanque.EditPositionBanque.Text);
+          RBanqueGlobal.CodeBanque:=FSAgenceBanque.EditCodeBanque.Text;
+          RBanqueGlobal.LibelleBanque:=FSAgenceBanque.EditLibelleBanque.Text;
+          RBanqueGlobal.AdresseBanque:=FSAgenceBanque.EditAdresseBanque.Text;
+          RBanqueGlobal.TelephoneBanque:=FSAgenceBanque.EditTelephoneBanque.Text;
+          RBanqueGlobal.AdresseLogoBanque:=FSAgenceBanque.EditAdresseLogoBanque.Text;
+          RBanqueGlobal.AdresseLogoBanqueLong:=FSAgenceBanque.EditAdresseLogoBanqueLong.Text;
+          Seek(FBanqueGlobal,RBanqueGlobal.PositionBanque);
+          write(FBanqueGlobal,RBanqueGlobal);
+
+     CloseFile(FBanqueGlobal);
+     CodeBanqueSelect:=FSAgenceBanque.EditCodeBanque.Text;
+     end;
+
+     if(FSAgenceBanque.BitOperationBanque.Caption='Supprimer')then
+     begin
+          CodeBanqueSelect:='';
+          if SupprimerFAgence(FSAgenceBanque.EditCodeBanque.Text,'',RExistant,RSupprimer,RSauvgarder)then
+          begin
+               if(RSupprimer>0)
+               then AfficherMessage('Suppression réussie ! FTotal: '+inttostr(RExistant)+', FSupprimer: '+inttostr(RSupprimer)+', FSauvgarder: '+inttostr(RSauvgarder))
+               else AfficherMessage('Aucun Registre Supprimer ! FTotal: '+inttostr(RExistant)+', FSupprimer: '+inttostr(RSupprimer)+', FSauvgarder: '+inttostr(RSauvgarder));
+
+               if SupprimerFBanqueGlobal(FSAgenceBanque.EditCodeBanque.Text,RExistant,RSupprimer,RSauvgarder)then
+               begin
+                    if(RSupprimer>0)
+                    then AfficherMessage('Suppression réussie ! FTotal: '+inttostr(RExistant)+', FSupprimer: '+inttostr(RSupprimer)+', FSauvgarder: '+inttostr(RSauvgarder))
+                    else AfficherMessage('Aucun Registre Supprimer ! FTotal: '+inttostr(RExistant)+', FSupprimer: '+inttostr(RSupprimer)+', FSauvgarder: '+inttostr(RSauvgarder));
+               end;
+          end;
+     end;
+
+ListeBanque(FSAgenceBanque.TableauBanque,'',CodeBanqueSelect);
+ListeAgence(FSAgenceBanque.TableauAgence,FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],'');
+
+FSAgenceBanque.AfficheBanque.Visible:=false;
+
+FSAgenceBanque.TableauBanque.SetFocus;
+end;
+
+procedure ListeAgence(TableauAgence:TStringGrid; CodeBanque,CodeAgenceSelect:string);
+var R:integer;  OKBanque:boolean;  Rowselect,TypeProces,FichierConcerne,Adresse:string;
+begin
+     TableauAgence.ColCount:=7;
+     TableauAgence.Cols[0].Text:='N°';
+     TableauAgence.Cols[1].Text:='P°';
+     TableauAgence.Cols[2].Text:='Code Banque';
+     TableauAgence.Cols[3].Text:='Code Agence';
+     TableauAgence.Cols[4].Text:='Libellé';
+     TableauAgence.Cols[5].Text:='Adresse';
+     TableauAgence.Cols[6].Text:='Téléphone';
+     TableauAgence.RowCount:=2;
+     TableauAgence.Rows[1].Text:='';
+
+     TypeProces:='Paie';
+     FichierConcerne:='FAgence';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChAgence:=Adresse;
+     assignfile(FAgence,ChAgence);
+     if FileExists(ChAgence)
+     then Reset(FAgence)
+     else Rewrite(FAgence);
+     Seek(FAgence,0);
+     R:=0;
+     while not eof(FAgence)do
+     begin
+          read(FAgence,RAgence);
+
+          if(CodeBanque<>'')then
+          begin
+               if firstlaters(RAgence.CodeBanque+RAgence.CodeAgence,longueur(CodeBanque))=CodeBanque
+               then OKBanque:=true
+               else OKBanque:=false;
+          end
+          else OKBanque:=true;
+
+          if(OKBanque=true)then
+          begin
+               R:=R+1;
+               TableauAgence.Rows[R].Text:=inttostr(R);
+               TableauAgence.Cells[1,R]:=inttostr(RAgence.PositionAgence);
+               TableauAgence.Cells[2,R]:=RAgence.CodeBanque;
+               TableauAgence.Cells[3,R]:=RAgence.CodeAgence;
+               TableauAgence.Cells[4,R]:=RAgence.LibelleAgence;
+               TableauAgence.Cells[5,R]:=RAgence.AdresseAgence;
+               TableauAgence.Cells[6,R]:=RAgence.TelephoneAgence;
+
+               if(RAgence.CodeAgence=CodeAgenceSelect)then RowSelect:=inttostr(R);
+          end;
+     end;
+     CloseFile(FAgence);
+
+     if(R>0)then TableauAgence.RowCount:=R+1
+            else TableauAgence.RowCount:=2;
+
+     AjusterColWidth(TableauAgence,'','');
+
+     if(strtointeger(RowSelect)>0)then TableauAgence.Row:=strtointeger(RowSelect);
+end;
+
+procedure ListeBanque(TableauBanque:TStringGrid; CodeBanque,CodeBanqueSelect:string);
+var R:integer;  OKBanque:boolean;  RowSelect,TypeProces,FichierConcerne,Adresse,AdresseLogoBanque:string;
+begin
+     TableauBanque.ColCount:=8;
+     TableauBanque.Cols[0].Text:='N°';
+     TableauBanque.Cols[1].Text:='P°';
+     TableauBanque.Cols[2].Text:='Code Banque';
+     TableauBanque.Cols[3].Text:='Libellé';
+     TableauBanque.Cols[4].Text:='Adresse';
+     TableauBanque.Cols[5].Text:='Téléphone';
+     TableauBanque.Cols[6].Text:='Adresse logo banque';
+     TableauBanque.Cols[7].Text:='Adresse logo banque Long';
+     TableauBanque.RowCount:=2;
+     TableauBanque.Rows[1].Text:='';
+
+     TypeProces:='Paie';
+     FichierConcerne:='FBanqueGlobal';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChBanqueGlobal:=Adresse;
+     assignfile(FBanqueGlobal,ChBanqueGlobal);
+     if FileExists(ChBanqueGlobal)
+     then Reset(FBanqueGlobal)
+     else Rewrite(FBanqueGlobal);
+     Seek(FBanqueGlobal,0);
+     R:=0;
+     while not eof(FBanqueGlobal)do
+     begin
+          read(FBanqueGlobal,RBanqueGlobal);
+
+          if(CodeBanque<>'')then
+          begin
+               if firstlaters(RBanqueGlobal.CodeBanque,longueur(CodeBanque))=CodeBanque
+               then OKBanque:=true
+               else OKBanque:=false;
+          end
+          else OKBanque:=true;
+
+          if(OKBanque=true)then
+          begin
+               R:=R+1;
+               TableauBanque.Rows[R].Text:=inttostr(R);
+               TableauBanque.Cells[1,R]:=inttostr(RBanqueGlobal.PositionBanque);
+               TableauBanque.Cells[2,R]:=RBanqueGlobal.CodeBanque;
+               TableauBanque.Cells[3,R]:=RBanqueGlobal.LibelleBanque;
+               TableauBanque.Cells[4,R]:=RBanqueGlobal.AdresseBanque;
+               TableauBanque.Cells[5,R]:=RBanqueGlobal.TelephoneBanque;
+               TableauBanque.Cells[6,R]:=RBanqueGlobal.AdresseLogoBanque;
+               TableauBanque.Cells[7,R]:=RBanqueGlobal.AdresseLogoBanqueLong;
+
+               if(RBanqueGlobal.CodeBanque=CodeBanqueSelect)then RowSelect:=inttostr(R);
+          end;
+     end;
+     CloseFile(FBanqueGlobal);
+
+     if(R>0)then TableauBanque.RowCount:=R+1
+            else TableauBanque.RowCount:=2;
+
+     AjusterColWidth(TableauBanque,'','');
+
+     if(strtointeger(RowSelect)>0)then TableauBanque.Row:=strtointeger(RowSelect);
+     ProcAffichePhoto(TableauBanque.Cells[2,TableauBanque.Row],TableauBanque.Cells[6,TableauBanque.Row],'LogoBanque',AdresseLogoBanque);
+     ProcAffichePhoto(TableauBanque.Cells[2,TableauBanque.Row],TableauBanque.Cells[7,TableauBanque.Row],'LogoBanqueLong',AdresseLogoBanque);
+end;
+
+procedure TFSAgenceBanque.BitOperationAgenceClick(Sender: TObject);
+var RExistant,RSupprimer,RSauvgarder:integer;  OKRemise:boolean; CodeAgenceSelect,TypeProces,FichierConcerne,Adresse:string;
+begin
+     if(FSAgenceBanque.BitOperationAgence.Caption='Valider')then
+     begin
+          TypeProces:='Paie';
+          FichierConcerne:='FAgence';
+          Adresse:='';
+          if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+               //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+          end;
+
+          ChAgence:=Adresse;
+          assignfile(FAgence,ChAgence);
+          if FileExists(ChAgence)
+          then Reset(FAgence)
+          else Rewrite(FAgence);
+          RAgence.PositionAgence:=strtointeger(FSAgenceBanque.EditPositionAgence.Text);
+          RAgence.CodeBanque:=FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row];
+          RAgence.CodeAgence:=FSAgenceBanque.EditCodeAgence.Text;
+          RAgence.LibelleAgence:=FSAgenceBanque.EditLibelleAgence.Text;
+          RAgence.AdresseAgence:=FSAgenceBanque.EditAdresseAgence.Text;
+          RAgence.TelephoneAgence:=FSAgenceBanque.EditTelephoneAgence.Text;
+          Seek(FAgence,RAgence.PositionAgence);
+          write(FAgence,RAgence);
+
+     CloseFile(FAgence);
+     CodeAgenceSelect:=FSAgenceBanque.EditCodeAgence.Text;
+     end;
+
+     if(FSAgenceBanque.BitOperationAgence.Caption='Supprimer')then
+     begin
+          CodeAgenceSelect:='';
+          if SupprimerFAgence(FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],FSAgenceBanque.EditCodeAgence.Text,RExistant,RSupprimer,RSauvgarder)then
+          begin
+               if(RSupprimer>0)
+               then AfficherMessage('Suppression réussie ! FTotal: '+inttostr(RExistant)+', FSupprimer: '+inttostr(RSupprimer)+', FSauvgarder: '+inttostr(RSauvgarder))
+               else AfficherMessage('Aucun Registre Supprimer ! FTotal: '+inttostr(RExistant)+', FSupprimer: '+inttostr(RSupprimer)+', FSauvgarder: '+inttostr(RSauvgarder));
+          end;
+     end;
+
+ListeAgence(FSAgenceBanque.TableauAgence,FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],CodeAgenceSelect);
+
+FSAgenceBanque.AfficheAgence.Visible:=false;
+
+FSAgenceBanque.TableauAgence.SetFocus;
+end;
+
+procedure TFSAgenceBanque.EditCodeBanqueKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then 
+     begin
+          FSAgenceBanque.EditLibelleBanque.SetFocus;
+     end;
+
+end;
+
+procedure TFSAgenceBanque.EditLibelleBanqueKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSAgenceBanque.EditAdresseBanque.SetFocus;
+     end;
+
+end;
+
+procedure TFSAgenceBanque.EditAdresseBanqueKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSAgenceBanque.EditTelephoneBanque.SetFocus;
+     end;
+
+end;
+
+procedure TFSAgenceBanque.EditTelephoneBanqueKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSAgenceBanque.BitOperationBanque.SetFocus;
+     end;
+
+end;
+
+procedure TFSAgenceBanque.EditCodeAgenceKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSAgenceBanque.EditLibelleAgence.SetFocus;
+     end;
+
+end;
+
+procedure TFSAgenceBanque.EditLibelleAgenceKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSAgenceBanque.EditAdresseAgence.SetFocus;
+     end;
+
+end;
+
+procedure TFSAgenceBanque.EditAdresseAgenceKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSAgenceBanque.EditTelephoneAgence.SetFocus;
+     end;
+
+end;
+
+procedure TFSAgenceBanque.EditTelephoneAgenceKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSAgenceBanque.BitOperationAgence.SetFocus;
+     end;
+
+end;
+
+procedure TFSAgenceBanque.BitBtn2Click(Sender: TObject);
+begin
+     FSAgenceBanque.EditTrier.Text:='OK';
+end;
+
+procedure TFSAgenceBanque.TableauAgenceDblClick(Sender: TObject);
+begin
+ListeAgence(FSAgenceBanque.TableauAgence,'','');
+end;
+
+Procedure ProcAffichePhoto(CodeBanqueGlobal,AdresseFichierCible,LogoBanque:string; var AdresseFichierCibleOut:string);
+var TypeProces,FichierConcerne,Adresse:string;
+begin
+
+if(AdresseFichierCible='Vide')then
+begin
+     if(FSAgenceBanque.Photo.Visible=true)then
+     begin
+          if(LogoBanque='LogoBanqueLong')then FSAgenceBanque.LogoBanqueLong.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+          if(LogoBanque='LogoBanque')then FSAgenceBanque.Photo.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+          FSAgenceBanque.LibelleBanque.Caption:='Pas de Photo!: '
+     end;
+
+     if(FSAgenceBanque.AfficheNewPhoto.Visible=true)then
+     begin
+          FSAgenceBanque.NouvellePhoto.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+          FSAgenceBanque.LibelleBanqueNew.Caption:='Pas de Photo!: '
+     end;
+
+     if(FSAvis.AfficheOptionImpression.Visible=true)or(FSAvis.AffichePrelevementUniteFonds.Visible=true)then
+     begin
+          if(FSAvis.BitPrintType.Caption='Virement')then
+          begin
+               PrintOrdreVirement.TitreLogoBanque.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+               PrintOrdreVirement.TitreLogoBanqueX.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+          end;
+
+          if(FSAvis.BitPrintType.Caption='Espèce')then
+          begin
+               PrintOrdreVersementEspece.TitreLogoBanque.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+          end;
+     end;
+
+     if(FSAvis.AfficheTaxesAvisBanque.Visible=true)then
+     begin
+          if(FSAvis.EtatPrintType.Caption='Avis Banque')then
+          begin
+               if(LogoBanque='LogoBanque')then
+               begin
+                    PrintAvisBanque1.TitreLogoBanque.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+                    PrintAvisBanque1.TitreLogoBanqueX.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+               end;
+
+               if(LogoBanque='LogoBanqueLong')then
+               begin
+                    PrintAvisBanque1.TitreLogoLong.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+                    PrintAvisBanque1.TitreLogoLongX.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+               end;
+          end;
+     end;
+end
+else
+begin
+     if(AdresseFichierCible<>'')then
+     begin
+          FichierConcerne:=AdresseFichierCible;
+          Adresse:=AdresseFichierCible;
+     end
+     else
+     begin
+          TypeProces:='Paie';
+          FichierConcerne:=LogoBanque+' ('+CodeBanqueGlobal+').JPG';
+          Adresse:='';
+          if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+               //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+          end;
+
+          AdresseFichierCibleOut:=Adresse;
+     end;
+
+     if(FSAgenceBanque.Photo.Visible=true)then
+     begin
+          {if FileExists(Adresse)then
+          begin
+               if(LogoBanque='LogoBanqueLong')then FSAgenceBanque.LogoBanqueLong.Picture.LoadFromFile(Adresse);
+               if(LogoBanque='LogoBanque')then FSAgenceBanque.Photo.Picture.LoadFromFile(Adresse);
+               FSAgenceBanque.LibelleBanque.Caption:='';
+          end
+          else}
+          begin
+               if(LogoBanque='LogoBanqueLong')then FSAgenceBanque.LogoBanqueLong.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+               if(LogoBanque='LogoBanque')then FSAgenceBanque.Photo.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+               FSAgenceBanque.LibelleBanque.Caption:='Pas de Photo!: '
+          end;
+     end;
+
+     if(FSAgenceBanque.AfficheNewPhoto.Visible=true)then
+     begin
+          if FileExists(Adresse)then
+          begin
+               FSAgenceBanque.NouvellePhoto.Picture.LoadFromFile(Adresse);
+               FSAgenceBanque.LibelleBanqueNew.Caption:=''
+          end
+          else
+          begin
+               FSAgenceBanque.NouvellePhoto.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+               FSAgenceBanque.LibelleBanqueNew.Caption:='Pas de Photo!: '
+          end;
+     end;
+
+     if(FSAvis.AfficheOptionImpression.Visible=true)or(FSAvis.AffichePrelevementUniteFonds.Visible=true)then
+     begin
+          if(FSAvis.BitPrintType.Caption='Virement')then
+          begin
+               if FileExists(Adresse)then
+               begin
+                    PrintOrdreVirement.TitreLogoBanque.Picture.LoadFromFile(Adresse);
+                    PrintOrdreVirement.TitreLogoBanqueX.Picture.LoadFromFile(Adresse);
+               end
+               else
+               begin
+                    PrintOrdreVirement.TitreLogoBanque.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+                    PrintOrdreVirement.TitreLogoBanqueX.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+               end;
+          end;
+
+          if(FSAvis.BitPrintType.Caption='Chèque')then
+          begin
+               if FileExists(Adresse)then
+               begin
+                    PrintRemiseCheque.TitreLogoBanque.Picture.LoadFromFile(Adresse);
+                    PrintRemiseCheque.TitreLogoBanqueX.Picture.LoadFromFile(Adresse);
+               end
+               else
+               begin
+                    PrintRemiseCheque.TitreLogoBanque.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+                    PrintRemiseCheque.TitreLogoBanqueX.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+               end;
+          end;
+
+          if(FSAvis.BitPrintType.Caption='Espèce')then
+          begin
+               if FileExists(Adresse)then
+               begin
+                    PrintOrdreVersementEspece.TitreLogoBanque.Picture.LoadFromFile(Adresse);
+               end
+               else
+               begin
+                    PrintOrdreVersementEspece.TitreLogoBanque.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+               end;
+          end;
+     end;
+
+     if(FSAvis.AfficheTaxesAvisBanque.Visible=true)then
+     begin
+          if(FSAvis.EtatPrintType.Caption='Avis Banque')then
+          begin
+               if FileExists(Adresse)then
+               begin
+                    if(LogoBanque='LogoBanque')then
+                    begin
+                         PrintAvisBanque1.TitreLogoBanque.Picture.LoadFromFile(Adresse);
+                         PrintAvisBanque1.TitreLogoBanqueX.Picture.LoadFromFile(Adresse);
+                    end;
+
+                    if(LogoBanque='LogoBanqueLong')then
+                    begin
+                         PrintAvisBanque1.TitreLogoLong.Picture.LoadFromFile(Adresse);
+                         PrintAvisBanque1.TitreLogoLongX.Picture.LoadFromFile(Adresse);
+                    end;
+               end
+               else
+               begin
+                    if(LogoBanque='LogoBanque')then
+                    begin
+                         PrintAvisBanque1.TitreLogoBanque.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+                         PrintAvisBanque1.TitreLogoBanqueX.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+                    end;
+
+                    if(LogoBanque='LogoBanqueLong')then
+                    begin
+                         PrintAvisBanque1.TitreLogoLong.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+                         PrintAvisBanque1.TitreLogoLongX.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+                    end;
+               end;
+          end;
+     end;
+end;
+end;
+
+procedure TFSAgenceBanque.BitOuvrirPhotoClick(Sender: TObject);
+var TypeProces,FichierConcerne,Adresse,NewFilNameLogoBanque:string;
+begin
+     FSAgenceBanque.OuvrirPhotos.Execute;
+
+     if FileExists(FSAgenceBanque.OuvrirPhotos.FileName)then
+     begin
+          FSAgenceBanque.NouvellePhoto.Picture.LoadFromFile(FSAgenceBanque.OuvrirPhotos.FileName);
+          FSAgenceBanque.EditFichiersource.Text:=FSAgenceBanque.OuvrirPhotos.FileName;
+          NewFilNameLogoBanque:=FSAgenceBanque.EditLogoBanque.Text+' ('+FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row]+').'+ExtentionFichier(FSAgenceBanque.EditFichiersource.Text);
+          FichierConcerne:=NewFilNameLogoBanque;
+          Adresse:='';
+          TypeProces:='Paie';
+          if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+               //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+          end;
+          FSAgenceBanque.EditAdresseLogoBanqueCree.Text:=Adresse;
+     end
+     else
+     begin
+          FSAgenceBanque.NouvellePhoto.Picture:=FSMenuPrincipal.PhotoVide.Picture;
+          FSAgenceBanque.EditFichiersource.Text:='';
+          FSAgenceBanque.EditAdresseLogoBanqueCree.Text:='';
+     end;
+end;
+
+procedure TFSAgenceBanque.BitValiderPhotoClick(Sender: TObject);
+var TypeProces,FichierConcerne,Adresse,AdresseLogoBanque,CodeBanqueSelect:string;
+begin
+     AdresseLogoBanque:=FSAgenceBanque.EditAdresseLogoBanqueCree.Text;
+
+     if(FSAgenceBanque.BitValiderPhoto.Caption='Modifier')then
+     begin
+          FSAgenceBanque.NouvellePhoto.Picture.SaveToFile(AdresseLogoBanque);
+     end;
+
+     if(FSAgenceBanque.BitValiderPhoto.Caption='Valider')then
+     begin
+          if not FileExists(AdresseLogoBanque)then
+          begin
+               FSAgenceBanque.NouvellePhoto.Picture.SaveToFile(AdresseLogoBanque);
+          end
+          else
+          begin
+               showmessage('Un logo est enregistré pour la banque sélectionner');
+          end;
+     end;
+
+     if(FSAgenceBanque.BitValiderPhoto.Caption='Supprimer')then
+     begin
+          if FileExists(AdresseLogoBanque)then
+          begin
+               deleteFile(AdresseLogoBanque);
+          end;
+
+          FSAgenceBanque.EditAdresseLogoBanqueCree.Text:='';
+          AdresseLogoBanque:=FSAgenceBanque.EditAdresseLogoBanqueCree.Text;
+     end;
+
+     TypeProces:='Business';
+     FichierConcerne:='FBanqueGlobal';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChBanqueGlobal:=Adresse;
+     assignfile(FBanqueGlobal,ChBanqueGlobal);
+     if FileExists(ChBanqueGlobal)
+     then Reset(FBanqueGlobal)
+     else Rewrite(FBanqueGlobal);
+     Seek(FBanqueGlobal,strtointeger(FSAgenceBanque.TableauBanque.Cells[1,FSAgenceBanque.TableauBanque.Row]));
+     read(FBanqueGlobal,RBanqueGlobal);
+     RBanqueGlobal.PositionBanque:=strtointeger(FSAgenceBanque.TableauBanque.Cells[1,FSAgenceBanque.TableauBanque.Row]);
+     RBanqueGlobal.CodeBanque:=FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row];
+     RBanqueGlobal.LibelleBanque:=FSAgenceBanque.TableauBanque.Cells[3,FSAgenceBanque.TableauBanque.Row];
+     RBanqueGlobal.AdresseBanque:=FSAgenceBanque.TableauBanque.Cells[4,FSAgenceBanque.TableauBanque.Row];
+     RBanqueGlobal.TelephoneBanque:=FSAgenceBanque.TableauBanque.Cells[5,FSAgenceBanque.TableauBanque.Row];
+     if(FSAgenceBanque.EditLogoBanque.Text='LogoBanque')then RBanqueGlobal.AdresseLogoBanque:=AdresseLogoBanque;
+     if(FSAgenceBanque.EditLogoBanque.Text='LogoBanqueLong')then RBanqueGlobal.AdresseLogoBanqueLong:=AdresseLogoBanque;
+
+     Seek(FBanqueGlobal,RBanqueGlobal.PositionBanque);
+     write(FBanqueGlobal,RBanqueGlobal);
+
+     CloseFile(FBanqueGlobal);
+     CodeBanqueSelect:=FSAgenceBanque.EditCodeBanque.Text;
+
+     ListeBanque(FSAgenceBanque.TableauBanque,'',CodeBanqueSelect);
+     ListeAgence(FSAgenceBanque.TableauAgence,FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],'');
+
+ProcAffichePhoto(FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],FSAgenceBanque.TableauBanque.Cells[6,FSAgenceBanque.TableauBanque.Row],'LogoBanque',AdresseLogoBanque);
+ProcAffichePhoto(FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],FSAgenceBanque.TableauBanque.Cells[7,FSAgenceBanque.TableauBanque.Row],'LogoBanqueLong',AdresseLogoBanque);
+FSAgenceBanque.AfficheNewPhoto.Visible:=false;
+end;
+
+procedure TFSAgenceBanque.BitBtn4Click(Sender: TObject);
+begin
+FSAgenceBanque.AfficheNewPhoto.Visible:=false;
+end;
+
+procedure TFSAgenceBanque.BitBtn11Click(Sender: TObject);
+var  AdresseLogoBanque,AdresseFichierCible:string;
+begin
+FSAgenceBanque.AfficheNewPhoto.Visible:=true;
+FSAgenceBanque.BitOuvrirPhoto.Enabled:=true;
+FSAgenceBanque.BitValiderPhoto.Kind:=bkRetry;
+FSAgenceBanque.BitValiderPhoto.Caption:='Modifier';
+if(FSAgenceBanque.EditLogoBanque.Text='LogoBanque')then AdresseFichierCible:=FSAgenceBanque.TableauBanque.Cells[6,FSAgenceBanque.TableauBanque.Row];
+if(FSAgenceBanque.EditLogoBanque.Text='LogoBanqueLong')then AdresseFichierCible:=FSAgenceBanque.TableauBanque.Cells[7,FSAgenceBanque.TableauBanque.Row];
+ProcAffichePhoto(FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],AdresseFichierCible,FSAgenceBanque.EditLogoBanque.Text,AdresseLogoBanque);
+FSAgenceBanque.EditFichiersource.Text:='';
+FSAgenceBanque.EditAdresseLogoBanqueCree.Text:=AdresseLogoBanque;
+end;
+
+procedure TFSAgenceBanque.EditAdresseLogoBanqueDblClick(Sender: TObject);
+var  AdresseLogoBanque:string;
+begin
+FSAgenceBanque.AfficheNewPhoto.Visible:=true;
+FSAgenceBanque.BitOuvrirPhoto.Enabled:=true;
+FSAgenceBanque.BitValiderPhoto.Kind:=bkRetry;
+FSAgenceBanque.BitValiderPhoto.Caption:='Modifier';
+ProcAffichePhoto(FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],FSAgenceBanque.EditLogoBanque.Text,AdresseLogoBanque);
+end;
+
+procedure TFSAgenceBanque.BitBtn12Click(Sender: TObject);
+var  AdresseLogoBanque:string;
+begin
+FSAgenceBanque.AfficheNewPhoto.Visible:=true;
+FSAgenceBanque.BitOuvrirPhoto.Enabled:=true;
+FSAgenceBanque.BitValiderPhoto.Kind:=bkCancel;
+FSAgenceBanque.BitValiderPhoto.Caption:='Supprimer';
+ProcAffichePhoto(FSAgenceBanque.TableauBanque.Cells[2,FSAgenceBanque.TableauBanque.Row],FSAgenceBanque.TableauBanque.Cells[6,FSAgenceBanque.TableauBanque.Row],FSAgenceBanque.EditLogoBanque.Text,AdresseLogoBanque);
+FSAgenceBanque.EditFichiersource.Text:='';
+FSAgenceBanque.EditAdresseLogoBanqueCree.Text:=AdresseLogoBanque;
+end;
+
+procedure TFSAgenceBanque.EditLogoBanqueKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSAgenceBanque.TableauBanqueDblClick(Sender: TObject);
+begin
+     if(FSAgenceBanque.TableauBanque.Col=6)then FSAgenceBanque.EditLogoBanque.ItemIndex:=0;
+     if(FSAgenceBanque.TableauBanque.Col=7)then FSAgenceBanque.EditLogoBanque.ItemIndex:=1;
+end;
+
+procedure TFSAgenceBanque.BitBtn13Click(Sender: TObject);
+begin
+     FSAgenceBanque.EditAdresseLogoBanque.Text:='';
+end;
+
+procedure TFSAgenceBanque.BitBtn14Click(Sender: TObject);
+begin
+     FSAgenceBanque.EditAdresseLogoBanqueLong.Text:='';
+end;
+
+end.

@@ -1,0 +1,34 @@
+unit UnitFSServeurClient;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons;
+
+type
+  TFSServeurClient = class(TForm)
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    procedure BitBtn2Click(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSServeurClient: TFSServeurClient;
+
+implementation
+
+uses UnitFSServeur, UnitInitialisation, UnitFSClient;
+
+{$R *.dfm}
+
+procedure TFSServeurClient.BitBtn2Click(Sender: TObject);
+begin
+     FSClient.Show;
+end;
+
+end.

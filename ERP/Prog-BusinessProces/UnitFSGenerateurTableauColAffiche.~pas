@@ -1,0 +1,24 @@
+unit UnitFSGenerateurTableauColAffiche;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFSGenerateurTableauColAffiche = class(TForm)
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSGenerateurTableauColAffiche: TFSGenerateurTableauColAffiche;
+
+implementation
+
+{$R *.dfm}
+
+end.

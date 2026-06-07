@@ -1,0 +1,1136 @@
+unit UnitFSGenerationGroupeTiers;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, ExtCtrls, Grids;
+
+type
+  TFSGenerationGroupeTiers = class(TForm)
+    AfficheVisibleListeGroupeTiers: TPanel;
+    TableauListeGroupeTiers: TStringGrid;
+    AfficheOperationListeGroupeTiers: TPanel;
+    Bevel2: TBevel;
+    Label4: TLabel;
+    Label5: TLabel;
+    TitreEditFichierConcerneTiersListe: TLabel;
+    BitBtn1: TBitBtn;
+    BitOperationListeGroupeTiers: TBitBtn;
+    EditPositionListeGroupeTiers: TEdit;
+    EditCodeTiers: TEdit;
+    EditTiers: TEdit;
+    EditFichierConcerneTiersListe: TComboBox;
+    Panel1: TPanel;
+    RBTiersPrincipalGroupe: TCheckBox;
+    AfficheListeGroupeTiers: TPanel;
+    BitModifierListeGroupeTier: TBitBtn;
+    BitSupprimerListeGroupeTier: TBitBtn;
+    BitNouveauListeGroupeTier: TBitBtn;
+    TableauListeTiers: TStringGrid;
+    AfficheVisibleGroupeTiers: TPanel;
+    TitreTableauListeGroupeTiers: TStringGrid;
+    TableauGroupeTiers: TStringGrid;
+    AfficheGroupeTiers: TPanel;
+    RBAjuster: TCheckBox;
+    BitNouveauGroupeTier: TBitBtn;
+    BitModifierGroupeTier: TBitBtn;
+    BitSupprimerGroupeTier: TBitBtn;
+    BitBtn2: TBitBtn;
+    AfficheOperationGroupeTiers: TPanel;
+    Bevel1: TBevel;
+    Label53: TLabel;
+    EditTitreFichierConserneTiers: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    BitBtn7: TBitBtn;
+    BitOperationGroupeTiers: TBitBtn;
+    EditPositionGroupe: TEdit;
+    EditDesignationGroupe: TEdit;
+    EditInformationGroupe: TMemo;
+    EditTypeProces: TComboBox;
+    EditFichierConcerneTiers: TComboBox;
+    EditOperationFichierTiersConserne: TEdit;
+    EditAddFichierTiersConserne: TEdit;
+    TimerADDFichierConcerne: TTimer;
+    EditFichierConcerne: TEdit;
+    AfficheOperationBaseDonneesJumele: TPanel;
+    EditTypeBaseDonnees: TComboBox;
+    EditBaseDonneesPrincipale: TComboBox;
+    EditInformationBaseDonneJumele: TMemo;
+    EditTypeProcesBaseDonneeJumele: TComboBox;
+    Label6: TLabel;
+    EditTitreFichierConserne: TLabel;
+    Label8: TLabel;
+    EditTitreFichierConcerneBaseDonneeJumele: TLabel;
+    Label10: TLabel;
+    EditFichierConcerneBaseDonneeJumele: TComboBox;
+    EditOperationFichierTiersConserneBaseDonneeJumele: TEdit;
+    EditAddFichierTiersConserneBaseDonneeJumele: TEdit;
+    Bevel3: TBevel;
+    BitBtn3: TBitBtn;
+    BitOperationBaseDonneeJumele: TBitBtn;
+    EditPositionBaseDonneeJumele: TEdit;
+    procedure BitNouveauGroupeTierClick(Sender: TObject);
+    procedure TableauGroupeTiersClick(Sender: TObject);
+    procedure TableauListeGroupeTiersClick(Sender: TObject);
+    procedure BitNouveauListeGroupeTierClick(Sender: TObject);
+    procedure BitModifierListeGroupeTierClick(Sender: TObject);
+    procedure BitSupprimerListeGroupeTierClick(Sender: TObject);
+    procedure BitModifierGroupeTierClick(Sender: TObject);
+    procedure BitSupprimerGroupeTierClick(Sender: TObject);
+    procedure BitOperationGroupeTiersClick(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitOperationListeGroupeTiersClick(Sender: TObject);
+    procedure EditTypeProcesSelect(Sender: TObject);
+    procedure EditDesignationGroupeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditInformationGroupeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditTypeProcesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditFichierConcerneTiersKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditCodeTiersEnter(Sender: TObject);
+    procedure TableauListeTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCodeTiersKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditTiersKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditTiersEnter(Sender: TObject);
+    procedure EditCodeTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
+    procedure TimerADDFichierConcerneTimer(Sender: TObject);
+    procedure EditFichierConcerneTiersKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditFichierConcerneTiersSelect(Sender: TObject);
+    procedure EditFichierConcerneTiersListeKeyPress(Sender: TObject; var Key: Char);
+    procedure EditFichierConcerneTiersListeSelect(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure TableauListeGroupeTiersKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure TableauListeTiersExit(Sender: TObject);
+    procedure RBTiersPrincipalGroupeClick(Sender: TObject);
+    procedure TableauGroupeTiersDblClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure EditTypeBaseDonneesKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitOperationBaseDonneeJumeleClick(Sender: TObject);
+    procedure EditTypeBaseDonneesSelect(Sender: TObject);
+    procedure EditTypeProcesBaseDonneeJumeleSelect(Sender: TObject);
+    procedure EditFichierConcerneBaseDonneeJumeleKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditFichierConcerneBaseDonneeJumeleSelect(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSGenerationGroupeTiers: TFSGenerationGroupeTiers;
+
+  Procedure AffichageGroupeTiers(TableauGroupeTiers:TStringGrid; FichierConcerne:string);
+  Procedure AffichageListeGroupeTiers(TableauListeGroupeTiers:TStringGrid; PositionGroupeTiers:string);
+  Function TrouverGroupeTiers(CodeTiersPrincipale,CodeTiersRechercher:string; ActiverGroupeTiers:boolean; var DesignationGroupe,ListeFichierTiersGroupe:string):boolean;
+  Function ListeCodeGroupeTiers(CodeTiersPrincipale:string; ActiverGroupeTiers:boolean; var DesignationGroupe,ListeFichierTiersGroupe:string):string;
+  Procedure RemplacerTiersPrincipalduGroupe(PositionGroupeTiersPrincipal,PositionListeGroupeTiersPrincipal:string);
+  Procedure ProcNouveauListeGroupeTiers;
+  Procedure ProcModifierListeGroupeTiers;
+  Procedure ProcSupprimerListeGroupeTiers;
+  
+implementation
+
+uses UnitInitialisation, UnitSuppression, UnitFSTiers, UnitFSGenerateurMouvement,
+  UnitFSMenuPrincipal;
+
+{$R *.dfm}
+
+procedure TFSGenerationGroupeTiers.BitNouveauGroupeTierClick(Sender: TObject);
+begin
+     if(FSGenerationGroupeTiers.EditFichierConcerne.Text='FGroupeTiers')then
+     begin
+          FSGenerationGroupeTiers.AfficheOperationGroupeTiers.Visible:=true;
+          FSGenerationGroupeTiers.BitOperationGroupeTiers.Kind:=FSGenerationGroupeTiers.BitNouveauGroupeTier.Kind;
+          FSGenerationGroupeTiers.BitOperationGroupeTiers.Caption:='Valider';
+
+          FSGenerationGroupeTiers.EditPositionGroupe.Text:='';
+          FSGenerationGroupeTiers.EditDesignationGroupe.Text:='';
+          FSGenerationGroupeTiers.EditInformationGroupe.Lines.Text:='';
+          FSGenerationGroupeTiers.EditTypeProces.ItemIndex:=0;
+          FSGenerationGroupeTiers.EditFichierConcerneTiers.Items.Text:='';
+          ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProces.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneTiers,FSGenerationGroupeTiers.EditTitreFichierConserneTiers);
+
+          FSGenerationGroupeTiers.EditDesignationGroupe.SetFocus;
+     end
+     else
+     begin
+          FSGenerationGroupeTiers.AfficheOperationBaseDonneesJumele.Visible:=true;
+          FSGenerationGroupeTiers.BitOperationBaseDonneeJumele.Kind:=FSGenerationGroupeTiers.BitNouveauGroupeTier.Kind;
+          FSGenerationGroupeTiers.BitOperationBaseDonneeJumele.Caption:='Valider';
+
+          FSGenerationGroupeTiers.EditPositionBaseDonneeJumele.Text:='';
+          FSGenerationGroupeTiers.EditBaseDonneesPrincipale.Text:='';
+          FSGenerationGroupeTiers.EditInformationBaseDonneJumele.Lines.Text:='';
+          FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.ItemIndex:=0;
+          FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele.Items.Text:='';
+          ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele,FSGenerationGroupeTiers.EditTitreFichierConserne);
+
+          FSGenerationGroupeTiers.EditTypeBaseDonnees.SetFocus;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.TableauGroupeTiersClick(Sender: TObject);
+begin
+     FSGenerationGroupeTiers.AfficheGroupeTiers.Visible:=true;
+     FSGenerationGroupeTiers.AfficheListeGroupeTiers.Visible:=false;
+     FSGenerationGroupeTiers.AfficheOperationBaseDonneesJumele.Visible:=false;
+
+     FSGenerationGroupeTiers.AfficheOperationGroupeTiers.Visible:=false;
+     FSGenerationGroupeTiers.AfficheOperationListeGroupeTiers.Visible:=false;
+     FSGenerationGroupeTiers.TableauListeTiers.Visible:=false;
+
+     ListeTypeFichierTiersInclu(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[5,FSGenerationGroupeTiers.TableauGroupeTiers.Row],'',FSGenerationGroupeTiers.EditFichierConcerneTiersListe,FSGenerationGroupeTiers.TitreEditFichierConcerneTiersListe);
+
+     if(FSGenerationGroupeTiers.AfficheVisibleListeGroupeTiers.Visible=true)
+     then AffichageListeGroupeTiers(FSGenerationGroupeTiers.TableauListeGroupeTiers,FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row]);
+end;
+
+procedure TFSGenerationGroupeTiers.TableauListeGroupeTiersClick(Sender: TObject);
+begin
+     FSGenerationGroupeTiers.AfficheGroupeTiers.Visible:=false;
+     FSGenerationGroupeTiers.AfficheListeGroupeTiers.Visible:=true;
+
+     FSGenerationGroupeTiers.AfficheOperationGroupeTiers.Visible:=false;
+     FSGenerationGroupeTiers.AfficheOperationListeGroupeTiers.Visible:=false;
+     FSGenerationGroupeTiers.TableauListeTiers.Visible:=false;
+
+end;
+
+procedure TFSGenerationGroupeTiers.BitNouveauListeGroupeTierClick(Sender: TObject);
+begin
+     ProcNouveauListeGroupeTiers;
+end;
+
+procedure TFSGenerationGroupeTiers.BitModifierListeGroupeTierClick(Sender: TObject);
+begin
+     ProcModifierListeGroupeTiers;
+end;
+
+procedure TFSGenerationGroupeTiers.BitSupprimerListeGroupeTierClick(Sender: TObject);
+begin
+     ProcSupprimerListeGroupeTiers;
+end;
+
+procedure TFSGenerationGroupeTiers.BitModifierGroupeTierClick(Sender: TObject);
+begin
+     if(FSGenerationGroupeTiers.EditFichierConcerne.Text='FGroupeTiers')then
+     begin
+          FSGenerationGroupeTiers.AfficheOperationGroupeTiers.Visible:=true;
+          FSGenerationGroupeTiers.BitOperationGroupeTiers.Kind:=FSGenerationGroupeTiers.BitModifierGroupeTier.Kind;
+          FSGenerationGroupeTiers.BitOperationGroupeTiers.Caption:='Valider';
+
+          FSGenerationGroupeTiers.EditPositionGroupe.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditDesignationGroupe.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[2,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditInformationGroupe.Lines.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[3,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditTypeProces.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProces.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneTiers,FSGenerationGroupeTiers.EditTitreFichierConserneTiers);
+          FSGenerationGroupeTiers.EditFichierConcerneTiers.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[5,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+
+          FSGenerationGroupeTiers.EditDesignationGroupe.SetFocus;
+     end
+     else                                     
+     begin
+          FSGenerationGroupeTiers.AfficheOperationBaseDonneesJumele.Visible:=true;
+          FSGenerationGroupeTiers.BitOperationBaseDonneeJumele.Kind:=FSGenerationGroupeTiers.BitModifierGroupeTier.Kind;
+          FSGenerationGroupeTiers.BitOperationBaseDonneeJumele.Caption:='Valider';
+
+          FSGenerationGroupeTiers.EditPositionBaseDonneeJumele.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditBaseDonneesPrincipale.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[2,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditInformationBaseDonneJumele.Lines.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[3,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele,FSGenerationGroupeTiers.EditTitreFichierConserne);
+          FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[5,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+
+          FSGenerationGroupeTiers.EditTypeBaseDonnees.SetFocus;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.BitSupprimerGroupeTierClick(Sender: TObject);
+begin
+     if(FSGenerationGroupeTiers.EditFichierConcerne.Text='FGroupeTiers')then
+     begin
+          FSGenerationGroupeTiers.AfficheOperationGroupeTiers.Visible:=true;
+          FSGenerationGroupeTiers.BitOperationGroupeTiers.Kind:=FSGenerationGroupeTiers.BitSupprimerGroupeTier.Kind;
+          FSGenerationGroupeTiers.BitOperationGroupeTiers.Caption:=FSGenerationGroupeTiers.BitSupprimerGroupeTier.Caption;
+
+          FSGenerationGroupeTiers.EditPositionGroupe.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditDesignationGroupe.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[2,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditInformationGroupe.Lines.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[3,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditTypeProces.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditFichierConcerneTiers.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[5,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+
+          FSGenerationGroupeTiers.BitOperationGroupeTiers.SetFocus;
+     end
+     else
+     begin
+          FSGenerationGroupeTiers.AfficheOperationBaseDonneesJumele.Visible:=true;
+          FSGenerationGroupeTiers.BitOperationBaseDonneeJumele.Kind:=FSGenerationGroupeTiers.BitSupprimerGroupeTier.Kind;
+          FSGenerationGroupeTiers.BitOperationBaseDonneeJumele.Caption:=FSGenerationGroupeTiers.BitSupprimerGroupeTier.Caption;
+
+          FSGenerationGroupeTiers.EditPositionBaseDonneeJumele.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditBaseDonneesPrincipale.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[2,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditInformationBaseDonneJumele.Lines.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[3,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+          ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele,FSGenerationGroupeTiers.EditTitreFichierConserne);
+          FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[5,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+
+          FSGenerationGroupeTiers.BitOperationBaseDonneeJumele.SetFocus;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.BitOperationGroupeTiersClick(
+  Sender: TObject);
+var  i,iExiste:integer;   OKGroupeTiers,OKExisteDesignation:boolean;
+begin
+     if(FSGenerationGroupeTiers.BitOperationGroupeTiers.Caption='Valider')then
+     begin
+           OpenFParc(RParc);
+           ChGroupeTiers:=RParc.Parcours+'\'+Exercice+FSGenerationGroupeTiers.EditFichierConcerne.Text;
+           assignfile(FGroupeTiers,ChGroupeTiers);
+           if FileExists(ChGroupeTiers)then
+           Reset(FGroupeTiers)
+           else Rewrite(FGroupeTiers);
+           Seek(FGroupeTiers,0);
+           i:=0;
+           OKGroupeTiers:=false;
+           OKExisteDesignation:=false;
+           while not eof(FGroupeTiers)and(OKGroupeTiers=false)and(OKExisteDesignation=false)do
+           begin
+                read(FGroupeTiers,RGroupeTiers);
+
+                if(inttostr(RGroupeTiers.PositionGroupeTiers)=FSGenerationGroupeTiers.EditPositionGroupe.Text)then
+                begin
+                     OKGroupeTiers:=true;
+                     iExiste:=i;
+                end
+                else
+                if(RGroupeTiers.DesignationGroupeTiers=FSGenerationGroupeTiers.EditDesignationGroupe.Text)then
+                begin
+                     OKExisteDesignation:=true;
+                end;
+                
+           i:=i+1;
+           end;
+
+           if(OKExisteDesignation=false)then
+           begin
+                 if(OKGroupeTiers=true)then i:=iExiste;
+                 RGroupeTiers.PositionGroupeTiers:=i;
+                 RGroupeTiers.DesignationGroupeTiers:=FSGenerationGroupeTiers.EditDesignationGroupe.Text;
+                 RGroupeTiers.InformationGroupeTiers:=FSGenerationGroupeTiers.EditInformationGroupe.Text;
+                 RGroupeTiers.TypeProces:=FSGenerationGroupeTiers.EditTypeProces.Text;
+                 RGroupeTiers.FichierConcerneTiers:=FSGenerationGroupeTiers.EditFichierConcerneTiers.Text;
+                 Seek(FGroupeTiers,i);
+                 write(FGroupeTiers,RGroupeTiers);
+           end
+           else
+           begin
+                showmessage('Le nom du groupe existe déjà !');
+                FSGenerationGroupeTiers.EditDesignationGroupe.SetFocus;
+                Exit;
+           end;
+
+           CloseFile(FGroupeTiers);
+     end;
+
+     if(FSGenerationGroupeTiers.BitOperationGroupeTiers.Caption='Supprimer')then
+     begin
+          DeleteFGroupeTiers(FSGenerationGroupeTiers.EditPositionGroupe.Text,FSGenerationGroupeTiers.EditFichierConcerne.Text,OKGroupeTiers);
+     end;
+
+     FSGenerationGroupeTiers.AfficheOperationGroupeTiers.Visible:=false;
+     AffichageGroupeTiers(FSGenerationGroupeTiers.TableauGroupeTiers,FSGenerationGroupeTiers.EditFichierConcerne.Text);
+end;
+
+procedure TFSGenerationGroupeTiers.BitBtn7Click(Sender: TObject);
+begin
+     FSGenerationGroupeTiers.AfficheOperationGroupeTiers.Visible:=false;
+end;
+
+procedure TFSGenerationGroupeTiers.BitBtn1Click(Sender: TObject);
+begin
+     FSGenerationGroupeTiers.AfficheOperationListeGroupeTiers.Visible:=false;
+     FSGenerationGroupeTiers.TableauListeTiers.Visible:=false;
+end;
+
+procedure TFSGenerationGroupeTiers.BitOperationListeGroupeTiersClick(
+  Sender: TObject);
+var  i,iExiste:integer;   OKListeGroupeTiers,TiersPrincipalduGroupeModifier:boolean;
+begin
+     if(FSGenerationGroupeTiers.BitOperationListeGroupeTiers.Caption='Valider')then
+     begin
+           OpenFParc(RParc);
+           ChListeGroupeTiers:=RParc.Parcours+'\'+Exercice+'FListeGroupeTiers';
+           assignfile(FListeGroupeTiers,ChListeGroupeTiers);
+           if FileExists(ChListeGroupeTiers)then
+           Reset(FListeGroupeTiers)
+           else Rewrite(FListeGroupeTiers);
+           Seek(FListeGroupeTiers,0);
+           i:=0;
+           OKListeGroupeTiers:=false;
+           while not eof(FListeGroupeTiers)and(OKListeGroupeTiers=false)do
+           begin
+                read(FListeGroupeTiers,RListeGroupeTiers);
+                if(inttostr(RListeGroupeTiers.PositionGroupeTiers)=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row])
+                and(inttostr(RListeGroupeTiers.PositionListeGroupeTiers)=FSGenerationGroupeTiers.EditPositionListeGroupeTiers.Text)
+                then
+                begin
+                     OKListeGroupeTiers:=true;
+                     iExiste:=i;
+                     TiersPrincipalduGroupeModifier:=RListeGroupeTiers.TiersPrincipalduGroupe;
+                end;
+           i:=i+1;
+           end;
+
+           if(OKListeGroupeTiers=true)then i:=iExiste;
+           RListeGroupeTiers.PositionGroupeTiers:=strtointeger(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row]);
+           RListeGroupeTiers.PositionListeGroupeTiers:=i;
+           RListeGroupeTiers.FichierConcerneTiers:=FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text;
+           RListeGroupeTiers.CodeTiers:=FSGenerationGroupeTiers.EditCodeTiers.Text;
+           RListeGroupeTiers.TiersPrincipalduGroupe:=FSGenerationGroupeTiers.RBTiersPrincipalGroupe.Checked;
+           Seek(FListeGroupeTiers,i);
+           write(FListeGroupeTiers,RListeGroupeTiers);
+           CloseFile(FListeGroupeTiers);
+
+           if(OKListeGroupeTiers=true)and(TiersPrincipalduGroupeModifier=false)and(FSGenerationGroupeTiers.RBTiersPrincipalGroupe.Checked=true)then RemplacerTiersPrincipalduGroupe(inttostr(RListeGroupeTiers.PositionGroupeTiers),inttostr(RListeGroupeTiers.PositionListeGroupeTiers));
+     end;
+
+     if(FSGenerationGroupeTiers.BitOperationListeGroupeTiers.Caption='Supprimer')then
+     begin
+          DeleteFListeGroupeTiers(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row],FSGenerationGroupeTiers.EditPositionListeGroupeTiers.Text,OKListeGroupeTiers);
+     end;
+
+     AffichageListeGroupeTiers(FSGenerationGroupeTiers.TableauListeGroupeTiers,FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row]);
+     FSGenerationGroupeTiers.AfficheOperationListeGroupeTiers.Visible:=false;
+
+     FSGenerationGroupeTiers.TableauListeGroupeTiers.SetFocus;
+end;
+
+procedure TFSGenerationGroupeTiers.EditTypeProcesSelect(
+  Sender: TObject);
+begin
+     ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProces.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneTiers,FSGenerationGroupeTiers.EditTitreFichierConserneTiers);
+end;
+
+Procedure AffichageGroupeTiers(TableauGroupeTiers:TStringGrid; FichierConcerne:string);
+var   R:integer;  OKGroupeTiers:boolean;  NotRow,NotCol:string;
+begin
+     TableauGroupeTiers.ColCount:=6;
+     TableauGroupeTiers.Cols[0].Text:='Ordre';
+     TableauGroupeTiers.Cols[1].Text:='PositionGroupe';
+     TableauGroupeTiers.Cols[2].Text:='DesignationGroupe';
+     TableauGroupeTiers.Cols[3].Text:='InformationGroupe';
+     TableauGroupeTiers.Cols[4].Text:='TypeProces';
+     TableauGroupeTiers.Cols[5].Text:='FichierConcerneTiers';
+
+     TableauGroupeTiers.RowCount:=2;
+     TableauGroupeTiers.Rows[1].Text:='';
+
+     OpenFParc(RParc);
+     ChGroupeTiers:=RParc.Parcours+'\'+Exercice+FichierConcerne;
+     assignfile(FGroupeTiers,ChGroupeTiers);
+     if FileExists(ChGroupeTiers)then
+     Reset(FGroupeTiers)
+     else Rewrite(FGroupeTiers);
+     Seek(FGroupeTiers,0);
+     R:=0;
+     while not eof(FGroupeTiers)do
+     begin
+          read(FGroupeTiers,RGroupeTiers);
+          OKGroupeTiers:=true;
+
+          if(OKGroupeTiers=true)then
+          begin
+               R:=R+1;
+               TableauGroupeTiers.Rows[R].Text:=inttostr(R);
+               TableauGroupeTiers.Cells[1,R]:=inttostr(RGroupeTiers.PositionGroupeTiers);
+               TableauGroupeTiers.Cells[2,R]:=RGroupeTiers.DesignationGroupeTiers;
+               TableauGroupeTiers.Cells[3,R]:=RGroupeTiers.InformationGroupeTiers;
+               TableauGroupeTiers.Cells[4,R]:=RGroupeTiers.TypeProces;
+               TableauGroupeTiers.Cells[5,R]:=RGroupeTiers.FichierConcerneTiers;
+          end;
+     end;
+     CloseFile(FGroupeTiers);
+
+     if(R>0)then TableauGroupeTiers.RowCount:=R+1
+            else TableauGroupeTiers.RowCount:=2;
+     NotRow:='';
+     NotCol:='1';
+     for R :=1 to TableauGroupeTiers.ColCount-1 do if ExisteNuminTexte(inttostr(R),NotCol)then TableauGroupeTiers.ColWidths[R]:=0;
+     AjusterColWidth(TableauGroupeTiers,NotRow,NotCol);
+end;
+
+Procedure AffichageListeGroupeTiers(TableauListeGroupeTiers:TStringGrid; PositionGroupeTiers:string);
+var   R:integer;  OKGroupeTiers:boolean;  NotRow,NotCol:string;
+begin
+     TableauListeGroupeTiers.ColCount:=7;
+     TableauListeGroupeTiers.Cols[0].Text:='Ordre';
+     TableauListeGroupeTiers.Cols[1].Text:='PositionGroupeTiers';
+     TableauListeGroupeTiers.Cols[2].Text:='PositionListeGroupeTiers';
+     TableauListeGroupeTiers.Cols[3].Text:='Fichier Concerne';
+     TableauListeGroupeTiers.Cols[4].Text:='CodeTiers';
+     TableauListeGroupeTiers.Cols[5].Text:='Tiers';
+     TableauListeGroupeTiers.Cols[6].Text:='Principal';
+
+     TableauListeGroupeTiers.RowCount:=2;
+     TableauListeGroupeTiers.Rows[1].Text:='';
+
+     OpenFParc(RParc);
+     ChListeGroupeTiers:=RParc.Parcours+'\'+Exercice+'FListeGroupeTiers';
+     assignfile(FListeGroupeTiers,ChListeGroupeTiers);
+     if FileExists(ChListeGroupeTiers)then
+     Reset(FListeGroupeTiers)
+     else Rewrite(FListeGroupeTiers);
+     Seek(FListeGroupeTiers,0);
+     R:=0;
+     while not eof(FListeGroupeTiers)do
+     begin
+          read(FListeGroupeTiers,RListeGroupeTiers);
+
+          if(PositionGroupeTiers<>'')then
+          begin
+               if(inttostr(RListeGroupeTiers.PositionGroupeTiers)=PositionGroupeTiers)
+               then OKGroupeTiers:=true
+               else OKGroupeTiers:=false;
+
+          end
+          else OKGroupeTiers:=true;
+
+          if(OKGroupeTiers=true)then
+          begin
+               R:=R+1;
+               TableauListeGroupeTiers.Rows[R].Text:=inttostr(R);
+               TableauListeGroupeTiers.Cells[1,R]:=inttostr(RListeGroupeTiers.PositionGroupeTiers);
+               TableauListeGroupeTiers.Cells[2,R]:=inttostr(RListeGroupeTiers.PositionListeGroupeTiers);
+               TableauListeGroupeTiers.Cells[3,R]:=RListeGroupeTiers.FichierConcerneTiers;
+               TableauListeGroupeTiers.Cells[4,R]:=RListeGroupeTiers.CodeTiers;
+               RTiersCopie:=ChercherTiers(ChercheGroupeTiers(RListeGroupeTiers.PositionGroupeTiers).TypeProces,RListeGroupeTiers.FichierConcerneTiers,RListeGroupeTiers.CodeTiers,'');
+               TableauListeGroupeTiers.Cells[5,R]:=RTiersCopie.NomTiers+' '+RTiersCopie.PrenomTiers;
+               TableauListeGroupeTiers.Cells[6,R]:=booleantostr(RListeGroupeTiers.TiersPrincipalduGroupe);
+          end;
+     end;
+     CloseFile(FListeGroupeTiers);
+
+     if(R>0)then TableauListeGroupeTiers.RowCount:=R+1
+            else TableauListeGroupeTiers.RowCount:=2;
+
+     NotRow:='';
+     NotCol:='1;2';
+     for R :=1 to TableauListeGroupeTiers.ColCount-1 do if ExisteNuminTexte(inttostr(R),NotCol)then TableauListeGroupeTiers.ColWidths[R]:=0;
+     AjusterColWidth(TableauListeGroupeTiers,NotRow,NotCol);
+end;
+
+procedure TFSGenerationGroupeTiers.EditDesignationGroupeKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSGenerationGroupeTiers.EditInformationGroupe.SetFocus;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.EditInformationGroupeKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSGenerationGroupeTiers.EditTypeProces.SetFocus;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.EditTypeProcesKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSGenerationGroupeTiers.EditFichierConcerneTiers.SetFocus;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.EditFichierConcerneTiersKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSGenerationGroupeTiers.BitOperationGroupeTiers.SetFocus;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.EditCodeTiersEnter(Sender: TObject);
+begin
+     FSGenerationGroupeTiers.TableauListeTiers.Visible:=true;
+     //FSGenerationGroupeTiers.TableauListeTiers.Top:=
+     //FSGenerationGroupeTiers.TableauListeTiers.Left:=;
+     ListeTiers(FSGenerationGroupeTiers.TableauListeTiers,FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row],FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text,'','','',false);
+end;
+
+procedure TFSGenerationGroupeTiers.TableauListeTiersKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+var  OKTiers:boolean;    Messagetexte:string;
+begin
+     if key in[VK_RETURN]then
+     begin
+          OpenFParc(RParc);
+          ChListeGroupeTiers:=RParc.Parcours+'\'+Exercice+'FListeGroupeTiers';
+          assignfile(FListeGroupeTiers,ChListeGroupeTiers);
+          if FileExists(ChListeGroupeTiers)then
+          Reset(FListeGroupeTiers)
+          else Rewrite(FListeGroupeTiers);
+          Seek(FListeGroupeTiers,0);
+          OKTiers:=false;
+          Messagetexte:='';
+          while not eof(FListeGroupeTiers)and(OKTiers=false)do
+          begin
+               read(FListeGroupeTiers,RListeGroupeTiers);
+               if(RListeGroupeTiers.FichierConcerneTiers=FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text)
+               and(RListeGroupeTiers.CodeTiers=FSGenerationGroupeTiers.TableauListeTiers.Cells[1,FSGenerationGroupeTiers.TableauListeTiers.Row])
+               then
+               begin
+                    OKTiers:=true;
+                    if(RListeGroupeTiers.PositionGroupeTiers=strtointeger(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row]))
+                    then Messagetexte:='Le tiers sélectionné existe dans le groupe !'
+                    else Messagetexte:='Le tiers sélectionné existe dans un autre groupe !';
+               end;
+          end;
+          CloseFile(FListeGroupeTiers);
+
+          if(OKTiers=false)then
+          begin
+          FSGenerationGroupeTiers.EditCodeTiers.Text:=FSGenerationGroupeTiers.TableauListeTiers.Cells[1,FSGenerationGroupeTiers.TableauListeTiers.Row];
+          FSGenerationGroupeTiers.EditTiers.Text:=FSGenerationGroupeTiers.TableauListeTiers.Cells[2,FSGenerationGroupeTiers.TableauListeTiers.Row];
+          FSGenerationGroupeTiers.TableauListeTiers.Visible:=false;
+          FSGenerationGroupeTiers.BitOperationListeGroupeTiers.SetFocus;
+          end
+          else
+          begin
+               showmessage(Messagetexte);
+          end;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.EditCodeTiersKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     ListeTiers(FSGenerationGroupeTiers.TableauListeTiers,FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row],FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text,'',FSGenerationGroupeTiers.EditCodeTiers.Text,'',false);
+end;
+
+procedure TFSGenerationGroupeTiers.EditTiersKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     ListeTiers(FSGenerationGroupeTiers.TableauListeTiers,FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row],FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text,'','',FSGenerationGroupeTiers.EditTiers.Text,false);
+end;
+
+procedure TFSGenerationGroupeTiers.EditTiersEnter(Sender: TObject);
+begin
+     FSGenerationGroupeTiers.TableauListeTiers.Visible:=true;
+     //FSGenerationGroupeTiers.TableauListeTiers.Top:=
+     //FSGenerationGroupeTiers.TableauListeTiers.Left:=;
+     ListeTiers(FSGenerationGroupeTiers.TableauListeTiers,FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row],FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text,'','','',false);
+end;
+
+procedure TFSGenerationGroupeTiers.EditCodeTiersKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSGenerationGroupeTiers.TableauListeTiers.SetFocus;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.EditTiersKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSGenerationGroupeTiers.TableauListeTiers.SetFocus;
+     end;
+end;
+
+Function TrouverGroupeTiers(CodeTiersPrincipale,CodeTiersRechercher:string; ActiverGroupeTiers:boolean; var DesignationGroupe,ListeFichierTiersGroupe:string):boolean;
+var  OKTrouver:boolean;   PositionGroupeCodePrincipale,PositionGroupeCodeRechercher:string;
+begin
+     TrouverGroupeTiers:=false;
+     DesignationGroupe:='';
+     ListeFichierTiersGroupe:='';
+
+     if(ActiverGroupeTiers=true)then
+     begin
+           if(CodeTiersPrincipale<>CodeTiersRechercher)then
+           begin
+                OpenFParc(RParc);
+                ChListeGroupeTiers:=RParc.Parcours+'\'+Exercice+'FListeGroupeTiers';
+                assignfile(FListeGroupeTiers,ChListeGroupeTiers);
+                if FileExists(ChListeGroupeTiers)then
+                Reset(FListeGroupeTiers)
+                else Rewrite(FListeGroupeTiers);
+                Seek(FListeGroupeTiers,0);
+                PositionGroupeCodePrincipale:='';
+                PositionGroupeCodeRechercher:='';
+                OKTrouver:=false;
+                while not eof(FListeGroupeTiers)and(OKTrouver=false)do
+                begin
+                     read(FListeGroupeTiers,RListeGroupeTiers);
+                     if(PositionGroupeCodePrincipale='')and(RListeGroupeTiers.CodeTiers=CodeTiersPrincipale)then PositionGroupeCodePrincipale:=inttostr(RListeGroupeTiers.PositionGroupeTiers);
+                     if(PositionGroupeCodeRechercher='')and(RListeGroupeTiers.CodeTiers=CodeTiersRechercher)then PositionGroupeCodeRechercher:=inttostr(RListeGroupeTiers.PositionGroupeTiers);
+
+                     if(PositionGroupeCodePrincipale<>'')and(PositionGroupeCodeRechercher<>'')then OKTrouver:=true;
+                end;
+                CloseFile(FListeGroupeTiers);
+
+                if(PositionGroupeCodePrincipale<>'')and(PositionGroupeCodeRechercher<>'')
+                and(PositionGroupeCodePrincipale=PositionGroupeCodeRechercher)then
+                begin
+                     TrouverGroupeTiers:=true;
+                     DesignationGroupe:=' {'+ChercheGroupeTiers(strtointeger(PositionGroupeCodePrincipale)).DesignationGroupeTiers+'}';
+                     ListeFichierTiersGroupe:=ChercheGroupeTiers(strtointeger(PositionGroupeCodePrincipale)).FichierConcerneTiers;
+                end;
+           end
+           else TrouverGroupeTiers:=true;
+     end
+     else if(CodeTiersPrincipale=CodeTiersRechercher)then TrouverGroupeTiers:=true;
+end;
+
+Function ListeCodeGroupeTiers(CodeTiersPrincipale:string; ActiverGroupeTiers:boolean; var DesignationGroupe,ListeFichierTiersGroupe:string):string;
+var  PositionGroupeCodePrincipale,ListeCodeTiers:string;
+begin
+     ListeCodeGroupeTiers:='';
+     ListeCodeTiers:=CodeTiersPrincipale;
+     DesignationGroupe:='';
+     ListeFichierTiersGroupe:='';
+
+     if(ActiverGroupeTiers=true)and(CodeTiersPrincipale<>'')then
+     begin
+          OpenFParc(RParc);
+          ChListeGroupeTiers:=RParc.Parcours+'\'+Exercice+'FListeGroupeTiers';
+          assignfile(FListeGroupeTiers,ChListeGroupeTiers);
+          if FileExists(ChListeGroupeTiers)then
+          Reset(FListeGroupeTiers)
+          else Rewrite(FListeGroupeTiers);
+          Seek(FListeGroupeTiers,0);
+          PositionGroupeCodePrincipale:='';
+          while not eof(FListeGroupeTiers)and(PositionGroupeCodePrincipale='')do
+          begin
+               read(FListeGroupeTiers,RListeGroupeTiers);
+               if(PositionGroupeCodePrincipale='')and(RListeGroupeTiers.CodeTiers=CodeTiersPrincipale)then PositionGroupeCodePrincipale:=inttostr(RListeGroupeTiers.PositionGroupeTiers);
+
+               if(PositionGroupeCodePrincipale<>'')then
+               begin
+                    ListeCodeTiers:=CodeTiersPrincipale;
+                    RGroupeTiers:=ChercheGroupeTiers(strtointeger(PositionGroupeCodePrincipale));
+                    DesignationGroupe:=' {'+RGroupeTiers.DesignationGroupeTiers+'}';
+                    ListeFichierTiersGroupe:=RGroupeTiers.FichierConcerneTiers;
+               end;
+          end;
+
+          if(PositionGroupeCodePrincipale<>'')then
+          begin
+               Seek(FListeGroupeTiers,0);
+               while not eof(FListeGroupeTiers)do
+               begin
+                    read(FListeGroupeTiers,RListeGroupeTiers);
+                    if(RListeGroupeTiers.CodeTiers<>CodeTiersPrincipale)and(inttostr(RListeGroupeTiers.PositionGroupeTiers)=PositionGroupeCodePrincipale)then
+                    begin
+                         ListeCodeTiers:=ListeCodeTiers+';'+RListeGroupeTiers.CodeTiers;
+                    end;
+               end;
+          end;
+
+          CloseFile(FListeGroupeTiers);
+     end;
+
+     ListeCodeGroupeTiers:=ListeCodeTiers;
+end;
+
+procedure TFSGenerationGroupeTiers.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+     FSGenerationGroupeTiers.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Génération de Groupe par Tièrs';
+end;
+
+procedure TFSGenerationGroupeTiers.TimerADDFichierConcerneTimer(
+  Sender: TObject);
+begin
+     if(FSGenerationGroupeTiers.AfficheOperationGroupeTiers.Visible=true)then
+     begin
+          FSGenerationGroupeTiers.TimerADDFichierConcerne.Enabled:=false;
+
+          if(FSGenerationGroupeTiers.EditOperationFichierTiersConserne.Text='+')then
+          begin
+               if(FSGenerationGroupeTiers.EditAddFichierTiersConserne.Text<>'')then
+               begin
+                    FSGenerationGroupeTiers.EditFichierConcerneTiers.Text:=FSGenerationGroupeTiers.EditAddFichierTiersConserne.Text;
+               end;
+
+          FSGenerationGroupeTiers.EditOperationFichierTiersConserne.Text:='';
+          FSGenerationGroupeTiers.EditAddFichierTiersConserne.Text:='';
+          end;
+     end;
+
+     if(FSGenerationGroupeTiers.AfficheOperationBaseDonneesJumele.Visible=true)then
+     begin
+          FSGenerationGroupeTiers.TimerADDFichierConcerne.Enabled:=false;
+
+          if(FSGenerationGroupeTiers.EditOperationFichierTiersConserneBaseDonneeJumele.Text='+')then
+          begin
+               if(FSGenerationGroupeTiers.EditAddFichierTiersConserneBaseDonneeJumele.Text<>'')then
+               begin
+                    FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele.Text:=FSGenerationGroupeTiers.EditAddFichierTiersConserneBaseDonneeJumele.Text;
+               end;
+
+          FSGenerationGroupeTiers.EditOperationFichierTiersConserneBaseDonneeJumele.Text:='';
+          FSGenerationGroupeTiers.EditAddFichierTiersConserneBaseDonneeJumele.Text:='';
+          end;
+     end;
+
+end;
+
+procedure TFSGenerationGroupeTiers.EditFichierConcerneTiersKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+if(key='+')then
+begin
+      FSGenerationGroupeTiers.EditOperationFichierTiersConserne.Text:=key;
+      FSGenerationGroupeTiers.EditAddFichierTiersConserne.Text:=FSGenerationGroupeTiers.EditFichierConcerneTiers.Text;
+end;
+key:=#0;
+end;
+
+procedure TFSGenerationGroupeTiers.EditFichierConcerneTiersSelect(
+  Sender: TObject);
+begin
+     if(FSGenerationGroupeTiers.EditOperationFichierTiersConserne.Text='+')then
+     begin
+          if(FSGenerationGroupeTiers.EditAddFichierTiersConserne.Text<>'')then
+          begin
+               FSGenerationGroupeTiers.EditAddFichierTiersConserne.Text:=FSGenerationGroupeTiers.EditAddFichierTiersConserne.Text+';'+FSGenerationGroupeTiers.EditFichierConcerneTiers.Text;
+          end;
+
+     FSGenerationGroupeTiers.TimerADDFichierConcerne.Enabled:=true;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.EditFichierConcerneTiersListeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+key:=#0;
+end;
+
+procedure TFSGenerationGroupeTiers.EditFichierConcerneTiersListeSelect(
+  Sender: TObject);
+begin
+     ListeTiers(FSGenerationGroupeTiers.TableauListeTiers,FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row],FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text,'','','',true);
+end;
+
+procedure TFSGenerationGroupeTiers.BitBtn2Click(Sender: TObject);
+var R,Row:integer; TitreEtat:string; AjustePrint:boolean; OrintationPapier:string; FontGrasARow,FontGrasACol,AlignementCenterARow,AlignementCenterACol,AlignementRightARow,AlignementRightACol:string; ImprimeEtat:boolean;
+begin
+
+     TitreEtat:='Liste Groupe Tiers: ';
+
+     R:=0;
+     ImprimeEtat:=false;
+     AjustePrint:=FSGenerationGroupeTiers.RBAjuster.Checked;
+     OrintationPapier:='Portrait';
+
+     for Row:=1 to FSGenerationGroupeTiers.TableauGroupeTiers.RowCount-1 do
+     begin
+          AffichageListeGroupeTiers(FSGenerationGroupeTiers.TableauListeGroupeTiers,FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,Row]);
+
+          FSGenerationGroupeTiers.TitreTableauListeGroupeTiers.Cells[0,0]:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[2,Row]+' '+
+                                                                           FSGenerationGroupeTiers.TableauGroupeTiers.Cells[3,Row]+':';
+
+           FontGrasARow:='0';
+           FontGrasACol:='';
+           AlignementCenterARow:='';
+           AlignementCenterACol:='';
+           AlignementRightARow:='';
+           AlignementRightACol:='';
+           OptionsImpression(FSGenerationGroupeTiers.TitreTableauListeGroupeTiers,'',R,1,TitreEtat,AjustePrint,OrintationPapier,FontGrasARow,FontGrasACol,AlignementCenterARow,AlignementCenterACol,AlignementRightARow,AlignementRightACol,ImprimeEtat,0,FSMenuPrincipal.ImageCodebarre,true,R);
+
+           FontGrasARow:='0';
+           FontGrasACol:='';
+           AlignementCenterARow:='0';
+           AlignementCenterACol:='0';
+           AlignementRightARow:='';
+           AlignementRightACol:='';
+           if(Row=FSGenerationGroupeTiers.TableauGroupeTiers.RowCount-1)then ImprimeEtat:=true;
+           OptionsImpression(FSGenerationGroupeTiers.TableauListeGroupeTiers,'Center',R,1,TitreEtat,AjustePrint,OrintationPapier,FontGrasARow,FontGrasACol,AlignementCenterARow,AlignementCenterACol,AlignementRightARow,AlignementRightACol,ImprimeEtat,1,FSMenuPrincipal.ImageCodebarre,true,R);
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.TableauListeGroupeTiersKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     if key in['n','N']then
+     begin
+          ProcNouveauListeGroupeTiers;
+     end;
+
+     if key in['m','M']then
+     begin
+          ProcModifierListeGroupeTiers;      
+     end;
+
+     if key in['s','S']then
+     begin
+          ProcSupprimerListeGroupeTiers;
+     end;
+end;
+
+Procedure ProcNouveauListeGroupeTiers;
+begin
+     FSGenerationGroupeTiers.AfficheOperationListeGroupeTiers.Visible:=true;
+     FSGenerationGroupeTiers.BitOperationListeGroupeTiers.Kind:=FSGenerationGroupeTiers.BitNouveauListeGroupeTier.Kind;
+     FSGenerationGroupeTiers.BitOperationListeGroupeTiers.Caption:='Valider';
+
+     FSGenerationGroupeTiers.EditPositionListeGroupeTiers.Text:='';
+     FSGenerationGroupeTiers.EditFichierConcerneTiersListe.ItemIndex:=0;
+     FSGenerationGroupeTiers.EditCodeTiers.Text:='';                   
+     FSGenerationGroupeTiers.EditTiers.Text:='';
+     FSGenerationGroupeTiers.RBTiersPrincipalGroupe.Checked:=not(ExisteTiersPricipalGroupe(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row],'','','',RListeGroupeTiersCopie));
+     FSGenerationGroupeTiers.EditTiers.SetFocus;
+
+     showmessage(RListeGroupeTiersCopie.CodeTiers);
+end;
+
+Procedure ProcModifierListeGroupeTiers;
+begin
+     FSGenerationGroupeTiers.AfficheOperationListeGroupeTiers.Visible:=true;
+     FSGenerationGroupeTiers.BitOperationListeGroupeTiers.Kind:=FSGenerationGroupeTiers.BitModifierListeGroupeTier.Kind;
+     FSGenerationGroupeTiers.BitOperationListeGroupeTiers.Caption:='Valider';
+
+     FSGenerationGroupeTiers.EditPositionListeGroupeTiers.Text:=FSGenerationGroupeTiers.TableauListeGroupeTiers.Cells[2,FSGenerationGroupeTiers.TableauListeGroupeTiers.Row];
+     FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text:=FSGenerationGroupeTiers.TableauListeGroupeTiers.Cells[3,FSGenerationGroupeTiers.TableauListeGroupeTiers.Row];
+     FSGenerationGroupeTiers.EditCodeTiers.Text:=FSGenerationGroupeTiers.TableauListeGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauListeGroupeTiers.Row];
+     RTiersCopie:=ChercherTiers(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row],FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text,FSGenerationGroupeTiers.EditCodeTiers.Text,'');
+     FSGenerationGroupeTiers.EditTiers.Text:=RTiersCopie.NomTiers+' '+RTiersCopie.PrenomTiers;
+     FSGenerationGroupeTiers.RBTiersPrincipalGroupe.Checked:=strtoboolean(FSGenerationGroupeTiers.TableauListeGroupeTiers.Cells[6,FSGenerationGroupeTiers.TableauListeGroupeTiers.Row]);
+     FSGenerationGroupeTiers.EditTiers.SetFocus;
+end;
+
+Procedure ProcSupprimerListeGroupeTiers;
+begin
+     FSGenerationGroupeTiers.AfficheOperationListeGroupeTiers.Visible:=true;
+     FSGenerationGroupeTiers.BitOperationListeGroupeTiers.Kind:=FSGenerationGroupeTiers.BitSupprimerListeGroupeTier.Kind;
+     FSGenerationGroupeTiers.BitOperationListeGroupeTiers.Caption:=FSGenerationGroupeTiers.BitSupprimerListeGroupeTier.Caption;
+
+     FSGenerationGroupeTiers.EditPositionListeGroupeTiers.Text:=FSGenerationGroupeTiers.TableauListeGroupeTiers.Cells[2,FSGenerationGroupeTiers.TableauListeGroupeTiers.Row];
+     FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text:=FSGenerationGroupeTiers.TableauListeGroupeTiers.Cells[3,FSGenerationGroupeTiers.TableauListeGroupeTiers.Row];
+     FSGenerationGroupeTiers.EditCodeTiers.Text:=FSGenerationGroupeTiers.TableauListeGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauListeGroupeTiers.Row];
+     RTiersCopie:=ChercherTiers(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row],FSGenerationGroupeTiers.EditFichierConcerneTiersListe.Text,FSGenerationGroupeTiers.EditCodeTiers.Text,'');
+     FSGenerationGroupeTiers.EditTiers.Text:=RTiersCopie.NomTiers+' '+RTiersCopie.PrenomTiers;
+     FSGenerationGroupeTiers.RBTiersPrincipalGroupe.Checked:=strtoboolean(FSGenerationGroupeTiers.TableauListeGroupeTiers.Cells[6,FSGenerationGroupeTiers.TableauListeGroupeTiers.Row]);
+     FSGenerationGroupeTiers.BitOperationListeGroupeTiers.SetFocus;
+end;
+
+Procedure RemplacerTiersPrincipalduGroupe(PositionGroupeTiersPrincipal,PositionListeGroupeTiersPrincipal:string);
+var  i:integer;
+begin
+     OpenFParc(RParc);
+     ChListeGroupeTiers:=RParc.Parcours+'\'+Exercice+'FListeGroupeTiers';
+     assignfile(FListeGroupeTiers,ChListeGroupeTiers);
+     if FileExists(ChListeGroupeTiers)then
+     Reset(FListeGroupeTiers)
+     else Rewrite(FListeGroupeTiers);
+     Seek(FListeGroupeTiers,0);
+     i:=0;
+     while not eof(FListeGroupeTiers)do
+     begin
+          read(FListeGroupeTiers,RListeGroupeTiers);
+          if(inttostr(RListeGroupeTiers.PositionGroupeTiers)=PositionGroupeTiersPrincipal)
+          and(inttostr(RListeGroupeTiers.PositionListeGroupeTiers)<>PositionListeGroupeTiersPrincipal)
+          then
+          begin
+               Seek(FListeGroupeTiers,i);
+               RListeGroupeTiers.TiersPrincipalduGroupe:=false;
+               write(FListeGroupeTiers,RListeGroupeTiers);
+          end;
+     i:=i+1;
+     end;
+     CloseFile(FListeGroupeTiers);
+end;
+
+procedure TFSGenerationGroupeTiers.TableauListeTiersExit(Sender: TObject);
+begin
+     FSGenerationGroupeTiers.TableauListeTiers.Visible:=false;
+end;
+
+procedure TFSGenerationGroupeTiers.RBTiersPrincipalGroupeClick(
+  Sender: TObject);
+begin
+     FSGenerationGroupeTiers.TableauListeTiers.Visible:=false;
+end;
+
+procedure TFSGenerationGroupeTiers.TableauGroupeTiersDblClick(
+  Sender: TObject);
+begin
+     if(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[3,FSGenerationGroupeTiers.TableauGroupeTiers.Row]='')then
+     begin
+           if(ExisteTiersPricipalGroupe(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row],'','','',RListeGroupeTiersCopie)=true)then
+           begin
+                FSGenerationGroupeTiers.AfficheOperationGroupeTiers.Visible:=true;
+                FSGenerationGroupeTiers.BitOperationGroupeTiers.Kind:=FSGenerationGroupeTiers.BitModifierGroupeTier.Kind;
+                FSGenerationGroupeTiers.BitOperationGroupeTiers.Caption:='Valider';
+
+                FSGenerationGroupeTiers.EditPositionGroupe.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[1,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+                FSGenerationGroupeTiers.EditDesignationGroupe.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[2,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+                RTiers:=ChercherTiers(FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row],RListeGroupeTiersCopie.FichierConcerneTiers,RListeGroupeTiersCopie.CodeTiers,'');
+                FSGenerationGroupeTiers.EditInformationGroupe.Lines.Text:=RTiers.NomTiers+' '+RTiers.PrenomTiers;
+                FSGenerationGroupeTiers.EditTypeProces.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[4,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+                ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProces.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneTiers,FSGenerationGroupeTiers.EditTitreFichierConserneTiers);
+                FSGenerationGroupeTiers.EditFichierConcerneTiers.Text:=FSGenerationGroupeTiers.TableauGroupeTiers.Cells[5,FSGenerationGroupeTiers.TableauGroupeTiers.Row];
+
+                FSGenerationGroupeTiers.BitOperationGroupeTiers.SetFocus;
+           end;
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+procedure TFSGenerationGroupeTiers.EditTypeBaseDonneesKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSGenerationGroupeTiers.BitBtn3Click(Sender: TObject);
+begin
+     FSGenerationGroupeTiers.AfficheOperationBaseDonneesJumele.Visible:=false;
+end;
+
+procedure TFSGenerationGroupeTiers.BitOperationBaseDonneeJumeleClick(Sender: TObject);
+var  i,iExiste:integer;   OKGroupeTiers,OKExisteDesignation:boolean;
+begin
+     if(FSGenerationGroupeTiers.BitOperationBaseDonneeJumele.Caption='Valider')then
+     begin
+           OpenFParc(RParc);
+           ChGroupeTiers:=RParc.Parcours+'\'+Exercice+FSGenerationGroupeTiers.EditFichierConcerne.Text;
+           assignfile(FGroupeTiers,ChGroupeTiers);
+           if FileExists(ChGroupeTiers)then
+           Reset(FGroupeTiers)
+           else Rewrite(FGroupeTiers);
+           Seek(FGroupeTiers,0);
+           i:=0;
+           OKGroupeTiers:=false;
+           OKExisteDesignation:=false;
+           while not eof(FGroupeTiers)and(OKGroupeTiers=false)and(OKExisteDesignation=false)do
+           begin
+                read(FGroupeTiers,RGroupeTiers);
+
+                if(inttostr(RGroupeTiers.PositionGroupeTiers)=FSGenerationGroupeTiers.EditPositionBaseDonneeJumele.Text)then
+                begin
+                     OKGroupeTiers:=true;
+                     iExiste:=i;
+                end
+                else
+                if(RGroupeTiers.DesignationGroupeTiers=FSGenerationGroupeTiers.EditBaseDonneesPrincipale.Text)then
+                begin
+                     OKExisteDesignation:=true;
+                end;
+                
+           i:=i+1;
+           end;
+
+           if(OKExisteDesignation=false)then
+           begin
+                 if(OKGroupeTiers=true)then i:=iExiste;
+                 RGroupeTiers.PositionGroupeTiers:=i;
+                 RGroupeTiers.DesignationGroupeTiers:=FSGenerationGroupeTiers.EditBaseDonneesPrincipale.Text;
+                 RGroupeTiers.InformationGroupeTiers:=FSGenerationGroupeTiers.EditInformationBaseDonneJumele.Text;
+                 RGroupeTiers.TypeProces:=FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text;
+                 RGroupeTiers.FichierConcerneTiers:=FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele.Text;
+                 Seek(FGroupeTiers,i);
+                 write(FGroupeTiers,RGroupeTiers);
+           end
+           else
+           begin
+                showmessage('Le nom du groupe existe déjà !');
+                FSGenerationGroupeTiers.EditBaseDonneesPrincipale.SetFocus;
+                Exit;
+           end;
+
+           CloseFile(FGroupeTiers);
+     end;
+
+     if(FSGenerationGroupeTiers.BitOperationBaseDonneeJumele.Caption='Supprimer')then
+     begin
+          DeleteFGroupeTiers(FSGenerationGroupeTiers.EditPositionBaseDonneeJumele.Text,FSGenerationGroupeTiers.EditFichierConcerne.Text,OKGroupeTiers);
+     end;
+
+     FSGenerationGroupeTiers.AfficheOperationBaseDonneesJumele.Visible:=false;
+     AffichageGroupeTiers(FSGenerationGroupeTiers.TableauGroupeTiers,FSGenerationGroupeTiers.EditFichierConcerne.Text);
+end;
+
+procedure TFSGenerationGroupeTiers.EditTypeBaseDonneesSelect(
+  Sender: TObject);
+begin
+     if(FSGenerationGroupeTiers.EditTypeBaseDonnees.Text<>'BaseAvis')then
+     begin
+           ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeBaseDonnees.Text,'','',FSGenerationGroupeTiers.EditBaseDonneesPrincipale,FSGenerationGroupeTiers.EditTitreFichierConcerneBaseDonneeJumele);
+
+           FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Items.Text:='';
+           FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Items.Add('Business');
+           FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Items.Add('Commercial');
+           FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Items.Add('Paie');
+           FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Items.Add('Comptabilité');
+           FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Items.Add('Social');
+
+           ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele,FSGenerationGroupeTiers.EditTitreFichierConserne);
+           FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text:=FSGenerationGroupeTiers.EditTypeBaseDonnees.Text;
+           ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele,FSGenerationGroupeTiers.EditTitreFichierConserne);
+     end;
+end;
+
+procedure TFSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumeleSelect(
+  Sender: TObject);
+begin
+     ListeTypeFichierTiersBox(FSGenerationGroupeTiers.EditTypeProcesBaseDonneeJumele.Text,'','',FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele,FSGenerationGroupeTiers.EditTitreFichierConserne);
+end;
+
+procedure TFSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumeleKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+if(key='+')then
+begin
+      FSGenerationGroupeTiers.EditOperationFichierTiersConserneBaseDonneeJumele.Text:=key;
+      FSGenerationGroupeTiers.EditAddFichierTiersConserneBaseDonneeJumele.Text:=FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele.Text;
+end;
+key:=#0;
+end;
+
+procedure TFSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumeleSelect(
+  Sender: TObject);
+begin
+     if(FSGenerationGroupeTiers.EditOperationFichierTiersConserneBaseDonneeJumele.Text='+')then
+     begin
+          if(FSGenerationGroupeTiers.EditAddFichierTiersConserneBaseDonneeJumele.Text<>'')then
+          begin
+               FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele.Text:=FSGenerationGroupeTiers.EditAddFichierTiersConserneBaseDonneeJumele.Text+';'+FSGenerationGroupeTiers.EditFichierConcerneBaseDonneeJumele.Text;
+          end;
+
+     FSGenerationGroupeTiers.TimerADDFichierConcerne.Enabled:=true;
+     end;
+end;
+
+end.

@@ -1,0 +1,1124 @@
+unit UnitFSMiseaJour;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, ExtCtrls, StdCtrls, Buttons, Grids, ShellCtrls;
+
+type
+  TFSMiseaJour = class(TForm)
+    OuvrirUnFichier: TOpenDialog;
+    TimerAlerteMJ: TTimer;
+    Panel2: TPanel;
+    PageMJ: TPageControl;
+    PageMJFonct: TTabSheet;
+    Bevel1: TBevel;
+    Bevel2: TBevel;
+    Bevel3: TBevel;
+    Bevel4: TBevel;
+    RBAppliqueDecodage: TCheckBox;
+    RBAjustement: TCheckBox;
+    BitOuvrir: TBitBtn;
+    EditAdresseFichierMJFonct: TEdit;
+    AfficheMJFonct: TPanel;
+    ImageMJFonct: TImage;
+    CliquerPourDemarrerMJFonct: TLabel;
+    EditMJFonct: TEdit;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    TableauDataMJFonct: TStringGrid;
+    AfficheReExecuterMJFonct: TPanel;
+    Bevel5: TBevel;
+    BitReExecuterMJFont: TBitBtn;
+    BitBtn4: TBitBtn;
+    AfficheMessageReExecuterMJFonct: TPanel;
+    AfficheAlerteMJFontDepassee: TPanel;
+    BitBtn3: TBitBtn;
+    PageMJIns: TTabSheet;
+    Bevel6: TBevel;
+    Label1: TLabel;
+    Bevel8: TBevel;
+    Bevel9: TBevel;
+    EditExtractParcours: TEdit;
+    EditNomBaseDonnee: TEdit;
+    BitBtn5: TBitBtn;
+    EditAdresseBaseDonnee: TEdit;
+    TableauDernierMJFont: TStringGrid;
+    AfficheMJIns: TPanel;
+    ImageMJIns: TImage;
+    CliquerPourDemarrerMJIns: TLabel;
+    Panel1: TPanel;
+    AfficheInstalle: TPanel;
+    Label15: TLabel;
+    Label17: TLabel;
+    Label41: TLabel;
+    Label3: TLabel;
+    Bevel24: TBevel;
+    Bevel25: TBevel;
+    EditExercice: TComboBox;
+    EditMode: TComboBox;
+    EditSource1: TEdit;
+    Source1: TShellTreeView;
+    EditEnregistrement: TEdit;
+    BitOK: TBitBtn;
+    BitBtn9: TBitBtn;
+    AfficheMiseaJourFontIns: TPanel;
+    EditAdresseFichierMJFonctIns: TEdit;
+    BitAdresseFichierMJFonctIns: TBitBtn;
+    AfficheAdresseBaseDonnee: TPanel;
+    Bevel10: TBevel;
+    Source: TShellTreeView;
+    AfficheOptionBaseDonnee: TPanel;
+    Bevel7: TBevel;
+    BitBtn6: TBitBtn;
+    ListeFichierSource: TShellListView;
+    EditParcours: TEdit;
+    PageMJSys: TTabSheet;
+    AfficheLicence: TPanel;
+    Bevel15: TBevel;
+    Image2: TImage;
+    Bevel11: TBevel;
+    Bevel12: TBevel;
+    Bevel13: TBevel;
+    Bevel14: TBevel;
+    EditLicenceInstallation: TEdit;
+    BitLicenceInstallation: TBitBtn;
+    Panel3: TPanel;
+    EditLicenceParcours: TEdit;
+    Label2: TLabel;
+    EditNatureMJ: TEdit;
+    EditExerciceExtract: TEdit;
+    Label4: TLabel;
+    RBTelechargerDataEntite: TCheckBox;
+    procedure ImageMJFonctClick(Sender: TObject);
+    procedure CliquerPourDemarrerMJFonctClick(Sender: TObject);
+    procedure BitOuvrirClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure TimerAlerteMJTimer(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitReExecuterMJFontClick(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure CliquerPourDemarrerMJInsClick(Sender: TObject);
+    procedure Source1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure Source1KeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure Source1MouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure BitBtn9Click(Sender: TObject);
+    procedure BitOKClick(Sender: TObject);
+    procedure ImageMJInsClick(Sender: TObject);
+    procedure BitAdresseFichierMJFonctInsClick(Sender: TObject);
+    procedure SourceMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure BitLicenceInstallationClick(Sender: TObject);
+    procedure EditLicenceParcoursDblClick(Sender: TObject);
+    procedure ListeFichierSourceMouseUp(Sender: TObject;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure RBTelechargerDataEntiteClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSMiseaJour: TFSMiseaJour;
+
+Procedure MiseaJourFonctionnelle(Parcours,DateMJFonct,HeureMJFonct:string; NbrJourMJFonct:integer; RegularisationDateAvancement:boolean);
+Procedure ReExecuterMJFonct(Parcours,DateMJFonct,HeureMJFonct:string; NbrJourMJFonct:integer; RegularisationDateAvancement:boolean);
+Function AfficherDerniereMJFont(TableauDernierMJFont:TStringGrid; Adresse:string):boolean;
+Procedure AutoInstall(Repertoire,Adresse,Exercice:string);
+Function ExtractParcours(FileParcours:string; var ExtractAnnee:string):string;
+
+implementation
+
+Uses UnitInitialisation, UnitFSMenuPrincipal;
+
+var
+   RParc:RInstalle;
+   FParc:FInstalle;
+   ParcInstalle:string100;
+
+   RMJFonct:RMJFoncts;
+   FMJFonct:FMJFoncts;
+   ChMJFonct:string250;
+
+   RRegistre:REnregistrement;
+   FRegistre:FEnregistrement;
+   ChEnregistrement:string250;
+
+{$R *.dfm}
+
+Function ExtractParcours(FileParcours:string; var ExtractAnnee:string):string;
+var  i:integer;   OKParcours:boolean; TexteParcours:string;
+begin
+     OKParcours:=false;
+     i:=1;
+     TexteParcours:='';
+     while(i<=longueur(FileParcours))and(OKParcours=false)do
+     begin
+          if(FileParcours[i]<>'-')then
+          begin
+               TexteParcours:=TexteParcours+FileParcours[i];
+          end
+          else
+          begin
+               OKParcours:=true;
+               i:=i+1;
+               ExtractAnnee:='';
+               while(i<=longueur(FileParcours))and(longueur(ExtractAnnee)<4)do
+               begin
+                    if(FileParcours[i]in['0'..'9'])then ExtractAnnee:=ExtractAnnee+FileParcours[i];
+               i:=i+1;
+               end;
+          end;
+     i:=i+1;
+     end;
+     if(longueur(ExtractAnnee)<>4)then ExtractAnnee:='';
+     ExtractParcours:=TexteParcours;
+end;
+              
+Procedure AutoInstall(Repertoire,Adresse,Exercice:string);
+var i:integer; Chemin,CheminSelect:string; OKRegistre:boolean;
+begin
+          Chemin:='C:\WinBuss.dll';
+          CheminSelect:='C:\WinBus.File';
+
+          assignfile(FRegistre,Chemin);
+          if FileExists(Chemin)
+          then reset(FRegistre)
+          else rewrite(FRegistre);
+          i:=0;
+          Seek(FRegistre,0);
+          OKRegistre:=false;
+          while(not eof(FRegistre))and(OKRegistre=false)do
+          begin
+               Read(FRegistre,RRegistre);
+               if(RRegistre.Repertoire=Repertoire)
+               and(RRegistre.Adresse=Adresse)
+               then
+               begin
+                    OKRegistre:=true;
+               end
+               else i:=i+1;
+          end;
+
+          RRegistre.Repertoire:=Repertoire;
+          RRegistre.Adresse:=Adresse;
+          RRegistre.Exercice:=Exercice;
+          Seek(FRegistre,i);
+          Write(FRegistre,RRegistre);
+          CloseFile(FRegistre);
+
+          assignfile(FRegistre,CheminSelect);
+          if FileExists(CheminSelect)
+          then reset(FRegistre)
+          else rewrite(FRegistre);
+          Seek(FRegistre,0);
+          Write(FRegistre,RRegistre);
+          CloseFile(FRegistre);
+
+          ChEnregistrement:=RRegistre.Adresse;
+          assignfile(FParc,ChEnregistrement);
+          rewrite(FParc);
+          RParc.Parcours:=FSMiseaJour.EditAdresseBaseDonnee.Text;
+          RParc.DateAvancement:=datetostr(date);
+          RParc.DateExp:=FSMiseaJour.TableauDernierMJFont.Cells[1,5];
+          RParc.HeureExp:=FSMiseaJour.TableauDernierMJFont.Cells[1,3];
+          RParc.NomLogo:=FSMiseaJour.TableauDernierMJFont.Cells[1,6];
+          RParc.NomLabel:=FSMiseaJour.TableauDernierMJFont.Cells[1,7];
+          RParc.MotPasse:='';
+          RParc.Text1:=FSMiseaJour.TableauDernierMJFont.Cells[1,8];
+          RParc.Text2:=FSMiseaJour.TableauDernierMJFont.Cells[1,9];
+          RParc.Text3:=FSMiseaJour.TableauDernierMJFont.Cells[1,10];
+          RParc.Text4:=FSMiseaJour.TableauDernierMJFont.Cells[1,11];
+          RParc.Text5:=FSMiseaJour.TableauDernierMJFont.Cells[1,12];
+          RParc.Text6:=FSMiseaJour.TableauDernierMJFont.Cells[1,13];
+          RParc.Text7:=FSMiseaJour.TableauDernierMJFont.Cells[1,14];
+          RParc.Text8:=FSMiseaJour.TableauDernierMJFont.Cells[1,15];
+          RParc.Text9:=FSMiseaJour.TableauDernierMJFont.Cells[1,16];
+          RParc.Text10:=FSMiseaJour.TableauDernierMJFont.Cells[1,17];
+          Seek(FParc,0);
+          Write(FParc,RParc);
+          CloseFile(FParc);
+
+          FSMenuPrincipal.TimerAfficheArret.Enabled:=false;
+          FSMenuPrincipal.TypeAlerteMJ.Caption:='';
+          FSMenuPrincipal.Enabled:=true;
+          FSMenuPrincipal.MenuPrincipal.Items[0].Enabled:=true;
+          FSMenuPrincipal.MenuPrincipal.Items[1].Enabled:=true;
+          FSMenuPrincipal.MenuPrincipal.Items[2].Enabled:=true;
+          FSMenuPrincipal.TimerSaisieFiches.Enabled:=true;
+
+end;
+
+Function AfficherDerniereMJFont(TableauDernierMJFont:TStringGrid; Adresse:string):boolean;
+var  i,PositionDEMJF:integer;  LastDateExperat,NextDateExperat:string[10];
+begin
+     TableauDernierMJFont.ColCount:=2;
+     TableauDernierMJFont.RowCount:=19;
+     TableauDernierMJFont.Cols[0].Text:='Data';
+     TableauDernierMJFont.Cols[1].Text:='Information';
+
+     TableauDernierMJFont.Rows[1].Text:='Parcours';
+     TableauDernierMJFont.Rows[2].Text:='Date mise à jour';
+     TableauDernierMJFont.Rows[3].Text:='Heure mise à jour';
+     TableauDernierMJFont.Rows[4].Text:='Durée mise à jour';
+     TableauDernierMJFont.Rows[5].Text:='Date Expiration';
+     TableauDernierMJFont.Rows[6].Text:='Logo';
+     TableauDernierMJFont.Rows[7].Text:='Label';
+     TableauDernierMJFont.Rows[8].Text:='Text1';
+     TableauDernierMJFont.Rows[9].Text:='Text2';
+     TableauDernierMJFont.Rows[10].Text:='Text3';
+     TableauDernierMJFont.Rows[11].Text:='Text4';
+     TableauDernierMJFont.Rows[12].Text:='Text5';
+     TableauDernierMJFont.Rows[13].Text:='Text6';
+     TableauDernierMJFont.Rows[14].Text:='Text7';
+     TableauDernierMJFont.Rows[15].Text:='Text8';
+     TableauDernierMJFont.Rows[16].Text:='Text9';
+     TableauDernierMJFont.Rows[17].Text:='Text10';
+     TableauDernierMJFont.Rows[18].Text:='Régularisation Date Avancement';
+
+     ChMJFonct:=Adresse+'\FListeMJFonct.cer';
+     assignfile(FMJFonct,ChMJFonct);
+     i:=0;
+     PositionDEMJF:=0;
+     if FileExists(ChMJFonct)then
+     begin
+          Reset(FMJFonct);
+          Seek(FMJFonct,0);
+          LastDateExperat:='';
+          while not eof(FMJFonct)do
+          begin
+               read(FMJFonct,RMJFonct);
+               if(LastDateExperat='')
+               then
+               begin
+                    LastDateExperat:=datetostr(strtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true))+RMJFonct.NbrJourMJFonct);
+                    PositionDEMJF:=i;
+               end
+               else
+               if(strtodate(LastDateExperat)<(strtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true))+RMJFonct.NbrJourMJFonct))
+               then
+               begin
+                    LastDateExperat:=datetostr(strtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true))+RMJFonct.NbrJourMJFonct);
+                    PositionDEMJF:=i;
+               end;
+          i:=i+1;
+          end;
+          Seek(FMJFonct,PositionDEMJF);
+          read(FMJFonct,RMJFonct);
+          TableauDernierMJFont.Cells[1,1]:=DecodageTexteSpeciale(RMJFonct.Parcours,true);
+          TableauDernierMJFont.Cells[1,2]:=DecodageTexteSpeciale(RMJFonct.DateMJFonct,true);
+          TableauDernierMJFont.Cells[1,3]:=DecodageTexteSpeciale(RMJFonct.HeureMJFonct,true);
+          TableauDernierMJFont.Cells[1,4]:=DecodageTexteSpeciale(inttostr(RMJFonct.NbrJourMJFonct),true);
+          TableauDernierMJFont.Cells[1,5]:=datetostr(strtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true))+RMJFonct.NbrJourMJFonct);
+          TableauDernierMJFont.Cells[1,6]:=DecodageTexteSpeciale(RMJFonct.NomLogo,true);
+          TableauDernierMJFont.Cells[1,7]:=DecodageTexteSpeciale(RMJFonct.NomLabel,true);
+          TableauDernierMJFont.Cells[1,8]:=DecodageTexteSpeciale(RMJFonct.Text1,true);
+          TableauDernierMJFont.Cells[1,9]:=DecodageTexteSpeciale(RMJFonct.Text2,true);
+          TableauDernierMJFont.Cells[1,10]:=DecodageTexteSpeciale(RMJFonct.Text3,true);
+          TableauDernierMJFont.Cells[1,11]:=DecodageTexteSpeciale(RMJFonct.Text4,true);
+          TableauDernierMJFont.Cells[1,12]:=DecodageTexteSpeciale(RMJFonct.Text5,true);
+          TableauDernierMJFont.Cells[1,13]:=DecodageTexteSpeciale(RMJFonct.Text6,true);
+          TableauDernierMJFont.Cells[1,14]:=DecodageTexteSpeciale(RMJFonct.Text7,true);
+          TableauDernierMJFont.Cells[1,15]:=DecodageTexteSpeciale(RMJFonct.Text8,true);
+          TableauDernierMJFont.Cells[1,16]:=DecodageTexteSpeciale(RMJFonct.Text9,true);
+          TableauDernierMJFont.Cells[1,17]:=DecodageTexteSpeciale(RMJFonct.Text10,true);
+          if(RMJFonct.RegularisationDateAvancement=true)
+          then TableauDernierMJFont.Cells[1,18]:='Inclus !'
+          else TableauDernierMJFont.Cells[1,18]:='Non Inclus !';
+          CloseFile(FMJFonct);
+
+          AfficherDerniereMJFont:=true;
+     end
+     else
+     begin
+          FSMiseaJour.AfficheMiseaJourFontIns.Visible:=true;
+          FSMiseaJour.TimerAlerteMJ.Enabled:=true;
+     end;
+end;
+
+Procedure MiseaJourFonctionnelle(Parcours,DateMJFonct,HeureMJFonct:string; NbrJourMJFonct:integer; RegularisationDateAvancement:boolean);
+var i:integer;  OKMJFonct:boolean;
+begin
+FSMiseaJour.AfficheAlerteMJFontDepassee.Visible:=false;
+
+     OpenFParc(RParc);
+     ChMJFonct:=RParc.Parcours+'\FListeMJFonct.cer';
+     assignfile(FMJFonct,ChMJFonct);
+     if FileExists(ChMJFonct)
+     then Reset(FMJFonct)
+     else Rewrite(FMJFonct);
+     Seek(FMJFonct,0);
+     i:=0;
+     OKMJFonct:=false;
+     while not eof(FMJFonct)and(OKMJFonct=false)do
+     begin
+          read(FMJFonct,RMJFonct);
+          if(DecodageTexteSpeciale(RMJFonct.Parcours,true)=Parcours)
+          and(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true)=DateMJFonct)
+          and(DecodageTexteSpeciale(RMJFonct.HeureMJFonct,true)=HeureMJFonct)
+          and(RMJFonct.NbrJourMJFonct=NbrJourMJFonct)
+          then
+          begin
+               OKMJFonct:=true;
+               FSMiseaJour.AfficheReExecuterMJFonct.Visible:=true;
+               FSMiseaJour.AfficheMessageReExecuterMJFonct.Caption:=('Cette mise à jour est déjà effectuée !');
+               FSMiseaJour.BitReExecuterMJFont.SetFocus;
+          end;
+          i:=i+1;
+     end;
+
+     if(OKMJFonct=false)then
+     begin
+          RMJFonct.PositionMJFonct:=i;
+          RMJFonct.Parcours:=CodageTexteSpeciale(Parcours);
+          RMJFonct.DateMJFonct:=CodageTexteSpeciale(DateMJFonct);
+          RMJFonct.HeureMJFonct:=CodageTexteSpeciale(HeureMJFonct);
+          RMJFonct.NbrJourMJFonct:=NbrJourMJFonct;
+          ////////////////////////////
+          if FileExists('C:\WinBus.File')then
+          begin
+               assignfile(FRegistre,'C:\WinBus.File');
+               reset(FRegistre);
+               Seek(FRegistre,0);
+               if not eof(FRegistre)then
+               begin
+                    Read(FRegistre,RRegistre);
+                    if FileExists(RRegistre.Adresse)then
+                    begin
+                         assignfile(FParc,RRegistre.Adresse);
+                         reset(FParc);
+                         Seek(FParc,0);
+                         RParc.DateExp:=datetostr(strtodate(DateMJFonct)+NbrJourMJFonct);
+                         RParc.HeureExp:=HeureMJFonct;
+                         if(RegularisationDateAvancement=true)
+                         then RParc.DateAvancement:=datetostr(date);
+                         ///////////////////////////////////////////////////////
+                         RMJFonct.NomLogo:=CodageTexteSpeciale(RParc.NomLogo);
+                         RMJFonct.NomLabel:=CodageTexteSpeciale(RParc.NomLabel);
+                         RMJFonct.Text1:=CodageTexteSpeciale(RParc.Text1);
+                         RMJFonct.Text2:=CodageTexteSpeciale(RParc.Text2);
+                         RMJFonct.Text3:=CodageTexteSpeciale(RParc.Text3);
+                         RMJFonct.Text4:=CodageTexteSpeciale(RParc.Text4);
+                         RMJFonct.Text5:=CodageTexteSpeciale(RParc.Text5);
+                         RMJFonct.Text6:=CodageTexteSpeciale(RParc.Text6);
+                         RMJFonct.Text7:=CodageTexteSpeciale(RParc.Text7);
+                         RMJFonct.Text8:=CodageTexteSpeciale(RParc.Text8);
+                         RMJFonct.Text9:=CodageTexteSpeciale(RParc.Text9);
+                         RMJFonct.Text10:=CodageTexteSpeciale(RParc.Text10);
+                         write(FMJFonct,RMJFonct);
+                         ///////////////////////////////////////////////////////
+                         Seek(FParc,0);
+                         Write(FParc,RParc);
+                         CloseFile(FParc);
+                    end;
+               end;
+          end;
+          ///////////////////////////
+          FSMenuPrincipal.Enabled:=true;
+          FSMenuPrincipal.MenuPrincipal.Items[0].Enabled:=true;
+          FSMenuPrincipal.MenuPrincipal.Items[1].Enabled:=true;
+          FSMenuPrincipal.MenuPrincipal.Items[2].Enabled:=true;
+          FSMenuPrincipal.TimerAfficheArret.Enabled:=false;
+          FSMenuPrincipal.TimerClosedMenuPrincipal.Enabled:=false;
+          FSMenuPrincipal.PanelAfficheArret.Visible:=false;
+          FSMenuPrincipal.TimerControleInstallation.Interval:=500;
+          FSMenuPrincipal.TimerControleInstallation.Enabled:=true;
+          FSMenuPrincipal.TimerSaisieFiches.Enabled:=true;
+
+          FSMiseaJour.TimerAlerteMJ.Enabled:=false;
+
+          showmessage('Mise à jour fonctionnelle effectué avec succès !');
+     end;
+     CloseFile(FMJFonct);
+
+     FSMiseaJour.AfficheMJFonct.Visible:=false;
+end;
+
+Procedure ReExecuterMJFonct(Parcours,DateMJFonct,HeureMJFonct:string; NbrJourMJFonct:integer; RegularisationDateAvancement:boolean);
+var i:integer;  OKMJFonct:boolean;
+begin
+     OpenFParc(RParc);
+     ChMJFonct:=RParc.Parcours+'\FListeMJFonct.cer';
+     assignfile(FMJFonct,ChMJFonct);
+     if FileExists(ChMJFonct)
+     then Reset(FMJFonct)
+     else Rewrite(FMJFonct);
+     Seek(FMJFonct,0);
+     i:=0;
+     OKMJFonct:=false;
+     while not eof(FMJFonct)and(OKMJFonct=false)do
+     begin
+          read(FMJFonct,RMJFonct);
+          if(DecodageTexteSpeciale(RMJFonct.Parcours,true)=Parcours)
+          and(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true)=DateMJFonct)
+          and(DecodageTexteSpeciale(RMJFonct.HeureMJFonct,true)=HeureMJFonct)
+          and(RMJFonct.NbrJourMJFonct=NbrJourMJFonct)
+          then
+          begin
+               OKMJFonct:=true;
+          end;
+          i:=i+1;
+     end;
+     CloseFile(FMJFonct);
+
+     if(OKMJFonct=true)then
+     begin
+          if FileExists('C:\WinBus.File')then
+          begin
+               assignfile(FRegistre,'C:\WinBus.File');
+               reset(FRegistre);
+               Seek(FRegistre,0);
+               if not eof(FRegistre)then
+               begin
+                    Read(FRegistre,RRegistre);
+                    if FileExists(RRegistre.Adresse)then
+                    begin
+                         assignfile(FParc,RRegistre.Adresse);
+                         reset(FParc);
+                         Seek(FParc,0);
+                         RParc.DateExp:=datetostr(strtodate(DateMJFonct)+NbrJourMJFonct);
+                         RParc.HeureExp:=HeureMJFonct;
+                         if(RegularisationDateAvancement=true)
+                         then RParc.DateAvancement:=datetostr(date);
+                         Seek(FParc,0);
+                         Write(FParc,RParc);
+                         CloseFile(FParc);
+                    end;
+               end;
+          end;
+          FSMenuPrincipal.Enabled:=true;
+          FSMenuPrincipal.MenuPrincipal.Items[0].Enabled:=true;
+          FSMenuPrincipal.MenuPrincipal.Items[1].Enabled:=true;
+          FSMenuPrincipal.MenuPrincipal.Items[2].Enabled:=true;
+          FSMenuPrincipal.TimerAfficheArret.Enabled:=false;
+          FSMenuPrincipal.TimerClosedMenuPrincipal.Enabled:=false;
+          FSMenuPrincipal.PanelAfficheArret.Visible:=false;
+          FSMenuPrincipal.TimerControleInstallation.Enabled:=true;
+          FSMenuPrincipal.TimerSaisieFiches.Enabled:=true;
+
+          FSMiseaJour.TimerAlerteMJ.Enabled:=false;
+
+          showmessage('Mise à jour fonctionnelle effectué avec succès !');
+     end;
+
+     FSMiseaJour.AfficheMJFonct.Visible:=false;
+end;
+
+procedure TFSMiseaJour.ImageMJFonctClick(Sender: TObject);
+var   RegularisationDateAvancement:boolean;
+begin
+if(FSMiseaJour.TableauDataMJFonct.Cells[1,11]='Inclus')
+then RegularisationDateAvancement:=true
+else RegularisationDateAvancement:=false;
+MiseaJourFonctionnelle(FSMiseaJour.TableauDataMJFonct.Cells[1,1],FSMiseaJour.TableauDataMJFonct.Cells[1,6],FSMiseaJour.TableauDataMJFonct.Cells[1,7],strtointeger(FSMiseaJour.TableauDataMJFonct.Cells[1,8]),RegularisationDateAvancement);
+end;
+
+procedure TFSMiseaJour.CliquerPourDemarrerMJFonctClick(Sender: TObject);
+var RegularisationDateAvancement:boolean;
+begin
+if(FSMiseaJour.TableauDataMJFonct.Cells[1,11]='Inclus !')
+then RegularisationDateAvancement:=true
+else RegularisationDateAvancement:=false;
+MiseaJourFonctionnelle(FSMiseaJour.TableauDataMJFonct.Cells[1,1],FSMiseaJour.TableauDataMJFonct.Cells[1,6],FSMiseaJour.TableauDataMJFonct.Cells[1,7],strtointeger(FSMiseaJour.TableauDataMJFonct.Cells[1,8]),RegularisationDateAvancement);
+end;
+
+procedure TFSMiseaJour.BitOuvrirClick(Sender: TObject);
+var  i,PositionDEMJF:integer;  LastDateExperat,NextDateExperat:string[10];
+begin
+FSMiseaJour.EditAdresseFichierMJFonct.Text:='';
+FSMiseaJour.AfficheMJFonct.Visible:=false;
+FSMiseaJour.TableauDataMJFonct.ColCount:=2;
+FSMiseaJour.TableauDataMJFonct.RowCount:=12;
+FSMiseaJour.TableauDataMJFonct.Rows[1].Text:='';
+FSMiseaJour.TableauDataMJFonct.Cols[0].Text:='Rubrique';
+FSMiseaJour.TableauDataMJFonct.Cols[1].Text:='Information';
+
+FSMiseaJour.TableauDataMJFonct.Rows[1].Text:='Parcours';
+FSMiseaJour.TableauDataMJFonct.Rows[2].Text:='Date dernière mise à jour';
+FSMiseaJour.TableauDataMJFonct.Rows[3].Text:='Heure dernière mise à jour';
+FSMiseaJour.TableauDataMJFonct.Rows[4].Text:='Durée dernière mise à jour';
+FSMiseaJour.TableauDataMJFonct.Rows[5].Text:='Date dernière Expiration';
+FSMiseaJour.TableauDataMJFonct.Rows[6].Text:='Date nouvelle mise à jour';
+FSMiseaJour.TableauDataMJFonct.Rows[7].Text:='Heure nouvelle mise à jour';
+FSMiseaJour.TableauDataMJFonct.Rows[8].Text:='Durée nouvelle mise à jour';
+FSMiseaJour.TableauDataMJFonct.Rows[9].Text:='Date nouvelle Expiration';
+FSMiseaJour.TableauDataMJFonct.Rows[10].Text:='Fichier cible (MJFont)';
+FSMiseaJour.TableauDataMJFonct.Rows[11].Text:='Régularisation Date Avancement';
+
+LastDateExperat:='';
+NextDateExperat:='';
+PositionDEMJF:=0;
+if(FSMiseaJour.OuvrirUnFichier.Execute)then
+begin
+     FSMiseaJour.EditAdresseFichierMJFonct.Text:=FSMiseaJour.OuvrirUnFichier.FileName;
+     FSMiseaJour.EditMJFonct.Text:=ExtractFileName(FSMiseaJour.EditAdresseFichierMJFonct.Text);
+
+     if(Firstlaters(FSMiseaJour.EditMJFonct.Text,7)='MJFonct')then
+     begin
+          OpenFParc(RParc);
+          ChMJFonct:=RParc.Parcours+'\FListeMJFonct.cer';
+          assignfile(FMJFonct,ChMJFonct);
+          if FileExists(ChMJFonct)then
+          begin
+               Reset(FMJFonct);
+               Seek(FMJFonct,0);
+               i:=0;
+               while not eof(FMJFonct)do
+               begin
+                    read(FMJFonct,RMJFonct);
+                    if(LastDateExperat='')
+                    then
+                    begin
+                         LastDateExperat:=datetostr(stringtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true),RMJFonct.DateMJFonct)+RMJFonct.NbrJourMJFonct);
+                         PositionDEMJF:=i;
+                    end
+                    else
+                    if(strtodate(LastDateExperat)<(stringtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true),RMJFonct.DateMJFonct)+RMJFonct.NbrJourMJFonct))
+                    then
+                    begin
+                         LastDateExperat:=datetostr(stringtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true),RMJFonct.DateMJFonct)+RMJFonct.NbrJourMJFonct);
+                         PositionDEMJF:=i;
+                    end;
+               i:=i+1;
+               end;
+               Seek(FMJFonct,PositionDEMJF);
+               FSMiseaJour.TableauDataMJFonct.Cells[1,2]:=DecodageTexteSpeciale(RMJFonct.DateMJFonct,true);
+               FSMiseaJour.TableauDataMJFonct.Cells[1,3]:=DecodageTexteSpeciale(RMJFonct.HeureMJFonct,true);
+               FSMiseaJour.TableauDataMJFonct.Cells[1,4]:=inttostr(RMJFonct.NbrJourMJFonct);
+               FSMiseaJour.TableauDataMJFonct.Cells[1,5]:=LastDateExperat+', à: '+DecodageTexteSpeciale(RMJFonct.HeureMJFonct,true);
+          CloseFile(FMJFonct);
+          end;
+
+          ChMJFonct:=FSMiseaJour.EditAdresseFichierMJFonct.Text;
+          assignfile(FMJFonct,ChMJFonct);
+          if FileExists(ChMJFonct)then
+          begin
+               Reset(FMJFonct);
+               Seek(FMJFonct,0);
+               i:=0;
+               if not eof(FMJFonct)then
+               begin
+                    read(FMJFonct,RMJFonct);
+                    if(DecodageTexteSpeciale(RMJFonct.Parcours,true)=ExtractFileName(RParc.Parcours))then
+                    begin
+                         FSMiseaJour.AfficheMJFonct.Visible:=true;
+                         FSMiseaJour.TimerAlerteMJ.Enabled:=true;
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,1]:=DecodageTexteSpeciale(RMJFonct.Parcours,true);
+                         //FSMiseaJour.TableauDataMJFonct.Cells[1,2]:='';
+                         //FSMiseaJour.TableauDataMJFonct.Cells[1,3]:='';
+                         //FSMiseaJour.TableauDataMJFonct.Cells[1,4]:='';
+                         //FSMiseaJour.TableauDataMJFonct.Cells[1,5]:='';
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,6]:=DecodageTexteSpeciale(RMJFonct.DateMJFonct,true);
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,7]:=DecodageTexteSpeciale(RMJFonct.HeureMJFonct,true);
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,8]:=inttostr(RMJFonct.NbrJourMJFonct);
+                         NextDateExperat:=datetostr(strtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true))+RMJFonct.NbrJourMJFonct);
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,9]:=NextDateExperat+', à: '+DecodageTexteSpeciale(RMJFonct.HeureMJFonct,true);
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,10]:=FSMiseaJour.EditAdresseFichierMJFonct.Text;
+                         if(RMJFonct.RegularisationDateAvancement=true)
+                         then FSMiseaJour.TableauDataMJFonct.Cells[1,11]:='Inclus !'
+                         else FSMiseaJour.TableauDataMJFonct.Cells[1,11]:='Non Inclus !';
+                         AjusterColWidth(FSMiseaJour.TableauDataMJFonct,'','');
+
+                         if(LastDateExperat<>'')and(NextDateExperat<>'')then
+                         begin
+                              if(strtodate(LastDateExperat)>strtodate(NextDateExperat))
+                              then FSMiseaJour.AfficheAlerteMJFontDepassee.Visible:=true;
+                         end;
+                    end
+                    else
+                    begin
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,1]:='" MJFonct " non valide, Votre mise à jour est obsolète ! ';
+                         //FSMiseaJour.TableauDataMJFonct.Cells[1,2]:='';
+                         //FSMiseaJour.TableauDataMJFonct.Cells[1,3]:='';
+                         //FSMiseaJour.TableauDataMJFonct.Cells[1,4]:='';
+                         //FSMiseaJour.TableauDataMJFonct.Cells[1,5]:='';
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,6]:='';
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,7]:='';
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,8]:='';
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,9]:='';
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,10]:=FSMiseaJour.EditAdresseFichierMJFonct.Text;
+                         FSMiseaJour.TableauDataMJFonct.Cells[1,11]:='';
+                         AjusterColWidth(FSMiseaJour.TableauDataMJFonct,'','');
+                         showmessage('" MJFonct " non valide, Votre mise à jour est obsolète ! ');
+                    end;
+               end;
+          CloseFile(FMJFonct);
+          end
+          else
+          begin// Not FileExists.
+               Affichermessage('le fichier "MJFonct" n''existe pas !!!');
+          end;
+     end;
+end;
+
+end;
+
+procedure TFSMiseaJour.BitBtn1Click(Sender: TObject);
+var  R:integer;
+begin
+FSMiseaJour.EditAdresseFichierMJFonct.Text:='';
+FSMiseaJour.AfficheMJFonct.Visible:=false;
+FSMiseaJour.TableauDataMJFonct.ColCount:=19;
+FSMiseaJour.TableauDataMJFonct.RowCount:=2;
+FSMiseaJour.TableauDataMJFonct.Rows[1].Text:='';
+FSMiseaJour.TableauDataMJFonct.Cols[0].Text:='Mise à jour';
+FSMiseaJour.TableauDataMJFonct.Cols[1].Text:='Parcours';
+FSMiseaJour.TableauDataMJFonct.Cols[2].Text:='Date mise à jour';
+FSMiseaJour.TableauDataMJFonct.Cols[3].Text:='Heure mise à jour';
+FSMiseaJour.TableauDataMJFonct.Cols[4].Text:='Durée mise à jour';
+FSMiseaJour.TableauDataMJFonct.Cols[5].Text:='Date Expiration';
+FSMiseaJour.TableauDataMJFonct.Cols[6].Text:='Logo';
+FSMiseaJour.TableauDataMJFonct.Cols[7].Text:='Label';
+FSMiseaJour.TableauDataMJFonct.Cols[8].Text:='Text1';
+FSMiseaJour.TableauDataMJFonct.Cols[9].Text:='Text2';
+FSMiseaJour.TableauDataMJFonct.Cols[10].Text:='Text3';
+FSMiseaJour.TableauDataMJFonct.Cols[11].Text:='Text4';
+FSMiseaJour.TableauDataMJFonct.Cols[12].Text:='Text5';
+FSMiseaJour.TableauDataMJFonct.Cols[13].Text:='Text6';
+FSMiseaJour.TableauDataMJFonct.Cols[14].Text:='Text7';
+FSMiseaJour.TableauDataMJFonct.Cols[15].Text:='Text8';
+FSMiseaJour.TableauDataMJFonct.Cols[16].Text:='Text9';
+FSMiseaJour.TableauDataMJFonct.Cols[17].Text:='Text10';
+FSMiseaJour.TableauDataMJFonct.Cols[18].Text:='Régularisation Date Avancement';
+
+     OpenFParc(RParc);
+     ChMJFonct:=RParc.Parcours+'\FListeMJFonct.cer';
+     assignfile(FMJFonct,ChMJFonct);
+     if FileExists(ChMJFonct)
+     then Reset(FMJFonct)
+     else Rewrite(FMJFonct);
+     Seek(FMJFonct,0);
+     R:=0;
+     while not eof(FMJFonct)do
+     begin
+          read(FMJFonct,RMJFonct);
+          R:=R+1;
+          FSMiseaJour.TableauDataMJFonct.Rows[R].Text:=inttostr(RMJFonct.PositionMJFonct);
+          FSMiseaJour.TableauDataMJFonct.Cells[1,R]:=DecodageTexteSpeciale(RMJFonct.Parcours,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[2,R]:=DecodageTexteSpeciale(RMJFonct.DateMJFonct,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[3,R]:=DecodageTexteSpeciale(RMJFonct.HeureMJFonct,FSMiseaJour.RBAppliqueDecodage.Checked);
+          if(RMJFonct.NbrJourMJFonct<=1)
+          then FSMiseaJour.TableauDataMJFonct.Cells[4,R]:=inttostr(RMJFonct.NbrJourMJFonct)+' jour'
+          else FSMiseaJour.TableauDataMJFonct.Cells[4,R]:=inttostr(RMJFonct.NbrJourMJFonct)+' jours';
+          if(FSMiseaJour.RBAppliqueDecodage.Checked=true)
+          then FSMiseaJour.TableauDataMJFonct.Cells[5,R]:=datetostr(strtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,FSMiseaJour.RBAppliqueDecodage.Checked))+RMJFonct.NbrJourMJFonct)+', à: '+DecodageTexteSpeciale(RMJFonct.HeureMJFonct,FSMiseaJour.RBAppliqueDecodage.Checked)
+          else FSMiseaJour.TableauDataMJFonct.Cells[5,R]:=DecodageTexteSpeciale(RMJFonct.DateMJFonct,FSMiseaJour.RBAppliqueDecodage.Checked)+', à: '+RMJFonct.HeureMJFonct;
+          FSMiseaJour.TableauDataMJFonct.Cells[6,R]:=DecodageTexteSpeciale(RMJFonct.NomLogo,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[7,R]:=DecodageTexteSpeciale(RMJFonct.NomLabel,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[8,R]:=DecodageTexteSpeciale(RMJFonct.Text1,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[9,R]:=DecodageTexteSpeciale(RMJFonct.Text2,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[10,R]:=DecodageTexteSpeciale(RMJFonct.Text3,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[11,R]:=DecodageTexteSpeciale(RMJFonct.Text4,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[12,R]:=DecodageTexteSpeciale(RMJFonct.Text5,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[13,R]:=DecodageTexteSpeciale(RMJFonct.Text6,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[14,R]:=DecodageTexteSpeciale(RMJFonct.Text7,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[15,R]:=DecodageTexteSpeciale(RMJFonct.Text8,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[16,R]:=DecodageTexteSpeciale(RMJFonct.Text9,FSMiseaJour.RBAppliqueDecodage.Checked);
+          FSMiseaJour.TableauDataMJFonct.Cells[17,R]:=DecodageTexteSpeciale(RMJFonct.Text10,FSMiseaJour.RBAppliqueDecodage.Checked);
+          if(RMJFonct.RegularisationDateAvancement=true)
+          then FSMiseaJour.TableauDataMJFonct.Cells[18,R]:='Inclus !'
+          else FSMiseaJour.TableauDataMJFonct.Cells[18,R]:='Non Inclus !';
+     end;
+     CloseFile(FMJFonct);
+
+     if(R>0)then FSMiseaJour.TableauDataMJFonct.RowCount:=R+1
+            else FSMiseaJour.TableauDataMJFonct.RowCount:=2;
+
+     AjusterColWidth(FSMiseaJour.TableauDataMJFonct,'','');
+end;
+
+procedure TFSMiseaJour.BitBtn2Click(Sender: TObject);
+var DebutRow,EcartTableau,Ordre:integer;  TitreEtat:string;  ImprimeEtat:boolean;
+begin
+DebutRow:=0;
+ImprimeEtat:=false;
+EcartTableau:=2;
+ImprimeEtat:=true;
+
+if(FSMiseaJour.TableauDataMJFonct.ColCount=2)then
+begin
+     TitreEtat:='Détail de la mise à jour Fonctionnelle !';
+     OptionsImpression(FSMiseaJour.TableauDataMJFonct,'Center',DebutRow,1,TitreEtat,FSMiseaJour.RBAjustement.Checked,'','0','','0','','','',ImprimeEtat,EcartTableau,FSMenuPrincipal.ImageCodebarre,true,DebutRow);
+end
+else
+begin
+     TitreEtat:='Liste des mises à jour effectuées';
+     OptionsImpression(FSMiseaJour.TableauDataMJFonct,'Center',DebutRow,1,TitreEtat,FSMiseaJour.RBAjustement.Checked,'','0','0','0','0;2;3;4','','',ImprimeEtat,EcartTableau,FSMenuPrincipal.ImageCodebarre,true,DebutRow);
+end;
+
+end;
+
+procedure TFSMiseaJour.TimerAlerteMJTimer(Sender: TObject);
+begin
+
+if(FSMiseaJour.AfficheMJFonct.Visible=true)then
+begin
+     if(FSMiseaJour.CliquerPourDemarrerMJFonct.Font.Color=clred)then
+     begin
+          FSMiseaJour.CliquerPourDemarrerMJFonct.Font.Color:=clyellow;
+     end
+     else
+     begin
+          FSMiseaJour.CliquerPourDemarrerMJFonct.Font.Color:=clred;
+     end;
+end;
+
+if(FSMiseaJour.AfficheMJIns.Visible=true)then
+begin
+     if(FSMiseaJour.CliquerPourDemarrerMJIns.Font.Color=clred)then
+     begin
+          FSMiseaJour.CliquerPourDemarrerMJIns.Font.Color:=clyellow;
+     end
+     else
+     begin
+          FSMiseaJour.CliquerPourDemarrerMJIns.Font.Color:=clred;
+     end;
+end;
+
+if(FSMiseaJour.AfficheAlerteMJFontDepassee.Visible=true)then
+begin
+     if(FSMiseaJour.AfficheAlerteMJFontDepassee.Color=clBtnFace)then
+     begin
+          FSMiseaJour.AfficheAlerteMJFontDepassee.Color:=clred;
+     end
+     else
+     begin
+          FSMiseaJour.AfficheAlerteMJFontDepassee.Color:=clBtnFace;
+     end;
+end;
+
+if(FSMiseaJour.AfficheMiseaJourFontIns.Visible=true)then
+begin
+     if(FSMiseaJour.AfficheMiseaJourFontIns.Color=clBtnFace)then
+     begin
+          FSMiseaJour.AfficheMiseaJourFontIns.Color:=clred;
+     end
+     else
+     begin
+          FSMiseaJour.AfficheMiseaJourFontIns.Color:=clBtnFace;
+     end;
+end;
+
+end;
+
+procedure TFSMiseaJour.BitBtn4Click(Sender: TObject);
+begin
+FSMiseaJour.AfficheReExecuterMJFonct.Visible:=false;
+end;
+
+procedure TFSMiseaJour.BitReExecuterMJFontClick(Sender: TObject);
+var RegularisationDateAvancement:boolean;
+begin
+if(FSMiseaJour.TableauDataMJFonct.Cells[1,11]='Inclus !')
+then RegularisationDateAvancement:=true
+else RegularisationDateAvancement:=false;
+ReExecuterMJFonct(FSMiseaJour.TableauDataMJFonct.Cells[1,1],FSMiseaJour.TableauDataMJFonct.Cells[1,6],FSMiseaJour.TableauDataMJFonct.Cells[1,7],strtointeger(FSMiseaJour.TableauDataMJFonct.Cells[1,8]),RegularisationDateAvancement);
+FSMiseaJour.AfficheReExecuterMJFonct.Visible:=false;
+end;
+
+procedure TFSMiseaJour.BitBtn3Click(Sender: TObject);
+begin
+FSMiseaJour.AfficheAlerteMJFontDepassee.Visible:=false;
+end;
+
+procedure TFSMiseaJour.BitBtn5Click(Sender: TObject);
+begin
+FSMiseaJour.AfficheMJIns.Visible:=false;
+FSMiseaJour.AfficheAdresseBaseDonnee.Visible:=true;
+FSMiseaJour.AfficheAdresseBaseDonnee.Left:=0;
+FSMiseaJour.AfficheAdresseBaseDonnee.Top:=0;
+end;
+
+procedure TFSMiseaJour.BitBtn6Click(Sender: TObject);
+begin
+FSMiseaJour.EditAdresseBaseDonnee.Text:=FSMiseaJour.Source.Path;
+FSMiseaJour.EditNomBaseDonnee.Text:=ExtractFileName(FSMiseaJour.Source.Path);
+FSMiseaJour.EditExtractParcours.Text:=FSMiseaJour.EditParcours.Text;
+
+if('Licence'+FSMiseaJour.EditExtractParcours.Text=DecodageTexteSpeciale(FSMiseaJour.EditLicenceParcours.Text,true))then
+begin
+
+     if(AfficherDerniereMJFont(FSMiseaJour.TableauDernierMJFont,FSMiseaJour.EditAdresseBaseDonnee.Text)=true)
+     then
+     begin
+          FSMiseaJour.AfficheMJIns.Visible:=true;
+          FSMiseaJour.TimerAlerteMJ.Enabled:=true;
+          FSMiseaJour.RBTelechargerDataEntite.Enabled:=true;
+          FSMiseaJour.RBTelechargerDataEntite.Checked:=false;
+     end;
+end
+else
+begin
+     showmessage('Votre base de données n''est pas conforme avec votre licence !');
+end;
+
+FSMiseaJour.AfficheAdresseBaseDonnee.Visible:=false;
+end;
+
+procedure TFSMiseaJour.CliquerPourDemarrerMJInsClick(Sender: TObject);
+var  Repertoire,Adresse,Exercice:string;
+begin
+
+if DirectoryExists('C:\WINDOWS')then
+begin
+     Repertoire:=FSMiseaJour.TableauDernierMJFont.Cells[1,1];
+     Adresse:='C:\WINDOWS\'+FSMiseaJour.TableauDernierMJFont.Cells[1,1];
+     if(FSMiseaJour.EditExerciceExtract.Text<>'')
+     then Exercice:=FSMiseaJour.EditExerciceExtract.Text
+     else Exercice:=Lastlaters(datetostr(date),4);
+     AutoInstall(Repertoire,Adresse,Exercice);
+     FSMiseaJour.AfficheMJIns.Visible:=false;
+end
+else
+begin
+     FSMiseaJour.AfficheInstalle.Visible:=true;
+     FSMiseaJour.EditEnregistrement.Text:=FSMiseaJour.TableauDernierMJFont.Cells[1,1];
+     FSMiseaJour.EditExercice.Text:=Lastlaters(datetostr(date),4);
+end;
+
+end;
+
+procedure TFSMiseaJour.Source1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if key in[VK_RETURN]then
+begin
+     FSMiseaJour.BitOK.SetFocus;
+end;
+end;
+
+procedure TFSMiseaJour.Source1KeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+FSMiseaJour.EditSource1.Text:=FSMiseaJour.Source1.Path;
+end;
+
+procedure TFSMiseaJour.Source1MouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+FSMiseaJour.EditSource1.Text:=FSMiseaJour.Source1.Path;
+end;
+
+procedure TFSMiseaJour.BitBtn9Click(Sender: TObject);
+begin
+FSMiseaJour.AfficheInstalle.Visible:=false;
+end;
+
+procedure TFSMiseaJour.BitOKClick(Sender: TObject);
+var  Repertoire,Adresse,Exercice:string;
+begin
+     Repertoire:=FSMiseaJour.EditEnregistrement.Text;
+     Adresse:=FSMiseaJour.EditSource1.Text+'\'+FSMiseaJour.EditEnregistrement.Text;
+     Exercice:=FSMiseaJour.EditExercice.Text;
+     AutoInstall(Repertoire,Adresse,Exercice);
+
+     FSMiseaJour.AfficheInstalle.Visible:=false;
+     FSMiseaJour.AfficheMJIns.Visible:=false;
+end;
+
+procedure TFSMiseaJour.ImageMJInsClick(Sender: TObject);
+var  Repertoire,Adresse,Exercice:string;
+begin
+if DirectoryExists('C:\WINDOWS')then
+begin
+     Repertoire:=FSMiseaJour.TableauDernierMJFont.Cells[1,1];
+     Adresse:='C:\WINDOWS\'+FSMiseaJour.TableauDernierMJFont.Cells[1,1];
+     Exercice:=FSMiseaJour.EditExerciceExtract.Text;
+     AutoInstall(Repertoire,Adresse,Exercice);
+     FSMiseaJour.AfficheMJIns.Visible:=false;
+end
+else
+begin
+     FSMiseaJour.AfficheInstalle.Visible:=true;
+     FSMiseaJour.EditEnregistrement.Text:=FSMiseaJour.TableauDernierMJFont.Cells[1,1];
+     FSMiseaJour.EditExercice.Text:=Lastlaters(datetostr(date),4);
+end;
+end;
+
+procedure TFSMiseaJour.BitAdresseFichierMJFonctInsClick(Sender: TObject);
+var   Parcours:string;
+begin
+     if(FSMiseaJour.OuvrirUnFichier.Execute)then
+     begin
+          FSMiseaJour.EditAdresseFichierMJFonctIns.Text:=FSMiseaJour.OuvrirUnFichier.FileName;
+         
+          if(Firstlaters(ExtractFileName(FSMiseaJour.EditAdresseFichierMJFonctIns.Text),7)='MJFonct')then
+          begin
+               ChMJFonct:=FSMiseaJour.EditAdresseFichierMJFonctIns.Text;
+               assignfile(FMJFonct,ChMJFonct);
+               if FileExists(ChMJFonct)then
+               begin
+                    Reset(FMJFonct);
+                    Seek(FMJFonct,0);
+                    if not eof(FMJFonct)then
+                    begin
+                         read(FMJFonct,RMJFonct);
+                         if(DecodageTexteSpeciale(RMJFonct.Parcours,true)=FSMiseaJour.EditExtractParcours.Text)then
+                         begin
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,1]:=DecodageTexteSpeciale(RMJFonct.Parcours,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,2]:=DecodageTexteSpeciale(RMJFonct.DateMJFonct,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,3]:=DecodageTexteSpeciale(RMJFonct.HeureMJFonct,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,4]:=DecodageTexteSpeciale(inttostr(RMJFonct.NbrJourMJFonct),true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,5]:=datetostr(strtodate(DecodageTexteSpeciale(RMJFonct.DateMJFonct,true))+RMJFonct.NbrJourMJFonct);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,6]:=DecodageTexteSpeciale(RMJFonct.NomLogo,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,7]:=DecodageTexteSpeciale(RMJFonct.NomLabel,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,8]:=DecodageTexteSpeciale(RMJFonct.Text1,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,9]:=DecodageTexteSpeciale(RMJFonct.Text2,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,10]:=DecodageTexteSpeciale(RMJFonct.Text3,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,11]:=DecodageTexteSpeciale(RMJFonct.Text4,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,12]:=DecodageTexteSpeciale(RMJFonct.Text5,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,13]:=DecodageTexteSpeciale(RMJFonct.Text6,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,14]:=DecodageTexteSpeciale(RMJFonct.Text7,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,15]:=DecodageTexteSpeciale(RMJFonct.Text8,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,16]:=DecodageTexteSpeciale(RMJFonct.Text9,true);
+                              FSMiseaJour.TableauDernierMJFont.Cells[1,17]:=DecodageTexteSpeciale(RMJFonct.Text10,true);
+                              if(RMJFonct.RegularisationDateAvancement=true)
+                              then TableauDernierMJFont.Cells[1,18]:='Inclus !'
+                              else TableauDernierMJFont.Cells[1,18]:='Non Inclus !';
+                         FSMiseaJour.AfficheMJIns.Visible:=true;
+                         FSMiseaJour.TimerAlerteMJ.Enabled:=true;
+                         FSMiseaJour.AfficheMiseaJourFontIns.Visible:=false;
+                         end;
+                    end;
+                    CloseFile(FMJFonct);
+               end;
+          end;
+     end;
+end;
+
+procedure TFSMiseaJour.SourceMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var  ExtractAnnee:string;
+begin
+
+if(FSMiseaJour.ListeFichierSource.Items.Count>0)then
+begin
+     FSMiseaJour.EditParcours.Text:=ExtractParcours(FSMiseaJour.ListeFichierSource.Folders[0].DisplayName,ExtractAnnee);
+     FSMiseaJour.EditExerciceExtract.Text:=ExtractAnnee;
+end
+else FSMiseaJour.EditParcours.Text:='';
+
+end;
+
+procedure TFSMiseaJour.BitLicenceInstallationClick(Sender: TObject);
+var ExtractAnnee:string;
+begin
+
+if(FSMiseaJour.OuvrirUnFichier.Execute)then
+begin
+     FSMiseaJour.EditLicenceInstallation.Text:=FSMiseaJour.OuvrirUnFichier.FileName;
+     if(Firstlaters(ExtractFileName(FSMiseaJour.EditLicenceInstallation.Text),5)='MJIns')then
+     begin
+          ChMJFonct:=FSMiseaJour.EditLicenceInstallation.Text;
+          assignfile(FMJFonct,ChMJFonct);
+          if FileExists(ChMJFonct)then
+          begin
+               Reset(FMJFonct);
+               Seek(FMJFonct,0);
+               if not eof(FMJFonct)then
+               begin
+                    read(FMJFonct,RMJFonct);
+                    FSMiseaJour.EditLicenceParcours.Text:=RMJFonct.Parcours;
+
+                    if(FSMiseaJour.EditNatureMJ.Text='MJFonct')then
+                    begin
+                         if FileExists('C:\WinBus.File')then
+                         begin
+                              assignfile(FRegistre,'C:\WinBus.File');
+                              reset(FRegistre);
+                              Seek(FRegistre,0);
+                              Read(FRegistre,RRegistre);
+                         end;
+
+                         if('Licence'+RRegistre.Repertoire=DecodageTexteSpeciale(FSMiseaJour.EditLicenceParcours.Text,true))then
+                         begin
+                              FSMiseaJour.AfficheLicence.Visible:=false;
+                              FSMiseaJour.PageMJ.Enabled:=true;
+                         end
+                         else
+                         begin
+                              showmessage('Votre installation n''est pas conforme avec votre licence !');
+                         end;
+                    end;
+
+                    if(FSMiseaJour.EditNatureMJ.Text='MJIns')then
+                    begin
+                         FSMiseaJour.AfficheLicence.Visible:=false;
+                         FSMiseaJour.PageMJ.Enabled:=true;
+                         FSMiseaJour.RBTelechargerDataEntite.Enabled:=false;
+                         FSMiseaJour.RBTelechargerDataEntite.Checked:=false;
+                    end;
+
+                    if(FSMiseaJour.EditNatureMJ.Text='MJSys')then
+                    begin
+
+                    end;
+               end;
+          end
+          else
+          begin
+               showmessage('l''adresse: {'+ChMJFonct+'} n''existe pas !');
+          end;
+     CloseFile(FMJFonct);
+     end;
+end;
+
+end;
+
+procedure TFSMiseaJour.EditLicenceParcoursDblClick(Sender: TObject);
+begin
+showmessage(DecodageTexteSpeciale(FSMiseaJour.EditLicenceParcours.Text,true));
+end;
+
+procedure TFSMiseaJour.ListeFichierSourceMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var  ExtractAnnee:string;
+begin
+
+if(FSMiseaJour.ListeFichierSource.Items.Count>0)then
+begin
+     FSMiseaJour.EditParcours.Text:=ExtractParcours(FSMiseaJour.ListeFichierSource.Folders[FSMiseaJour.ListeFichierSource.ItemIndex].DisplayName,ExtractAnnee);
+     FSMiseaJour.EditExerciceExtract.Text:=ExtractAnnee;
+end
+else FSMiseaJour.EditParcours.Text:='';
+
+end;
+
+procedure TFSMiseaJour.RBTelechargerDataEntiteClick(Sender: TObject);
+begin
+
+     if(FSMiseaJour.AfficheMJIns.Visible=true)then
+     begin
+          FSMiseaJour.AfficheMiseaJourFontIns.Visible:=true;
+          FSMiseaJour.TimerAlerteMJ.Enabled:=true;
+     end
+     else
+     begin
+          FSMiseaJour.RBTelechargerDataEntite.Checked:=false;
+     end;
+
+end;
+
+procedure TFSMiseaJour.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+     FSMiseaJour.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Mise à Jour';
+end;
+
+procedure TFSMiseaJour.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

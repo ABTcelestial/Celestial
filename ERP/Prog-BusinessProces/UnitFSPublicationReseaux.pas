@@ -1,0 +1,114 @@
+unit UnitFSPublicationReseaux;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls;
+
+type
+  TFSPublicationReseaux = class(TForm)
+    AfficheMessage: TPanel;
+    TimerPublicationReseaux: TTimer;
+    RBApplicationTerminate: TCheckBox;
+    EditJourPublication: TEdit;
+    EditHeurePublication: TEdit;
+    EditJourPublier: TEdit;
+    EditHeurePublier: TEdit;
+    RBPublicationActive: TCheckBox;
+    procedure TimerPublicationReseauxTimer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSPublicationReseaux: TFSPublicationReseaux;
+
+implementation
+
+Uses UnitInitialisation, UnitFSMenuPrincipal, UnitFSGenerateurBase, UnitFSParametresAvances;
+
+{$R *.dfm}
+
+procedure TFSPublicationReseaux.TimerPublicationReseauxTimer(
+  Sender: TObject);
+var  TravauxConnexionReseaux,ActiverPublicationReseaux:boolean;
+begin
+     FSPublicationReseaux.TimerPublicationReseaux.Enabled:=false;
+
+     FSMenuPrincipal.EditRapport.Text:='';
+     FSMenuPrincipal.EditRapport.Lines.Add('Publication Réseaux programmé '+FSPublicationReseaux.EditJourPublication.Text+' '+FSPublicationReseaux.EditHeurePublication.Text+', {Exécuté le '+jour(FSPublicationReseaux.EditJourPublier.Text,'Data')+' '+FSPublicationReseaux.EditJourPublier.Text+' à '+FSPublicationReseaux.EditHeurePublier.Text+'}');
+     FSMenuPrincipal.EditRapport.Lines.Add('');
+
+     try
+     TravauxConnexionReseaux :=false;
+     ActiverPublicationReseaux:=false;
+
+     OpenFParc(RParc);
+     ChActiverPublicationReseaux:=RParc.Parcours+'\'+Exercice+'FActiverPublicationReseaux';
+     assignfile(FActiverPublicationReseaux,ChActiverPublicationReseaux);
+     if FileExists(ChActiverPublicationReseaux)then
+     begin
+          Try
+          Reset(FActiverPublicationReseaux);
+          Seek(FActiverPublicationReseaux,0);
+          if not eof(FActiverPublicationReseaux)then
+          begin
+               read(FActiverPublicationReseaux,RActiverPublicationReseaux);
+               TravauxConnexionReseaux:=RActiverPublicationReseaux.TravauxConnexionReseaux;
+               ActiverPublicationReseaux:=RActiverPublicationReseaux.ActiverPublicationReseaux;
+               RActiverPublicationReseaux.TravauxConnexionReseaux:=true;
+               RActiverPublicationReseaux.ActiverPublicationReseaux:=true;
+               Seek(FActiverPublicationReseaux,0);
+               write(FActiverPublicationReseaux,RActiverPublicationReseaux);
+          end;
+          finally
+          CloseFile(FActiverPublicationReseaux);
+          end;
+     end;
+     FSMenuPrincipal.RBConnectiviteReseaux.Checked:=TravauxConnexionReseaux;//FTravauxConnexionReseaux;
+
+     PublierDansLeReseaux('','','',FSMenuPrincipal.RBImporteAutorisationReseaux.Checked);
+
+     finally
+
+     OpenFParc(RParc);
+     ChActiverPublicationReseaux:=RParc.Parcours+'\'+Exercice+'FActiverPublicationReseaux';
+     assignfile(FActiverPublicationReseaux,ChActiverPublicationReseaux);
+     if FileExists(ChActiverPublicationReseaux)then
+     begin
+          try
+          Reset(FActiverPublicationReseaux);
+          Seek(FActiverPublicationReseaux,0);
+          if not eof(FActiverPublicationReseaux)then
+          begin
+               read(FActiverPublicationReseaux,RActiverPublicationReseaux);
+               RActiverPublicationReseaux.TravauxConnexionReseaux:=TravauxConnexionReseaux;
+               RActiverPublicationReseaux.ActiverPublicationReseaux:=ActiverPublicationReseaux;
+               Seek(FActiverPublicationReseaux,0);
+               write(FActiverPublicationReseaux,RActiverPublicationReseaux);
+          end;
+          finally
+          CloseFile(FActiverPublicationReseaux);
+          end;
+     end;
+     FSMenuPrincipal.RBConnectiviteReseaux.Checked:=TravauxConnexionReseaux;//FTravauxConnexionReseaux;
+     
+     ListeAdresseDossierPartageReseaux(FSMenuPrincipal.TableauAdresseDossierPartageReseaux,true,false,True);
+
+     FSMenuPrincipal.AfficheRapport.Visible:=FunctAfficherRapportPublicationReseaux;
+
+     FSPublicationReseaux.Close;
+     if(FSPublicationReseaux.RBApplicationTerminate.Checked=true)then application.Terminate;
+     end;
+end;
+
+procedure TFSPublicationReseaux.FormShow(Sender: TObject);
+begin
+     FSPublicationReseaux.TimerPublicationReseaux.Enabled:=true;
+end;
+
+end.

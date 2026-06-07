@@ -1,0 +1,930 @@
+unit UnitFSSairiePiecesDomiciliation;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, Grids, Buttons, ComCtrls;
+
+type
+  TFSSairiePiecesDomiciliation = class(TForm)
+    TableauSeriesPiecesDomiciliation: TStringGrid;
+    Panel1: TPanel;
+    EditDomiciliation: TComboBox;
+    Label1: TLabel;
+    AfficheOperationSeriesPiecesDomiciliation: TPanel;
+    EditChargeNumDomiciliation: TEdit;
+    Label2: TLabel;
+    EditNumReferenceSerieDomiciliation: TEdit;
+    Label3: TLabel;
+    EditNumDebutSerie: TEdit;
+    Label4: TLabel;
+    EditNombrePieceDomiciliation: TEdit;
+    Label5: TLabel;
+    Bevel1: TBevel;
+    BitBtn1: TBitBtn;
+    BitSeriesPiecesDomiciliation: TBitBtn;
+    EditChargeDomiciliation: TComboBox;
+    InfoNumFinSerie: TLabel;
+    EditNumDomiciliation: TEdit;
+    EditPositionSeriePieceDomiciliation: TEdit;
+    Label6: TLabel;
+    EditNombreMinPieceAvantNotification: TEdit;
+    Label7: TLabel;
+    EditModePaiement: TComboBox;
+    Label8: TLabel;
+    BitBtn2: TBitBtn;
+    AfficheSeriePieceAvis: TPanel;
+    Bevel23: TBevel;
+    TableauSeriePieceAvis: TStringGrid;
+    BitValiderSeriePieceAvis: TBitBtn;
+    BitBtn17: TBitBtn;
+    EditLongueureSeriePiece: TEdit;
+    IncrimentEditLongueureSeriePiece: TUpDown;
+    Label10: TLabel;
+    Bevel2: TBevel;
+    BitBtn3: TBitBtn;
+    Bevel3: TBevel;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitSeriesPiecesDomiciliationClick(Sender: TObject);
+    procedure TableauSeriesPiecesDomiciliationClick(Sender: TObject);
+    procedure TableauSeriesPiecesDomiciliationKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditNumReferenceSerieDomiciliationKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure EditChargeDomiciliationSelect(Sender: TObject);
+    procedure EditDomiciliationSelect(Sender: TObject);
+    procedure EditPositionSeriePieceDomiciliationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditChargeDomiciliationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditNumReferenceSerieDomiciliationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditNumDebutSerieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNombrePieceDomiciliationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditNumDebutSerieKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNombrePieceDomiciliationKeyUp(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditNumDebutSerieExit(Sender: TObject);
+    procedure TableauSeriesPiecesDomiciliationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditNombreMinPieceAvantNotificationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditModePaiementKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn17Click(Sender: TObject);
+    procedure TableauSeriePieceAvisDblClick(Sender: TObject);
+    procedure TableauSeriePieceAvisKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitValiderSeriePieceAvisClick(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure EditNumReferenceSerieDomiciliationExit(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSSairiePiecesDomiciliation: TFSSairiePiecesDomiciliation;
+
+  Procedure ListeNotificationDomiciliation(TableauSeriesPiecesDomiciliation:TStringGrid; NumDomiciliation:string);
+  Procedure DernierNumeroSeriePieceSaisie(NumDomiciliation:string; SeriePieceDomiciliation,NumDebutSerie:string; var PremierNumPieceSerie,DernierNumPieceSerie,PremierNumPieceSaisie,DernierNumPieceSaisie:string; var NombrePieceSaisie:integer);
+  Procedure ListeSeriePieceDomiciliation(TableauSeriePieceDomiciliation:TStringGrid; NumDomiciliation,ModePaiement,LongueureSeriePiece:string);
+  Procedure ListeSeriePieceDomiciliationNew(TableauSeriePieceDomiciliation:TStringGrid; RowSerieIn:integer; NumDomiciliation,ModePaiement,LongueureSeriePiece:string);
+  Function LongueureSeriePieceTrouver(NumDomiciliation,ModePaiement,NumPieceComplet:string; var PremierNumPieceSerie,DernierNumPieceSerie:string):integer;
+
+implementation
+
+uses UnitInitialisation, UnitSuppression, UnitFSMenuPrincipal, UnitFSAvis;
+
+{$R *.dfm}
+
+procedure TFSSairiePiecesDomiciliation.BitBtn1Click(Sender: TObject);
+begin
+     FSSairiePiecesDomiciliation.AfficheOperationSeriesPiecesDomiciliation.Visible:=false;
+end;
+
+procedure TFSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliationClick(
+  Sender: TObject);
+var   i,iselect:integer;  OKSeriePieceDomiciliation:boolean;
+begin
+     if(FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Caption='Valider')then
+     begin
+          OpenFParc(RParc);
+          ChSeriePieceDomiciliation:=RParc.Parcours+'\'+Exercice+'FSeriePieceDomiciliation';
+          assignfile(FSeriePieceDomiciliation,ChSeriePieceDomiciliation);
+          if FileExists(ChSeriePieceDomiciliation)then
+          Reset(FSeriePieceDomiciliation)
+          else Rewrite(FSeriePieceDomiciliation);
+          Seek(FSeriePieceDomiciliation,0);
+          i:=0;
+          iselect:=0;
+          OKSeriePieceDomiciliation:=false;
+          while not eof(FSeriePieceDomiciliation)and(OKSeriePieceDomiciliation=false)do
+          begin
+               read(FSeriePieceDomiciliation,RSeriePieceDomiciliation);
+               if(inttostr(RSeriePieceDomiciliation.PositionSeriePieceDomiciliation)=FSSairiePiecesDomiciliation.EditPositionSeriePieceDomiciliation.Text)then
+               begin
+                    OKSeriePieceDomiciliation:=true;
+                    iselect:=i;
+               end;
+          i:=i+1;
+          end;
+
+          if(OKSeriePieceDomiciliation=true)then i:=iselect;
+
+          RSeriePieceDomiciliation.PositionSeriePieceDomiciliation:=i;
+          RSeriePieceDomiciliation.NumDomiciliation:=FSSairiePiecesDomiciliation.EditChargeNumDomiciliation.Text;
+          RSeriePieceDomiciliation.ModePaiement:=FSSairiePiecesDomiciliation.EditModePaiement.Text;
+          RSeriePieceDomiciliation.NumReferenceSerieDomiciliation:=FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text;
+          RSeriePieceDomiciliation.NumDebutSerie:=FSSairiePiecesDomiciliation.EditNumDebutSerie.Text;
+          RSeriePieceDomiciliation.NombrePieceDomiciliation:=strtointeger(FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text);
+          RSeriePieceDomiciliation.NombreMinPieceAvantNotification:=strtointeger(FSSairiePiecesDomiciliation.EditNombreMinPieceAvantNotification.Text);
+          Seek(FSeriePieceDomiciliation,i);
+          write(FSeriePieceDomiciliation,RSeriePieceDomiciliation);
+     end;
+
+     if(FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Caption='Supprimer')then
+     begin
+          DeleteFSeriePieceDomiciliation(FSSairiePiecesDomiciliation.EditPositionSeriePieceDomiciliation.Text,OKSeriePieceDomiciliation);
+     end;
+
+     ListeNotificationDomiciliation(FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation,FSSairiePiecesDomiciliation.EditNumDomiciliation.Text);
+     
+     FSSairiePiecesDomiciliation.AfficheOperationSeriesPiecesDomiciliation.Visible:=false;
+     FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.SetFocus;
+end;
+
+procedure TFSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliationClick(
+  Sender: TObject);
+begin
+     FSSairiePiecesDomiciliation.AfficheOperationSeriesPiecesDomiciliation.Visible:=false;
+end;
+
+procedure TFSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliationKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     if(key in['n','N','+'])then
+     begin
+          FSSairiePiecesDomiciliation.AfficheOperationSeriesPiecesDomiciliation.Visible:=true;
+          FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Kind:=bkAll;
+          FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Caption:='Valider';
+
+          FSSairiePiecesDomiciliation.EditPositionSeriePieceDomiciliation.Text:='';
+          FSSairiePiecesDomiciliation.EditChargeDomiciliation.ItemIndex:=0;
+          FSSairiePiecesDomiciliation.EditChargeNumDomiciliation.Text:=ChercherDomiciliation('',FSSairiePiecesDomiciliation.EditChargeDomiciliation.Text,PositionDomiciliationRecherche).NumDomiciliation;
+
+          FSSairiePiecesDomiciliation.EditModePaiement.ItemIndex:=0;
+          FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text:='';
+          FSSairiePiecesDomiciliation.EditNumDebutSerie.Text:='';
+          FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text:='';
+          FSSairiePiecesDomiciliation.EditNombreMinPieceAvantNotification.Text:='10';
+          FSSairiePiecesDomiciliation.InfoNumFinSerie.Caption:='Num Fin Série: ';
+          FSSairiePiecesDomiciliation.EditChargeDomiciliation.SetFocus;
+     end;
+
+     if(key in['m','M','s','S'])then
+     begin
+          FSSairiePiecesDomiciliation.EditPositionSeriePieceDomiciliation.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[0,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditChargeDomiciliation.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[2,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditChargeNumDomiciliation.Text:=ChercherDomiciliation('',FSSairiePiecesDomiciliation.EditChargeDomiciliation.Text,PositionDomiciliationRecherche).NumDomiciliation;
+          FSSairiePiecesDomiciliation.EditModePaiement.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[3,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];;
+          FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[4,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditNumDebutSerie.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[5,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[6,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditNombreMinPieceAvantNotification.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[9,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.InfoNumFinSerie.Caption:='Num Fin Serie: '+inttostr(strtointeger(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text)+strtointeger(FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text)-1);
+
+          if(key in['m','M'])then
+          begin
+               FSSairiePiecesDomiciliation.AfficheOperationSeriesPiecesDomiciliation.Visible:=true;
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Kind:=bkAll;
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Caption:='Valider';
+               FSSairiePiecesDomiciliation.EditChargeDomiciliation.SetFocus;
+          end;
+
+          if(key in['s','S'])then
+          begin
+               FSSairiePiecesDomiciliation.AfficheOperationSeriesPiecesDomiciliation.Visible:=true;
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Kind:=bkCancel;
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Caption:='Supprimer';
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.SetFocus;
+          end;
+     end;
+
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliationKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     if not(key in['0'..'9'])then key:=#0;
+end;
+
+procedure TFSSairiePiecesDomiciliation.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+     FSSairiePiecesDomiciliation.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Fiche de saisie séries de pièces domiciliations';
+
+     FSSairiePiecesDomiciliation.EditChargeDomiciliation.Items.Text:='';
+     FSSairiePiecesDomiciliation.EditDomiciliation.Items.Text:='';
+     FSSairiePiecesDomiciliation.EditDomiciliation.Items.Add('Tous');
+     OpenFParc(RParc);
+     ChDomiciliation:=RParc.Parcours+'\'+Exercice+'FDomiciliation';
+     assignfile(FDomiciliation,ChDomiciliation);
+     if FileExists(ChDomiciliation)then
+     Reset(FDomiciliation)
+     else Rewrite(FDomiciliation);
+     Seek(FDomiciliation,0);
+     while not eof(FDomiciliation)do
+     begin
+          read(FDomiciliation,RDomiciliation);
+          FSSairiePiecesDomiciliation.EditDomiciliation.Items.Add(RDomiciliation.DesignationDomiciliation);
+          FSSairiePiecesDomiciliation.EditChargeDomiciliation.Items.Add(RDomiciliation.DesignationDomiciliation);
+     end;
+     Closefile(FDomiciliation);       
+
+     FSSairiePiecesDomiciliation.EditDomiciliation.ItemIndex:=0;
+     FSSairiePiecesDomiciliation.EditNumDomiciliation.Text:=ChercherDomiciliation('',FSSairiePiecesDomiciliation.EditDomiciliation.Text,PositionDomiciliationRecherche).NumDomiciliation;
+
+     FSSairiePiecesDomiciliation.EditChargeDomiciliation.ItemIndex:=0;
+     FSSairiePiecesDomiciliation.EditChargeNumDomiciliation.Text:=ChercherDomiciliation('',FSSairiePiecesDomiciliation.EditChargeDomiciliation.Text,PositionDomiciliationRecherche).NumDomiciliation;
+
+     ListeNotificationDomiciliation(FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation,FSSairiePiecesDomiciliation.EditNumDomiciliation.Text);
+end;
+
+Procedure ListeNotificationDomiciliation(TableauSeriesPiecesDomiciliation:TStringGrid; NumDomiciliation:string);
+var  R,C,NumSeriePieceLast,EcartLongueurPiece:integer; OKNumDomiciliation:boolean;    PremierNumPiece,DernierNumPiece,PremierNumPieceSaisie,DernierNumPieceSaisie,NotCol,Notification,NumFinSerie:string;  NombrePieceSaisie,NbrPieceRestante:integer;
+begin
+     TableauSeriesPiecesDomiciliation.ColCount:=11;
+     TableauSeriesPiecesDomiciliation.Cols[0].Text:='P°';
+     TableauSeriesPiecesDomiciliation.Cols[1].Text:='Num Domiciliation';
+     TableauSeriesPiecesDomiciliation.Cols[2].Text:='Domiciliation';
+     TableauSeriesPiecesDomiciliation.Cols[3].Text:='Mode Paiement';
+     TableauSeriesPiecesDomiciliation.Cols[4].Text:='Référence Série';
+     TableauSeriesPiecesDomiciliation.Cols[5].Text:='Début Série';
+     TableauSeriesPiecesDomiciliation.Cols[6].Text:='Nombre Pièce Série';
+     TableauSeriesPiecesDomiciliation.Cols[7].Text:='Num Fin Série';
+     TableauSeriesPiecesDomiciliation.Cols[8].Text:='Dérnier Num Saisie';
+     TableauSeriesPiecesDomiciliation.Cols[9].Text:='Min Notification';
+     TableauSeriesPiecesDomiciliation.Cols[10].Text:='Commentaire';
+
+     TableauSeriesPiecesDomiciliation.RowCount:=2;
+     TableauSeriesPiecesDomiciliation.Rows[1].Text:='';
+
+     OpenFParc(RParc);
+     ChSeriePieceDomiciliation:=RParc.Parcours+'\'+Exercice+'FSeriePieceDomiciliation';
+     assignfile(FSeriePieceDomiciliation,ChSeriePieceDomiciliation);
+     if FileExists(ChSeriePieceDomiciliation)then
+     Reset(FSeriePieceDomiciliation)
+     else Rewrite(FSeriePieceDomiciliation);
+     Seek(FSeriePieceDomiciliation,0);
+     R:=0;
+     while not eof(FSeriePieceDomiciliation)do
+     begin
+          read(FSeriePieceDomiciliation,RSeriePieceDomiciliation);
+          if(NumDomiciliation<>'')and(NumDomiciliation<>'Tous')then
+          begin
+               if(RSeriePieceDomiciliation.NumDomiciliation=NumDomiciliation)
+               then OKNumDomiciliation:=true
+               else OKNumDomiciliation:=false;
+          end
+          else OKNumDomiciliation:=true;
+
+          if(OKNumDomiciliation=true)then
+          begin
+               R:=R+1;
+               TableauSeriesPiecesDomiciliation.Rows[R].Text:='';
+               TableauSeriesPiecesDomiciliation.Cells[0,R]:=inttostr(RSeriePieceDomiciliation.PositionSeriePieceDomiciliation);
+               TableauSeriesPiecesDomiciliation.Cells[1,R]:=RSeriePieceDomiciliation.NumDomiciliation;
+               TableauSeriesPiecesDomiciliation.Cells[2,R]:=ChercherDomiciliation(RSeriePieceDomiciliation.NumDomiciliation,'',PositionDomiciliationRecherche).DesignationDomiciliation;
+               TableauSeriesPiecesDomiciliation.Cells[3,R]:=RSeriePieceDomiciliation.ModePaiement;
+               TableauSeriesPiecesDomiciliation.Cells[4,R]:=RSeriePieceDomiciliation.NumReferenceSerieDomiciliation;
+               TableauSeriesPiecesDomiciliation.Cells[5,R]:=RSeriePieceDomiciliation.NumDebutSerie;
+               TableauSeriesPiecesDomiciliation.Cells[6,R]:=inttostr(RSeriePieceDomiciliation.NombrePieceDomiciliation);
+
+               NumSeriePieceLast:=strtointeger(RSeriePieceDomiciliation.NumDebutSerie)+RSeriePieceDomiciliation.NombrePieceDomiciliation-1;
+               EcartLongueurPiece:=longueur(RSeriePieceDomiciliation.NumDebutSerie)-longueur(inttostr(NumSeriePieceLast));
+               NumFinSerie:=Firstlaters(RSeriePieceDomiciliation.NumDebutSerie,EcartLongueurPiece)+inttostr(NumSeriePieceLast);
+               TableauSeriesPiecesDomiciliation.Cells[7,R]:=NumFinSerie;
+
+               DernierNumeroSeriePieceSaisie(RSeriePieceDomiciliation.NumDomiciliation,RSeriePieceDomiciliation.NumReferenceSerieDomiciliation,RSeriePieceDomiciliation.NumDebutSerie,PremierNumPiece,DernierNumPiece,PremierNumPieceSaisie,DernierNumPieceSaisie,NombrePieceSaisie);
+               TableauSeriesPiecesDomiciliation.Cells[8,R]:=DernierNumPieceSaisie;
+               TableauSeriesPiecesDomiciliation.Cells[9,R]:=inttostr(RSeriePieceDomiciliation.NombreMinPieceAvantNotification);
+
+               if(DernierNumPieceSaisie<>'')
+               then NbrPieceRestante:=strtointeger(RSeriePieceDomiciliation.NumDebutSerie)+RSeriePieceDomiciliation.NombrePieceDomiciliation-1-strtointeger(DernierNumPieceSaisie)
+               else NbrPieceRestante:=RSeriePieceDomiciliation.NombrePieceDomiciliation;
+               if(RSeriePieceDomiciliation.NombreMinPieceAvantNotification>=NbrPieceRestante)then Notification:='Attention ! 'else Notification:='';
+
+               if(NbrPieceRestante=0)then TableauSeriesPiecesDomiciliation.Cells[10,R]:='Fin de série !'
+               else
+               if(NbrPieceRestante=1)then TableauSeriesPiecesDomiciliation.Cells[10,R]:='il vous reste '+inttostr(NbrPieceRestante)+' pièce'
+               else
+               if(NbrPieceRestante>1)then TableauSeriesPiecesDomiciliation.Cells[10,R]:=Notification+'il vous reste '+inttostr(NbrPieceRestante)+' pièces'
+          end;
+
+     end;
+     Closefile(FSeriePieceDomiciliation);
+
+     if(R>0)then TableauSeriesPiecesDomiciliation.RowCount:=R+1
+            else TableauSeriesPiecesDomiciliation.RowCount:=2;
+
+     NotCol:='';
+
+     for C:=0 to TableauSeriesPiecesDomiciliation.ColCount-1 do if ExisteNumInTexte(inttostr(C),NotCol)then TableauSeriesPiecesDomiciliation.ColWidths[C]:=0;
+
+     AjusterColWidth(TableauSeriesPiecesDomiciliation,'',NotCol);
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditChargeDomiciliationSelect(
+  Sender: TObject);
+begin
+     FSSairiePiecesDomiciliation.EditChargeNumDomiciliation.Text:=ChercherDomiciliation('',FSSairiePiecesDomiciliation.EditChargeDomiciliation.Text,PositionDomiciliationRecherche).NumDomiciliation;
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditDomiciliationSelect(
+  Sender: TObject);
+begin
+     FSSairiePiecesDomiciliation.EditNumDomiciliation.Text:=ChercherDomiciliation('',FSSairiePiecesDomiciliation.EditDomiciliation.Text,PositionDomiciliationRecherche).NumDomiciliation;
+
+     ListeNotificationDomiciliation(FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation,FSSairiePiecesDomiciliation.EditNumDomiciliation.Text);
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditPositionSeriePieceDomiciliationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSSairiePiecesDomiciliation.EditChargeDomiciliation.SetFocus;
+     end;
+
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditChargeDomiciliationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin            
+
+     if key in[VK_RETURN]then
+     begin
+          FSSairiePiecesDomiciliation.EditModePaiement.SetFocus;
+     end;
+
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSSairiePiecesDomiciliation.EditNumDebutSerie.SetFocus;
+     end;
+
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditNumDebutSerieKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.SetFocus;
+     end;
+
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditNombrePieceDomiciliationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+                        
+     if key in[VK_RETURN]then
+     begin
+          FSSairiePiecesDomiciliation.EditNombreMinPieceAvantNotification.SetFocus;
+     end;
+
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditNumDebutSerieKeyUp(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+var  EcartLongueurPiece,NumSeriePieceLast:integer;   NumFinSerie:string;
+begin
+     NumSeriePieceLast:=strtointeger(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text)+strtointeger(FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text)-1;
+     EcartLongueurPiece:=longueur(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text)-longueur(inttostr(NumSeriePieceLast));
+     NumFinSerie:=Firstlaters(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text,EcartLongueurPiece)+inttostr(NumSeriePieceLast);
+     FSSairiePiecesDomiciliation.InfoNumFinSerie.Caption:='Num Fin Serie: '+NumFinSerie;
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditNombrePieceDomiciliationKeyUp(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+var  EcartLongueurPiece,NumSeriePieceLast:integer;  NumFinSerie:string;
+begin
+     NumSeriePieceLast:=strtointeger(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text)+strtointeger(FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text)-1;
+     EcartLongueurPiece:=longueur(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text)-longueur(inttostr(NumSeriePieceLast));
+     NumFinSerie:=Firstlaters(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text,EcartLongueurPiece)+inttostr(NumSeriePieceLast);
+     FSSairiePiecesDomiciliation.InfoNumFinSerie.Caption:='Num Fin Serie: '+NumFinSerie;
+
+
+     
+     if(Firstlaters(NumFinSerie,longueur(FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text))<>FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text)then
+     begin
+          showmessage('Nombre incorrecte ! La série n''est pas respecter !');
+     end;
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditNumDebutSerieExit(
+  Sender: TObject);
+begin
+     if(firstlaters(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text,longueur(FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text))<>FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text)then
+     begin
+          showmessage('Le numéro ne correspond pas à la série !');
+          FSSairiePiecesDomiciliation.EditNumDebutSerie.SetFocus;
+     end;
+end;
+
+Procedure DernierNumeroSeriePieceSaisie(NumDomiciliation:string; SeriePieceDomiciliation,NumDebutSerie:string; var PremierNumPieceSerie,DernierNumPieceSerie,PremierNumPieceSaisie,DernierNumPieceSaisie:string; var NombrePieceSaisie:integer);
+var  NumSeriePieceLast,EcartLongueurPiece:integer;   OKSeriePieceDomiciliation,OKNumPieceSaisie:boolean;  TypeProcesAvis,AdresseAvis,FichierConserneAvis,TypeProcesBaseAvis,AdresseBaseAvis,FichierConserneBaseAvis:string;
+begin
+     PremierNumPieceSaisie:='99999999';
+     DernierNumPieceSaisie:='0';
+     PremierNumPieceSerie:='99999999';
+     DernierNumPieceSerie:='0';
+     NombrePieceSaisie:=0;
+
+     OpenFParc(RParc);
+     ChSeriePieceDomiciliationCopie:=RParc.Parcours+'\'+Exercice+'FSeriePieceDomiciliation';
+     assignfile(FSeriePieceDomiciliationCopie,ChSeriePieceDomiciliationCopie);
+     if FileExists(ChSeriePieceDomiciliationCopie)then
+     Reset(FSeriePieceDomiciliationCopie)
+     else Rewrite(FSeriePieceDomiciliationCopie);
+     Seek(FSeriePieceDomiciliationCopie,0);
+     DernierNumPieceSerie:='';
+     OKSeriePieceDomiciliation:=false;             
+     while not eof(FSeriePieceDomiciliationCopie)and(DernierNumPieceSerie='')do
+     begin
+          read(FSeriePieceDomiciliationCopie,RSeriePieceDomiciliationCopie);  Application.ProcessMessages;
+
+          if(RSeriePieceDomiciliationCopie.NumDomiciliation=NumDomiciliation)
+          and(strtointeger(NumDebutSerie)>=strtointeger(RSeriePieceDomiciliationCopie.NumDebutSerie))
+          and(strtointeger(NumDebutSerie)<=strtointeger(RSeriePieceDomiciliationCopie.NumDebutSerie)+RSeriePieceDomiciliationCopie.NombrePieceDomiciliation-1)
+          and(Firstlaters(RSeriePieceDomiciliationCopie.NumReferenceSerieDomiciliation,longueur(SeriePieceDomiciliation))=SeriePieceDomiciliation)then
+          begin
+               OKSeriePieceDomiciliation:=true;
+
+               PremierNumPieceSerie:=RSeriePieceDomiciliationCopie.NumDebutSerie;
+               NumSeriePieceLast:=strtointeger(RSeriePieceDomiciliationCopie.NumDebutSerie)+RSeriePieceDomiciliationCopie.NombrePieceDomiciliation-1;
+               EcartLongueurPiece:=longueur(RSeriePieceDomiciliationCopie.NumDebutSerie)-longueur(inttostr(NumSeriePieceLast));
+               DernierNumPieceSerie:=Firstlaters(RSeriePieceDomiciliationCopie.NumDebutSerie,EcartLongueurPiece)+inttostr(NumSeriePieceLast);
+          end;
+     end;
+     CloseFile(FSeriePieceDomiciliationCopie);
+
+     TypeProcesBaseAvis:='Business';   FichierConserneBaseAvis:='FBaseAvis';
+     if not(FunctionAdresseProces(TypeProcesBaseAvis,FichierConserneBaseAvis,'',AdresseBaseAvis,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserneBaseAvis+' recherché !');
+     end;
+
+     ChBaseAvis:=AdresseBaseAvis;
+     assignfile(FBaseAvis,ChBaseAvis);
+     if FileExists(ChBaseAvis)then
+     Reset(FBaseAvis)
+     else Rewrite(FBaseAvis);
+     Seek(FBaseAvis,0);
+     while not eof(FBaseAvis)do
+     begin
+          read(FBaseAvis,RBaseAvis);   Application.ProcessMessages;
+
+           FichierConserneAvis:=RBaseAvis.DesignationBaseAvis;
+           TypeProcesAvis:='Business';
+           if not(FunctionAdresseProces(TypeProcesAvis,FichierConserneAvis,'',AdresseAvis,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+           begin
+                AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserneAvis+' recherché !');
+           end;
+
+           ChAvis:=AdresseAvis;
+           assignfile(FAvis,ChAvis);
+           if FileExists(ChAvis)then
+           Reset(FAvis)
+           else Rewrite(FAvis);
+           Seek(FAvis,0);
+           while not eof(FAvis)do
+           begin
+                read(FAvis,RAvis);   Application.ProcessMessages;
+
+                if(OKSeriePieceDomiciliation=true)then
+                begin
+                     if(strtointeger(RAvis.NumPiece)>=strtointeger(PremierNumPieceSerie))
+                     and(strtointeger(RAvis.NumPiece)<=strtointeger(DernierNumPieceSerie))
+                     then OKNumPieceSaisie:=true
+                     else OKNumPieceSaisie:=false;
+                end
+                else OKNumPieceSaisie:=true;
+
+                if(OKNumPieceSaisie=true)
+                and(RAvis.NumDomiciliationAvis=NumDomiciliation)and(Firstlaters(RAvis.NumPiece,longueur(SeriePieceDomiciliation))=SeriePieceDomiciliation)
+                then
+                begin
+                     NombrePieceSaisie:=NombrePieceSaisie+1;
+
+                     if(strtointeger(PremierNumPieceSaisie)>strtointeger(RAvis.NumPiece))then PremierNumPieceSaisie:=RAvis.NumPiece;
+
+                     if(strtointeger(DernierNumPieceSaisie)<strtointeger(RAvis.NumPiece))then DernierNumPieceSaisie:=RAvis.NumPiece;
+                end;
+           end;
+           CloseFile(FAvis);
+     end;
+     CloseFile(FBaseAvis);
+
+     if(PremierNumPieceSaisie='99999999')then PremierNumPieceSaisie:='';
+     if(DernierNumPieceSaisie='0')then DernierNumPieceSaisie:='';
+     if(PremierNumPieceSerie='99999999')then PremierNumPieceSerie:='';
+     if(DernierNumPieceSerie='0')then DernierNumPieceSerie:='';
+end;
+
+procedure TFSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_DELETE]then
+     begin
+          FSSairiePiecesDomiciliation.EditPositionSeriePieceDomiciliation.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[0,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditChargeDomiciliation.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[2,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditChargeNumDomiciliation.Text:=ChercherDomiciliation('',FSSairiePiecesDomiciliation.EditChargeDomiciliation.Text,PositionDomiciliationRecherche).NumDomiciliation;
+          FSSairiePiecesDomiciliation.EditModePaiement.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[3,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];;
+          FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[4,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditNumDebutSerie.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[5,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[6,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.EditNombreMinPieceAvantNotification.Text:=FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Cells[9,FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation.Row];
+          FSSairiePiecesDomiciliation.InfoNumFinSerie.Caption:='Num Fin Serie: '+inttostr(strtointeger(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text)+strtointeger(FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text)-1);
+
+          if key in[VK_ADD]then
+          begin
+               FSSairiePiecesDomiciliation.AfficheOperationSeriesPiecesDomiciliation.Visible:=true;
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Kind:=bkAll;
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Caption:='Valider';
+               FSSairiePiecesDomiciliation.EditChargeDomiciliation.SetFocus;
+          end;
+
+          if key in[VK_DELETE]then
+          begin
+               FSSairiePiecesDomiciliation.AfficheOperationSeriesPiecesDomiciliation.Visible:=true;
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Kind:=bkCancel;
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.Caption:='Supprimer';
+               FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.SetFocus;
+          end;
+     end;
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditNombreMinPieceAvantNotificationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSSairiePiecesDomiciliation.BitSeriesPiecesDomiciliation.SetFocus;
+     end;
+     
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditModePaiementKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.SetFocus;
+     end;
+
+end;
+
+procedure TFSSairiePiecesDomiciliation.BitBtn2Click(Sender: TObject);
+begin
+     if(FSSairiePiecesDomiciliation.EditDomiciliation.Text<>'')then
+     begin
+          FSSairiePiecesDomiciliation.AfficheSeriePieceAvis.Visible:=true;
+          ListeSeriePieceDomiciliation(FSSairiePiecesDomiciliation.TableauSeriePieceAvis,FSSairiePiecesDomiciliation.EditChargeNumDomiciliation.Text,FSSairiePiecesDomiciliation.EditModePaiement.Text,FSSairiePiecesDomiciliation.EditLongueureSeriePiece.Text);
+     end
+     else
+     begin
+          showmessage('Veuillez indiquer la Domiciliation SVP !');
+          FSSairiePiecesDomiciliation.EditDomiciliation.SetFocus;
+     end;
+end;
+
+procedure TFSSairiePiecesDomiciliation.BitBtn17Click(Sender: TObject);
+begin
+     FSSairiePiecesDomiciliation.AfficheSeriePieceAvis.Visible:=false;
+end;
+
+procedure TFSSairiePiecesDomiciliation.TableauSeriePieceAvisDblClick(
+  Sender: TObject);
+var  R:integer;
+begin
+
+for R:=1 to FSSairiePiecesDomiciliation.TableauSeriePieceAvis.RowCount-1 do
+begin
+     if(R<>FSSairiePiecesDomiciliation.TableauSeriePieceAvis.Row)
+     then FSSairiePiecesDomiciliation.TableauSeriePieceAvis.Cells[1,R]:=''
+     else FSSairiePiecesDomiciliation.TableauSeriePieceAvis.Cells[1,R]:='OK';
+end;
+
+end;
+
+procedure TFSSairiePiecesDomiciliation.TableauSeriePieceAvisKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSSairiePiecesDomiciliation.BitValiderSeriePieceAvis.SetFocus;
+end;
+
+end;
+
+procedure TFSSairiePiecesDomiciliation.BitValiderSeriePieceAvisClick(
+  Sender: TObject);
+var   R:integer;  OKSerie:boolean;    EcartLongueurPiece,NumSeriePieceLast:integer;   NumFinSerie:string;
+begin
+     R:=1;
+     OKSerie:=false;
+     while(R<=FSSairiePiecesDomiciliation.TableauSeriePieceAvis.RowCount-1)and(OKSerie=false)do
+     begin
+          if(FSSairiePiecesDomiciliation.TableauSeriePieceAvis.Cells[1,R]='OK')then
+          begin
+               OKSerie:=true;
+               FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text:=FSSairiePiecesDomiciliation.TableauSeriePieceAvis.Cells[0,R];
+               FSSairiePiecesDomiciliation.EditNumDebutSerie.Text:=FSSairiePiecesDomiciliation.TableauSeriePieceAvis.Cells[2,R];
+               FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text:=inttostr(strtointeger(FSSairiePiecesDomiciliation.TableauSeriePieceAvis.Cells[3,R])-strtointeger(FSSairiePiecesDomiciliation.TableauSeriePieceAvis.Cells[2,R])+1);
+
+               NumSeriePieceLast:=strtointeger(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text)+strtointeger(FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text)-1;
+               EcartLongueurPiece:=longueur(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text)-longueur(inttostr(NumSeriePieceLast));
+               NumFinSerie:=Firstlaters(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text,EcartLongueurPiece)+inttostr(NumSeriePieceLast);
+               FSSairiePiecesDomiciliation.InfoNumFinSerie.Caption:='Num Fin Serie: '+NumFinSerie;
+
+               FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.SetFocus;
+               FSSairiePiecesDomiciliation.AfficheSeriePieceAvis.Visible:=false;
+          end;
+     R:=R+1;
+     end;
+end;
+
+Procedure ListeSeriePieceDomiciliationNew(TableauSeriePieceDomiciliation:TStringGrid; RowSerieIn:integer; NumDomiciliation,ModePaiement,LongueureSeriePiece:string);
+var  RowSerie,NumPiece,RSerie,NumSeriePieceLast,EcartLongueurPiece:integer;  OKSerieCharger:boolean; NumFinSerie:string;
+begin
+     if(RowSerieIn=0)then
+     begin
+          TableauSeriePieceDomiciliation.ColCount:=4;
+          TableauSeriePieceDomiciliation.Cols[0].Text:='Séries Pièce';
+          TableauSeriePieceDomiciliation.Cols[1].Text:='Sélection';
+          TableauSeriePieceDomiciliation.Cols[2].Text:='Num Begin';
+          TableauSeriePieceDomiciliation.Cols[3].Text:='Num End';
+
+          TableauSeriePieceDomiciliation.RowCount:=2;
+          TableauSeriePieceDomiciliation.Rows[1].Text:='';
+     end;
+     RowSerie:=RowSerieIn;
+
+          OpenFParc(RParc);
+          ChSeriePieceDomiciliationCopie:=RParc.Parcours+'\'+Exercice+'FSeriePieceDomiciliation';
+          assignfile(FSeriePieceDomiciliationCopie,ChSeriePieceDomiciliationCopie);
+          if FileExists(ChSeriePieceDomiciliationCopie)then
+          Reset(FSeriePieceDomiciliationCopie)
+          else Rewrite(FSeriePieceDomiciliationCopie);
+          Seek(FSeriePieceDomiciliationCopie,0);
+          while not eof(FSeriePieceDomiciliationCopie)do
+          begin
+               read(FSeriePieceDomiciliationCopie,RSeriePieceDomiciliationCopie);
+               if(RSeriePieceDomiciliationCopie.NumDomiciliation=NumDomiciliation)
+               and(RSeriePieceDomiciliationCopie.ModePaiement=ModePaiement)
+               then
+               begin
+                    OKSerieCharger:=false;
+                    RSerie:=1;
+                    while(RSerie<=RowSerie)and(OKSerieCharger=false)do
+                    begin
+                         if(TableauSeriePieceDomiciliation.Cells[0,RSerie]=RSeriePieceDomiciliationCopie.NumReferenceSerieDomiciliation)//firstlaters(RSeriePieceDomiciliationCopie.NumReferenceSerieDomiciliation,strtointeger(LongueureSeriePiece)))
+                         then OKSerieCharger:=true;
+                    RSerie:=RSerie+1;
+                    end;
+
+                    if(OKSerieCharger=false)then
+                    begin
+                         RowSerie:=RowSerie+1;
+                         TableauSeriePieceDomiciliation.Rows[RowSerie].Text:='';
+                         //TableauSeriePieceDomiciliation.Cells[0,RowSerie]:=firstlaters(RSeriePieceDomiciliationCopie.NumReferenceSerieDomiciliation,strtointeger(LongueureSeriePiece));
+                         TableauSeriePieceDomiciliation.Cells[0,RowSerie]:=RSeriePieceDomiciliationCopie.NumReferenceSerieDomiciliation;
+                         TableauSeriePieceDomiciliation.Cells[1,RowSerie]:='';
+                         TableauSeriePieceDomiciliation.Cells[2,RowSerie]:=RSeriePieceDomiciliationCopie.NumDebutSerie;
+
+                         NumSeriePieceLast:=strtointeger(RSeriePieceDomiciliationCopie.NumDebutSerie)+RSeriePieceDomiciliationCopie.NombrePieceDomiciliation-1;
+                         EcartLongueurPiece:=longueur(RSeriePieceDomiciliationCopie.NumDebutSerie)-longueur(inttostr(NumSeriePieceLast));
+                         NumFinSerie:=Firstlaters(RSeriePieceDomiciliationCopie.NumDebutSerie,EcartLongueurPiece)+inttostr(NumSeriePieceLast);
+                         TableauSeriePieceDomiciliation.Cells[3,RowSerie]:=NumFinSerie;
+
+                         TableauSeriePieceDomiciliation.Cells[4,RowSerie]:='New';
+                    end;
+               end;
+          end;
+          CloseFile(FSeriePieceDomiciliationCopie);
+
+          if(RowSerie>0)then
+          begin
+               if(RowSerie>RowSerieIn)then
+               begin
+                    TableauSeriePieceDomiciliation.ColCount:=5;
+                    TableauSeriePieceDomiciliation.Cells[4,0]:='New';
+
+               end;
+               TableauSeriePieceDomiciliation.RowCount:=RowSerie+1;
+          end
+          else
+          begin
+               TableauSeriePieceDomiciliation.RowCount:=2;
+               TableauSeriePieceDomiciliation.Rows[1].Text:='';
+          end;
+end;
+
+Procedure ListeSeriePieceDomiciliation(TableauSeriePieceDomiciliation:TStringGrid; NumDomiciliation,ModePaiement,LongueureSeriePiece:string);
+var  RowSerie,NumPiece,RSerie,LongueureSeriePieceTrue:integer;  OKSerieCharger,OKNumPieceValide:boolean;   PremierNumPieceSerie,DernierNumPieceSerie:string;
+     TypeProcesAvis,AdresseAvis,FichierConserneAvis,TypeProcesBaseAvis,AdresseBaseAvis,FichierConserneBaseAvis:string;
+begin
+     TableauSeriePieceDomiciliation.ColCount:=4;
+     TableauSeriePieceDomiciliation.Cols[0].Text:='Séries Pièce';
+     TableauSeriePieceDomiciliation.Cols[1].Text:='Sélection';
+     TableauSeriePieceDomiciliation.Cols[2].Text:='Num Begin';
+     TableauSeriePieceDomiciliation.Cols[3].Text:='Num End';
+
+     TableauSeriePieceDomiciliation.RowCount:=2;
+     TableauSeriePieceDomiciliation.Rows[1].Text:='';
+
+     RowSerie:=0;
+
+     TypeProcesBaseAvis:='Business';   FichierConserneBaseAvis:='FBaseAvis';
+     if not(FunctionAdresseProces(TypeProcesBaseAvis,FichierConserneBaseAvis,'',AdresseBaseAvis,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserneBaseAvis+' recherché !');
+     end;
+
+     ChBaseAvis:=AdresseBaseAvis;
+     assignfile(FBaseAvis,ChBaseAvis);
+     if FileExists(ChBaseAvis)then
+     Reset(FBaseAvis)
+     else Rewrite(FBaseAvis);
+     Seek(FBaseAvis,0);
+     while not eof(FBaseAvis)do
+     begin
+          read(FBaseAvis,RBaseAvis);
+
+          FichierConserneAvis:=RBaseAvis.DesignationBaseAvis;
+          TypeProcesAvis:='Business';
+          if not(FunctionAdresseProces(TypeProcesAvis,FichierConserneAvis,'',AdresseAvis,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+                AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserneAvis+' recherché !');
+          end;
+
+          ChAvis:=AdresseAvis;
+          assignfile(FAvis,ChAvis);
+          if FileExists(ChAvis)then
+          Reset(FAvis)
+          else Rewrite(FAvis);
+          Seek(FAvis,0);
+          NumPiece:=0;
+          while not eof(FAvis)do
+          begin
+               read(FAvis,RAvis);
+               if(RAvis.NumDomiciliationAvis=NumDomiciliation)
+               and(RAvis.ModePaiement=ModePaiement)
+               and(RAvis.NumPiece<>'')
+               then
+               begin
+                    LongueureSeriePieceTrue:=MaxInt(strtointeger(LongueureSeriePiece),LongueureSeriePieceTrouver(NumDomiciliation,ModePaiement,RAvis.NumPiece,PremierNumPieceSerie,DernierNumPieceSerie));
+          
+                    OKSerieCharger:=false;
+                    RSerie:=1;
+                    while(RSerie<=RowSerie)and(OKSerieCharger=false)do
+                    begin
+                         if(PremierNumPieceSerie<>'')and(DernierNumPieceSerie<>'')then
+                         begin
+                              if(strtointeger(RAvis.NumPiece)>=strtointeger(PremierNumPieceSerie))
+                              and(strtointeger(RAvis.NumPiece)<=strtointeger(DernierNumPieceSerie))
+                              then OKNumPieceValide:=true
+                              else OKNumPieceValide:=false;
+                         end
+                         else OKNumPieceValide:=true;
+
+                         if(OKNumPieceValide=true)
+                         and(TableauSeriePieceDomiciliation.Cells[0,RSerie]=firstlaters(RAvis.NumPiece,LongueureSeriePieceTrue))
+                         then
+                         begin
+                              OKSerieCharger:=true;
+                              if(TableauSeriePieceDomiciliation.Cells[2,RSerie]='')
+                              then TableauSeriePieceDomiciliation.Cells[2,RSerie]:=RAvis.NumPiece
+                              else if(strtointeger(RAvis.NumPiece)<strtointeger(TableauSeriePieceDomiciliation.Cells[2,RSerie]))then  TableauSeriePieceDomiciliation.Cells[2,RSerie]:=RAvis.NumPiece;
+
+
+                              if(TableauSeriePieceDomiciliation.Cells[3,RSerie]='')
+                              then TableauSeriePieceDomiciliation.Cells[3,RSerie]:=RAvis.NumPiece
+                              else if(strtointeger(RAvis.NumPiece)>strtointeger(TableauSeriePieceDomiciliation.Cells[3,RSerie]))then  TableauSeriePieceDomiciliation.Cells[3,RSerie]:=RAvis.NumPiece;
+                         end;
+                    RSerie:=RSerie+1;
+                    end;
+
+                    if(OKSerieCharger=false)then
+                    begin
+                         RowSerie:=RowSerie+1;
+                         TableauSeriePieceDomiciliation.Rows[RowSerie].Text:='';
+                         TableauSeriePieceDomiciliation.Cells[0,RowSerie]:=firstlaters(RAvis.NumPiece,LongueureSeriePieceTrue);
+                         TableauSeriePieceDomiciliation.Cells[1,RowSerie]:='';
+                         TableauSeriePieceDomiciliation.Cells[2,RSerie]:=RAvis.NumPiece;
+                         TableauSeriePieceDomiciliation.Cells[3,RSerie]:=RAvis.NumPiece;
+                         TableauSeriePieceDomiciliation.Cells[4,RSerie]:='';
+                    end;
+               end;
+          end;
+          CloseFile(FAvis);
+     end;
+     CloseFile(FBaseAvis);
+
+     if(RowSerie>0)then
+     begin
+          TableauSeriePieceDomiciliation.RowCount:=RowSerie+1;
+          TableauSeriePieceDomiciliation.Cells[0,0]:='';
+     end
+     else
+     begin
+          TableauSeriePieceDomiciliation.RowCount:=2;
+     end;
+
+     AjusterColWidth(TableauSeriePieceDomiciliation,'','');
+end;
+
+procedure TFSSairiePiecesDomiciliation.BitBtn3Click(Sender: TObject);
+var  TitreEtat,SousTitreEtat:string;
+begin
+     TitreEtat:='Liste Séries pièce domiciliations';
+     SousTitreEtat:='Domiciliation: '+FSSairiePiecesDomiciliation.EditDomiciliation.Text;
+
+     TableauToExcel(FSSairiePiecesDomiciliation.TableauSeriesPiecesDomiciliation,1,0,ColNum,ColDate,ColTexte,ColGauche,ColCentre,ColDroite,TitreEtat,SousTitreEtat,'',true,FSMenuPrincipal.RBInsertLogo.Checked,FSMenuPrincipal.RBAfficherLaSaisie.Checked);
+end;
+
+procedure TFSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliationExit(
+  Sender: TObject);
+begin
+     if(Firstlaters(inttostr(strtointeger(FSSairiePiecesDomiciliation.EditNumDebutSerie.Text)+strtointeger(FSSairiePiecesDomiciliation.EditNombrePieceDomiciliation.Text)-1),longueur(FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text))<>FSSairiePiecesDomiciliation.EditNumReferenceSerieDomiciliation.Text)then
+     begin
+          showmessage('Nombre incorrecte ! La série n''est pas respecter !');
+     end;
+end;
+
+Function LongueureSeriePieceTrouver(NumDomiciliation,ModePaiement,NumPieceComplet:string; var PremierNumPieceSerie,DernierNumPieceSerie:string):integer;
+var    OKSerieCharger:boolean;  NumSeriePieceLast,EcartLongueurPiece:integer;
+begin
+     PremierNumPieceSerie:='';
+     DernierNumPieceSerie:='';
+     LongueureSeriePieceTrouver:=0;
+
+     OpenFParc(RParc);
+     ChSeriePieceDomiciliationCopie:=RParc.Parcours+'\'+Exercice+'FSeriePieceDomiciliation';
+     assignfile(FSeriePieceDomiciliationCopie,ChSeriePieceDomiciliationCopie);
+     if FileExists(ChSeriePieceDomiciliationCopie)then
+     Reset(FSeriePieceDomiciliationCopie)
+     else Rewrite(FSeriePieceDomiciliationCopie);
+     Seek(FSeriePieceDomiciliationCopie,0);
+     OKSerieCharger:=false;
+     while not eof(FSeriePieceDomiciliationCopie)and(OKSerieCharger=false)do
+     begin
+          read(FSeriePieceDomiciliationCopie,RSeriePieceDomiciliationCopie);
+
+          if(RSeriePieceDomiciliationCopie.NumDomiciliation=NumDomiciliation)
+          and(RSeriePieceDomiciliationCopie.ModePaiement=ModePaiement)
+          and(strtointeger(NumPieceComplet)>=strtointeger(RSeriePieceDomiciliationCopie.NumDebutSerie))
+          and(strtointeger(NumPieceComplet)<=strtointeger(RSeriePieceDomiciliationCopie.NumDebutSerie)+RSeriePieceDomiciliationCopie.NombrePieceDomiciliation-1)
+          and(firstlaters(NumPieceComplet,longueur(RSeriePieceDomiciliationCopie.NumReferenceSerieDomiciliation))=RSeriePieceDomiciliationCopie.NumReferenceSerieDomiciliation)
+          then
+          begin
+               OKSerieCharger:=false;
+               PremierNumPieceSerie:=RSeriePieceDomiciliationCopie.NumDebutSerie;
+               NumSeriePieceLast:=strtointeger(RSeriePieceDomiciliationCopie.NumDebutSerie)+RSeriePieceDomiciliationCopie.NombrePieceDomiciliation-1;
+               EcartLongueurPiece:=longueur(RSeriePieceDomiciliationCopie.NumDebutSerie)-longueur(inttostr(NumSeriePieceLast));
+               DernierNumPieceSerie:=Firstlaters(RSeriePieceDomiciliationCopie.NumDebutSerie,EcartLongueurPiece)+inttostr(NumSeriePieceLast);
+
+               LongueureSeriePieceTrouver:=longueur(RSeriePieceDomiciliationCopie.NumReferenceSerieDomiciliation);
+          end;
+     end;
+     CloseFile(FSeriePieceDomiciliationCopie);
+end;
+
+procedure TFSSairiePiecesDomiciliation.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

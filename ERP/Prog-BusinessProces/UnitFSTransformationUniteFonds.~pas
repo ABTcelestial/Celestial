@@ -1,0 +1,1029 @@
+unit UnitFSTransformationUniteFonds;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, ExtCtrls, StdCtrls, Buttons, ComCtrls;
+
+type
+  TFSTransformationUniteFonds = class(TForm)
+    TitreTransformationUniteFonds: TPanel;
+    TableauUniteFondsSortante: TStringGrid;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    TableauUniteFondsEntrante: TStringGrid;
+    Panel3: TPanel;
+    Label1: TLabel;
+    EditNumPrelevement: TEdit;
+    Bevel1: TBevel;
+    Label2: TLabel;
+    EditPeriode: TEdit;
+    Panel4: TPanel;
+    EditMontantUniteFonds: TMemo;
+    Panel5: TPanel;
+    EditMontantUniteFondsEntrant: TMemo;
+    Label3: TLabel;
+    Label4: TLabel;
+    EditNumPrelevementEntrant: TEdit;
+    RBIncrimenterSortant: TCheckBox;
+    RBIncrimenterEntrant: TCheckBox;
+    AfficheInrimenter: TPanel;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    EditMontantUniteFondsSortant: TMemo;
+    Label5: TLabel;
+    AfficheTiers: TPanel;
+    TableauTiers: TStringGrid;
+    EditTypeProcesUF: TComboBox;
+    Label33: TLabel;
+    EditFichierConserneUF: TComboBox;
+    Label21: TLabel;
+    Bevel3: TBevel;
+    TableauListePrelevement: TStringGrid;
+    AfficheOperationTransformation: TPanel;
+    BitBtn1: TBitBtn;
+    BitBtn4: TBitBtn;
+    BitBtn5: TBitBtn;
+    BitOperationTransformation: TBitBtn;
+    Panel6: TPanel;
+    Label6: TLabel;
+    EditCodeTiers: TEdit;
+    EditTiers: TEdit;
+    EditTypeAffichge: TEdit;
+    EditDateAffichage: TEdit;
+    EditHeureAffichage: TEdit;
+    EditTypeProcesUFChargement: TEdit;
+    EditFichierConserneUFChargement: TEdit;
+    AfficheDetailTransformation: TPanel;
+    TableauUniteFondsTransformer: TStringGrid;
+    EditMontantUniteFondsTransformer: TMemo;
+    Label7: TLabel;
+    BitBtn6: TBitBtn;
+    BitBtn7: TBitBtn;
+    TableauTiersTransformer: TStringGrid;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    BitImprimerEtatProcesverbalTransformationUFonds: TBitBtn;
+    TableauTitreUniteFondsTransformer: TStringGrid;
+    TableauTitreTiersTransformer: TStringGrid;
+    TableauTitreUniteFondsSortante: TStringGrid;
+    TableauTitreUniteFondsEntrante: TStringGrid;
+    TableauTitreTiers: TStringGrid;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure TableauListePrelevementDblClick(Sender: TObject);
+    procedure TableauListePrelevementKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure TableauUniteFondsSortanteClick(Sender: TObject);
+    procedure TableauUniteFondsEntranteClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure TableauUniteFondsSortanteDblClick(Sender: TObject);
+    procedure TableauUniteFondsEntranteDblClick(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure TableauUniteFondsSortanteKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure TableauUniteFondsEntranteKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure EditFichierConserneUFSelect(Sender: TObject);
+    procedure EditTypeProcesUFSelect(Sender: TObject);
+    procedure TableauTiersKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitOperationTransformationClick(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure TableauTiersTransformerDblClick(Sender: TObject);
+    procedure TableauUniteFondsTransformerDblClick(Sender: TObject);
+    procedure BitImprimerEtatProcesverbalTransformationUFondsClick(
+      Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSTransformationUniteFonds: TFSTransformationUniteFonds;
+
+Procedure PrelevementTransfertUniteFonds(TableauUniteFonds,TableauTiers:TStringGrid; NumPrelevement:string; MemoCummulUniteFonds:TMemo; CodeTiers:string);
+
+implementation
+
+Uses UnitInitialisation, UnitFSListePrelevement, UnitFSNowPrelevement,
+     UnitFSAvis, UnitFSMenuPrincipal,
+  UnitPrintEtatProcesverbalTransformationUFonds, UnitFSTiers;
+
+var
+
+RParc:RInstalle;
+FParc:FInstalle;
+ParcInstalle:string100;
+
+TTypeUniteFonds:TTypeUniteFondss;
+RTypeUniteFonds:RTypeUniteFondss;
+FTypeUniteFonds:FTypeUniteFondss;
+ChTypeUniteFonds:string250;
+
+TUniteFonds:TUniteFondss;
+RUniteFonds:RUniteFondss;
+FUniteFonds:FUniteFondss;
+ChUniteFonds:string250;
+
+TPrelevement:TPrelevements;
+RPrelevement:RPrelevements;
+FPrelevement:FPrelevements;
+ChPrelevement:string250;
+
+TPrelevementUniteFonds,TArchivePrelevementUniteFonds:TRegistrePrelevementUniteFondss;
+RPrelevementUniteFonds,RArchivePrelevementUniteFonds:RRegistrePrelevementUniteFondss;
+FPrelevementUniteFonds,FArchivePrelevementUniteFonds:FRegistrePrelevementUniteFondss;
+ChPrelevementUniteFonds,ChArchivePrelevementUniteFonds:string250;
+
+{$R *.dfm}
+
+Procedure PrelevementTransfertUniteFonds(TableauUniteFonds,TableauTiers:TStringGrid; NumPrelevement:string; MemoCummulUniteFonds:TMemo; CodeTiers:string);
+var C,R,NbrUF,NbrTiers,ACol,Signe:integer; OKTiers:boolean;  DateIn,HeureIn,DatePrelevement,HeurePrelevement,NotCol,FichierConcerne,SigleDevise:string; OKData:boolean;
+begin
+
+     TableauTiers.ColCount:=3;
+     TableauTiers.Cols[1].Text:='N°';
+     TableauTiers.Cols[1].Text:='    Code   ';
+     TableauTiers.Cols[1].Text:='     Tiers     ';
+     TableauTiers.RowCount:=2;
+     TableauTiers.Rows[1].Text:='';
+
+     TableauUniteFonds.ColCount:=20;
+     TableauUniteFonds.Cols[1].Text:='Num';
+     TableauUniteFonds.Cols[2].Text:='Code Utilisateur';
+     TableauUniteFonds.Cols[3].Text:='Num Equipe';
+     TableauUniteFonds.Cols[4].Text:='Date';
+     TableauUniteFonds.Cols[5].Text:='Heure';
+     TableauUniteFonds.Cols[6].Text:='Num Unite Fonds';
+     TableauUniteFonds.Cols[7].Text:='Num Type U.F';
+     TableauUniteFonds.Cols[8].Text:='Type U.F';
+     TableauUniteFonds.Cols[9].Text:='Unite Fonds';
+     TableauUniteFonds.Cols[10].Text:='Data';
+     TableauUniteFonds.Cols[11].Text:='T.Proces';
+     TableauUniteFonds.Cols[12].Text:='F.Concerne';
+     TableauUniteFonds.Cols[13].Text:='Valeur UF';
+     TableauUniteFonds.Cols[14].Text:='Mode.Paie.';
+     TableauUniteFonds.Cols[15].Text:='Num.Pièce';
+     TableauUniteFonds.Cols[16].Text:='Domciliation';
+     TableauUniteFonds.Cols[17].Text:='Nbr.Sortant';
+     TableauUniteFonds.Cols[18].Text:='Nbr.Entrant';
+     TableauUniteFonds.Cols[19].Text:='Montant';
+     TableauUniteFonds.RowCount:=2;
+     TableauUniteFonds.Rows[1].Text:='';
+
+     MemoCummulUniteFonds.Text:='';
+
+     FichierConcerne:='FPrelevementUniteFonds';
+
+     if(NumPrelevement<>'')then
+     begin
+          DateIn:='';
+          HeureIn:='';
+          DatePrelevement:='';
+          HeurePrelevement:='';
+          OpenFParc(RParc);
+          ChPrelevement:=RParc.Parcours+'\'+Exercice+'FPrelevement';
+          assignfile(FPrelevement,ChPrelevement);
+          if FileExists(ChPrelevement)then
+          Reset(FPrelevement)
+          else Rewrite(FPrelevement);
+          Seek(FPrelevement,strtointeger(NumPrelevement));
+          if not eof(FPrelevement)then
+          begin
+               read(FPrelevement,RPrelevement);
+               if(RPrelevement.Archiver=false)
+               then FichierConcerne:='FPrelevementUniteFonds'
+               else FichierConcerne:='FArchivePrelevementUniteFonds';
+
+               DatePrelevement:=RPrelevement.DatePrelevement;
+               HeurePrelevement:=RPrelevement.HeurePrelevement;
+          end;
+          CloseFile(FPrelevement);
+
+          ///////////////////////////////////////////////////////////////////////////
+
+          OpenFParc(RParc);
+          ChPrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+FichierConcerne;
+          assignfile(FPrelevementUniteFonds,ChPrelevementUniteFonds);
+          if FileExists(ChPrelevementUniteFonds)then
+          Reset(FPrelevementUniteFonds)
+          else Rewrite(FPrelevementUniteFonds);
+          Seek(FPrelevementUniteFonds,0);
+          NbrUF:=0;
+          NbrTiers:=0;
+          SigleDevise:='';
+          while not eof(FPrelevementUniteFonds)do
+          begin
+               read(FPrelevementUniteFonds,RPrelevementUniteFonds);
+               if(RPrelevementUniteFonds.NumPrelevement=strtointeger(NumPrelevement))
+               then
+               begin
+                    if(RPrelevementUniteFonds.ValeurPrecise=true)
+                    and(RPrelevementUniteFonds.CodeTiers<>'')
+                    then
+                    begin
+                         if(CodeTiers='')then
+                         begin
+                              OKTiers:=false;
+                              R:=1;
+                              while(R<=NbrTiers)and(OKTiers=false)do
+                              begin
+                                   if(TableauTiers.Cells[1,R]=RPrelevementUniteFonds.CodeTiers)then OKTiers:=true;
+                              R:=R+1;
+                              end;
+
+                              if(OKTiers=false)then
+                              begin
+                                   NbrTiers:=NbrTiers+1;
+                                   TableauTiers.Rows[NbrTiers].Text:=inttostr(NbrTiers);
+                                   TableauTiers.Cells[1,NbrTiers]:=RPrelevementUniteFonds.CodeTiers;
+                                   TableauTiers.Cells[2,NbrTiers]:=ImporteDataProcesTiers(RPrelevementUniteFonds.TypeProces,RPrelevementUniteFonds.FichierConcerne,RPrelevementUniteFonds.CodeTiers);
+                              end;
+                         OKTiers:=true;
+                         end
+                         else
+                         begin
+                              if(CodeTiers=RPrelevementUniteFonds.CodeTiers)then
+                              begin
+                                   OKTiers:=true;
+                                   if(TableauTiers.Cells[1,1]='')then
+                                   begin
+                                        TableauTiers.Rows[1].Text:=inttostr(1);
+                                        TableauTiers.Cells[1,1]:=RPrelevementUniteFonds.CodeTiers;
+                                        TableauTiers.Cells[2,1]:=ImporteDataProcesTiers(RPrelevementUniteFonds.TypeProces,RPrelevementUniteFonds.FichierConcerne,RPrelevementUniteFonds.CodeTiers);
+                                   end;
+                              end
+                              else OKTiers:=false;
+                         end;
+
+                         if(OKTiers=true)then
+                         begin
+                              NbrUF:=NbrUF+1;
+                              TableauUniteFonds.Rows[NbrUF].Text:=inttostr(NbrUF);
+                              TableauUniteFonds.Cells[1,NbrUF]:=inttostr(RPrelevementUniteFonds.NumPrelevement);
+                              TableauUniteFonds.Cells[2,NbrUF]:=RPrelevementUniteFonds.CodeUtilisateur;
+                              TableauUniteFonds.Cells[3,NbrUF]:=inttostr(RPrelevementUniteFonds.NumEquipe);
+                              TableauUniteFonds.Cells[4,NbrUF]:=RPrelevementUniteFonds.DatePrelevement;
+                              TableauUniteFonds.Cells[5,NbrUF]:=RPrelevementUniteFonds.HeurePrelevement;
+                              TableauUniteFonds.Cells[6,NbrUF]:=inttostr(RPrelevementUniteFonds.NumUniteFonds);
+                              RUniteFonds:=ChercherUniteFonds(inttostr(RPrelevementUniteFonds.NumUniteFonds));
+                              TableauUniteFonds.Cells[7,NbrUF]:=inttostr(RUniteFonds.NumTypeUniteFonds);
+                              RTypeUniteFonds:=ChercherTypeUniteFonds(inttostr(RUniteFonds.NumTypeUniteFonds));
+                              TableauUniteFonds.Cells[8,NbrUF]:=RTypeUniteFonds.DesignationTypeUniteFonds;
+                              TableauUniteFonds.Cells[9,NbrUF]:=RUniteFonds.DesignationUniteFonds;
+                              TableauUniteFonds.Cells[10,NbrUF]:=booleantostr(RUniteFonds.ValeurPrecise);
+                              TableauUniteFonds.Cells[11,NbrUF]:=RUniteFonds.TypeProces;
+                              TableauUniteFonds.Cells[12,NbrUF]:=RUniteFonds.FichierConcerne;
+                              TableauUniteFonds.Cells[13,NbrUF]:=floattostr(RUniteFonds.ValeurMonetaireUnitaire);
+                              TableauUniteFonds.Cells[14,NbrUF]:=RPrelevementUniteFonds.ModePaiement;
+                              TableauUniteFonds.Cells[15,NbrUF]:=RPrelevementUniteFonds.NumPiece;
+                              TableauUniteFonds.Cells[16,NbrUF]:=RPrelevementUniteFonds.Domiciliation;
+
+                              if(RPrelevementUniteFonds.ValeurPrelevement<0)
+                              then begin ACol:=17; Signe:=-1;end
+                              else begin ACol:=18; Signe:=1;end;
+
+                              if(RPrelevementUniteFonds.ValeurPrecise=true)
+                              then TableauUniteFonds.Cells[ACol,NbrUF]:=Vergule(Floattostr(RPrelevementUniteFonds.ValeurPrelevement*Signe),'2','C','')
+                              else
+                              begin
+                                   if(RPrelevementUniteFonds.ValeurPrelevement<>0)
+                                   then TableauUniteFonds.Cells[ACol,NbrUF]:=Vergule(Floattostr(RUniteFonds.ValeurMonetaireUnitaire*Signe),'2','C','')
+                                   else TableauUniteFonds.Cells[ACol,NbrUF]:='';
+                              end;
+
+                              TableauUniteFonds.Cells[19,NbrUF]:=Vergule(Floattostr(RPrelevementUniteFonds.ValeurPrelevement*RUniteFonds.ValeurMonetaireUnitaire),'2','C','');
+
+                              if(SigleDevise<>'?')then
+                              begin
+                                   if(SigleDevise='')then
+                                   begin
+                                        SigleDevise:=RUniteFonds.SigleDevise;
+                                   end
+                                   else
+                                   begin
+                                        if(SigleDevise<>RUniteFonds.SigleDevise)then SigleDevise:='?';
+                                   end;
+                              end;
+                         end;
+                    end;
+               end;
+          end;
+          CloseFile(FPrelevementUniteFonds);
+          ///////////////////////////////////////////////////////////////////////////
+     end;
+
+     if(NbrUF>0)then TableauUniteFonds.RowCount:=NbrUF+1
+                else TableauUniteFonds.RowCount:=2;
+
+     if(NbrTiers>0)then TableauTiers.RowCount:=NbrTiers+1
+                   else TableauTiers.RowCount:=2;
+     AjusterColWidth(TableauTiers,'','');
+
+     for R:=1 to TableauUniteFonds.ColCount-1 do
+     begin
+          if strtoreal(TableauUniteFonds.Cells[19,R])>0 then
+          MemoCummulUniteFonds.Text:=floattostr(strtoreal(MemoCummulUniteFonds.Text)+strtoreal(TableauUniteFonds.Cells[19,R]));
+     end;
+
+     if(SigleDevise='?')then SigleDevise:='';
+
+     MemoCummulUniteFonds.Text:=Vergule(MemoCummulUniteFonds.Text,'2','C','')+' '+SigleDevise;
+
+NotCol:='1;2;3;4;5;6;7;8;10;11;12;13;14;15;16';
+for C:=0 to TableauUniteFonds.ColCount-1 do
+begin
+     if existenumintexte(inttostr(C),NotCol)then TableauUniteFonds.ColWidths[C]:=0;
+end;
+AjusterColWidth(TableauUniteFonds,'',NotCol);
+TrierTableauARowSpecial(TableauUniteFonds,1,TableauUniteFonds.RowCount-1,1,'13','Num','-');
+end;
+
+procedure TFSTransformationUniteFonds.BitBtn1Click(Sender: TObject);
+begin
+FSTransformationUniteFonds.BitOperationTransformation.Width:=137;
+FSTransformationUniteFonds.AfficheOperationTransformation.Width:=169;
+FSTransformationUniteFonds.AfficheOperationTransformation.Height:=73;
+FSTransformationUniteFonds.AfficheOperationTransformation.Left:=624;
+
+FSTransformationUniteFonds.TableauListePrelevement.Visible:=true;
+ListePrelevement(FSTransformationUniteFonds.TableauListePrelevement,datetostr(FSListePrelevement.EditDateDebutPrelevement.Date),datetostr(FSListePrelevement.EditDateFinPrelevement.Date),FSListePrelevement.EditMatriculeEffectif.Text,'','',FSListePrelevement.RBAbregerTitreRubrique.Checked);
+end;
+
+procedure TFSTransformationUniteFonds.TableauListePrelevementDblClick(
+  Sender: TObject);
+var  R,NbrSelect:integer;
+begin
+
+if(strtoboolean(FSTransformationUniteFonds.TableauListePrelevement.Cells[6,FSTransformationUniteFonds.TableauListePrelevement.Row])=false)then
+begin
+     showmessage('Le prélèvement n''est pas archivé !');
+     Exit;
+end;
+
+FSTransformationUniteFonds.EditNumPrelevement.Text:='';
+
+if(FSTransformationUniteFonds.TableauListePrelevement.Cells[1,FSTransformationUniteFonds.TableauListePrelevement.Row]<>'')then
+begin
+     if(FSTransformationUniteFonds.TableauListePrelevement.Cells[9,FSTransformationUniteFonds.TableauListePrelevement.Row]='')then
+     begin
+          FSTransformationUniteFonds.TableauListePrelevement.Cells[9,FSTransformationUniteFonds.TableauListePrelevement.Row]:='OK';
+     end
+     else
+     begin
+          FSTransformationUniteFonds.TableauListePrelevement.Cells[9,FSTransformationUniteFonds.TableauListePrelevement.Row]:='';
+     end;
+
+     NbrSelect:=0;
+     for R:=1 to FSTransformationUniteFonds.TableauListePrelevement.RowCount-1 do
+     begin
+          if(FSTransformationUniteFonds.TableauListePrelevement.Cells[9,R]='OK')then
+          begin
+               NbrSelect:=NbrSelect+1;
+          end;
+     end;
+
+     if(NbrSelect<=2)then
+     begin
+          FSTransformationUniteFonds.EditPeriode.Text:='Prélèvement ';
+
+          NbrSelect:=0;
+          for R:=1 to FSTransformationUniteFonds.TableauListePrelevement.RowCount-1 do
+          begin
+               if(FSTransformationUniteFonds.TableauListePrelevement.Cells[9,R]='OK')then
+               begin
+                    NbrSelect:=NbrSelect+1;
+
+                    if(NbrSelect=1)then
+                    begin
+                         FSTransformationUniteFonds.EditPeriode.Text:=FSTransformationUniteFonds.EditPeriode.Text+'N°:'+FSTransformationUniteFonds.TableauListePrelevement.Cells[1,R]+' du '+FSTransformationUniteFonds.TableauListePrelevement.Cells[4,R]+'/'+FSTransformationUniteFonds.TableauListePrelevement.Cells[5,R];
+                         FSTransformationUniteFonds.EditNumPrelevement.Text:=FSTransformationUniteFonds.TableauListePrelevement.Cells[1,R];
+                         FSTransformationUniteFonds.EditTypeAffichge.Text:='Par Prélèvement: ';
+                    end;
+                    if(NbrSelect=2)then
+                    begin
+                         FSTransformationUniteFonds.EditPeriode.Text:=FSTransformationUniteFonds.EditPeriode.Text+' au '+'N°:'+FSTransformationUniteFonds.TableauListePrelevement.Cells[1,R]+' du '+FSTransformationUniteFonds.TableauListePrelevement.Cells[4,R]+'/'+FSTransformationUniteFonds.TableauListePrelevement.Cells[5,R];
+                         FSTransformationUniteFonds.EditNumPrelevement.Text:='';
+                         FSTransformationUniteFonds.EditTypeAffichge.Text:='Périodique: ';
+                    end;
+               end;
+          end;
+     end
+     else
+     begin
+          FSTransformationUniteFonds.TableauListePrelevement.Cells[9,FSTransformationUniteFonds.TableauListePrelevement.Row]:='';
+          FSTransformationUniteFonds.EditNumPrelevement.Text:='';
+          Showmessage('La Période est sélectionné !, Veuillez confirmer votre requette SVP');
+     end;
+end;
+end;
+
+procedure TFSTransformationUniteFonds.TableauListePrelevementKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+var  R,C,NbrSelect:integer; TypeProces,FichierConcerne,NotCol,NumPrelevement,NumPrelevementFin,DateIn,HeureIn,DatePrelevement,HeurePrelevement:string;
+begin
+
+if key in[VK_RETURN]then
+begin
+     if(FSTransformationUniteFonds.EditTypeAffichge.Text='Par Prélèvement: ')then
+     begin
+          R:=1;
+          NbrSelect:=0;
+          while(R<=FSTransformationUniteFonds.TableauListePrelevement.RowCount-1)and(NbrSelect<>1)do
+          begin
+               if(FSTransformationUniteFonds.TableauListePrelevement.Cells[9,R]='OK')then
+               begin
+                    NbrSelect:=1;
+                    NumPrelevement:=FSTransformationUniteFonds.TableauListePrelevement.Cells[1,R];
+                    NumPrelevementFin:='';
+                    DateIn:=FSTransformationUniteFonds.TableauListePrelevement.Cells[4,R];
+                    HeureIn:=FSTransformationUniteFonds.TableauListePrelevement.Cells[5,R];
+                    DatePrelevement:=FSTransformationUniteFonds.TableauListePrelevement.Cells[4,R];
+                    HeurePrelevement:=FSTransformationUniteFonds.TableauListePrelevement.Cells[5,R];
+
+                    FSTransformationUniteFonds.EditDateAffichage.Text:=DatePrelevement;
+                    FSTransformationUniteFonds.EditHeureAffichage.Text:=HeurePrelevement;
+
+                    ////////////////
+                    ProcPrelevementUniteFonds(FSTransformationUniteFonds.TableauUniteFondsSortante,FSTransformationUniteFonds.TableauTitreUniteFondsSortante,
+                                          FSTransformationUniteFonds.EditMontantUniteFonds,
+                                          FSTransformationUniteFonds.EditNumPrelevement,
+                                          NumPrelevement,NumPrelevementFin,'',FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[6,FSTransformationUniteFonds.TableauUniteFondsSortante.Row]);
+                    FSTransformationUniteFonds.TableauUniteFondsSortante.Cols[18].Text:='   Nombre Sortant!';
+
+                    NotCol:='1;2;3;4;5;6;7;8;10;11;12;13;14;15;16';
+                    for C:=0 to FSTransformationUniteFonds.TableauUniteFondsSortante.ColCount-1 do
+                    begin
+                         if Existenumintexte(inttostr(C),NotCol)then FSTransformationUniteFonds.TableauUniteFondsSortante.ColWidths[C]:=0;
+                    end;
+                    AjusterColWidth(FSTransformationUniteFonds.TableauUniteFondsSortante,'',NotCol);
+                    //////////////
+                    ProcPrelevementUniteFonds(FSTransformationUniteFonds.TableauUniteFondsEntrante,FSTransformationUniteFonds.TableauTitreUniteFondsEntrante,
+                                          FSTransformationUniteFonds.EditMontantUniteFondsEntrant,
+                                          FSTransformationUniteFonds.EditNumPrelevementEntrant,
+                                          NumPrelevement,NumPrelevementFin,'',FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[6,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row]);
+                    FSTransformationUniteFonds.TableauUniteFondsEntrante.ColCount:=18;
+                    FSTransformationUniteFonds.TableauUniteFondsEntrante.Cols[17].Text:='   Nombre Entrant!';
+                    FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text:='';
+
+                    NotCol:='1;2;3;4;5;6;7;8;10;11;12;13;14;15;16';
+                    for C:=0 to FSTransformationUniteFonds.TableauUniteFondsEntrante.ColCount-1 do
+                    begin
+                         if Existenumintexte(inttostr(C),NotCol)then FSTransformationUniteFonds.TableauUniteFondsEntrante.ColWidths[C]:=0;
+                    end;
+                    AjusterColWidth(FSTransformationUniteFonds.TableauUniteFondsEntrante,'',NotCol);
+
+                    FSTransformationUniteFonds.TableauListePrelevement.Visible:=false;
+
+                    if(FSTransformationUniteFonds.EditCodeTiers.Text='')then
+                    begin
+                         FSTransformationUniteFonds.AfficheTiers.Visible:=true;
+                         TypeProces:=FSTransformationUniteFonds.EditTypeProcesUF.Text;
+                         FichierConcerne:=FSTransformationUniteFonds.EditFichierConserneUF.Text;
+                         ListeTiers(FSTransformationUniteFonds.TableauTiers,TypeProces,FichierConcerne,'','','',true);
+                         FSTransformationUniteFonds.TableauTiers.SetFocus;
+                    end;
+
+               end;
+          R:=R+1;
+          end;
+
+          if(NbrSelect=0)then
+          begin
+               Showmessage('Aucun Prélèvement n''est sélectionné !');
+          end;
+     end;
+
+     if(FSTransformationUniteFonds.EditTypeAffichge.Text='Périodique: ')then
+     begin
+
+     end;
+end;
+
+end;
+
+procedure TFSTransformationUniteFonds.TableauUniteFondsSortanteClick(
+  Sender: TObject);
+begin
+FSTransformationUniteFonds.AfficheInrimenter.Visible:=false;
+FSTransformationUniteFonds.RBIncrimenterSortant.Checked:=false;
+FSTransformationUniteFonds.RBIncrimenterEntrant.Checked:=false;
+end;
+
+procedure TFSTransformationUniteFonds.TableauUniteFondsEntranteClick(
+  Sender: TObject);
+begin
+FSTransformationUniteFonds.AfficheInrimenter.Visible:=false;
+FSTransformationUniteFonds.RBIncrimenterSortant.Checked:=false;
+FSTransformationUniteFonds.RBIncrimenterEntrant.Checked:=false;
+end;
+
+procedure TFSTransformationUniteFonds.BitBtn2Click(Sender: TObject);
+var R:integer;
+begin
+
+if(FSTransformationUniteFonds.RBIncrimenterSortant.Checked=true)then
+begin
+if(strtoboolean(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[10,FSTransformationUniteFonds.TableauUniteFondsSortante.Row])=true)then
+begin
+     if(strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,FSTransformationUniteFonds.TableauUniteFondsSortante.Row])+1<=strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[17,FSTransformationUniteFonds.TableauUniteFondsSortante.Row]))then
+     begin
+          FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,FSTransformationUniteFonds.TableauUniteFondsSortante.Row]:=floattostr(strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,FSTransformationUniteFonds.TableauUniteFondsSortante.Row])+1);
+     end
+     else Showmessage('Vous n''avez pas suffisamment d''Unités pour satisfaire la requête !');
+
+     FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text:='';
+     for R:=1 to FSTransformationUniteFonds.TableauUniteFondsSortante.RowCount-1 do
+     begin
+          FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text:=floattostr(strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text)+(strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,R])*strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[13,R])));
+     end;
+
+     FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text:=Vergule(FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text,'2','C','');
+end
+else
+begin
+    showmessage('L''Unité de Fonds Sélectionnée, n''est pas décomposable !');
+end;
+end;
+
+if(FSTransformationUniteFonds.RBIncrimenterEntrant.Checked=true)then
+begin
+if(strtoboolean(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[10,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row])=true)then
+begin
+     if(strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text)+strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[13,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row])>strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text))then
+     begin
+          showmessage('La Balance n''est pas satisfaite !');
+          Exit;
+     end;
+
+     FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[17,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row]:=floattostr(strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[17,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row])+1);
+
+     FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text:='';
+     for R:=1 to FSTransformationUniteFonds.TableauUniteFondsEntrante.RowCount-1 do
+     begin
+          FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text:=floattostr(strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text)+strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[17,R])*strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[13,R]));
+     end;
+
+     FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text:=Vergule(FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text,'2','C','');
+end
+else
+begin
+    showmessage('L''Unité de Fonds Sélectionnée, n''est pas décomposable !');
+end;
+end;
+
+end;
+
+procedure TFSTransformationUniteFonds.TableauUniteFondsSortanteDblClick(
+  Sender: TObject);
+begin
+FSTransformationUniteFonds.RBIncrimenterSortant.Checked:=true;
+FSTransformationUniteFonds.RBIncrimenterEntrant.Checked:=false;
+FSTransformationUniteFonds.AfficheInrimenter.Visible:=true;
+end;
+
+procedure TFSTransformationUniteFonds.TableauUniteFondsEntranteDblClick(
+  Sender: TObject);
+begin
+FSTransformationUniteFonds.RBIncrimenterEntrant.Checked:=true;
+FSTransformationUniteFonds.RBIncrimenterSortant.Checked:=false;
+FSTransformationUniteFonds.AfficheInrimenter.Visible:=true;
+end;
+
+procedure TFSTransformationUniteFonds.BitBtn3Click(Sender: TObject);
+var R:integer;
+begin
+
+if(FSTransformationUniteFonds.RBIncrimenterSortant.Checked=true)then
+begin
+if(strtoboolean(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[10,FSTransformationUniteFonds.TableauUniteFondsSortante.Row])=true)then
+begin
+     if(strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text)-strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[13,FSTransformationUniteFonds.TableauUniteFondsSortante.Row])<strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text))then
+     begin
+          showmessage('La Balance n''est pas satisfaite !');
+          Exit;
+     end;
+
+     if(strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,FSTransformationUniteFonds.TableauUniteFondsSortante.Row])-1>=0)then
+     begin
+          FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,FSTransformationUniteFonds.TableauUniteFondsSortante.Row]:=floattostr(strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,FSTransformationUniteFonds.TableauUniteFondsSortante.Row])-1);
+     end
+     else Showmessage('Vos Unités sont satisfaite !');
+
+     FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text:='';
+     for R:=1 to FSTransformationUniteFonds.TableauUniteFondsSortante.RowCount-1 do
+     begin
+          FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text:=floattostr(strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text)+(strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,R])*strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[13,R])));
+     end;
+
+     FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text:=Vergule(FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text,'2','C','');
+end
+else
+begin
+    showmessage('L''Unité de Fonds Sélectionnée, n''est pas décomposable !');
+end;
+end;
+
+if(FSTransformationUniteFonds.RBIncrimenterEntrant.Checked=true)then
+begin
+if(strtoboolean(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[10,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row])=true)then
+begin
+     if(strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[17,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row])-1>=0)then
+     begin
+          FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[17,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row]:=floattostr(strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[17,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row])-1);
+     end
+     else Showmessage('Vos Unités sont satisfaite !');
+
+     FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text:='';
+     for R:=1 to FSTransformationUniteFonds.TableauUniteFondsEntrante.RowCount-1 do
+     begin
+          FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text:=floattostr(strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text)+strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[17,R])*strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[13,R]));
+     end;
+
+     FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text:=Vergule(FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text,'2','C','');
+end
+else
+begin
+    showmessage('L''Unité de Fonds Sélectionnée, n''est pas décomposable !');
+end;
+end;
+
+end;
+
+procedure TFSTransformationUniteFonds.TableauUniteFondsSortanteKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSTransformationUniteFonds.RBIncrimenterSortant.Checked:=true;
+     FSTransformationUniteFonds.RBIncrimenterEntrant.Checked:=false;
+     FSTransformationUniteFonds.AfficheInrimenter.Visible:=true;
+end;
+
+end;
+
+procedure TFSTransformationUniteFonds.TableauUniteFondsEntranteKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSTransformationUniteFonds.RBIncrimenterEntrant.Checked:=true;
+     FSTransformationUniteFonds.RBIncrimenterSortant.Checked:=false;
+     FSTransformationUniteFonds.AfficheInrimenter.Visible:=true;
+end;
+end;
+
+procedure TFSTransformationUniteFonds.BitBtn4Click(Sender: TObject);
+var i,R,C,NbrSelect:integer;  FichierConcerne,NotCol,NumPrelevement,NumPrelevementFin,DateIn,HeureIn,DatePrelevement,HeurePrelevement:string;
+begin
+FSTransformationUniteFonds.BitOperationTransformation.Width:=137;
+FSTransformationUniteFonds.AfficheOperationTransformation.Width:=169;
+FSTransformationUniteFonds.AfficheOperationTransformation.Height:=73;
+FSTransformationUniteFonds.AfficheOperationTransformation.Left:=624;
+
+if(strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsSortant.Text)=strtoreal(FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text))then
+begin
+     if(FSTransformationUniteFonds.EditNumPrelevement.Text='')
+     or(FSTransformationUniteFonds.EditCodeTiers.Text='')
+     then
+     begin
+          Showmessage('Saisissez les Données SVP !');
+          Exit;
+     end;
+
+          DateIn:='';
+          HeureIn:='';
+          DatePrelevement:='';
+          HeurePrelevement:='';
+          OpenFParc(RParc);
+          ChPrelevement:=RParc.Parcours+'\'+Exercice+'FPrelevement';
+          assignfile(FPrelevement,ChPrelevement);
+          if FileExists(ChPrelevement)then
+          Reset(FPrelevement)
+          else Rewrite(FPrelevement);
+          Seek(FPrelevement,strtointeger(NumPrelevement));
+          if not eof(FPrelevement)then
+          begin
+               read(FPrelevement,RPrelevement);
+               if(RPrelevement.Archiver=false)
+               then FichierConcerne:='FPrelevementUniteFonds'
+               else FichierConcerne:='FArchivePrelevementUniteFonds';
+
+               DatePrelevement:=RPrelevement.DatePrelevement;
+               HeurePrelevement:=RPrelevement.HeurePrelevement;
+          end;
+          CloseFile(FPrelevement);
+
+     OpenFParc(RParc);
+     ChPrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+FichierConcerne;
+     assignfile(FPrelevementUniteFonds,ChPrelevementUniteFonds);
+     if FileExists(ChPrelevementUniteFonds)then
+     Reset(FPrelevementUniteFonds)
+     else Rewrite(FPrelevementUniteFonds);
+     Seek(FPrelevementUniteFonds,0);
+     i:=0;
+     while not eof(FPrelevementUniteFonds)do
+     begin
+          read(FPrelevementUniteFonds,RPrelevementUniteFonds);
+          i:=i+1;
+     end;
+
+     for R:=1 to FSTransformationUniteFonds.TableauUniteFondsSortante.RowCount-1 do
+     begin
+          if(strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,R])>0)then
+          begin
+          RPrelevementUniteFonds.NumPrelevementUniteFonds:=i;
+          RPrelevementUniteFonds.NumPrelevement:=strtointeger(FSTransformationUniteFonds.EditNumPrelevement.Text);
+          RPrelevementUniteFonds.CodeUtilisateur:=FSMenuPrincipal.EditCodeUtilisateur.Text;
+          RPrelevementUniteFonds.DatePrelevement:=FSTransformationUniteFonds.EditDateAffichage.Text;
+          RPrelevementUniteFonds.HeurePrelevement:=FSTransformationUniteFonds.EditHeureAffichage.Text;
+          RPrelevementUniteFonds.NumEquipe:=0;
+          RPrelevementUniteFonds.NumUniteFonds:=strtointeger(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[6,R]);
+          RPrelevementUniteFonds.ValeurPrecise:=strtoboolean(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[10,R]);
+          RPrelevementUniteFonds.TypeProces:=FSTransformationUniteFonds.EditTypeProcesUFChargement.Text;
+          RPrelevementUniteFonds.FichierConcerne:=FSTransformationUniteFonds.EditFichierConserneUFChargement.Text;
+          RPrelevementUniteFonds.CodeTiers:=FSTransformationUniteFonds.EditCodeTiers.Text;
+          RPrelevementUniteFonds.ModePaiement:=FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[14,R];
+          RPrelevementUniteFonds.NumPiece:='';
+          RPrelevementUniteFonds.Domiciliation:='';
+          RPrelevementUniteFonds.ValeurPrelevement:=(-1)*strtoreal(FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[18,R]);
+          Seek(FPrelevementUniteFonds,i);
+          write(FPrelevementUniteFonds,RPrelevementUniteFonds);
+          i:=i+1;
+          end;
+     end;
+
+     for R:=1 to FSTransformationUniteFonds.TableauUniteFondsEntrante.RowCount-1 do
+     begin
+          if(strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[17,R])>0)then
+          begin
+          RPrelevementUniteFonds.NumPrelevementUniteFonds:=i;
+          RPrelevementUniteFonds.NumPrelevement:=strtointeger(FSTransformationUniteFonds.EditNumPrelevement.Text);
+          RPrelevementUniteFonds.CodeUtilisateur:=FSMenuPrincipal.EditCodeUtilisateur.Text;
+          RPrelevementUniteFonds.DatePrelevement:=FSTransformationUniteFonds.EditDateAffichage.Text;
+          RPrelevementUniteFonds.HeurePrelevement:=FSTransformationUniteFonds.EditHeureAffichage.Text;
+          RPrelevementUniteFonds.NumEquipe:=0;
+          RPrelevementUniteFonds.NumUniteFonds:=strtointeger(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[6,R]);
+          RPrelevementUniteFonds.ValeurPrecise:=strtoboolean(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[10,R]);
+          RPrelevementUniteFonds.TypeProces:=FSTransformationUniteFonds.EditTypeProcesUFChargement.Text;
+          RPrelevementUniteFonds.FichierConcerne:=FSTransformationUniteFonds.EditFichierConserneUFChargement.Text;
+          RPrelevementUniteFonds.CodeTiers:=FSTransformationUniteFonds.EditCodeTiers.Text;
+          RPrelevementUniteFonds.ModePaiement:=FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[14,R];
+          RPrelevementUniteFonds.NumPiece:='';
+          RPrelevementUniteFonds.Domiciliation:='';
+          RPrelevementUniteFonds.ValeurPrelevement:=strtoreal(FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[17,R]);
+          Seek(FPrelevementUniteFonds,i);
+          write(FPrelevementUniteFonds,RPrelevementUniteFonds);
+          i:=i+1;
+          end;
+     end;
+
+     CloseFile(FPrelevementUniteFonds);
+
+     NumPrelevement:=FSTransformationUniteFonds.EditNumPrelevement.Text;
+     NumPrelevementFin:='';
+     DateIn:='';
+     HeureIn:='';
+     DatePrelevement:=FSTransformationUniteFonds.EditDateAffichage.Text;
+     HeurePrelevement:=FSTransformationUniteFonds.EditHeureAffichage.Text;
+
+     //////////////
+     ProcPrelevementUniteFonds(FSTransformationUniteFonds.TableauUniteFondsSortante,FSTransformationUniteFonds.TableauTitreUniteFondsSortante,
+                           FSTransformationUniteFonds.EditMontantUniteFonds,
+                           FSTransformationUniteFonds.EditNumPrelevement,
+                           NumPrelevement,NumPrelevementFin,'',FSTransformationUniteFonds.TableauUniteFondsSortante.Cells[6,FSTransformationUniteFonds.TableauUniteFondsSortante.Row]);
+     FSTransformationUniteFonds.TableauUniteFondsSortante.Cols[18].Text:='   Nombre Sortant!';
+
+     NotCol:='1;2;3;4;5;6;7;8;10;11;12;13;14;15;16';
+     for C:=0 to FSTransformationUniteFonds.TableauUniteFondsSortante.ColCount-1 do
+     begin
+          if Existenumintexte(inttostr(C),NotCol)then FSTransformationUniteFonds.TableauUniteFondsSortante.ColWidths[C]:=0;
+     end;
+     AjusterColWidth(FSTransformationUniteFonds.TableauUniteFondsSortante,'',NotCol);
+
+     //////////////
+     ProcPrelevementUniteFonds(FSTransformationUniteFonds.TableauUniteFondsEntrante,FSTransformationUniteFonds.TableauTitreUniteFondsEntrante,
+                           FSTransformationUniteFonds.EditMontantUniteFondsEntrant,
+                           FSTransformationUniteFonds.EditNumPrelevementEntrant,
+                           NumPrelevement,NumPrelevementFin,'',FSTransformationUniteFonds.TableauUniteFondsEntrante.Cells[6,FSTransformationUniteFonds.TableauUniteFondsEntrante.Row]);
+     FSTransformationUniteFonds.TableauUniteFondsEntrante.ColCount:=18;
+     FSTransformationUniteFonds.TableauUniteFondsEntrante.Cols[17].Text:='   Nombre Entrant!';
+     FSTransformationUniteFonds.EditMontantUniteFondsEntrant.Text:='';
+
+     NotCol:='1;2;3;4;5;6;7;8;10;11;12;13;14;15;16';
+     for C:=0 to FSTransformationUniteFonds.TableauUniteFondsEntrante.ColCount-1 do
+     begin
+          if Existenumintexte(inttostr(C),NotCol)then FSTransformationUniteFonds.TableauUniteFondsEntrante.ColWidths[C]:=0;
+     end;
+     AjusterColWidth(FSTransformationUniteFonds.TableauUniteFondsEntrante,'',NotCol);
+end
+else
+begin
+     showmessage('La Balance n''est pas satisfaite !');
+end;
+
+end;
+
+procedure TFSTransformationUniteFonds.EditFichierConserneUFSelect(
+  Sender: TObject);
+var    TypeProces,FichierConcerne:string;
+begin
+TypeProces:=FSTransformationUniteFonds.EditTypeProcesUF.Text;
+FichierConcerne:=FSTransformationUniteFonds.EditFichierConserneUF.Text;
+ListeTiers(FSTransformationUniteFonds.TableauTiers,TypeProces,FichierConcerne,'','','',true);
+end;
+
+procedure TFSTransformationUniteFonds.EditTypeProcesUFSelect(
+  Sender: TObject);
+begin
+FSTransformationUniteFonds.TableauTiers.RowCount:=2;
+FSTransformationUniteFonds.TableauTiers.Rows[1].Text:='';
+end;
+
+procedure TFSTransformationUniteFonds.TableauTiersKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     if(FSTransformationUniteFonds.TableauTiers.Cells[1,FSTransformationUniteFonds.TableauTiers.Row]<>'')then
+     begin
+          FSTransformationUniteFonds.EditCodeTiers.Text:=FSTransformationUniteFonds.TableauTiers.Cells[1,FSTransformationUniteFonds.TableauTiers.Row];
+          FSTransformationUniteFonds.EditTiers.Text:=FSTransformationUniteFonds.TableauTiers.Cells[2,FSTransformationUniteFonds.TableauTiers.Row];
+          FSTransformationUniteFonds.EditTypeProcesUFChargement.Text:=FSTransformationUniteFonds.EditTypeProcesUF.Text;
+          FSTransformationUniteFonds.EditFichierConserneUFChargement.Text:=FSTransformationUniteFonds.EditFichierConserneUF.Text;
+     end
+     else
+     begin
+          Showmessage('Aucun Tiers n''est Sélectionné !');
+     end;
+
+     FSTransformationUniteFonds.AfficheTiers.Visible:=false;
+end;
+
+end;
+
+procedure TFSTransformationUniteFonds.BitOperationTransformationClick(Sender: TObject);
+begin
+
+if(FSTransformationUniteFonds.AfficheOperationTransformation.Width=169)
+and(FSTransformationUniteFonds.AfficheOperationTransformation.Height=73)
+then
+begin
+     FSTransformationUniteFonds.AfficheOperationTransformation.Left:=496;
+     FSTransformationUniteFonds.AfficheOperationTransformation.Width:=297;
+     FSTransformationUniteFonds.AfficheOperationTransformation.Height:=225;
+     FSTransformationUniteFonds.BitOperationTransformation.Width:=265;
+end
+else
+begin
+     FSTransformationUniteFonds.BitOperationTransformation.Width:=137;
+     FSTransformationUniteFonds.AfficheOperationTransformation.Width:=169;
+     FSTransformationUniteFonds.AfficheOperationTransformation.Height:=73;
+     FSTransformationUniteFonds.AfficheOperationTransformation.Left:=624;
+end;
+
+end;
+
+procedure TFSTransformationUniteFonds.BitBtn5Click(Sender: TObject);
+var  TypeProces,FichierConcerne:string;
+begin
+FSTransformationUniteFonds.BitOperationTransformation.Width:=137;
+FSTransformationUniteFonds.AfficheOperationTransformation.Width:=169;
+FSTransformationUniteFonds.AfficheOperationTransformation.Height:=73;
+FSTransformationUniteFonds.AfficheOperationTransformation.Left:=624;
+
+FSTransformationUniteFonds.AfficheTiers.Visible:=true;
+TypeProces:=FSTransformationUniteFonds.EditTypeProcesUF.Text; 
+FichierConcerne:=FSTransformationUniteFonds.EditFichierConserneUF.Text;
+ListeTiers(FSTransformationUniteFonds.TableauTiers,TypeProces,FichierConcerne,'','','',true);
+end;
+
+procedure TFSTransformationUniteFonds.BitBtn6Click(Sender: TObject);
+var NumPrelevement:string;
+begin
+FSTransformationUniteFonds.AfficheDetailTransformation.Visible:=true;
+NumPrelevement:=FSTransformationUniteFonds.EditNumPrelevement.Text;
+PrelevementTransfertUniteFonds(FSTransformationUniteFonds.TableauUniteFondsTransformer,FSTransformationUniteFonds.TableauTiersTransformer,NumPrelevement,FSTransformationUniteFonds.EditMontantUniteFondsTransformer,'');
+end;
+
+procedure TFSTransformationUniteFonds.BitBtn7Click(Sender: TObject);
+begin
+FSTransformationUniteFonds.AfficheDetailTransformation.Visible:=false;
+end;
+
+procedure TFSTransformationUniteFonds.TableauTiersTransformerDblClick(
+  Sender: TObject);
+var NumPrelevement:string;
+begin
+NumPrelevement:=FSTransformationUniteFonds.EditNumPrelevement.Text;
+PrelevementTransfertUniteFonds(FSTransformationUniteFonds.TableauUniteFondsTransformer,FSTransformationUniteFonds.TableauTiersTransformer,NumPrelevement,FSTransformationUniteFonds.EditMontantUniteFondsTransformer,FSTransformationUniteFonds.TableauTiersTransformer.Cells[1,FSTransformationUniteFonds.TableauTiersTransformer.Row]);
+end;
+
+procedure TFSTransformationUniteFonds.TableauUniteFondsTransformerDblClick(
+  Sender: TObject);
+var NumPrelevement:string;
+begin
+NumPrelevement:=FSTransformationUniteFonds.EditNumPrelevement.Text;
+PrelevementTransfertUniteFonds(FSTransformationUniteFonds.TableauUniteFondsTransformer,FSTransformationUniteFonds.TableauTiersTransformer,NumPrelevement,FSTransformationUniteFonds.EditMontantUniteFondsTransformer,'');
+end;
+
+procedure TFSTransformationUniteFonds.BitImprimerEtatProcesverbalTransformationUFondsClick(
+  Sender: TObject);
+var  R,NbrUFS,NbrUFE,NbrUFMax:integer;   MontantS,MontantE:real;
+begin
+
+if(FSTransformationUniteFonds.TableauTiersTransformer.RowCount=2)
+and(FSTransformationUniteFonds.TableauTiersTransformer.Cells[1,1]<>'')
+then
+begin
+     {*******************Entreprise***************}
+     OpenFParc(RParc);
+     PrintEtatProcesverbalTransformationUFonds.TextEntreprise.Caption:=RParc.Text1;
+     PrintEtatProcesverbalTransformationUFonds.TextD2.Caption:=RParc.Text2;
+     PrintEtatProcesverbalTransformationUFonds.TextD3.Caption:=RParc.Text3;
+     PrintEtatProcesverbalTransformationUFonds.TextD4.Caption:=RParc.Text4;
+     {***************Fin Entreprise***************}
+
+     PrintEtatProcesverbalTransformationUFonds.TitreEtat.Caption:='Procès-verbal de transformation d''Unités de Fonds';
+     PrintEtatProcesverbalTransformationUFonds.TitreDate.Caption:=FSTransformationUniteFonds.EditDateAffichage.Text+' à '+FSTransformationUniteFonds.EditHeureAffichage.Text;
+     PrintEtatProcesverbalTransformationUFonds.DataBeneficiaire.Caption:=FSTransformationUniteFonds.TableauTiersTransformer.Cells[2,1];
+
+     PrintEtatProcesverbalTransformationUFonds.DataRapport.Lines.Text:='';
+     PrintEtatProcesverbalTransformationUFonds.DataRapport.Lines.Add('En cette date du '+FSTransformationUniteFonds.EditDateAffichage.Text+' à '+FSTransformationUniteFonds.EditHeureAffichage.Text+'.');
+     PrintEtatProcesverbalTransformationUFonds.DataRapport.Lines.Add('Il a été transformé un montant de:'+ FSTransformationUniteFonds.EditMontantUniteFondsTransformer.Text+', dont le détail ci-dessous :');
+
+     PrintEtatProcesverbalTransformationUFonds.DataDetailS.Lines.Text:='';
+     PrintEtatProcesverbalTransformationUFonds.DataDetailE.Lines.Text:='';
+     NbrUFMax:=0;
+     NbrUFS:=0;
+     NbrUFE:=0;
+     MontantS:=0;
+     for R:=1 to FSTransformationUniteFonds.TableauUniteFondsTransformer.RowCount-1 do
+     begin
+          if(strtoreal(FSTransformationUniteFonds.TableauUniteFondsTransformer.Cells[17,R])<>0)then
+          begin
+               NbrUFS:=NbrUFS+1;
+               NbrUFMax:=NbrUFMax+1;
+               PrintEtatProcesverbalTransformationUFonds.DataDetailS.Lines.Add(inttostr(NbrUFS)+')- '+CompleteZerogauche(FSTransformationUniteFonds.TableauUniteFondsTransformer.Cells[17,R],'2')+' '+FSTransformationUniteFonds.TableauUniteFondsTransformer.Cells[9,R]);
+               MontantS:=MontantS+strtoreal(FSTransformationUniteFonds.TableauUniteFondsTransformer.Cells[19,R]);
+          end;
+
+          if(strtoreal(FSTransformationUniteFonds.TableauUniteFondsTransformer.Cells[18,R])<>0)then
+          begin
+               NbrUFE:=NbrUFE+1;
+               NbrUFMax:=NbrUFMax+1;
+               PrintEtatProcesverbalTransformationUFonds.DataDetailE.Lines.Add(inttostr(NbrUFE)+')- '+CompleteZerogauche(FSTransformationUniteFonds.TableauUniteFondsTransformer.Cells[18,R],'2')+' '+FSTransformationUniteFonds.TableauUniteFondsTransformer.Cells[9,R]);
+               MontantS:=MontantS+strtoreal(FSTransformationUniteFonds.TableauUniteFondsTransformer.Cells[19,R]);
+          end;
+     end;
+
+     PrintEtatProcesverbalTransformationUFonds.DataRapport.Height:=50;
+
+     PrintEtatProcesverbalTransformationUFonds.TitreDetailS.Top:=PrintEtatProcesverbalTransformationUFonds.DataRapport.Top+
+                                                                 PrintEtatProcesverbalTransformationUFonds.DataRapport.Height+24;
+     PrintEtatProcesverbalTransformationUFonds.TitreDetailE.Top:=PrintEtatProcesverbalTransformationUFonds.TitreDetailS.Top;
+
+     PrintEtatProcesverbalTransformationUFonds.HorizontaleHaut.Top:=PrintEtatProcesverbalTransformationUFonds.TitreDetailS.Top+24;
+     PrintEtatProcesverbalTransformationUFonds.DataDetailS.Top:=PrintEtatProcesverbalTransformationUFonds.HorizontaleHaut.Top+24;
+     PrintEtatProcesverbalTransformationUFonds.DataDetailE.Top:=PrintEtatProcesverbalTransformationUFonds.DataDetailS.Top;
+     PrintEtatProcesverbalTransformationUFonds.Verticale.Top:=PrintEtatProcesverbalTransformationUFonds.HorizontaleHaut.Top+4;
+
+     PrintEtatProcesverbalTransformationUFonds.DataDetailS.Height:=NbrUFMax*25;
+     PrintEtatProcesverbalTransformationUFonds.DataDetailE.Height:=NbrUFMax*25;
+     PrintEtatProcesverbalTransformationUFonds.Verticale.Height:=NbrUFMax*25;
+     PrintEtatProcesverbalTransformationUFonds.HorizontaleBas.Top:=PrintEtatProcesverbalTransformationUFonds.Verticale.Top+
+                                                                PrintEtatProcesverbalTransformationUFonds.Verticale.Height;
+
+     PrintEtatProcesverbalTransformationUFonds.TitreVisaBeneficiaire.Top:=PrintEtatProcesverbalTransformationUFonds.DataDetailS.Top+
+                                                                          PrintEtatProcesverbalTransformationUFonds.DataDetailS.Height+40;
+
+     PrintEtatProcesverbalTransformationUFonds.TitreVisaEntreprise.Top:=PrintEtatProcesverbalTransformationUFonds.TitreVisaBeneficiaire.Top;
+
+     PrintEtatProcesverbalTransformationUFonds.Preview;
+end;
+
+end;
+
+procedure TFSTransformationUniteFonds.FormShow(Sender: TObject);
+begin
+     ActiverNomForm(1,(Sender as TComponent).Name);
+     FSTransformationUniteFonds.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Transformation d''Unités de Fonds';
+end;
+
+procedure TFSTransformationUniteFonds.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

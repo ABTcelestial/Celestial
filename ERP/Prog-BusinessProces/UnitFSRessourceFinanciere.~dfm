@@ -1,0 +1,54 @@
+object FSRessourceFinanciere: TFSRessourceFinanciere
+  Left = 410
+  Top = 198
+  Width = 530
+  Height = 192
+  Caption = 'Ressource financi'#232're'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Bevel1: TBevel
+    Left = 368
+    Top = 24
+    Width = 138
+    Height = 121
+  end
+  object TableauBaseAvis: TStringGrid
+    Left = 6
+    Top = 24
+    Width = 355
+    Height = 121
+    ColCount = 4
+    Ctl3D = False
+    RowCount = 2
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected]
+    ParentCtl3D = False
+    TabOrder = 0
+    OnDblClick = TableauBaseAvisDblClick
+    OnKeyDown = TableauBaseAvisKeyDown
+  end
+  object RBMultiSelection: TCheckBox
+    Left = 8
+    Top = 4
+    Width = 97
+    Height = 17
+    Caption = 'Multi-S'#233'lection'
+    TabOrder = 1
+  end
+  object BitBtn1: TBitBtn
+    Left = 376
+    Top = 32
+    Width = 123
+    Height = 105
+    Caption = 'Valider'
+    TabOrder = 2
+    OnClick = BitBtn1Click
+    Kind = bkAll
+  end
+end

@@ -1,0 +1,315 @@
+unit UnitFSOperationsAvis;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Mask, Buttons, ComCtrls, ExtCtrls, Grids;
+
+type
+  TFSOperationsAvis = class(TForm)
+    AfficheAvisExecutes: TPanel;
+    Bevel5: TBevel;
+    Label2: TLabel;
+    Bevel3: TBevel;
+    Bevel4: TBevel;
+    EditChoisDateAvisExecute: TDateTimePicker;
+    BitValiderAvisExecute: TBitBtn;
+    BitBtn1: TBitBtn;
+    EditDateAvisExecute: TMaskEdit;
+    BitBtn2: TBitBtn;
+    Panel1: TPanel;
+    Label4: TLabel;
+    EditNumAvis: TEdit;
+    EditRowSelect: TEdit;
+    TableauPositionAvisSelect: TStringGrid;
+    Bevel2: TBevel;
+    BitBtn3: TBitBtn;
+    EditBaseAvisFichierConcerne: TEdit;
+    Bevel1: TBevel;
+    procedure BitBtn2Click(Sender: TObject);
+    procedure EditChoisDateAvisExecuteChange(Sender: TObject);
+    procedure BitValiderAvisExecuteClick(Sender: TObject);
+    procedure AfficheAvisExecutesClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure EditDateAvisExecuteKeyPress(Sender: TObject; var Key: Char);
+    procedure EditDateAvisExecuteDblClick(Sender: TObject);
+    procedure EditChoisDateAvisExecuteExit(Sender: TObject);
+    procedure EditChoisDateAvisExecuteDblClick(Sender: TObject);
+    procedure EditDateAvisExecuteKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditMontantKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSOperationsAvis: TFSOperationsAvis;
+
+implementation
+
+uses UnitInitialisation, UnitFSTraitementDonnees, UnitFSMenuPrincipal, UnitFSGenerateurMouvement, UnitPointeurs;
+
+var
+
+RParc:RInstalle;
+FParc:FInstalle;
+ParcInstalle:string100;
+
+TAvis:TAviss;
+RAvis:RAviss;
+FAvis:FAviss;
+ChAvis:string250;
+
+{$R *.dfm}
+
+procedure TFSOperationsAvis.BitBtn2Click(Sender: TObject);
+begin
+FSOperationsAvis.EditDateAvisExecute.Text:='';
+end;
+
+procedure TFSOperationsAvis.EditChoisDateAvisExecuteChange(
+  Sender: TObject);
+begin
+     FSOperationsAvis.EditDateAvisExecute.Text:=datetostr(FSOperationsAvis.EditChoisDateAvisExecute.Date);
+     FSOperationsAvis.EditChoisDateAvisExecute.Visible:=false;
+end;
+
+procedure TFSOperationsAvis.BitValiderAvisExecuteClick(Sender: TObject);
+var  i,R:integer;  OKAvis,OKCreatePointeurAvis:boolean; DateExecution:string[10];  NumFiche,NumRubrique,NumPlanificateur,TypeData,Adresse,TypeProcesAvis,FichierConserneAvis,AdresseAvis,TypeTraitement,TypeProcesControleReseaux:string;
+begin
+     if(FSOperationsAvis.EditDateAvisExecute.Text='')
+     or(FSOperationsAvis.EditDateAvisExecute.Text='  /  /    ')
+     then
+     begin
+          DateExecution:='';
+     end
+     else DateExecution:=FSOperationsAvis.EditDateAvisExecute.Text;
+
+     if not(FunctionAdresseProces('Business','FBaseAvis','',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+'FBaseAvis '+'recherché !');
+     end;
+
+     ChBaseAvisListeAvis:=Adresse;
+     assignfile(FBaseAvisListeAvis,ChBaseAvisListeAvis);
+     if FileExists(ChBaseAvisListeAvis)then
+     Reset(FBaseAvisListeAvis)
+     else Rewrite(FBaseAvisListeAvis);
+     Seek(FBaseAvisListeAvis,0);
+     while not eof(FBaseAvisListeAvis)do
+     begin
+          read(FBaseAvisListeAvis,RBaseAvisListeAvis);  Application.ProcessMessages;
+
+          FichierConserneAvis:=RBaseAvisListeAvis.DesignationBaseAvis;
+
+          if(FunctionFichierInclu(FichierConserneAvis,FSOperationsAvis.EditBaseAvisFichierConcerne.Text))then
+          begin
+               TypeProcesAvis:='Business';
+
+               if not(FunctionAdresseProces(TypeProcesAvis,FichierConserneAvis,'',AdresseAvis,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché '+FichierConserneAvis+' !');
+               end;
+               ChAvis:=AdresseAvis;
+               assignfile(FAvis,ChAvis);
+               if FileExists(ChAvis)then
+               Reset(FAvis)
+               else Rewrite(FAvis);
+               R:=1;
+               while(R<=FSOperationsAvis.TableauPositionAvisSelect.RowCount-1)do
+               begin
+                    Seek(FAvis,strtointeger(FSOperationsAvis.TableauPositionAvisSelect.Cells[7,R]));
+                    read(FAvis,RAvis);
+                    RAvis.DateExecute:=DateExecution;
+                    Seek(FAvis,strtointeger(FSOperationsAvis.TableauPositionAvisSelect.Cells[7,R]));
+                    write(FAvis,RAvis);
+
+                    FSTraitementDonnees.TableauAvis.Cells[3,strtointeger(FSOperationsAvis.TableauPositionAvisSelect.Cells[8,R])]:=DateExecution;
+               R:=R+1;
+               end;
+               Closefile(FAvis);
+          end;
+     end;
+     Closefile(FBaseAvisListeAvis);
+
+     {ListeAvis(FSTraitementDonnees.TableauAvis,FSTraitementDonnees.EditDesignationTypeAvis.Text,FSTraitementDonnees.EditRechercheModePaiement.Text,FSTraitementDonnees.EditRechercheDomiciliation.Text,datetostr(FSTraitementDonnees.EditRechercheDateDebut.Date),datetostr(FSTraitementDonnees.EditRechercheDateFin.Date),FSTraitementDonnees.EditNumProjetTraitement.Text,NumFiche,NumRubrique,NumPlanificateur,'','','',strtointeger(FSTraitementDonnees.EditRubriqueTrie.Text),FSTraitementDonnees.RBAfficherAvisAnnules.Checked,FSTraitementDonnees.RBAvisExecutesNonExecutes.Checked,FSTraitementDonnees.RBAvisExecutes.Checked,FSTraitementDonnees.RBAvisNonExecutes.Checked,FSTraitementDonnees.RBAfficherPartiesCommunes.Checked,FSTraitementDonnees.RBPartiesCommunesCumules.Checked,FSTraitementDonnees.RBJustifierAvisNonJustifieAvis.Checked,FSTraitementDonnees.RBJustifierAvis.Checked,FSTraitementDonnees.RBNonJustifieAvis.Checked);
+     TypeData:='';
+
+     if(FSTraitementDonnees.TableauAvis.Col=2)
+     or(FSTraitementDonnees.TableauAvis.Col=3)
+     then
+     begin
+          TypeData:='Date';
+     end;
+
+     if(FSTraitementDonnees.TableauAvis.Col=7)
+     or(FSTraitementDonnees.TableauAvis.Col=8)
+     then
+     begin
+          TypeData:='Num';
+     end;
+     SoldeListeAvis(FSTraitementDonnees.TableauAvis,FSTraitementDonnees.TableauAfficheRubrique,'',FSTraitementDonnees.EditRechercheDomiciliation.Text,FSTraitementDonnees.EditRechercheModePaiement.Text,FSTraitementDonnees.EditNumProjetTraitement.Text,FSTraitementDonnees.EditDesignationTypeAvis.Text,FSTraitementDonnees.EditRubriqueTrie.Text,FSTraitementDonnees.EditTypeDataTrieDomiciliation.Text,FSTraitementDonnees.TypeTrie.Caption);}
+
+     if(FSTraitementDonnees.TableauAvis.RowCount>=strtointeger(FSOperationsAvis.TableauPositionAvisSelect.Cells[8,FSOperationsAvis.TableauPositionAvisSelect.RowCount-1])+1)
+     and(strtointeger(FSOperationsAvis.TableauPositionAvisSelect.Cells[8,FSOperationsAvis.TableauPositionAvisSelect.RowCount-1])>0)
+     then FSTraitementDonnees.TableauAvis.Row:=strtointeger(FSOperationsAvis.TableauPositionAvisSelect.Cells[8,FSOperationsAvis.TableauPositionAvisSelect.RowCount-1]);
+
+     {if not(FunctionAdresseProces('Business','FBaseAvis',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+'FBaseAvis '+'recherché !');
+     end;
+
+     ChBaseAvisListeAvis:=Adresse;
+     assignfile(FBaseAvisListeAvis,ChBaseAvisListeAvis);
+     if FileExists(ChBaseAvisListeAvis)then
+     Reset(FBaseAvisListeAvis)
+     else Rewrite(FBaseAvisListeAvis);
+     Seek(FBaseAvisListeAvis,0);
+     while not eof(FBaseAvisListeAvis)do
+     begin
+          read(FBaseAvisListeAvis,RBaseAvisListeAvis);  Application.ProcessMessages;
+
+          FichierConserneAvis:=RBaseAvisListeAvis.DesignationBaseAvis;
+
+          if(FunctionFichierInclu(FichierConserneAvis,FSOperationsAvis.EditBaseAvisFichierConcerne.Text))then
+          begin
+               TypeProcesAvis:='Business';
+
+               if not(FunctionAdresseProces(TypeProcesAvis,FichierConserneAvis,AdresseAvis,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché '+FichierConserneAvis+' !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+               TypeTraitement:='Domiciliation';
+               ChargerPointeurAvis(TypeProcesAvis,FichierConserneAvis,TypeProcesControleReseaux,datetostr(FSTraitementDonnees.EditTiersDateDebut.Date),datetostr(FSTraitementDonnees.EditTiersDateFin.Date),FSTraitementDonnees.EditTiersDomiciliation.Text,FSTraitementDonnees.EditTiersTypeProces.Text,FSTraitementDonnees.EditTiersFichierConserne.Text,FSTraitementDonnees.EditTiersCodeTiers.Text,TypeTraitement,FSTraitementDonnees.RBAvisExecutesNonExecutes.Checked,FSTraitementDonnees.RBAvisExecutes.Checked,FSTraitementDonnees.RBAvisNonExecutes.Checked,OKCreatePointeurAvis);
+          end;
+     end;
+     CloseFile(FBaseAvisListeAvis);}
+
+     FSOperationsAvis.Close;
+end;
+
+procedure TFSOperationsAvis.AfficheAvisExecutesClick(Sender: TObject);
+begin
+FSOperationsAvis.EditChoisDateAvisExecute.Visible:=false;
+end;
+
+procedure TFSOperationsAvis.BitBtn1Click(Sender: TObject);
+begin
+FSOperationsAvis.Close;
+ListeAvis(FSTraitementDonnees.TableauAvis,FSTraitementDonnees.EditDesignationTypeAvis.Text,FSTraitementDonnees.EditRechercheModePaiement.Text,FSTraitementDonnees.EditRechercheDomiciliation.Text,datetostr(FSTraitementDonnees.EditRechercheDateDebut.Date),datetostr(FSTraitementDonnees.EditRechercheDateFin.Date),FSTraitementDonnees.EditNumProjetTraitement.Text,FSTraitementDonnees.EditNumFicheTraitement.Text,FSTraitementDonnees.EditNumRubriqueTraitement.Text,FSTraitementDonnees.EditNumPlanificateurTraitement.Text,'','','',strtointeger(FSTraitementDonnees.EditRubriqueTrie.Text),FSTraitementDonnees.RBAfficherAvisAnnules.Checked,FSTraitementDonnees.RBAvisExecutesNonExecutes.Checked,FSTraitementDonnees.RBAvisExecutes.Checked,FSTraitementDonnees.RBAvisNonExecutes.Checked,FSTraitementDonnees.RBAfficherPartiesCommunes.Checked,FSTraitementDonnees.RBPartiesCommunesCumules.Checked
+,FSTraitementDonnees.RBJustifierAvisNonJustifieAvis.Checked,FSTraitementDonnees.RBJustifierAvis.Checked,FSTraitementDonnees.RBNonJustifieAvis.Checked);
+SoldeListeAvis(FSTraitementDonnees.TableauAvis,FSTraitementDonnees.TableauAfficheRubrique,'',FSTraitementDonnees.EditRechercheDomiciliation.Text,FSTraitementDonnees.EditRechercheModePaiement.Text,FSTraitementDonnees.EditNumProjetTraitement.Text,FSTraitementDonnees.EditDesignationTypeAvis.Text,FSTraitementDonnees.EditRubriqueTrie.Text,FSTraitementDonnees.EditTypeDataTrieDomiciliation.Text,FSTraitementDonnees.TypeTrie.Caption);
+end;
+
+procedure TFSOperationsAvis.EditDateAvisExecuteKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+key:=#0;
+end;
+
+procedure TFSOperationsAvis.EditDateAvisExecuteDblClick(Sender: TObject);
+begin
+FSOperationsAvis.EditChoisDateAvisExecute.Visible:=true;
+
+if(FSOperationsAvis.EditDateAvisExecute.Text<>'')
+and(FSOperationsAvis.EditDateAvisExecute.Text<>'  /  /    ')
+then
+begin
+     FSOperationsAvis.EditChoisDateAvisExecute.Date:=strtodate(FSOperationsAvis.EditDateAvisExecute.Text);
+end
+else FSOperationsAvis.EditChoisDateAvisExecute.Date:=date;
+
+FSOperationsAvis.EditChoisDateAvisExecute.SetFocus;
+end;
+
+procedure TFSOperationsAvis.EditChoisDateAvisExecuteExit(Sender: TObject);
+begin
+FSOperationsAvis.EditChoisDateAvisExecute.Visible:=false;
+end;
+
+procedure TFSOperationsAvis.EditChoisDateAvisExecuteDblClick(
+  Sender: TObject);
+var  R,RSelect:integer;  OKDateValider:boolean;
+begin
+     R:=1;
+     RSelect:=1;
+     OKDateValider:=true;
+     while(R<=FSOperationsAvis.TableauPositionAvisSelect.RowCount-1)and(OKDateValider=true)do
+     begin
+          if(strtodate(datetostr(FSOperationsAvis.EditChoisDateAvisExecute.Date))<strtodate(FSOperationsAvis.TableauPositionAvisSelect.Cells[2,R]))then
+          begin
+               OKDateValider:=false;
+               RSelect:=R;
+          end;
+     R:=R+1;
+     end;
+
+     if(OKDateValider=false)then
+     begin
+          showmessage('Veuillez vérifier la date d''établissement et la date d''éxécution SVP !');
+          FSOperationsAvis.EditChoisDateAvisExecute.Date:=strtodate(FSOperationsAvis.TableauPositionAvisSelect.Cells[2,RSelect]);
+          FSOperationsAvis.TableauPositionAvisSelect.Row:=RSelect;
+          FSOperationsAvis.TableauPositionAvisSelect.Col:=2;
+     end
+     else
+     begin
+          FSOperationsAvis.EditDateAvisExecute.Text:=datetostr(FSOperationsAvis.EditChoisDateAvisExecute.Date);
+     end;
+
+FSOperationsAvis.EditChoisDateAvisExecute.Visible:=false;
+end;
+
+procedure TFSOperationsAvis.EditDateAvisExecuteKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSOperationsAvis.BitValiderAvisExecute.SetFocus;
+end;
+
+end;
+
+procedure TFSOperationsAvis.EditMontantKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSOperationsAvis.BitValiderAvisExecute.SetFocus;
+end;
+
+end;
+
+procedure TFSOperationsAvis.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+     FSOperationsAvis.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Opérations Avis';
+
+     FSOperationsAvis.EditBaseAvisFichierConcerne.Text:=FSTraitementDonnees.EditBaseAvisFichierConcerne.Text;
+end;
+
+procedure TFSOperationsAvis.BitBtn3Click(Sender: TObject);
+var  TitreEtat,SousTitreEtat:string;
+begin
+     TitreEtat:='Liste des avis à éxécuter !';
+     SousTitreEtat:='';
+     TableauToExcel(FSOperationsAvis.TableauPositionAvisSelect,1,0,ColNum,ColDate,ColTexte,ColGauche,ColCentre,ColDroite,TitreEtat,SousTitreEtat,'',true,FSMenuPrincipal.RBInsertLogo.Checked,FSMenuPrincipal.RBAfficherLaSaisie.Checked);
+end;
+
+procedure TFSOperationsAvis.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

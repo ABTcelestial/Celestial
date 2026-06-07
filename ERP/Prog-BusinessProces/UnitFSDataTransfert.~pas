@@ -1,0 +1,110 @@
+unit UnitFSDataTransfert;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ActnList, ScktComp, StdCtrls, ExtCtrls;
+
+type
+  TFSDataTransfert = class(TForm)
+    GroupBox3: TGroupBox;
+    Bevel1: TBevel;
+    Button1: TButton;
+    Edit1: TEdit;
+    GroupBox2: TGroupBox;
+    Label1: TLabel;
+    Button2: TButton;
+    Button3: TButton;
+    Memo1: TMemo;
+    Edit2: TEdit;
+    ServerSocket1: TServerSocket;
+    ActionList1: TActionList;
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure ServerSocket1ClientConnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ServerSocket1ClientDisconnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ServerSocket1ClientError(Sender: TObject;
+      Socket: TCustomWinSocket; ErrorEvent: TErrorEvent;
+      var ErrorCode: Integer);
+    procedure ServerSocket1ClientRead(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ServerSocket1ClientWrite(Sender: TObject;
+      Socket: TCustomWinSocket);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSDataTransfert: TFSDataTransfert;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFSDataTransfert.Button2Click(Sender: TObject);
+begin
+serversocket1.Active:=true;
+button3.Enabled:=true;
+button2.Enabled:=false;
+end;
+
+procedure TFSDataTransfert.Button3Click(Sender: TObject);
+begin
+button3.Enabled:=false;
+serversocket1.Active:=false;
+button2.Enabled:=true;
+end;
+
+procedure TFSDataTransfert.Button1Click(Sender: TObject);
+Var
+i:integer;
+begin
+Memo1.Lines.Add(' '+Edit2.text+' dit : '+Edit1.text );
+if (Serversocket1.Socket.ActiveConnections > 0) then
+begin
+for i := 0 to Serversocket1.Socket.ActiveConnections-1 do
+begin
+Serversocket1.Socket.Connections[i].sendtext(' '+Edit2.text+' dit : '+Edit1.text);
+Edit1.Clear;
+end;
+end;
+end;
+
+procedure TFSDataTransfert.ServerSocket1ClientConnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+     form1.Caption:='chat(server )';
+end;
+
+procedure TFSDataTransfert.ServerSocket1ClientDisconnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+form1.Caption:='chat(server)Déconnecter';
+end;
+
+procedure TFSDataTransfert.ServerSocket1ClientError(Sender: TObject;
+  Socket: TCustomWinSocket; ErrorEvent: TErrorEvent;
+  var ErrorCode: Integer);
+begin
+form1.Caption:='chat(server )Erreur Connection';
+end;
+
+procedure TFSDataTransfert.ServerSocket1ClientRead(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+Memo1.lines.add(Socket.ReceiveText);
+end;
+
+procedure TFSDataTransfert.ServerSocket1ClientWrite(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+ Memo1.Lines.add(Socket.ReceiveText);
+end;
+
+end.

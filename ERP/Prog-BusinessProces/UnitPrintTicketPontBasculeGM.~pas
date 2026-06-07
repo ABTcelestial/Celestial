@@ -1,0 +1,23 @@
+unit UnitPrintTicketPontBasculeGM;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls;
+
+type
+  TPrintTicketPontBasculeGM = class(TQuickRep)
+  private
+
+  public
+
+  end;
+
+var
+  PrintTicketPontBasculeGM: TPrintTicketPontBasculeGM;
+
+implementation
+
+{$R *.DFM}
+
+end.

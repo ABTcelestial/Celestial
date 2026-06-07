@@ -1,0 +1,103 @@
+unit UnitPrintFormulairePreselection;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls;
+
+type
+  TPrintFormulairePreselection = class(TQuickRep)
+    TitleBand1: TQRBand;
+    PageHeaderBand1: TQRBand;
+    QRShape1: TQRShape;
+    TitreEntreprise1: TQRLabel;
+    QRShape3: TQRShape;
+    QRLabel3: TQRLabel;
+    QRShape6: TQRShape;
+    QRShape7: TQRShape;
+    QRLabel5: TQRLabel;
+    QRShape8: TQRShape;
+    QRShape9: TQRShape;
+    QRLabel6: TQRLabel;
+    QRShape10: TQRShape;
+    QRShape11: TQRShape;
+    QRLabel7: TQRLabel;
+    QRShape13: TQRShape;
+    QRLabel8: TQRLabel;
+    QRShape12: TQRShape;
+    QRLabel9: TQRLabel;
+    QRShape14: TQRShape;
+    QRShape16: TQRShape;
+    QRShape18: TQRShape;
+    QRLabel13: TQRLabel;
+    QRShape19: TQRShape;
+    QRShape20: TQRShape;
+    DataType: TQRLabel;
+    QRShape22: TQRShape;
+    QRLabel16: TQRLabel;
+    QRShape23: TQRShape;
+    QRShape24: TQRShape;
+    DataEtat: TQRLabel;
+    QRShape26: TQRShape;
+    QRLabel19: TQRLabel;
+    QRShape27: TQRShape;
+    QRShape28: TQRShape;
+    QRShape29: TQRShape;
+    QRShape30: TQRShape;
+    QRShape31: TQRShape;
+    QRShape34: TQRShape;
+    QRLabel20: TQRLabel;
+    QRLabel21: TQRLabel;
+    QRLabel22: TQRLabel;
+    QRLabel23: TQRLabel;
+    QRLabel25: TQRLabel;
+    DataDateNaissance: TQRLabel;
+    DataFonction: TQRLabel;
+    DataTelephone: TQRLabel;
+    DataMotifAccord: TQRRichText;
+    DataAccord: TQRLabel;
+    QRLabel34: TQRLabel;
+    DataMontantApportPersonnelChiffre: TQRLabel;
+    QRLabel36: TQRLabel;
+    DataMontantApportPersonnelLettre: TQRRichText;
+    QRLabel37: TQRLabel;
+    DataMontantSimulationChiffre: TQRLabel;
+    QRLabel39: TQRLabel;
+    DataMontantSimulationLettre: TQRRichText;
+    QRLabel40: TQRLabel;
+    DataMontantLogementChiffre: TQRLabel;
+    QRLabel42: TQRLabel;
+    DataMontantLogementLettre: TQRRichText;
+    TitreEtat: TQRLabel;
+    TitreEntreprise2: TQRLabel;
+    TitreEntreprise3: TQRLabel;
+    TitreEntreprise4: TQRLabel;
+    Logo: TQRImage;
+    DataDateFormulaire: TQRLabel;
+    QRLabel1: TQRLabel;
+    QRLabel2: TQRLabel;
+    DataMontantApportInitialLettre: TQRRichText;
+    DataMontantApportInitialChiffre: TQRLabel;
+    QRLabel10: TQRLabel;
+    QRLabel11: TQRLabel;
+    QRShape2: TQRShape;
+    DataSignataire: TQRLabel;
+    QRShape4: TQRShape;
+    QRLabel4: TQRLabel;
+    DataNometPrenom: TQRRichText;
+    DataProjet: TQRRichText;
+    DataAttribution: TQRRichText;
+  private
+
+  public
+
+  end;
+
+var
+  PrintFormulairePreselection: TPrintFormulairePreselection;
+
+implementation
+
+{$R *.DFM}
+
+end.

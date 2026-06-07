@@ -1,0 +1,1342 @@
+unit UnitFSRechercheBaseDonnees;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, ShellCtrls, StdCtrls, ExtCtrls, Grids, Buttons, Mask, DriveOleWord, Clipbrd,ComObj, ExtDlgs;
+
+  
+
+type
+  TFSRechercheBaseDonnees = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    Panel1: TPanel;
+    EditStyleFichierRenommer: TComboBox;
+    EditIndex: TEdit;
+    EditIndexMax: TEdit;
+    EditAdresse: TEdit;
+    RadioGroup1: TRadioGroup;
+    RBRechercheSelective: TRadioButton;
+    RadioButton2: TRadioButton;
+    IncrimenteExerciceActuel: TUpDown;
+    SourceFichierRenommer: TShellTreeView;
+    TableauListeFichier: TShellListView;
+    TableauListeBaseDonnees: TStringGrid;
+    TabSheet2: TTabSheet;
+    Image1: TImage;
+    OuvrireFichier: TOpenDialog;
+    Button2: TButton;
+    Button1: TButton;
+    Panel3: TPanel;
+    BitBtn1: TBitBtn;
+    Panel2: TPanel;
+    Edit1: TEdit;
+    Label3: TLabel;
+    OpenDialog2: TOpenDialog;
+    OpenDialog1: TOpenDialog;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    BitBtn4: TBitBtn;
+    BitBtn5: TBitBtn;
+    BitBtn6: TBitBtn;
+    BitBtn7: TBitBtn;
+    BitBtn8: TBitBtn;
+    BitBtn9: TBitBtn;
+    BitBtn10: TBitBtn;
+    BitBtn11: TBitBtn;
+    BitBtn12: TBitBtn;
+    OpenDialog3: TOpenDialog;
+    SaveDialog1: TSaveDialog;
+    BitBtn13: TBitBtn;
+    Panel4: TPanel;
+    TableauDonnees: TStringGrid;
+    BitBtn14: TBitBtn;
+    EditRBegin: TEdit;
+    EditREnd: TEdit;
+    EditCBegin: TEdit;
+    EditCEnd: TEdit;
+    BitBtn16: TBitBtn;
+    Bevel1: TBevel;
+    Bevel2: TBevel;
+    Bevel3: TBevel;
+    BitBtn15: TBitBtn;
+    Bevel4: TBevel;
+    BitBtn17: TBitBtn;
+    EditRBeginIn: TEdit;
+    EditCBeginIn: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Bevel5: TBevel;
+    UpDown1: TUpDown;
+    UpDown2: TUpDown;
+    UpDown3: TUpDown;
+    UpDown4: TUpDown;
+    Bevel6: TBevel;
+    AfficheOptionPrint: TPanel;
+    Bevel30: TBevel;
+    RadioGroup4: TRadioGroup;
+    StaticText1: TStaticText;
+    RBOrientationPapier: TComboBox;
+    RBAjustement: TCheckBox;
+    BitBtn18: TBitBtn;
+    BitBtn19: TBitBtn;
+    Bevel7: TBevel;
+    EditExerciceActuel: TEdit;
+    RBIndiceRubriqueTriCol: TCheckBox;
+    EditIndiceRubriqueTriCol: TEdit;
+    EditTypeDataTrie: TEdit;
+    EditTypeTrie: TComboBox;
+    EditTypeOctets: TComboBox;
+    TabSheet3: TTabSheet;
+    BitBtn20: TBitBtn;
+    TableauOrdreListeMouvement: TStringGrid;
+    EditOrdreListeMouvement: TEdit;
+    TableauxFichierConcernePartageReseaux: TStringGrid;
+    Panel25: TPanel;
+    Bevel8: TBevel;
+    TabSheet4: TTabSheet;
+    BitBtn21: TBitBtn;
+    BitBtn22: TBitBtn;
+    BitBtn23: TBitBtn;
+    EditRepertoireActuel: TComboBox;
+    EditExerciceRepertoireActuel: TComboBox;
+    ListeBaseDonnees: TShellListView;
+    procedure EditStyleFichierRenommerSelect(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure RBRechercheSelectiveClick(Sender: TObject);
+    procedure RadioButton2Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure BitBtn8Click(Sender: TObject);
+    procedure BitBtn9Click(Sender: TObject);
+    procedure BitBtn10Click(Sender: TObject);
+    procedure BitBtn11Click(Sender: TObject);
+    procedure BitBtn12Click(Sender: TObject);
+    procedure BitBtn13Click(Sender: TObject);
+    procedure BitBtn14Click(Sender: TObject);
+    procedure Panel4Click(Sender: TObject);
+    procedure BitBtn16Click(Sender: TObject);
+    procedure BitBtn15Click(Sender: TObject);
+    procedure TableauDonneesDblClick(Sender: TObject);
+    procedure BitBtn17Click(Sender: TObject);
+    procedure EditRBeginInKeyPress(Sender: TObject; var Key: Char);
+    procedure EditCBeginInKeyPress(Sender: TObject; var Key: Char);
+    procedure TableauListeFichierChange(Sender: TObject; Item: TListItem;
+      Change: TItemChange);
+    procedure AfficheOptionPrintClick(Sender: TObject);
+    procedure BitBtn18Click(Sender: TObject);
+    procedure BitBtn19Click(Sender: TObject);
+    procedure TableauListeBaseDonneesClick(Sender: TObject);
+    procedure SourceFichierRenommerClick(Sender: TObject);
+    procedure TableauListeFichierClick(Sender: TObject);
+    procedure EditTypeOctetsKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn20Click(Sender: TObject);
+    procedure TableauxFichierConcernePartageReseauxDblClick(
+      Sender: TObject);
+    procedure BitBtn21Click(Sender: TObject);
+    procedure BitBtn22Click(Sender: TObject);
+    procedure BitBtn23Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSRechercheBaseDonnees: TFSRechercheBaseDonnees;
+
+  procedure IdentificationFichier(ListeFichier:TShellListView; Index:integer; var  AdresseFichierOut,RepertoireFichier,NomFichier,AnneeFichier:string);
+  Procedure ProcRechercheBaseDonnees(TableauListeBaseDonnees:TStringGrid; ExerciceActuel,TypeOctets,RubriqueTrieCol,TypeData,TypeTrie:string);
+  Procedure ProcEffectueBaseDonnee(TableauListeBaseDonnees:TStringGrid; RepertoireFichier,NomFichier,AnneeFichier,TypeProcesControleReseaux:string; NbrRegistre:integer);
+  Procedure ProcAnomalieBaseDonnee(TableauListeBaseDonnees:TStringGrid; RepertoireFichier,NomFichier,AnneeFichier,TypeProcesControleReseaux:string; NbrRegistre:integer);
+  procedure copiefichier(NomFicSource:string;NomFicCible:String);
+  Function ConvertOctets(TailleOctets:integer; TypeOctets,NbrChiffreApresVergule:string):string;
+  Procedure ListeFichierTransfertReseauxInBasePrive(TableauListeFichier:TStringGrid);
+  Procedure ListeDataRepertoireActuel(AdresseSource:string; ListeBaseDonnees:TShellListView; EditRepertoireActuel,EditExerciceRepertoireActuel:TComboBox);
+
+implementation
+
+Uses  UnitInitialisation, UnitFSMenuPrincipal, UnitFSTravauxFinAnnee;
+
+var
+
+OleApplication :variant;
+OleWorkBook    :variant;
+
+{$R *.dfm}
+
+Function ConvertOctets(TailleOctets:integer; TypeOctets,NbrChiffreApresVergule:string):string;
+var Resultat,Reste:integer;
+begin
+     if(TypeOctets='')then
+     begin
+           Division(TailleOctets,1024,Resultat,Reste);
+
+           if(Resultat>=0)and(Resultat<100)then
+           begin
+                ConvertOctets:=Vergule(floattostr(TailleOctets),NbrChiffreApresVergule,'C','')+' Octets.'
+           end;
+           if(Resultat>=100)and(Resultat<1000)then
+           begin
+                ConvertOctets:=Vergule(floattostr(TailleOctets/1024),NbrChiffreApresVergule,'C','')+' KOctets.'
+           end;
+           if(Resultat>=1000)and(Resultat<10000)then
+           begin
+                ConvertOctets:=Vergule(floattostr(TailleOctets/1024/1024),NbrChiffreApresVergule,'C','')+' MOctets.'
+           end;
+           if(Resultat>=10000)then
+           begin
+                ConvertOctets:=Vergule(floattostr(TailleOctets/1024/1024/1024),NbrChiffreApresVergule,'C','')+' GOctets.'
+           end;
+     end
+     else
+     begin
+          if(TypeOctets='Octets')then
+          begin
+               ConvertOctets:=Vergule(floattostr(TailleOctets),NbrChiffreApresVergule,'C','')+' Octets.'
+          end;
+
+          if(TypeOctets='KOctets')then
+          begin
+               ConvertOctets:=Vergule(floattostr(TailleOctets/1024),NbrChiffreApresVergule,'C','')+' KOctets.'
+          end;
+
+          if(TypeOctets='MOctets')then
+          begin
+               ConvertOctets:=Vergule(floattostr(TailleOctets/1024/1024),NbrChiffreApresVergule,'C','')+' MOctets.'
+          end;
+
+          if(TypeOctets='GOctets')then
+          begin
+               ConvertOctets:=Vergule(floattostr(TailleOctets/1024/1024/1024),NbrChiffreApresVergule,'C','')+' GOctets.'
+          end;
+     end;
+end;
+
+procedure IdentificationFichier(ListeFichier:TShellListView; Index:integer; var  AdresseFichierOut,RepertoireFichier,NomFichier,AnneeFichier:string);
+var  i:integer; OKChargement:boolean;  AdresseFichier:string;
+begin
+
+AdresseFichier:='';
+RepertoireFichier:='';
+NomFichier:='';
+AnneeFichier:='';
+
+if(Index>=0)then
+begin
+     AdresseFichier:=ListeFichier.Folders[Index].DisplayName;
+     AdresseFichierOut:=ListeFichier.Folders[Index].PathName;
+end
+else
+begin
+     AdresseFichier:='';       
+     AdresseFichierOut:='';
+end;
+
+i:=1;
+OKChargement:=false;
+while(i<=longueur(AdresseFichier))and(OKChargement=false)do
+begin
+     if(AdresseFichier[i]='.')then
+     begin
+          OKChargement:=true;
+          AdresseFichier:='';
+     end;
+i:=i+1;
+end;
+
+RepertoireFichier:='';
+NomFichier:='';
+i:=1;
+OKChargement:=false;
+while(i<=longueur(AdresseFichier))do
+begin
+     if(OKChargement=true)then
+     begin
+          NomFichier:=NomFichier+AdresseFichier[i];
+     end;
+
+     if(AdresseFichier[i]='-')then
+     begin
+          OKChargement:=true;
+     end;
+
+     if(OKChargement=false)then
+     begin
+          RepertoireFichier:=RepertoireFichier+AdresseFichier[i];
+     end;
+
+i:=i+1;
+end;
+
+if(strtointeger(Firstlaters(NomFichier,4))>0)then
+begin
+     AnneeFichier:=Firstlaters(NomFichier,4);
+     NomFichier:=lastlaters(NomFichier,longueur(NomFichier)-4);
+end
+else
+begin
+     AnneeFichier:='';
+end;
+end;
+
+procedure TFSRechercheBaseDonnees.EditStyleFichierRenommerSelect(
+  Sender: TObject);
+begin
+     if(FSRechercheBaseDonnees.EditStyleFichierRenommer.Text='icônes')then FSRechercheBaseDonnees.TableauListeFichier.ViewStyle:=VsIcon;
+     if(FSRechercheBaseDonnees.EditStyleFichierRenommer.Text='liste')then FSRechercheBaseDonnees.TableauListeFichier.ViewStyle:=VsList;
+     if(FSRechercheBaseDonnees.EditStyleFichierRenommer.Text='détails')then FSRechercheBaseDonnees.TableauListeFichier.ViewStyle:=VsReport;
+     if(FSRechercheBaseDonnees.EditStyleFichierRenommer.Text='petite Icône')then FSRechercheBaseDonnees.TableauListeFichier.ViewStyle:=vsSmallIcon;
+end;
+
+procedure TFSRechercheBaseDonnees.FormShow(Sender: TObject);
+begin
+     ActiverNomForm(1,(Sender as TComponent).Name);
+     FSRechercheBaseDonnees.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Recherche Base de données';
+
+     FSRechercheBaseDonnees.EditAdresse.Text:=RParc.Parcours;
+     FSRechercheBaseDonnees.IncrimenteExerciceActuel.Position:=strtointeger(ExerciceAnnee);
+
+     ListeFichierTransfertReseauxInBasePrive(FSRechercheBaseDonnees.TableauxFichierConcernePartageReseaux);
+end;
+
+procedure TFSRechercheBaseDonnees.RBRechercheSelectiveClick(Sender: TObject);
+begin
+     FSRechercheBaseDonnees.TableauListeFichier.Root:='rfDesktop';
+     FSRechercheBaseDonnees.EditExerciceActuel.Enabled:=true;
+     FSRechercheBaseDonnees.IncrimenteExerciceActuel.Enabled:=true;
+end;
+
+procedure TFSRechercheBaseDonnees.RadioButton2Click(Sender: TObject);
+var  i,R:integer;  RepertoireSauvgarde,RepertoireFichier,NomFichier,AnneeFichier,NewExercice:string; OKReouverture:boolean;
+begin
+     RepertoireSauvgarde:='';
+     if FileExists('C:\WinBus.File')then
+     begin
+          assignfile(FRegistre,'C:\WinBus.File');
+          reset(FRegistre);
+          Seek(FRegistre,0);
+          Read(FRegistre,RRegistre);
+          RepertoireSauvgarde:=RRegistre.Repertoire;
+     end;
+
+     OpenFParc(RParc);
+     FSRechercheBaseDonnees.EditAdresse.Text:=RParc.Parcours;
+     FSRechercheBaseDonnees.IncrimenteExerciceActuel.Position:=strtointeger(ExerciceAnnee);
+     FSRechercheBaseDonnees.EditExerciceActuel.Text:=ExerciceAnnee;
+
+     FSRechercheBaseDonnees.TableauListeFichier.Root:=FSRechercheBaseDonnees.EditAdresse.Text;
+     FSRechercheBaseDonnees.EditExerciceActuel.Enabled:=false;
+     FSRechercheBaseDonnees.IncrimenteExerciceActuel.Enabled:=false;
+
+     FSRechercheBaseDonnees.TableauListeBaseDonnees.ColCount:=7;
+     FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[0].Text:='N°';
+     FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[1].Text:='Répertoir';
+     FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[2].Text:='Année';
+     FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[3].Text:='Nom Fichier';
+     FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[4].Text:='Validation';
+     FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[5].Text:='Réouverture effectué';
+     FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[6].Text:='Nombre de registre';
+
+     TableauListeBaseDonnees.RowCount:=2;
+     TableauListeBaseDonnees.Rows[1].Text:='';
+
+     R:=0;
+     for i:=0 to FSRechercheBaseDonnees.TableauListeFichier.Items.Count-1 do
+     begin
+          IdentificationFichier(FSRechercheBaseDonnees.TableauListeFichier,i,AdresseFile,RepertoireFichier,NomFichier,AnneeFichier);
+          if(RepertoireFichier=RepertoireSauvgarde)
+          and(AnneeFichier=FSRechercheBaseDonnees.EditExerciceActuel.Text)
+          and(ControleOKTexteVide(NomFichier)=false)then
+          begin
+               R:=R+1;
+               FSRechercheBaseDonnees.TableauListeBaseDonnees.Rows[R].Text:=inttostr(R);
+               FSRechercheBaseDonnees.TableauListeBaseDonnees.Cells[1,R]:=RepertoireFichier;
+               FSRechercheBaseDonnees.TableauListeBaseDonnees.Cells[2,R]:=inttostr(strtointeger(AnneeFichier)+1);
+               FSRechercheBaseDonnees.TableauListeBaseDonnees.Cells[3,R]:=NomFichier;
+          end;
+     end;
+
+     if(R>0)then FSRechercheBaseDonnees.TableauListeBaseDonnees.RowCount:=R+1
+            else FSRechercheBaseDonnees.TableauListeBaseDonnees.RowCount:=2;
+
+     AjusterColWidth(FSRechercheBaseDonnees.TableauListeBaseDonnees,'','');
+     TrierTableauARowSpecial(FSRechercheBaseDonnees.TableauListeBaseDonnees,1,FSRechercheBaseDonnees.TableauListeBaseDonnees.RowCount-1,1,'3','','+');
+
+     NewExercice:=inttostr(strtointeger(FSRechercheBaseDonnees.EditExerciceActuel.Text)+1);
+     ActiverReouverture(FSRechercheBaseDonnees.TableauListeBaseDonnees,NewExercice,false,OKReouverture);
+end;
+
+Procedure ProcRechercheBaseDonnees(TableauListeBaseDonnees:TStringGrid; ExerciceActuel,TypeOctets,RubriqueTrieCol,TypeData,TypeTrie:string);
+var  i,R:integer;  RepertoireFichier,NomFichier,AnneeFichier:string;  OKFichier:boolean;
+begin
+     FSRechercheBaseDonnees.TableauListeFichier.Refresh;
+     OpenFParc(RParc);
+     FSRechercheBaseDonnees.TableauListeFichier.Root:=RParc.Parcours;
+     FSRechercheBaseDonnees.EditExerciceActuel.Enabled:=false;
+     FSRechercheBaseDonnees.IncrimenteExerciceActuel.Enabled:=false;
+
+     TableauListeBaseDonnees.ColCount:=10;
+     TableauListeBaseDonnees.Cols[0].Text:='N°';
+     TableauListeBaseDonnees.Cols[1].Text:='Répertoir';
+     TableauListeBaseDonnees.Cols[2].Text:='Année';
+     TableauListeBaseDonnees.Cols[3].Text:='Nom Fichier';
+     TableauListeBaseDonnees.Cols[4].Text:='Validation';
+     TableauListeBaseDonnees.Cols[5].Text:='Réouverture effectué';
+     TableauListeBaseDonnees.Cols[6].Text:='Nombre de registre';
+     TableauListeBaseDonnees.Cols[7].Text:='Tille (Octets)';
+     TableauListeBaseDonnees.Cols[8].Text:='IsFileInUse';
+     TableauListeBaseDonnees.Cols[9].Text:='Adresse';
+
+     TableauListeBaseDonnees.RowCount:=2;
+     TableauListeBaseDonnees.Rows[1].Text:='';
+
+     R:=0;
+     for i:=0 to FSRechercheBaseDonnees.TableauListeFichier.Items.Count-1 do
+     begin
+          IdentificationFichier(FSRechercheBaseDonnees.TableauListeFichier,i,AdresseFile,RepertoireFichier,NomFichier,AnneeFichier);
+
+          if(ExerciceActuel<>'')then
+          begin
+               if(AnneeFichier=ExerciceActuel)and(ControleOKTexteVide(NomFichier)=false)
+               then OKFichier:=true
+               else OKFichier:=false;
+          end
+          else OKFichier:=true;
+
+          if(OKFichier=true)then
+          begin
+               R:=R+1;
+               TableauListeBaseDonnees.Rows[R].Text:=inttostr(R);
+               TableauListeBaseDonnees.Cells[1,R]:=RepertoireFichier;
+               TableauListeBaseDonnees.Cells[2,R]:=AnneeFichier;
+               TableauListeBaseDonnees.Cells[3,R]:=NomFichier;
+               TableauListeBaseDonnees.Cells[4,R]:='Non';
+               TableauListeBaseDonnees.Cells[5,R]:='';
+               TableauListeBaseDonnees.Cells[6,R]:='';
+               TableauListeBaseDonnees.Cells[7,R]:=ConvertOctets(TailleFichier(FSRechercheBaseDonnees.TableauListeFichier.Folders[i].PathName),TypeOctets,'2');
+               TableauListeBaseDonnees.Cells[8,R]:=booleantostr(IsFileInUse(AdresseFile));
+               TableauListeBaseDonnees.Cells[9,R]:=AdresseFile;
+          end;
+     end;
+
+     if(R>0)then TableauListeBaseDonnees.RowCount:=R+1
+            else TableauListeBaseDonnees.RowCount:=2;
+
+     AjusterColWidth(TableauListeBaseDonnees,'','');
+
+     TrierTableauARowSpecial(TableauListeBaseDonnees,1,TableauListeBaseDonnees.RowCount-1,1,RubriqueTrieCol,TypeData,TypeTrie);
+end;
+
+Procedure ProcEffectueBaseDonnee(TableauListeBaseDonnees:TStringGrid; RepertoireFichier,NomFichier,AnneeFichier,TypeProcesControleReseaux:string; NbrRegistre:integer);
+var  Rp:integer;  OKBaseDonnee:boolean;
+begin
+     if(TypeProcesControleReseaux='Réseaux')
+     then FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réseaux '+NomFichier)
+     else FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture '+NomFichier);
+     Rp:=1;
+     OKBaseDonnee:=false;
+     while(Rp<=TableauListeBaseDonnees.RowCount-1)and(OKBaseDonnee=false)do
+     begin
+          if(TableauListeBaseDonnees.Cells[1,Rp]=RepertoireFichier)
+          //and(TableauListeBaseDonnees.Cells[2,R]=AnneeFichier)
+          and(TableauListeBaseDonnees.Cells[3,Rp]=NomFichier)
+          then
+          begin
+               OKBaseDonnee:=true;
+               if(TypeProcesControleReseaux='Réseaux')then
+               begin
+                    TableauListeBaseDonnees.Cells[4,Rp]:='OK';
+                    TableauListeBaseDonnees.Cells[5,Rp]:='Réseaux';
+                    TableauListeBaseDonnees.Cells[6,Rp]:='';
+
+                    showmessage(NomFichier+': Emplacement '+TableauListeBaseDonnees.Cells[5,Rp]);
+               end
+               else
+               begin
+                    TableauListeBaseDonnees.Cells[4,Rp]:='OK';
+                    TableauListeBaseDonnees.Cells[5,Rp]:='Effectué avec succès';
+                    TableauListeBaseDonnees.Cells[6,Rp]:=inttostr(NbrRegistre);
+
+                    showmessage(NomFichier+': Emplacement '+TableauListeBaseDonnees.Cells[5,Rp]);
+               end;
+          end;
+     Rp:=Rp+1;
+     end;
+
+     if(OKBaseDonnee=false)then
+     begin
+          TableauListeBaseDonnees.Cells[4,Rp]:='Non';
+          TableauListeBaseDonnees.Cells[5,Rp]:='Répertoir ou nom du fichier introuvable !';
+          TableauListeBaseDonnees.Cells[6,Rp]:=inttostr(NbrRegistre);
+
+          showmessage(NomFichier+': Emplacement '+TableauListeBaseDonnees.Cells[5,Rp]);
+     end;
+
+     AjusterColWidth(TableauListeBaseDonnees,'','');
+end;
+
+Procedure ProcAnomalieBaseDonnee(TableauListeBaseDonnees:TStringGrid; RepertoireFichier,NomFichier,AnneeFichier,TypeProcesControleReseaux:string; NbrRegistre:integer);
+var  Rp:integer;  OKBaseDonnee:boolean;
+begin
+     if(TypeProcesControleReseaux='Réseaux')
+     then FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Anomalie, Réseaux '+NomFichier)
+     else FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Anomalie, Réouverture '+NomFichier);
+     Rp:=1;
+     OKBaseDonnee:=false;
+     while(Rp<=TableauListeBaseDonnees.RowCount-1)and(OKBaseDonnee=false)do
+     begin
+          if(TableauListeBaseDonnees.Cells[1,Rp]=RepertoireFichier)
+          //and(TableauListeBaseDonnees.Cells[2,R]=AnneeFichier)
+          and(TableauListeBaseDonnees.Cells[3,Rp]=NomFichier)
+          then
+          begin
+               OKBaseDonnee:=true;
+               if(TypeProcesControleReseaux='Réseaux')then
+               begin
+                    TableauListeBaseDonnees.Cells[4,Rp]:='Anomalie';
+                    TableauListeBaseDonnees.Cells[5,Rp]:='Réseaux';
+                    TableauListeBaseDonnees.Cells[6,Rp]:='';
+               end
+               else
+               begin
+                    TableauListeBaseDonnees.Cells[4,Rp]:='Anomalie';
+                    TableauListeBaseDonnees.Cells[5,Rp]:='Non Effectué';
+                    TableauListeBaseDonnees.Cells[6,Rp]:=inttostr(NbrRegistre);
+               end;
+          end;
+     Rp:=Rp+1;
+     end;
+
+     AjusterColWidth(TableauListeBaseDonnees,'','');
+
+end;
+
+procedure TFSRechercheBaseDonnees.Button2Click(Sender: TObject);
+var wrdApp, wrdDoc: Variant;
+begin
+     OuvrireFichier.Filter :='Doc Word|*.doc';
+     OuvrireFichier.FilterIndex := 1;
+     if OuvrireFichier.Execute then
+     begin
+          CreerInstanceDeWord(wrdApp,true);
+          OuvrirUnDocument(wrdApp,wrdDoc,OuvrireFichier.FileName);
+     end;
+end;
+
+procedure TFSRechercheBaseDonnees.Button1Click(Sender: TObject);
+var
+  StrToAdd : String;
+  ImageTempo : TPicture;
+  wrdApp, wrdDoc: Variant;
+
+begin
+
+   ImageTempo := TPicture.Create;
+   ImageTempo := Image1.Picture;
+
+   // Pour copier une image, je passe par le presse papier
+   Clipboard.Assign(ImageTempo);
+
+
+  // Creation d'une instance de Word visible
+  CreerInstanceDeWord(wrdApp,true);
+
+
+  // Creation d'un nouveau document
+  CreerNouveauDocument(wrdDoc,wrdApp);
+
+
+
+
+  Activer_Entete(wrdapp);
+  Alignement(wrdApp,Centre); // centrer
+  InsererTexte(wrdApp,'Exemple  de pilotage de Word');
+
+
+
+
+  RetourLigne(wrdApp,1);
+  InsererDate(wrdApp,1,true);
+  Activer_Corps_Document(wrdApp);
+
+
+
+  // Police :
+  TexteGras(wrdApp,true); // Texte en Gras
+  TexteSouligne(wrdApp,true); // Souligne le texte
+  TexteTaille(wrdApp,20); // Taille de la police : 20
+  Alignement(wrdApp,Centre); // centrer
+  TexteFont(wrdApp,'Comic Sans MS'); // Choix de la police, on peut obtenir ces noms simplement
+                                     // avec un  if FontDialog1.Execute then Edit1.Text := FontDialog1.Font.Name;
+
+  // Insertion de Texte :
+  InsererTexte(wrdApp,'Pilotage de l'#39'OLE de Word'#10); // #10 : retour a la ligne sinon, la police du dessous affecte la ligne
+
+  RetourLigne(wrdApp,4);
+
+    // Police :
+  TexteGras(wrdApp,false); // Texte non Gras
+  Alignement(wrdApp,Gauche); // alignement a gauche
+  TexteSouligne(wrdApp,false); // texte non Souligne
+  TexteTaille(wrdApp,12); // Taille de la police : 12
+
+  IndentationGauche(wrdApp,20);
+  InsererTexte(wrdApp,'Indentation de Gauche'#10#10);
+  IndentationGauche(wrdApp,0);
+
+
+
+  InsererTexte(wrdApp,'Exemple :'#10);
+
+  InsererTexte(wrdApp,'Indice : CO');
+  TexteIndice(wrdApp,true);
+  InsererTexte(wrdApp,'2');
+  TexteIndice(wrdApp,false);
+
+  // Saut de ligne
+  RetourLigne(wrdApp,2);
+
+  InsererTexte(wrdApp,'Exposant : x');
+  TexteExposant(wrdApp,true);
+  InsererTexte(wrdApp,'2');
+  TexteExposant(wrdApp,false);
+
+  // Saut de ligne
+  RetourLigne(wrdApp,2);
+
+
+  InsererTexte(wrdApp,'insertion d'#39'un tableau : '#10);
+
+
+
+  CreerTableau(wrdApp,wrdDoc,4,4);
+
+  // Choix des types de traits du tableau
+  MiseEnFormeTableau(WrdDoc,1,Single);
+
+  // La case 4-4 : trait double
+  MiseEnFormeCelluleTableau(WrdDoc,1,4,4,Double,Double,Double,Double);
+
+
+  //Choix des largeurs des cases
+  TableauLargeurCase(wrdDoc,1,1,51);
+  TableauLargeurCase(wrdDoc,1,2,170);
+  TableauLargeurCase(wrdDoc,1,3,100);
+  TableauLargeurCase(wrdDoc,1,4,111);
+
+
+  // Choix des couleurs
+  TableauCouleurColonne(wrdDoc,1,1,Jaune);
+  TableauCouleurLigne(wrdDoc,1,1,GrisClair);
+  TableauCouleurCase(wrdDoc,1,1,1,Blanc);
+  TableauCouleurCase(wrdDoc,1,4,4,Rouge);
+  TableauCouleurCase(wrdDoc,1,1,4,Blanc);
+
+
+  // choix des alignement
+  TableauAlignementLigne(wrdDoc,1,1,Centre);
+  TableauAlignementLigne(wrdDoc,1,2,Droit);
+  TableauAlignementLigne(wrdDoc,1,3,Droit);
+  TableauAlignementLigne(wrdDoc,1,4,Droit);
+  TableauAlignementCase(wrdDoc,1,1,2,Centre);
+  TableauAlignementCase(wrdDoc,1,1,3,Centre);
+  TableauAlignementCase(wrdDoc,1,1,4,Centre);
+
+
+  TableauGrasLigne(wrdDoc,1,1,true);
+
+  TableauGrasCase(wrdDoc,1,2,1,false);
+
+  // 1ere ligne
+  TableauTexteDansCase(wrdDoc,1,2,1,'X');
+  TableauTexteDansCase(wrdDoc,1,3,1,'Y');
+  TableauTexteDansCase(wrdDoc,1,4,1,'SOMME');
+
+  // 2eme ligne
+  TableauTexteDansCase(wrdDoc,1,1,2,'Toto');
+  TableauTexteDansCase(wrdDoc,1,2,2,'1');
+  TableauTexteDansCase(wrdDoc,1,3,2,'2');
+  TableauTexteDansCase(wrdDoc,1,4,2,'3');
+
+  //3eme ligne
+  TableauTexteDansCase(wrdDoc,1,1,3,'Tovo');
+  TableauTexteDansCase(wrdDoc,1,2,3,'2');
+  TableauTexteDansCase(wrdDoc,1,3,3,'3');
+  TableauTexteDansCase(wrdDoc,1,4,3,'5');
+
+  //4eme ligne
+  TableauTexteDansCase(wrdDoc,1,1,4,'Total');
+  TableauTexteDansCase(wrdDoc,1,4,4,'8');
+
+  // Pour sortir du tableau
+  AllerEnFinDuFichier(wrdApp);
+
+  RetourLigne(wrdApp,5);
+
+  InsererTexte(wrdApp,'Insertion d'#39'un lien HyperText : ');  // le '#39'  permet d'ecrire le '
+
+  InsererLienHyperTexte(wrdApp,'http://firejocker.free.fr');
+
+  RetourLigne(wrdApp,3);
+
+  MiseEnForme(wrdApp, 'Titre 1');
+  InsererTexte(wrdApp, 'Exemple de mise en forme : titre 1');
+  FinDeParagraphe(wrdApp);
+  RetourLigne(wrdApp,1);
+  InsererTexte(wrdApp, 'Insertion d''une image (via le presse papier) :');
+
+  RetourLigne(wrdApp,3);
+  Alignement(wrdApp,Centre);
+
+  // Insertion de l'image du presse papier
+  CollerLePressePapier(wrdApp);
+                    
+
+// Yapluka !
+
+//  SauvegarderSous(wrdDoc,'c:\test pilotage de word.doc');
+
+//  FermerDocument(wrdDoc);
+
+//  FermerWord(wrdApp);
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn1Click(Sender: TObject);
+var
+  StrToAdd : String;
+  ImageTempo : TPicture;
+  wrdApp, wrdDoc: Variant;
+begin
+     ImageTempo := TPicture.Create;
+     ImageTempo := FSRechercheBaseDonnees.Image1.Picture;
+
+     // Pour copier une image, je passe par le presse papier
+     Clipboard.Assign(ImageTempo);
+
+
+     // Creation d'une instance de Word visible
+     CreerInstanceDeWord(wrdApp,true);
+
+
+     // Creation d'un nouveau document
+     CreerNouveauDocument(wrdDoc,wrdApp);
+
+
+     OpenFParc(RParc);
+
+     Activer_Entete(wrdapp);
+
+     // Insertion de l'image du presse papier
+     CollerLePressePapier(wrdApp);
+     
+     RetourLigne(wrdApp,1);
+     Alignement(wrdApp,Centre); // centrer
+     InsererTexte(wrdApp,RParc.Text1);
+     RetourLigne(wrdApp,1);
+     Alignement(wrdApp,Centre); // centrer
+     InsererTexte(wrdApp,RParc.Text2);
+     RetourLigne(wrdApp,1);
+     Alignement(wrdApp,Centre); // centrer
+     InsererTexte(wrdApp,RParc.Text3);
+     RetourLigne(wrdApp,1);
+     Alignement(wrdApp,Centre); // centrer
+     InsererTexte(wrdApp,RParc.Text4);
+
+     RetourLigne(wrdApp,1);
+     InsererDate(wrdApp,1,true);
+     Activer_Corps_Document(wrdApp);
+
+     // Police :
+     TexteGras(wrdApp,true); // Texte en Gras
+     TexteSouligne(wrdApp,true); // Souligne le texte
+     TexteTaille(wrdApp,20); // Taille de la police : 20
+     Alignement(wrdApp,Centre); // centrer
+     TexteFont(wrdApp,'Comic Sans MS'); // Choix de la police, on peut obtenir ces noms simplement
+                                     // avec un  if FontDialog1.Execute then Edit1.Text := FontDialog1.Font.Name;
+
+     RetourLigne(wrdApp,2);
+     // Insertion de l'image du presse papier
+     CollerLePressePapier(wrdApp);
+
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn2Click(Sender: TObject);
+begin
+     if MessageDlg('message''Voulez-vous vraiment supprimer ' +Edit1.Text+ '?',mtConfirmation, [mbYes, mbNo], 0)=MrYes
+     then if removeDir(Edit1.Text)
+     then ShowMessage ('l''effacement c''est déroulé corectement')
+     else ShowMessage('Erreur à l''effacement du dossier. Vérifier le chemin. Le dossier doit être vide');
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn3Click(Sender: TObject);
+begin
+     if MessageDlg('message''Voulez-vous vraiment supprimer ' +Edit1.Text+ '?',mtConfirmation, [mbYes, mbNo], 0)=MrYes
+     then RmDir(Edit1.Text);
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn4Click(Sender: TObject);
+begin
+     ChDir(Edit1.Text);
+     Opendialog1.Execute; //pour tester le nouveau répertoire en cours
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn5Click(Sender: TObject);
+begin
+     if not SetCurrentDir(Edit1.Text) then ShowMessage('opération impossible');
+     Opendialog1.Execute; //pour tester le nouveau répertoire en cours
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn6Click(Sender: TObject);
+begin
+     if OpenDialog1.Execute then ShowMessage('chemin :  '+ ExtractFileDir(OpenDialog1.FileName));
+    //ou if OpenDialog1.Execute then ShowMessage('chemin :  '+ ExtractFilePath(OpenDialog1.FileName));
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn7Click(Sender: TObject);
+begin
+     ShowMessage('Le programme va vous faire choisir dabord le nom de votre fichier puis le nom d''un fichier se trouvant dans le dossier qui servirra de base au chemin relatif');
+     if OpenDialog1.Execute then
+     if OpenDialog2.Execute then
+     ShowMessage('chemin :  '+ ExtractRelativePath(OpenDialog2.Filename,OpenDialog1.FileName));
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn8Click(Sender: TObject);
+begin
+     if MessageDlg('message''Voulez-vous vraiment créer un nouveau dossier ' +Edit1.Text+ '?',mtConfirmation, [mbYes, mbNo], 0)=MrYes
+     then
+     if CreateDir(Edit1.Text) then (ShowMessage('dossier créé')) else ShowMessage('erreur à la créatioon');
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn9Click(Sender: TObject);
+begin
+     if MessageDlg('message''Voulez-vous vraiment créer un nouveau dossier ' +Edit1.Text+ '?',mtConfirmation, [mbYes, mbNo], 0)=MrYes
+     then CreateDir(Edit1.Text);
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn10Click(Sender: TObject);
+begin
+     if MessageDlg('message''Voulez-vous vraiment créer un (ou les) nouveau(x) dossier(s) ' +Edit1.Text+ '?',mtConfirmation, [mbYes, mbNo], 0)=MrYes
+     then ForceDirectories(Edit1.Text);
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn11Click(Sender: TObject);
+begin
+     ShowMessage('nom du dossier en cours : '+GetCurrentDir);
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn12Click(Sender: TObject);
+begin
+     if DirectoryExists(Edit1.Text) then ShowMessage('le dossier existe')
+     else ShowMessage('le dossier n''existe pas');
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn13Click(Sender: TObject);
+begin
+     if OpenDialog1.execute then
+     if SaveDialog1.execute then CopieFichier(Opendialog1.FileName,SaveDialog1.FileName);
+end;
+
+procedure copiefichier(NomFicSource:string;NomFicCible:String);
+{cette procédure copie le fichier NomFicSource vers NomFicCible}
+var
+
+  FromF, ToF: file;
+  NumRead, NumWritten: Integer;
+  Buf: array[1..2048] of Char;
+begin
+  if AnsiUpperCase(NomFicSource)<>AnsiUpperCase(NomFicCible) then //si on ne cherche pas à copier sur lui même
+  begin
+    AssignFile(FromF, NomFicSource); {ouverture du fichier source}
+    Reset(FromF, 1);	{ Taille d'enregistrement = 1 }
+    AssignFile(ToF, NomFicCible);	{ Ouverture du fichier de sortie }
+    Rewrite(ToF, 1);	{ Taille d'enregistrement = 1 }
+    repeat
+      BlockRead(FromF, Buf, SizeOf(Buf), NumRead);
+      BlockWrite(ToF, Buf, NumRead, NumWritten);
+    until (NumRead = 0) or (NumWritten <> NumRead);
+    CloseFile(FromF);
+    CloseFile(ToF);
+  end;
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn14Click(Sender: TObject);
+var  RBegin,REnd,CBegin,CEnd:integer;
+begin
+     if FSRechercheBaseDonnees.OuvrireFichier.Execute then
+     begin
+          RBegin:=strtointeger(FSRechercheBaseDonnees.EditRBeginIn.Text);
+          CBegin:=strtointeger(FSRechercheBaseDonnees.EditCBeginIn.Text);
+
+          ChargerRowColTableauExcel(FSRechercheBaseDonnees.OuvrireFichier.FileName,RBegin,CBegin,RBegin,REnd,CBegin,CEnd,True);
+
+          FSRechercheBaseDonnees.EditRBegin.Text:=inttostr(RBegin);
+          FSRechercheBaseDonnees.EditREnd.Text:=inttostr(REnd);
+
+          FSRechercheBaseDonnees.EditCBegin.Text:=inttostr(CBegin);
+          FSRechercheBaseDonnees.EditCEnd.Text:=inttostr(CEnd);
+          
+          ExcelToTableau(FSRechercheBaseDonnees.TableauDonnees,RBegin,REnd,CBegin,CEnd,FSRechercheBaseDonnees.OuvrireFichier.FileName,false);
+     end;
+end;
+
+procedure TFSRechercheBaseDonnees.Panel4Click(Sender: TObject);
+begin
+     showmessage(FSRechercheBaseDonnees.EditCBegin.PasswordChar);
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn16Click(Sender: TObject);
+var  RBegin,REnd,CBegin,CEnd:integer;
+begin
+     RBegin:=strtointeger(FSRechercheBaseDonnees.EditRBegin.Text);
+     REnd:=strtointeger(FSRechercheBaseDonnees.EditREnd.Text);
+     CBegin:=strtointeger(FSRechercheBaseDonnees.EditCBegin.Text);
+     CEnd:=strtointeger(FSRechercheBaseDonnees.EditCEnd.Text);
+     ExcelToTableau(FSRechercheBaseDonnees.TableauDonnees,RBegin,REnd,CBegin,CEnd,FSRechercheBaseDonnees.OuvrireFichier.FileName,false);
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn15Click(Sender: TObject);
+var  OleApplication :variant;
+begin
+     OleApplication.Quit;
+     OleApplication:=Unassigned;//La constante Unassigned est utilisée pour indiquer qu'une variable Variant n'a pas encore été affectée d'une valeur.
+end;
+
+procedure TFSRechercheBaseDonnees.TableauDonneesDblClick(Sender: TObject);
+begin
+     FSRechercheBaseDonnees.TableauDonnees.ColWidths[FSRechercheBaseDonnees.TableauDonnees.Col]:=50;
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn17Click(Sender: TObject);
+var  R,C,RBegin,REnd,CBegin,CEnd,REndMax,CEndMax:integer;
+begin
+     RBegin:=strtointeger(FSRechercheBaseDonnees.EditRBeginIn.Text);
+     CBegin:=strtointeger(FSRechercheBaseDonnees.EditCBeginIn.Text);
+
+     ChargerRowColTableauExcel(FSRechercheBaseDonnees.OuvrireFichier.FileName,RBegin,CBegin,RBegin,REnd,CBegin,CEnd,false);
+
+     FSRechercheBaseDonnees.EditRBegin.Text:=inttostr(RBegin);
+     FSRechercheBaseDonnees.EditREnd.Text:=inttostr(REnd);
+
+     FSRechercheBaseDonnees.EditCBegin.Text:=inttostr(CBegin);
+     FSRechercheBaseDonnees.EditCEnd.Text:=inttostr(CEnd);
+end;
+
+procedure TFSRechercheBaseDonnees.EditRBeginInKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if not(key in['0'..'9'])then key:=#0;
+end;
+
+procedure TFSRechercheBaseDonnees.EditCBeginInKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if(not(key in['0'..'9']))or(not(key in['A'..'Z']))then key:=#0;
+end;
+
+procedure TFSRechercheBaseDonnees.TableauListeFichierChange(
+  Sender: TObject; Item: TListItem; Change: TItemChange);
+var i,R:integer;  RepertoireSauvgarde,RepertoireFichier,NomFichier,AnneeFichier:string;
+begin
+     FSRechercheBaseDonnees.EditIndex.Text:=inttostr(FSRechercheBaseDonnees.TableauListeFichier.ItemIndex);
+     FSRechercheBaseDonnees.EditIndexMax.Text:=inttostr(FSRechercheBaseDonnees.TableauListeFichier.Items.Count);
+
+     if(FSRechercheBaseDonnees.RBRechercheSelective.Checked=true)then
+     begin
+          IdentificationFichier(FSRechercheBaseDonnees.TableauListeFichier,FSRechercheBaseDonnees.TableauListeFichier.ItemIndex,AdresseFile,RepertoireSauvgarde,NomFichier,AnneeFichier);
+          FSRechercheBaseDonnees.EditAdresse.Text:=FSRechercheBaseDonnees.SourceFichierRenommer.Path;
+          if(AnneeFichier<>'')then
+          begin
+               FSRechercheBaseDonnees.IncrimenteExerciceActuel.Position:=strtointeger(AnneeFichier);
+               FSRechercheBaseDonnees.EditExerciceActuel.Text:=AnneeFichier;
+          end
+          else FSRechercheBaseDonnees.EditExerciceActuel.Text:='';
+
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.ColCount:=7;
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[0].Text:='N°';
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[1].Text:='Répertoir';
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[2].Text:='Année';
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[3].Text:='Nom Fichier';
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[4].Text:='Validation';
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[5].Text:='Réouverture effectué';
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.Cols[6].Text:='Nombre de registre';
+
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.RowCount:=2;
+          FSRechercheBaseDonnees.TableauListeBaseDonnees.Rows[1].Text:='';
+
+          R:=0;
+          for i:=0 to FSRechercheBaseDonnees.TableauListeFichier.Items.Count-1 do
+          begin
+               IdentificationFichier(FSRechercheBaseDonnees.TableauListeFichier,i,AdresseFile,RepertoireFichier,NomFichier,AnneeFichier);
+               if(RepertoireFichier=RepertoireSauvgarde)
+               and(AnneeFichier=FSRechercheBaseDonnees.EditExerciceActuel.Text)
+               and(ControleOKTexteVide(NomFichier)=false)then
+               begin
+                    R:=R+1;
+                    FSRechercheBaseDonnees.TableauListeBaseDonnees.Rows[R].Text:=inttostr(R);
+                    FSRechercheBaseDonnees.TableauListeBaseDonnees.Cells[1,R]:=RepertoireFichier;
+                    FSRechercheBaseDonnees.TableauListeBaseDonnees.Cells[2,R]:=AnneeFichier;
+                    FSRechercheBaseDonnees.TableauListeBaseDonnees.Cells[3,R]:=NomFichier;
+               end;
+          end;
+
+          if(R>0)then FSRechercheBaseDonnees.TableauListeBaseDonnees.RowCount:=R+1
+                 else FSRechercheBaseDonnees.TableauListeBaseDonnees.RowCount:=2;
+
+          AjusterColWidth(FSRechercheBaseDonnees.TableauListeBaseDonnees,'','');
+          TrierTableauARowSpecial(FSRechercheBaseDonnees.TableauListeBaseDonnees,1,FSRechercheBaseDonnees.TableauListeBaseDonnees.RowCount-1,1,'3','','+');
+     end;
+end;
+
+procedure TFSRechercheBaseDonnees.AfficheOptionPrintClick(Sender: TObject);
+begin
+if(FSRechercheBaseDonnees.AfficheOptionPrint.Height=25)
+then FSRechercheBaseDonnees.AfficheOptionPrint.Height:=223
+else FSRechercheBaseDonnees.AfficheOptionPrint.Height:=25;
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn18Click(Sender: TObject);
+var  R:integer;  TitreEtat,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol:string;
+begin
+      TitreEtat:='Liste base de données: '+FSRechercheBaseDonnees.EditAdresse.Text+' '+FSRechercheBaseDonnees.EditExerciceActuel.Text;
+
+      GrasARow:='0';
+      GrasACol:='0';
+      CenterARow:='0';
+      CenterACol:='0;2';
+      RightARow:='';
+      RightACol:='';
+
+      OptionsImpression(FSRechercheBaseDonnees.TableauListeBaseDonnees,'Center',0,1,TitreEtat,FSRechercheBaseDonnees.RBAjustement.Checked,FSRechercheBaseDonnees.RBOrientationPapier.Text,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol,true,1,FSMenuPrincipal.ImageCodebarre,true,R);
+      FSRechercheBaseDonnees.AfficheOptionPrint.Height:=25;
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn19Click(Sender: TObject);
+var  TitreEtat,SousTitreEtat:string;
+begin
+     TitreEtat:='Liste base de données: '+FSRechercheBaseDonnees.EditAdresse.Text; 
+     SousTitreEtat:='Année: '+FSRechercheBaseDonnees.EditExerciceActuel.Text;
+     TableauToExcel(FSRechercheBaseDonnees.TableauListeBaseDonnees,1,0,'','','','','','',TitreEtat,SousTitreEtat,'',true,FSMenuPrincipal.RBInsertLogo.Checked,FSMenuPrincipal.RBAfficherLaSaisie.Checked);
+end;
+
+procedure TFSRechercheBaseDonnees.TableauListeBaseDonneesClick(
+  Sender: TObject);
+var  NotTrieRow:integer;
+begin
+     FSRechercheBaseDonnees.AfficheOptionPrint.Height:=25;
+
+     if(FSRechercheBaseDonnees.RBIndiceRubriqueTriCol.Checked=true)then
+     begin
+          FSRechercheBaseDonnees.RBIndiceRubriqueTriCol.Checked:=false;
+          FSRechercheBaseDonnees.EditIndiceRubriqueTriCol.Text:=inttostr(FSRechercheBaseDonnees.TableauListeBaseDonnees.Col);
+          if(FSRechercheBaseDonnees.TableauListeBaseDonnees.Col in[2,6])
+          then FSRechercheBaseDonnees.EditTypeDataTrie.Text:='Num'
+          else FSRechercheBaseDonnees.EditTypeDataTrie.Text:='';
+          NotTrieRow:=1;
+          TrierTableauARowSpecial(FSRechercheBaseDonnees.TableauListeBaseDonnees,1,FSRechercheBaseDonnees.TableauListeBaseDonnees.RowCount-NotTrieRow,1,FSRechercheBaseDonnees.EditIndiceRubriqueTriCol.Text,FSRechercheBaseDonnees.EditTypeDataTrie.Text,FSRechercheBaseDonnees.EditTypeTrie.Text);
+     end;
+end;
+
+procedure TFSRechercheBaseDonnees.SourceFichierRenommerClick(
+  Sender: TObject);
+begin
+     FSRechercheBaseDonnees.AfficheOptionPrint.Height:=25;
+end;
+
+procedure TFSRechercheBaseDonnees.TableauListeFichierClick(
+  Sender: TObject);
+begin
+     FSRechercheBaseDonnees.AfficheOptionPrint.Height:=25;
+end;
+
+procedure TFSRechercheBaseDonnees.EditTypeOctetsKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn20Click(Sender: TObject);
+begin
+     EnregistrerDetailMouvementReseauxInBasePrive;
+end;
+
+Procedure ListeFichierTransfertReseauxInBasePrive(TableauListeFichier:TStringGrid);
+var  R,C:integer;   NotCol:string;  OKListeFichier:boolean;
+begin
+     TableauListeFichier.ColCount:=20;
+     TableauListeFichier.Cols[0].Text:='N°';
+     TableauListeFichier.Cols[1].Text:='N° Partage';
+     TableauListeFichier.Cols[2].Text:='Nom Dossier Partagé';
+     TableauListeFichier.Cols[3].Text:='Nom Fichier';
+
+     TableauListeFichier.Cols[4].Text:='MC';
+     TableauListeFichier.Cols[5].Text:='Date D. MC';
+     TableauListeFichier.Cols[6].Text:='Date F. MC';
+
+     TableauListeFichier.Cols[7].Text:='MA';
+     TableauListeFichier.Cols[8].Text:='Date D. MA';
+     TableauListeFichier.Cols[9].Text:='Date F. MA';
+
+     TableauListeFichier.Cols[10].Text:='MM';
+     TableauListeFichier.Cols[11].Text:='Date D. MM';
+     TableauListeFichier.Cols[12].Text:='Date F. MM';
+
+     TableauListeFichier.Cols[13].Text:='MS';
+     TableauListeFichier.Cols[14].Text:='Date D. MS';
+     TableauListeFichier.Cols[15].Text:='Date F. MS';
+
+     TableauListeFichier.Cols[16].Text:='MI';
+     TableauListeFichier.Cols[17].Text:='Date D. MI';
+     TableauListeFichier.Cols[18].Text:='Date F. MI';
+
+     TableauListeFichier.Cols[19].Text:='Sélect';
+
+     TableauListeFichier.RowCount:=2;
+     TableauListeFichier.Rows[1].Text:='';
+     R:=0;
+
+     OpenFParc(RParc);
+     ChAdresseProces:=RParc.Parcours+'\'+Exercice+'FAdresseProces';
+     assignfile(FAdresseProces,ChAdresseProces);
+     if FileExists(ChAdresseProces)then
+     begin
+           Reset(FAdresseProces);
+           Seek(FAdresseProces,0);
+           while not eof(FAdresseProces)do
+           begin
+                read(FAdresseProces,RAdresseProces);
+                if(RAdresseProces.TypeProces='Réseaux')then
+                begin
+                     OpenFParc(RParc);
+                     ChListeFichierConcernePartageReseaux:=RParc.Parcours+'\'+Exercice+'FListeFichierConcernePartageReseaux'+' '+inttostr(RAdresseProces.NumAdresseProces);
+                     assignfile(FListeFichierConcernePartageReseaux,ChListeFichierConcernePartageReseaux);
+                     if FileExists(ChListeFichierConcernePartageReseaux)then
+                     Reset(FListeFichierConcernePartageReseaux)
+                     else begin Showmessage('Attention ! '+ChListeFichierConcernePartageReseaux+' n''existe pas !'); Exit; end;
+                     Seek(FListeFichierConcernePartageReseaux,0);
+                     while not eof(FListeFichierConcernePartageReseaux)do
+                     begin
+                          read(FListeFichierConcernePartageReseaux,RListeFichierConcernePartageReseaux);
+
+                          if(RListeFichierConcernePartageReseaux.NumAdresseProces=RAdresseProces.NumAdresseProces)
+                          then OKListeFichier:=true
+                          else OKListeFichier:=false;
+
+                          if(OKListeFichier=true)then
+                          begin
+                               if(Firstlaters(RListeFichierConcernePartageReseaux.FichierConcerne,15)='DétailMouvement')
+                               then OKListeFichier:=true
+                               else OKListeFichier:=false;
+                          end;
+
+                          if(OKListeFichier=true)then
+                          begin
+                               R:=R+1;
+                               TableauListeFichier.Rows[R].Text:=inttostr(R);
+                               TableauListeFichier.Cells[1,R]:=inttostr(RListeFichierConcernePartageReseaux.NumAdresseProces);
+                               TableauListeFichier.Cells[2,R]:=RListeFichierConcernePartageReseaux.NomPosteReseaux;
+                               TableauListeFichier.Cells[3,R]:=RListeFichierConcernePartageReseaux.FichierConcerne;
+
+                               TableauListeFichier.Cells[4,R]:=booleantostr(RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.ModeConsultation);
+                               TableauListeFichier.Cells[5,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateDebutConsultation;
+                               TableauListeFichier.Cells[6,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateFinConsultation;
+
+                               TableauListeFichier.Cells[7,R]:=booleantostr(RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.ModeAjouter);
+                               TableauListeFichier.Cells[8,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateDebutAjouter;
+                               TableauListeFichier.Cells[9,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateFinAjouter;
+
+                               TableauListeFichier.Cells[10,R]:=booleantostr(RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.ModeModifier);
+                               TableauListeFichier.Cells[11,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateDebutModifier;
+                               TableauListeFichier.Cells[12,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateFinModifier;
+
+                               TableauListeFichier.Cells[13,R]:=booleantostr(RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.ModeSupprimer);
+                               TableauListeFichier.Cells[14,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateDebutSupprimer;
+                               TableauListeFichier.Cells[15,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateFinSupprimer;
+
+                               TableauListeFichier.Cells[16,R]:=booleantostr(RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.ModeImprimer);
+                               TableauListeFichier.Cells[17,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateDebutImprimer;
+                               TableauListeFichier.Cells[18,R]:=RListeFichierConcernePartageReseaux.RAccesPrivilegieReseaux.DateFinImprimer;
+
+                          end;
+                     end;
+                     CloseFile(FListeFichierConcernePartageReseaux);
+                end;
+           end;
+           CloseFile(FAdresseProces);
+     end;
+
+     if(R>0)then TableauListeFichier.RowCount:=R+1
+            else TableauListeFichier.RowCount:=2;
+
+     NotCol:='4-18';
+     for C:=1 to TableauListeFichier.ColCount-1 do if existenumintexte(inttostr(C),NotCol)then TableauListeFichier.ColWidths[C]:=0;
+     AjusterColWidth(TableauListeFichier,'',NotCol);
+end;
+
+procedure TFSRechercheBaseDonnees.TableauxFichierConcernePartageReseauxDblClick(
+  Sender: TObject);
+begin
+     if(FSRechercheBaseDonnees.TableauxFichierConcernePartageReseaux.Cells[19,FSRechercheBaseDonnees.TableauxFichierConcernePartageReseaux.Row]='')then
+     begin
+          if(FSRechercheBaseDonnees.TableauxFichierConcernePartageReseaux.Cells[3,FSRechercheBaseDonnees.TableauxFichierConcernePartageReseaux.Row]<>'')
+          then FSRechercheBaseDonnees.TableauxFichierConcernePartageReseaux.Cells[19,FSRechercheBaseDonnees.TableauxFichierConcernePartageReseaux.Row]:='OK';
+     end
+     else FSRechercheBaseDonnees.TableauxFichierConcernePartageReseaux.Cells[19,FSRechercheBaseDonnees.TableauxFichierConcernePartageReseaux.Row]:='';
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn21Click(Sender: TObject);
+var i,iCount,l:integer;  TypeProces,FichierConcerne,Adresse:string;
+begin
+     { Désactivation des erreurs E/S }
+    {$I-}
+    TypeProces:='Business';
+    FichierConcerne:='FMouvement';
+    Adresse:='';
+    if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+    begin
+           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+    end;
+
+     ChMouvement:=Adresse;
+     assignfile(FMouvement,ChMouvement);
+     if FileExists(ChMouvement)then
+     begin
+          Reset(FMouvement);
+          i:=SizeOf(FMouvement);
+          showmessage('SizeOf: '+inttostr(i));
+          iCount:=FileSize(FMouvement); // Nombre de registres
+          showmessage('FileSize: '+inttostr(iCount));
+     end
+     else Rewrite(FMouvement);
+
+     Seek(FMouvement,0);
+     i:=0;
+     while not eof(FMouvement)do
+     begin
+          l:=FilePos(FMouvement);
+          showmessage('avant Read i: '+inttostr(i)+' l: '+inttostr(l));
+
+          read(FMouvement,RMouvement);          
+
+          l:=FilePos(FMouvement);
+          showmessage('apres Read i: '+inttostr(i)+' l: '+inttostr(l));
+
+          Seek(FMouvement,i);
+          write(FMouvement,RMouvement);
+
+          l:=FilePos(FMouvement);
+          showmessage('apres Write i: '+inttostr(i)+' l: '+inttostr(l));
+     i:=i+1;
+     end;
+     CloseFile(FMouvement);
+
+      {Réactivation des erreurs d'E/S et rétablissement du mode de lecture}
+     {$I+}
+
+     //SeekEof (f); { Pointeur en fin de fichier }
+end;
+
+
+procedure TFSRechercheBaseDonnees.BitBtn22Click(Sender: TObject);
+var i,iDepart,iCount,l:integer;  TypeProces,FichierConcerne,Adresse:string;
+    NomRessource, TypeRessource:PChar;
+begin
+     { Désactivation des erreurs E/S }
+     {$I-}
+
+     NomRessource:='BusinessProces';
+     TypeRessource:='.exe';
+     iDepart:=GetModuleHandle(nil);
+     i := FindResource(hinstance, NomRessource, TypeRessource);
+     showmessage('i: '+inttostr(i));
+
+     {Réactivation des erreurs d'E/S et rétablissement du mode de lecture}
+     {$I+}
+end;
+
+Procedure ListeDataRepertoireActuel(AdresseSource:string; ListeBaseDonnees:TShellListView; EditRepertoireActuel,EditExerciceRepertoireActuel:TComboBox);
+var  i,l,iMax:integer; RepertoireFichier,NomFichier,AnneeFichier,TypeData,TypeTrie:string;  OKData:boolean;
+begin
+     EditRepertoireActuel.Items.Text:='';
+     EditExerciceRepertoireActuel.Items.Text:='';
+
+     if(AdresseSource='')then AdresseSource:=GetCurrentDir;
+     ListeBaseDonnees.Root:=AdresseSource;
+     ListeBaseDonnees.Refresh;
+
+     i:=0;
+     iMax:=ListeBaseDonnees.Items.Count-1;
+     while(i<=iMax)do
+     begin
+          IdentificationFichier(ListeBaseDonnees,i,AdresseFile,RepertoireFichier,NomFichier,AnneeFichier);
+
+          if(RepertoireFichier<>'')
+          and(NomFichier<>'')
+          and(AnneeFichier<>'')
+          then
+          begin
+                l:=0;
+                OKData:=false;
+                while(l<=EditRepertoireActuel.Items.Count-1)and(OKData=false)do
+                begin
+                     if(EditRepertoireActuel.Items[l]=RepertoireFichier)then
+                     begin
+                          OKData:=true
+                     end;
+                l:=l+1;
+                end;
+
+                if(OKData=false)then
+                begin
+                     EditRepertoireActuel.Items.Add(RepertoireFichier);
+                end;
+
+                l:=0;
+                OKData:=false;
+                while(l<=EditExerciceRepertoireActuel.Items.Count-1)and(OKData=false)do
+                begin
+                     if(EditExerciceRepertoireActuel.Items[l]=AnneeFichier)then
+                     begin
+                          OKData:=true
+                     end;
+                l:=l+1;
+                end;
+
+                if(OKData=false)then
+                begin
+                     EditExerciceRepertoireActuel.Items.Add(AnneeFichier);
+                end;
+          end;
+     i:=i+1;
+     end;
+
+     EditRepertoireActuel.ItemIndex:=0;
+     EditExerciceRepertoireActuel.ItemIndex:=0;
+
+     TrieTComboBox(EditRepertoireActuel,'','+');
+     TrieTComboBox(EditExerciceRepertoireActuel,'Num','+');    
+end;
+
+procedure TFSRechercheBaseDonnees.BitBtn23Click(Sender: TObject);
+begin
+     OpenFParc(RParc);
+     ListeDataRepertoireActuel(RParc.Parcours,FSRechercheBaseDonnees.ListeBaseDonnees,FSRechercheBaseDonnees.EditRepertoireActuel,FSRechercheBaseDonnees.EditExerciceRepertoireActuel);
+end;
+
+procedure TFSRechercheBaseDonnees.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+     ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

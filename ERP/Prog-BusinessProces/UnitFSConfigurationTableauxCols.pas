@@ -1,0 +1,159 @@
+unit UnitFSConfigurationTableauxCols;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids;
+
+type
+  TFSConfigurationTableauxCols = class(TForm)
+    TableauListeTableauxCols: TStringGrid;
+    TableauColsTableaux: TStringGrid;
+    procedure FormShow(Sender: TObject);
+    procedure TableauListeTableauxColsClick(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSConfigurationTableauxCols: TFSConfigurationTableauxCols;
+
+  Procedure AfficherListeTableauxCols(TableauxListeTableauxCols:TStringGrid);
+  Procedure AfficherListeActiveColsTableaux(TableauxCols:TStringGrid; PositionTableauxs,NomTableaux:string);
+
+implementation
+
+Uses UnitInitialisation;
+
+{$R *.dfm}
+
+Procedure AfficherListeTableauxCols(TableauxListeTableauxCols:TStringGrid);
+var   R:integer;   TypeProces,FichierConcerne,Adresse:string;
+begin
+     TableauxListeTableauxCols.ColCount:=4;
+     TableauxListeTableauxCols.Cols[0].Text:='N°';
+     TableauxListeTableauxCols.Cols[1].Text:='P°';
+     TableauxListeTableauxCols.Cols[2].Text:='Nom Tableau';
+     TableauxListeTableauxCols.Cols[3].Text:='ColCount';
+     TableauxListeTableauxCols.RowCount:=2;
+     TableauxListeTableauxCols.Rows[1].Text:='';
+
+     TypeProces:='Business';
+     FichierConcerne:='FListeTableauxCols';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          if(FichierConcerne<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier {'+FichierConcerne+'} recherché !');
+     end;
+
+     ChListeTableauxCols:=Adresse;
+     assignfile(FListeTableauxCols,ChListeTableauxCols);
+     if FileExists(ChListeTableauxCols)then
+     Reset(FListeTableauxCols)
+     else Rewrite(FListeTableauxCols);
+     Seek(FListeTableauxCols,0);
+     R:=0;
+     while not eof(FListeTableauxCols)do
+     begin
+          read(FListeTableauxCols,RListeTableauxCols);
+
+          R:=R+1;
+          TableauxListeTableauxCols.Rows[R].Text:=inttostr(R);
+          TableauxListeTableauxCols.Cells[1,R]:=inttostr(RListeTableauxCols.PositionTableauxs);
+          TableauxListeTableauxCols.Cells[2,R]:=RListeTableauxCols.NomTableaux;
+          TableauxListeTableauxCols.Cells[3,R]:=inttostr(RListeTableauxCols.ColCount);
+     end;
+     CloseFile(FListeTableauxCols);
+
+     if(R>0)then TableauxListeTableauxCols.RowCount:=R+1
+            else TableauxListeTableauxCols.RowCount:=2;
+
+     AjusterColWidth(TableauxListeTableauxCols,'','');
+end;
+
+Procedure AfficherListeActiveColsTableaux(TableauxCols:TStringGrid; PositionTableauxs,NomTableaux:string);
+var   R:integer; OKColsTableaux:boolean; TypeProces,FichierConcerne,Adresse:string;
+begin
+     TableauxCols.ColCount:=6;
+     TableauxCols.Cols[0].Text:='N°';
+     TableauxCols.Cols[1].Text:='P°Cols';
+     TableauxCols.Cols[2].Text:='P°Tableau';
+     TableauxCols.Cols[3].Text:='Cols';
+     TableauxCols.Cols[4].Text:='Désignation';
+     TableauxCols.Cols[5].Text:='Active';
+     TableauxCols.RowCount:=2;
+     TableauxCols.Rows[1].Text:='';
+
+     TypeProces:='Business';
+     FichierConcerne:='FColsTableaux';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          if(FichierConcerne<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier {'+FichierConcerne+'} recherché !');
+     end;
+
+     ChColsTableaux:=Adresse;
+     assignfile(FColsTableaux,ChColsTableaux);
+     if FileExists(ChColsTableaux)then
+     Reset(FColsTableaux)
+     else Rewrite(FColsTableaux);
+     Seek(FColsTableaux,0);
+     R:=0;
+     while not eof(FColsTableaux)do
+     begin
+          read(FColsTableaux,RColsTableaux);
+
+          if(NomTableaux<>'')then
+          begin
+               RListeTableauxColsCopie:=ChercherListeTableauxCols('',NomTableaux);
+
+               if(RColsTableaux.PositionTableauxs=RListeTableauxColsCopie.PositionTableauxs)
+               then OKColsTableaux:=true
+               else OKColsTableaux:=false;
+          end
+          else
+          begin
+               if(PositionTableauxs<>'')then
+               begin
+                    if(RColsTableaux.PositionTableauxs=strtointeger(PositionTableauxs))
+                    then OKColsTableaux:=true
+                    else OKColsTableaux:=false;
+               end;
+          end;
+             
+          if(OKColsTableaux=true)then
+          begin
+               R:=R+1;
+               TableauxCols.Rows[R].Text:=inttostr(R);
+               TableauxCols.Cells[1,R]:=inttostr(RColsTableaux.PositionColsTableauxs);
+               TableauxCols.Cells[2,R]:=inttostr(RColsTableaux.PositionTableauxs);
+               TableauxCols.Cells[3,R]:=inttostr(RColsTableaux.Cols);
+               TableauxCols.Cells[4,R]:=RColsTableaux.Designation;
+               TableauxCols.Cells[5,R]:=booleantostr(RColsTableaux.Active);
+          end;
+          
+     end;
+     CloseFile(FColsTableaux);
+
+     if(R>0)then TableauxCols.RowCount:=R+1
+            else TableauxCols.RowCount:=2;
+
+     AjusterColWidth(TableauxCols,'','');
+end;
+
+procedure TFSConfigurationTableauxCols.FormShow(Sender: TObject);
+begin
+     AfficherListeTableauxCols(FSConfigurationTableauxCols.TableauListeTableauxCols);
+     AfficherListeActiveColsTableaux(FSConfigurationTableauxCols.TableauColsTableaux,FSConfigurationTableauxCols.TableauListeTableauxCols.Cells[1,FSConfigurationTableauxCols.TableauListeTableauxCols.Row],'');
+end;
+
+procedure TFSConfigurationTableauxCols.TableauListeTableauxColsClick(
+  Sender: TObject);
+begin
+     AfficherListeActiveColsTableaux(FSConfigurationTableauxCols.TableauColsTableaux,FSConfigurationTableauxCols.TableauListeTableauxCols.Cells[1,FSConfigurationTableauxCols.TableauListeTableauxCols.Row],'');
+end;
+
+end.

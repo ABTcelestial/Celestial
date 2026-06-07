@@ -1,0 +1,12144 @@
+unit UnitFSTravauxFinAnnee;    //Add('')
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, StdCtrls, Buttons, ExtCtrls, ComCtrls,ShellAPI;
+
+type
+    ROrdreListeMouvementReouvertures=Record
+                                     OrdreListeMouvementExerciceNPlusUn:integer;
+                                     end;
+    TOrdreListeMouvementReouvertures=array of ROrdreListeMouvementReouvertures;
+
+    RPositionDetaiMouvementInOrdreListeMouvements=Record
+                                                  PoisitionDetailMouvementBegin:integer;
+                                                  PoisitionDetailMouvementEnd:integer;
+                                                  end;
+    TPositionDetaiMouvementInOrdreListeMouvements=array of RPositionDetaiMouvementInOrdreListeMouvements;
+
+    TFSTravauxFinAnnee = class(TForm)
+    PageControl1: TPageControl;
+    PageControleDonnees: TTabSheet;
+    PageControl2: TPageControl;
+    PageSyntheseTiers: TTabSheet;
+    Panel2: TPanel;
+    EditNewExercice: TEdit;
+    Label1: TLabel;
+    TableauMouvement: TStringGrid;
+    RBAfficherSoldeSuperieur: TCheckBox;
+    EditSoldeMinimum: TEdit;
+    EditSigleDevise: TEdit;
+    Label8: TLabel;
+    EditDesignationDevise: TEdit;
+    RBIndiceRubriqueTriCol: TCheckBox;
+    EditIndiceRubriqueTriCol: TEdit;
+    EditTypeDataTrie: TEdit;
+    EditTypeTrie: TComboBox;
+    Bevel6: TBevel;
+    Bevel7: TBevel;
+    AffichePatienter: TPanel;
+    TimerSyntheseTiers: TTimer;
+    TimerReouverture: TTimer;
+    BitReouvertureExercice: TBitBtn;
+    Bevel2: TBevel;
+    AfficheValidationReouverture: TPanel;
+    TableauValidationReouverture: TStringGrid;
+    Bevel3: TBevel;
+    BitBtn1: TBitBtn;
+    BitBtn3: TBitBtn;
+    PageListeBDExerciceN: TTabSheet;
+    TableauListeBaseDonnees: TStringGrid;
+    BitBtn2: TBitBtn;
+    Panel1: TPanel;
+    AfficheOptionPrintFinanceProjets: TPanel;
+    Bevel32: TBevel;
+    RadioGroup5: TRadioGroup;
+    StaticText2: TStaticText;
+    RBOrientationPapierFinanceProjets: TComboBox;
+    RBAjustementFinanceProjets: TCheckBox;
+    BitBtn20: TBitBtn;
+    Bevel5: TBevel;
+    PageSynthese: TPageControl;
+    TabSheet1: TTabSheet;
+    TableauSyntheseTiers: TStringGrid;
+    TabSheet2: TTabSheet;
+    TableauDeBohrTiers: TStringGrid;
+    TabSheet3: TTabSheet;
+    TableauDeBohrDetailRubrique: TStringGrid;
+    TabSheet4: TTabSheet;
+    TableauInventaireDomiciliation: TStringGrid;
+    TableauListeAvisNotifier: TStringGrid;
+    MemoRapportReouverture: TMemo;
+    AfficherPatienter: TPanel;
+    MemoVoirRapportReouverture: TMemo;
+    AfficheConsultationNewExercice: TPanel;
+    BitBtn5: TBitBtn;
+    BitOuiNewExercice: TBitBtn;
+    Bevel8: TBevel;
+    RBIndiceRubriqueTriColBD: TCheckBox;
+    EditIndiceRubriqueTriColBD: TEdit;
+    EditTypeDataTrieBD: TEdit;
+    EditTypeTrieBD: TComboBox;
+    Bevel1: TBevel;
+    TabSheet5: TTabSheet;
+    TableauDetailSituationMarche: TStringGrid;
+    RadioGroup1: TRadioGroup;
+    RBValiderNonValider: TRadioButton;
+    RBValider: TRadioButton;
+    RBNonValider: TRadioButton;
+    TableauListeBaseDonneesImage: TStringGrid;
+    EditTypeOctets: TComboBox;
+    EditNbrChiffreApresVergule: TEdit;
+    UpDown1: TUpDown;
+    Label2: TLabel;
+    Label3: TLabel;
+    Bevel9: TBevel;
+    RBFixeColonne: TCheckBox;
+    EditFixeColonne: TEdit;
+    IncrimentFixeColonne: TUpDown;
+    Bevel38: TBevel;
+    Bevel10: TBevel;
+    Bevel4: TBevel;
+    PageListeBDExerciceNPlus1: TTabSheet;
+    TableauListeBaseDonneesExerciceNPlus1: TStringGrid;
+    Panel5: TPanel;
+    RadioGroup3: TRadioGroup;
+    RBNouvelleReouvertureReseaux: TRadioButton;
+    RBMettreAJourReouvertureReseaux: TRadioButton;
+    Panel4: TPanel;
+    RadioGroup2: TRadioGroup;
+    RBNouvelleReouvertureLocale: TRadioButton;
+    RBMettreAJourReouvertureLocale: TRadioButton;
+    Panel6: TPanel;
+    Bevel14: TBevel;
+    RBIndiceRubriqueTriColBDExerciceNPlus1: TCheckBox;
+    EditIndiceRubriqueTriColBDExerciceNPlus1: TEdit;
+    EditTypeDataTrieBDExerciceNPlus1: TEdit;
+    EditTypeTrieBDExerciceNPlus1: TComboBox;
+    RadioGroup4: TRadioGroup;
+    RBValiderNonValiderExerciceNPlus1: TRadioButton;
+    RBValiderExerciceNPlus1: TRadioButton;
+    RBNonValiderExerciceNPlus1: TRadioButton;
+    TableauListeBaseDonneesImageExerciceNPlus1: TStringGrid;
+    Label4: TLabel;
+    EditTypeOctetsExerciceNPlus1: TComboBox;
+    Label5: TLabel;
+    EditNbrChiffreApresVerguleExerciceNPlus1: TEdit;
+    UpDown2: TUpDown;
+    Bevel11: TBevel;
+    Bevel12: TBevel;
+    Bevel13: TBevel;
+    BitBtn6: TBitBtn;
+    BitBtn7: TBitBtn;
+    RBAppliquerPourTous: TCheckBox;
+    Bevel15: TBevel;
+    EditCodeFondateurParDefaut: TEdit;
+    AfficherDetailleReouverture: TMemo;
+    TimerMAJIsFileInUse: TTimer;
+    AfficheMAJIsFileInUse: TPanel;
+    Bevel16: TBevel;
+    BitBtn8: TBitBtn;
+    BitBtn9: TBitBtn;
+    RBSelectIsFileInUse: TCheckBox;
+    BitBtn10: TBitBtn;
+    NbrActiveIsFileInUse: TLabel;
+    BitBtn11: TBitBtn;
+    BitBtn12: TBitBtn;
+    BitBtn13: TBitBtn;
+    SaveDialog1: TSaveDialog;
+    GroupBox1: TGroupBox;
+    CheckBoxPossibleAnnuler: TCheckBox;
+    CheckBoxChangeNomSiCollision: TCheckBox;
+    CheckBoxSansConfirmation: TCheckBox;
+    CheckBoxSansProgression: TCheckBox;
+    RBCopierTous: TCheckBox;
+    BitTousBaseData: TBitBtn;
+    RBCopierRepertoire: TCheckBox;
+    BitBtn14: TBitBtn;
+    RBAlacorbeille: TCheckBox;
+    BitBtn16: TBitBtn;
+    BitFermerVisualisation: TBitBtn;
+    RBAucuneReouvertureReseaux: TRadioButton;
+    AfficheAnomalieReouverture: TPanel;
+    BitBtn17: TBitBtn;
+    Bevel17: TBevel;
+    EditAutorisationEnregistrementClotureExercice: TEdit;
+    FichierDisponible: TLabel;
+    RBFinReouvertureClotureExercice: TCheckBox;
+    AfficheTableauConfigurations: TPanel;
+    PageControl3: TPageControl;
+    TabSheet6: TTabSheet;
+    TabSheet7: TTabSheet;
+    TabSheet8: TTabSheet;
+    TabSheet9: TTabSheet;
+    Panel3: TPanel;
+    TableauTypeFichierTiers: TStringGrid;
+    TabSheet10: TTabSheet;
+    TabSheet11: TTabSheet;
+    TabSheet12: TTabSheet;
+    Panel7: TPanel;
+    TableauProjetFinance: TStringGrid;
+    Panel15: TPanel;
+    TableauNumTypeFormule: TStringGrid;
+    Panel14: TPanel;
+    TableauTypeMouvement: TStringGrid;
+    Panel8: TPanel;
+    TableauOrdreListeMouvement: TStringGrid;
+    Panel9: TPanel;
+    TableauRegistreComptes: TStringGrid;
+    Panel10: TPanel;
+    TableauLocalisationGeographique: TStringGrid;
+    TabSheet13: TTabSheet;
+    Panel12: TPanel;
+    TableauMarche: TStringGrid;
+    TabSheet14: TTabSheet;
+    Panel13: TPanel;
+    TableauLAttachement: TStringGrid;
+    TabSheet15: TTabSheet;
+    Panel11: TPanel;
+    TableauSituationMarche: TStringGrid;
+    TabSheet16: TTabSheet;
+    Label9: TLabel;
+    EditEcartPUF: TEdit;
+    Label6: TLabel;
+    EditNumPrelevementFirstNewExercice: TEdit;
+    EditMatriculeFirstNewExercice: TEdit;
+    Label7: TLabel;
+    EditEcartPrelevement: TEdit;
+    BitBtn4: TBitBtn;
+    Bevel18: TBevel;
+    RBSuspendreReouverture: TCheckBox;
+    Panel16: TPanel;
+    TableauPositionDetailMouvementOdreListeMouvement: TStringGrid;
+    EditFichierDetailMouvementConcerne: TMemo;
+    procedure TableauSyntheseTiersClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitReouvertureExerciceClick(Sender: TObject);
+    procedure EditNewExerciceKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TimerSyntheseTiersTimer(Sender: TObject);
+    procedure TimerReouvertureTimer(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure TableauValidationReouvertureDblClick(Sender: TObject);
+    procedure AfficheValidationReouvertureExit(Sender: TObject);
+    procedure TableauListeBaseDonneesDblClick(Sender: TObject);
+    procedure TableauListeBaseDonneesClick(Sender: TObject);
+    procedure AfficheOptionPrintFinanceProjetsClick(Sender: TObject);
+    procedure BitBtn20Click(Sender: TObject);
+    procedure PageControl2Change(Sender: TObject);
+    procedure TableauDeBohrTiersClick(Sender: TObject);
+    procedure TableauDeBohrDetailRubriqueClick(Sender: TObject);
+    procedure TableauInventaireDomiciliationClick(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure MemoVoirRapportReouvertureExit(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure BitOuiNewExerciceClick(Sender: TObject);
+    procedure RBValiderNonValiderClick(Sender: TObject);
+    procedure RBValiderClick(Sender: TObject);
+    procedure RBNonValiderClick(Sender: TObject);
+    procedure EditTypeOctetsKeyPress(Sender: TObject; var Key: Char);
+    procedure EditTypeOctetsSelect(Sender: TObject);
+    procedure UpDown1Click(Sender: TObject; Button: TUDBtnType);
+    procedure TableauDetailSituationMarcheClick(Sender: TObject);
+    procedure TableauMarcheDblClick(Sender: TObject);
+    procedure TableauListeBaseDonneesExerciceNPlus1Click(Sender: TObject);
+    procedure RBValiderNonValiderExerciceNPlus1Click(Sender: TObject);
+    procedure RBValiderExerciceNPlus1Click(Sender: TObject);
+    procedure RBNonValiderExerciceNPlus1Click(Sender: TObject);
+    procedure UpDown2Click(Sender: TObject; Button: TUDBtnType);
+    procedure EditTypeOctetsExerciceNPlus1KeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditTypeOctetsExerciceNPlus1Select(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure EditNewExerciceDblClick(Sender: TObject);
+    procedure EditNewExerciceExit(Sender: TObject);
+    procedure EditCodeFondateurParDefautKeyUp(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure TimerMAJIsFileInUseTimer(Sender: TObject);
+    procedure BitBtn8Click(Sender: TObject);
+    procedure BitBtn9Click(Sender: TObject);
+    procedure BitBtn10Click(Sender: TObject);
+    procedure BitBtn11Click(Sender: TObject);
+    procedure BitBtn12Click(Sender: TObject);
+    procedure BitBtn13Click(Sender: TObject);
+    procedure BitTousBaseDataClick(Sender: TObject);
+    procedure BitBtn14Click(Sender: TObject);
+    procedure BitBtn16Click(Sender: TObject);
+    procedure BitFermerVisualisationClick(Sender: TObject);
+    procedure BitBtn17Click(Sender: TObject);
+    procedure BitReouvertureExerciceContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure AfficheTableauConfigurationsClick(Sender: TObject);
+  private
+    { Déclarations privées }
+
+  public
+    { Déclarations publiques }
+
+  end;
+
+var
+  FSTravauxFinAnnee: TFSTravauxFinAnnee;
+  TOrdreLMNpluUN:TOrdreListeMouvementReouvertures;
+
+  Function ExisteValidationReouverture(AfficheValidationReouverture:TPanel; TableauValidationReouverture:TStringGrid;  NewExercice,FichierCible:string):boolean;
+  Procedure ActionTableauDeBohrMouvement(TableauMouvement,TableauDeBohrTiers:TStringGrid;  DateDebut,DateFin:string; RowMouvementSelect,IndiceRubriqueTriCol:integer; TypeDataTrie,TypeTrie:string; RBAfficherSoldeSuperieur,ActiverTransfertTableauBohr:boolean; RowCountTableauDeBohrMouvementIn:integer; var RowCountTableauDeBohrMouvementOut:integer);
+  Procedure ActionTableauDeBohrAvis(TableauDeBohrTiers:TStringGrid;  DateDebut,DateFin:string; IndiceRubriqueTriCol:integer; TypeDataTrie,TypeTrie:string; RBAfficherSoldeSuperieur,ActiverTransfertTableauBohr:boolean; RowCountTableauDeBohrAvisIn:integer; var RowCountTableauDeBohrAvisOut:integer);
+  Procedure ActiverReouverture(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean; var OKReouverture:boolean);
+
+  Procedure ReouvertureAccesPrivilegie(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureUtilisateur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouverturePosteMenu(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAdresseProces(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTypeFichierTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureStockArticle(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTypeMouvement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureMouvement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTypeFormule(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureFormule(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTypeAffichageFormuleNonVisible(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureListeMouvement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTypeAvis(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAvis(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureBanqueGlobal(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAgence(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureParametreTaxeAjoute(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureBaremeTaxeAjouter(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureLocalisationGeographique(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureRegistreCompte(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureDetailMouvement(TableauTypeMouvement,TableauListeBaseDonnees:TStringGrid; TOrdreLMNpluUN:TOrdreListeMouvementReouvertures; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTypeProjet(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureProjetFinance(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTempsAlerteAvantAction(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTypeUniteFonds(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureUniteFonds(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAffectationCompteur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureGroupeTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureListeGroupeTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureDomiciliation(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureFormulairePreselection(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureDetailRubriqueFicheTechnique(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouverturePlanificateur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureSeriePieceDomiciliation(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureFicheTechnique(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureRubriqueFicheTechnique(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureCompteur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureEquipe(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouverturePrelevement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureArchivePrelevementCompteur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureArchiveDetailArticlePrelevementUniteFonds(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureMoyenTransport(TableauListeBaseDonnees:TStringGrid; TOrdreLMNpluUN:TOrdreListeMouvementReouvertures; NewExercice,TypeFiche:string; ActiverReouverture:boolean);
+  Procedure ReouvertureArchiveRegistreEtatStockPrelevement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureParametresStock(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureEffectifEquipe(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureArchivePrelevementUniteFonds(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureArchivePrelevementEffectifEquipe(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureDetailMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureSituationMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureDetailSituationMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureStructureMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureStatistiqueMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAttachement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureDetailAttachement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureStockMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureDataStatistiqueSituation(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureListeValeursFormuleArticle(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureBaseAvis(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureFinance(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureOperationFinance(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureListeFichierConcernePartageReseaux(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAdresseDossierPartageReseaux(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureDataIdentificateurEnttreprise(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureActiverPublicationReseaux(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAlerteStockLimiteBaseData(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureArchivePhotoCommentaire(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAutorisationPartageRegistre(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureEntite(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureFormuleComposition(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureIdentificateurEnttreprise(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureModeConnectiviteBaseData(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureModelFormule(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureOrganismeTutelle(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouverturePublicationReseauxProgrammer(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureTitreDataTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+
+  Procedure ReouvertureColsTableaux(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureQteforfaitStock(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAffichagePublication(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureAutresParametres(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureLastNumDetailMouvementMAJ(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureListeTableauxCols(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+  Procedure ReouvertureRParametresImprimePrelevement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+
+  Procedure EnregistrementReouverture(ExerciceReouverture:string; OKCloture:boolean);
+  Function FinReouvertureClotureExercice(ExerciceReouverture:string):boolean;
+  Procedure ListeReouvertureClotureExercice(TableauReouverture:TStringGrid);
+  Procedure MiseAJourPositionPrelevement(NewExercice:string);
+  Procedure MiseAJourPositionListeMouvementdansFMouvement(ExerciceAnneeConserne:string);
+  Procedure MiseAJourPositionDetailMouvementdansFListeMouvement(ExerciceAnneeConserne:string);
+  Function MiseAJourIsFileInUse(TableauListeBaseDonnees:TStringGrid; ActiverRowSelectMAJ:boolean; var NbtIsFileInUse:integer):boolean;
+  Function InclureFinanceTiersAvis(var TypeProcesReseaux:string):boolean;
+  Procedure SyntheseTableauDeBohr;
+  Procedure SyntheseTableauDeBohrTiers;
+  Procedure SyntheseTableauDeBohrDetailRubrique;
+  Procedure SyntheseInventaireDomiciliation;
+  Procedure OptionAffichageValideNonValide;
+  Procedure OptionAffichageValideNonValideExerciceNPlus1;
+  Function FonctionListePositionMouvementJustifierParAvis:string;
+  Procedure MiseAJourListeMouvementJustifierParAvis(NewExercice:string);
+
+  Function ConvertirAdresseExerciceAnnee(AdresseIn,ExerciceIn,ExerciceOut:string):string;
+  Procedure ImageTableauListeBaseDonnees;
+  Procedure ImageTableauListeBaseDonneesExerciceNPlus1;
+  Function AutoriserReouvertureFichierConcerne(FichierConcerneRFC:string):boolean;
+  Function ActiverReouverturePrelevement(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; Var PrelevementArchiver:boolean; Var TypeProcesReseaux:string):boolean;
+  Function ActiverReouvertureStock(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+  Function ActiverReouverturePlanComptable(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+  Function ActiverReouvertureMarche(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+  Function ActiverReouvertureTiers(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+  Function ActiverReouvertureDetailMouvement(FichierConcerne,NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+  Function ExisteFichierConcerneAReouvrir(FichierConcerneEFCR:string):boolean;
+  function IsOpen(const txt:TextFile):Boolean;
+  Procedure Affichepropriete(fichier: string);
+  Procedure Fichieralacorbeille(fichier: string);
+  Function TailleFichier(fichier: string): longint;
+  Function RemplireOrdreListeMouvementExerciceNPlusUn:TOrdreListeMouvementReouvertures;
+  Function RemplireTPositionDetaiMouvementInOrdreListeMouvement(DesignationTypeMouvement,ExerciceAnneeConserne:string; var NbrRegistre:integer):TPositionDetaiMouvementInOrdreListeMouvements;
+  Procedure EnregistrerRedemarrerReouverture(OKRedemarreReouverture:boolean);
+  Function FunctOKRedemarrerReouverture:boolean;
+  
+implementation
+
+Uses UnitInitialisation, UnitFSCreateFichierTexte, UnitFSGenerateurBase, UnitFSFormules, UnitFSGenerateurMouvement,
+     UnitFSTraitementDonnees, UnitFSRechercheBaseDonnees, UnitFSConsultationExercice, UnitFSMarche, UnitFSSituations,
+     UnitFSMenuPrincipal, UnitFSTiers, API_LiberationProcessus,
+     UnitFSFicheSaisie;
+
+
+var
+TableauPointeurData:TableauPointeurDatas;
+
+{$R *.dfm}
+
+procedure TFSTravauxFinAnnee.RBValiderNonValiderClick(Sender: TObject);
+begin
+     OptionAffichageValideNonValide;       
+end;
+
+procedure TFSTravauxFinAnnee.RBValiderClick(Sender: TObject);
+begin
+     OptionAffichageValideNonValide;
+end;
+
+procedure TFSTravauxFinAnnee.RBNonValiderClick(Sender: TObject);
+begin
+     OptionAffichageValideNonValide;
+end;
+
+procedure TFSTravauxFinAnnee.EditTypeOctetsKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSTravauxFinAnnee.EditTypeOctetsSelect(Sender: TObject);
+var  R:integer;  Adresse,NomFichier:string;
+begin
+     R:=1;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-1)do
+     begin
+          NomFichier:=FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[3,R];
+          OpenFParc(RParc);
+          Adresse:=RParc.Parcours+'\'+Exercice+NomFichier;;
+          FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[7,R]:=ConvertOctets(TailleFichier(Adresse),FSTravauxFinAnnee.EditTypeOctets.Text,FSTravauxFinAnnee.EditNbrChiffreApresVergule.Text);
+     R:=R+1;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.UpDown1Click(Sender: TObject;
+  Button: TUDBtnType);
+var  R:integer;  Adresse,NomFichier:string;
+begin
+     R:=1;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-1)do
+     begin
+          NomFichier:=FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[3,R];
+          OpenFParc(RParc);
+          Adresse:=RParc.Parcours+'\'+Exercice+NomFichier;
+          FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[7,R]:=ConvertOctets(TailleFichier(Adresse),FSTravauxFinAnnee.EditTypeOctets.Text,FSTravauxFinAnnee.EditNbrChiffreApresVergule.Text);
+     R:=R+1;
+     end;
+end;
+
+Procedure ImageTableauListeBaseDonnees;
+var R:integer;
+begin
+     FSTravauxFinAnnee.TableauListeBaseDonneesImage.ColCount:=FSTravauxFinAnnee.TableauListeBaseDonnees.ColCount;
+     FSTravauxFinAnnee.TableauListeBaseDonneesImage.RowCount:=FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount;
+
+     R:=0;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-1)do
+     begin
+          FSTravauxFinAnnee.TableauListeBaseDonneesImage.Rows[R].Text:=FSTravauxFinAnnee.TableauListeBaseDonnees.Rows[R].Text;
+     R:=R+1;
+     end;
+end;
+
+Procedure ImageTableauListeBaseDonneesExerciceNPlus1;
+var R:integer;
+begin
+     FSTravauxFinAnnee.TableauListeBaseDonneesImageExerciceNPlus1.ColCount:=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.ColCount;
+     FSTravauxFinAnnee.TableauListeBaseDonneesImageExerciceNPlus1.RowCount:=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount;
+
+     R:=0;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount-1)do
+     begin
+          FSTravauxFinAnnee.TableauListeBaseDonneesImageExerciceNPlus1.Rows[R].Text:=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Rows[R].Text;
+     R:=R+1;
+     end;
+end;
+
+Procedure OptionAffichageValideNonValide;
+var  R,l:integer;    OKAffiche:boolean;   Adresse,NomFichier:string;
+begin
+     FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount:=2;
+     FSTravauxFinAnnee.TableauListeBaseDonnees.Rows[1].Text:='';
+     l:=0;
+
+     R:=1;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonneesImage.RowCount-1)do
+     begin
+          if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+          
+          if(FSTravauxFinAnnee.RBValiderNonValider.Checked=true)then OKAffiche:=true;
+
+          if(FSTravauxFinAnnee.RBValider.Checked=true)then
+          if(FSTravauxFinAnnee.TableauListeBaseDonneesImage.Cells[4,R]='OK')
+          then OKAffiche:=true
+          else OKAffiche:=false;
+
+          if(FSTravauxFinAnnee.RBNonValider.Checked=true)then
+          if(FSTravauxFinAnnee.TableauListeBaseDonneesImage.Cells[4,R]<>'OK')
+          then OKAffiche:=true
+          else OKAffiche:=false;
+
+          if(OKAffiche=true)then
+          begin
+               l:=l+1;
+               FSTravauxFinAnnee.TableauListeBaseDonnees.Rows[l].Text:=FSTravauxFinAnnee.TableauListeBaseDonneesImage.Rows[R].Text;
+
+               NomFichier:=FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[3,l];
+               OpenFParc(RParc);
+               Adresse:=RParc.Parcours+'\'+Exercice+NomFichier;
+               FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[7,l]:=ConvertOctets(TailleFichier(Adresse),FSTravauxFinAnnee.EditTypeOctets.Text,FSTravauxFinAnnee.EditNbrChiffreApresVergule.Text);
+          end;
+     R:=R+1;
+     end;
+
+     if(l>0)then FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount:=l+1
+            else FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount:=2;
+
+     AjusterColWidth(FSTravauxFinAnnee.TableauListeBaseDonnees,'','');
+end;
+
+Procedure OptionAffichageValideNonValideExerciceNPlus1;
+var  R,l:integer;    OKAffiche:boolean;   Adresse,NomFichier:string;
+begin
+     FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount:=2;
+     FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Rows[1].Text:='';
+     l:=0;
+
+     R:=1;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonneesImageExerciceNPlus1.RowCount-1)do
+     begin
+          if(FSTravauxFinAnnee.RBValiderNonValiderExerciceNPlus1.Checked=true)then OKAffiche:=true;
+
+          if(FSTravauxFinAnnee.RBValiderExerciceNPlus1.Checked=true)then
+          if(FSTravauxFinAnnee.TableauListeBaseDonneesImageExerciceNPlus1.Cells[4,R]='OK')
+          then OKAffiche:=true
+          else OKAffiche:=false;
+
+          if(FSTravauxFinAnnee.RBNonValiderExerciceNPlus1.Checked=true)then
+          if(FSTravauxFinAnnee.TableauListeBaseDonneesImageExerciceNPlus1.Cells[4,R]<>'OK')
+          then OKAffiche:=true
+          else OKAffiche:=false;
+
+          if(OKAffiche=true)then
+          begin
+               l:=l+1;
+               FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Rows[l].Text:=FSTravauxFinAnnee.TableauListeBaseDonneesImageExerciceNPlus1.Rows[R].Text;
+
+               NomFichier:=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[3,l];
+               OpenFParc(RParc);
+               Adresse:=RParc.Parcours+'\'+Exercice+NomFichier;
+               FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[7,l]:=ConvertOctets(TailleFichier(Adresse),FSTravauxFinAnnee.EditTypeOctetsExerciceNPlus1.Text,FSTravauxFinAnnee.EditNbrChiffreApresVerguleExerciceNPlus1.Text);
+          end;
+     R:=R+1;
+     end;
+
+     if(l>0)then FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount:=l+1
+            else FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount:=2;
+
+     AjusterColWidth(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1,'','');
+end;
+
+Function ConvertirAdresseExerciceAnnee(AdresseIn,ExerciceIn,ExerciceOut:string):string;
+var Icae,kcae:integer;  ExerciceTeste,AdresseOut:string;
+begin
+     AdresseOut:=AdresseIn;
+
+     if(longueur(ExerciceIn)=4)and(longueur(ExerciceOut)=4)and(strtointeger(ExerciceIn)>0)and(strtointeger(ExerciceOut)>0)then
+     begin
+           Icae:=1;
+           while(Icae<=longueur(AdresseIn))do
+           begin
+                if(AdresseIn[Icae]in['0'..'9'])then
+                begin
+                     ExerciceTeste:='';
+                     kcae:=0;
+                     while((AdresseIn[Icae]in['0'..'9'])and(Icae<=longueur(AdresseIn))and(kcae<=4))do
+                     begin
+                          ExerciceTeste:=ExerciceTeste+AdresseIn[Icae];
+                          Icae:=Icae+1;
+                          kcae:=kcae+1;
+                     end;
+
+                     if(ExerciceTeste=ExerciceIn)and(kcae=4)then
+                     begin
+                          AdresseOut:='';
+                          for kcae:=1 to Icae-5 do AdresseOut:=AdresseOut+AdresseIn[kcae];
+                          AdresseOut:=AdresseOut+ExerciceOut;
+                          for kcae:=Icae to longueur(AdresseIn) do AdresseOut:=AdresseOut+AdresseIn[kcae];
+                     end;
+                end;
+           Icae:=Icae+1;
+           end;
+     end;
+
+     ConvertirAdresseExerciceAnnee:=AdresseOut;
+end;
+
+procedure TFSTravauxFinAnnee.TimerReouvertureTimer(Sender: TObject);
+var  OKReouverture:boolean;
+begin
+     FSTravauxFinAnnee.TimerReouverture.Enabled:=false;
+
+     ActiverReouverture(FSTravauxFinAnnee.TableauListeBaseDonnees,FSTravauxFinAnnee.EditNewExercice.Text,true,OKReouverture);
+     OptionAffichageValideNonValide;
+
+     FSTravauxFinAnnee.PageSyntheseTiers.Show;
+
+     if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+     
+     if(OKReouverture=true)then
+     begin
+          FSTravauxFinAnnee.AfficheConsultationNewExercice.Visible:=true;
+          FSTravauxFinAnnee.BitOuiNewExercice.SetFocus;
+          FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Fin de la réouverture');
+          FSTravauxFinAnnee.AffichePatienter.Visible:=false;
+     end
+     else
+     begin
+          FSTravauxFinAnnee.AfficheAnomalieReouverture.Visible:=true;
+          FSTravauxFinAnnee.AfficheAnomalieReouverture.Caption:='Réouverture interrompu  !';
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.BitReouvertureExerciceClick(Sender: TObject);
+begin
+     if(FinReouvertureClotureExercice(ExerciceAnnee))then
+     begin
+          if(NonOui('Exercice '+ExerciceAnnee+' déjà clôturé ! Voulez vous réouvrir ?'))then
+          begin
+               //EnregistrementReouverture(ExerciceAnnee,false);
+               FSTravauxFinAnnee.BitReouvertureExerciceClick(FSTravauxFinAnnee.BitReouvertureExercice);
+          end;
+     end
+     else
+     begin
+          FSTravauxFinAnnee.RBSuspendreReouverture.Checked:=false;
+          FSTravauxFinAnnee.AfficheValidationReouverture.Visible:=false;
+          //PositionAffichage(FSTravauxFinAnnee,FSTravauxFinAnnee.AffichePatienter,'Midel','Midel','','-100');
+
+          FSTravauxFinAnnee.AffichePatienter.Height:=FSTravauxFinAnnee.PageSynthese.Height;
+          FSTravauxFinAnnee.AffichePatienter.Width:=FSTravauxFinAnnee.PageSynthese.Width;
+          FSTravauxFinAnnee.AffichePatienter.Left:=FSTravauxFinAnnee.PageSynthese.Left;
+          FSTravauxFinAnnee.AffichePatienter.Top:=FSTravauxFinAnnee.PageSynthese.Top;
+          FSTravauxFinAnnee.MemoRapportReouverture.Text:='';
+          FSTravauxFinAnnee.AfficherDetailleReouverture.Text:='';
+          FSTravauxFinAnnee.AffichePatienter.Visible:=true;
+          FSTravauxFinAnnee.AfficherPatienter.Caption:='Veuillez Patienter S.V.P !';
+          FSTravauxFinAnnee.BitFermerVisualisation.Visible:=false;
+          FSTravauxFinAnnee.TimerSyntheseTiers.Enabled:=true;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.TableauSyntheseTiersClick(Sender: TObject);
+var  C:integer;
+begin
+     FSTravauxFinAnnee.AfficheValidationReouverture.Visible:=false;
+     
+     if(FSTravauxFinAnnee.RBIndiceRubriqueTriCol.Checked=true)then
+     begin
+          FSTravauxFinAnnee.RBIndiceRubriqueTriCol.Checked:=false;
+          C:=FSTravauxFinAnnee.TableauSyntheseTiers.Col;
+          FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text:=inttostr(C);
+          case C of
+          1 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          2 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          3 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          4 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          5 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          6 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          7 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          8 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          9 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          10: FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          end;
+
+          TrierTableauARowSpecial(FSTravauxFinAnnee.TableauSyntheseTiers,1,FSTravauxFinAnnee.TableauSyntheseTiers.RowCount-1,1,FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text,FSTravauxFinAnnee.EditTypeDataTrie.Text,FSTravauxFinAnnee.EditTypeTrie.Text)
+     end;
+
+     if(FSTravauxFinAnnee.RBFixeColonne.Checked=true)then
+     begin
+          FSTravauxFinAnnee.TableauSyntheseTiers.FixedCols:=strtointeger(FSTravauxFinAnnee.EditFixeColonne.Text);
+          FSTravauxFinAnnee.RBFixeColonne.Checked:=false;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.FormShow(Sender: TObject);
+var  R:integer;
+     ArrayIndexPrelevementMatricule:ArrayIndexPrelevementMatricules;
+begin
+     ActiverNomForm(1,(Sender as TComponent).Name);
+
+     FSTravauxFinAnnee.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Travaux de fin d''année';
+
+     FSTravauxFinAnnee.EditNewExercice.ReadOnly:=true;
+     FSTravauxFinAnnee.EditNewExercice.Color:=clSilver;
+     FSTravauxFinAnnee.EditNewExercice.Text:=inttostr(strtointeger(ExerciceAnnee)+1);
+     FSTravauxFinAnnee.BitReouvertureExercice.Caption:='Réouverture de l''Exercice '+FSTravauxFinAnnee.EditNewExercice.Text;
+     ProcListeMouvement(FSTravauxFinAnnee.TableauMouvement,'','','','');
+
+     FSTravauxFinAnnee.TableauSyntheseTiers.RowCount:=2;
+     FSTravauxFinAnnee.TableauSyntheseTiers.Rows[1].Text:='';
+
+     FSTravauxFinAnnee.TableauValidationReouverture.ColCount:=3;
+     FSTravauxFinAnnee.TableauValidationReouverture.Cols[0].Text:='N°';
+     FSTravauxFinAnnee.TableauValidationReouverture.Cols[1].Text:='Réouverture';
+     FSTravauxFinAnnee.TableauValidationReouverture.Cols[2].Text:='Validation';
+
+     FSTravauxFinAnnee.TableauValidationReouverture.RowCount:=2;
+     FSTravauxFinAnnee.TableauValidationReouverture.Rows[1].Text:='';
+
+     FSTravauxFinAnnee.PageListeBDExerciceN.Caption:='     Liste base de données Exercice '+inttostr(strtointeger(ExerciceAnnee))+'     ';
+     FSTravauxFinAnnee.PageListeBDExerciceNPlus1.Caption:='     Liste base de données Exercice '+inttostr(strtointeger(ExerciceAnnee)+1)+'     ';
+
+     ProcRechercheBaseDonnees(FSTravauxFinAnnee.TableauListeBaseDonnees,inttostr(strtointeger(ExerciceAnnee)),FSTravauxFinAnnee.EditTypeOctets.Text,FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text,FSTravauxFinAnnee.EditTypeDataTrie.Text,FSTravauxFinAnnee.EditTypeTrie.Text);
+     ImageTableauListeBaseDonnees;
+     ProcRechercheBaseDonnees(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1,inttostr(strtointeger(ExerciceAnnee)+1),FSTravauxFinAnnee.EditTypeOctets.Text,FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text,FSTravauxFinAnnee.EditTypeDataTrie.Text,FSTravauxFinAnnee.EditTypeTrie.Text);     
+     ImageTableauListeBaseDonneesExerciceNPlus1;
+     FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cols[5].Text:='Autorisation !';
+     for R:=1 to FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount-1 do FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[5,R]:='Autorisé';
+     AjusterColWidth(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1,'','');
+
+     if(FSMenuPrincipal.RBRemplireTPrelevement.Checked=false)
+     then TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule)
+     else FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Remplissage TPrélèvement déjà effectué...');
+
+     FSTravauxFinAnnee.AfficheTableauConfigurations.Width:=7;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn2Click(Sender: TObject);
+var  NomFichier:string;
+begin
+     if(FSTravauxFinAnnee.PageSyntheseTiers.Showing=true)then
+     begin
+          NomFichier:='Synthèse de données Tiers';
+          TableauInFileTexte(FSTravauxFinAnnee.TableauSyntheseTiers,NomFichier,FSCreateFichierTexte.RBCodificationRubriqes,FSCreateFichierTexte.RBLibelleRubriques,FSCreateFichierTexte.RBSignatureEntrepeise);
+     end;
+
+     if(FSTravauxFinAnnee.PageListeBDExerciceN.Showing=true)then
+     begin
+          if(FSTravauxFinAnnee.RBValiderNonValider.Checked=true)then NomFichier:='réouverture valider et non valider';
+          if(FSTravauxFinAnnee.RBValider.Checked=true)then NomFichier:='réouverture valider';
+          if(FSTravauxFinAnnee.RBNonValider.Checked=true)then NomFichier:='réouverture non valider';
+          NomFichier:='Rapport de réouverture de l''exercice: '+FSTravauxFinAnnee.EditNewExercice.Text+' '+NomFichier;
+          TableauInFileTexte(FSTravauxFinAnnee.TableauListeBaseDonnees,NomFichier,FSCreateFichierTexte.RBCodificationRubriqes,FSCreateFichierTexte.RBLibelleRubriques,FSCreateFichierTexte.RBSignatureEntrepeise);
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.EditNewExerciceKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if(longueur(FSTravauxFinAnnee.EditNewExercice.Text)=4)then
+     begin
+          if(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)>strtointeger(ExerciceAnnee))and(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)<=strtointeger(lastlaters(datetostr(date),4)))then
+          begin
+               FSTravauxFinAnnee.BitReouvertureExercice.Caption:='Réouverture de l''Exercice '+FSTravauxFinAnnee.EditNewExercice.Text;
+               FSTravauxFinAnnee.BitReouvertureExercice.SetFocus;
+          end
+          else
+          begin
+               FSTravauxFinAnnee.EditNewExercice.Text:='';
+          end;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.TimerSyntheseTiersTimer(Sender: TObject);
+var  RIn,ROut:integer;
+     TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.TimerSyntheseTiers.Enabled:=false;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Text:='';
+
+     FSTravauxFinAnnee.TableauDeBohrTiers.ColCount:=21;
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[0].Text:='N°';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[1].Text:='Code';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[2].Text:='Tiers';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[3].Text:='D.Antérieur';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[4].Text:='C.Antérieur';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[5].Text:='S.D.Antérieur';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[6].Text:='S.C.Antérieur';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[7].Text:='';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[8].Text:='D.Périodique';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[9].Text:='C.Périodique';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[10].Text:='S.D.Périodique';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[11].Text:='S.C.Périodique';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[12].Text:='';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[13].Text:='D.Global';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[14].Text:='C.Global';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[15].Text:='S.D.Global';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[16].Text:='S.C.Global';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[17].Text:='TypeProces';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[18].Text:='AvisConcerneTiers';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[19].Text:='Type Base Avis';
+     FSTravauxFinAnnee.TableauDeBohrTiers.Cols[20].Text:='P°Tiers';
+
+     FSTravauxFinAnnee.TableauDeBohrTiers.RowCount:=2;
+     FSTravauxFinAnnee.TableauDeBohrTiers.Rows[1].Text:='';
+
+     FSTravauxFinAnnee.TableauSyntheseTiers.ColCount:=12;
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[0].Text:='N°';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[1].Text:='NumAvis';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[2].Text:='DateAvis';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[3].Text:='Montant';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[4].Text:='TypeProces';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[5].Text:='CodeTiers';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[6].Text:='NatureDepense';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[7].Text:='DebitCredit';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[8].Text:='AvisConcerneTiers';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[9].Text:='Type Base Avis';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[10].Text:='Tiers';
+     FSTravauxFinAnnee.TableauSyntheseTiers.Cols[11].Text:='P°Tiers';
+
+     FSTravauxFinAnnee.TableauSyntheseTiers.RowCount:=2;
+     FSTravauxFinAnnee.TableauSyntheseTiers.Rows[1].Text:='';
+
+     if(InclureFinanceTiersAvis(TypeProcesControleReseaux)=true)then
+     begin
+          SyntheseTableauDeBohr;
+          SyntheseTableauDeBohrTiers;
+          SyntheseTableauDeBohrDetailRubrique;
+          SyntheseInventaireDomiciliation;
+     end;
+
+     FSTravauxFinAnnee.TimerReouverture.Enabled:=true;
+     FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Fin des traitements ');
+end;
+
+Procedure ReouvertureTypeProjet(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FTypeProjet');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FTypeProjet';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                                ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChTypeProjetCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FTypeProjetCopie,ChTypeProjetCopie);
+                           try
+                           if FileExists(ChTypeProjetCopie)then
+                           Reset(FTypeProjetCopie)
+                           else Rewrite(FTypeProjetCopie);
+                           Seek(FTypeProjetCopie,0);
+                           Truncate(FTypeProjetCopie);
+
+                           ChTypeProjet:=Adresse;
+                           assignfile(FTypeProjet,ChTypeProjet);
+                           try
+                           if FileExists(ChTypeProjet)then
+                           Reset(FTypeProjet)
+                           else Rewrite(FTypeProjet);
+                           Seek(FTypeProjet,0);
+                           i:=0;
+                           while not eof(FTypeProjet)do
+                           begin
+                                Read(FTypeProjet,RTypeProjet);   Application.ProcessMessages; if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RTypeProjetCopie:=RTypeProjet;
+                                Seek(FTypeProjetCopie,i);
+                                write(FTypeProjetCopie,RTypeProjetCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Type Projet: '+RTypeProjet.DesignationTypeProjet);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FTypeProjet);
+                           end;
+
+                           finally
+                           CloseFile(FTypeProjetCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeProjet',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeProjet',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureProjetFinance(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FProjetFinance');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FProjetFinance';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChProjetFinanceCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FProjetFinanceCopie,ChProjetFinanceCopie);
+                           try
+                           if FileExists(ChProjetFinanceCopie)then
+                           Reset(FProjetFinanceCopie)
+                           else Rewrite(FProjetFinanceCopie);
+                           Seek(FProjetFinanceCopie,0);
+                           Truncate(FProjetFinanceCopie);
+
+                           ChProjetFinance:=Adresse;
+                           assignfile(FProjetFinance,ChProjetFinance);
+                           try
+                           if FileExists(ChProjetFinance)then
+                           Reset(FProjetFinance)
+                           else Rewrite(FProjetFinance);
+                           Seek(FProjetFinance,0);
+                           i:=0;
+                           while not eof(FProjetFinance)do
+                           begin
+                                Read(FProjetFinance,RProjetFinance); Application.ProcessMessages;  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RProjetFinanceCopie:=RProjetFinance;
+                                Seek(FProjetFinanceCopie,i);
+                                write(FProjetFinanceCopie,RProjetFinanceCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Projet: '+RProjetFinance.DesignationProjetFinance);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FProjetFinance);
+                           end;
+
+                           finally
+                           CloseFile(FProjetFinanceCopie);
+                           end;
+                     end;
+
+                     ListeProjetFinance(FSTravauxFinAnnee.TableauProjetFinance,'','','10',false,'','',true,true,'','');
+                     AjusterColWidth(FSTravauxFinAnnee.TableauProjetFinance,'','');
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FProjetFinance',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FProjetFinance',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ActionTableauDeBohrMouvement(TableauMouvement,TableauDeBohrTiers:TStringGrid;  DateDebut,DateFin:string; RowMouvementSelect,IndiceRubriqueTriCol:integer; TypeDataTrie,TypeTrie:string; RBAfficherSoldeSuperieur,ActiverTransfertTableauBohr:boolean; RowCountTableauDeBohrMouvementIn:integer; var RowCountTableauDeBohrMouvementOut:integer);
+var  iTFA,IBegin,IEnd,R,C,l,T,F,h,REditFinance,REditTiers,Indice,NotTrieRow,RowCountTiers,RubriqueTrie,IndiceFinControleTrieRow:integer; Solde,MontantMouvement:real;
+     OKMouvement,OKAvis,OKTypeAvis,OKTiers,OKFinance,OKPeriode:boolean;  DebitCreditTypeMouvement,NotRow,NotCol,DateInc,TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,TypeProces,FichierConcerne,Adresse:string;
+     TMouvementPointeur:TMouvements;
+     TTypeMouvementPointeur:TTypeMouvements;
+begin
+     OpenFParc(RParc);
+     ChTypeAvis:=RParc.Parcours+'\'+Exercice+'FTypeAvis';
+     assignfile(FTypeAvis,ChTypeAvis);
+     if FileExists(ChTypeAvis)then
+     begin
+          try
+          Reset(FTypeAvis);
+          Seek(FTypeAvis,0);
+          while not eof(FTypeAvis)do
+          begin
+               read(FTypeAvis,RTypeAvis); Application.ProcessMessages;
+               if(RTypeAvis.TypeProces=TableauMouvement.Cells[4,RowMouvementSelect])
+               and(RTypeAvis.FichierConserne=TableauMouvement.Cells[5,RowMouvementSelect])
+               then
+               begin
+
+               end;
+          end;
+          finally
+          CloseFile(FTypeAvis);
+          end;
+     end;
+
+     T:=RowCountTableauDeBohrMouvementIn;
+     RowCountTableauDeBohrMouvementOut:=T;
+
+     TTypeMouvementPointeur:=RemplireTTypeMouvement;
+     TMouvementPointeur:=RemplireTMouvement(TableauMouvement.Cells[0,RowMouvementSelect]);
+     iAnnee:=Strtointeger(ExerciceAnnee);
+     
+     if(TableauMouvement.Cells[1,RowMouvementSelect]<>'Pr')
+     and(TableauMouvement.Cells[1,RowMouvementSelect]<>'ST')
+     and(strtoboolean(TableauMouvement.Cells[13,RowMouvementSelect])=true)
+     and(TMouvementPointeur[strtointeger(TableauMouvement.Cells[1,RowMouvementSelect])].MouvementeFinance=true)
+     then
+     begin
+
+           OpenFParc(RParc);
+           ChListeMouvement:=IndiqueAdresseListeMouvement(TableauMouvement.Cells[0,RowMouvementSelect],TypeProcesReseauxListeMouvement);
+           assignfile(FListeMouvement,ChListeMouvement);
+           if FileExists(ChListeMouvement)and(TypeProcesReseauxListeMouvement<>'Réseaux')then
+           begin
+                try
+                //IBegin:=TMouvementPointeur[strtointeger(TableauMouvement.Cells[1,RowMouvementSelect])].RegistrePositionListeMouvementParPeriode[iAnnee,1].PositionListeMouvementBegin;
+                //IEnd:=TMouvementPointeur[strtointeger(TableauMouvement.Cells[1,RowMouvementSelect])].RegistrePositionListeMouvementParPeriode[iAnnee,12].PositionListeMouvementEnd;
+                IBegin:=0;
+                IEnd:=999999999;
+                iTFA:=IBegin;
+                Reset(FListeMouvement);
+                Seek(FListeMouvement,iTFA);
+                R:=0;
+                MontantMouvement:=0;
+                while not eof(FListeMouvement)and(iTFA<=IEnd)do
+                begin
+                     read(FListeMouvement,RListeMouvement);  Application.ProcessMessages;  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                     iTFA:=iTFA+1;
+                     //RTypeMouvement:=ChercherTypeMouvement(RListeMouvement.PositionTypeMouvement,AdresseFichierConcerne);
+                     //RMouvement:=ChercherMouvement(inttostr(RListeMouvement.PositionTypeMouvement),RListeMouvement.PositionMouvement,AdresseFichierConcerne);
+
+                     if(RListeMouvement.ValidationListeMouvement=true)
+                     and(inttostr(RListeMouvement.PositionTypeMouvement)=TableauMouvement.Cells[0,RowMouvementSelect])
+                     and(inttostr(RListeMouvement.PositionMouvement)=TableauMouvement.Cells[1,RowMouvementSelect])
+                     and(RListeMouvement.TypeProces=TableauMouvement.Cells[4,RowMouvementSelect])
+                     and(FunctionFichierInclu(RListeMouvement.FichierTiersConserne,TableauMouvement.Cells[5,RowMouvementSelect])=true)
+                     then OKMouvement:=true
+                     else OKMouvement:=false;
+
+                     if(OKMouvement=true)
+                     and(TMouvementPointeur[RListeMouvement.PositionMouvement].MouvementeFinance=true)
+                     and(strtodate(RListeMouvement.DateMouvement)<=strtodate(DateFin))then
+                     begin
+                           if(RListeMouvement.TypeProces<>'')
+                           and(RListeMouvement.FichierTiersConserne<>'')
+                           and(RListeMouvement.CodeTiers<>'')
+                           and(ExisteTiersPricipalGroupe('',RListeMouvement.TypeProces,RListeMouvement.FichierTiersConserne,RListeMouvement.CodeTiers,RListeGroupeTiersCopie)=true)then
+                           begin
+                                CodeTiersPrincipal:=RListeGroupeTiersCopie.CodeTiers;
+                                TypeProcesTiersPrincipal:=RListeGroupeTiersCopie.TypeProces;
+                                FichierConserneTiersPrincipal:=RListeGroupeTiersCopie.FichierConcerneTiers;
+                           end
+                           else
+                           begin
+                                CodeTiersPrincipal:=RListeMouvement.CodeTiers;
+                                TypeProcesTiersPrincipal:=RListeMouvement.TypeProces;
+                                FichierConserneTiersPrincipal:=RListeMouvement.FichierTiersConserne;
+                           end;
+
+                           if(TMouvementPointeur[RListeMouvement.PositionMouvement].DebitCredit<>'')then
+                           begin
+                                DebitCreditTypeMouvement:=TMouvementPointeur[RListeMouvement.PositionMouvement].DebitCredit;
+                           end
+                           else
+                           begin
+                                if(TTypeMouvementPointeur[RListeMouvement.PositionTypeMouvement].SigneTypeMouvement='+')
+                                then DebitCreditTypeMouvement:='Débit'
+                                else DebitCreditTypeMouvement:='Crédit';
+                           end;
+
+                           if(DebitCreditTypeMouvement='Débit')then C:=0 else C:=1;
+
+                           OKTiers:=false;
+                           l:=1;
+                           while(l<=T)and(OKTiers=false)do
+                           begin
+                                if(CodeTiersPrincipal=TableauPointeurData[l-1].Data1)
+                                and(TypeProcesTiersPrincipal=TableauPointeurData[l-1].Data2)
+                                and(FichierConserneTiersPrincipal=TableauPointeurData[l-1].Data3)
+                                then
+                                begin
+                                     OKTiers:=true;
+                                     REditTiers:=TableauPointeurData[l-1].RowPointeur;
+                                end
+                                else l:=l+1;
+                           end;
+
+                           if(OKTiers=false)then
+                           begin
+                                T:=T+1;
+                                REditTiers:=T;
+                                //RTiers:=cherchertiers(TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,'');
+                                TableauDeBohrTiers.Rows[REditTiers].Text:=inttostr(REditTiers);
+                                TableauDeBohrTiers.Cells[1,REditTiers]:=CodeTiersPrincipal;
+                                //TableauDeBohrTiers.Cells[2,REditTiers]:=RTiers.NomTiers+' '+RTiers.PrenomTiers;
+                                TableauDeBohrTiers.Cells[2,REditTiers]:=ImporteDataProcesTiers(TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,PositionTiersRecherche);
+
+                                TableauDeBohrTiers.Cells[17,REditTiers]:=TypeProcesTiersPrincipal;
+                                TableauDeBohrTiers.Cells[18,REditTiers]:=FichierConserneTiersPrincipal;
+                                //TableauDeBohrTiers.Cells[19,REditTiers]:=
+                                TableauDeBohrTiers.Cells[20,REditTiers]:=PositionTiersRecherche;
+
+                                FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Nouveau mouvement: N° '+inttostr(RListeMouvement.NumListeMouvement)+'. Tiers: '+TableauDeBohrTiers.Cells[1,REditTiers]+' '+TableauDeBohrTiers.Cells[2,REditTiers]+'. Montant: '+Vergule(Floattostr(RListeMouvement.MontantMouvement),'2','C',''));
+
+                                setlength(TableauPointeurData,T);
+                                TableauPointeurData[T-1].Data1:=CodeTiersPrincipal;
+                                TableauPointeurData[T-1].Data2:=TypeProcesTiersPrincipal;
+                                TableauPointeurData[T-1].Data3:=FichierConserneTiersPrincipal;
+                                TableauPointeurData[T-1].RowPointeur:=T;
+                           end;
+
+                           if(OKMouvement=true)then
+                           begin
+                                if(strtodate(RListeMouvement.DateMouvement)>=strtodate(DateDebut))
+                                and(strtodate(RListeMouvement.DateMouvement)<=strtodate(DateFin))
+                                then
+                                begin
+                                     OKMouvement:=true;
+                                end
+                                else
+                                begin
+                                     OKMouvement:=false;
+                                     if(strtodate(RListeMouvement.DateMouvement)<strtodate(DateDebut))then
+                                     begin
+                                          TableauDeBohrTiers.Cells[C+3,REditTiers]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[C+3,REditTiers])+RListeMouvement.MontantMouvement),'2','C','');
+                                     end;
+                                end;
+                            end;
+
+                           if(OKMouvement=true)then
+                           begin
+                                FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Mise à jour mouvement: N° '+inttostr(RListeMouvement.NumListeMouvement)+'. Tiers: '+TableauDeBohrTiers.Cells[1,REditTiers]+' '+TableauDeBohrTiers.Cells[2,REditTiers]+'. Montant: '+Vergule(Floattostr(RListeMouvement.MontantMouvement),'2','C',''));
+                                TableauDeBohrTiers.Cells[C+8,REditTiers]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[C+8,REditTiers])+RListeMouvement.MontantMouvement),'2','C','');
+                           end;
+                     end;
+                end;
+                finally
+                CloseFile(FListeMouvement);
+                end;
+           end
+           else
+           begin
+                if not FileExists(ChListeMouvement)then FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Adresse introuvable: '+ChListeMouvement);
+                if(TypeProcesReseauxListeMouvement='Réseaux')then FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Adresse '+TypeProcesReseauxListeMouvement+' '+ChListeMouvement);
+           end;
+     end;
+
+     if(TableauMouvement.Cells[1,RowMouvementSelect]='Pr')then
+     begin
+           TypeProces:='Business';
+           FichierConcerne:='FArchivePrelevementUniteFonds';
+           Adresse:='';
+           if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+           begin
+                if(FichierConcerne<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier {'+FichierConcerne+'} recherché !');
+           end;
+
+           ChPrelevementUniteFonds:=Adresse;
+           assignfile(FPrelevementUniteFonds,ChPrelevementUniteFonds);
+           if FileExists(ChPrelevementUniteFonds)and(TypeProcesReseaux<>'Réseaux')then
+           begin
+                try
+                Reset(FPrelevementUniteFonds);
+                Seek(FPrelevementUniteFonds,0);
+                R:=0;
+                MontantMouvement:=0;
+                while not eof(FPrelevementUniteFonds)do
+                begin
+                     read(FPrelevementUniteFonds,RPrelevementUniteFonds);  Application.ProcessMessages;  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                     OKMouvement:=not RPrelevementUniteFonds.ValeurPrecise;
+
+                     if(OKMouvement=true)then
+                     begin
+                          if(RPrelevementUniteFonds.ValeurPrelevement<>0)
+                          then OKMouvement:=true
+                          else OKMouvement:=false;
+                     end;
+
+                     if(OKMouvement=true)then
+                     begin
+                          OKMouvement:=DateCorrecte(RPrelevementUniteFonds.DatePrelevement);
+                     end;
+
+                     if(OKMouvement=true)
+                     and(stringtodate(RPrelevementUniteFonds.DatePrelevement,'Prélèvement')<=stringtodate(DateFin,'DateFin'))then
+                     begin
+                           if(RPrelevementUniteFonds.TypeProces<>'')
+                           and(RPrelevementUniteFonds.FichierConcerne<>'')
+                           and(RPrelevementUniteFonds.CodeTiers<>'')
+                           and(ExisteTiersPricipalGroupe('',RPrelevementUniteFonds.TypeProces,RPrelevementUniteFonds.FichierConcerne,RPrelevementUniteFonds.CodeTiers,RListeGroupeTiersCopie)=true)then
+                           begin
+                                CodeTiersPrincipal:=RListeGroupeTiersCopie.CodeTiers;
+                                TypeProcesTiersPrincipal:=RListeGroupeTiersCopie.TypeProces;
+                                FichierConserneTiersPrincipal:=RListeGroupeTiersCopie.FichierConcerneTiers;
+                           end
+                           else
+                           begin
+                                CodeTiersPrincipal:=RPrelevementUniteFonds.CodeTiers;
+                                TypeProcesTiersPrincipal:=RPrelevementUniteFonds.TypeProces;
+                                FichierConserneTiersPrincipal:=RPrelevementUniteFonds.FichierConcerne;
+                           end;
+
+                           {if(''<>'')then //?????????????????????
+                           begin
+                                //DebitCreditTypeMouvement:=RPrelevementUniteFonds.DebitCredit;
+                           end
+                           else
+                           begin
+                                DebitCreditTypeMouvement:='Crédit';
+                           end;}
+
+                           DebitCreditTypeMouvement:='Crédit';
+
+                           if(DebitCreditTypeMouvement='Débit')then C:=0 else C:=1;
+
+                           OKTiers:=false;
+                           l:=1;
+                           while(l<=T)and(OKTiers=false)do
+                           begin
+                                if(CodeTiersPrincipal=TableauPointeurData[l-1].Data1)
+                                and(TypeProcesTiersPrincipal=TableauPointeurData[l-1].Data2)
+                                and(FichierConserneTiersPrincipal=TableauPointeurData[l-1].Data3)
+                                then
+                                begin
+                                     OKTiers:=true;
+                                     REditTiers:=TableauPointeurData[l-1].RowPointeur;
+                                end
+                                else l:=l+1;
+                           end;
+
+                           if(OKTiers=false)then
+                           begin
+                                T:=T+1;
+                                REditTiers:=T;
+                                //RTiers:=cherchertiers(TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,'');
+                                TableauDeBohrTiers.Rows[REditTiers].Text:=inttostr(REditTiers);
+                                TableauDeBohrTiers.Cells[1,REditTiers]:=CodeTiersPrincipal;
+                                //TableauDeBohrTiers.Cells[2,REditTiers]:=RTiers.NomTiers+' '+RTiers.PrenomTiers;
+                                TableauDeBohrTiers.Cells[2,REditTiers]:=ImporteDataProcesTiers(TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,PositionTiersRecherche);
+
+                                TableauDeBohrTiers.Cells[17,REditTiers]:=TypeProcesTiersPrincipal;
+                                TableauDeBohrTiers.Cells[18,REditTiers]:=FichierConserneTiersPrincipal;
+                                //TableauDeBohrTiers.Cells[19,REditTiers]:=
+                                TableauDeBohrTiers.Cells[20,REditTiers]:=PositionTiersRecherche;
+
+                                FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Nouveau Prélèvement: N° '+inttostr(RPrelevementUniteFonds.NumPrelevementUniteFonds)+'. Tiers: '+TableauDeBohrTiers.Cells[1,REditTiers]+' '+TableauDeBohrTiers.Cells[2,REditTiers]+'. Montant: '+Vergule(Floattostr(RPrelevementUniteFonds.ValeurPrelevement),'2','C',''));
+
+                                setlength(TableauPointeurData,T);
+                                TableauPointeurData[T-1].Data1:=CodeTiersPrincipal;
+                                TableauPointeurData[T-1].Data2:=TypeProcesTiersPrincipal;
+                                TableauPointeurData[T-1].Data3:=FichierConserneTiersPrincipal;
+                                TableauPointeurData[T-1].RowPointeur:=T;
+                           end;
+
+                           if(OKMouvement=true)then
+                           begin
+                                if(stringtodate(RPrelevementUniteFonds.DatePrelevement,'Prélèvement')>=stringtodate(DateDebut,'DateDebut'))
+                                and(stringtodate(RPrelevementUniteFonds.DatePrelevement,'Prélèvement')<=stringtodate(DateFin,'DateFin'))
+                                then
+                                begin
+                                     OKMouvement:=true;
+                                end
+                                else
+                                begin
+                                     OKMouvement:=false;
+                                     if(stringtodate(RPrelevementUniteFonds.DatePrelevement,'Prélèvement')<stringtodate(DateDebut,'DateDebut'))then
+                                     begin
+                                          TableauDeBohrTiers.Cells[C+3,REditTiers]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[C+3,REditTiers])+RPrelevementUniteFonds.ValeurPrelevement),'2','C','');
+                                     end;
+                                end;
+                            end;
+
+                           if(OKMouvement=true)then
+                           begin
+                                FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Mise à jour Prélèvement U.F.: N° '+inttostr(RPrelevementUniteFonds.NumPrelevementUniteFonds)+'. Tiers: '+TableauDeBohrTiers.Cells[1,REditTiers]+' '+TableauDeBohrTiers.Cells[2,REditTiers]+'. Montant: '+Vergule(Floattostr(RPrelevementUniteFonds.ValeurPrelevement),'2','C',''));
+                                TableauDeBohrTiers.Cells[C+8,REditTiers]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[C+8,REditTiers])+RPrelevementUniteFonds.ValeurPrelevement),'2','C','');
+                           end;
+                     end;
+                end;
+                finally
+                CloseFile(FPrelevementUniteFonds);
+                end;
+           end
+           else
+           begin
+                if not FileExists(ChPrelevementUniteFonds)then FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Adresse introuvable: '+ChPrelevementUniteFonds);
+                if(TypeProcesReseaux='Réseaux')then FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Adresse '+TypeProcesReseaux+' '+ChPrelevementUniteFonds);
+           end;
+     end;
+
+     if(TableauMouvement.Cells[1,RowMouvementSelect]='ST')then
+     begin
+           OpenFParc(RParc);
+           ChSituationMarche:=RParc.Parcours+'\'+Exercice+'FSituationMarche';
+           assignfile(FSituationMarche,ChSituationMarche);
+           if FileExists(ChSituationMarche)then
+           begin
+                try
+                Reset(FSituationMarche);
+                Seek(FSituationMarche,0);
+                R:=0;
+                MontantMouvement:=0;
+                while not eof(FSituationMarche)do
+                begin
+                     read(FSituationMarche,RSituationMarche); Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                     RMarcheCopie:=ChercherMarche(RSituationMarche.NSMarche);
+
+                     OKMouvement:=RSituationMarche.ValiditeSituation;
+
+                     if(OKMouvement=true)
+                     and(strtodate(RSituationMarche.DateSituationMarche)<=strtodate(DateFin))then
+                     begin
+                           if(RMarcheCopie.TypeProces<>'')
+                           and(RMarcheCopie.FichierConcerneTiers<>'')
+                           and(RMarcheCopie.CodeMaitreOuvrage<>'')
+                           and(ExisteTiersPricipalGroupe('',RMarcheCopie.TypeProces,RMarcheCopie.FichierConcerneTiers,RMarcheCopie.CodeMaitreOuvrage,RListeGroupeTiersCopie)=true)then
+                           begin
+                                CodeTiersPrincipal:=RListeGroupeTiersCopie.CodeTiers;
+                                TypeProcesTiersPrincipal:=RListeGroupeTiersCopie.TypeProces;
+                                FichierConserneTiersPrincipal:=RListeGroupeTiersCopie.FichierConcerneTiers;
+                           end
+                           else
+                           begin
+                                CodeTiersPrincipal:=RMarcheCopie.CodeMaitreOuvrage;
+                                TypeProcesTiersPrincipal:=RMarcheCopie.TypeProces;
+                                FichierConserneTiersPrincipal:=RMarcheCopie.FichierConcerneTiers;
+                           end;
+
+                           if(RMarcheCopie.DebitCredit<>'')then
+                           begin
+                                DebitCreditTypeMouvement:=RMarcheCopie.DebitCredit;
+                           end
+                           else
+                           begin
+                                DebitCreditTypeMouvement:='Débit';
+                           end;
+
+                           if(DebitCreditTypeMouvement='Débit')then C:=0 else C:=1;
+
+                           OKTiers:=false;
+                           l:=1;
+                           while(l<=T)and(OKTiers=false)do
+                           begin
+                                if(CodeTiersPrincipal=TableauPointeurData[l-1].Data1)
+                                and(TypeProcesTiersPrincipal=TableauPointeurData[l-1].Data2)
+                                and(FichierConserneTiersPrincipal=TableauPointeurData[l-1].Data3)
+                                then
+                                begin
+                                     OKTiers:=true;
+                                     REditTiers:=TableauPointeurData[l-1].RowPointeur;
+                                end
+                                else l:=l+1;
+                           end;
+
+                           if(OKTiers=false)then
+                           begin
+                                T:=T+1;
+                                REditTiers:=T;
+                                //RTiers:=cherchertiers(TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,'');
+                                TableauDeBohrTiers.Rows[REditTiers].Text:=inttostr(REditTiers);
+                                TableauDeBohrTiers.Cells[1,REditTiers]:=CodeTiersPrincipal;
+                                //TableauDeBohrTiers.Cells[2,REditTiers]:=RTiers.NomTiers+' '+RTiers.PrenomTiers;
+                                TableauDeBohrTiers.Cells[2,REditTiers]:=ImporteDataProcesTiers(TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,PositionTiersRecherche);
+
+                                TableauDeBohrTiers.Cells[17,REditTiers]:=TypeProcesTiersPrincipal;
+                                TableauDeBohrTiers.Cells[18,REditTiers]:=FichierConserneTiersPrincipal;
+                                //TableauDeBohrTiers.Cells[19,REditTiers]:=
+                                TableauDeBohrTiers.Cells[20,REditTiers]:=PositionTiersRecherche;
+
+                                FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Nouvelle situation: N° '+inttostr(RSituationMarche.NSituationMarche)+'. Tiers: '+TableauDeBohrTiers.Cells[1,REditTiers]+' '+TableauDeBohrTiers.Cells[2,REditTiers]+'. Montant: '+Vergule(Floattostr(RSituationMarche.MontantSituationTTCNet),'2','C',''));
+
+                                setlength(TableauPointeurData,T);
+                                TableauPointeurData[T-1].Data1:=CodeTiersPrincipal;
+                                TableauPointeurData[T-1].Data2:=TypeProcesTiersPrincipal;
+                                TableauPointeurData[T-1].Data3:=FichierConserneTiersPrincipal;
+                                TableauPointeurData[T-1].RowPointeur:=T;
+                           end;
+
+                           if(OKMouvement=true)then
+                           begin
+                                if(strtodate(RSituationMarche.DateSituationMarche)>=strtodate(DateDebut))
+                                and(strtodate(RSituationMarche.DateSituationMarche)<=strtodate(DateFin))
+                                then
+                                begin
+                                     OKMouvement:=true;
+                                end
+                                else
+                                begin
+                                     OKMouvement:=false;
+                                     if(strtodate(RSituationMarche.DateSituationMarche)<strtodate(DateDebut))then
+                                     begin
+                                          TableauDeBohrTiers.Cells[C+3,REditTiers]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[C+3,REditTiers])+RSituationMarche.MontantSituationTTCNet),'2','C','');
+                                     end;
+                                end;
+                            end;
+
+                           if(OKMouvement=true)then
+                           begin
+                                FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Mise à jour situation: N° '+inttostr(RSituationMarche.NSituationMarche)+'. Tiers: '+TableauDeBohrTiers.Cells[1,REditTiers]+' '+TableauDeBohrTiers.Cells[2,REditTiers]+'. Montant: '+Vergule(Floattostr(RSituationMarche.MontantSituationTTCNet),'2','C',''));
+                                TableauDeBohrTiers.Cells[C+8,REditTiers]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[C+8,REditTiers])+RSituationMarche.MontantSituationTTCNet),'2','C','');
+                           end;
+                     end;
+                end;
+                finally
+                CloseFile(FSituationMarche);
+                end;
+           end;
+     end;
+
+     if(ActiverTransfertTableauBohr=true)then
+     begin
+           TableauDeBohrTiers.Rows[T+1].Text:='';
+           TableauDeBohrTiers.Rows[T+2].Text:='';
+           TableauDeBohrTiers.Cells[2,T+2]:='T.Ant.';
+           TableauDeBohrTiers.Cells[7,T+2]:='T.Pér.';
+           TableauDeBohrTiers.Cells[12,T+2]:='T.Gle.';
+           l:=1;
+           while(l<=T)do
+           begin
+                Solde:=strtoreal(TableauDeBohrTiers.Cells[3,l])-strtoreal(TableauDeBohrTiers.Cells[4,l]);
+                if(Solde<0)then
+                begin
+                     C:=6;
+                     Indice:=(-1);
+                end
+                else
+                begin
+                     C:=5;
+                     Indice:=(1);
+                end;
+                TableauDeBohrTiers.Cells[C,l]:=Vergule(floattostr(Solde*Indice),'2','C','');
+
+                Solde:=strtoreal(TableauDeBohrTiers.Cells[8,l])-strtoreal(TableauDeBohrTiers.Cells[9,l]);
+                if(Solde<0)then
+                begin
+                     C:=11;
+                     Indice:=(-1);
+                end
+                else
+                begin
+                     C:=10;
+                     Indice:=(1);
+                end;
+                TableauDeBohrTiers.Cells[C,l]:=Vergule(floattostr(Solde*Indice),'2','C','');
+
+                TableauDeBohrTiers.Cells[13,l]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[3,l])+strtoreal(TableauDeBohrTiers.Cells[8,l])),'2','C','');
+                TableauDeBohrTiers.Cells[14,l]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[4,l])+strtoreal(TableauDeBohrTiers.Cells[9,l])),'2','C','');
+
+                Solde:=strtoreal(TableauDeBohrTiers.Cells[5,l])+strtoreal(TableauDeBohrTiers.Cells[10,l])-
+                       strtoreal(TableauDeBohrTiers.Cells[6,l])-strtoreal(TableauDeBohrTiers.Cells[11,l]);
+                if(Solde<0)then
+                begin
+                     C:=16;
+                     Indice:=(-1);
+                end
+                else
+                begin
+                     C:=15;
+                     Indice:=(1);
+                end;
+                TableauDeBohrTiers.Cells[C,l]:=Vergule(floattostr(Solde*Indice),'2','C','');
+
+                TableauDeBohrTiers.Cells[3,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[3,T+2])+strtoreal(TableauDeBohrTiers.Cells[3,l])),'2','C','');
+                TableauDeBohrTiers.Cells[4,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[4,T+2])+strtoreal(TableauDeBohrTiers.Cells[4,l])),'2','C','');
+                TableauDeBohrTiers.Cells[5,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[5,T+2])+strtoreal(TableauDeBohrTiers.Cells[5,l])),'2','C','');
+                TableauDeBohrTiers.Cells[6,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[6,T+2])+strtoreal(TableauDeBohrTiers.Cells[6,l])),'2','C','');
+                TableauDeBohrTiers.Cells[8,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[8,T+2])+strtoreal(TableauDeBohrTiers.Cells[8,l])),'2','C','');
+                TableauDeBohrTiers.Cells[9,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[9,T+2])+strtoreal(TableauDeBohrTiers.Cells[9,l])),'2','C','');
+                TableauDeBohrTiers.Cells[10,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[10,T+2])+strtoreal(TableauDeBohrTiers.Cells[10,l])),'2','C','');
+                TableauDeBohrTiers.Cells[11,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[11,T+2])+strtoreal(TableauDeBohrTiers.Cells[11,l])),'2','C','');
+                TableauDeBohrTiers.Cells[13,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[13,T+2])+strtoreal(TableauDeBohrTiers.Cells[13,l])),'2','C','');
+                TableauDeBohrTiers.Cells[14,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[14,T+2])+strtoreal(TableauDeBohrTiers.Cells[14,l])),'2','C','');
+                TableauDeBohrTiers.Cells[15,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[15,T+2])+strtoreal(TableauDeBohrTiers.Cells[15,l])),'2','C','');
+                TableauDeBohrTiers.Cells[16,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[16,T+2])+strtoreal(TableauDeBohrTiers.Cells[16,l])),'2','C','');
+           l:=l+1;
+           end;
+     end;
+
+     NotTrieRow:=1;
+
+     if(T>0)then
+            begin
+                 if(ActiverTransfertTableauBohr=false)then
+                 begin
+                      NotTrieRow:=1;
+                      TableauDeBohrTiers.RowCount:=T+NotTrieRow;
+                 end
+                 else
+                 begin
+                      NotTrieRow:=3;
+                      TableauDeBohrTiers.RowCount:=T+NotTrieRow;
+                      if(IndiceRubriqueTriCol in[2])
+                      then TypeDataTrie:=''
+                      else TypeDataTrie:='Num';
+                      if(RBAfficherSoldeSuperieur=true)then NotTrieRow:=4 else NotTrieRow:=3;
+                      TrierTableauARowSpecial(TableauDeBohrTiers,1,TableauDeBohrTiers.RowCount-NotTrieRow,1,inttostr(IndiceRubriqueTriCol),TypeDataTrie,TypeTrie);
+                      TransfertTableauBohr(TableauDeBohrTiers,FSTravauxFinAnnee.RBAfficherSoldeSuperieur.Checked,FSTravauxFinAnnee.EditSoldeMinimum.Text);
+                 end;
+            end
+            else TableauDeBohrTiers.RowCount:=2;
+
+     AjusterColWidth(TableauDeBohrTiers,'','');
+
+     if(RBAfficherSoldeSuperieur=true)then NotTrieRow:=4 else NotTrieRow:=3;
+     
+     for R:=1 to TableauDeBohrTiers.RowCount-NotTrieRow do
+     begin
+          TableauDeBohrTiers.Cells[0,R]:=inttostr(R);
+          for C:=1 to TableauDeBohrTiers.ColCount-1 do
+          begin
+               if(C in[3,4,5,6,8,9,10,10,13,14,15,16])then
+               if(strtoreal(TableauDeBohrTiers.Cells[C,R])=0)then TableauDeBohrTiers.Cells[C,R]:='';
+          end;
+     end;
+
+     RowCountTableauDeBohrMouvementOut:=T;
+
+     FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Fin Traitement mouvements');
+end;
+
+Procedure ActionTableauDeBohrAvis(TableauDeBohrTiers:TStringGrid;  DateDebut,DateFin:string; IndiceRubriqueTriCol:integer; TypeDataTrie,TypeTrie:string; RBAfficherSoldeSuperieur,ActiverTransfertTableauBohr:boolean; RowCountTableauDeBohrAvisIn:integer; var RowCountTableauDeBohrAvisOut:integer);
+var  R,C,l,T,h,REditFinance,REditTiers,Indice,NotTrieRow,RowCountTiers,RubriqueTrie,IndiceFinControleTrieRow:integer; Solde,MontantMouvement:real;
+     OKMouvement,OKAvis,OKTypeAvis,OKTiers,OKFinance,OKPeriode:boolean;  TypeProcesControleReseaux,Adresse,AdresseAvis,TypeProcesAvis,FichierConserneAvis,DebitCreditTypeMouvement,NotRow,NotCol,DateInc,TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,DataTiers:string;
+begin
+     ///////////////////////////////////////////////////////////////////////////
+     T:=RowCountTableauDeBohrAvisIn;
+     RowCountTableauDeBohrAvisOut:=T;
+
+     if not(FunctionAdresseProces('Business','FBaseAvis','',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+'FBaseAvis '+'recherché !');
+     end;
+
+     ChBaseAvisCopie:=Adresse;
+     assignfile(FBaseAvisCopie,ChBaseAvisCopie);
+     try
+     if FileExists(ChBaseAvisCopie)then
+     Reset(FBaseAvisCopie)
+     else Rewrite(FBaseAvisCopie);
+     Seek(FBaseAvisCopie,0);
+     while not eof(FBaseAvisCopie)do
+     begin
+          read(FBaseAvisCopie,RBaseAvisCopie);  Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+          FichierConserneAvis:=RBaseAvisCopie.DesignationBaseAvis;
+
+          if(FichierConserneAvis<>'')then
+          begin
+               FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Traitement: '+FichierConserneAvis);
+
+               TypeProcesAvis:='Business';
+               if not(FunctionAdresseProces(TypeProcesAvis,FichierConserneAvis,'',AdresseAvis,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché '+FichierConserneAvis+' !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+               ChAvis:=AdresseAvis;
+               assignfile(FAvis,ChAvis);
+               if FileExists(ChAvis)then
+               begin
+                    try
+                    Reset(FAvis);
+                    Seek(FAvis,0);
+                    while not eof(FAvis)do
+                    begin
+                         read(FAvis,RAvis);  Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                         OKAvis:=RAvis.ValiditeAvis;
+
+                         if(OKAvis=true)then
+                         begin
+                              if(strtodate(RAvis.DateAvis)<=strtodate(DateFin))
+                              then OKAvis:=true
+                              else OKAvis:=false;
+                         end;
+
+                         if(OKAvis=true)then
+                         begin
+                              if(TypeProcesControleReseaux='Réseaux')then
+                              begin
+                                   if(strtodate(RAvis.DateAvis)>=strtodate('01/01/'+ExerciceAnnee))
+                                   then OKAvis:=true
+                                   else OKAvis:=false;
+                              end;
+                         end;
+
+                         if(OKAvis=true)then
+                         begin
+                              DataTiers:=ImporteDataProcesTiers(RAvis.TypeProces,RAvis.AvisConcerneTiers,RAvis.CodeTiers,PositionTiersRecherche);
+
+                              if(PositionTiersRecherche='')then OKAvis:=false;
+                         end;
+
+                         if(OKAvis=true)then
+                         begin
+                              if(RAvis.TypeProces<>'')
+                              and(RAvis.AvisConcerneTiers<>'')
+                              and(RAvis.CodeTiers<>'')
+                              and(ExisteTiersPricipalGroupe('',RAvis.TypeProces,RAvis.AvisConcerneTiers,RAvis.CodeTiers,RListeGroupeTiersCopie)=true)then
+                              begin
+                                   CodeTiersPrincipal:=RListeGroupeTiersCopie.CodeTiers;
+                                   TypeProcesTiersPrincipal:=RListeGroupeTiersCopie.TypeProces;
+                                   FichierConserneTiersPrincipal:=RListeGroupeTiersCopie.FichierConcerneTiers;
+                              end
+                              else
+                              begin
+                                   CodeTiersPrincipal:=RAvis.CodeTiers;
+                                   TypeProcesTiersPrincipal:=RAvis.TypeProces;
+                                   FichierConserneTiersPrincipal:=RAvis.AvisConcerneTiers;
+                              end;
+                         end;
+
+                         if(OKAvis=true)then
+                         begin
+                               //RTiers:=cherchertiers(TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,'');
+
+                               DebitCreditTypeMouvement:=RAvis.DebitCredit;
+                               ChercherTypeAvis('',RAvis.DesignationTypeAvis,'','','','',RTypeAvisCopie);
+                               Indice:=RTypeAvisCopie.SigneDebitCredit;
+
+                               if(DebitCreditTypeMouvement<>'Débit')and(DebitCreditTypeMouvement<>'Crédit')
+                               then DebitCreditTypeMouvement:=RTypeAvisCopie.DebitCredit;
+
+                               if(DebitCreditTypeMouvement<>'Débit')and(DebitCreditTypeMouvement<>'Crédit')
+                               then DebitCreditTypeMouvement:='Débit';
+
+                               if(DebitCreditTypeMouvement='Débit')then
+                               begin
+                                    C:=0;
+                               end
+                               else
+                               begin
+                                    C:=1;
+                               end;
+
+                               if(OKAvis=true)then
+                               begin
+                                    OKTiers:=false;
+                                    l:=1;
+                                    while(l<=T)and(OKTiers=false)do
+                                    begin
+                                         if(CodeTiersPrincipal=TableauPointeurData[l-1].Data1)
+                                         and(TypeProcesTiersPrincipal=TableauPointeurData[l-1].Data2)
+                                         and(FichierConserneTiersPrincipal=TableauPointeurData[l-1].Data3)
+                                         then
+                                         begin
+                                              OKTiers:=true;
+                                              REditTiers:=TableauPointeurData[l-1].RowPointeur;
+                                         end
+                                         else l:=l+1;
+                                    end;
+
+                                    if(OKTiers=false)and(TypeProcesControleReseaux<>'Réseaux')then
+                                    begin
+                                         T:=T+1;
+                                         REditTiers:=T;
+                                         TableauDeBohrTiers.Rows[REditTiers].Text:=inttostr(REditTiers);
+                                         TableauDeBohrTiers.Cells[1,REditTiers]:=CodeTiersPrincipal;
+                                         //TableauDeBohrTiers.Cells[2,REditTiers]:=RTiers.NomTiers+' '+RTiers.PrenomTiers;
+                                         TableauDeBohrTiers.Cells[2,REditTiers]:=ImporteDataProcesTiers(TypeProcesTiersPrincipal,FichierConserneTiersPrincipal,CodeTiersPrincipal,PositionTiersRecherche);
+                                         TableauDeBohrTiers.Cells[17,REditTiers]:=TypeProcesTiersPrincipal;
+                                         TableauDeBohrTiers.Cells[18,REditTiers]:=FichierConserneTiersPrincipal;
+                                         TableauDeBohrTiers.Cells[19,REditTiers]:=FichierConserneAvis;
+                                         TableauDeBohrTiers.Cells[20,REditTiers]:=PositionTiersRecherche;
+
+                                         TableauDeBohrTiers.Cells[3,REditTiers]:='';
+                                         TableauDeBohrTiers.Cells[4,REditTiers]:='';
+                                         TableauDeBohrTiers.Cells[5,REditTiers]:='';
+                                         TableauDeBohrTiers.Cells[6,REditTiers]:='';
+
+                                         TableauDeBohrTiers.Cells[8,REditTiers]:='';
+                                         TableauDeBohrTiers.Cells[9,REditTiers]:='';
+                                         TableauDeBohrTiers.Cells[10,REditTiers]:='';
+                                         TableauDeBohrTiers.Cells[11,REditTiers]:='';
+
+                                         TableauDeBohrTiers.Cells[13,REditTiers]:='';
+                                         TableauDeBohrTiers.Cells[14,REditTiers]:='';
+                                         TableauDeBohrTiers.Cells[15,REditTiers]:='';
+                                         TableauDeBohrTiers.Cells[16,REditTiers]:='';
+
+                                         FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Nouveau '+FichierConserneAvis+': N° '+inttostr(RAvis.NumAvis)+' du '+RAvis.DateAvis+'. Tiers: '+TableauDeBohrTiers.Cells[1,REditTiers]+' '+TableauDeBohrTiers.Cells[2,REditTiers]+'. Montant: '+Vergule(Floattostr(RAvis.Montant),'2','C',''));
+
+                                         setlength(TableauPointeurData,T);
+                                         TableauPointeurData[T-1].Data1:=CodeTiersPrincipal;
+                                         TableauPointeurData[T-1].Data2:=TypeProcesTiersPrincipal;
+                                         TableauPointeurData[T-1].Data3:=FichierConserneTiersPrincipal;
+                                         TableauPointeurData[T-1].RowPointeur:=T;
+                                    end;
+
+                                    if(OKTiers=true)or((OKTiers=false)and(TypeProcesControleReseaux<>'Réseaux'))then
+                                    begin
+                                          if(strtodate(RAvis.DateAvis)>=strtodate(DateDebut))
+                                          and(strtodate(RAvis.DateAvis)<=strtodate(DateFin))
+                                          then
+                                          begin
+                                               TableauDeBohrTiers.Cells[C+8,REditTiers]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[C+8,REditTiers])+(Indice*RAvis.Montant)),'2','C','');
+
+                                               FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Mise à jour '+FichierConserneAvis+': N° '+inttostr(RAvis.NumAvis)+' du '+RAvis.DateAvis+'. Tiers: '+TableauDeBohrTiers.Cells[1,REditTiers]+' '+TableauDeBohrTiers.Cells[2,REditTiers]+'. Montant: '+Vergule(Floattostr(RAvis.Montant),'2','C',''));
+                                          end
+                                          else
+                                          begin
+                                               if(strtodate(RAvis.DateAvis)<strtodate(DateDebut))then
+                                               begin
+                                                    TableauDeBohrTiers.Cells[C+3,REditTiers]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[C+3,REditTiers])+(Indice*RAvis.Montant)),'2','C','');
+                                               end;
+                                          end;
+                                    end;
+                               end;
+                         end;
+                    end;
+                    finally
+                    Closefile(FAvis);
+                    end;
+               end;
+          end;
+     end;
+     finally
+     closefile(FBaseAvisCopie);   
+     end;
+     ///////////////////////////////////////////////////////////////////////////
+
+     if(ActiverTransfertTableauBohr=true)then
+     begin
+           TableauDeBohrTiers.Rows[T+1].Text:='';
+           TableauDeBohrTiers.Rows[T+2].Text:='';
+           TableauDeBohrTiers.Cells[2,T+2]:='T.Ant.';
+           TableauDeBohrTiers.Cells[7,T+2]:='T.Pér.';
+           TableauDeBohrTiers.Cells[12,T+2]:='T.Gle.';
+           l:=1;
+           while(l<=T)do
+           begin
+                Solde:=strtoreal(TableauDeBohrTiers.Cells[3,l])-strtoreal(TableauDeBohrTiers.Cells[4,l]);
+                if(Solde<0)then
+                begin
+                     C:=6;
+                     Indice:=(-1);
+                end
+                else
+                begin
+                     C:=5;
+                     Indice:=(1);
+                end;
+                TableauDeBohrTiers.Cells[C,l]:=Vergule(floattostr(Solde*Indice),'2','C','');
+
+                Solde:=strtoreal(TableauDeBohrTiers.Cells[8,l])-strtoreal(TableauDeBohrTiers.Cells[9,l]);
+                if(Solde<0)then
+                begin
+                     C:=11;
+                     Indice:=(-1);
+                end
+                else
+                begin
+                     C:=10;
+                     Indice:=(1);
+                end;
+                TableauDeBohrTiers.Cells[C,l]:=Vergule(floattostr(Solde*Indice),'2','C','');
+
+                TableauDeBohrTiers.Cells[13,l]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[3,l])+strtoreal(TableauDeBohrTiers.Cells[8,l])),'2','C','');
+                TableauDeBohrTiers.Cells[14,l]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[4,l])+strtoreal(TableauDeBohrTiers.Cells[9,l])),'2','C','');
+
+                Solde:=strtoreal(TableauDeBohrTiers.Cells[5,l])+strtoreal(TableauDeBohrTiers.Cells[10,l])-
+                       strtoreal(TableauDeBohrTiers.Cells[6,l])-strtoreal(TableauDeBohrTiers.Cells[11,l]);
+
+                if(Solde<0)then
+                begin
+                     C:=16;
+                     Indice:=(-1);
+                end
+                else
+                begin
+                     C:=15;
+                     Indice:=(1);
+                end;
+                TableauDeBohrTiers.Cells[C,l]:=Vergule(floattostr(Solde*Indice),'2','C','');
+
+                TableauDeBohrTiers.Cells[3,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[3,T+2])+strtoreal(TableauDeBohrTiers.Cells[3,l])),'2','C','');
+                TableauDeBohrTiers.Cells[4,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[4,T+2])+strtoreal(TableauDeBohrTiers.Cells[4,l])),'2','C','');
+                TableauDeBohrTiers.Cells[5,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[5,T+2])+strtoreal(TableauDeBohrTiers.Cells[5,l])),'2','C','');
+                TableauDeBohrTiers.Cells[6,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[6,T+2])+strtoreal(TableauDeBohrTiers.Cells[6,l])),'2','C','');
+                TableauDeBohrTiers.Cells[8,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[8,T+2])+strtoreal(TableauDeBohrTiers.Cells[8,l])),'2','C','');
+                TableauDeBohrTiers.Cells[9,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[9,T+2])+strtoreal(TableauDeBohrTiers.Cells[9,l])),'2','C','');
+                TableauDeBohrTiers.Cells[10,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[10,T+2])+strtoreal(TableauDeBohrTiers.Cells[10,l])),'2','C','');
+                TableauDeBohrTiers.Cells[11,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[11,T+2])+strtoreal(TableauDeBohrTiers.Cells[11,l])),'2','C','');
+                TableauDeBohrTiers.Cells[13,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[13,T+2])+strtoreal(TableauDeBohrTiers.Cells[13,l])),'2','C','');
+                TableauDeBohrTiers.Cells[14,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[14,T+2])+strtoreal(TableauDeBohrTiers.Cells[14,l])),'2','C','');
+                TableauDeBohrTiers.Cells[15,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[15,T+2])+strtoreal(TableauDeBohrTiers.Cells[15,l])),'2','C','');
+                TableauDeBohrTiers.Cells[16,T+2]:=Vergule(floattostr(strtoreal(TableauDeBohrTiers.Cells[16,T+2])+strtoreal(TableauDeBohrTiers.Cells[16,l])),'2','C','');
+           l:=l+1;
+           end;
+     end;
+
+     NotTrieRow:=1;
+
+     if(T>0)then
+            begin
+                 if(ActiverTransfertTableauBohr=false)then
+                 begin
+                      NotTrieRow:=1;
+                      TableauDeBohrTiers.RowCount:=T+NotTrieRow;
+                 end
+                 else
+                 begin
+                      NotTrieRow:=3;
+                      TableauDeBohrTiers.RowCount:=T+NotTrieRow;
+                      if(IndiceRubriqueTriCol in[2])
+                      then TypeDataTrie:=''
+                      else TypeDataTrie:='Num';
+                      if(RBAfficherSoldeSuperieur=true)then NotTrieRow:=4 else NotTrieRow:=3;
+                      TrierTableauARowSpecial(TableauDeBohrTiers,1,TableauDeBohrTiers.RowCount-NotTrieRow,1,inttostr(IndiceRubriqueTriCol),TypeDataTrie,TypeTrie);
+                      TransfertTableauBohr(TableauDeBohrTiers,FSTravauxFinAnnee.RBAfficherSoldeSuperieur.Checked,FSTravauxFinAnnee.EditSoldeMinimum.Text);
+                 end;
+            end
+            else TableauDeBohrTiers.RowCount:=2;
+
+     AjusterColWidth(TableauDeBohrTiers,'','');
+
+     if(RBAfficherSoldeSuperieur=true)then NotTrieRow:=4 else NotTrieRow:=3;
+     
+     for R:=1 to TableauDeBohrTiers.RowCount-NotTrieRow do
+     begin
+          TableauDeBohrTiers.Cells[0,R]:=inttostr(R);
+          for C:=1 to TableauDeBohrTiers.ColCount-1 do
+          begin
+               if(C in[3,4,5,6,8,9,10,10,13,14,15,16])then
+               if(strtoreal(TableauDeBohrTiers.Cells[C,R])=0)then TableauDeBohrTiers.Cells[C,R]:='';
+          end;
+     end;
+
+     RowCountTableauDeBohrAvisOut:=T;
+end;
+
+Procedure SyntheseTableauDeBohr;
+var   R,TOut,C,l,m,Signe,NotTrieRow:integer; DateDebut,DateFin:string; RowMouvementSelect,IndiceRubriqueTriCol:integer; TypeDataTrie,TypeTrie:string; RBAfficherSoldeSuperieur,OKActiveTransfertTableauBohr:boolean;
+begin
+     DateDebut:='01/01/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+     DateFin:='31/12/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+     IndiceRubriqueTriCol:=strtointeger(FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text);
+     TypeDataTrie:=FSTravauxFinAnnee.EditTypeDataTrie.Text;
+     TypeTrie:=FSTravauxFinAnnee.EditTypeTrie.Text;
+     RBAfficherSoldeSuperieur:=FSTravauxFinAnnee.RBAfficherSoldeSuperieur.Checked;
+
+     R:=1;
+     Tout:=0;
+     OKActiveTransfertTableauBohr:=false;
+     for R:=1 to FSTravauxFinAnnee.TableauMouvement.RowCount-1 do
+     begin
+           if(strtoboolean(FSTravauxFinAnnee.TableauMouvement.Cells[13,R])=true)
+           then
+           begin
+                RowMouvementSelect:=R;
+                FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Synthèse '+FSTravauxFinAnnee.TableauMouvement.Cells[3,R]);
+                ActionTableauDeBohrMouvement(FSTravauxFinAnnee.TableauMouvement,FSTravauxFinAnnee.TableauDeBohrTiers,DateDebut,DateFin,RowMouvementSelect,IndiceRubriqueTriCol,TypeDataTrie,TypeTrie,RBAfficherSoldeSuperieur,OKActiveTransfertTableauBohr,Tout,TOut);
+           end;
+     end;
+
+     OKActiveTransfertTableauBohr:=true;
+     FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Synthèse Base Avis');
+     ActionTableauDeBohrAvis(FSTravauxFinAnnee.TableauDeBohrTiers,DateDebut,DateFin,IndiceRubriqueTriCol,TypeDataTrie,TypeTrie,RBAfficherSoldeSuperieur,OKActiveTransfertTableauBohr,Tout,TOut);
+end;
+
+Procedure SyntheseTableauDeBohrTiers;
+var   R,C,l,m,Signe,NotTrieRow:integer; DateDebut,DateFin:string; RowMouvementSelect,IndiceRubriqueTriCol:integer; TypeDataTrie,TypeTrie:string; RBAfficherSoldeSuperieur:boolean;
+begin
+     DateDebut:='01/01/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+     DateFin:='31/12/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+     IndiceRubriqueTriCol:=strtointeger(FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text);
+     TypeDataTrie:=FSTravauxFinAnnee.EditTypeDataTrie.Text;
+     TypeTrie:=FSTravauxFinAnnee.EditTypeTrie.Text;
+
+     m:=0;
+     if(FSTravauxFinAnnee.RBAfficherSoldeSuperieur.Checked=true)then NotTrieRow:=4 else NotTrieRow:=3;
+     for l:=1 to FSTravauxFinAnnee.TableauDeBohrTiers.RowCount-NotTrieRow do
+     begin
+          if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+          m:=m+1;
+          if(strtoreal(FSTravauxFinAnnee.TableauDeBohrTiers.Cells[15,l])>=strtoreal(FSTravauxFinAnnee.TableauDeBohrTiers.Cells[16,l]))
+          then Signe:=1
+          else Signe:=(-1);
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[0,m]:=inttostr(m);
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[1,m]:=inttostr(m);                                          //NumAvis:integer;
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[2,m]:='31/12/'+ExerciceAnnee;                               //DateAvis:string[10];
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[3,m]:=Vergule(floattostr(Signe*(strtoreal(FSTravauxFinAnnee.TableauDeBohrTiers.Cells[15,l])-
+          strtoreal(FSTravauxFinAnnee.TableauDeBohrTiers.Cells[16,l]))),'2','C','');                                          //Montant:real;
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[4,m]:=FSTravauxFinAnnee.TableauDeBohrTiers.Cells[17,l];      //TypeProces:string[100];
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[5,m]:=FSTravauxFinAnnee.TableauDeBohrTiers.Cells[1,l];   //CodeTiers:string[10];
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[6,m]:='Inventaire au 31/12/'+ExerciceAnnee;                //NatureDepense:string[255];
+          if(Signe=1)
+          then FSTravauxFinAnnee.TableauSyntheseTiers.Cells[7,m]:='Débit'
+          else FSTravauxFinAnnee.TableauSyntheseTiers.Cells[7,m]:='Crédit';                                            //DebitCredit:string[10];
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[8,m]:=FSTravauxFinAnnee.TableauDeBohrTiers.Cells[18,l];     //AvisConcerneTiers:string[50];
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[9,m]:=FSTravauxFinAnnee.TableauDeBohrTiers.Cells[19,l];
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[10,m]:=FSTravauxFinAnnee.TableauDeBohrTiers.Cells[2,l];
+          FSTravauxFinAnnee.TableauSyntheseTiers.Cells[11,m]:=FSTravauxFinAnnee.TableauDeBohrTiers.Cells[20,l];
+
+          FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Synthèse Tableau de bohrs N° '+inttostr(m)+'. Code Tiers: '+FSTravauxFinAnnee.TableauSyntheseTiers.Cells[5,m]+'. Montant '+FSTravauxFinAnnee.TableauSyntheseTiers.Cells[3,m]);
+     end;
+
+     if(m>0)then FSTravauxFinAnnee.TableauSyntheseTiers.RowCount:=m+1
+            else FSTravauxFinAnnee.TableauSyntheseTiers.RowCount:=2;
+
+     AjusterColWidth(FSTravauxFinAnnee.TableauSyntheseTiers,'','');
+
+     FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Fin Synthèse Tableau de bohrs');
+end;
+
+Procedure SyntheseTableauDeBohrDetailRubrique;
+var  R,l:integer;  DateDebut,DateFin:string; OKTiers:boolean;
+begin
+     DateDebut:='01/01/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+     DateFin:='31/12/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.ColCount:=8;
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cols[0].Text:='N°';
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cols[1].Text:='Num Rubrique';
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cols[2].Text:='Num Planificateur';
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cols[3].Text:='Domiciliation';
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cols[4].Text:='Code Tiers';
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cols[5].Text:='Tiers';
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cols[6].Text:='Quantité';
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cols[7].Text:='Montant';
+
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.RowCount:=2;
+     FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Rows[1].Text:='';
+
+     FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Synthèse Rubrique Fiche Technique');
+
+     OpenFParc(RParc);
+     ChDetailRubriqueFicheTechnique:=RParc.Parcours+'\'+Exercice+'FDetailRubriqueFicheTechnique';
+     assignfile(FDetailRubriqueFicheTechnique,ChDetailRubriqueFicheTechnique);
+     try
+     if FileExists(ChDetailRubriqueFicheTechnique)then
+     Reset(FDetailRubriqueFicheTechnique)
+     else Rewrite(FDetailRubriqueFicheTechnique);
+     Seek(FDetailRubriqueFicheTechnique,0);
+     R:=0;
+     while not eof(FDetailRubriqueFicheTechnique)do
+     begin
+          Read(FDetailRubriqueFicheTechnique,RDetailRubriqueFicheTechnique); Application.ProcessMessages;  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+          if(strtodate(RDetailRubriqueFicheTechnique.Date)<=strtodate(DateFin))
+          then OKTiers:=true
+          else OKTiers:=false;
+
+          l:=1;
+          while(l<=R)and(OKTiers=true)do
+          begin
+               {if(inttostr(RDetailRubriqueFicheTechnique.NumRubrique)=FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[1,l])
+               and(inttostr(RDetailRubriqueFicheTechnique.NumPlanificateur)=FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[2,l])
+               and(RDetailRubriqueFicheTechnique.Domiciliation=FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[3,l])
+               and(RDetailRubriqueFicheTechnique.CodeTiers=FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[4,l])
+               then
+               begin
+                    OKTiers:=false;
+                    FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[7,l]:=Vergule(floattostr(strtoreal(FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[7,l])+(RDetailRubriqueFicheTechnique.Quantite*RDetailRubriqueFicheTechnique.Montant)),'2','C','');
+               end;}
+
+               if(inttostr(RDetailRubriqueFicheTechnique.NumRubrique)=TableauPointeurData[l-1].Data1)
+               and(inttostr(RDetailRubriqueFicheTechnique.NumPlanificateur)=TableauPointeurData[l-1].Data2)
+               and(RDetailRubriqueFicheTechnique.Domiciliation=TableauPointeurData[l-1].Data3)
+               and(RDetailRubriqueFicheTechnique.CodeTiers=TableauPointeurData[l-1].Data4)
+               then
+               begin
+                    OKTiers:=false;
+                    FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[7,TableauPointeurData[l-1].RowPointeur]:=Vergule(floattostr(strtoreal(FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[7,TableauPointeurData[l-1].RowPointeur])+(RDetailRubriqueFicheTechnique.Quantite*RDetailRubriqueFicheTechnique.Montant)),'2','C','');
+              end;
+          l:=l+1;
+          end;
+
+          if(OKTiers)then
+          begin
+               R:=R+1;
+               FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Rows[R].Text:=inttostr(R);
+               FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[1,R]:=inttostr(RDetailRubriqueFicheTechnique.NumRubrique);
+               FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[2,R]:=inttostr(RDetailRubriqueFicheTechnique.NumPlanificateur);
+               FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[3,R]:=RDetailRubriqueFicheTechnique.Domiciliation;
+               FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[4,R]:=RDetailRubriqueFicheTechnique.CodeTiers;
+               RubriqueArborescence('',inttostr(RDetailRubriqueFicheTechnique.NumRubrique),RRubriqueFicheTechnique,RFicheTechnique,RTypeAvis);
+               RTiers:=chercherTiers(RTypeAvis.TypeProces,RTypeAvis.FichierConserne,RDetailRubriqueFicheTechnique.CodeTiers,'');
+               FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[5,R]:=RTiers.NomTiers+' '+RTiers.PrenomTiers;
+               FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[6,R]:='1';
+               FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[7,R]:=Vergule(floattostr(RDetailRubriqueFicheTechnique.Quantite*RDetailRubriqueFicheTechnique.Montant),'2','C','');
+
+               FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Rubrique Fiche Technique N°'+inttostr(RDetailRubriqueFicheTechnique.NumRubrique)+'. Tiers: '+RTiers.NomTiers+' '+RTiers.PrenomTiers+'. Montant: '+FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[7,R]);
+
+               setlength(TableauPointeurData,R);
+               TableauPointeurData[R-1].Data1:=inttostr(RDetailRubriqueFicheTechnique.NumRubrique);
+               TableauPointeurData[R-1].Data2:=inttostr(RDetailRubriqueFicheTechnique.NumPlanificateur);
+               TableauPointeurData[R-1].Data3:=RDetailRubriqueFicheTechnique.Domiciliation;
+               TableauPointeurData[R-1].Data4:=RDetailRubriqueFicheTechnique.CodeTiers;
+               TableauPointeurData[R-1].RowPointeur:=R;
+          end;
+     end;
+     finally
+     CloseFile(FDetailRubriqueFicheTechnique);
+     end;
+
+     if(R>0)then FSTravauxFinAnnee.TableauDeBohrDetailRubrique.RowCount:=R+1
+            else FSTravauxFinAnnee.TableauDeBohrDetailRubrique.RowCount:=2;
+
+     AjusterColWidth(FSTravauxFinAnnee.TableauDeBohrDetailRubrique,'','');
+
+     FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Fin Rubrique Fiche Technique');
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn1Click(Sender: TObject);
+begin
+     FSTravauxFinAnnee.AfficheValidationReouverture.Visible:=false;
+     FSTravauxFinAnnee.TableauValidationReouverture.RowCount:=2;
+     FSTravauxFinAnnee.TableauValidationReouverture.Rows[1].Text:='';
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn3Click(Sender: TObject);
+begin
+     FSTravauxFinAnnee.AfficheValidationReouverture.Visible:=false;
+     FSTravauxFinAnnee.AfficheValidationReouverture.Visible:=false;
+     PositionAffichage(FSTravauxFinAnnee,FSTravauxFinAnnee.AffichePatienter,'Midel','Midel','','');
+     FSTravauxFinAnnee.AffichePatienter.Visible:=true;
+     FSTravauxFinAnnee.TimerSyntheseTiers.Enabled:=true;
+end;
+
+Function ExisteValidationReouverture(AfficheValidationReouverture:TPanel; TableauValidationReouverture:TStringGrid;  NewExercice,FichierCible:string):boolean;
+var  R:integer;   OKValidationReouverture:boolean; Adresse:string;
+begin
+     OpenFParc(RParc);
+     Adresse:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+FichierCible;
+     if FileExists(Adresse)then
+     begin
+          R:=1;
+          OKValidationReouverture:=false;
+          While(R<=TableauValidationReouverture.RowCount-1)and(OKValidationReouverture=false)do
+          begin
+               if(TableauValidationReouverture.Cells[1,R]=FichierCible)then
+               begin
+                    OKValidationReouverture:=true;
+                    ExisteValidationReouverture:=strtoboolean(TableauValidationReouverture.Cells[2,R]);
+               end;
+          R:=R+1;
+          end;
+
+          if(OKValidationReouverture=false)then
+          begin
+               if(TableauValidationReouverture.Cells[1,TableauValidationReouverture.RowCount-1]<>'')then TableauValidationReouverture.RowCount:=TableauValidationReouverture.RowCount+1;
+               TableauValidationReouverture.Rows[R].Text:=inttostr(TableauValidationReouverture.RowCount-1);
+               TableauValidationReouverture.Cells[1,TableauValidationReouverture.RowCount-1]:=FichierCible;
+               TableauValidationReouverture.Cells[2,TableauValidationReouverture.RowCount-1]:='Non';
+
+               PositionAffichage(FSTravauxFinAnnee,AfficheValidationReouverture,'Midel','Midel','','');
+               AfficheValidationReouverture.Visible:=true;
+          end;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.TableauValidationReouvertureDblClick(
+  Sender: TObject);
+begin
+     if(FSTravauxFinAnnee.TableauValidationReouverture.Cells[2,FSTravauxFinAnnee.TableauValidationReouverture.Row]='Non')
+     then FSTravauxFinAnnee.TableauValidationReouverture.Cells[2,FSTravauxFinAnnee.TableauValidationReouverture.Row]:='Oui'
+     else FSTravauxFinAnnee.TableauValidationReouverture.Cells[2,FSTravauxFinAnnee.TableauValidationReouverture.Row]:='Non';
+end;
+
+procedure TFSTravauxFinAnnee.AfficheValidationReouvertureExit(
+  Sender: TObject);
+begin
+     FSTravauxFinAnnee.AffichePatienter.Visible:=false;
+end;
+
+procedure TFSTravauxFinAnnee.TableauListeBaseDonneesDblClick(
+  Sender: TObject);
+begin
+     if(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[4,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]='Non')
+     then FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[4,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]:='Oui'
+     else FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[4,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]:='Non';
+end;
+
+procedure TFSTravauxFinAnnee.TableauListeBaseDonneesClick(Sender: TObject);
+var  NotTrieRow:integer;
+begin
+     FSTravauxFinAnnee.AfficheOptionPrintFinanceProjets.Height:=31;
+
+     if(FSTravauxFinAnnee.RBIndiceRubriqueTriColBD.Checked=true)then
+     begin
+          FSTravauxFinAnnee.RBIndiceRubriqueTriColBD.Checked:=false;
+          FSTravauxFinAnnee.EditIndiceRubriqueTriColBD.Text:=inttostr(FSTravauxFinAnnee.TableauListeBaseDonnees.Col);
+          if(FSTravauxFinAnnee.TableauListeBaseDonnees.Col in[2,6])
+          then FSTravauxFinAnnee.EditTypeDataTrieBD.Text:='Num'
+          else FSTravauxFinAnnee.EditTypeDataTrieBD.Text:='';
+          NotTrieRow:=1;
+          TrierTableauARowSpecial(FSTravauxFinAnnee.TableauListeBaseDonnees,1,FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-NotTrieRow,1,FSTravauxFinAnnee.EditIndiceRubriqueTriColBD.Text,FSTravauxFinAnnee.EditTypeDataTrieBD.Text,FSTravauxFinAnnee.EditTypeTrieBD.Text);
+     end;
+     FSTravauxFinAnnee.FichierDisponible.Caption:=inttostr(FuctionFichierDisponible(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]));
+end;
+
+procedure TFSTravauxFinAnnee.AfficheOptionPrintFinanceProjetsClick(
+  Sender: TObject);
+begin
+
+if(FSTravauxFinAnnee.AfficheOptionPrintFinanceProjets.Height=31)
+then FSTravauxFinAnnee.AfficheOptionPrintFinanceProjets.Height:=223
+else FSTravauxFinAnnee.AfficheOptionPrintFinanceProjets.Height:=31;
+
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn20Click(Sender: TObject);
+var  R,C:integer;  TitreEtat,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol:string;  ImprimeTableau:boolean;
+begin
+     FSTravauxFinAnnee.AfficheOptionPrintFinanceProjets.Height:=31;
+
+     if(FSTravauxFinAnnee.RBValiderNonValider.Checked=true)then TitreEtat:='réouverture valider et non valider';
+     if(FSTravauxFinAnnee.RBValider.Checked=true)then TitreEtat:='réouverture valider';
+     if(FSTravauxFinAnnee.RBNonValider.Checked=true)then TitreEtat:='réouverture non valider';
+     TitreEtat:='Rapport de réouverture de l''exercice: '+FSTravauxFinAnnee.EditNewExercice.Text+' '+TitreEtat;
+     ImprimeTableau:=true;
+     GrasARow:='0';
+     GrasACol:='0';
+     CenterARow:='0';
+     CenterACol:='0;2;4';
+     RightARow:='';
+     RightACol:='6;7';
+     R:=0;
+     OptionsImpression(FSTravauxFinAnnee.TableauListeBaseDonnees,'Center',R,1,TitreEtat,FSTravauxFinAnnee.RBAjustementFinanceProjets.Checked,FSTravauxFinAnnee.RBOrientationPapierFinanceProjets.Text,GrasARow,GrasACol,CenterARow,CenterACol,RightARow,RightACol,ImprimeTableau,1,FSMenuPrincipal.ImageCodebarre,true,R);
+end;
+
+procedure TFSTravauxFinAnnee.PageControl2Change(Sender: TObject);
+begin
+     FSTravauxFinAnnee.AfficheOptionPrintFinanceProjets.Height:=31;
+end;
+
+Procedure ReouvertureAccesPrivilegie(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAccesPrivilegie');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               i:=0;
+               FichierConserne:='FAccesPrivilegie';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     TypeProcesControleReseaux:='';
+
+                     OpenFParc(RParc);
+                     ChAccesPrivilegieCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FAccesPrivilegie';
+                     assignfile(FAccesPrivilegieCopie,ChAccesPrivilegieCopie);
+                     try
+                     if FileExists(ChAccesPrivilegieCopie)
+                     then Reset(FAccesPrivilegieCopie)
+                     else Rewrite(FAccesPrivilegieCopie);
+                     Seek(FAccesPrivilegieCopie,0);
+                     Truncate(FAccesPrivilegieCopie);
+
+                     ChAccesPrivilegie:=RParc.Parcours+'\'+Exercice+'FAccesPrivilegie';
+                     assignfile(FAccesPrivilegie,ChAccesPrivilegie);
+                     try
+                     if FileExists(ChAccesPrivilegie)then
+                     Reset(FAccesPrivilegie)
+                     else Rewrite(FAccesPrivilegie);
+                     Seek(FAccesPrivilegie,0);
+                     i:=0;
+                     while not eof(FAccesPrivilegie)do
+                     begin
+                          Read(FAccesPrivilegie,RAccesPrivilegie);   Application.ProcessMessages;  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RAccesPrivilegieCopie:=RAccesPrivilegie;
+                          Seek(FAccesPrivilegieCopie,i);
+                          write(FAccesPrivilegieCopie,RAccesPrivilegieCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Accés Privilégier: '+RAccesPrivilegie.CodeUtilisateur+' '+RAccesPrivilegie.CodePosteMenu);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FAccesPrivilegie);
+                     end;
+                     finally
+                     CloseFile(FAccesPrivilegieCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAccesPrivilegie',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAccesPrivilegie',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureUtilisateur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FUtilisateur');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               i:=0;
+               FichierConserne:='FUtilisateur';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     TypeProcesControleReseaux:='';
+
+                     TypeProces:='Business';   FichierConcerne:='FUtilisateur';
+                     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+                     end;
+
+                     ChUtilisateurCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FUtilisateurCopie,ChUtilisateurCopie);
+                     try
+                     if FileExists(ChUtilisateurCopie)then
+                     Reset(FUtilisateurCopie)
+                     else Rewrite(FUtilisateurCopie);
+                     Seek(FUtilisateurCopie,0);
+                     Truncate(FUtilisateurCopie);
+
+                     ChUtilisateur:=Adresse;
+                     assignfile(FUtilisateur,ChUtilisateur);
+                     try
+                     if FileExists(ChUtilisateur)then
+                     Reset(FUtilisateur)
+                     else Rewrite(FUtilisateur);
+                     Seek(FUtilisateur,0);
+                     i:=0;
+                     while not eof(FUtilisateur)do
+                     begin
+                          Read(FUtilisateur,RUtilisateur);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RUtilisateurCopie:=RUtilisateur;
+                          Seek(FUtilisateurCopie,i);
+                          write(FUtilisateurCopie,RUtilisateurCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Utilisateur: '+RUtilisateur.Nom+' '+RUtilisateur.Prenom);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FUtilisateur);
+                     end;
+                     finally
+                     CloseFile(FUtilisateurCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FUtilisateur',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FUtilisateur',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouverturePosteMenu(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FPosteMenu');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               i:=0;
+               FichierConserne:='FPosteMenu';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     TypeProcesControleReseaux:='';
+
+                     OpenFParc(RParc);
+                     ChPosteMenuCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FPosteMenu';
+                     assignfile(FPosteMenuCopie,ChPosteMenuCopie);
+                     try
+                     if FileExists(ChPosteMenuCopie)then
+                     Reset(FPosteMenuCopie)
+                     else Rewrite(FPosteMenuCopie);
+                     Seek(FPosteMenuCopie,0);
+                     Truncate(FPosteMenuCopie);
+
+                     ChPosteMenu:=RParc.Parcours+'\'+Exercice+'FPosteMenu';
+                     assignfile(FPosteMenu,ChPosteMenu);
+                     try
+                     if FileExists(ChPosteMenu)then
+                     Reset(FPosteMenu)
+                     else Rewrite(FPosteMenu);
+                     Seek(FPosteMenu,0);
+                     i:=0;
+                     while not eof(FPosteMenu)do
+                     begin
+                          Read(FPosteMenu,RPosteMenu);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RPosteMenuCopie:=RPosteMenu;
+                          Seek(FPosteMenuCopie,i);
+                          write(FPosteMenuCopie,RPosteMenuCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Poste Menu: '+RPosteMenu.DesignationPosteMenu);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FPosteMenu);
+                     end;
+                     finally
+                     CloseFile(FPosteMenuCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FPosteMenu',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FPosteMenu',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAdresseProces(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAdresseProces');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               i:=0;
+               FichierConserne:='FAdresseProces';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     TypeProcesControleReseaux:='';
+
+                     OpenFParc(RParc);
+                     ChAdresseProcesCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FAdresseProces';
+                     assignfile(FAdresseProcesCopie,ChAdresseProcesCopie);
+                     try
+                     if FileExists(ChAdresseProcesCopie)
+                     then Reset(FAdresseProcesCopie)
+                     else Rewrite(FAdresseProcesCopie);
+                     Seek(FAdresseProcesCopie,0);
+                     Truncate(FAdresseProcesCopie);
+          
+
+                     ChAdresseProces:=RParc.Parcours+'\'+Exercice+'FAdresseProces';
+                     assignfile(FAdresseProces,ChAdresseProces);
+                     i:=0;
+                     if FileExists(ChAdresseProces)then
+                     begin
+                           try
+                           Reset(FAdresseProces);
+                           Seek(FAdresseProces,0);
+                           while not eof(FAdresseProces)do
+                           begin
+                                Read(FAdresseProces,RAdresseProces);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RAdresseProcesCopie:=RAdresseProces;
+                                Seek(FAdresseProcesCopie,i);
+                                write(FAdresseProcesCopie,RAdresseProcesCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Adresse Proces: '+RAdresseProces.TypeProces+' '+RAdresseProces.Exercice+' '+RAdresseProces.FichierConcerne);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FAdresseProces);
+                           end;
+                     end
+                     else
+                     begin
+                          Showmessage('Attention ! '+ChAdresseProcesCopie+' n''existe pas !'); Exit;
+                     end;
+                     finally
+                     CloseFile(FAdresseProcesCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAdresseProces',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAdresseProces',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureTypeFichierTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     {if not(ActiverReouvertureTiers(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeFichierTiers',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;}
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FTypeFichierTiers');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FTypeFichierTiers';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChTypeFichierTiersCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FTypeFichierTiersCopie,ChTypeFichierTiersCopie);
+                           try
+                           if FileExists(ChTypeFichierTiersCopie)then
+                           Reset(FTypeFichierTiersCopie)
+                           else Rewrite(FTypeFichierTiersCopie);
+                           Seek(FTypeFichierTiersCopie,0);
+                           Truncate(FTypeFichierTiersCopie);
+
+                           ChTypeFichierTiers:=Adresse;
+                           assignfile(FTypeFichierTiers,ChTypeFichierTiers);
+                           try
+                           if FileExists(ChTypeFichierTiers)then
+                           Reset(FTypeFichierTiers)
+                           else Rewrite(FTypeFichierTiers);
+                           Seek(FTypeFichierTiers,0);
+                           i:=0;
+                           while not eof(FTypeFichierTiers)do
+                           begin
+                                Read(FTypeFichierTiers,RTypeFichierTiers);   Application.ProcessMessages;  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RTypeFichierTiersCopie:=RTypeFichierTiers;
+                                Seek(FTypeFichierTiersCopie,i);
+                                write(FTypeFichierTiersCopie,RTypeFichierTiersCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Type Fichier Tiers: '+RTypeFichierTiers.TypeProces+' '+RTypeFichierTiers.FichierConcerne+' '+RTypeFichierTiers.BaseAvis);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FTypeFichierTiers);
+                           end;
+                           finally
+                           CloseFile(FTypeFichierTiersCopie);
+                           end;
+                     end;
+
+                     ListeTypeFichierTiers(FSTravauxFinAnnee.TableauTypeFichierTiers,'Tous',1);
+                     AjusterColWidth(FSTravauxFinAnnee.TableauTypeFichierTiers,'','');
+               end;
+
+               ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeFichierTiers',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeFichierTiers',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R:integer;    TypeProces,FichierTiers,Adresse,TypeProcesControleReseaux:string;
+begin
+     {if not(ActiverReouvertureTiers(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTiers',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;}
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauTypeFichierTiers.RowCount-1)do
+               begin
+                    if(ActiverReouverture=true)then
+                    begin
+                    try
+                          TypeProces:=FSTravauxFinAnnee.TableauTypeFichierTiers.Cells[2,R];
+                          FichierTiers:='F'+FSTravauxFinAnnee.TableauTypeFichierTiers.Cells[3,R];
+
+                          if not(FunctionAdresseProces(TypeProces,FichierTiers,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                          begin
+                               AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierTiers+' recherché !');
+                          end;
+
+                          TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                          ActiverReouverture:=true;
+
+                          if(TypeProcesControleReseaux='Réseaux')then
+                          begin
+                               if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                               begin
+                                    ActiverReouverture:=false;
+                               end
+                               else
+                               if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                               begin
+                                    ActiverReouverture:=true;
+                               end
+                               else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                          end;
+
+                          if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierTiers)=true)then
+                          begin
+                                //FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture '+FichierTiers);
+
+                                if(TypeProces='Comptabilité')then
+                                begin
+
+                                end;
+
+                                if(TypeProces='Social')then
+                                begin
+                                      ChEmployeCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                                      assignfile(FEmployeCopie,ChEmployeCopie);
+                                      try
+                                      if FileExists(ChEmployeCopie)then
+                                      Reset(FEmployeCopie)
+                                      else Rewrite(FEmployeCopie);
+                                      Seek(FEmployeCopie,0);
+                                      Truncate(FEmployeCopie);
+
+                                      ChEmploye:=Adresse;
+                                      assignfile(FEmploye,ChEmploye);
+                                      try
+                                      if FileExists(ChEmploye)then
+                                      Reset(FEmploye)
+                                      else Rewrite(FEmploye);
+                                      Seek(FEmploye,0);
+                                      i:=0;
+                                      while not eof(FEmploye)do
+                                      begin
+                                           Read(FEmploye,REmployeCopie);   Application.ProcessMessages;  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                           Seek(FEmployeCopie,i);
+                                           write(FEmployeCopie,REmployeCopie);
+
+                                           FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Employé: '+REmployeCopie.Nom+' '+REmployeCopie.Prenom);
+                                      i:=i+1;
+                                      end;
+                                      finally
+                                      CloseFile(FEmploye);
+                                      end;
+                                      finally
+                                      CloseFile(FEmployeCopie);
+                                      end;
+                                end;
+
+                                if(TypeProces='Commercial')or(TypeProces='Business')then
+                                begin
+                                     if(FichierTiers<>'FProjetFinance')then
+                                     begin
+                                          ChTiersCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                                          assignfile(FTiersCopie,ChTiersCopie);
+                                          try
+                                          if FileExists(ChTiersCopie)then
+                                          Reset(FTiersCopie)
+                                          else Rewrite(FTiersCopie);
+                                          Seek(FTiersCopie,0);
+                                          Truncate(FTiersCopie);
+
+                                          ChTiers:=Adresse;
+                                          assignfile(FTiers,ChTiers);
+                                          try
+                                          if FileExists(ChTiers)then
+                                          Reset(FTiers)
+                                          else Rewrite(FTiers);
+                                          Seek(FTiers,0);
+                                          i:=0;
+                                          while not eof(FTiers)do
+                                          begin
+                                               Read(FTiers,RTiersCopie);   Application.ProcessMessages;
+                                               Seek(FTiersCopie,i);
+                                               write(FTiersCopie,RTiersCopie);
+
+                                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Tiers: '+RTiersCopie.NomTiers+' '+RTiersCopie.PrenomTiers);
+                                          i:=i+1;
+                                          end;
+                                          finally
+                                          CloseFile(FTiers);
+                                          end;
+                                          finally
+                                          CloseFile(FTiersCopie);
+                                          end;
+                                     end
+                                     else
+                                     begin
+                                          ChProjetFinanceCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                                          assignfile(FProjetFinanceCopie,ChProjetFinanceCopie);
+                                          try
+                                          if FileExists(ChProjetFinanceCopie)then
+                                          Reset(FProjetFinanceCopie)
+                                          else Rewrite(FProjetFinanceCopie);
+                                          Seek(FProjetFinanceCopie,0);
+                                          Truncate(FProjetFinanceCopie);
+
+                                          ChProjetFinance:=Adresse;
+                                          assignfile(FProjetFinance,ChProjetFinance);
+                                          try
+                                          if FileExists(ChProjetFinance)then
+                                          Reset(FProjetFinance)
+                                          else Rewrite(FProjetFinance);
+                                          Seek(FProjetFinance,0);
+                                          i:=0;
+                                          while not eof(FProjetFinance)do
+                                          begin
+                                               Read(FProjetFinance,RProjetFinanceCopie);   Application.ProcessMessages;
+                                               Seek(FProjetFinanceCopie,i);
+                                               write(FProjetFinanceCopie,RProjetFinanceCopie);
+
+                                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Projet Tiers: '+RProjetFinanceCopie.DesignationProjetFinance);
+                                          i:=i+1;
+                                          end;
+                                          finally
+                                          CloseFile(FProjetFinance);
+                                          end;
+                                          finally
+                                          CloseFile(FProjetFinanceCopie);
+                                          end;
+                                     end;
+                                end;
+
+                                if(TypeProces='Paie')then
+                                begin
+                                      ChPersonnelCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                                      assignfile(FPersonnelCopie,ChPersonnelCopie);
+                                      try
+                                      if FileExists(ChPersonnelCopie)then
+                                      Reset(FPersonnelCopie)
+                                      else Rewrite(FPersonnelCopie);
+                                      Seek(FPersonnelCopie,0);
+                                      Truncate(FPersonnelCopie);
+
+                                      ChPersonnel:=Adresse;
+                                      assignfile(FPersonnel,ChPersonnel);
+                                      try
+                                      if FileExists(ChPersonnel)then
+                                      Reset(FPersonnel)
+                                      else Rewrite(FPersonnel);
+                                      Seek(FPersonnel,0);
+                                      i:=0;
+                                      while not eof(FPersonnel)do
+                                      begin
+                                           Read(FPersonnel,RPersonnelCopie);   Application.ProcessMessages;
+                                           Seek(FPersonnelCopie,i);
+                                           write(FPersonnelCopie,RPersonnelCopie);
+
+                                           FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Personnel: '+RPersonnelCopie.Nom+' '+RPersonnelCopie.Nom);
+                                      i:=i+1;
+                                      end;
+                                      finally
+                                      CloseFile(FPersonnel);
+                                      end;
+                                      finally
+                                      CloseFile(FPersonnelCopie);
+                                      end;
+                                end;
+                          end;
+                          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierTiers,NewExercice,TypeProcesControleReseaux,i);
+                    except
+                    ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierTiers,NewExercice,TypeProcesControleReseaux,i);
+                    end;
+                    end;
+               R:=R+1;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureStockArticle(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R:integer;  FichierStock,TypeProcesControleReseaux:string;
+begin
+     TypeProcesControleReseaux:='';
+     FichierStock:='FStockArticle'+FSTravauxFinAnnee.TableauProjetFinance.Cells[1,R];
+
+     if not(ActiverReouvertureStock(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierStock,NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FStockArticle');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauProjetFinance.RowCount-1)do
+               begin
+                     try
+
+                     TypeProcesControleReseaux:='';
+                     FichierStock:='FStockArticle'+FSTravauxFinAnnee.TableauProjetFinance.Cells[1,R];
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierStock)=true)then
+                     begin
+                           OpenFParc(RParc);
+                           ChStockArticleCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+FichierStock;
+                           assignfile(FStockArticleCopie,ChStockArticleCopie);
+                           try
+                           if FileExists(ChStockArticleCopie)then
+                           Reset(FStockArticleCopie)
+                           else Rewrite(FStockArticleCopie);
+                           Seek(FStockArticleCopie,0);
+                           Truncate(FStockArticleCopie);
+
+                           ChStockArticle:=RParc.Parcours+'\'+Exercice+FichierStock;
+                           assignfile(FStockArticle,ChStockArticle);
+                           try
+                           if FileExists(ChStockArticle)then
+                           Reset(FStockArticle)
+                           else Rewrite(FStockArticle);
+                           Seek(FStockArticle,0);
+                           i:=0;
+                           while not eof(FStockArticle)do
+                           begin
+                                Read(FStockArticle,RStockArticle);   Application.ProcessMessages;    if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RStockArticleCopie:=RStockArticle;
+                                RStockArticleCopie.QteEntree:=0;
+                                RStockArticleCopie.QteSortie:=0;
+                                RStockArticleCopie.QteStock:=0;
+                                RStockArticleCopie.QteInitial:=RStockArticle.QteStock;
+                                Seek(FStockArticleCopie,i);
+                                write(FStockArticleCopie,RStockArticleCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Stock Article: '+RStockArticle.Design+' '+RStockArticle.Ref);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FStockArticle);
+                           end;
+                           finally
+                           CloseFile(FStockArticleCopie);
+                           end;
+                     end;
+
+                     if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierStock,NewExercice,TypeProcesControleReseaux,i);
+
+                     except
+                           ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierStock,NewExercice,TypeProcesControleReseaux,i);
+                     end;
+               R:=R+1;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureTypeMouvement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FTypeMouvement');
+
+     ProcListeTypeMouvement(FSTravauxFinAnnee.TableauTypeMouvement);
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FTypeMouvement';
+               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+               ActiverReouverture:=true;
+
+               try
+
+               if(TypeProcesControleReseaux='Réseaux')then
+               begin
+                    if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=false;
+                    end
+                    else
+                    if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=true;
+                    end
+                    else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+               end;
+
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     TypeProcesControleReseaux:='';
+
+                     ChTypeMouvementCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FTypeMouvementCopie,ChTypeMouvementCopie);
+                     try
+                     if FileExists(ChTypeMouvementCopie)then
+                     Reset(FTypeMouvementCopie)
+                     else Rewrite(FTypeMouvementCopie);
+                     Seek(FTypeMouvementCopie,0);
+                     Truncate(FTypeMouvementCopie);
+
+                     ChTypeMouvement:=Adresse;
+                     assignfile(FTypeMouvement,ChTypeMouvement);
+                     try
+                     if FileExists(ChTypeMouvement)then
+                     Reset(FTypeMouvement)
+                     else Rewrite(FTypeMouvement);
+                     Seek(FTypeMouvement,0);
+                     i:=0;
+                     while not eof(FTypeMouvement)do
+                     begin
+                          Read(FTypeMouvement,RTypeMouvement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RTypeMouvementCopie:=RTypeMouvement;
+                          Seek(FTypeMouvementCopie,i);
+                          write(FTypeMouvementCopie,RTypeMouvementCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Type Mouvement: '+RTypeMouvement.DesignationTypeMouvement);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FTypeMouvement);
+                     end;
+                     finally
+                     CloseFile(FTypeMouvementCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeMouvement',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeMouvement',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureMouvement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,iA,iMois:integer;  TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FMouvement');
+
+     if(strtointeger(NewExercice)>0)then
+     begin                         
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FMouvement';
+               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+               ActiverReouverture:=true;
+
+               try
+               
+               if(TypeProcesControleReseaux='Réseaux')then
+               begin
+                    if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=false;
+                    end
+                    else
+                    if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=true;
+                    end
+                    else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+               end;
+
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     //// ouverture général cas réseaux ************************
+                     ChMouvementCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FMouvementCopie,ChMouvementCopie);
+                     try
+                     if FileExists(ChMouvementCopie)then
+                     Reset(FMouvementCopie)
+                     else Rewrite(FMouvementCopie);
+                     Seek(FMouvementCopie,0);
+                     Truncate(FMouvementCopie);
+
+                     ChMouvement:=Adresse;
+                     assignfile(FMouvement,ChMouvement);
+                     try
+                     if FileExists(ChMouvement)then
+                     Reset(FMouvement)
+                     else Rewrite(FMouvement);
+                     Seek(FMouvement,0);
+                     i:=0;
+                     while not eof(FMouvement)do
+                     begin
+                          Read(FMouvement,RMouvement);   Application.ProcessMessages;    if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RMouvementCopie:=RMouvement;
+                          RMouvementCopie.PositionListeMouvementBegin:=0;
+                          RMouvementCopie.PositionListeMouvementEnd:=999999999;
+                          for iA:=2010 to 2050 do
+                          for iMois:=1 to 12 do
+                          begin
+                               RMouvementCopie.RegistrePositionListeMouvementParPeriode[iA,iMois].PositionListeMouvementBegin:=0;
+                               RMouvementCopie.RegistrePositionListeMouvementParPeriode[iA,iMois].PositionListeMouvementEnd:=999999999;
+                          end;
+
+                          Seek(FMouvementCopie,i);
+                          write(FMouvementCopie,RMouvementCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Mouvement réseaux: '+RMouvementCopie.DesignationMouvement);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FMouvement);
+                     end;
+                     finally
+                     CloseFile(FMouvementCopie);
+                     end;
+                     //*********************************************************
+                 end;
+
+                 begin
+                     //// ouverture cas local ************************
+                     OpenFParc(RParc);
+                     Adresse:=RParc.Parcours+'\'+Exercice+FichierConserne;
+                     ChMouvementCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FMouvementCopie,ChMouvementCopie);
+                     try
+                     if FileExists(ChMouvementCopie)then
+                     Reset(FMouvementCopie)
+                     else Rewrite(FMouvementCopie);
+                     Seek(FMouvementCopie,0);
+                     Truncate(FMouvementCopie);
+
+                     ChMouvement:=Adresse;
+                     assignfile(FMouvement,ChMouvement);
+                     try
+                     if FileExists(ChMouvement)then
+                     Reset(FMouvement)
+                     else Rewrite(FMouvement);
+                     Seek(FMouvement,0);
+                     i:=0;
+                     while not eof(FMouvement)do
+                     begin
+                          Read(FMouvement,RMouvement);   Application.ProcessMessages;
+                          RMouvementCopie:=RMouvement;
+                          RMouvementCopie.PositionListeMouvementBegin:=0;
+                          RMouvementCopie.PositionListeMouvementEnd:=999999999;
+                          for iA:=2010 to 2050 do
+                          for iMois:=1 to 12 do
+                          begin
+                               RMouvementCopie.RegistrePositionListeMouvementParPeriode[iA,iMois].PositionListeMouvementBegin:=0;
+                               RMouvementCopie.RegistrePositionListeMouvementParPeriode[iA,iMois].PositionListeMouvementEnd:=999999999;
+                          end;
+
+                          Seek(FMouvementCopie,i);
+                          write(FMouvementCopie,RMouvementCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Mouvement local: '+RMouvementCopie.DesignationMouvement);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FMouvement);
+                     end;
+                     finally
+                     CloseFile(FMouvementCopie);
+                     end;
+                     //*********************************************************
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FMouvement',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FMouvement',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureTypeFormule(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FTypeFormule');
+
+     ListeTypeFormule(FSTravauxFinAnnee.TableauNumTypeFormule);
+     FSTravauxFinAnnee.TableauNumTypeFormule.ColCount:=5;
+     FSTravauxFinAnnee.TableauNumTypeFormule.Cols[4].Text:='Num';
+     AjusterColWidth(FSTravauxFinAnnee.TableauNumTypeFormule,'','');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FTypeFormule';
+               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+               ActiverReouverture:=true;
+
+               try
+
+               if(TypeProcesControleReseaux='Réseaux')then
+               begin
+                    if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=false;
+                    end
+                    else
+                    if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=true;
+                    end
+                    else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+               end;
+
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     ChTypeFormuleCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FTypeFormuleCopie,ChTypeFormuleCopie);
+                     try
+                     if FileExists(ChTypeFormuleCopie)then
+                     Reset(FTypeFormuleCopie)
+                     else Rewrite(FTypeFormuleCopie);
+                     Seek(FTypeFormuleCopie,0);
+                     Truncate(FTypeFormuleCopie);
+
+                     ChTypeFormule:=Adresse;
+                     assignfile(FTypeFormule,ChTypeFormule);
+                     try
+                     if FileExists(ChTypeFormule)then
+                     Reset(FTypeFormule)
+                     else Rewrite(FTypeFormule);
+                     Seek(FTypeFormule,0);
+                     i:=0;
+                     while not eof(FTypeFormule)do
+                     begin
+                          Read(FTypeFormule,RTypeFormule);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RTypeFormuleCopie:=RTypeFormule;
+                          Seek(FTypeFormuleCopie,i);
+                          write(FTypeFormuleCopie,RTypeFormuleCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Type formule: '+RTypeFormule.DesignationTypeFormule);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FTypeFormule);
+                     end;
+                     finally
+                     CloseFile(FTypeFormuleCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeFormule',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeFormule',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureFormule(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R:integer;    CodeTypeFormule,TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FFormule');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauNumTypeFormule.RowCount-1)do
+               begin
+                    i:=0;
+                    CodeTypeFormule:=FSTravauxFinAnnee.TableauNumTypeFormule.Cells[2,R];
+                    TypeProces:='Business';
+                    FichierConserne:=CodeTypeFormule;
+                    if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                    begin
+                         AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                    end;
+
+                    TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                    ActiverReouverture:=true;
+
+                    try
+
+                    if(TypeProcesControleReseaux='Réseaux')then
+                    begin
+                         if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                         begin
+                              ActiverReouverture:=false;
+                         end
+                         else
+                         if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                         begin
+                              ActiverReouverture:=true;
+                         end
+                         else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                    end;
+
+                    if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(CodeTypeFormule)=true)then
+                    begin
+                          ChFormuleCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                          assignfile(FFormuleCopie,ChFormuleCopie);
+                          try
+                          if FileExists(ChFormuleCopie)then
+                          Reset(FFormuleCopie)
+                          else Rewrite(FFormuleCopie);
+                          Seek(FFormuleCopie,0);
+                          Truncate(FFormuleCopie);
+
+                          ChFormule:=Adresse;
+                          assignfile(FFormule,ChFormule);
+                          try
+                          if FileExists(ChFormule)then
+                          Reset(FFormule)
+                          else Rewrite(FFormule);
+                          Seek(FFormule,0);
+                          i:=0;
+                          while not eof(FFormule)do
+                          begin
+                               Read(FFormule,RFormule);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                               RFormuleCopie:=RFormule;
+                               Seek(FFormuleCopie,i);
+                               write(FFormuleCopie,RFormuleCopie);
+
+                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Formule: '+RFormule.Libelle);
+                          i:=i+1;
+                          end;
+                          finally
+                          CloseFile(FFormule);
+                          end;
+                          finally
+                          CloseFile(FFormuleCopie);
+                          end;
+                    end;
+
+                    if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,CodeTypeFormule,NewExercice,TypeProcesControleReseaux,i);
+
+                    except
+                    ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,CodeTypeFormule,NewExercice,TypeProcesControleReseaux,i);
+                    end;
+               R:=R+1;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureTypeAffichageFormuleNonVisible(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R,l:integer;
+     CodeTypeFormule,TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse,TableauConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FTypeAffichageFormuleNonVisible');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauNumTypeFormule.RowCount-1)do
+               begin
+                    for l:=0 to FSFormules.EditListeTableauConserne.Items.Capacity-1 do
+                    begin
+                         i:=0;
+                         TableauConserne:=FSFormules.EditListeTableauConserne.Items.Strings[l];
+                         CodeTypeFormule:=FSTravauxFinAnnee.TableauNumTypeFormule.Cells[2,R];
+                         TypeProces:='Business';
+                         FichierConserne:='FTypeAffichageFormuleNonVisible '+TableauConserne+' '+CodeTypeFormule;
+                         if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                         begin
+                              AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                         end;
+
+                         TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                         ActiverReouverture:=true;
+
+                         try
+
+                         if(TypeProcesControleReseaux='Réseaux')then
+                         begin
+                              if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                              begin
+                                   ActiverReouverture:=false;
+                              end
+                              else
+                              if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                              begin
+                                   ActiverReouverture:=true;
+                              end
+                              else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                         end;
+
+                         if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(CodeTypeFormule)=true)then
+                         begin
+                              ChTypeAffichageFormuleNonVisibleCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                              assignfile(FTypeAffichageFormuleNonVisibleCopie,ChTypeAffichageFormuleNonVisibleCopie);
+                              try
+                              if FileExists(ChTypeAffichageFormuleNonVisibleCopie)then
+                              Reset(FTypeAffichageFormuleNonVisibleCopie)
+                              else Rewrite(FTypeAffichageFormuleNonVisibleCopie);
+                              Seek(FTypeAffichageFormuleNonVisibleCopie,0);
+                              Truncate(FTypeAffichageFormuleNonVisibleCopie);
+
+                              ChTypeAffichageFormuleNonVisible:=Adresse;
+                              assignfile(FTypeAffichageFormuleNonVisible,ChTypeAffichageFormuleNonVisible);
+                              try
+                              if FileExists(ChTypeAffichageFormuleNonVisible)then
+                              Reset(FTypeAffichageFormuleNonVisible)
+                              else Rewrite(FTypeAffichageFormuleNonVisible);
+                              Seek(FTypeAffichageFormuleNonVisible,0);
+                              i:=0;
+                              while not eof(FTypeAffichageFormuleNonVisible)do
+                              begin
+                                   Read(FTypeAffichageFormuleNonVisible,RTypeAffichageFormuleNonVisible);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                   RTypeAffichageFormuleNonVisibleCopie:=RTypeAffichageFormuleNonVisible;
+                                   Seek(FTypeAffichageFormuleNonVisibleCopie,i);
+                                   write(FTypeAffichageFormuleNonVisibleCopie,RTypeAffichageFormuleNonVisibleCopie);           
+
+                                   FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('TypeAffichageFormuleNonVisible: '+RTypeAffichageFormuleNonVisible.TypeNonVisible);
+                              i:=i+1;
+                              end;
+                              finally
+                              CloseFile(FTypeAffichageFormuleNonVisible);
+                              end;
+                              finally
+                              CloseFile(FTypeAffichageFormuleNonVisibleCopie);
+                              end;
+                         end;
+
+                         if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierConserne,NewExercice,TypeProcesControleReseaux,i);
+
+                         except
+                         ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierConserne,NewExercice,TypeProcesControleReseaux,i);
+                         end;
+                    end;
+               R:=R+1;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureListeMouvement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R:integer;   OKTypeFormule,OKListeMouvement:boolean; TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse,ListePositionMouvementJustifierParAvis:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FListeMouvement');
+
+     ListePositionMouvementJustifierParAvis:='';//FonctionListePositionMouvementJustifierParAvis;
+
+     FSTravauxFinAnnee.TableauOrdreListeMouvement.ColCount:=2;
+     FSTravauxFinAnnee.TableauOrdreListeMouvement.Cols[0].Text:='Last';
+     FSTravauxFinAnnee.TableauOrdreListeMouvement.Cols[1].Text:='Next';
+     FSTravauxFinAnnee.TableauOrdreListeMouvement.RowCount:=2;
+     FSTravauxFinAnnee.TableauOrdreListeMouvement.Rows[1].Text:='';
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FListeMouvement';
+               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+               ActiverReouverture:=true;
+
+               try
+
+               if(TypeProcesControleReseaux='Réseaux')then
+               begin
+                    if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=false;
+                    end
+                    else
+                    if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=true;
+                    end
+                    else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+               end;
+
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     ChListeMouvementCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FListeMouvementCopie,ChListeMouvementCopie);
+                     try
+                     if FileExists(ChListeMouvementCopie)then
+                     Reset(FListeMouvementCopie)
+                     else Rewrite(FListeMouvementCopie);
+                     Seek(FListeMouvementCopie,0);
+                     Truncate(FListeMouvementCopie);
+
+                     ChListeMouvement:=Adresse;
+                     assignfile(FListeMouvement,ChListeMouvement);
+                     try
+                     if FileExists(ChListeMouvement)then
+                     Reset(FListeMouvement)
+                     else begin Showmessage('Attention ! '+ChListeMouvement+' n''existe pas !'); Exit; end;
+                     Seek(FListeMouvement,0);
+                     i:=0;
+                     while not eof(FListeMouvement)do
+                     begin
+                          Read(FListeMouvement,RListeMouvement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                          if(RListeMouvement.ValidationListeMouvement=true)and(strtointeger(Lastlaters(RListeMouvement.DateMouvement,4))>=strtointeger(NewExercice))then
+                          begin
+                               RListeMouvementCopie:=RListeMouvement;
+                               RListeMouvementCopie.OrdreListeMouvement:=i+1;
+                               RListeMouvementCopie.ListeNumAvis:='';
+                               RListeMouvementCopie.NumListeMouvement:=i+1;
+
+                               FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[0,i+1]:=inttostr(RListeMouvement.OrdreListeMouvement);
+                               FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[1,i+1]:=inttostr(RListeMouvementCopie.OrdreListeMouvement);
+
+                               R:=1;
+                               OKTypeFormule:=false;
+                               while(R<=FSTravauxFinAnnee.TableauNumTypeFormule.RowCount-1)and(OKTypeFormule=false)do
+                               begin
+                                    if(RListeMouvement.CodeTypeFormule=FSTravauxFinAnnee.TableauNumTypeFormule.Cells[2,R])then
+                                    begin
+                                         OKTypeFormule:=true;
+                                         FSTravauxFinAnnee.TableauNumTypeFormule.Cells[4,R]:=floattostr(strtointeger(FSTravauxFinAnnee.TableauNumTypeFormule.Cells[4,R])+1);
+                                         RListeMouvementCopie.NumListeMouvement:=strtointeger(FSTravauxFinAnnee.TableauNumTypeFormule.Cells[4,R]);
+                                    end;
+                               R:=R+1;
+                               end;
+
+                               if(OKTypeFormule=false)then FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Anomalie Réouverture liste mouvement: code Type formule liste mouvement non répertorié ! {'+RListeMouvement.CodeTypeFormule+'}');
+
+                               Seek(FListeMouvementCopie,i);
+                               write(FListeMouvementCopie,RListeMouvementCopie);
+
+                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Liste Mouvement: Date '+RListeMouvementCopie.DateMouvement+' Ordre '+inttostr(RListeMouvementCopie.OrdreListeMouvement)+' Num: '+inttostr(RListeMouvementCopie.OrdreListeMouvement));
+                               i:=i+1;
+                          end;
+                     end;
+                     finally
+                     CloseFile(FListeMouvement);
+                     end;
+                     finally
+                     CloseFile(FListeMouvementCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeMouvement',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeMouvement',NewExercice,TypeProcesControleReseaux,i);
+               end;
+
+               if(i>0)then FSTravauxFinAnnee.TableauOrdreListeMouvement.RowCount:=i+1
+                      else FSTravauxFinAnnee.TableauOrdreListeMouvement.RowCount:=2;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureDetailMouvement(TableauTypeMouvement,TableauListeBaseDonnees:TStringGrid; TOrdreLMNpluUN:TOrdreListeMouvementReouvertures; NewExercice:string; ActiverReouverture:boolean);
+var  i,R,l:integer;
+     NomMouvement,TypeProcesControleReseaux:string;
+     OKOrdreListeMouvement:boolean;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FDetailMouvement');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               for R:=1 to TableauTypeMouvement.RowCount-1 do
+               begin
+                    try
+
+                    i:=0;
+
+                    NomMouvement:='DétailMouvement '+TableauTypeMouvement.Cells[3,R];
+                    TypeProces:='Business';
+
+                    if not(ActiverReouvertureDetailMouvement(NomMouvement,NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+                    begin
+                         ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,NomMouvement,NewExercice,TypeProcesControleReseaux,i);
+                    end
+                    else
+                    begin
+                         FichierConcerne:=NomMouvement;
+                         if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                         begin
+                              AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+                         end;
+
+                         TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                         if(TypeProcesControleReseaux='Réseaux')then
+                         begin
+                              if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                              begin
+                                   ActiverReouverture:=false;
+                              end
+                              else
+                              if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                              begin
+                                   ActiverReouverture:=true;
+                              end
+                              else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                         end
+                         else ActiverReouverture:=true;
+
+                         if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(NomMouvement)=true)then
+                         begin
+                               OpenFParc(RParc);
+                               ChDetailMouvementCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+NomMouvement;
+
+                               assignfile(FDetailMouvementCopie,ChDetailMouvementCopie);
+                               try
+                               if FileExists(ChDetailMouvementCopie)then
+                               Reset(FDetailMouvementCopie)
+                               else Rewrite(FDetailMouvementCopie);
+                               Seek(FDetailMouvementCopie,0);
+                               Truncate(FDetailMouvementCopie);
+
+                               ChDetailMouvement:=Adresse;
+                               assignfile(FDetailMouvement,ChDetailMouvement);
+                               try
+                               if FileExists(ChDetailMouvement)then
+                               Reset(FDetailMouvement)
+                               else Rewrite(FDetailMouvement);
+                               Seek(FDetailMouvement,0);
+                               i:=0;
+                               while not eof(FDetailMouvement)do
+                               begin
+                                    Read(FDetailMouvement,RDetailMouvement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                    if strtointeger(Lastlaters(RDetailMouvement.DateMouvement,4))>=strtointeger(NewExercice)then
+                                    begin
+                                         RDetailMouvementCopie:=RDetailMouvement;
+                                         RDetailMouvementCopie.PositionDetailMouvement:=i;
+                                         RDetailMouvementCopie.NumDetailMouvement:=i+1;
+                                         RDetailMouvementCopie.OrdreListeMouvement:=i+1;
+                                         {l:=1;
+                                         OKOrdreListeMouvement:=false;
+                                         while(l<=FSTravauxFinAnnee.TableauOrdreListeMouvement.RowCount-1)and(OKOrdreListeMouvement=false)do
+                                         begin
+                                              if(RDetailMouvement.OrdreListeMouvement=strtointeger(FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[0,l]))then
+                                              begin
+                                                   OKOrdreListeMouvement:=true;
+                                                   RDetailMouvementCopie.OrdreListeMouvement:=strtointeger(FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[1,l]);
+                                              end;
+                                         l:=l+1;
+                                         end;}
+
+                                         if(RDetailMouvement.OrdreListeMouvement<=High(TOrdreLMNpluUN))then RDetailMouvementCopie.OrdreListeMouvement:=TOrdreLMNpluUN[RDetailMouvement.OrdreListeMouvement].OrdreListeMouvementExerciceNPlusUn;
+
+                                         Seek(FDetailMouvementCopie,i);
+                                         write(FDetailMouvementCopie,RDetailMouvementCopie);
+
+                                         FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add(NomMouvement+' '+RDetailMouvementCopie.DateMouvement+' N° '+inttostr(RDetailMouvementCopie.NumDetailMouvement)+' Article '+RDetailMouvementCopie.CodeArticle+RDetailMouvementCopie.DesignationArticle+' '+RDetailMouvementCopie.ReferenceArticle);
+                                         i:=i+1;
+                                    end;
+                               end;
+                               finally
+                               CloseFile(FDetailMouvement);
+                               end;
+                               finally
+                               CloseFile(FDetailMouvementCopie);
+                               end;
+                         end;
+
+                         if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,NomMouvement,NewExercice,TypeProcesControleReseaux,i);
+                    end;
+                    except
+                    ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,NomMouvement,NewExercice,TypeProcesControleReseaux,i);
+                    end;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureTypeAvis(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FTypeAvis');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FTypeAvis';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChTypeAvisCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FTypeAvisCopie,ChTypeAvisCopie);
+                           try
+                           if FileExists(ChTypeAvisCopie)then
+                           Reset(FTypeAvisCopie)
+                           else Rewrite(FTypeAvisCopie);
+                           Seek(FTypeAvisCopie,0);
+                           Truncate(FTypeAvisCopie);
+
+                           ChTypeAvis:=Adresse;
+                           assignfile(FTypeAvis,ChTypeAvis);
+                           try
+                           if FileExists(ChTypeAvis)then
+                           Reset(FTypeAvis)
+                           else Rewrite(FTypeAvis);
+                           Seek(FTypeAvis,0);
+                           i:=0;
+                           while not eof(FTypeAvis)do
+                           begin
+                                Read(FTypeAvis,RTypeAvis);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RTypeAvisCopie:=RTypeAvis;
+                                Seek(FTypeAvisCopie,i);
+                                write(FTypeAvisCopie,RTypeAvisCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Type Avis: '+RTypeAvis.DesignationTypeAvis);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FTypeAvis);
+                           end;
+                           finally
+                           CloseFile(FTypeAvisCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeAvis',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeAvis',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAvis(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R,l,m:integer;    OKOrdreListeMouvement,OKListeMouvement:boolean;   TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,AdresseBaseAvis,TypeProcesControleReseaux:string;
+begin
+     FichierConserne:='FAvis';
+     if not(InclureFinanceTiersAvis(TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierConserne,NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAvis');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                    if not(FunctionAdresseProces('Business','FBaseAvis','',AdresseBaseAvis,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                    begin
+                          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+'FBaseAvis'+' recherché !');
+                    end;
+                    ChBaseAvis:=AdresseBaseAvis;
+                    assignfile(FBaseAvis,ChBaseAvis);
+                    try
+                    if FileExists(ChBaseAvis)then
+                    Reset(FBaseAvis)
+                    else Rewrite(FBaseAvis);
+                    Seek(FBaseAvis,0);
+                    while not eof(FBaseAvis)do
+                    begin
+                         Read(FBaseAvis,RBaseAvis);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                         if(RBaseAvis.DesignationBaseAvis<>'')then
+                         begin
+                               try
+
+                               TypeProces:='Business';
+                               FichierConserne:=RBaseAvis.DesignationBaseAvis;
+                               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                               begin
+                                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                               end;
+
+                               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                               ActiverReouverture:=true;
+
+                               if(TypeProcesControleReseaux='Réseaux')then
+                               begin
+                                    if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                                    begin
+                                         ActiverReouverture:=false;
+                                    end
+                                    else
+                                    if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                                    begin
+                                         ActiverReouverture:=true;
+                                    end
+                                    else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                               end;
+
+                               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                               begin
+                                     ChAvisCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                                     assignfile(FAvisCopie,ChAvisCopie);
+                                     try
+                                     if FileExists(ChAvisCopie)
+                                     then Reset(FAvisCopie)
+                                     else Rewrite(FAvisCopie);
+                                     Seek(FAvisCopie,0);
+                                     Truncate(FAvisCopie);
+                                     i:=0;
+
+                                     if(TypeProcesControleReseaux<>'Réseaux')then
+                                     begin
+                                     for R:=1 to FSTravauxFinAnnee.TableauSyntheseTiers.RowCount-1 do
+                                     begin
+                                          if(datecorrecte(FSTravauxFinAnnee.TableauSyntheseTiers.Cells[2,R])and(FSTravauxFinAnnee.TableauSyntheseTiers.Cells[3,R]<>''))then
+                                          begin
+                                          RAvisCopie.NumAvis:=i+1;
+                                          RAvisCopie.DateAvis:=FSTravauxFinAnnee.TableauSyntheseTiers.Cells[2,R];
+                                          RAvisCopie.DateExecute:=FSTravauxFinAnnee.TableauSyntheseTiers.Cells[2,R];
+                                          RAvisCopie.PositionTypeAvis:=-1;
+                                          RAvisCopie.DesignationTypeAvis:='';
+                                          RAvisCopie.PositionModePaiement:='-1';
+                                          RAvisCopie.ModePaiement:='';
+                                          RAvisCopie.NumPiece:='';
+                                          RAvisCopie.PositionDomiciliationAvis:='-1';
+                                          RAvisCopie.NumDomiciliationAvis:='-1';
+                                          RAvisCopie.DomiciliationAvis:='';
+                                          RAvisCopie.PositionDomiciliationPiece:='-1';
+                                          RAvisCopie.NumDomiciliationPiece:='-1';
+                                          RAvisCopie.DomiciliationPiece:='';
+                                          RAvisCopie.TypeProces:=FSTravauxFinAnnee.TableauSyntheseTiers.Cells[4,R];
+                                          RAvisCopie.AvisConcerneTiers:=FSTravauxFinAnnee.TableauSyntheseTiers.Cells[8,R];
+                                          RAvisCopie.PositionTiers:=strtointeger(FSTravauxFinAnnee.TableauSyntheseTiers.Cells[11,R]);
+                                          RAvisCopie.CodeTiers:=FSTravauxFinAnnee.TableauSyntheseTiers.Cells[5,R];
+                                          RAvisCopie.IdentificateurTiers:=FSTravauxFinAnnee.TableauSyntheseTiers.Cells[10,R];
+                                          RAvisCopie.NatureDepense:=FSTravauxFinAnnee.TableauSyntheseTiers.Cells[6,R];
+                                          RAvisCopie.CompteImputation:='';
+                                          RAvisCopie.DebitCredit:=FSTravauxFinAnnee.TableauSyntheseTiers.Cells[7,R];
+                                          RAvisCopie.Montant:=strtoreal(FSTravauxFinAnnee.TableauSyntheseTiers.Cells[3,R]);
+                                          RAvisCopie.PositionProjetFinance:='';
+                                          RAvisCopie.NumProjetFinance:='';
+                                          RAvisCopie.DesignationProjetFinance:='';
+                                          RAvisCopie.PositionFicheTechnique:='';
+                                          RAvisCopie.NumFicheTechnique:='';
+                                          RAvisCopie.PositionRubrique:='';
+                                          RAvisCopie.NumRubrique:='';
+                                          RAvisCopie.PositionPlanificateur:='';
+                                          RAvisCopie.NumPlanificateur:='';
+                                          RAvisCopie.DesignationDocumentBase:='';
+                                          RAvisCopie.NumeroDocumentBase:='';
+                                          RAvisCopie.DateDocumentBase:='';
+                                          RAvisCopie.IntituleOperationBase:='';
+                                          RAvisCopie.Signataire:='';
+                                          RAvisCopie.ValiditeAvis:=true;
+                                          RAvisCopie.Origine:='';
+
+                                          Seek(FAvisCopie,i);
+                                          write(FAvisCopie,RAvisCopie);
+                                          i:=i+1;
+                                          end;
+                                     end;
+                                     end;
+
+                                     for R:=1 to FSTravauxFinAnnee.TableauInventaireDomiciliation.RowCount-1 do
+                                     begin
+                                          if(FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[6,R]<>'')then
+                                          begin
+                                          RAvisCopie.NumAvis:=i+1;
+                                          RAvisCopie.DateAvis:='31/12/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+                                          RAvisCopie.DateExecute:='31/12/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+                                          RAvisCopie.PositionTypeAvis:=-1;
+                                          RAvisCopie.DesignationTypeAvis:='';
+                                          RAvisCopie.PositionModePaiement:='-1';
+                                          RAvisCopie.ModePaiement:='';
+                                          RAvisCopie.NumPiece:='';
+                                          RAvisCopie.PositionDomiciliationAvis:='';
+                                          RAvisCopie.NumDomiciliationAvis:=FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[1,R];
+                                          RAvisCopie.DomiciliationAvis:=FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[2,R];
+                                          RAvisCopie.PositionDomiciliationPiece:='';
+                                          RAvisCopie.NumDomiciliationPiece:=FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[1,R];
+                                          RAvisCopie.DomiciliationPiece:=FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[2,R];
+                                          RAvisCopie.TypeProces:='';
+                                          RAvisCopie.AvisConcerneTiers:='';
+                                          RAvisCopie.PositionTiers:=0;
+                                          RAvisCopie.CodeTiers:='';
+                                          RAvisCopie.IdentificateurTiers:='';
+                                          RAvisCopie.NatureDepense:='Inventaire au 31/12/'+ExerciceAnnee;;
+                                          RAvisCopie.CompteImputation:='';
+                                          RAvisCopie.DebitCredit:=FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[5,R];
+                                          RAvisCopie.Montant:=strtoreal(FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[6,R]);
+                                          RAvisCopie.PositionProjetFinance:='';
+                                          RAvisCopie.NumProjetFinance:='';
+                                          RAvisCopie.DesignationProjetFinance:='';
+                                          RAvisCopie.PositionFicheTechnique:='';
+                                          RAvisCopie.NumFicheTechnique:='';
+                                          RAvisCopie.PositionRubrique:='';
+                                          RAvisCopie.NumRubrique:='';
+                                          RAvisCopie.PositionPlanificateur:='';
+                                          RAvisCopie.NumPlanificateur:='';
+                                          RAvisCopie.DesignationDocumentBase:='';
+                                          RAvisCopie.NumeroDocumentBase:='';
+                                          RAvisCopie.DateDocumentBase:='';
+                                          RAvisCopie.IntituleOperationBase:='';
+                                          RAvisCopie.Signataire:='';
+                                          RAvisCopie.ValiditeAvis:=true;
+                                          RAvisCopie.Origine:='';
+
+                                          Seek(FAvisCopie,i);
+                                          write(FAvisCopie,RAvisCopie);
+                                          i:=i+1;
+                                          end;
+                                     end;
+
+                                     ChAvis:=Adresse;
+                                     assignfile(FAvis,ChAvis);
+                                     try
+                                     if FileExists(ChAvis)then
+                                     Reset(FAvis)
+                                     else Rewrite(FAvis);
+                                     Seek(FAvis,0);
+                                     //i:=0;
+                                     while not eof(FAvis)do
+                                     begin
+                                          Read(FAvis,RAvis);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                          if(strtointeger(Lastlaters(RAvis.DateAvis,4))>=strtointeger(NewExercice))and(RAvis.ValiditeAvis=true)then
+                                          begin
+                                               RAvisCopie:=RAvis;
+                                               RAvisCopie.NumAvis:=i+1;
+                                               RAvisCopie.Origine:='';
+                                               Seek(FAvisCopie,i);
+                                               write(FAvisCopie,RAvisCopie);
+
+                                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Avis: '+RAvisCopie.DesignationTypeAvis+' '+inttostr(RAvisCopie.NumAvis));
+                                          i:=i+1;
+                                          end;
+                                     end;
+                                     finally
+                                     CloseFile(FAvis);
+                                     end;
+                                     finally
+                                     CloseFile(FAvisCopie);
+                                     end;
+                               end;
+
+                               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierConserne,NewExercice,TypeProcesControleReseaux,i);
+
+                               except
+                                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierConserne,NewExercice,TypeProcesControleReseaux,i);
+                               end;
+                         end;
+                    end;
+                    finally
+                    closefile(FBaseAvis);
+                    end;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAgence(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAgence');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FAgence';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChAgenceCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FAgence';
+                     assignfile(FAgenceCopie,ChAgenceCopie);
+                     try
+                     if FileExists(ChAgenceCopie)
+                     then Reset(FAgenceCopie)
+                     else Rewrite(FAgenceCopie);
+                     Seek(FAgenceCopie,0);
+                     Truncate(FAgenceCopie);
+
+                     ChAgence:=RParc.Parcours+'\'+Exercice+'FAgence';
+                     assignfile(FAgence,ChAgence);
+                     try
+                     if FileExists(ChAgence)then
+                     Reset(FAgence)
+                     else Rewrite(FAgence);
+                     Seek(FAgence,0);
+                     i:=0;
+                     while not eof(FAgence)do
+                     begin
+                          Read(FAgence,RAgence);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RAgenceCopie:=RAgence;
+                          Seek(FAgenceCopie,i);
+                          write(FAgenceCopie,RAgenceCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Agence: '+RAgence.LibelleAgence);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FAgence);
+                     end;
+                     finally
+                     CloseFile(FAgenceCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAgence',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAgence',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureBanqueGlobal(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FBanqueGlobal');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FBanqueGlobal';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChBanqueGlobalCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FBanqueGlobal';
+                     assignfile(FBanqueGlobalCopie,ChBanqueGlobalCopie);
+                     try
+                     if FileExists(ChBanqueGlobalCopie)then
+                     Reset(FBanqueGlobalCopie)
+                     else Rewrite(FBanqueGlobalCopie);
+                     Seek(FBanqueGlobalCopie,0);
+                     Truncate(FBanqueGlobalCopie);
+
+                     ChBanqueGlobal:=RParc.Parcours+'\'+Exercice+'FBanqueGlobal';
+                     assignfile(FBanqueGlobal,ChBanqueGlobal);
+                     try
+                     if FileExists(ChBanqueGlobal)then
+                     Reset(FBanqueGlobal)
+                     else Rewrite(FBanqueGlobal);
+                     Seek(FBanqueGlobal,0);
+                     i:=0;
+                     while not eof(FBanqueGlobal)do
+                     begin
+                          Read(FBanqueGlobal,RBanqueGlobal);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RBanqueGlobalCopie:=RBanqueGlobal;
+                          Seek(FBanqueGlobalCopie,i);
+                          write(FBanqueGlobalCopie,RBanqueGlobalCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Banque: '+RBanqueGlobal.LibelleBanque);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FBanqueGlobal);
+                     end;
+                     finally
+                     CloseFile(FBanqueGlobalCopie);
+                     end;
+               end;
+               
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FBanqueGlobal',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FBanqueGlobal',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureBaremeTaxeAjouter(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;   TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FBaremeTaxeAjouter');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FBaremeTaxeAjouter';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChBaremeTaxeAjouterCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FBaremeTaxeAjouter';
+                     assignfile(FBaremeTaxeAjouterCopie,ChBaremeTaxeAjouterCopie);
+                     try
+                     if FileExists(ChBaremeTaxeAjouterCopie)then
+                     Reset(FBaremeTaxeAjouterCopie)
+                     else Rewrite(FBaremeTaxeAjouterCopie);
+                     Seek(FBaremeTaxeAjouterCopie,0);
+                     Truncate(FBaremeTaxeAjouterCopie);
+
+                     ChBaremeTaxeAjouter:=RParc.Parcours+'\'+Exercice+'FBaremeTaxeAjouter';
+                     assignfile(FBaremeTaxeAjouter,ChBaremeTaxeAjouter);
+                     try
+                     if FileExists(ChBaremeTaxeAjouter)then
+                     Reset(FBaremeTaxeAjouter)
+                     else Rewrite(FBaremeTaxeAjouter);
+                     Seek(FBaremeTaxeAjouter,0);
+                     i:=0;
+                     while not eof(FBaremeTaxeAjouter)do
+                     begin
+                          Read(FBaremeTaxeAjouter,RBaremeTaxeAjouter);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RBaremeTaxeAjouterCopie:=RBaremeTaxeAjouter;
+                          Seek(FBaremeTaxeAjouterCopie,i);
+                          write(FBaremeTaxeAjouterCopie,RBaremeTaxeAjouterCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Taxe ajouté: '+inttostr(RBaremeTaxeAjouter.PositionBaremeTaxeAjouter));
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FBaremeTaxeAjouter);
+                     end;
+                     finally
+                     CloseFile(FBaremeTaxeAjouterCopie);
+                     end;
+               end;
+               
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FBaremeTaxeAjouter',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FBaremeTaxeAjouter',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureParametreTaxeAjoute(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FParametreTaxeAjoute');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FParametreTaxeAjoute';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChParametreTaxeAjouteCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FParametreTaxeAjoute';
+                     assignfile(FParametreTaxeAjouteCopie,ChParametreTaxeAjouteCopie);
+                     try
+                     if FileExists(ChParametreTaxeAjouteCopie)then
+                     Reset(FParametreTaxeAjouteCopie)
+                     else Rewrite(FParametreTaxeAjouteCopie);
+                     Seek(FParametreTaxeAjouteCopie,0);
+                     Truncate(FParametreTaxeAjouteCopie);
+
+                     ChParametreTaxeAjoute:=RParc.Parcours+'\'+Exercice+'FParametreTaxeAjoute';
+                     assignfile(FParametreTaxeAjoute,ChParametreTaxeAjoute);
+                     try
+                     if FileExists(ChParametreTaxeAjoute)then
+                     Reset(FParametreTaxeAjoute)
+                     else Rewrite(FParametreTaxeAjoute);
+                     Seek(FParametreTaxeAjoute,0);
+                     i:=0;
+                     while not eof(FParametreTaxeAjoute)do
+                     begin
+                          Read(FParametreTaxeAjoute,RParametreTaxeAjoute);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RParametreTaxeAjouteCopie:=RParametreTaxeAjoute;
+                          Seek(FParametreTaxeAjouteCopie,i);
+                          write(FParametreTaxeAjouteCopie,RParametreTaxeAjouteCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Paramètre Taxe Ajouté: '+RParametreTaxeAjoute.FichierLocalisationGeographique);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FParametreTaxeAjoute);
+                     end;
+                     finally
+                     CloseFile(FParametreTaxeAjouteCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FParametreTaxeAjoute',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FParametreTaxeAjoute',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureLocalisationGeographique(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R:integer;  Localisation,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FLocalisationGeographique');
+
+     FSTravauxFinAnnee.TableauLocalisationGeographique.ColCount:=1;
+     FSTravauxFinAnnee.TableauLocalisationGeographique.Cols[0].Text:='Localisation';
+     FSTravauxFinAnnee.TableauLocalisationGeographique.RowCount:=6;
+     FSTravauxFinAnnee.TableauLocalisationGeographique.Rows[1].Text:='FPays';
+     FSTravauxFinAnnee.TableauLocalisationGeographique.Rows[2].Text:='FWilaya';
+     FSTravauxFinAnnee.TableauLocalisationGeographique.Rows[3].Text:='FDaira';
+     FSTravauxFinAnnee.TableauLocalisationGeographique.Rows[4].Text:='FCommune';
+     FSTravauxFinAnnee.TableauLocalisationGeographique.Rows[5].Text:='FZone';
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               for R:=1 to FSTravauxFinAnnee.TableauLocalisationGeographique.RowCount+-1 do
+               begin
+                    try
+
+                    i:=0;
+                    TypeProcesControleReseaux:='';
+                    Localisation:=FSTravauxFinAnnee.TableauLocalisationGeographique.Cells[0,R];
+                    if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(Localisation)=true)then
+                    begin
+                          OpenFParc(RParc);
+                          ChLocalisationGeographiqueCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+Localisation;
+                          assignfile(FLocalisationGeographiqueCopie,ChLocalisationGeographiqueCopie);
+                          try
+                          if FileExists(ChLocalisationGeographiqueCopie)then
+                          Reset(FLocalisationGeographiqueCopie)
+                          else Rewrite(FLocalisationGeographiqueCopie);
+                          Seek(FLocalisationGeographiqueCopie,0);
+                          Truncate(FLocalisationGeographiqueCopie);
+
+                          ChLocalisationGeographique:=RParc.Parcours+'\'+Exercice+Localisation;
+                          assignfile(FLocalisationGeographique,ChLocalisationGeographique);
+                          try
+                          if FileExists(ChLocalisationGeographique)then
+                          Reset(FLocalisationGeographique)
+                          else Rewrite(FLocalisationGeographique);
+                          Seek(FLocalisationGeographique,0);
+                          i:=0;
+                          while not eof(FLocalisationGeographique)do
+                          begin
+                               Read(FLocalisationGeographique,RLocalisationGeographique);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                               RLocalisationGeographiqueCopie:=RLocalisationGeographique;
+                               Seek(FLocalisationGeographiqueCopie,i);
+                               write(FLocalisationGeographiqueCopie,RLocalisationGeographiqueCopie);
+
+                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Localisation: '+RLocalisationGeographique.IntitulleLocalisationGeographique);
+                          i:=i+1;
+                          end;
+                          finally
+                          CloseFile(FLocalisationGeographique);
+                          end;
+                          finally
+                          CloseFile(FLocalisationGeographiqueCopie);
+                          end;
+                    end;
+                    
+                    if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,Localisation,NewExercice,TypeProcesControleReseaux,i);
+
+                    except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,Localisation,NewExercice,TypeProcesControleReseaux,i);
+               end;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureRegistreCompte(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R:integer;       RegistreComptes,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FRegistreCompte');
+
+     FSTravauxFinAnnee.TableauRegistreComptes.ColCount:=1;
+     FSTravauxFinAnnee.TableauRegistreComptes.Cols[0].Text:='Registre Comptes';
+     FSTravauxFinAnnee.TableauRegistreComptes.RowCount:=13;
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[1].Text:='FClassePlanComptable';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[2].Text:='FSousClassePlanComptable';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[3].Text:='FCategoriePlanComptable';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[4].Text:='FSousCategoriePlanComptable';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[5].Text:='FFamillePlanComptable';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[6].Text:='FSousFamillePlanComptable';
+
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[7].Text:='FClasseMarche';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[8].Text:='FSousClasseMarche';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[9].Text:='FCategorieMarche';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[10].Text:='FSousCategorieMarche';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[11].Text:='FFamilleMarche';
+     FSTravauxFinAnnee.TableauRegistreComptes.Rows[12].Text:='FSousFamilleMarche';
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               for R:=1 to FSTravauxFinAnnee.TableauRegistreComptes.RowCount-1 do
+                begin
+                    try
+
+                    {if not(ActiverReouverturePlanComptable(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+                    begin
+                         ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FSTravauxFinAnnee.TableauRegistreComptes.Cells[0,R],NewExercice,TypeProcesControleReseaux,i);
+                    end
+                    else}
+                    begin
+                         i:=0;
+
+                         TypeProces:='Business';
+                         RegistreComptes:=FSTravauxFinAnnee.TableauRegistreComptes.Cells[0,R];
+
+                         if not(FunctionAdresseProces(TypeProces,RegistreComptes,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                          begin
+                               AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+RegistreComptes+' recherché !');
+                          end;
+
+                          TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                          ActiverReouverture:=true;
+
+                          if(TypeProcesControleReseaux='Réseaux')then
+                          begin
+                               if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                               begin
+                                    ActiverReouverture:=false;
+                               end
+                               else
+                               if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                               begin
+                                    ActiverReouverture:=true;
+                               end
+                               else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                          end;
+
+                         if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(RegistreComptes)=true)then
+                         begin
+                              OpenFParc(RParc);
+                              ChRegistreCompteCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+RegistreComptes;
+                              assignfile(FRegistreCompteCopie,ChRegistreCompteCopie);
+                              try
+                              if FileExists(ChRegistreCompteCopie)then
+                              Reset(FRegistreCompteCopie)
+                              else Rewrite(FRegistreCompteCopie);
+                              Seek(FRegistreCompteCopie,0);
+                              Truncate(FRegistreCompteCopie);
+
+                              ChRegistreCompte:=RParc.Parcours+'\'+Exercice+RegistreComptes;
+                              assignfile(FRegistreCompte,ChRegistreCompte);
+                              try
+                              if FileExists(ChRegistreCompte)then
+                              Reset(FRegistreCompte)
+                              else Rewrite(FRegistreCompte);
+                              Seek(FRegistreCompte,0);
+                              i:=0;
+                              while not eof(FRegistreCompte)do
+                              begin
+                                   Read(FRegistreCompte,RRegistreCompte);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                   RRegistreCompteCopie:=RRegistreCompte;
+                                   Seek(FRegistreCompteCopie,i);
+                                   write(FRegistreCompteCopie,RRegistreCompteCopie);
+
+                                   FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Registre Compte: '+RRegistreCompte.Designation);
+                              i:=i+1;
+                              end;
+                              finally
+                              CloseFile(FRegistreCompte);
+                              end;
+                              finally
+                              CloseFile(FRegistreCompteCopie);
+                              end;
+                         end;
+
+                         ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,RegistreComptes,NewExercice,TypeProcesControleReseaux,i);
+                    end;
+                    
+                    except
+                          ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,RegistreComptes,NewExercice,TypeProcesControleReseaux,i);
+                    end;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureTempsAlerteAvantAction(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FTempsAlerteAvantAction');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='TempsAlerteAvantAction';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChTempsAlerteAvantActionCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'TempsAlerteAvantAction';
+                     assignfile(FTempsAlerteAvantActionCopie,ChTempsAlerteAvantActionCopie);
+                     try
+                     if FileExists(ChTempsAlerteAvantActionCopie)then
+                     Reset(FTempsAlerteAvantActionCopie)
+                     else Rewrite(FTempsAlerteAvantActionCopie);
+                     Seek(FTempsAlerteAvantActionCopie,0);
+                     Truncate(FTempsAlerteAvantActionCopie);
+
+                     ChTempsAlerteAvantAction:=RParc.Parcours+'\'+Exercice+'TempsAlerteAvantAction';
+                     assignfile(FTempsAlerteAvantAction,ChTempsAlerteAvantAction);
+                     try
+                     if FileExists(ChTempsAlerteAvantAction)then
+                     Reset(FTempsAlerteAvantAction)
+                     else Rewrite(FTempsAlerteAvantAction);
+                     Seek(FTempsAlerteAvantAction,0);
+                     i:=0;
+                     while not eof(FTempsAlerteAvantAction)do
+                     begin
+                          Read(FTempsAlerteAvantAction,RTempsAlerteAvantAction);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RTempsAlerteAvantActionCopie:=RTempsAlerteAvantAction;
+                          Seek(FTempsAlerteAvantActionCopie,i);
+                          write(FTempsAlerteAvantActionCopie,RTempsAlerteAvantActionCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Alerte: '+RTempsAlerteAvantAction.TypeProces+' '+RTempsAlerteAvantAction.ActionSourceAlerte+' '+RTempsAlerteAvantAction.UniteTempsAlerte);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FTempsAlerteAvantAction);
+                     end;
+                     finally
+                     CloseFile(FTempsAlerteAvantActionCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'TempsAlerteAvantAction',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'TempsAlerteAvantAction',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureUniteFonds(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FUniteFonds');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FUniteFonds';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChUniteFondsCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FUniteFonds';
+                     assignfile(FUniteFondsCopie,ChUniteFondsCopie);
+                     try
+                     if FileExists(ChUniteFondsCopie)then
+                     Reset(FUniteFondsCopie)
+                     else Rewrite(FUniteFondsCopie);
+                     Seek(FUniteFondsCopie,0);
+                     Truncate(FUniteFondsCopie);
+
+                     ChUniteFonds:=RParc.Parcours+'\'+Exercice+'FUniteFonds';
+                     assignfile(FUniteFonds,ChUniteFonds);
+                     try
+                     if FileExists(ChUniteFonds)then
+                     Reset(FUniteFonds)
+                     else Rewrite(FUniteFonds);
+                     Seek(FUniteFonds,0);
+                     i:=0;
+                     while not eof(FUniteFonds)do
+                     begin
+                          Read(FUniteFonds,RUniteFonds);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RUniteFondsCopie:=RUniteFonds;
+                          Seek(FUniteFondsCopie,i);
+                          write(FUniteFondsCopie,RUniteFondsCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Unité de fonds: '+RUniteFonds.DesignationUniteFonds);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FUniteFonds);
+                     end;
+                     finally
+                     CloseFile(FUniteFondsCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureTypeUniteFonds(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FTypeUniteFonds');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FTypeUniteFonds';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChTypeUniteFondsCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FTypeUniteFonds';
+                     assignfile(FTypeUniteFondsCopie,ChTypeUniteFondsCopie);
+                     try
+                     if FileExists(ChTypeUniteFondsCopie)then
+                     Reset(FTypeUniteFondsCopie)
+                     else Rewrite(FTypeUniteFondsCopie);
+                     Seek(FTypeUniteFondsCopie,0);
+                     Truncate(FTypeUniteFondsCopie);
+
+                     ChTypeUniteFonds:=RParc.Parcours+'\'+Exercice+'FTypeUniteFonds';
+                     assignfile(FTypeUniteFonds,ChTypeUniteFonds);
+                     try
+                     if FileExists(ChTypeUniteFonds)then
+                     Reset(FTypeUniteFonds)
+                     else Rewrite(FTypeUniteFonds);
+                     Seek(FTypeUniteFonds,0);
+                     i:=0;
+                     while not eof(FTypeUniteFonds)do
+                     begin
+                          Read(FTypeUniteFonds,RTypeUniteFonds);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RTypeUniteFondsCopie:=RTypeUniteFonds;
+                          Seek(FTypeUniteFondsCopie,i);
+                          write(FTypeUniteFondsCopie,RTypeUniteFondsCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Type unité de fonds: '+RTypeUniteFonds.DesignationTypeUniteFonds);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FTypeUniteFonds);
+                     end;
+                     finally
+                     CloseFile(FTypeUniteFondsCopie);
+                     end;
+               end;
+               
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTypeUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAffectationCompteur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;
+     TypeProcesControleReseaux,FichierConserne:string;
+     OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAffectationCompteur',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAffectationCompteur');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FAffectationCompteur';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChAffectationCompteurCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FAffectationCompteur';
+                     assignfile(FAffectationCompteurCopie,ChAffectationCompteurCopie);
+                     try
+                     if FileExists(ChAffectationCompteurCopie)then
+                     Reset(FAffectationCompteurCopie)
+                     else Rewrite(FAffectationCompteurCopie);
+                     Seek(FAffectationCompteurCopie,0);
+                     Truncate(FAffectationCompteurCopie);
+
+                     ChAffectationCompteur:=RParc.Parcours+'\'+Exercice+'FAffectationCompteur';
+                     assignfile(FAffectationCompteur,ChAffectationCompteur);
+                     try
+                     if FileExists(ChAffectationCompteur)then
+                     Reset(FAffectationCompteur)
+                     else Rewrite(FAffectationCompteur);
+                     Seek(FAffectationCompteur,0);
+                     i:=0;
+                     while not eof(FAffectationCompteur)do
+                     begin                              
+                          Read(FAffectationCompteur,RAffectationCompteur);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RAffectationCompteurCopie:=RAffectationCompteur;
+                          Seek(FAffectationCompteurCopie,i);
+                          write(FAffectationCompteurCopie,RAffectationCompteurCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Afféctation compteur: '+RAffectationCompteur.DesignationAffectationCompteur);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FAffectationCompteur);
+                     end;
+                     finally
+                     CloseFile(FAffectationCompteurCopie);
+                     end;
+               end;
+               
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAffectationCompteur',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAffectationCompteur',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureGroupeTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse:string;
+begin
+     {if not(ActiverReouvertureTiers(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FGroupeTiers',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;}
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FGroupeTiers');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FGroupeTiers';
+               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+               if(TypeProcesControleReseaux='Réseaux')then
+               begin
+                    if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)
+                    then ActiverReouverture:=true
+                    else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+               end;
+
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     ChGroupeTiersCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FGroupeTiersCopie,ChGroupeTiersCopie);
+                     try
+                     if FileExists(ChGroupeTiersCopie)then
+                     Reset(FGroupeTiersCopie)
+                     else Rewrite(FGroupeTiersCopie);
+                     Seek(FGroupeTiersCopie,0);
+                     Truncate(FGroupeTiersCopie);
+
+                     ChGroupeTiers:=Adresse;
+                     assignfile(FGroupeTiers,ChGroupeTiers);
+                     try
+                     if FileExists(ChGroupeTiers)then
+                     Reset(FGroupeTiers)
+                     else Rewrite(FGroupeTiers);
+                     Seek(FGroupeTiers,0);
+                     i:=0;
+                     while not eof(FGroupeTiers)do
+                     begin
+                          Read(FGroupeTiers,RGroupeTiers);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RGroupeTiersCopie:=RGroupeTiers;
+                          Seek(FGroupeTiersCopie,i);
+                          write(FGroupeTiersCopie,RGroupeTiersCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Groupe tiers: '+RGroupeTiers.DesignationGroupeTiers);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FGroupeTiers);
+                     end;
+                     finally
+                     CloseFile(FGroupeTiersCopie);
+                     end;
+               end;
+
+               ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FGroupeTiers',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FGroupeTiers',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureListeGroupeTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     {if not(ActiverReouvertureTiers(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeGroupeTiers',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;}
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FListeGroupeTiers');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FListeGroupeTiers';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChListeGroupeTiersCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FListeGroupeTiers';
+                     assignfile(FListeGroupeTiersCopie,ChListeGroupeTiersCopie);
+                     try
+                     if FileExists(ChListeGroupeTiersCopie)then
+                     Reset(FListeGroupeTiersCopie)
+                     else Rewrite(FListeGroupeTiersCopie);
+                     Seek(FListeGroupeTiersCopie,0);
+                     Truncate(FListeGroupeTiersCopie);
+
+                     ChListeGroupeTiers:=RParc.Parcours+'\'+Exercice+'FListeGroupeTiers';
+                     assignfile(FListeGroupeTiers,ChListeGroupeTiers);
+                     try
+                     if FileExists(ChListeGroupeTiers)then
+                     Reset(FListeGroupeTiers)
+                     else Rewrite(FListeGroupeTiers);
+                     Seek(FListeGroupeTiers,0);
+                     i:=0;
+                     while not eof(FListeGroupeTiers)do
+                     begin
+                          Read(FListeGroupeTiers,RListeGroupeTiers);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RListeGroupeTiersCopie:=RListeGroupeTiers;
+                          Seek(FListeGroupeTiersCopie,i);
+                          write(FListeGroupeTiersCopie,RListeGroupeTiersCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Liste G.Tiers: '+RListeGroupeTiers.TypeProces+' '+RListeGroupeTiers.FichierConcerneTiers+' '+RListeGroupeTiers.CodeTiers);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FListeGroupeTiers);
+                     end;
+                     finally
+                     CloseFile(FListeGroupeTiersCopie);
+                     end;
+               end;
+
+               ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeGroupeTiers',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeGroupeTiers',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureDomiciliation(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FDomiciliation');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FDomiciliation';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)
+                          then ActiverReouverture:=true
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChDomiciliationCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FDomiciliationCopie,ChDomiciliationCopie);
+                           try
+                           if FileExists(ChDomiciliationCopie)then
+                           Reset(FDomiciliationCopie)
+                           else Rewrite(FDomiciliationCopie);
+                           Seek(FDomiciliationCopie,0);
+                           Truncate(FDomiciliationCopie);
+
+                           //OpenFParc(RParc);
+                           //ChDomiciliation:=RParc.Parcours+'\'+Exercice+'FDomiciliation';
+                           ChDomiciliation:=Adresse;
+                           assignfile(FDomiciliation,ChDomiciliation);
+                           try
+                           if FileExists(ChDomiciliation)then
+                           Reset(FDomiciliation)
+                           else Rewrite(FDomiciliation);
+                           Seek(FDomiciliation,0);
+                           i:=0;
+                           while not eof(FDomiciliation)do
+                           begin
+                                Read(FDomiciliation,RDomiciliation);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RDomiciliationCopie:=RDomiciliation;
+                                Seek(FDomiciliationCopie,i);
+                                write(FDomiciliationCopie,RDomiciliationCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Domiciliation: '+RDomiciliation.DesignationDomiciliation);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FDomiciliation);
+                           end;
+                           finally
+                           CloseFile(FDomiciliationCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDomiciliation',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDomiciliation',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureFormulairePreselection(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FFormulairePreselection');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FFormulairePreselection';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChFormulairePreselectionCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FFormulairePreselection';
+                     assignfile(FFormulairePreselectionCopie,ChFormulairePreselectionCopie);
+                     try
+                     if FileExists(ChFormulairePreselectionCopie)then
+                     Reset(FFormulairePreselectionCopie)
+                     else Rewrite(FFormulairePreselectionCopie);
+                     Seek(FFormulairePreselectionCopie,0);
+                     Truncate(FFormulairePreselectionCopie);
+
+                     ChFormulairePreselection:=RParc.Parcours+'\'+Exercice+'FFormulairePreselection';
+                     assignfile(FFormulairePreselection,ChFormulairePreselection);
+                     try
+                     if FileExists(ChFormulairePreselection)then
+                     Reset(FFormulairePreselection)
+                     else Rewrite(FFormulairePreselection);
+                     Seek(FFormulairePreselection,0);
+                     i:=0;
+                     while not eof(FFormulairePreselection)do
+                     begin
+                          Read(FFormulairePreselection,RFormulairePreselection);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(RFormulairePreselection.Accord='Favorable')then
+                          begin
+                               RFormulairePreselectionCopie:=RFormulairePreselection;
+                               Seek(FFormulairePreselectionCopie,i);
+                               write(FFormulairePreselectionCopie,RFormulairePreselectionCopie);
+
+                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Préselection: '+RFormulairePreselection.DateFormulairePreselection+' '+RFormulairePreselection.Tiers);
+                               i:=i+1;
+                          end;
+                     end;
+                     finally
+                     CloseFile(FFormulairePreselection);
+                     end;
+                     finally
+                     CloseFile(FFormulairePreselectionCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FFormulairePreselection',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FFormulairePreselection',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureDetailRubriqueFicheTechnique(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R:integer;    DateFin,TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FDetailRubriqueFicheTechnique');
+
+     if(strtointeger(NewExercice)>0)then
+     begin                                      
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FDetailRubriqueFicheTechnique';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     DateFin:='31/12/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+
+                     OpenFParc(RParc);
+                     ChDetailRubriqueFicheTechniqueCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FDetailRubriqueFicheTechnique';
+                     assignfile(FDetailRubriqueFicheTechniqueCopie,ChDetailRubriqueFicheTechniqueCopie);
+                     try
+                     if FileExists(ChDetailRubriqueFicheTechniqueCopie)then
+                     Reset(FDetailRubriqueFicheTechniqueCopie)
+                     else Rewrite(FDetailRubriqueFicheTechniqueCopie);
+                     Seek(FDetailRubriqueFicheTechniqueCopie,0);
+                     Truncate(FDetailRubriqueFicheTechniqueCopie);
+                     i:=0;
+                     R:=1;
+                     while(R<=FSTravauxFinAnnee.TableauDeBohrDetailRubrique.RowCount-1)do
+                     begin
+                          RDetailRubriqueFicheTechniqueCopie.NumDetailRubrique:=i;
+                          RDetailRubriqueFicheTechniqueCopie.NumRubrique:=strtointeger(FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[1,R]);
+                          RDetailRubriqueFicheTechniqueCopie.NumPlanificateur:=strtointeger(FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[2,R]);
+                          RDetailRubriqueFicheTechniqueCopie.Date:=DateFin;
+                          RDetailRubriqueFicheTechniqueCopie.ModePaiement:='';
+                          RDetailRubriqueFicheTechniqueCopie.Domiciliation:=FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[3,R];
+                          RDetailRubriqueFicheTechniqueCopie.NumPiece:='';
+                          RDetailRubriqueFicheTechniqueCopie.CodeTiers:=FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[4,R];
+                          RDetailRubriqueFicheTechniqueCopie.Quantite:=strtoreal(FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[6,R]);
+                          RDetailRubriqueFicheTechniqueCopie.Montant:=strtoreal(FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Cells[7,R]);
+                          RDetailRubriqueFicheTechniqueCopie.Observation:='Inventaire au '+DateFin;
+
+                          Seek(FDetailRubriqueFicheTechniqueCopie,i);
+                          write(FDetailRubriqueFicheTechniqueCopie,RDetailRubriqueFicheTechniqueCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('DR Fiche Tech: '+RDetailRubriqueFicheTechniqueCopie.Date+' '+inttostr(RDetailRubriqueFicheTechniqueCopie.NumDetailRubrique));
+                          i:=i+1;
+                     R:=R+1;
+                     end;
+
+                     OpenFParc(RParc);
+                     ChDetailRubriqueFicheTechnique:=RParc.Parcours+'\'+Exercice+'FDetailRubriqueFicheTechnique';
+                     assignfile(FDetailRubriqueFicheTechnique,ChDetailRubriqueFicheTechnique);
+                     try
+                     if FileExists(ChDetailRubriqueFicheTechnique)then
+                     Reset(FDetailRubriqueFicheTechnique)
+                     else Rewrite(FDetailRubriqueFicheTechnique);
+                     Seek(FDetailRubriqueFicheTechnique,0);
+                     while not eof(FDetailRubriqueFicheTechnique)do
+                     begin
+                          Read(FDetailRubriqueFicheTechnique,RDetailRubriqueFicheTechnique);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(strtodate(RDetailRubriqueFicheTechnique.Date)>strtodate(DateFin))then
+                          begin
+                               RDetailRubriqueFicheTechniqueCopie:=RDetailRubriqueFicheTechnique;
+                               Seek(FDetailRubriqueFicheTechniqueCopie,i);
+                               write(FDetailRubriqueFicheTechniqueCopie,RDetailRubriqueFicheTechniqueCopie);
+
+                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('DR Fiche Tech: '+RDetailRubriqueFicheTechnique.Date+' '+inttostr(RDetailRubriqueFicheTechnique.NumDetailRubrique));
+                               i:=i+1;
+                          end;
+                     end;
+                     finally
+                     CloseFile(FDetailRubriqueFicheTechnique);
+                     end;
+                     finally
+                     CloseFile(FDetailRubriqueFicheTechniqueCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDetailRubriqueFicheTechnique',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDetailRubriqueFicheTechnique',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouverturePlanificateur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FPlanificateur');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FPlanificateur';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChPlanificateurCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FPlanificateur';
+                     assignfile(FPlanificateurCopie,ChPlanificateurCopie);
+                     try
+                     if FileExists(ChPlanificateurCopie)then
+                     Reset(FPlanificateurCopie)
+                     else Rewrite(FPlanificateurCopie);
+                     Seek(FPlanificateurCopie,0);
+                     Truncate(FPlanificateurCopie);
+
+                     ChPlanificateur:=RParc.Parcours+'\'+Exercice+'FPlanificateur';
+                     assignfile(FPlanificateur,ChPlanificateur);
+                     try
+                     if FileExists(ChPlanificateur)then
+                     Reset(FPlanificateur)
+                     else Rewrite(FPlanificateur);
+                     Seek(FPlanificateur,0);
+                     i:=0;
+                     while not eof(FPlanificateur)do
+                     begin
+                          Read(FPlanificateur,RPlanificateur);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RPlanificateurCopie:=RPlanificateur;
+                          Seek(FPlanificateurCopie,i);
+                          write(FPlanificateurCopie,RPlanificateurCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Planificateur: '+RPlanificateur.DesignationPlanificateur);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FPlanificateur);
+                     end;
+                     finally
+                     CloseFile(FPlanificateurCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FPlanificateur',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FPlanificateur',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureSeriePieceDomiciliation(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;   TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FSeriePieceDomiciliation');
+
+     if(strtointeger(NewExercice)>0)then
+     begin                                 
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FSeriePieceDomiciliation';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChSeriePieceDomiciliationCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FSeriePieceDomiciliation';
+                     assignfile(FSeriePieceDomiciliationCopie,ChSeriePieceDomiciliationCopie);
+                     try
+                     if FileExists(ChSeriePieceDomiciliationCopie)then
+                     Reset(FSeriePieceDomiciliationCopie)
+                     else Rewrite(FSeriePieceDomiciliationCopie);
+                     Seek(FSeriePieceDomiciliationCopie,0);
+                     Truncate(FSeriePieceDomiciliationCopie);
+
+                     ChSeriePieceDomiciliation:=RParc.Parcours+'\'+Exercice+'FSeriePieceDomiciliation';
+                     assignfile(FSeriePieceDomiciliation,ChSeriePieceDomiciliation);
+                     try
+                     if FileExists(ChSeriePieceDomiciliation)then
+                     Reset(FSeriePieceDomiciliation)
+                     else Rewrite(FSeriePieceDomiciliation);
+                     Seek(FSeriePieceDomiciliation,0);
+                     i:=0;
+                     while not eof(FSeriePieceDomiciliation)do
+                     begin
+                          Read(FSeriePieceDomiciliation,RSeriePieceDomiciliation);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RSeriePieceDomiciliationCopie:=RSeriePieceDomiciliation;
+                          Seek(FSeriePieceDomiciliationCopie,i);
+                          write(FSeriePieceDomiciliationCopie,RSeriePieceDomiciliationCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Série Pièce Dom: '+inttostr(RSeriePieceDomiciliation.PositionSeriePieceDomiciliation)+' '+RSeriePieceDomiciliation.NumReferenceSerieDomiciliation);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FSeriePieceDomiciliation);
+                     end;
+                     finally
+                     CloseFile(FSeriePieceDomiciliationCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FSeriePieceDomiciliation',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FSeriePieceDomiciliation',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureFicheTechnique(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FFicheTechnique');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FFicheTechnique';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChFicheTechniqueCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FFicheTechnique';
+                     assignfile(FFicheTechniqueCopie,ChFicheTechniqueCopie);
+                     try
+                     if FileExists(ChFicheTechniqueCopie)then
+                     Reset(FFicheTechniqueCopie)
+                     else Rewrite(FFicheTechniqueCopie);
+                     Seek(FFicheTechniqueCopie,0);
+                     Truncate(FFicheTechniqueCopie);
+
+                     ChFicheTechnique:=RParc.Parcours+'\'+Exercice+'FFicheTechnique';
+                     assignfile(FFicheTechnique,ChFicheTechnique);
+                     try
+                     if FileExists(ChFicheTechnique)then
+                     Reset(FFicheTechnique)
+                     else Rewrite(FFicheTechnique);
+                     Seek(FFicheTechnique,0);
+                     i:=0;
+                     while not eof(FFicheTechnique)do
+                     begin
+                          Read(FFicheTechnique,RFicheTechnique);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RFicheTechniqueCopie:=RFicheTechnique;
+                          Seek(FFicheTechniqueCopie,i);
+                          write(FFicheTechniqueCopie,RFicheTechniqueCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Fiche Tech: '+RFicheTechnique.DesignationFicheTechnique);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FFicheTechnique);
+                     end;
+                     finally
+                     CloseFile(FFicheTechniqueCopie);
+                     end;
+               end;
+               
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FFicheTechnique',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FFicheTechnique',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureRubriqueFicheTechnique(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FRubriqueFicheTechnique');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FRubriqueFicheTechnique';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChRubriqueFicheTechniqueCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FRubriqueFicheTechnique';
+                     assignfile(FRubriqueFicheTechniqueCopie,ChRubriqueFicheTechniqueCopie);
+                     try
+                     if FileExists(ChRubriqueFicheTechniqueCopie)then
+                     Reset(FRubriqueFicheTechniqueCopie)
+                     else Rewrite(FRubriqueFicheTechniqueCopie);
+                     Seek(FRubriqueFicheTechniqueCopie,0);
+                     Truncate(FRubriqueFicheTechniqueCopie);
+
+                     ChRubriqueFicheTechnique:=RParc.Parcours+'\'+Exercice+'FRubriqueFicheTechnique';
+                     assignfile(FRubriqueFicheTechnique,ChRubriqueFicheTechnique);
+                     try
+                     if FileExists(ChRubriqueFicheTechnique)then
+                     Reset(FRubriqueFicheTechnique)
+                     else Rewrite(FRubriqueFicheTechnique);
+                     Seek(FRubriqueFicheTechnique,0);
+                     i:=0;
+                     while not eof(FRubriqueFicheTechnique)do
+                     begin
+                          Read(FRubriqueFicheTechnique,RRubriqueFicheTechnique);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RRubriqueFicheTechniqueCopie:=RRubriqueFicheTechnique;
+                          Seek(FRubriqueFicheTechniqueCopie,i);
+                          write(FRubriqueFicheTechniqueCopie,RRubriqueFicheTechniqueCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('R.Fiche Tech: '+RRubriqueFicheTechnique.DesignationRubrique);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FRubriqueFicheTechnique);
+                     end;
+                     finally
+                     CloseFile(FRubriqueFicheTechniqueCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FRubriqueFicheTechnique',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FRubriqueFicheTechnique',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.TableauDeBohrTiersClick(Sender: TObject);
+var  C,NotTrieRow:integer;
+begin
+     if(FSTravauxFinAnnee.RBIndiceRubriqueTriCol.Checked=true)then
+     begin
+          FSTravauxFinAnnee.RBIndiceRubriqueTriCol.Checked:=false;
+          C:=FSTravauxFinAnnee.TableauDeBohrTiers.Col;
+          FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text:=inttostr(C);
+          case C of
+          1 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          2 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          3 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          4 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          5 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          6 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          7 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          8 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          9 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          10: FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          11: FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          12: FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          13: FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          14: FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          15: FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          16: FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          17: FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          18: FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          19: FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          20: FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          21: FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          22: FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          23: FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          end;
+          if(FSTravauxFinAnnee.RBAfficherSoldeSuperieur.Checked=true)then NotTrieRow:=4 else NotTrieRow:=3;
+          TrierTableauARowSpecial(FSTravauxFinAnnee.TableauDeBohrTiers,1,FSTravauxFinAnnee.TableauDeBohrTiers.RowCount-NotTrieRow,1,FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text,FSTravauxFinAnnee.EditTypeDataTrie.Text,FSTravauxFinAnnee.EditTypeTrie.Text)
+     end;
+
+     if(FSTravauxFinAnnee.RBFixeColonne.Checked=true)then
+     begin
+          FSTravauxFinAnnee.TableauDeBohrTiers.FixedCols:=strtointeger(FSTravauxFinAnnee.EditFixeColonne.Text);
+          FSTravauxFinAnnee.RBFixeColonne.Checked:=false;
+     end;
+end;
+
+Procedure SyntheseInventaireDomiciliation;
+var   R,RBegin:integer; EtatSoldePlanifier,EtatSoldeTrouver,TypeProcesSID,FichierConserneSID,AdresseSID,DateFin:string;  Solde:real;  OKDomiciliation,AfficherTous:boolean;
+begin
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.ColCount:=7;
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.Cols[0].Text:='N°';
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.Cols[1].Text:='Num';
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.Cols[2].Text:='Domiciliation';
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.Cols[3].Text:='Identificateur';
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.Cols[4].Text:='Nature du Solde';
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.Cols[5].Text:='Etat du Solde';
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.Cols[6].Text:='Montant du Solde';
+
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.RowCount:=2;
+     FSTravauxFinAnnee.TableauInventaireDomiciliation.Rows[1].Text:='';
+
+     FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Domiciliation');
+     DateFin:='31/12/'+inttostr(strtointeger(FSTravauxFinAnnee.EditNewExercice.Text)-1);
+
+     TypeProcesSID:='Business';
+     FichierConserneSID:='FDomiciliation';
+     if not(FunctionAdresseProces(TypeProcesSID,FichierConserneSID,'',AdresseSID,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserneSID+' recherché !');
+     end;
+
+     if(TypeProcesReseaux='Réseaux')then
+     begin
+          Exit;
+     end;
+
+     ChDomiciliationCopie:=AdresseSID;
+     assignfile(FDomiciliationCopie,ChDomiciliationCopie);
+     try
+     if FileExists(ChDomiciliationCopie)then
+     Reset(FDomiciliationCopie)
+     else Rewrite(FDomiciliationCopie);
+     Seek(FDomiciliationCopie,0);
+     R:=0;
+     RBegin:=0;
+     AfficherTous:=true;
+     while not eof(FDomiciliationCopie)do
+     begin
+          read(FDomiciliationCopie,RDomiciliationCopie);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+          if(RDomiciliationCopie.EtatSoldeDebitCredit<>'')then
+          begin
+               Solde:=SoldeDomiciliationAvis(FSTravauxFinAnnee.TableauListeAvisNotifier,RBegin,RDomiciliationCopie.NumDomiciliation,'',DateFin,false,EtatSoldePlanifier,EtatSoldeTrouver,RBegin);
+
+               if(AfficherTous=true)then
+               begin
+                    OKDomiciliation:=true;
+               end
+               else
+               begin
+                    if(EtatSoldePlanifier<>EtatSoldeTrouver)
+                    then OKDomiciliation:=true
+                    else OKDomiciliation:=false;
+               end;
+          end
+          else OKDomiciliation:=false;
+
+          if(OKDomiciliation=true)then
+          begin
+               if(Solde<>0)
+               then OKDomiciliation:=true
+               else OKDomiciliation:=false;
+          end;
+
+          if(OKDomiciliation=true)then
+          begin
+               R:=R+1;
+               FSTravauxFinAnnee.TableauInventaireDomiciliation.Rows[R].Text:=inttostr(R);
+               FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[1,R]:=RDomiciliationCopie.NumDomiciliation;
+               FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[2,R]:=RDomiciliationCopie.DesignationDomiciliation;
+               FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[3,R]:=RDomiciliationCopie.Identificateur;
+               FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[4,R]:=RDomiciliationCopie.EtatSoldeDebitCredit;
+               FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[5,R]:=EtatSoldeTrouver;
+               FSTravauxFinAnnee.TableauInventaireDomiciliation.Cells[6,R]:=Vergule(floattostr(Solde),'2','C','');
+
+               FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Domiciliation '+RDomiciliationCopie.DesignationDomiciliation+'. Solde: '+Vergule(floattostr(Solde),'2','C',''));
+          end;
+     end;
+     finally
+     CloseFile(FDomiciliationCopie);
+     end;
+
+     if(R>0)then
+     begin
+          FSTravauxFinAnnee.TableauInventaireDomiciliation.RowCount:=R+1;
+     end
+     else
+     begin
+          FSTravauxFinAnnee.TableauInventaireDomiciliation.RowCount:=2;
+     end;
+
+     AjusterColWidth(FSTravauxFinAnnee.TableauInventaireDomiciliation,'','');
+
+     FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Fin Domiciliation');
+end;
+
+procedure TFSTravauxFinAnnee.TableauDeBohrDetailRubriqueClick(
+  Sender: TObject);
+var  C:integer;
+begin
+     if(FSTravauxFinAnnee.RBIndiceRubriqueTriCol.Checked=true)then
+     begin
+          FSTravauxFinAnnee.RBIndiceRubriqueTriCol.Checked:=false;
+          C:=FSTravauxFinAnnee.TableauDeBohrDetailRubrique.Col;
+          FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text:=inttostr(C);
+          case C of
+          1 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          2 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          3 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          4 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          5 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          6 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          7 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          8 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          end;
+          
+          TrierTableauARowSpecial(FSTravauxFinAnnee.TableauDeBohrDetailRubrique,1,FSTravauxFinAnnee.TableauDeBohrDetailRubrique.RowCount-1,1,FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text,FSTravauxFinAnnee.EditTypeDataTrie.Text,FSTravauxFinAnnee.EditTypeTrie.Text)
+     end;
+
+     if(FSTravauxFinAnnee.RBFixeColonne.Checked=true)then
+     begin
+          FSTravauxFinAnnee.TableauDeBohrDetailRubrique.FixedCols:=strtointeger(FSTravauxFinAnnee.EditFixeColonne.Text);
+          FSTravauxFinAnnee.RBFixeColonne.Checked:=false;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.TableauInventaireDomiciliationClick(
+  Sender: TObject);
+var  C:integer;
+begin
+     if(FSTravauxFinAnnee.RBIndiceRubriqueTriCol.Checked=true)then
+     begin
+          FSTravauxFinAnnee.RBIndiceRubriqueTriCol.Checked:=false;
+          C:=FSTravauxFinAnnee.TableauInventaireDomiciliation.Col;
+          FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text:=inttostr(C);
+          case C of
+          1 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          2 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Date';
+          3 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          4 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          5 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          6 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='';
+          7 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          8 : FSTravauxFinAnnee.EditTypeDataTrie.Text:='Num';
+          end;
+          
+          TrierTableauARowSpecial(FSTravauxFinAnnee.TableauInventaireDomiciliation,1,FSTravauxFinAnnee.TableauInventaireDomiciliation.RowCount-1,1,FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text,FSTravauxFinAnnee.EditTypeDataTrie.Text,FSTravauxFinAnnee.EditTypeTrie.Text)
+     end;
+
+     if(FSTravauxFinAnnee.RBFixeColonne.Checked=true)then
+     begin
+          FSTravauxFinAnnee.TableauInventaireDomiciliation.FixedCols:=strtointeger(FSTravauxFinAnnee.EditFixeColonne.Text);
+          FSTravauxFinAnnee.RBFixeColonne.Checked:=false;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn4Click(Sender: TObject);
+begin
+     {FSTravauxFinAnnee.MemoVoirRapportReouverture.Left:=FSTravauxFinAnnee.AffichePatienter.Left;
+     FSTravauxFinAnnee.MemoVoirRapportReouverture.Top:=FSTravauxFinAnnee.AffichePatienter.Top;
+     FSTravauxFinAnnee.MemoVoirRapportReouverture.Text:=FSTravauxFinAnnee.MemoRapportReouverture.Text;
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Visible:=true;
+     FSTravauxFinAnnee.MemoVoirRapportReouverture.Visible:=true; }
+
+     FSTravauxFinAnnee.AffichePatienter.Visible:=true;
+     FSTravauxFinAnnee.BitFermerVisualisation.Visible:=true;
+     FSTravauxFinAnnee.AfficherPatienter.Caption:='Visualisation';
+end;
+
+procedure TFSTravauxFinAnnee.MemoVoirRapportReouvertureExit(
+  Sender: TObject);
+begin
+     FSTravauxFinAnnee.MemoVoirRapportReouverture.Visible:=false;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn5Click(Sender: TObject);
+begin
+     FSTravauxFinAnnee.AfficheConsultationNewExercice.Visible:=false;
+end;
+
+procedure TFSTravauxFinAnnee.BitOuiNewExerciceClick(Sender: TObject);
+var  AdresseExecutionProces:string;
+begin
+     EnregistrementReouverture(ExerciceAnnee,true);
+     EnregistrerRedemarrerReouverture(true);
+     FSTravauxFinAnnee.AfficheConsultationNewExercice.Visible:=false;
+     FSTravauxFinAnnee.Close;
+
+     ConsulterExercice(FSTravauxFinAnnee.EditNewExercice.Text);
+
+     AdresseExecutionProces:=Application.ExeName;
+
+     Application.Terminate;
+     
+     if(AdresseExecutionProces<>'')
+     then ShellExecute(Handle,'Open',PChar(AdresseExecutionProces),nil,nil,SW_SHOWDEFAULT);
+
+     //FSMenuPrincipal.TimerCodeAcces.Enabled:=true;
+end;
+
+Procedure ReouvertureCompteur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FCompteur');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FCompteur';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChCompteurCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FCompteur';
+                     assignfile(FCompteurCopie,ChCompteurCopie);
+                     try
+                     if FileExists(ChCompteurCopie)then
+                     Reset(FCompteurCopie)
+                     else Rewrite(FCompteurCopie);
+                     Seek(FCompteurCopie,0);
+                     Truncate(FCompteurCopie);
+
+                     ChCompteur:=RParc.Parcours+'\'+Exercice+'FCompteur';
+                     assignfile(FCompteur,ChCompteur);
+                     try
+                     if FileExists(ChCompteur)then
+                     Reset(FCompteur)
+                     else Rewrite(FCompteur);
+                     Seek(FCompteur,0);
+                     i:=0;
+                     while not eof(FCompteur)do
+                     begin
+                          Read(FCompteur,RCompteur);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RCompteurCopie:=RCompteur;
+                          Seek(FCompteurCopie,i);
+                          write(FCompteurCopie,RCompteurCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Compteur: '+RCompteur.DesignationCompteur);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FCompteur);
+                     end;
+                     finally
+                     CloseFile(FCompteurCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FCompteur',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FCompteur',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureEquipe(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FEquipe');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FEquipe';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChEquipeCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FEquipe';
+                     assignfile(FEquipeCopie,ChEquipeCopie);
+                     try
+                     if FileExists(ChEquipeCopie)then
+                     Reset(FEquipeCopie)
+                     else Rewrite(FEquipeCopie);
+                     Seek(FEquipeCopie,0);
+                     Truncate(FEquipeCopie);
+
+                     ChEquipe:=RParc.Parcours+'\'+Exercice+'FEquipe';
+                     assignfile(FEquipe,ChEquipe);
+                     try
+                     if FileExists(ChEquipe)then
+                     Reset(FEquipe)
+                     else Rewrite(FEquipe);
+                     Seek(FEquipe,0);
+                     i:=0;
+                     while not eof(FEquipe)do
+                     begin
+                          Read(FEquipe,REquipe);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          REquipeCopie:=REquipe;
+                          Seek(FEquipeCopie,i);
+                          write(FEquipeCopie,REquipeCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Equipe: '+REquipe.DesignationEquipe);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FEquipe);
+                     end;
+                     finally
+                     CloseFile(FEquipeCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FEquipe',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FEquipe',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureParametresStock(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     TypeProcesControleReseaux:='';
+     FichierConserne:='FParametresStock';
+     if not(ActiverReouvertureStock(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierConserne,NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FParametresStock(');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FParametresStock';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChParametresStockCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FParametresStock';
+                     assignfile(FParametresStockCopie,ChParametresStockCopie);
+                     try
+                     if FileExists(ChParametresStockCopie)then
+                     Reset(FParametresStockCopie)
+                     else Rewrite(FParametresStockCopie);
+                     Seek(FParametresStockCopie,0);
+                     Truncate(FParametresStockCopie);
+
+                     ChParametresStock:=RParc.Parcours+'\'+Exercice+'FParametresStock';
+                     assignfile(FParametresStock,ChParametresStock);
+                     try
+                     if FileExists(ChParametresStock)then
+                     Reset(FParametresStock)
+                     else Rewrite(FParametresStock);
+                     Seek(FParametresStock,0);
+                     i:=0;
+                     while not eof(FParametresStock)do
+                     begin
+                          Read(FParametresStock,RParametresStock);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RParametresStockCopie:=RParametresStock;
+                          Seek(FParametresStockCopie,i);
+                          write(FParametresStockCopie,RParametresStockCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Paramètre Stock: Stock libre '+booleantostr(RParametresStock.CreationStockLibre)+', Par structure '+booleantostr(RParametresStock.StockSpecifierParStructure));
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FParametresStock);
+                     end;
+                     finally
+                     CloseFile(FParametresStockCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FParametresStock',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FParametresStock',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureEffectifEquipe(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FEffectifEquipe');
+     
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FEffectifEquipe';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChEffectifEquipeCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FEffectifEquipe';
+                     assignfile(FEffectifEquipeCopie,ChEffectifEquipeCopie);
+                     try
+                     if FileExists(ChEffectifEquipeCopie)then
+                     Reset(FEffectifEquipeCopie)
+                     else Rewrite(FEffectifEquipeCopie);
+                     Seek(FEffectifEquipeCopie,0);
+                     Truncate(FEffectifEquipeCopie);
+
+                     ChEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FEffectifEquipe';
+                     assignfile(FEffectifEquipe,ChEffectifEquipe);
+                     try
+                     if FileExists(ChEffectifEquipe)then
+                     Reset(FEffectifEquipe)
+                     else Rewrite(FEffectifEquipe);
+                     Seek(FEffectifEquipe,0);
+                     i:=0;
+                     while not eof(FEffectifEquipe)do
+                     begin
+                          Read(FEffectifEquipe,REffectifEquipe);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          REffectifEquipeCopie:=REffectifEquipe;
+                          Seek(FEffectifEquipeCopie,i);
+                          write(FEffectifEquipeCopie,REffectifEquipeCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Matricule: '+REffectifEquipe.Matricule);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FEffectifEquipe);
+                     end;
+                     finally
+                     CloseFile(FEffectifEquipeCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FEffectifEquipe',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FEffectifEquipe',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouverturePrelevement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  Ecart,TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse:string;
+     MontantCompteur,MontantUniteFonds,MontantFondRoulement,SoldePrelevement:real;
+     OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FPrelevement',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FPrelevement');
+
+     FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text:='999999999';
+     FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text:='';
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FPrelevement';
+               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+               ActiverReouverture:=true;
+
+               if(TypeProcesControleReseaux='Réseaux')then
+               begin
+                    if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=false;
+                    end
+                    else
+                    if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=true;
+                    end
+                    else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+               end;
+
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     MontantCompteur:=0;
+                     MontantUniteFonds:=0;
+                     MontantFondRoulement:=0;
+                     SoldePrelevement:=0;
+
+                     ChPrelevementCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FPrelevementCopie,ChPrelevementCopie);
+                     try
+                     if FileExists(ChPrelevementCopie)then
+                     Reset(FPrelevementCopie)
+                     else Rewrite(FPrelevementCopie);
+                     Seek(FPrelevementCopie,0);
+                     Truncate(FPrelevementCopie);
+
+                     Seek(FPrelevementCopie,i);
+                     RPrelevementCopie.NumPrelevement:=0;
+                     RPrelevementCopie.CodeUtilisateur:='Réouverture';
+                     RPrelevementCopie.NumEquipe:=0;
+                     RPrelevementCopie.DatePrelevement:='31/12/'+ExerciceAnnee;
+                     RPrelevementCopie.HeurePrelevement:='00:00:00';
+                     RPrelevementCopie.Archiver:=true;
+                     RPrelevementCopie.MontantPrelevement:=MontantCompteur;
+                     RPrelevementCopie.MontantFondRoulement:=MontantFondRoulement;
+                     RPrelevementCopie.MontantUnitesFonds:=MontantUniteFonds;
+                     RPrelevementCopie.SoldePrelevement:=SoldePrelevement;
+                     write(FPrelevementCopie,RPrelevementCopie);
+                     i:=i+1;
+
+                     ChPrelevement:=Adresse;
+                     assignfile(FPrelevement,ChPrelevement);
+                     if FileExists(ChPrelevement)then
+                     begin
+                           try
+                           Reset(FPrelevement);
+                           Seek(FPrelevement,0);
+                           Ecart:='';
+                           FSTravauxFinAnnee.EditEcartPrelevement.Text:=Ecart;
+                           while not eof(FPrelevement)do
+                           begin
+                                Read(FPrelevement,RPrelevement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Contrôle Prélèvement n° '+inttostr(RPrelevement.NumPrelevement)+'/'+RPrelevement.Matricule+' du '+RPrelevement.DatePrelevement);
+
+                                if(datecorrecte(RPrelevement.DatePrelevement))and(datecorrecte('31/12/'+ExerciceAnnee))then
+                                begin
+                                      if(strtodate(RPrelevement.DatePrelevement)>strtodate('31/12/'+ExerciceAnnee))then
+                                      begin
+                                           RPrelevementCopie:=RPrelevement;
+
+                                           if(Ecart='')then
+                                           begin
+                                                if(RPrelevementCopie.NumPrelevement>1)
+                                                then Ecart:=inttostr(RPrelevementCopie.NumPrelevement-1)
+                                                else Ecart:='0';
+                                           end;
+                                           FSTravauxFinAnnee.EditEcartPrelevement.Text:=Ecart;
+
+                                           if(strtointeger(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text)>RPrelevementCopie.NumPrelevement)then
+                                           begin
+                                                FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text:=inttostr(RPrelevementCopie.NumPrelevement);
+                                                FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text:=RPrelevementCopie.Matricule;
+                                           end;
+
+                                           RPrelevementCopie.NumPrelevement:=RPrelevementCopie.NumPrelevement-strtointeger(Ecart);
+                                           Seek(FPrelevementCopie,i);
+                                           write(FPrelevementCopie,RPrelevementCopie);
+                                           i:=i+1;
+
+                                           FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Prélèvement n° '+inttostr(RPrelevement.NumPrelevement)+'/'+RPrelevement.Matricule+' du '+RPrelevement.DatePrelevement);
+                                      end
+                                      else
+                                      begin
+                                           MontantCompteur:=MontantCompteur+RPrelevement.MontantPrelevement;
+                                           MontantUniteFonds:=MontantUniteFonds+RPrelevement.MontantUnitesFonds;
+                                           MontantFondRoulement:=MontantFondRoulement+RPrelevement.MontantFondRoulement;
+                                           SoldePrelevement:=SoldePrelevement+RPrelevement.SoldePrelevement;
+                                      end;
+                                end;
+                           end;
+                           finally
+                           CloseFile(FPrelevement);
+                           end;
+                     end;
+                     finally
+                     CloseFile(FPrelevementCopie);
+                     end;
+
+                     assignfile(FPrelevementCopie,ChPrelevementCopie);
+                     if FileExists(ChPrelevementCopie)then
+                     begin
+                          try
+                          Reset(FPrelevementCopie);
+                          Seek(FPrelevementCopie,0);
+                          if not eof(FPrelevementCopie)then
+                          begin
+                               Read(FPrelevementCopie,RPrelevementCopie);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                               //RPrelevementCopie.NumPrelevement:=0;
+                               //RPrelevementCopie.CodeUtilisateur:='Réouverture';
+                               //RPrelevementCopie.NumEquipe:=0;
+                               //RPrelevementCopie.DatePrelevement:='31/12/'+ExerciceAnnee;
+                               //RPrelevementCopie.HeurePrelevement:='00:00:00';
+                               //RPrelevementCopie.Archiver:=true;
+                               RPrelevementCopie.MontantPrelevement:=MontantCompteur;
+                               RPrelevementCopie.MontantFondRoulement:=MontantFondRoulement;
+                               RPrelevementCopie.MontantUnitesFonds:=MontantUniteFonds;
+                               RPrelevementCopie.SoldePrelevement:=SoldePrelevement;
+                               Seek(FPrelevementCopie,0);
+                               write(FPrelevementCopie,RPrelevementCopie);
+                          end;
+                          finally
+                          CloseFile(FPrelevementCopie);
+                          end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FPrelevement',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FPrelevement',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+
+     if(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text='999999999')then FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text:='0';
+end;
+
+Procedure MiseAJourPositionPrelevement(NewExercice:string);
+var   i:integer;
+      TypeProces,FichierConserne,Adresse,PositionPrelevement,TypeProcesControleReseaux:string;
+      MontantCompteur,MontantUniteFonds,MontantFondRoulement,SoldePrelevement:real;
+      RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3:RRegistrePositionArchives;
+      OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Mise à joure prélèvement Non autorisée (Réseaux)');
+          Exit;
+     end; 
+
+     TPrelevementCopie:=RemplireTPrelevement(NewExercice,FSMenuPrincipal.RBRemplireTPrelevementNewExercice,ArrayIndexPrelevementMatricule);
+
+     TypeProces:='Business';
+     FichierConserne:='FPrelevement';
+     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+     end;
+
+     ChPrelevementCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+     assignfile(FPrelevementCopie,ChPrelevementCopie);
+     if FileExists(ChPrelevementCopie)then
+     begin
+          try
+          Reset(FPrelevementCopie);
+          Seek(FPrelevementCopie,0);
+          i:=0;
+          while not eof(FPrelevementCopie)do
+          begin
+               Read(FPrelevementCopie,RPrelevementCopie);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+               DataArchivePrelevement(RPrelevementCopie.NumPrelevement,NewExercice,inttostr(RPrelevementCopie.NumEquipe),RPrelevementCopie.Matricule,false,true,TPrelevementCopie,ArrayIndexPrelevementMatricule,MontantCompteur,MontantUniteFonds,MontantFondRoulement,SoldePrelevement,RegistrePositionPrelevementCompteur,RegistrePositionPrelevementUniteFonds,RegistrePositionPrelevementEffectifEquipe,RegistrePositionRegistreAffectationEffectifEquipe,RegistrePositionDetailArticlePrelevementUniteFonds,RegistrePositionMoyenTransportPrelevement,RegistrePositionEtatStockPrelevement,RegistrePositionAutre2,RegistrePositionAutre3,PositionPrelevement,OKPrelevementArchiveAvecSucce);
+
+               RPrelevementCopie.RegistrePositionPrelevementCompteur:=RegistrePositionPrelevementCompteur;
+               RPrelevementCopie.RegistrePositionPrelevementUniteFonds:=RegistrePositionPrelevementUniteFonds;
+               RPrelevementCopie.RegistrePositionPrelevementEffectifEquipe:=RegistrePositionPrelevementEffectifEquipe;
+               RPrelevementCopie.RegistrePositionRegistreAffectationEffectifEquipe:=RegistrePositionRegistreAffectationEffectifEquipe;
+               RPrelevementCopie.RegistrePositionDetailArticlePrelevementUniteFonds:=RegistrePositionDetailArticlePrelevementUniteFonds;
+               RPrelevementCopie.RegistrePositionMoyenTransportPrelevement:=RegistrePositionMoyenTransportPrelevement;
+               RPrelevementCopie.RegistrePositionEtatStockPrelevement:=RegistrePositionEtatStockPrelevement;
+               RPrelevementCopie.RegistrePositionAutre2:=RegistrePositionAutre2;
+               RPrelevementCopie.RegistrePositionAutre3:=RegistrePositionAutre3;
+               Seek(FPrelevementCopie,i);
+               write(FPrelevementCopie,RPrelevementCopie);
+
+               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Mise à joure prélèvement: Date '+RPrelevementCopie.DatePrelevement+' N° '+Inttostr(RPrelevementCopie.NumPrelevement)+'/'+RPrelevementCopie.Matricule);
+          i:=i+1;
+          end;
+          finally
+          CloseFile(FPrelevementCopie);
+          end;
+     end;
+
+end;  
+
+Procedure ReouvertureArchivePrelevementCompteur(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,PBegin,NumPrelevementEnd,IndexPrelevement,iIPM:integer;
+     TypeProcesControleReseaux,FichierConserne,PositionPrelevement:string;
+     OKIndexPrelevementMatricule,OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePrelevementCompteur',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FArchivePrelevementCompteur');
+
+     TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule);
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FArchivePrelevementCompteur';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChArchivePrelevementCompteurCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FArchivePrelevementCompteur';
+                     assignfile(FArchivePrelevementCompteurCopie,ChArchivePrelevementCompteurCopie);
+                     try
+                     if FileExists(ChArchivePrelevementCompteurCopie)then
+                     Reset(FArchivePrelevementCompteurCopie)
+                     else Rewrite(FArchivePrelevementCompteurCopie);
+                     Seek(FArchivePrelevementCompteurCopie,0);
+                     Truncate(FArchivePrelevementCompteurCopie);
+
+                     //RPrelevement:=ChercherPrelevement(strtointeger(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text),ExerciceAnnee,FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text,PositionPrelevement);
+                     //TPrelevementCopie[IndexPrelevement]
+                     IndexPrelevement:=strtoint(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text+inttostr(strtointeger(FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text)));
+
+                     iIPM:=0;
+                     OKIndexPrelevementMatricule:=false;
+                     while(iIPM<=High(ArrayIndexPrelevementMatricule))and(OKIndexPrelevementMatricule=false)do
+                     begin
+                          if(ArrayIndexPrelevementMatricule[iIPM]=IndexPrelevement)then
+                          begin
+                               OKIndexPrelevementMatricule:=true;
+                               IndexPrelevement:=iIPM;
+                          end;
+                          iIPM:=iIPM+1;
+                     end;
+
+                     PBegin:=TPrelevementCopie[IndexPrelevement].RegistrePositionPrelevementCompteur.PositionArchiveBegin;
+
+                     ChArchivePrelevementCompteur:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementCompteur';
+                     assignfile(FArchivePrelevementCompteur,ChArchivePrelevementCompteur);
+                     try
+                     if FileExists(ChArchivePrelevementCompteur)then
+                     Reset(FArchivePrelevementCompteur)
+                     else Rewrite(FArchivePrelevementCompteur);
+                     Seek(FArchivePrelevementCompteur,PBegin);
+                     i:=0;
+                     NumPrelevementEnd:=0;
+                     while not eof(FArchivePrelevementCompteur)do
+                     begin
+                          Read(FArchivePrelevementCompteur,RArchivePrelevementCompteur);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(RArchivePrelevementCompteur.NumPrelevement>NumPrelevementEnd)then
+                          begin
+                               RArchivePrelevementCompteurCopie:=RArchivePrelevementCompteur;
+                          end;
+                     end;
+                     RArchivePrelevementCompteurCopie.NumPrelevement:=0;
+                     Seek(FArchivePrelevementCompteurCopie,i);
+                     write(FArchivePrelevementCompteurCopie,RArchivePrelevementCompteurCopie);
+                     i:=i+1;
+
+                     Seek(FArchivePrelevementCompteur,PBegin);
+                     while not eof(FArchivePrelevementCompteur)do
+                     begin
+                          Read(FArchivePrelevementCompteur,RArchivePrelevementCompteur);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(datecorrecte(RArchivePrelevementCompteur.DatePrelevement)=true)
+                          and(strtodate(RArchivePrelevementCompteur.DatePrelevement)>strtodate('31/12/'+ExerciceAnnee))then
+                          begin
+                               RArchivePrelevementCompteurCopie:=RArchivePrelevementCompteur;
+                               RArchivePrelevementCompteurCopie.NumPrelevement:=RArchivePrelevementCompteurCopie.NumPrelevement-strtointeger(FSTravauxFinAnnee.EditEcartPrelevement.Text);
+                               Seek(FArchivePrelevementCompteurCopie,i);
+                               write(FArchivePrelevementCompteurCopie,RArchivePrelevementCompteurCopie);
+                          i:=i+1;
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Prélèvement Compteur n° '+inttostr(RArchivePrelevementCompteurCopie.NumCompteur)+' du '+RArchivePrelevementCompteurCopie.DatePrelevement);
+                          end;
+                     end;
+                     finally
+                     CloseFile(FArchivePrelevementCompteur);
+                     end;
+                     finally
+                     CloseFile(FArchivePrelevementCompteurCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePrelevementCompteur',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePrelevementCompteur',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureArchiveDetailArticlePrelevementUniteFonds(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,PBegin,IndexPrelevement,iIPM:integer;
+     TypeProcesControleReseaux,FichierConserne,PositionPrelevement:string;
+     OKIndexPrelevementMatricule,OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchiveDetailArticlePrelevementUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FArchiveDetailArticlePrelevementUniteFonds');
+
+     TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule);
+     
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FArchiveDetailArticlePrelevementUniteFonds';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChArchiveDetailArticlePrelevementUniteFondsCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FArchiveDetailArticlePrelevementUniteFonds';
+                     assignfile(FArchiveDetailArticlePrelevementUniteFondsCopie,ChArchiveDetailArticlePrelevementUniteFondsCopie);
+                     try
+                     if FileExists(ChArchiveDetailArticlePrelevementUniteFondsCopie)then
+                     Reset(FArchiveDetailArticlePrelevementUniteFondsCopie)
+                     else Rewrite(FArchiveDetailArticlePrelevementUniteFondsCopie);
+                     Seek(FArchiveDetailArticlePrelevementUniteFondsCopie,0);
+                     Truncate(FArchiveDetailArticlePrelevementUniteFondsCopie);
+
+                     //RPrelevement:=ChercherPrelevement(strtointeger(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text),ExerciceAnnee,FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text,PositionPrelevement);
+                     //TPrelevementCopie[IndexPrelevement]
+                     IndexPrelevement:=strtoint(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text+inttostr(strtointeger(FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text)));
+
+                     iIPM:=0;
+                     OKIndexPrelevementMatricule:=false;
+                     while(iIPM<=High(ArrayIndexPrelevementMatricule))and(OKIndexPrelevementMatricule=false)do
+                     begin
+                          if(ArrayIndexPrelevementMatricule[iIPM]=IndexPrelevement)then
+                          begin
+                               OKIndexPrelevementMatricule:=true;
+                               IndexPrelevement:=iIPM;
+                          end;
+                          iIPM:=iIPM+1;
+                     end;
+
+                     PBegin:=TPrelevementCopie[IndexPrelevement].RegistrePositionDetailArticlePrelevementUniteFonds.PositionArchiveBegin;
+
+                     ChArchiveDetailArticlePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchiveDetailArticlePrelevementUniteFonds';
+                     assignfile(FArchiveDetailArticlePrelevementUniteFonds,ChArchiveDetailArticlePrelevementUniteFonds);
+                     try
+                     if FileExists(ChArchiveDetailArticlePrelevementUniteFonds)then
+                     Reset(FArchiveDetailArticlePrelevementUniteFonds)
+                     else Rewrite(FArchiveDetailArticlePrelevementUniteFonds);
+                     Seek(FArchiveDetailArticlePrelevementUniteFonds,PBegin);
+                     i:=0;
+                     while not eof(FArchiveDetailArticlePrelevementUniteFonds)do
+                     begin
+                          Read(FArchiveDetailArticlePrelevementUniteFonds,RArchiveDetailArticlePrelevementUniteFonds);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                          if(datecorrecte(RArchiveDetailArticlePrelevementUniteFonds.DatePrelevement)=true)
+                          and(strtodate(RArchiveDetailArticlePrelevementUniteFonds.DatePrelevement)>strtodate('31/12/'+ExerciceAnnee))then
+                          begin
+                               RArchiveDetailArticlePrelevementUniteFondsCopie:=RArchiveDetailArticlePrelevementUniteFonds;
+                               RArchiveDetailArticlePrelevementUniteFondsCopie.PositionDetailArticlePrelevementUniteFonds:=i;
+                               RArchiveDetailArticlePrelevementUniteFondsCopie.NumPrelevement:=RArchiveDetailArticlePrelevementUniteFondsCopie.NumPrelevement-strtointeger(FSTravauxFinAnnee.EditEcartPrelevement.Text);
+                               RArchiveDetailArticlePrelevementUniteFondsCopie.NumPrelevementUniteFonds:=RArchiveDetailArticlePrelevementUniteFondsCopie.NumPrelevementUniteFonds-strtointeger(FSTravauxFinAnnee.EditEcartPUF.Text);
+                               Seek(FArchiveDetailArticlePrelevementUniteFondsCopie,i);
+                               write(FArchiveDetailArticlePrelevementUniteFondsCopie,RArchiveDetailArticlePrelevementUniteFondsCopie);
+                          i:=i+1;
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Détail article PUF n° '+inttostr(RArchiveDetailArticlePrelevementUniteFonds.NumPrelevementUniteFonds)+' du '+RArchiveDetailArticlePrelevementUniteFonds.DatePrelevement);
+                          end;
+                     end;
+                     finally
+                     CloseFile(FArchiveDetailArticlePrelevementUniteFonds);
+                     end;
+                     finally
+                     CloseFile(FArchiveDetailArticlePrelevementUniteFondsCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchiveDetailArticlePrelevementUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchiveDetailArticlePrelevementUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureMoyenTransport(TableauListeBaseDonnees:TStringGrid; TOrdreLMNpluUN:TOrdreListeMouvementReouvertures; NewExercice,TypeFiche:string; ActiverReouverture:boolean);
+var  i,l:integer;
+     TypeProcesControleReseaux,FichierConserne,Archive:string;
+     OKOrdreListeMouvement,OKMoyenTransport,OKArchive:boolean;
+begin
+     Archive:='';
+     if(TypeFiche='Prélèvement')then
+     begin
+          Archive:='Archive';
+
+          if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+          begin
+               ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'F'+Archive+'MoyenTransport'+TypeFiche,NewExercice,TypeProcesControleReseaux,i);
+               Exit;
+          end;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FMoyenTransport'+TypeFiche);
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='F'+Archive+'MoyenTransport'+TypeFiche;
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChMoyenTransportCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'F'+Archive+'MoyenTransport'+TypeFiche;
+                     assignfile(FMoyenTransportCopie,ChMoyenTransportCopie);
+                     try
+                     if FileExists(ChMoyenTransportCopie)then
+                     Reset(FMoyenTransportCopie)
+                     else Rewrite(FMoyenTransportCopie);
+                     Seek(FMoyenTransportCopie,0);
+                     Truncate(FMoyenTransportCopie);
+
+                     ChMoyenTransport:=RParc.Parcours+'\'+Exercice+'F'+Archive+'MoyenTransport'+TypeFiche;
+                     assignfile(FMoyenTransport,ChMoyenTransport);
+                     try
+                     if FileExists(ChMoyenTransport)then
+                     Reset(FMoyenTransport)
+                     else Rewrite(FMoyenTransport);
+                     Seek(FMoyenTransport,0);
+                     i:=0;
+                     while not eof(FMoyenTransport)do
+                     begin
+                          Read(FMoyenTransport,RMoyenTransport);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                          RMoyenTransportCopie:=RMoyenTransport;
+                          RMoyenTransportCopie.PositionMoyenTransport:=i;
+
+                          OKMoyenTransport:=false;
+
+                          if(TypeFiche='Prélèvement')then
+                          begin
+                               if(RMoyenTransport.NumMovementPrelevement>=strtointeger(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text))then
+                               begin
+                                    OKMoyenTransport:=true;
+                                    RMoyenTransportCopie.NumMovementPrelevement:=RMoyenTransport.NumMovementPrelevement-strtointeger(FSTravauxFinAnnee.EditEcartPrelevement.Text);
+                                    RMoyenTransportCopie.NumFiche:=RMoyenTransport.NumFiche-strtointeger(FSTravauxFinAnnee.EditEcartPUF.Text);
+                               end;
+                          end
+                          else
+                          if(TypeFiche='Mouvement')then
+                          begin
+                               {l:=1;
+                               OKOrdreListeMouvement:=false;
+                               while(l<=FSTravauxFinAnnee.TableauOrdreListeMouvement.RowCount-1)and(OKOrdreListeMouvement=false)do
+                               begin
+                                    if(RMoyenTransport.NumFiche=strtointeger(FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[0,l]))then
+                                    begin
+                                         OKOrdreListeMouvement:=true;
+                                         RMoyenTransportCopie.NumMovementPrelevement:=RMoyenTransport.NumMovementPrelevement;
+                                         RMoyenTransportCopie.NumFiche:=strtointeger(FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[1,l]);
+                                    end;
+                               l:=l+1;
+                               end;}
+
+                               RMoyenTransportCopie.NumMovementPrelevement:=RMoyenTransport.NumMovementPrelevement;
+                               if(RMoyenTransport.NumFiche<=High(TOrdreLMNpluUN))then RMoyenTransportCopie.NumFiche:=TOrdreLMNpluUN[RMoyenTransport.NumFiche].OrdreListeMouvementExerciceNPlusUn;
+
+                               OKMoyenTransport:=OKOrdreListeMouvement;
+                          end
+                          else
+                          begin
+                               OKMoyenTransport:=true;
+                          end;
+
+                          if(OKMoyenTransport=true)then
+                          begin
+                               Seek(FMoyenTransportCopie,i);
+                               write(FMoyenTransportCopie,RMoyenTransportCopie);
+
+                          i:=i+1;
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add(RMoyenTransport.TypeFiche+': Prél: '+inttostr(RMoyenTransport.NumMovementPrelevement)+'/'+RMoyenTransport.MatriculeEffectif+' C.Tiers: '+RMoyenTransport.CodeTiers);
+                          end;
+                     end;
+                     finally
+                     CloseFile(FMoyenTransport);
+                     end;
+                     finally
+                     CloseFile(FMoyenTransportCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'F'+Archive+'MoyenTransport'+TypeFiche,NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'F'+Archive+'MoyenTransport'+TypeFiche,NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureArchivePrelevementUniteFonds(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,PBegin,NumPrelevementEnd,IndexPrelevement,iIPM,EcartNPUF:integer;
+     TypeProcesControleReseaux,FichierConserne,PositionPrelevement:string;
+     OKIndexPrelevementMatricule,OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePrelevementUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FArchivePrelevementUniteFonds');
+
+     TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule);
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FArchivePrelevementUniteFonds';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChArchivePrelevementUniteFondsCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FArchivePrelevementUniteFonds';
+                     assignfile(FArchivePrelevementUniteFondsCopie,ChArchivePrelevementUniteFondsCopie);
+                     try
+                     if FileExists(ChArchivePrelevementUniteFondsCopie)then
+                     Reset(FArchivePrelevementUniteFondsCopie)
+                     else Rewrite(FArchivePrelevementUniteFondsCopie);
+                     Seek(FArchivePrelevementUniteFondsCopie,0);
+                     Truncate(FArchivePrelevementUniteFondsCopie);
+
+                     //RPrelevement:=ChercherPrelevement(strtointeger(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text),ExerciceAnnee,FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text,PositionPrelevement);
+                     //TPrelevementCopie[IndexPrelevement]
+                     IndexPrelevement:=strtoint(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text+inttostr(strtointeger(FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text)));
+
+                     iIPM:=0;
+                     OKIndexPrelevementMatricule:=false;
+                     while(iIPM<=High(ArrayIndexPrelevementMatricule))and(OKIndexPrelevementMatricule=false)do
+                     begin
+                          if(ArrayIndexPrelevementMatricule[iIPM]=IndexPrelevement)then
+                          begin
+                               OKIndexPrelevementMatricule:=true;
+                               IndexPrelevement:=iIPM;
+                          end;
+                          iIPM:=iIPM+1;
+                     end;
+
+                     PBegin:=TPrelevementCopie[IndexPrelevement].RegistrePositionPrelevementUniteFonds.PositionArchiveBegin;
+
+                     ChArchivePrelevementUniteFonds:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementUniteFonds';
+                     assignfile(FArchivePrelevementUniteFonds,ChArchivePrelevementUniteFonds);
+                     try
+                     if FileExists(ChArchivePrelevementUniteFonds)then
+                     Reset(FArchivePrelevementUniteFonds)
+                     else Rewrite(FArchivePrelevementUniteFonds);
+                     Seek(FArchivePrelevementUniteFonds,PBegin);
+                     i:=0;
+                     NumPrelevementEnd:=0;
+                     EcartNPUF:=99999999;
+                     while not eof(FArchivePrelevementUniteFonds)do
+                     begin
+                          Read(FArchivePrelevementUniteFonds,RArchivePrelevementUniteFonds);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(RArchivePrelevementUniteFonds.NumPrelevement>NumPrelevementEnd)then
+                          begin
+                               RArchivePrelevementUniteFondsCopie:=RArchivePrelevementUniteFonds;
+                          end;
+
+                          if(RArchivePrelevementUniteFonds.NumPrelevementUniteFonds<EcartNPUF)then EcartNPUF:=RArchivePrelevementUniteFonds.NumPrelevementUniteFonds-1;
+                     end;
+                     RArchivePrelevementUniteFondsCopie.NumPrelevement:=0;
+                     Seek(FArchivePrelevementUniteFondsCopie,i);
+                     write(FArchivePrelevementUniteFondsCopie,RArchivePrelevementUniteFondsCopie);
+                     i:=i+1;
+
+                     FSTravauxFinAnnee.EditEcartPUF.Text:=inttostr(EcartNPUF);
+
+                     Seek(FArchivePrelevementUniteFonds,PBegin);
+                     while not eof(FArchivePrelevementUniteFonds)do
+                     begin
+                          Read(FArchivePrelevementUniteFonds,RArchivePrelevementUniteFonds);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(datecorrecte(RArchivePrelevementUniteFonds.DatePrelevement)=true)
+                          and(strtodate(RArchivePrelevementUniteFonds.DatePrelevement)>strtodate('31/12/'+ExerciceAnnee))then
+                          begin
+                               RArchivePrelevementUniteFondsCopie:=RArchivePrelevementUniteFonds;
+                               RArchivePrelevementUniteFondsCopie.NumPrelevement:=RArchivePrelevementUniteFondsCopie.NumPrelevement-strtointeger(FSTravauxFinAnnee.EditEcartPrelevement.Text);
+                               RArchivePrelevementUniteFondsCopie.NumPrelevementUniteFonds:=RArchivePrelevementUniteFondsCopie.NumPrelevementUniteFonds-strtointeger(FSTravauxFinAnnee.EditEcartPUF.Text);
+                               Seek(FArchivePrelevementUniteFondsCopie,i);
+                               write(FArchivePrelevementUniteFondsCopie,RArchivePrelevementUniteFondsCopie);
+                          i:=i+1;
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Prélèvement UF n° '+inttostr(RArchivePrelevementUniteFonds.NumPrelevementUniteFonds)+' du '+RArchivePrelevementUniteFonds.DatePrelevement);
+                          end;
+                     end;
+                     finally
+                     CloseFile(FArchivePrelevementUniteFonds);
+                     end;
+                     finally
+                     CloseFile(FArchivePrelevementUniteFondsCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePrelevementUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePrelevementUniteFonds',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureArchiveRegistreAffectationEffectifEquipe(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,PBegin,NumPrelevementEnd,IndexPrelevement,iIPM:integer;
+     PositionPrelevement,TypeProcesControleReseaux,FichierConserne:string;
+     OKIndexPrelevementMatricule,OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchiveRegistreAffectationEffectifEquipe',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FArchiveRegistreAffectationEffectifEquipe');
+
+     TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule);
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';         
+               FichierConserne:='FArchiveRegistreAffectationEffectifEquipe';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChArchiveRegistreAffectationEffectifEquipeCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FArchiveRegistreAffectationEffectifEquipe';
+                     assignfile(FArchiveRegistreAffectationEffectifEquipeCopie,ChArchiveRegistreAffectationEffectifEquipeCopie);
+                     try
+                     if FileExists(ChArchiveRegistreAffectationEffectifEquipeCopie)then
+                     Reset(FArchiveRegistreAffectationEffectifEquipeCopie)
+                     else Rewrite(FArchiveRegistreAffectationEffectifEquipeCopie);
+                     Seek(FArchiveRegistreAffectationEffectifEquipeCopie,0);
+                     Truncate(FArchiveRegistreAffectationEffectifEquipeCopie);
+
+                     //RPrelevement:=ChercherPrelevement(strtointeger(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text),ExerciceAnnee,FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text,PositionPrelevement);
+                     //TPrelevementCopie[IndexPrelevement]
+                     IndexPrelevement:=strtoint(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text+inttostr(strtointeger(FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text)));
+
+                     iIPM:=0;
+                     OKIndexPrelevementMatricule:=false;
+                     while(iIPM<=High(ArrayIndexPrelevementMatricule))and(OKIndexPrelevementMatricule=false)do
+                     begin
+                          if(ArrayIndexPrelevementMatricule[iIPM]=IndexPrelevement)then
+                          begin
+                               OKIndexPrelevementMatricule:=true;
+                               IndexPrelevement:=iIPM;
+                          end;
+                          iIPM:=iIPM+1;
+                     end;
+
+                     PBegin:=TPrelevementCopie[IndexPrelevement].RegistrePositionRegistreAffectationEffectifEquipe.PositionArchiveBegin;
+
+                     ChArchiveRegistreAffectationEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreAffectationEffectifEquipe';
+                     assignfile(FArchiveRegistreAffectationEffectifEquipe,ChArchiveRegistreAffectationEffectifEquipe);
+                     try
+                     if FileExists(ChArchiveRegistreAffectationEffectifEquipe)then
+                     Reset(FArchiveRegistreAffectationEffectifEquipe)
+                     else Rewrite(FArchiveRegistreAffectationEffectifEquipe);
+                     Seek(FArchiveRegistreAffectationEffectifEquipe,PBegin);
+                     i:=0;
+                     NumPrelevementEnd:=0;
+                     while not eof(FArchiveRegistreAffectationEffectifEquipe)do
+                     begin
+                          Read(FArchiveRegistreAffectationEffectifEquipe,RArchiveRegistreAffectationEffectifEquipe);  Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(RArchiveRegistreAffectationEffectifEquipe.NumPrelevement>NumPrelevementEnd)then
+                          begin
+                               RArchiveRegistreAffectationEffectifEquipeCopie:=RArchiveRegistreAffectationEffectifEquipe;
+                          end;
+                     end;
+                     RArchiveRegistreAffectationEffectifEquipeCopie.NumPrelevement:=0;
+                     Seek(FArchiveRegistreAffectationEffectifEquipeCopie,i);
+                     write(FArchiveRegistreAffectationEffectifEquipeCopie,RArchiveRegistreAffectationEffectifEquipeCopie);
+                     i:=i+1;
+
+                     Seek(FArchiveRegistreAffectationEffectifEquipe,PBegin);
+                     while not eof(FArchiveRegistreAffectationEffectifEquipe)do
+                     begin
+                          Read(FArchiveRegistreAffectationEffectifEquipe,RArchiveRegistreAffectationEffectifEquipe);  Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          //RPrelevement:=ChercherPrelevement(RArchiveRegistreAffectationEffectifEquipe.NumPrelevement,ExerciceAnnee,'',PositionPrelevement);
+                          IndexPrelevement:=strtoint(inttostr(RArchiveRegistreAffectationEffectifEquipe.NumPrelevement)+inttostr(strtointeger(RArchiveRegistreAffectationEffectifEquipe.Matricule)));
+
+                          iIPM:=0;
+                          OKIndexPrelevementMatricule:=false;
+                          while(iIPM<=High(ArrayIndexPrelevementMatricule))and(OKIndexPrelevementMatricule=false)do
+                          begin
+                               if(ArrayIndexPrelevementMatricule[iIPM]=IndexPrelevement)then
+                               begin
+                                    OKIndexPrelevementMatricule:=true;
+                                    IndexPrelevement:=iIPM;
+                               end;
+                               iIPM:=iIPM+1;
+                          end;
+
+                          if(datecorrecte(TPrelevementCopie[IndexPrelevement].DatePrelevement)=true)
+                          and(strtodate(TPrelevementCopie[IndexPrelevement].DatePrelevement)>strtodate('31/12/'+ExerciceAnnee))then
+                          begin
+                               RArchiveRegistreAffectationEffectifEquipeCopie:=RArchiveRegistreAffectationEffectifEquipe;
+                               RArchiveRegistreAffectationEffectifEquipeCopie.NumPrelevement:=RArchiveRegistreAffectationEffectifEquipeCopie.NumPrelevement-strtointeger(FSTravauxFinAnnee.EditEcartPrelevement.Text);
+                               Seek(FArchiveRegistreAffectationEffectifEquipeCopie,i);
+                               write(FArchiveRegistreAffectationEffectifEquipeCopie,RArchiveRegistreAffectationEffectifEquipeCopie);
+                          i:=i+1;
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Registre Affectation E.Equipe n°'+inttostr(RArchiveRegistreAffectationEffectifEquipe.NumAffectationEffectifEquipe)+' matricule '+RArchiveRegistreAffectationEffectifEquipe.Matricule);
+                          end;
+                     end;
+                     finally
+                     CloseFile(FArchiveRegistreAffectationEffectifEquipe);
+                     end;
+                     finally
+                     CloseFile(FArchiveRegistreAffectationEffectifEquipeCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchiveRegistreAffectationEffectifEquipe',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchiveRegistreAffectationEffectifEquipe',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureArchivePrelevementEffectifEquipe(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,PBegin,NumPrelevementEnd,IndexPrelevement,iIPM:integer;
+     PositionPrelevement,TypeProcesControleReseaux,FichierConserne:string;
+     OKIndexPrelevementMatricule,OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePrelevementEffectifEquipe',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réuverture FArchivePrelevementEffectifEquipe');
+
+     TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule);
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FArchivePrelevementEffectifEquipe';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChArchivePrelevementEffectifEquipeCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FArchivePrelevementEffectifEquipe';
+                     assignfile(FArchivePrelevementEffectifEquipeCopie,ChArchivePrelevementEffectifEquipeCopie);
+                     try
+                     if FileExists(ChArchivePrelevementEffectifEquipeCopie)then
+                     Reset(FArchivePrelevementEffectifEquipeCopie)
+                     else Rewrite(FArchivePrelevementEffectifEquipeCopie);
+                     Seek(FArchivePrelevementEffectifEquipeCopie,0);
+                     Truncate(FArchivePrelevementEffectifEquipeCopie);
+
+                     //RPrelevement:=ChercherPrelevement(strtointeger(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text),ExerciceAnnee,FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text,PositionPrelevement);
+                     //TPrelevementCopie[IndexPrelevement]
+                     IndexPrelevement:=strtoint(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text+inttostr(strtointeger(FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text)));
+
+                     iIPM:=0;
+                     OKIndexPrelevementMatricule:=false;
+                     while(iIPM<=High(ArrayIndexPrelevementMatricule))and(OKIndexPrelevementMatricule=false)do
+                     begin
+                          if(ArrayIndexPrelevementMatricule[iIPM]=IndexPrelevement)then
+                          begin
+                               OKIndexPrelevementMatricule:=true;
+                               IndexPrelevement:=iIPM;
+                          end;
+                          iIPM:=iIPM+1;
+                     end;
+
+                     PBegin:=TPrelevementCopie[IndexPrelevement].RegistrePositionPrelevementEffectifEquipe.PositionArchiveBegin;
+
+                     ChArchivePrelevementEffectifEquipe:=RParc.Parcours+'\'+Exercice+'FArchivePrelevementEffectifEquipe';
+                     assignfile(FArchivePrelevementEffectifEquipe,ChArchivePrelevementEffectifEquipe);
+                     try
+                     if FileExists(ChArchivePrelevementEffectifEquipe)then
+                     Reset(FArchivePrelevementEffectifEquipe)
+                     else Rewrite(FArchivePrelevementEffectifEquipe);
+                     Seek(FArchivePrelevementEffectifEquipe,PBegin);
+                     i:=0;
+                     NumPrelevementEnd:=0;
+                     while not eof(FArchivePrelevementEffectifEquipe)do
+                     begin
+                          Read(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(RArchivePrelevementEffectifEquipe.NumPrelevement>NumPrelevementEnd)then
+                          begin
+                               RArchivePrelevementEffectifEquipeCopie:=RArchivePrelevementEffectifEquipe;
+                          end;
+                     end;
+                     RArchivePrelevementEffectifEquipeCopie.NumPrelevement:=0;
+                     Seek(FArchivePrelevementEffectifEquipeCopie,i);
+                     write(FArchivePrelevementEffectifEquipeCopie,RArchivePrelevementEffectifEquipeCopie);
+                     i:=i+1;
+
+                     Seek(FArchivePrelevementEffectifEquipe,PBegin);
+                     while not eof(FArchivePrelevementEffectifEquipe)do
+                     begin
+                          Read(FArchivePrelevementEffectifEquipe,RArchivePrelevementEffectifEquipe);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          //RPrelevement:=ChercherPrelevement(RArchivePrelevementEffectifEquipe.NumPrelevement,ExerciceAnnee,'',PositionPrelevement);
+                          //TPrelevementCopie[IndexPrelevement]
+                          IndexPrelevement:=strtoint(inttostr(RArchivePrelevementEffectifEquipe.NumPrelevement)+RArchivePrelevementEffectifEquipe.Matricule);
+
+                          iIPM:=0;
+                          OKIndexPrelevementMatricule:=false;
+                          while(iIPM<=High(ArrayIndexPrelevementMatricule))and(OKIndexPrelevementMatricule=false)do
+                          begin
+                              if(ArrayIndexPrelevementMatricule[iIPM]=IndexPrelevement)then
+                              begin
+                                   OKIndexPrelevementMatricule:=true;
+                                   IndexPrelevement:=iIPM;
+                              end;
+                              iIPM:=iIPM+1;
+                          end;
+
+                          if(datecorrecte(TPrelevementCopie[IndexPrelevement].DatePrelevement)=true)
+                          and(strtodate(TPrelevementCopie[IndexPrelevement].DatePrelevement)>strtodate('31/12/'+ExerciceAnnee))then
+                          begin
+                               RArchivePrelevementEffectifEquipeCopie:=RArchivePrelevementEffectifEquipe;
+                               RArchivePrelevementEffectifEquipeCopie.NumPrelevement:=RArchivePrelevementEffectifEquipeCopie.NumPrelevement-strtointeger(FSTravauxFinAnnee.EditEcartPrelevement.Text);
+                               Seek(FArchivePrelevementEffectifEquipeCopie,i);
+                               write(FArchivePrelevementEffectifEquipeCopie,RArchivePrelevementEffectifEquipeCopie);
+                          i:=i+1;
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Effectif Equipe n° '+inttostr(RArchivePrelevementEffectifEquipe.NumPrelevementEffectifEquipe)+' du '+RArchivePrelevementEffectifEquipe.DatePrelevement);
+                          end;
+                     end;
+                     finally
+                     CloseFile(FArchivePrelevementEffectifEquipe);
+                     end;
+                     finally
+                     CloseFile(FArchivePrelevementEffectifEquipeCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePrelevementEffectifEquipe',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePrelevementEffectifEquipe',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FMarche',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FMarche');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FMarche';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces('Business','FMarche','',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+'FBaseAvis'+' recherché !');
+                     end;
+                     ChMarcheCopie:=Adresse;
+                     assignfile(FMarcheCopie,ChMarcheCopie);
+                     try
+                     if FileExists(ChMarcheCopie)then
+                     Reset(FMarcheCopie)
+                     else Rewrite(FMarcheCopie);
+                     Seek(FMarcheCopie,0);
+                     Truncate(FMarcheCopie);
+
+                     ChMarche:=RParc.Parcours+'\'+Exercice+'FMarche';
+                     assignfile(FMarche,ChMarche);
+                     try
+                     if FileExists(ChMarche)then
+                     Reset(FMarche)
+                     else Rewrite(FMarche);
+                     Seek(FMarche,0);
+                     i:=0;
+                     while not eof(FMarche)do
+                     begin
+                          Read(FMarche,RMarche);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RMarcheCopie:=RMarche;
+                          Seek(FMarcheCopie,i);
+                          write(FMarcheCopie,RMarcheCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Marché: '+RMarche.Marche);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FMarche);
+                     end;
+                     finally
+                     CloseFile(FMarcheCopie);
+                     end;
+               end;
+
+               ProcAfficheMarche(FSTravauxFinAnnee.TableauMarche,'','');
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FMarche',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FMarche',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureStructureMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FStructureMarche',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FStructureMarche');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FStructureMarche';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChStructureMarcheCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FStructureMarche';
+                     assignfile(FStructureMarcheCopie,ChStructureMarcheCopie);
+                     try
+                     if FileExists(ChStructureMarcheCopie)then
+                     Reset(FStructureMarcheCopie)
+                     else Rewrite(FStructureMarcheCopie);
+                     Seek(FStructureMarcheCopie,0);
+                     Truncate(FStructureMarcheCopie);
+
+                     ChStructureMarche:=RParc.Parcours+'\'+Exercice+'FStructureMarche';
+                     assignfile(FStructureMarche,ChStructureMarche);
+                     try
+                     if FileExists(ChStructureMarche)then
+                     Reset(FStructureMarche)
+                     else Rewrite(FStructureMarche);
+                     Seek(FStructureMarche,0);
+                     i:=0;
+                     while not eof(FStructureMarche)do
+                     begin
+                          Read(FStructureMarche,RStructureMarche);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RStructureMarcheCopie:=RStructureMarche;
+                          Seek(FStructureMarcheCopie,i);
+                          write(FStructureMarcheCopie,RStructureMarcheCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('S.Marché: '+RStructureMarche.StructureMarche);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FStructureMarche);
+                     end;
+                     finally
+                     CloseFile(FStructureMarcheCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FStructureMarche',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FStructureMarche',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureStatistiqueMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FStatistiqueMarche',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FStatistiqueMarche');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FStatistiqueMarche';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChStatistiqueMarcheCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FStatistiqueMarche';
+                     assignfile(FStatistiqueMarcheCopie,ChStatistiqueMarcheCopie);
+                     try
+                     if FileExists(ChStatistiqueMarcheCopie)then
+                     Reset(FStatistiqueMarcheCopie)
+                     else Rewrite(FStatistiqueMarcheCopie);
+                     Seek(FStatistiqueMarcheCopie,0);
+                     Truncate(FStatistiqueMarcheCopie);
+
+                     ChStatistiqueMarche:=RParc.Parcours+'\'+Exercice+'FStatistiqueMarche';
+                     assignfile(FStatistiqueMarche,ChStatistiqueMarche);
+                     try
+                     if FileExists(ChStatistiqueMarche)then
+                     Reset(FStatistiqueMarche)
+                     else Rewrite(FStatistiqueMarche);
+                     Seek(FStatistiqueMarche,0);
+                     i:=0;
+                     while not eof(FStatistiqueMarche)do
+                     begin
+                          Read(FStatistiqueMarche,RStatistiqueMarche);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RStatistiqueMarcheCopie:=RStatistiqueMarche;
+                          Seek(FStatistiqueMarcheCopie,i);
+                          write(FStatistiqueMarcheCopie,RStatistiqueMarcheCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('S.Marché: '+RStatistiqueMarche.StatistiqueMarche);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FStatistiqueMarche);
+                     end;
+                     finally
+                     CloseFile(FStatistiqueMarcheCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FStatistiqueMarche',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FStatistiqueMarche',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureDetailMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R:integer;    NomFichier,TypeProcesControleReseaux:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDetailMarche',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FDetailMarche');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauMarche.RowCount-1)and(FSTravauxFinAnnee.TableauMarche.Cells[19,R]<>'')and(FSTravauxFinAnnee.TableauMarche.Cells[1,R]<>'')do
+               begin
+                     try
+
+                     TypeProcesControleReseaux:='';
+                     NomFichier:='FDetail'+FSTravauxFinAnnee.TableauMarche.Cells[19,R]+' '+FSTravauxFinAnnee.TableauMarche.Cells[1,R];
+                     i:=0;
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(NomFichier)=true)then
+                     begin
+                           OpenFParc(RParc);
+                           ChDetailMarcheCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+NomFichier;
+                           assignfile(FDetailMarcheCopie,ChDetailMarcheCopie);
+                           try
+                           if FileExists(ChDetailMarcheCopie)then
+                           Reset(FDetailMarcheCopie)
+                           else Rewrite(FDetailMarcheCopie);
+                           Seek(FDetailMarcheCopie,0);
+                           Truncate(FDetailMarcheCopie);
+
+                           ChDetailMarche:=RParc.Parcours+'\'+Exercice+NomFichier;
+                           assignfile(FDetailMarche,ChDetailMarche);
+                           try
+                           if FileExists(ChDetailMarche)then
+                           Reset(FDetailMarche)
+                           else Rewrite(FDetailMarche);
+                           Seek(FDetailMarche,0);
+                           i:=0;
+                           while not eof(FDetailMarche)do
+                           begin
+                                Read(FDetailMarche,RDetailMarche);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RDetailMarcheCopie:=RDetailMarche;
+                                Seek(FDetailMarcheCopie,i);
+                                write(FDetailMarcheCopie,RDetailMarcheCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('D.Marché: '+RDetailMarche.DesignationArticle);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FDetailMarche);
+                           end;
+                           finally
+                           CloseFile(FDetailMarcheCopie);
+                           end;
+                     end;
+               R:=R+1;
+
+                     if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,NomFichier,NewExercice,TypeProcesControleReseaux,i);
+
+                     except
+                           ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,NomFichier,NewExercice,TypeProcesControleReseaux,i);
+                     end;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAttachement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R,l,NewNumAttachement:integer;  OKAttachement,OKSituation:boolean; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAttachement',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAttachement');
+
+     FSTravauxFinAnnee.TableauLAttachement.ColCount:=4;
+     FSTravauxFinAnnee.TableauLAttachement.Cols[0].Text:='Code Trie';
+     FSTravauxFinAnnee.TableauLAttachement.Cols[1].Text:='New N°Attachement';
+     FSTravauxFinAnnee.TableauLAttachement.Cols[2].Text:='Last N°Attachement';
+     FSTravauxFinAnnee.TableauLAttachement.Cols[3].Text:='Date';
+     FSTravauxFinAnnee.TableauLAttachement.RowCount:=2;
+     FSTravauxFinAnnee.TableauLAttachement.Rows[1].Text:='';
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+               
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FAttachement';
+
+               // Nouvelle Attachement exercice N+1
+               if not(FunctionAdresseProces('Business','FAttachement','',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+'FBaseAvis'+' recherché !');
+               end;
+               ChLAttachement:=Adresse;
+               assignfile(FLAttachement,ChLAttachement);
+               try
+               if FileExists(ChLAttachement)then
+               Reset(FLAttachement)
+               else Rewrite(FLAttachement);
+               Seek(FLAttachement,0);
+               R:=0;
+               while not eof(FLAttachement)do
+               begin
+                    Read(FLAttachement,RLAttachement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                    if(datecorrecte(RLAttachement.Date)=true)
+                    and(strtodate(RLAttachement.Date)>strtodate('31/12/'+ExerciceAnnee))then
+                    begin
+                         l:=1;
+                         OKSituation:=false;
+                         while(l<=R)and(OKSituation=false)do
+                         begin
+                              if(inttostr(RLAttachement.NSMarche)+inttostr(RLAttachement.NAttachement)=FSTravauxFinAnnee.TableauLAttachement.Cells[0,l])then
+                              begin
+                                   OKSituation:=true;
+                              end;
+                         l:=l+1;
+                         end;
+
+                         if(OKSituation=false)then
+                         begin
+                              R:=R+1;
+                              FSTravauxFinAnnee.TableauLAttachement.Rows[R].Text:='';
+                              FSTravauxFinAnnee.TableauLAttachement.Cells[0,R]:=inttostr(RLAttachement.NSMarche)+inttostr(RLAttachement.NAttachement);
+                              FSTravauxFinAnnee.TableauLAttachement.Cells[1,R]:='';
+                              FSTravauxFinAnnee.TableauLAttachement.Cells[2,R]:=inttostr(RLAttachement.NAttachement);
+                              FSTravauxFinAnnee.TableauLAttachement.Cells[3,R]:=RLAttachement.Date;
+                         end;
+                    end;
+               end;
+
+               if(R>0)then FSTravauxFinAnnee.TableauLAttachement.RowCount:=R+1
+               else FSTravauxFinAnnee.TableauLAttachement.RowCount:=2;
+
+               TrierTableauARowSpecial(FSTravauxFinAnnee.TableauLAttachement,1,FSTravauxFinAnnee.TableauLAttachement.RowCount-1,0,'0','Num','+');
+
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauLAttachement.RowCount-1)do
+               begin
+                    NewNumAttachement:=0;
+                    l:=1;
+                    while(l<=FSTravauxFinAnnee.TableauLAttachement.RowCount-1)do
+                    begin
+                         if(FSTravauxFinAnnee.TableauLAttachement.Cells[0,l]=FSTravauxFinAnnee.TableauLAttachement.Cells[0,R])then
+                         begin
+                              if(NewNumAttachement<=strtointeger(FSTravauxFinAnnee.TableauLAttachement.Cells[1,l]))then NewNumAttachement:=NewNumAttachement+1;
+                         end;
+                    l:=l+1;
+                    end;
+
+                    FSTravauxFinAnnee.TableauLAttachement.Cells[1,R]:=inttostr(NewNumAttachement);
+               R:=R+1;
+               end;
+
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChLAttachementCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FAttachement';
+                     assignfile(FLAttachementCopie,ChLAttachementCopie);
+                     try
+                     if FileExists(ChLAttachementCopie)then
+                     Reset(FLAttachementCopie)
+                     else Rewrite(FLAttachementCopie);
+                     Seek(FLAttachementCopie,0);
+                     Truncate(FLAttachementCopie);
+                     i:=0;
+
+                     R:=1;
+                     while(R<=FSTravauxFinAnnee.TableauMarche.RowCount-1)do
+                     begin
+                          Seek(FLAttachementCopie,i);
+                          RLAttachementCopie.TypeProjet:=FSTravauxFinAnnee.TableauMarche.Cells[19,R];
+                          RLAttachementCopie.NAttachement:=0;
+                          RLAttachementCopie.NSMarche:=strtointeger(FSTravauxFinAnnee.TableauMarche.Cells[1,R]);
+                          RLAttachementCopie.Date:='31/12/'+ExerciceAnnee;
+                          write(FLAttachementCopie,RLAttachementCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Attachement: '+RLAttachementCopie.DesignationAttachement);
+                          i:=i+1;
+                     R:=R+1;
+                     end;
+
+                     //Nouveau
+                     Seek(FLAttachement,0);
+                     while not eof(FLAttachement)do
+                     begin
+                          Read(FLAttachement,RLAttachement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(datecorrecte(RLAttachement.Date)=true)
+                          and(strtodate(RLAttachement.Date)>strtodate('31/12/'+ExerciceAnnee))then
+                          begin
+                               l:=1;
+                               OKSituation:=false;
+                               while(l<=FSTravauxFinAnnee.TableauLAttachement.RowCount-1)and(OKSituation=false)do
+                               begin
+                                    if(inttostr(RLAttachement.NSMarche)+inttostr(RLAttachement.NAttachement)=FSTravauxFinAnnee.TableauLAttachement.Cells[0,l])then
+                                    begin
+                                         OKSituation:=true;
+                                         RLAttachement.NAttachement:=strtointeger(FSTravauxFinAnnee.TableauLAttachement.Cells[1,l]);
+                                    end;
+                               l:=l+1;
+                               end;
+                               RLAttachementCopie:=RLAttachement;
+                               Seek(FLAttachementCopie,i);
+                               write(FLAttachementCopie,RLAttachementCopie);
+
+                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Attachement N: '+RLAttachementCopie.DesignationAttachement);
+                               i:=i+1;
+                          end;
+                     end;
+                     finally
+                     closefile(FLAttachementCopie);
+                     end;
+               end;
+               finally
+               CloseFile(FLAttachement);
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAttachement',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAttachement',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureDetailAttachement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R,l:integer;    NomFichier,TypeProcesControleReseaux:string;   OKAttachement:boolean;  DateSituationBegin,DateSituationEnd:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDetailAttachement',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FDetailAttachement');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauMarche.RowCount-1)do
+               begin
+                     try
+                     
+                     TypeProcesControleReseaux:='';
+                     NomFichier:='FDetailAttachement'+FSTravauxFinAnnee.TableauMarche.Cells[19,R]+' '+FSTravauxFinAnnee.TableauMarche.Cells[1,R];
+                     i:=0;
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(NomFichier)=true)then
+                     begin
+                           OpenFParc(RParc);
+                           ChDetailAttachementCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+NomFichier;
+                           assignfile(FDetailAttachementCopie,ChDetailAttachementCopie);
+                           try
+                           if FileExists(ChDetailAttachementCopie)then
+                           Reset(FDetailAttachementCopie)
+                           else Rewrite(FDetailAttachementCopie);
+                           Seek(FDetailAttachementCopie,0);
+                           Truncate(FDetailAttachementCopie);
+                           DateSituationBegin:='01/01/'+ExerciceAnnee;
+                           DateSituationEnd:='31/12/'+ExerciceAnnee;
+                           DetailSituationMarche(FSTravauxFinAnnee.TableauDetailSituationMarche,DateSituationBegin,DateSituationEnd,strtointeger(FSTravauxFinAnnee.TableauMarche.Cells[1,R]),0,0,0,true,true,true);
+
+                           if(FSTravauxFinAnnee.TableauDetailSituationMarche.RowCount>=2)and(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[10,1]<>'')then
+                           begin
+                                 l:=1;
+                                 while(l<=FSTravauxFinAnnee.TableauDetailSituationMarche.RowCount-1)do
+                                 begin
+                                      RDetailAttachementCopie.NDetailAttachement:=i;
+                                      RDetailAttachementCopie.NAttachement:=0;
+                                      RDetailAttachementCopie.NArticle:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[0,l];
+                                      RDetailAttachementCopie.DesignationArticle:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[1,l];
+                                      RDetailAttachementCopie.UniteM:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[2,l];
+                                      RDetailAttachementCopie.QuantiteAttachementRealise:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[4,l]);
+                                      RDetailAttachementCopie.QuantiteAttachementObjetMarche:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[6,l]);
+                                      RDetailAttachementCopie.QuantiteAttachementObjetAvenant:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[8,l]);
+                                      RDetailAttachementCopie.PrixUnitaire:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[9,l]);
+                                      RDetailAttachementCopie.CodeTrie:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[10,l];
+                                      RDetailAttachementCopie.CodeStock:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[11,l];
+
+                                      Seek(FDetailAttachementCopie,i);
+                                      write(FDetailAttachementCopie,RDetailAttachementCopie);
+
+                                      FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('D.Attachement: '+RDetailAttachementCopie.DesignationArticle);
+                                      i:=i+1;
+                                 l:=l+1;
+                                 end;
+                           end;
+
+                           OpenFParc(RParc);
+                           ChDetailAttachement:=RParc.Parcours+'\'+Exercice+NomFichier;
+                           assignfile(FDetailAttachement,ChDetailAttachement);
+                           try
+                           if FileExists(ChDetailAttachement)then
+                           Reset(FDetailAttachement)
+                           else Rewrite(FDetailAttachement);
+                           Seek(FDetailAttachement,0);
+                           while not eof(FDetailAttachement)do
+                           begin
+                                Read(FDetailAttachement,RDetailAttachement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RlAttachement:=ChercherAttachement(strtointeger(FSTravauxFinAnnee.TableauMarche.Cells[1,R]),RDetailAttachement.NAttachement);
+                                if(stringtodate(RlAttachement.Date,'ReouvertureDetailAttachement')>=stringtodate('01/01/'+NewExercice,'ReouvertureDetailAttachement'))then
+                                begin
+                                     OKAttachement:=false;
+                                     RDetailAttachementCopie:=RDetailAttachement;
+                                     l:=1;
+                                     while(l<=FSTravauxFinAnnee.TableauLAttachement.RowCount-1)and(OKAttachement=false)do
+                                     begin
+                                          if(FSTravauxFinAnnee.TableauMarche.Cells[1,R]+inttostr(RDetailAttachementCopie.NAttachement)=FSTravauxFinAnnee.TableauLAttachement.Cells[0,l])then
+                                          begin
+                                               OKAttachement:=true;
+                                               RDetailAttachementCopie.NAttachement:=strtointeger(FSTravauxFinAnnee.TableauLAttachement.Cells[1,l]);
+                                          end;
+                                     l:=l+1;
+                                     end;
+
+                                     Seek(FDetailAttachementCopie,i);
+                                     write(FDetailAttachementCopie,RDetailAttachementCopie);
+                                i:=i+1;
+                                end;
+                           end;
+                           finally
+                           CloseFile(FDetailAttachement);
+                           end;
+                           finally
+                           CloseFile(FDetailAttachementCopie);
+                           end;
+                     end;
+
+                     if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,NomFichier,NewExercice,TypeProcesControleReseaux,i);
+
+                     except
+                           ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,NomFichier,NewExercice,TypeProcesControleReseaux,i);
+                     end;
+               R:=R+1;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureStockMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FStockMarche',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FStockMarche');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FStockMarche';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChStockArticleCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FStockMarche';
+                     assignfile(FStockArticleCopie,ChStockArticleCopie);
+                     try
+                     if FileExists(ChStockArticleCopie)then
+                     Reset(FStockArticleCopie)
+                     else Rewrite(FStockArticleCopie);
+                     Seek(FStockArticleCopie,0);
+                     Truncate(FStockArticleCopie);
+
+                     ChStockArticle:=RParc.Parcours+'\'+Exercice+'FStockMarche';
+                     assignfile(FStockArticle,ChStockArticle);
+                     try
+                     if FileExists(ChStockArticle)then
+                     Reset(FStockArticle)
+                     else Rewrite(FStockArticle);
+                     Seek(FStockArticle,0);
+                     i:=0;
+                     while not eof(FStockArticle)do
+                     begin
+                          Read(FStockArticle,RStockArticle);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RStockArticleCopie:=RStockArticle;
+                          Seek(FStockArticleCopie,i);
+                          write(FStockArticleCopie,RStockArticleCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Stock: '+RStockArticle.Design+' '+RStockArticle.Ref);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FStockArticle);
+                     end;
+                     finally
+                     CloseFile(FStockArticleCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FStockMarche',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FStockMarche',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureDetailSituationMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R,l:integer;  DateSituationBegin,DateSituationEnd,TypeProcesControleReseaux,FichierConserne,NSMarche,NumSituation:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDetailSituationMarche',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FDetailSituationMarche');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauMarche.RowCount-1)do
+               begin
+                     try
+
+                     i:=0;
+                     TypeProcesControleReseaux:='';
+                     FichierConserne:='FDetailSituationMarche '+FSTravauxFinAnnee.TableauMarche.Cells[1,R]+' '+'0';
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           OpenFParc(RParc);
+                           ChDetailSituationMarcheCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FDetailSituationMarche '+FSTravauxFinAnnee.TableauMarche.Cells[1,R]+' '+'0';
+                           assignfile(FDetailSituationMarcheCopie,ChDetailSituationMarcheCopie);
+                           try
+                           if FileExists(ChDetailSituationMarcheCopie)then
+                           Reset(FDetailSituationMarcheCopie)
+                           else Rewrite(FDetailSituationMarcheCopie);
+                           Seek(FDetailSituationMarcheCopie,0);
+                           Truncate(FDetailSituationMarcheCopie);
+
+                           DateSituationBegin:='01/01/'+ExerciceAnnee;
+                           DateSituationEnd:='31/12/'+ExerciceAnnee;
+                           //DetailSituationMarche(FSTravauxFinAnnee.TableauDetailSituationMarche,DateSituationBegin,DateSituationEnd,strtointeger(FSTravauxFinAnnee.TableauMarche.Cells[1,R]),0,0,0,true,true,true);
+
+                           NSMarche:=FSTravauxFinAnnee.TableauMarche.Cells[1,R];
+                           NumSituation:=ProcLastNumSituationMarchePeriode(strtointeger(NSMarche),DateSituationEnd);
+                           ListeDetailSituationMarche(FSTravauxFinAnnee.TableauDetailSituationMarche,NumSituation,NSMarche,lastlaters(DateSituationEnd,4));
+                           l:=1;
+                           while(l<=FSTravauxFinAnnee.TableauDetailSituationMarche.RowCount-1)do
+                           begin
+                                FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[3,l]:=floattostr(strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[3,l])+strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[4,l]));
+                                FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[4,l]:='';
+
+                                FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[5,l]:=floattostr(strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[5,l])+strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[6,l]));
+                                FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[6,l]:='';
+
+                                FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[7,l]:=floattostr(strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[7,l])+strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[8,l]));
+                                FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[8,l]:='';
+                           l:=l+1;
+                           end;
+
+                           if(FSTravauxFinAnnee.TableauDetailSituationMarche.RowCount>=2)and(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[10,1]<>'')then
+                           begin
+                                 l:=1;
+                                 while(l<=FSTravauxFinAnnee.TableauDetailSituationMarche.RowCount-1)do
+                                 begin
+                                      RDetailSituationMarcheCopie.NDetailSituationMarche:=i;
+                                      RDetailSituationMarcheCopie.NSituationMarche:=0;
+                                      RDetailSituationMarcheCopie.NArticle:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[0,l];
+                                      RDetailSituationMarcheCopie.DesignationArticle:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[1,l];
+                                      RDetailSituationMarcheCopie.UniteM:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[2,l];
+                                      RDetailSituationMarcheCopie.QuantiteSituationMarcheRealisePrecedement:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[3,l]);
+                                      RDetailSituationMarcheCopie.QuantiteSituationMarcheRealiseMois:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[4,l]);
+                                      RDetailSituationMarcheCopie.QuantiteSituationMarcheObjetMarchePrecedement:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[5,l]);
+                                      RDetailSituationMarcheCopie.QuantiteSituationMarcheObjetMarcheMois:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[6,l]);
+                                      RDetailSituationMarcheCopie.QuantiteSituationMarcheObjetAvenantPrecedement:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[7,l]);
+                                      RDetailSituationMarcheCopie.QuantiteSituationMarcheObjetAvenantMois:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[8,l]);
+                                      RDetailSituationMarcheCopie.PrixUnitaire:=strtoreal(FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[9,l]);
+                                      RDetailSituationMarcheCopie.CodeTrie:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[10,l];
+                                      RDetailSituationMarcheCopie.CodeStock:=FSTravauxFinAnnee.TableauDetailSituationMarche.Cells[11,l];
+                                      Seek(FDetailSituationMarcheCopie,i);
+                                      write(FDetailSituationMarcheCopie,RDetailSituationMarcheCopie);
+
+                                      FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('D.Situation Marché: '+RDetailSituationMarcheCopie.DesignationArticle);
+                                      i:=i+1;
+                                 l:=l+1;
+                                 end;
+                           end;
+                           finally
+                           CloseFile(FDetailSituationMarcheCopie);
+                           end;
+                     end;
+
+                     if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDetailSituationMarche '+FSTravauxFinAnnee.TableauMarche.Cells[1,R],NewExercice,TypeProcesControleReseaux,i);
+
+                     except
+                           ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDetailSituationMarche '+FSTravauxFinAnnee.TableauMarche.Cells[1,R],NewExercice,TypeProcesControleReseaux,i);
+                     end;
+               R:=R+1;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureSituationMarche(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R,l,NewNumSituation,NombreSituation:integer; OKSituation,OKAttachement:boolean; TypeProcesControleReseaux,FichierConserne:string; CumulSituationTTCBrut,ValeurRetenueGarantie,CumulRetenueGarantie,CumulSituationTTCNet:real;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FSituationMarche',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FSituationMarche');
+
+     FSTravauxFinAnnee.TableauSituationMarche.ColCount:=4;
+     FSTravauxFinAnnee.TableauSituationMarche.Cols[0].Text:='Code Trie';
+     FSTravauxFinAnnee.TableauSituationMarche.Cols[1].Text:='New N°Situation';
+     FSTravauxFinAnnee.TableauSituationMarche.Cols[2].Text:='Last N°Situation';
+     FSTravauxFinAnnee.TableauSituationMarche.Cols[3].Text:='Date';
+     FSTravauxFinAnnee.TableauSituationMarche.RowCount:=2;
+     FSTravauxFinAnnee.TableauSituationMarche.Rows[1].Text:='';
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FSituationMarche';
+
+               // Nouvelle situation exercice N+1
+               OpenFParc(RParc);
+               ChSituationMarche:=RParc.Parcours+'\'+Exercice+'FSituationMarche';
+               assignfile(FSituationMarche,ChSituationMarche);
+               try
+               if FileExists(ChSituationMarche)then
+               Reset(FSituationMarche)
+               else Rewrite(FSituationMarche);
+               Seek(FSituationMarche,0);
+               R:=0;
+               while not eof(FSituationMarche)do
+               begin
+                    Read(FSituationMarche,RSituationMarche);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                    if(stringtodate(RSituationMarche.DateSituationMarche,'ReouvertureSituationMarche')>stringtodate('31/12/'+ExerciceAnnee,'ReouvertureSituationMarche'))then
+                    begin
+                         l:=1;
+                         OKSituation:=false;
+                         while(l<=R)and(OKSituation=false)do
+                         begin
+                              if(inttostr(RSituationMarche.NSMarche)+inttostr(RSituationMarche.NSituationMarche)=FSTravauxFinAnnee.TableauSituationMarche.Cells[0,l])then
+                              begin
+                                   OKSituation:=true;
+                              end;
+                         l:=l+1;
+                         end;
+
+                         if(OKSituation=false)then
+                         begin
+                              R:=R+1;
+                              FSTravauxFinAnnee.TableauSituationMarche.Rows[R].Text:='';
+                              FSTravauxFinAnnee.TableauSituationMarche.Cells[0,R]:=inttostr(RSituationMarche.NSMarche)+inttostr(RSituationMarche.NSituationMarche);
+                              FSTravauxFinAnnee.TableauSituationMarche.Cells[1,R]:='';
+                              FSTravauxFinAnnee.TableauSituationMarche.Cells[2,R]:=inttostr(RSituationMarche.NSituationMarche);
+                              FSTravauxFinAnnee.TableauSituationMarche.Cells[3,R]:=RSituationMarche.DateSituationMarche;
+                         end;
+                    end;
+               end;
+
+               if(R>0)then FSTravauxFinAnnee.TableauSituationMarche.RowCount:=R+1
+                      else FSTravauxFinAnnee.TableauSituationMarche.RowCount:=2;
+
+               TrierTableauARowSpecial(FSTravauxFinAnnee.TableauSituationMarche,1,FSTravauxFinAnnee.TableauSituationMarche.RowCount-1,0,'0','Num','+');
+
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauSituationMarche.RowCount-1)do
+               begin
+                    NewNumSituation:=0;
+                    l:=1;
+                    while(l<=FSTravauxFinAnnee.TableauSituationMarche.RowCount-1)do
+                    begin
+                         if(FSTravauxFinAnnee.TableauSituationMarche.Cells[0,l]=FSTravauxFinAnnee.TableauSituationMarche.Cells[0,R])then
+                         begin
+                              if(NewNumSituation<=strtointeger(FSTravauxFinAnnee.TableauSituationMarche.Cells[1,l]))then NewNumSituation:=NewNumSituation+1;
+                         end;
+                    l:=l+1;
+                    end;
+
+                    FSTravauxFinAnnee.TableauSituationMarche.Cells[1,R]:=inttostr(NewNumSituation);
+               R:=R+1;
+               end;
+
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChSituationMarcheCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FSituationMarche';
+                     assignfile(FSituationMarcheCopie,ChSituationMarcheCopie);
+                     try
+                     if FileExists(ChSituationMarcheCopie)then
+                     Reset(FSituationMarcheCopie)
+                     else Rewrite(FSituationMarcheCopie);
+                     Seek(FSituationMarcheCopie,0);
+                     Truncate(FSituationMarcheCopie);
+                     R:=1;
+                     i:=0;
+                     while(R<=FSTravauxFinAnnee.TableauMarche.RowCount-1)do
+                     begin
+                          CumuleSituationMarchePeriode(FSTravauxFinAnnee.TableauMarche.Cells[1,R],'','31/12/'+ExerciceAnnee,CumulSituationTTCBrut,ValeurRetenueGarantie,CumulRetenueGarantie,CumulSituationTTCNet,NombreSituation);
+                          if(ActiverReouverture=true)then
+                          begin
+                               Seek(FSituationMarcheCopie,i);
+                               RSituationMarcheCopie.DesignationSituation:='Situation Inventaire au 31/12/'+ExerciceAnnee;
+                               RSituationMarcheCopie.NSituationMarche:=0;
+                               RSituationMarcheCopie.NSMarche:=strtointeger(FSTravauxFinAnnee.TableauMarche.Cells[1,R]);
+                               RSituationMarcheCopie.NAttachement:='0';
+                               RSituationMarcheCopie.ValiditeSituation:=true;
+                               RSituationMarcheCopie.DateSituationMarche:='31/12/'+ExerciceAnnee;
+                               RSituationMarcheCopie.ModePaiement:='';
+                               RSituationMarcheCopie.NumDomiciliation:='';
+                               RSituationMarcheCopie.Domiciliation:='';
+                               RSituationMarcheCopie.NumPiece:='';
+                               RSituationMarcheCopie.MontantSituationTTCBrut:=CumulSituationTTCBrut;
+                               RSituationMarcheCopie.RetenueGarantie:=ValeurRetenueGarantie;
+                               RSituationMarcheCopie.MontantRetenueGarantie:=CumulRetenueGarantie;
+                               RSituationMarcheCopie.MontantSituationTTCNet:=CumulSituationTTCNet;
+                               RSituationMarcheCopie.ParStructure:=true;
+                               RSituationMarcheCopie.ParStatistique:=true;
+                               RSituationMarcheCopie.CummulerAttachement:=true;
+                               RSituationMarcheCopie.ListeNumAvis:='';
+                               Seek(FSituationMarcheCopie,i);
+                               write(FSituationMarcheCopie,RSituationMarcheCopie);
+                               i:=i+1;
+                          end;
+                     R:=R+1;
+                     end;
+
+                     //Nouvelle Situation
+                     Seek(FSituationMarche,0);
+                     while not eof(FSituationMarche)do
+                     begin
+                          Read(FSituationMarche,RSituationMarche);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(strtodate(RSituationMarche.DateSituationMarche)>strtodate('31/12/'+ExerciceAnnee))then
+                          begin
+                               l:=1;
+                               OKSituation:=false;
+                               RSituationMarcheCopie:=RSituationMarche;
+                               while(l<=FSTravauxFinAnnee.TableauSituationMarche.RowCount-1)and(OKSituation=false)do
+                               begin
+                                    if(inttostr(RSituationMarche.NSMarche)+inttostr(RSituationMarche.NSituationMarche)=FSTravauxFinAnnee.TableauSituationMarche.Cells[0,l])then
+                                    begin
+                                         OKSituation:=true;
+                                         RSituationMarcheCopie.NSituationMarche:=strtointeger(FSTravauxFinAnnee.TableauSituationMarche.Cells[1,l]);
+                                    end;
+                               l:=l+1;
+                               end;
+
+                               OKAttachement:=false;
+                               l:=1;
+                               while(l<=FSTravauxFinAnnee.TableauLAttachement.RowCount-1)and(OKAttachement=false)do
+                               begin
+                                    if(inttostr(RSituationMarche.NSMarche)+RSituationMarche.NAttachement=FSTravauxFinAnnee.TableauLAttachement.Cells[0,l])then
+                                    begin
+                                         OKAttachement:=true;
+                                         RSituationMarcheCopie.NAttachement:=FSTravauxFinAnnee.TableauLAttachement.Cells[1,l];
+                                    end;
+                               l:=l+1;
+                               end;
+
+                               Seek(FSituationMarcheCopie,i);
+                               write(FSituationMarcheCopie,RSituationMarcheCopie);
+                               i:=i+1;
+
+                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Situation Marché: '+RSituationMarcheCopie.DesignationSituation);
+                          end;
+                     end;
+                     finally
+                     CloseFile(FSituationMarcheCopie);
+                     end;
+               end;
+               finally
+               CloseFile(FSituationMarche);
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FSituationMarche',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FSituationMarche',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureDataStatistiqueSituation(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,R:integer; NumSituation,TypeProcesControleReseaux,FichierConserne:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDataStatistiqueSituation',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FDataStatistiqueSituation');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FDataStatistiqueSituation 0';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+               R:=1;
+               while(R<=FSTravauxFinAnnee.TableauMarche.RowCount-1)do
+               begin
+                     NumSituation:=ProcLastNumSituationMarchePeriode(strtointeger(FSTravauxFinAnnee.TableauMarche.Cells[1,R]),'31/12/'+ExerciceAnnee);
+
+                     if(NumSituation<>'')then
+                     begin
+                           try
+                           
+                           OpenFParc(RParc);
+                           ChDataStatistiqueSituationCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FDataStatistiqueSituation 0';
+                           assignfile(FDataStatistiqueSituationCopie,ChDataStatistiqueSituationCopie);
+                           try
+                           if FileExists(ChDataStatistiqueSituationCopie)then
+                           Reset(FDataStatistiqueSituationCopie)
+                           else Rewrite(FDataStatistiqueSituationCopie);
+                           Seek(FDataStatistiqueSituationCopie,0);
+                           Truncate(FDataStatistiqueSituationCopie);
+
+                           ChDataStatistiqueSituation:=RParc.Parcours+'\'+Exercice+'FDataStatistiqueSituation '+NumSituation;
+                           assignfile(FDataStatistiqueSituation,ChDataStatistiqueSituation);
+                           try
+                           if FileExists(ChDataStatistiqueSituation)then
+                           Reset(FDataStatistiqueSituation)
+                           else Rewrite(FDataStatistiqueSituation);
+                           Seek(FDataStatistiqueSituation,0);
+                           i:=0;
+                           while not eof(FDataStatistiqueSituation)do
+                           begin
+                                Read(FDataStatistiqueSituation,RDataStatistiqueSituation);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RDataStatistiqueSituationCopie:=RDataStatistiqueSituation;
+                                Seek(FDataStatistiqueSituationCopie,i);
+                                write(FDataStatistiqueSituationCopie,RDataStatistiqueSituationCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Statistique S: '+RDataStatistiqueSituation.DataCode);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FDataStatistiqueSituation);
+                           end;
+                           finally
+                           CloseFile(FDataStatistiqueSituationCopie);
+                           end;
+
+                           if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDataStatistiqueSituation',NewExercice,TypeProcesControleReseaux,i);
+
+                           except
+                                 ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDataStatistiqueSituation',NewExercice,TypeProcesControleReseaux,i);
+                           end;
+                     end;
+               R:=R+1;
+               end;
+               end
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureOperationFinance(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FOperationFinance',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FOperationFinance');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FOperationFinance';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChOperationFinanceCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FOperationFinance';
+                     assignfile(FOperationFinanceCopie,ChOperationFinanceCopie);
+                     try
+                     if FileExists(ChOperationFinanceCopie)then
+                     Reset(FOperationFinanceCopie)
+                     else Rewrite(FOperationFinanceCopie);
+                     Seek(FOperationFinanceCopie,0);
+                     Truncate(FOperationFinanceCopie);
+
+                     ChOperationFinance:=RParc.Parcours+'\'+Exercice+'FOperationFinance';
+                     assignfile(FOperationFinance,ChOperationFinance);
+                     try
+                     if FileExists(ChOperationFinance)then
+                     Reset(FOperationFinance)
+                     else Rewrite(FOperationFinance);
+                     Seek(FOperationFinance,0);
+                     i:=0;
+                     while not eof(FOperationFinance)do
+                     begin
+                          Read(FOperationFinance,ROperationFinance);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          ROperationFinanceCopie:=ROperationFinance;
+                          Seek(FOperationFinanceCopie,i);
+                          write(FOperationFinanceCopie,ROperationFinanceCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Opération Finance: '+ROperationFinance.DateOperation+' '+ROperationFinance.DesignFinance);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FOperationFinance);
+                     end;
+                     finally
+                     CloseFile(FOperationFinanceCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FOperationFinance',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FOperationFinance',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureFinance(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     if not(ActiverReouvertureMarche(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FFinance',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FFinance');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FFinance';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChFinanceCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FFinance';
+                     assignfile(FFinanceCopie,ChFinanceCopie);
+                     try
+                     if FileExists(ChFinanceCopie)then
+                     Reset(FFinanceCopie)
+                     else Rewrite(FFinanceCopie);
+                     Seek(FFinanceCopie,0);
+                     Truncate(FFinanceCopie);
+
+                     ChFinance:=RParc.Parcours+'\'+Exercice+'FFinance';
+                     assignfile(FFinance,ChFinance);
+                     try
+                     if FileExists(ChFinance)then
+                     Reset(FFinance)
+                     else Rewrite(FFinance);
+                     Seek(FFinance,0);
+                     i:=0;
+                     while not eof(FFinance)do  
+                     begin
+                          Read(FFinance,RFinance);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RFinanceCopie:=RFinance;
+                          Seek(FFinanceCopie,i);
+                          write(FFinanceCopie,RFinanceCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Finance: '+RFinance.DesignFinance);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FFinance);
+                     end;
+                     finally
+                     CloseFile(FFinanceCopie);
+                     end;
+               end;
+               
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FFinance',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FFinance',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureListeValeursFormuleArticle(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FListeValeursFormuleArticle');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FListeValeursFormuleArticle';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChListeValeursFormuleArticleCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FListeValeursFormuleArticle';
+                     assignfile(FListeValeursFormuleArticleCopie,ChListeValeursFormuleArticleCopie);
+                     try
+                     if FileExists(ChListeValeursFormuleArticleCopie)then
+                     Reset(FListeValeursFormuleArticleCopie)
+                     else Rewrite(FListeValeursFormuleArticleCopie);
+                     Seek(FListeValeursFormuleArticleCopie,0);
+                     Truncate(FListeValeursFormuleArticleCopie);
+
+                     ChListeValeursFormuleArticle:=RParc.Parcours+'\'+Exercice+'FListeValeursFormuleArticle';
+                     assignfile(FListeValeursFormuleArticle,ChListeValeursFormuleArticle);
+                     try
+                     if FileExists(ChListeValeursFormuleArticle)then
+                     Reset(FListeValeursFormuleArticle)
+                     else Rewrite(FListeValeursFormuleArticle);
+                     Seek(FListeValeursFormuleArticle,0);
+                     i:=0;
+                     while not eof(FListeValeursFormuleArticle)do
+                     begin
+                          Read(FListeValeursFormuleArticle,RListeValeursFormuleArticle);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RListeValeursFormuleArticleCopie:=RListeValeursFormuleArticle;
+                          Seek(FListeValeursFormuleArticleCopie,i);
+                          write(FListeValeursFormuleArticleCopie,RListeValeursFormuleArticleCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Valeur Formule Article: '+inttostr(RListeValeursFormuleArticle.PositionListeValeursFormuleArticle)+' '+RListeValeursFormuleArticle.CodeTypeFormule);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FListeValeursFormuleArticle);
+                     end;
+                     finally
+                     CloseFile(FListeValeursFormuleArticleCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeValeursFormuleArticle',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeValeursFormuleArticle',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureBaseAvis(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse:string;
+begin
+     FichierConserne:='FBaseAvis';
+     if not(InclureFinanceTiersAvis(TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierConserne,NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FBaseAvis');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FBaseAvis';
+               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+               ActiverReouverture:=true;
+               
+               if(TypeProcesControleReseaux='Réseaux')then
+               begin
+                    if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=false;
+                    end
+                    else
+                    if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                    begin
+                         ActiverReouverture:=true;
+                    end
+                    else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+               end;
+
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     ChBaseAvisCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FBaseAvisCopie,ChBaseAvisCopie);
+                     try
+                     if FileExists(ChBaseAvisCopie)then
+                     Reset(FBaseAvisCopie)
+                     else Rewrite(FBaseAvisCopie);
+                     Seek(FBaseAvisCopie,0);
+                     Truncate(FBaseAvisCopie);
+
+                     ChBaseAvis:=Adresse;
+                     assignfile(FBaseAvis,ChBaseAvis);
+                     try
+                     if FileExists(ChBaseAvis)then
+                     Reset(FBaseAvis)
+                     else Rewrite(FBaseAvis);
+                     Seek(FBaseAvis,0);
+                     i:=0;
+                     while not eof(FBaseAvis)do
+                     begin
+                          Read(FBaseAvis,RBaseAvis);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RBaseAvisCopie:=RBaseAvis;
+                          Seek(FBaseAvisCopie,i);
+                          write(FBaseAvisCopie,RBaseAvisCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Base Avis: '+RBaseAvis.DesignationBaseAvis);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FBaseAvis);
+                     end;
+                     finally
+                     CloseFile(FBaseAvisCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FBaseAvis',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FBaseAvis',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureListeFichierConcernePartageReseaux(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FListeFichierConcernePartageReseaux');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               i:=0;                
+               if(ActiverReouverture=true)then
+               begin
+                    OpenFParc(RParc);
+                    ChAdresseProces:=RParc.Parcours+'\'+Exercice+'FAdresseProces';
+                    assignfile(FAdresseProces,ChAdresseProces);
+                    if FileExists(ChAdresseProces)then
+                    begin
+                          try
+                          Reset(FAdresseProces);
+                          Seek(FAdresseProces,0);
+                          while not eof(FAdresseProces)do
+                          begin
+                               try
+
+                               read(FAdresseProces,RAdresseProces);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                               TypeProcesControleReseaux:='';
+                               FichierConserne:='FListeFichierConcernePartageReseaux'+' '+inttostr(RAdresseProces.NumAdresseProces);
+
+                               if(RAdresseProces.NumAdresseProces>=0)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                               begin
+                                     OpenFParc(RParc);
+                                     ChListeFichierConcernePartageReseauxCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FListeFichierConcernePartageReseaux'+' '+inttostr(RAdresseProces.NumAdresseProces);
+                                     assignfile(FListeFichierConcernePartageReseauxCopie,ChListeFichierConcernePartageReseauxCopie);
+                                     try
+                                     if FileExists(ChListeFichierConcernePartageReseauxCopie)
+                                     then Reset(FListeFichierConcernePartageReseauxCopie)
+                                     else Rewrite(FListeFichierConcernePartageReseauxCopie);
+                                     Seek(FListeFichierConcernePartageReseauxCopie,0);
+                                     Truncate(FListeFichierConcernePartageReseauxCopie);
+
+                                     ChListeFichierConcernePartageReseaux:=RParc.Parcours+'\'+Exercice+'FListeFichierConcernePartageReseaux'+' '+inttostr(RAdresseProces.NumAdresseProces);
+                                     assignfile(FListeFichierConcernePartageReseaux,ChListeFichierConcernePartageReseaux);
+                                     try
+                                     if FileExists(ChListeFichierConcernePartageReseaux)then
+                                     Reset(FListeFichierConcernePartageReseaux)
+                                     else begin Showmessage('Attention ! '+ChListeFichierConcernePartageReseaux+' n''existe pas !'); Exit; end;
+                                     Seek(FListeFichierConcernePartageReseaux,0);
+                                     i:=0;
+                                     while not eof(FListeFichierConcernePartageReseaux)do
+                                     begin
+                                          Read(FListeFichierConcernePartageReseaux,RListeFichierConcernePartageReseaux);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                          RListeFichierConcernePartageReseauxCopie:=RListeFichierConcernePartageReseaux;
+                                          Seek(FListeFichierConcernePartageReseauxCopie,i);
+                                          write(FListeFichierConcernePartageReseauxCopie,RListeFichierConcernePartageReseauxCopie);
+
+                                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Partage réseaux: '+RListeFichierConcernePartageReseauxCopie.NomPosteReseaux+' '+RListeFichierConcernePartageReseauxCopie.FichierConcerne);
+                                     i:=i+1;
+                                     end;
+                                     finally
+                                     CloseFile(FListeFichierConcernePartageReseaux);
+                                     end;
+                                     finally
+                                     CloseFile(FListeFichierConcernePartageReseauxCopie);
+                                     end;
+                               end;
+
+                               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeFichierConcernePartageReseaux'+' '+inttostr(RAdresseProces.NumAdresseProces),NewExercice,TypeProcesControleReseaux,i);
+
+                               except
+                                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeFichierConcernePartageReseaux'+' '+inttostr(RAdresseProces.NumAdresseProces),NewExercice,TypeProcesControleReseaux,i);
+                               end;
+                          end;
+                    finally
+                    closefile(FAdresseProces);
+                    end;
+                    end;
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAdresseDossierPartageReseaux(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProcesControleReseaux,FichierConserne:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAdresseDossierPartageReseaux');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FAdresseDossierPartageReseaux';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChAdresseDossierPartageReseauxCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FAdresseDossierPartageReseaux';
+                     assignfile(FAdresseDossierPartageReseauxCopie,ChAdresseDossierPartageReseauxCopie);
+                     try
+                     if FileExists(ChAdresseDossierPartageReseauxCopie)then
+                     Reset(FAdresseDossierPartageReseauxCopie)
+                     else Rewrite(FAdresseDossierPartageReseauxCopie);
+                     Seek(FAdresseDossierPartageReseauxCopie,0);
+                     Truncate(FAdresseDossierPartageReseauxCopie);
+
+                     ChAdresseDossierPartageReseaux:=RParc.Parcours+'\'+Exercice+'FAdresseDossierPartageReseaux';
+                     assignfile(FAdresseDossierPartageReseaux,ChAdresseDossierPartageReseaux);
+                     try
+                     if FileExists(ChAdresseDossierPartageReseaux)then
+                     Reset(FAdresseDossierPartageReseaux)
+                     else Rewrite(FAdresseDossierPartageReseaux);
+                     Seek(FAdresseDossierPartageReseaux,0);
+                     i:=0;
+                     while not eof(FAdresseDossierPartageReseaux)do
+                     begin
+                          Read(FAdresseDossierPartageReseaux,RAdresseDossierPartageReseaux);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          RAdresseDossierPartageReseauxCopie:=RAdresseDossierPartageReseaux;
+                          Seek(FAdresseDossierPartageReseauxCopie,i);
+                          write(FAdresseDossierPartageReseauxCopie,RAdresseDossierPartageReseauxCopie);
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Partage réseaux: '+RAdresseDossierPartageReseauxCopie.NomPosteReseaux+' '+RAdresseDossierPartageReseauxCopie.EmlacementLocalOuReseaux);
+                     i:=i+1;
+                     end;
+                     finally
+                     CloseFile(FAdresseDossierPartageReseaux);
+                     end;
+                     finally
+                     CloseFile(FAdresseDossierPartageReseauxCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAdresseDossierPartageReseaux',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAdresseDossierPartageReseaux',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureDataIdentificateurEnttreprise(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FDataIdentificateurEnttreprise');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FDataIdentificateurEnttreprise';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChDataIdentificateurEnttrepriseCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FDataIdentificateurEnttrepriseCopie,ChDataIdentificateurEnttrepriseCopie);
+                           try
+                           if FileExists(ChDataIdentificateurEnttrepriseCopie)then
+                           Reset(FDataIdentificateurEnttrepriseCopie)
+                           else Rewrite(FDataIdentificateurEnttrepriseCopie);
+                           Seek(FDataIdentificateurEnttrepriseCopie,0);
+                           Truncate(FDataIdentificateurEnttrepriseCopie);
+
+                           ChDataIdentificateurEnttreprise:=Adresse;
+                           assignfile(FDataIdentificateurEnttreprise,ChDataIdentificateurEnttreprise);
+                           try
+                           if FileExists(ChDataIdentificateurEnttreprise)then
+                           Reset(FDataIdentificateurEnttreprise)
+                           else Rewrite(FDataIdentificateurEnttreprise);
+                           Seek(FDataIdentificateurEnttreprise,0);
+                           i:=0;
+                           while not eof(FDataIdentificateurEnttreprise)do
+                           begin
+                                Read(FDataIdentificateurEnttreprise,RDataIdentificateurEnttreprise);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RDataIdentificateurEnttrepriseCopie:=RDataIdentificateurEnttreprise;
+                                Seek(FDataIdentificateurEnttrepriseCopie,i);
+                                write(FDataIdentificateurEnttrepriseCopie,RDataIdentificateurEnttrepriseCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Id entreprise: '+RDataIdentificateurEnttrepriseCopie.IntitulleIdentificateur);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FDataIdentificateurEnttreprise);
+                           end;
+                           finally
+                           CloseFile(FDataIdentificateurEnttrepriseCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDataIdentificateurEnttreprise',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FDataIdentificateurEnttreprise',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureActiverPublicationReseaux(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FActiverPublicationReseaux');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FActiverPublicationReseaux';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChActiverPublicationReseauxCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FActiverPublicationReseauxCopie,ChActiverPublicationReseauxCopie);
+                           try
+                           if FileExists(ChActiverPublicationReseauxCopie)then
+                           Reset(FActiverPublicationReseauxCopie)
+                           else Rewrite(FActiverPublicationReseauxCopie);
+                           Seek(FActiverPublicationReseauxCopie,0);
+                           Truncate(FActiverPublicationReseauxCopie);
+
+                           ChActiverPublicationReseaux:=Adresse;
+                           assignfile(FActiverPublicationReseaux,ChActiverPublicationReseaux);
+                           try
+                           if FileExists(ChActiverPublicationReseaux)then
+                           Reset(FActiverPublicationReseaux)
+                           else Rewrite(FActiverPublicationReseaux);
+                           Seek(FActiverPublicationReseaux,0);
+                           i:=0;
+                           while not eof(FActiverPublicationReseaux)do
+                           begin
+                                Read(FActiverPublicationReseaux,RActiverPublicationReseaux);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RActiverPublicationReseauxCopie:=RActiverPublicationReseaux;
+                                Seek(FActiverPublicationReseauxCopie,i);
+                                write(FActiverPublicationReseauxCopie,RActiverPublicationReseauxCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Active Pub réseaux: '+booleantostr(RActiverPublicationReseauxCopie.TravauxConnexionReseaux));
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FActiverPublicationReseaux);
+                           end;
+                           finally
+                           CloseFile(FActiverPublicationReseauxCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FActiverPublicationReseaux',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FActiverPublicationReseaux',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAlerteStockLimiteBaseData(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     TypeProces:='Business';
+     FichierConserne:='FAlerteStockLimiteBaseData';
+     if not(ActiverReouvertureStock(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierConserne,NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAlerteStockLimiteBaseData');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FAlerteStockLimiteBaseData';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChAlerteStockLimiteBaseDataCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FAlerteStockLimiteBaseDataCopie,ChAlerteStockLimiteBaseDataCopie);
+                           try
+                           if FileExists(ChAlerteStockLimiteBaseDataCopie)then
+                           Reset(FAlerteStockLimiteBaseDataCopie)
+                           else Rewrite(FAlerteStockLimiteBaseDataCopie);
+                           Seek(FAlerteStockLimiteBaseDataCopie,0);
+                           Truncate(FAlerteStockLimiteBaseDataCopie);
+
+                           ChAlerteStockLimiteBaseData:=Adresse;
+                           assignfile(FAlerteStockLimiteBaseData,ChAlerteStockLimiteBaseData);
+                           try
+                           if FileExists(ChAlerteStockLimiteBaseData)then
+                           Reset(FAlerteStockLimiteBaseData)
+                           else Rewrite(FAlerteStockLimiteBaseData);
+                           Seek(FAlerteStockLimiteBaseData,0);
+                           i:=0;
+                           while not eof(FAlerteStockLimiteBaseData)do
+                           begin
+                                Read(FAlerteStockLimiteBaseData,RAlerteStockLimiteBaseData);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RAlerteStockLimiteBaseDataCopie:=RAlerteStockLimiteBaseData;
+                                Seek(FAlerteStockLimiteBaseDataCopie,i);
+                                write(FAlerteStockLimiteBaseDataCopie,RAlerteStockLimiteBaseDataCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Stock limite: '+RAlerteStockLimiteBaseDataCopie.NumProjetFinance+' '+booleantostr(RAlerteStockLimiteBaseDataCopie.OKAlerteStockLimite));
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FAlerteStockLimiteBaseData);
+                           end;
+                           finally
+                           CloseFile(FAlerteStockLimiteBaseDataCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAlerteStockLimiteBaseData',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAlerteStockLimiteBaseData',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureArchivePhotoCommentaire(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FArchivePhotoCommentaire');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FArchivePhotoCommentaire';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChArchivePhotoCommentaireCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FArchivePhotoCommentaireCopie,ChArchivePhotoCommentaireCopie);
+                           try
+                           if FileExists(ChArchivePhotoCommentaireCopie)then
+                           Reset(FArchivePhotoCommentaireCopie)
+                           else Rewrite(FArchivePhotoCommentaireCopie);
+                           Seek(FArchivePhotoCommentaireCopie,0);
+                           Truncate(FArchivePhotoCommentaireCopie);
+
+                           ChArchivePhotoCommentaire:=Adresse;
+                           assignfile(FArchivePhotoCommentaire,ChArchivePhotoCommentaire);
+                           try
+                           if FileExists(ChArchivePhotoCommentaire)then
+                           Reset(FArchivePhotoCommentaire)
+                           else Rewrite(FArchivePhotoCommentaire);
+                           Seek(FArchivePhotoCommentaire,0);
+                           i:=0;
+                           while not eof(FArchivePhotoCommentaire)do
+                           begin
+                                Read(FArchivePhotoCommentaire,RArchivePhotoCommentaire);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RArchivePhotoCommentaireCopie:=RArchivePhotoCommentaire;
+                                Seek(FArchivePhotoCommentaireCopie,i);
+                                write(FArchivePhotoCommentaireCopie,RArchivePhotoCommentaireCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Archive photos: '+RArchivePhotoCommentaireCopie.DesignationStructure+' '+RArchivePhotoCommentaireCopie.NomFichierArchive);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FArchivePhotoCommentaire);
+                           end;
+                           finally
+                           CloseFile(FArchivePhotoCommentaireCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePhotoCommentaire',NewExercice,TypeProcesControleReseaux,i);
+
+               except                      
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchivePhotoCommentaire',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAutorisationPartageRegistre(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAutorisationPartageRegistre');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FAutorisationPartageRegistre';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChAutorisationPartageRegistreCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FAutorisationPartageRegistreCopie,ChAutorisationPartageRegistreCopie);
+                           try
+                           if FileExists(ChAutorisationPartageRegistreCopie)then
+                           Reset(FAutorisationPartageRegistreCopie)
+                           else Rewrite(FAutorisationPartageRegistreCopie);
+                           Seek(FAutorisationPartageRegistreCopie,0);
+                           Truncate(FAutorisationPartageRegistreCopie);
+
+                           ChAutorisationPartageRegistre:=Adresse;
+                           assignfile(FAutorisationPartageRegistre,ChAutorisationPartageRegistre);
+                           try
+                           if FileExists(ChAutorisationPartageRegistre)then
+                           Reset(FAutorisationPartageRegistre)
+                           else Rewrite(FAutorisationPartageRegistre);
+                           Seek(FAutorisationPartageRegistre,0);
+                           i:=0;
+                           while not eof(FAutorisationPartageRegistre)do
+                           begin
+                                Read(FAutorisationPartageRegistre,RAutorisationPartageRegistre);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RAutorisationPartageRegistreCopie:=RAutorisationPartageRegistre;
+                                Seek(FAutorisationPartageRegistreCopie,i);
+                                write(FAutorisationPartageRegistreCopie,RAutorisationPartageRegistreCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Auto.Pge.réseaux: '+RAutorisationPartageRegistreCopie.TypeProces+' '+RAutorisationPartageRegistreCopie.FichierConcerneRegistre);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FAutorisationPartageRegistre);
+                           end;
+                           finally
+                           CloseFile(FAutorisationPartageRegistreCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAutorisationPartageRegistre',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAutorisationPartageRegistre',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureEntite(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FEntite');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FEntite';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChEntiteCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FEntiteCopie,ChEntiteCopie);
+                           try
+                           if FileExists(ChEntiteCopie)then
+                           Reset(FEntiteCopie)
+                           else Rewrite(FEntiteCopie);
+                           Seek(FEntiteCopie,0);
+                           Truncate(FEntiteCopie);
+
+                           ChEntite:=Adresse;
+                           assignfile(FEntite,ChEntite);
+                           try
+                           if FileExists(ChEntite)then
+                           Reset(FEntite)
+                           else Rewrite(FEntite);
+                           Seek(FEntite,0);
+                           i:=0;
+                           while not eof(FEntite)do
+                           begin
+                                Read(FEntite,REntite);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                REntiteCopie:=REntite;
+                                Seek(FEntiteCopie,i);
+                                write(FEntiteCopie,REntiteCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Entité: '+REntiteCopie.NomEntite);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FEntite);
+                           end;
+                           finally
+                           CloseFile(FEntiteCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FEntite',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FEntite',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureFormuleComposition(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FFormuleComposition');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FFormuleComposition';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChFormuleCompositionCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FFormuleCompositionCopie,ChFormuleCompositionCopie);
+                           try
+                           if FileExists(ChFormuleCompositionCopie)then
+                           Reset(FFormuleCompositionCopie)
+                           else Rewrite(FFormuleCompositionCopie);
+                           Seek(FFormuleCompositionCopie,0);
+                           Truncate(FFormuleCompositionCopie);
+
+                           ChFormuleComposition:=Adresse;
+                           assignfile(FFormuleComposition,ChFormuleComposition);
+                           try
+                           if FileExists(ChFormuleComposition)then
+                           Reset(FFormuleComposition)
+                           else Rewrite(FFormuleComposition);
+                           Seek(FFormuleComposition,0);
+                           i:=0;
+                           while not eof(FFormuleComposition)do
+                           begin
+                                Read(FFormuleComposition,RFormuleComposition);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RFormuleCompositionCopie:=RFormuleComposition;
+                                Seek(FFormuleCompositionCopie,i);
+                                write(FFormuleCompositionCopie,RFormuleCompositionCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Formule Compt°: '+RFormuleCompositionCopie.DesignProd);
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FFormuleComposition);
+                           end;
+                           finally
+                           CloseFile(FFormuleCompositionCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FFormuleComposition',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FFormuleComposition',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureIdentificateurEnttreprise(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FIdentificateurEnttreprise');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FIdentificateurEnttreprise';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChIdentificateurEnttrepriseCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FIdentificateurEnttrepriseCopie,ChIdentificateurEnttrepriseCopie);
+                           try
+                           if FileExists(ChIdentificateurEnttrepriseCopie)then
+                           Reset(FIdentificateurEnttrepriseCopie)
+                           else Rewrite(FIdentificateurEnttrepriseCopie);
+                           Seek(FIdentificateurEnttrepriseCopie,0);
+                           Truncate(FIdentificateurEnttrepriseCopie);
+
+                           ChIdentificateurEnttreprise:=Adresse;
+                           assignfile(FIdentificateurEnttreprise,ChIdentificateurEnttreprise);
+                           try
+                           if FileExists(ChIdentificateurEnttreprise)then
+                           Reset(FIdentificateurEnttreprise)
+                           else Rewrite(FIdentificateurEnttreprise);
+                           Seek(FIdentificateurEnttreprise,0);
+                           i:=0;
+                           while not eof(FIdentificateurEnttreprise)do
+                           begin
+                                Read(FIdentificateurEnttreprise,RIdentificateurEnttreprise);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RIdentificateurEnttrepriseCopie:=RIdentificateurEnttreprise;
+                                Seek(FIdentificateurEnttrepriseCopie,i);
+                                write(FIdentificateurEnttrepriseCopie,RIdentificateurEnttrepriseCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FIdentificateurEnttreprise);
+                           end;
+                           finally
+                           CloseFile(FIdentificateurEnttrepriseCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FIdentificateurEnttreprise',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FIdentificateurEnttreprise',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureModeConnectiviteBaseData(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FModeConnectiviteBaseData');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FModeConnectiviteBaseData';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChModeConnectiviteBaseDataCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FModeConnectiviteBaseDataCopie,ChModeConnectiviteBaseDataCopie);
+                           try
+                           if FileExists(ChModeConnectiviteBaseDataCopie)then
+                           Reset(FModeConnectiviteBaseDataCopie)
+                           else Rewrite(FModeConnectiviteBaseDataCopie);
+                           Seek(FModeConnectiviteBaseDataCopie,0);
+                           Truncate(FModeConnectiviteBaseDataCopie);
+
+                           ChModeConnectiviteBaseData:=Adresse;
+                           assignfile(FModeConnectiviteBaseData,ChModeConnectiviteBaseData);
+                           try
+                           if FileExists(ChModeConnectiviteBaseData)then
+                           Reset(FModeConnectiviteBaseData)
+                           else Rewrite(FModeConnectiviteBaseData);
+                           Seek(FModeConnectiviteBaseData,0);
+                           i:=0;
+                           while not eof(FModeConnectiviteBaseData)do
+                           begin
+                                Read(FModeConnectiviteBaseData,RModeConnectiviteBaseData);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RModeConnectiviteBaseDataCopie:=RModeConnectiviteBaseData;
+                                Seek(FModeConnectiviteBaseDataCopie,i);
+                                write(FModeConnectiviteBaseDataCopie,RModeConnectiviteBaseDataCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FModeConnectiviteBaseData);
+                           end;
+                           finally
+                           CloseFile(FModeConnectiviteBaseDataCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FModeConnectiviteBaseData',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FModeConnectiviteBaseData',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureModelFormule(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FModelFormule');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FModelFormule';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChModelFormuleCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FModelFormuleCopie,ChModelFormuleCopie);
+                           try
+                           if FileExists(ChModelFormuleCopie)then
+                           Reset(FModelFormuleCopie)
+                           else Rewrite(FModelFormuleCopie);
+                           Seek(FModelFormuleCopie,0);
+                           Truncate(FModelFormuleCopie);
+
+                           ChModelFormule:=Adresse;
+                           assignfile(FModelFormule,ChModelFormule);
+                           try
+                           if FileExists(ChModelFormule)then
+                           Reset(FModelFormule)
+                           else Rewrite(FModelFormule);
+                           Seek(FModelFormule,0);
+                           i:=0;
+                           while not eof(FModelFormule)do
+                           begin
+                                Read(FModelFormule,RModelFormule);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RModelFormuleCopie:=RModelFormule;
+                                Seek(FModelFormuleCopie,i);
+                                write(FModelFormuleCopie,RModelFormuleCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FModelFormule);
+                           end;
+                           finally
+                           CloseFile(FModelFormuleCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FModelFormule',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FModelFormule',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureOrganismeTutelle(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FOrganismeTutelle');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FOrganismeTutelle';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChOrganismeTutelleCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FOrganismeTutelleCopie,ChOrganismeTutelleCopie);
+                           try
+                           if FileExists(ChOrganismeTutelleCopie)then
+                           Reset(FOrganismeTutelleCopie)
+                           else Rewrite(FOrganismeTutelleCopie);
+                           Seek(FOrganismeTutelleCopie,0);
+                           Truncate(FOrganismeTutelleCopie);
+
+                           ChOrganismeTutelle:=Adresse;
+                           assignfile(FOrganismeTutelle,ChOrganismeTutelle);
+                           try
+                           if FileExists(ChOrganismeTutelle)then
+                           Reset(FOrganismeTutelle)
+                           else Rewrite(FOrganismeTutelle);
+                           Seek(FOrganismeTutelle,0);
+                           i:=0;
+                           while not eof(FOrganismeTutelle)do
+                           begin
+                                Read(FOrganismeTutelle,ROrganismeTutelle);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                ROrganismeTutelleCopie:=ROrganismeTutelle;
+                                Seek(FOrganismeTutelleCopie,i);
+                                write(FOrganismeTutelleCopie,ROrganismeTutelleCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FOrganismeTutelle);
+                           end;
+                           finally
+                           CloseFile(FOrganismeTutelleCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FOrganismeTutelle',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FOrganismeTutelle',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouverturePublicationReseauxProgrammer(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FPublicationReseauxProgrammer');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FPublicationReseauxProgrammer';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+               
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChPublicationReseauxProgrammerCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FPublicationReseauxProgrammerCopie,ChPublicationReseauxProgrammerCopie);
+                           try
+                           if FileExists(ChPublicationReseauxProgrammerCopie)then
+                           Reset(FPublicationReseauxProgrammerCopie)
+                           else Rewrite(FPublicationReseauxProgrammerCopie);
+                           Seek(FPublicationReseauxProgrammerCopie,0);
+                           Truncate(FPublicationReseauxProgrammerCopie);
+
+                           ChPublicationReseauxProgrammer:=Adresse;
+                           assignfile(FPublicationReseauxProgrammer,ChPublicationReseauxProgrammer);
+                           try
+                           if FileExists(ChPublicationReseauxProgrammer)then
+                           Reset(FPublicationReseauxProgrammer)
+                           else Rewrite(FPublicationReseauxProgrammer);
+                           Seek(FPublicationReseauxProgrammer,0);
+                           i:=0;
+                           while not eof(FPublicationReseauxProgrammer)do
+                           begin
+                                Read(FPublicationReseauxProgrammer,RPublicationReseauxProgrammer);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RPublicationReseauxProgrammerCopie:=RPublicationReseauxProgrammer;
+                                Seek(FPublicationReseauxProgrammerCopie,i);
+                                write(FPublicationReseauxProgrammerCopie,RPublicationReseauxProgrammerCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FPublicationReseauxProgrammer);
+                           end;
+                           finally
+                           CloseFile(FPublicationReseauxProgrammerCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FPublicationReseauxProgrammer',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FPublicationReseauxProgrammer',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureTitreDataTiers(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;  TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     {if not(ActiverReouvertureTiers(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTitreDataTiers',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;}
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FTitreDataTiers');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               if(ActiverReouverture=true)then
+               begin
+                     TypeProces:='Business';
+                     FichierConserne:='FTitreDataTiers';
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+                     begin
+                           ChTitreDataTiersCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FTitreDataTiersCopie,ChTitreDataTiersCopie);
+                           try
+                           if FileExists(ChTitreDataTiersCopie)then
+                           Reset(FTitreDataTiersCopie)
+                           else Rewrite(FTitreDataTiersCopie);
+                           Seek(FTitreDataTiersCopie,0);
+                           Truncate(FTitreDataTiersCopie);
+
+                           ChTitreDataTiers:=Adresse;
+                           assignfile(FTitreDataTiers,ChTitreDataTiers);
+                           try
+                           if FileExists(ChTitreDataTiers)then
+                           Reset(FTitreDataTiers)
+                           else Rewrite(FTitreDataTiers);
+                           Seek(FTitreDataTiers,0);
+                           i:=0;
+                           while not eof(FTitreDataTiers)do
+                           begin
+                                Read(FTitreDataTiers,RTitreDataTiers);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RTitreDataTiersCopie:=RTitreDataTiers;
+                                Seek(FTitreDataTiersCopie,i);
+                                write(FTitreDataTiersCopie,RTitreDataTiersCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FTitreDataTiers);
+                           end;
+                           finally
+                           CloseFile(FTitreDataTiersCopie);
+                           end;
+                     end;
+               end;
+
+               ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTitreDataTiers',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FTitreDataTiers',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ActiverReouverture(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean; var OKReouverture:boolean);
+var  IncrementeReouverture:integer;
+     label DebutReouverture;
+begin
+     if not(IncrementeReouverture in[0..3])then IncrementeReouverture:=0;
+
+     DebutReouverture:
+     OKReouverture:=true;
+     IncrementeReouverture:=IncrementeReouverture+1;
+     FSTravauxFinAnnee.EditFichierDetailMouvementConcerne.Lines.Text:='';
+
+     try
+     ReouvertureAccesPrivilegie(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureUtilisateur(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouverturePosteMenu(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAdresseProces(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureTypeFichierTiers(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!');  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end; Exit; end;
+     ReouvertureTiers(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureTypeProjet(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureProjetFinance(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureStockArticle(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureTypeFormule(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureFormule(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureTypeAffichageFormuleNonVisible(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureTypeMouvement(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureMouvement(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureListeMouvement(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+
+     TOrdreLMNpluUN:=RemplireOrdreListeMouvementExerciceNPlusUn;
+
+     ReouvertureTypeAvis(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAvis(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureBanqueGlobal(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAgence(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureParametreTaxeAjoute(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureBaremeTaxeAjouter(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureLocalisationGeographique(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureRegistreCompte(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureDetailMouvement(FSTravauxFinAnnee.TableauTypeMouvement,TableauListeBaseDonnees,TOrdreLMNpluUN,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureMoyenTransport(TableauListeBaseDonnees,TOrdreLMNpluUN,NewExercice,'Mouvement',ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureTempsAlerteAvantAction(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureTypeUniteFonds(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureUniteFonds(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAffectationCompteur(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureGroupeTiers(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureListeGroupeTiers(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureDomiciliation(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureFormulairePreselection(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureDetailRubriqueFicheTechnique(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouverturePlanificateur(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureSeriePieceDomiciliation(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureFicheTechnique(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureRubriqueFicheTechnique(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureCompteur(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureEquipe(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureParametresStock(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+
+     ReouvertureEffectifEquipe(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouverturePrelevement(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureArchivePrelevementUniteFonds(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureArchiveDetailArticlePrelevementUniteFonds(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureMoyenTransport(TableauListeBaseDonnees,TOrdreLMNpluUN,NewExercice,'Prélèvement',ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureArchiveRegistreEtatStockPrelevement(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureArchivePrelevementCompteur(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureArchiveRegistreAffectationEffectifEquipe(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureArchivePrelevementEffectifEquipe(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+
+     ReouvertureMarche(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureDetailMarche(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAttachement(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureDetailAttachement(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureDetailSituationMarche(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureSituationMarche(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureStructureMarche(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureStatistiqueMarche(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureStockMarche(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureDataStatistiqueSituation(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureOperationFinance(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureFinance(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureListeValeursFormuleArticle(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureBaseAvis(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureListeFichierConcernePartageReseaux(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAdresseDossierPartageReseaux(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureDataIdentificateurEnttreprise(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureActiverPublicationReseaux(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAlerteStockLimiteBaseData(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureArchivePhotoCommentaire(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAutorisationPartageRegistre(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureEntite(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureFormuleComposition(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureIdentificateurEnttreprise(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureModeConnectiviteBaseData(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureModelFormule(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureOrganismeTutelle(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouverturePublicationReseauxProgrammer(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureTitreDataTiers(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureColsTableaux(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureQteforfaitStock(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAffichagePublication(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureAutresParametres(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureLastNumDetailMouvementMAJ(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureListeTableauxCols(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     ReouvertureRParametresImprimePrelevement(TableauListeBaseDonnees,NewExercice,ActiverReouverture);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+
+     MiseAJourPositionPrelevement(NewExercice);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     MiseAJourPositionListeMouvementdansFMouvement(NewExercice);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+     MiseAJourPositionDetailMouvementdansFListeMouvement(NewExercice);  if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then begin FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture suspendue !!!'); Exit; end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Création de l''image Tableau liste mouvement');
+     ImageTableauListeBaseDonnees;
+
+     ///////////////////////////////////////
+     except
+           FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture interrompu '+inttostr(IncrementeReouverture)+' fois !');
+           FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('');
+           OKReouverture:=false;
+     end;
+     ///////////////////////////////////////
+
+     if(OKReouverture=false)
+     and(IncrementeReouverture<3)
+     then goto DebutReouverture
+     else
+     begin
+          FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('');
+          if(OKReouverture=false)
+          then FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Attention: Réouverture non achevé après '+inttostr(IncrementeReouverture)+' tentatives !')
+          else FSTravauxFinAnnee.MemoRapportReouverture.Lines.Add('Réouverture terminé avec succès !');
+
+          IncrementeReouverture:=0;
+     end;
+
+     FSTravauxFinAnnee.RBSuspendreReouverture.Checked:=false;
+end;
+
+procedure TFSTravauxFinAnnee.TableauDetailSituationMarcheClick(
+  Sender: TObject);
+begin
+     if(FSTravauxFinAnnee.RBFixeColonne.Checked=true)then
+     begin
+          FSTravauxFinAnnee.TableauDetailSituationMarche.FixedCols:=strtointeger(FSTravauxFinAnnee.EditFixeColonne.Text);
+          FSTravauxFinAnnee.RBFixeColonne.Checked:=false;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.TableauMarcheDblClick(Sender: TObject);
+begin
+     AjusterColWidth(FSTravauxFinAnnee.TableauMarche,'','');
+end;
+
+procedure TFSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1Click(
+  Sender: TObject);
+var  NotTrieRow:integer;
+begin
+     if(FSTravauxFinAnnee.RBIndiceRubriqueTriColBDExerciceNPlus1.Checked=true)then
+     begin
+          FSTravauxFinAnnee.RBIndiceRubriqueTriColBDExerciceNPlus1.Checked:=false;
+          FSTravauxFinAnnee.EditIndiceRubriqueTriColBDExerciceNPlus1.Text:=inttostr(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Col);
+          if(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Col in[2,6])
+          then FSTravauxFinAnnee.EditTypeDataTrieBDExerciceNPlus1.Text:='Num'
+          else FSTravauxFinAnnee.EditTypeDataTrieBDExerciceNPlus1.Text:='';
+          NotTrieRow:=1;
+          TrierTableauARowSpecial(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1,1,FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount-NotTrieRow,1,FSTravauxFinAnnee.EditIndiceRubriqueTriColBDExerciceNPlus1.Text,FSTravauxFinAnnee.EditTypeDataTrieBDExerciceNPlus1.Text,FSTravauxFinAnnee.EditTypeTrieBDExerciceNPlus1.Text);
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.RBValiderNonValiderExerciceNPlus1Click(
+  Sender: TObject);
+begin
+     OptionAffichageValideNonValideExerciceNPlus1;
+     FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cols[5].Text:='Autorisation !';
+     AjusterColWidth(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1,'','');
+end;
+
+procedure TFSTravauxFinAnnee.RBValiderExerciceNPlus1Click(Sender: TObject);
+begin
+     OptionAffichageValideNonValideExerciceNPlus1;
+     FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cols[5].Text:='Autorisation !';
+     AjusterColWidth(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1,'','');
+end;
+
+procedure TFSTravauxFinAnnee.RBNonValiderExerciceNPlus1Click(
+  Sender: TObject);
+begin
+     OptionAffichageValideNonValideExerciceNPlus1;
+     FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cols[5].Text:='Autorisation !';
+     AjusterColWidth(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1,'','');
+end;
+
+procedure TFSTravauxFinAnnee.UpDown2Click(Sender: TObject;
+  Button: TUDBtnType);
+var  R:integer;  Adresse,NomFichier:string;
+begin
+     R:=1;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount-1)do
+     begin
+          NomFichier:=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[3,R];
+          OpenFParc(RParc);
+          Adresse:=RParc.Parcours+'\'+Entreprise+'-'+FSTravauxFinAnnee.EditNewExercice.Text+NomFichier;
+          FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[7,R]:=ConvertOctets(TailleFichier(Adresse),FSTravauxFinAnnee.EditTypeOctetsExerciceNPlus1.Text,FSTravauxFinAnnee.EditNbrChiffreApresVerguleExerciceNPlus1.Text);
+     R:=R+1;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.EditTypeOctetsExerciceNPlus1KeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSTravauxFinAnnee.EditTypeOctetsExerciceNPlus1Select(
+  Sender: TObject);
+var  R:integer;  Adresse,NomFichier:string;
+begin
+     R:=1;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount-1)do
+     begin
+          NomFichier:=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[3,R];
+          OpenFParc(RParc);
+          Adresse:=RParc.Parcours+'\'+Entreprise+'-'+FSTravauxFinAnnee.EditNewExercice.Text+NomFichier;
+          FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[7,R]:=ConvertOctets(TailleFichier(Adresse),FSTravauxFinAnnee.EditTypeOctetsExerciceNPlus1.Text,FSTravauxFinAnnee.EditNbrChiffreApresVerguleExerciceNPlus1.Text);
+     R:=R+1;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn6Click(Sender: TObject);
+var  R:integer;   OKSelect:boolean;
+begin
+     R:=1;
+     OKSelect:=false;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount-1)and(OKSelect=false)do
+     begin
+          if(FSTravauxFinAnnee.RBAppliquerPourTous.Checked=true)then
+          begin
+               FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[5,R]:='Autorisé';
+          end
+          else
+          begin
+               if(R=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Row)then
+               begin
+                    OKSelect:=true;
+                    FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[5,R]:='Autorisé';
+               end;
+          end;
+     R:=R+1;
+     end;
+
+     AjusterColWidth(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1,'','');
+
+     FSTravauxFinAnnee.RBAppliquerPourTous.Checked:=false;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn7Click(Sender: TObject);
+var  R:integer;   OKSelect:boolean;
+begin
+     R:=1;
+     OKSelect:=false;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount-1)and(OKSelect=false)do
+     begin
+          if(FSTravauxFinAnnee.RBAppliquerPourTous.Checked=true)then
+          begin
+               FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[5,R]:='Ne pas autorisé';
+          end
+          else
+          begin
+               if(R=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Row)then
+               begin
+                    OKSelect:=true;
+                    FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[5,R]:='Ne pas autorisé';
+               end;
+          end;
+     R:=R+1;
+     end;
+
+     AjusterColWidth(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1,'','');
+
+     FSTravauxFinAnnee.RBAppliquerPourTous.Checked:=false;
+end;
+
+Function AutoriserReouvertureFichierConcerne(FichierConcerneRFC:string):boolean;
+var RARFC:integer;  OKAutoriserRFC,OKAutorisation:boolean;
+begin
+     OKAutorisation:=true;
+
+     RARFC:=1;
+     OKAutoriserRFC:=false;
+     while(RARFC<=FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.RowCount-1)and(OKAutoriserRFC=false)do
+     begin
+          if(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[3,RARFC]=FichierConcerneRFC)then
+          begin
+               OKAutoriserRFC:=true;
+               if(FSTravauxFinAnnee.TableauListeBaseDonneesExerciceNPlus1.Cells[5,RARFC]='Autorisé')
+               then OKAutorisation:=true
+               else OKAutorisation:=false;
+          end;
+     RARFC:=RARFC+1;
+     end;
+
+     if(OKAutoriserRFC=true)then
+     begin
+          AutoriserReouvertureFichierConcerne:=OKAutorisation;
+     end
+     else
+     begin
+          AutoriserReouvertureFichierConcerne:=ExisteFichierConcerneAReouvrir(FichierConcerneRFC);
+     end;
+end;
+
+Function ExisteFichierConcerneAReouvrir(FichierConcerneEFCR:string):boolean;
+var EFCR:integer;  OKExisteFichierConcerne:boolean;
+begin
+     EFCR:=1;
+     OKExisteFichierConcerne:=false;
+     while(EFCR<=FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-1)and(OKExisteFichierConcerne=false)do
+     begin
+          if(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[3,EFCR]=FichierConcerneEFCR)then
+          begin
+               OKExisteFichierConcerne:=true;
+          end;
+     EFCR:=EFCR+1;
+     end;
+
+     ExisteFichierConcerneAReouvrir:=OKExisteFichierConcerne;
+end;
+
+procedure TFSTravauxFinAnnee.EditNewExerciceDblClick(Sender: TObject);
+begin
+      if {AccesPrivilegies('FS Accés Privilégiés',FSMenuPrincipal.EditCodeUtilisateur.Text,'MC',false)
+      or}(AnsiUpperCase(FSTravauxFinAnnee.EditCodeFondateurParDefaut.Text)=AnsiUpperCase(FSMenuPrincipal.EditCodeFondateurParDefaut.Text))
+      then
+      begin
+           FSTravauxFinAnnee.EditNewExercice.ReadOnly:=false;
+           FSTravauxFinAnnee.EditNewExercice.Color:=clWindow;
+      end
+      else
+      begin
+           showmessage('Accés Privilégiés Non Autorisé !');
+           FSTravauxFinAnnee.EditCodeFondateurParDefaut.SetFocus;
+      end;
+end;
+
+procedure TFSTravauxFinAnnee.EditNewExerciceExit(Sender: TObject);
+begin
+     FSTravauxFinAnnee.EditNewExercice.ReadOnly:=true;
+     FSTravauxFinAnnee.EditNewExercice.Color:=clSilver;
+end;
+
+procedure TFSTravauxFinAnnee.EditCodeFondateurParDefautKeyUp(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if(AnsiUpperCase(FSTravauxFinAnnee.EditCodeFondateurParDefaut.Text)=AnsiUpperCase(FSMenuPrincipal.EditCodeFondateurParDefaut.Text))
+     then
+     begin
+          FSTravauxFinAnnee.EditCodeFondateurParDefaut.Text:='';
+          FSTravauxFinAnnee.EditNewExercice.ReadOnly:=false;
+          FSTravauxFinAnnee.EditNewExercice.Color:=clWindow;
+          FSTravauxFinAnnee.EditNewExercice.Text:=lastlaters(datetostr(date),4);
+          FSTravauxFinAnnee.EditNewExercice.SetFocus;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+     ActiverNomForm(0,(Sender as TComponent).Name);
+     FSTravauxFinAnnee.TimerMAJIsFileInUse.Enabled:=false;
+     FSTravauxFinAnnee.AfficheMAJIsFileInUse.Color:=clBtnFace;
+end;
+
+Function InclureFinanceTiersAvis(var TypeProcesReseaux:string):boolean;
+var  AdresseBaseAvis,TypeProces,FichierConserne,Adresse:string;
+begin
+     InclureFinanceTiersAvis:=false;
+
+     if not(FunctionAdresseProces('Business','FBaseAvis','',AdresseBaseAvis,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+'FBaseAvis'+' recherché !');
+     end;
+     ChBaseAvis:=AdresseBaseAvis;
+     assignfile(FBaseAvis,ChBaseAvis);
+     try
+     if FileExists(ChBaseAvis)then
+     Reset(FBaseAvis)
+     else Rewrite(FBaseAvis);
+     Seek(FBaseAvis,0);
+     while not eof(FBaseAvis)do
+     begin
+          Read(FBaseAvis,RBaseAvis);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+          if(RBaseAvis.DesignationBaseAvis<>'')then
+          begin
+               TypeProces:='Business';
+               FichierConserne:=RBaseAvis.DesignationBaseAvis;
+               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+               end;
+
+               if(TypeProcesReseaux<>'Réseaux')then
+               begin
+                    InclureFinanceTiersAvis:=true;
+               end;
+          end;
+     end;
+     finally
+     CloseFile(FBaseAvis);
+     end;
+end;
+
+Procedure MiseAJourPositionListeMouvementdansFMouvement(ExerciceAnneeConserne:string);
+var  i,R,PBegin,PEnd:integer;  TypeProces,FichierConcerne,Adresse:string;
+begin
+     TypeProces:='Business';
+     FichierConcerne:='FTypeMouvement';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChTypeMouvementMAJ:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,ExerciceAnneeConserne);
+     assignfile(FTypeMouvementMAJ,ChTypeMouvementMAJ);
+     if FileExists(ChTypeMouvementMAJ)then
+     begin
+           try
+           Reset(FTypeMouvementMAJ);
+           Seek(FTypeMouvementMAJ,0);
+           i:=0;
+           while not eof(FTypeMouvementMAJ)do
+           begin
+                 read(FTypeMouvementMAJ,RTypeMouvementMAJ);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                 ChMouvement:=IndiqueAdresseMouvement(inttostr(RTypeMouvementMAJ.PositionTypeMouvement),TypeProcesReseaux);
+                 ChMouvement:=ConvertirAdresseExerciceAnnee(ChMouvement,ExerciceAnnee,ExerciceAnneeConserne);
+                 assignfile(FMouvement,ChMouvement);
+                 try
+                 if FileExists(ChMouvement)then
+                 Reset(FMouvement)
+                 else Rewrite(FMouvement);
+                 Seek(FMouvement,0);
+                 i:=0;
+                 while not eof(FMouvement)do
+                 begin
+                      read(FMouvement,RMouvement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                      if(RMouvement.PositionTypeMouvement=RTypeMouvementMAJ.PositionTypeMouvement)then
+                      begin
+                           IndiquerPositionListeMouvement(RMouvement.PositionMouvement,inttostr(RMouvement.PositionTypeMouvement),ExerciceAnneeConserne,PBegin,PEnd,RegistrePositionListeMouvementParPeriode);
+
+                           RMouvement.PositionListeMouvementBegin:=PBegin;
+                           RMouvement.PositionListeMouvementEnd:=PEnd;
+                           RMouvement.RegistrePositionListeMouvementParPeriode:=RegistrePositionListeMouvementParPeriode;
+
+                           Seek(FMouvement,i);
+                           write(FMouvement,RMouvement);
+
+                           FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Mise à jour P° Liste mouvement dans mouvement: '+RMouvement.DesignationMouvement);
+                      end;
+
+                 i:=i+1;
+                 LibererMemoireProcessus('BusinessProces.exe',true);
+                 end;
+                 finally
+                 CloseFile(FMouvement);
+                 end;
+           end;
+           finally
+           CloseFile(FTypeMouvementMAJ);
+           end;
+     end;
+end;
+
+Procedure MiseAJourPositionDetailMouvementdansFListeMouvement(ExerciceAnneeConserne:string);
+var  i,PBegin,PEnd,NbrRegistre:integer;
+     TypeProces,FichierConcerne,Adresse,TypeProcesTypeMouvementMAJ,FichierConcerneTypeMouvementMAJ,AdresseTypeMouvementMAJ:string;
+     TPDMInOLM:TPositionDetaiMouvementInOrdreListeMouvements;
+begin
+     TypeProcesTypeMouvementMAJ:='Business';
+     FichierConcerneTypeMouvementMAJ:='FTypeMouvement';
+     AdresseTypeMouvementMAJ:='';
+     if not(FunctionAdresseProces(TypeProcesTypeMouvementMAJ,FichierConcerneTypeMouvementMAJ,'',AdresseTypeMouvementMAJ,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerneTypeMouvementMAJ+' recherché !');
+     end;
+
+     ChTypeMouvementMAJ:=ConvertirAdresseExerciceAnnee(AdresseTypeMouvementMAJ,ExerciceAnnee,ExerciceAnneeConserne);
+     assignfile(FTypeMouvementMAJ,ChTypeMouvementMAJ);
+     if FileExists(ChTypeMouvementMAJ)then
+     begin
+          try
+          Reset(FTypeMouvementMAJ);
+          Seek(FTypeMouvementMAJ,0);
+          i:=0;
+          while not eof(FTypeMouvementMAJ)do
+          begin
+               read(FTypeMouvementMAJ,RTypeMouvementMAJ);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+               //////////////////////////////////////////////////////////////////////////////
+               try
+
+               MiseAJourPositionDetailMouvement(RTypeMouvementMAJ.DesignationTypeMouvement,ExerciceAnneeConserne);
+
+               TPDMInOLM:=RemplireTPositionDetaiMouvementInOrdreListeMouvement(RTypeMouvementMAJ.DesignationTypeMouvement,ExerciceAnneeConserne,NbrRegistre);
+
+               if(NbrRegistre>0)then
+               begin
+                     TypeProces:='Business';
+                     FichierConcerne:='FListeMouvement';
+                     Adresse:='';
+                     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+                     end;
+
+                     ChListeMouvementMAJ:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,ExerciceAnneeConserne);
+                     assignfile(FListeMouvementMAJ,ChListeMouvementMAJ);
+                     if FileExists(ChListeMouvementMAJ)then
+                     begin
+                          try
+                          Reset(FListeMouvementMAJ);
+                          Seek(FListeMouvementMAJ,0);
+                          i:=0;
+                          while not eof(FListeMouvementMAJ)do
+                          begin
+                               read(FListeMouvementMAJ,RListeMouvementMAJ);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                               if (RListeMouvementMAJ.OrdreListeMouvement<=High(TPDMInOLM))
+                               and(RListeMouvementMAJ.PositionTypeMouvement=RTypeMouvementMAJ.PositionTypeMouvement)then
+                               begin
+                                    //IndiquerPositionDetailMouvement(RTypeMouvementMAJ.DesignationTypeMouvement,ExerciceAnneeConserne,RListeMouvementMAJ.OrdreListeMouvement,PBegin,PEnd);
+
+                                    PBegin:=TPDMInOLM[RListeMouvementMAJ.OrdreListeMouvement].PoisitionDetailMouvementBegin;
+                                    PEnd:=TPDMInOLM[RListeMouvementMAJ.OrdreListeMouvement].PoisitionDetailMouvementEnd;
+
+                                    RListeMouvementMAJ.PositionDetailMouvementBegin:=PBegin;
+                                    RListeMouvementMAJ.PositionDetailMouvementEnd:=PEnd;
+                                    Seek(FListeMouvementMAJ,i);
+                                    write(FListeMouvementMAJ,RListeMouvementMAJ);
+
+                                    FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Mise à jour P° DMnt dans Liste Mnt: '+RListeMouvementMAJ.DateMouvement+' Ordre '+inttostr(RListeMouvementMAJ.OrdreListeMouvement));
+                               end;
+                          i:=i+1;
+                          LibererMemoireProcessus('BusinessProces.exe',true);
+                          end;
+                          finally
+                          CloseFile(FListeMouvementMAJ);
+                          end;
+                     end;
+               end;
+               except
+                     showmessage('Anomalie MiseAJourPositionDetailMouvementdansFListeMouvement');
+               end;
+               ////////////////////////////////////////////////////////////////////////////////
+          end;
+          finally
+          closefile(FTypeMouvementMAJ);
+          end;
+     end;
+end;
+
+Function MiseAJourIsFileInUse(TableauListeBaseDonnees:TStringGrid; ActiverRowSelectMAJ:boolean; var NbtIsFileInUse:integer):boolean;
+var  R,RowSelect:integer; OKMAJ,OKTeste:boolean;
+begin
+     NbtIsFileInUse:=0;
+     R:=1;
+     OKMAJ:=false;
+     while(R<=TableauListeBaseDonnees.RowCount-1)do
+     begin
+          OKTeste:=strtoboolean(TableauListeBaseDonnees.Cells[8,R]);
+          TableauListeBaseDonnees.Cells[8,R]:=booleantostr(IsFileInUse(TableauListeBaseDonnees.Cells[9,R]));
+          if(OKTeste<>strtoboolean(TableauListeBaseDonnees.Cells[8,R]))then OKMAJ:=true;
+
+          if(ActiverRowSelectMAJ=true)and(OKMAJ=true)and(RowSelect=0)then RowSelect:=R;
+
+          if(strtoboolean(TableauListeBaseDonnees.Cells[8,R])=true)then NbtIsFileInUse:=NbtIsFileInUse+1;
+     R:=R+1;
+     end;
+
+     MiseAJourIsFileInUse:=OKMAJ;
+
+     if(RowSelect<>0)then TableauListeBaseDonnees.Row:=RowSelect;
+end;
+
+procedure TFSTravauxFinAnnee.TimerMAJIsFileInUseTimer(Sender: TObject);
+var  R,NbtIsFileInUse:integer;   FileSelect:string;   OKMAJOperer,OKRowSelect:boolean;
+begin
+     OKMAJOperer:=MiseAJourIsFileInUse(FSTravauxFinAnnee.TableauListeBaseDonnees,FSTravauxFinAnnee.RBSelectIsFileInUse.Checked,NbtIsFileInUse);
+
+     FSTravauxFinAnnee.NbrActiveIsFileInUse.Caption:='IsFileInUse: '+inttostr(NbtIsFileInUse);
+
+     if(OKMAJOperer=true)then
+     begin
+          FileSelect:=FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[3,FSTravauxFinAnnee.TableauListeBaseDonnees.Row];
+
+          TrierTableauARowSpecial(FSTravauxFinAnnee.TableauListeBaseDonnees,1,FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-1,1,FSTravauxFinAnnee.EditIndiceRubriqueTriColBD.Text,FSTravauxFinAnnee.EditTypeDataTrieBD.Text,FSTravauxFinAnnee.EditTypeTrieBD.Text);
+
+          R:=1;
+          OKRowSelect:=false;
+          while(R<=FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-1)and(OKRowSelect=false)do
+          begin
+               if(FileSelect=FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[3,R])then
+               begin
+                    OKRowSelect:=true;
+                    FSTravauxFinAnnee.TableauListeBaseDonnees.Row:=R;
+               end;
+          R:=R+1;
+          end;
+     end;
+
+     if(FSTravauxFinAnnee.AfficheMAJIsFileInUse.Color=clLime)
+     then FSTravauxFinAnnee.AfficheMAJIsFileInUse.Color:=$0093FF93
+     else FSTravauxFinAnnee.AfficheMAJIsFileInUse.Color:=clLime;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn8Click(Sender: TObject);
+begin
+     FSTravauxFinAnnee.TableauListeBaseDonnees.Col:=8;
+
+     FSTravauxFinAnnee.EditIndiceRubriqueTriColBD.Text:='8';
+     FSTravauxFinAnnee.EditTypeDataTrieBD.Text:='';
+     FSTravauxFinAnnee.EditTypeTrieBD.Text:='-';
+
+     TrierTableauARowSpecial(FSTravauxFinAnnee.TableauListeBaseDonnees,1,FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-1,1,FSTravauxFinAnnee.EditIndiceRubriqueTriColBD.Text,FSTravauxFinAnnee.EditTypeDataTrieBD.Text,FSTravauxFinAnnee.EditTypeTrieBD.Text);
+
+     FSTravauxFinAnnee.TimerMAJIsFileInUse.Enabled:=true;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn9Click(Sender: TObject);
+begin
+     FSTravauxFinAnnee.TimerMAJIsFileInUse.Enabled:=false;
+     FSTravauxFinAnnee.AfficheMAJIsFileInUse.Color:=clBtnFace;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn10Click(Sender: TObject);
+begin
+     if(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[8,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]='Oui')then
+     begin
+          if(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[3,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]='FBaseAvis')then
+          begin
+               ChBaseAvis:=FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row];
+               assignfile(FBaseAvis,ChBaseAvis);
+               if FileExists(ChBaseAvis)then
+               begin
+                    Reset(FBaseAvis);
+               end;
+          end;
+     end;
+end;
+
+{
+55216 = closed
+55217 = open read
+55218 = open write
+
+fmClosed = $D7B0;
+fmInput  = $D7B1;
+fmOutput = $D7B2;
+fmInOut  = $D7B3;
+}
+
+function IsOpen(const txt:TextFile):Boolean;
+const
+     fmTextOpenRead = 55217;
+     fmTextOpenWrite = 55218;
+begin
+     Result := (TTextRec(txt).Mode = fmTextOpenRead) or (TTextRec(txt).Mode = fmTextOpenWrite)
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn11Click(Sender: TObject);
+begin 
+     if(TailleFichier(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row])=0)
+     and(not IsFileInUse(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]))
+     then
+     begin
+          if(FSTravauxFinAnnee.RBAlacorbeille.Checked=true)
+          then Fichieralacorbeille(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row])
+          else deleteFile(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]);
+     end
+     else
+     begin
+          if(TailleFichier(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row])<>0)then
+          begin
+               showmessage(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[3,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]+' n''est pas vide !');
+          end;
+
+          if(IsFileInUse(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]))then
+          begin
+               showmessage(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[3,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]+' est en cour d''utilisation !');
+          end;
+     end;
+
+     ProcRechercheBaseDonnees(FSTravauxFinAnnee.TableauListeBaseDonnees,inttostr(strtointeger(ExerciceAnnee)),FSTravauxFinAnnee.EditTypeOctets.Text,FSTravauxFinAnnee.EditIndiceRubriqueTriColBD.Text,FSTravauxFinAnnee.EditTypeDataTrieBD.Text,FSTravauxFinAnnee.EditTypeTrieBD.Text);
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn12Click(Sender: TObject);
+var R:integer;
+begin
+     R:=1;
+     while(R<=FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-1)do
+     begin
+          if(TailleFichier(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,R])=0)
+          and(not IsFileInUse(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,R]))
+          then
+          begin
+               deleteFile(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,R]);
+          end;
+     R:=R+1;
+     end;
+
+     ProcRechercheBaseDonnees(FSTravauxFinAnnee.TableauListeBaseDonnees,inttostr(strtointeger(ExerciceAnnee)),FSTravauxFinAnnee.EditTypeOctets.Text,FSTravauxFinAnnee.EditIndiceRubriqueTriColBD.Text,FSTravauxFinAnnee.EditTypeDataTrieBD.Text,FSTravauxFinAnnee.EditTypeTrieBD.Text);
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn13Click(Sender: TObject);
+Var  R:integer; OKCopier,OKFini:boolean; AdresseSource,AdresseCible,NomFichier,DossierSource,DossierCible:string;
+     Handle:HWND;
+begin
+DossierSource:=ExtractFileDir(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]);
+Savedialog1.FileName:=FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row];
+If Savedialog1.Execute then
+begin
+     DossierCible:=ExtractFileDir(Savedialog1.FileName);
+     if(FSTravauxFinAnnee.RBCopierRepertoire.Checked=false)then
+     begin
+           R:=1;
+           OKFini:=false;
+           while(R<=FSTravauxFinAnnee.TableauListeBaseDonnees.RowCount-1)and(OKFini=false)do
+           begin
+                if(FSTravauxFinAnnee.RBCopierTous.Checked=false)then
+                begin
+                     if(R=FSTravauxFinAnnee.TableauListeBaseDonnees.Row)then
+                     begin
+                          OKCopier:=true;
+                          OKFini:=true;
+                     end
+                     else
+                     begin
+                          OKCopier:=false;
+                     end;
+                end
+                else OKCopier:=true;
+
+                if(OKCopier=true)then
+                begin
+                     AdresseSource:=FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,R];
+                     NomFichier:=ExtractFileName(AdresseSource);
+                     AdresseCible:=DossierCible+'/'+NomFichier;
+
+                     ProcCopierFichier(AdresseSource,AdresseCible,Handle,CheckBoxPossibleAnnuler.Checked,CheckBoxChangeNomSiCollision.Checked,CheckBoxSansConfirmation.Checked,CheckBoxSansProgression.Checked)
+                end;
+           R:=R+1;                                                                                           
+           end;
+     end
+     else
+     begin
+          AdresseSource:=DossierSource;
+          AdresseCible:=DossierCible;
+
+          ProcCopierFichier(AdresseSource,AdresseCible,Handle,CheckBoxPossibleAnnuler.Checked,CheckBoxChangeNomSiCollision.Checked,CheckBoxSansConfirmation.Checked,CheckBoxSansProgression.Checked)
+     end;
+end;
+
+end;
+
+procedure TFSTravauxFinAnnee.BitTousBaseDataClick(Sender: TObject);
+var  TexteExercice:string;
+begin
+     if(FSTravauxFinAnnee.BitTousBaseData.Caption='Toute la base')then
+     begin
+          TexteExercice:='';
+          FSTravauxFinAnnee.BitTousBaseData.Caption:='Exercice '+inttostr(strtointeger(ExerciceAnnee));
+     end
+     else
+     begin
+          TexteExercice:=inttostr(strtointeger(ExerciceAnnee));
+          FSTravauxFinAnnee.BitTousBaseData.Caption:='Toute la base';
+     end;
+
+     FSTravauxFinAnnee.PageListeBDExerciceN.Caption:='     Liste base de données Exercice '+TexteExercice+'     ';
+     ProcRechercheBaseDonnees(FSTravauxFinAnnee.TableauListeBaseDonnees,TexteExercice,FSTravauxFinAnnee.EditTypeOctets.Text,FSTravauxFinAnnee.EditIndiceRubriqueTriCol.Text,FSTravauxFinAnnee.EditTypeDataTrie.Text,FSTravauxFinAnnee.EditTypeTrie.Text);
+end;
+
+Procedure Affichepropriete(fichier: string);
+var info: TShellExecuteInfo;
+begin
+     FillChar(info, SizeOf(info),0);
+     info.cbSize := SizeOf(info);
+     info.lpFile := PChar(fichier);
+     info.lpVerb := 'properties';
+     info.fMask := SEE_MASK_INVOKEIDLIST; ShellExecuteEx(@info);
+end;
+
+Procedure Fichieralacorbeille(fichier: string);
+var SHFileOpStruct : TSHFileOpStruct;
+begin
+     with SHFileOpStruct do
+     begin
+          Wnd := 0;
+          wFunc := FO_DELETE;
+          pFrom := PChar(fichier+#0+#0);
+          pTo := nil;
+          fFlags := FOF_ALLOWUNDO;
+          hNameMappings := nil;
+          lpszProgressTitle := nil;
+     end;
+     SHFileOperation(SHFileOpStruct);
+end;
+
+Function TailleFichier(fichier: string): longint;
+var  SearchRec:TSearchRec;
+     Resultat:integer;
+begin
+     // fonction renvoyant la taille du fichier en Octets
+     Result:=0;
+     Resultat:=FindFirst(fichier, FaAnyFile, SearchRec);
+     if Resultat=0 then
+     Result:=SearchRec.Size;
+     FindClose(SearchRec);
+end;
+
+{Procedure ProcCopierFichier(AdresseSource,AdresseCible:string; Handle:HWND; RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression:boolean);
+var  FlagsOptions: FILEOP_FLAGS;
+begin
+     FlagsOptions:=0;
+     if(RBPossibleAnnuler)      then FlagsOptions:=FlagsOptions+FOF_ALLOWUNDO;
+     if(RBChangeNomSiCollision) then FlagsOptions:=FlagsOptions+ FOF_RENAMEONCOLLISION;
+     if(RBSansConfirmation)     then FlagsOptions:=FlagsOptions+FOF_NOCONFIRMATION;
+     if(RBSansProgression)      then FlagsOptions:=FlagsOptions+FOF_SILENT;
+
+     copier(handle,AdresseSource,AdresseCible,FlagsOptions);
+end;
+
+procedure copier(Handle:HWND;Source,Cible:String; FlagsOptions: FILEOP_FLAGS);
+var
+  lpFileOp:TSHFileOpStructA;
+  TabFrom:array[0..255] of char;
+  i:integer;
+begin
+     For i:=0 to length(Source)-1 do TabFrom[i]:=Source[i+1];
+     // pFrom peut contenir plusieurs noms de fichier.
+     //Les noms doivent être séparés par le caractère #0.
+     // d'après mes essais, le dernier nom de fichier doit être suivi
+     //de deux caractères #0.
+     TabFrom[length(Source)]:=#0;
+     TabFrom[length(Source)+1]:=#0;
+
+    //-----préparation du paramètre lpFileOp qui sera passé en paramètre
+     //à SHFileOperation -----
+     lpFileOp.Wnd:=handle;
+     lpFileOp.wFunc:=FO_COPY; // l'action sera une copie
+     lpFileOp.pFrom:=TabFrom; // contient le ou les fichiers /dossiers à recopier
+     lpFileOp.pTo:=PAnsiChar(Cible);   // ce vers quoi on recopie
+     lpFileOp.fFlags:=FlagsOptions;
+     // fin de la préparation du paramètre lpFileOp
+
+     SHFileOperation(lpFileOp); // procède à la copie
+end;}
+
+procedure TFSTravauxFinAnnee.BitBtn14Click(Sender: TObject);
+begin
+     Affichepropriete(FSTravauxFinAnnee.TableauListeBaseDonnees.Cells[9,FSTravauxFinAnnee.TableauListeBaseDonnees.Row]);
+end;
+
+Function FonctionListePositionMouvementJustifierParAvis:string;
+var  ListePositionMouvement:string;
+begin
+     ListePositionMouvement:='';
+
+     TypeProces:='Business';
+     FichierConcerne:='FListeMouvement';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     if(TypeProcesReseaux<>'Réseaux')then
+     begin
+          ChListeMouvement:=Adresse;
+          assignfile(FListeMouvement,ChListeMouvement);
+          if FileExists(ChListeMouvement)then
+          begin
+               try
+               Reset(FListeMouvement);
+               Seek(FListeMouvement,0);
+               while not eof(FListeMouvement)do
+               begin
+                    Read(FListeMouvement,RListeMouvement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                    if(RListeMouvement.ListeNumAvis<>'')then
+                    begin
+                         if(ListePositionMouvement='')
+                         then ListePositionMouvement:=inttostr(RListeMouvement.PositionMouvement)
+                         else
+                         begin
+                              if not ExisteNumInTexte(inttostr(RListeMouvement.PositionMouvement),ListePositionMouvement)
+                              then ListePositionMouvement:=ListePositionMouvement+';'+inttostr(RListeMouvement.PositionMouvement)
+                         end;
+                    end;
+               end;
+               finally
+               CloseFile(FListeMouvement);
+               end;
+          end;
+     end;
+
+     FonctionListePositionMouvementJustifierParAvis:=ListePositionMouvement;
+end;
+
+Procedure MiseAJourListeMouvementJustifierParAvis(NewExercice:string);
+var  i,R,OrdreListeMouvement:integer;   OKTypeFormule,OKListeMouvement,ExisteListeMouvement:boolean; TypeProcesControleReseaux,TypeProces,FichierConserne,Adresse,ListePositionMouvementJustifierParAvis:string;
+begin
+     ListePositionMouvementJustifierParAvis:=FonctionListePositionMouvementJustifierParAvis;
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FListeMouvement';
+               if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+               end;
+
+               TypeProcesControleReseaux:=TypeProcesReseaux;
+
+               if(TypeProcesControleReseaux<>'Réseaux')then
+               begin
+                     ChListeMouvementCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                     assignfile(FListeMouvementCopie,ChListeMouvementCopie);
+                     try
+                     if FileExists(ChListeMouvementCopie)then
+                     Reset(FListeMouvementCopie)
+                     else Rewrite(FListeMouvementCopie);
+                     i:=filesize(FListeMouvementCopie);
+
+                     ChListeMouvement:=Adresse;
+                     assignfile(FListeMouvement,ChListeMouvement);
+                     try
+                     if FileExists(ChListeMouvement)then
+                     Reset(FListeMouvement)
+                     else begin Showmessage('Attention ! '+ChListeMouvement+' n''existe pas !'); Exit; end;
+                     Seek(FListeMouvement,0);
+                     while not eof(FListeMouvement)do
+                     begin
+                          Read(FListeMouvement,RListeMouvement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                          if strtointeger(Lastlaters(RListeMouvement.DateMouvement,4))>=strtointeger(NewExercice)
+                          then OKListeMouvement:=true
+                          else OKListeMouvement:=false;
+
+                          if(OKListeMouvement=false)then
+                          begin
+                               if(ExisteNumInTexte(inttostr(RListeMouvement.PositionMouvement),ListePositionMouvementJustifierParAvis))
+                               and(RListeMouvement.ListeNumAvis='')
+                               then OKListeMouvement:=true
+                               else OKListeMouvement:=false;
+                          end;
+
+                          if(OKListeMouvement=true)then
+                          begin
+                               Seek(FListeMouvementCopie,0);
+                               ExisteListeMouvement:=false;
+                               OrdreListeMouvement:=0;
+                               while not eof(FListeMouvementCopie)and(ExisteListeMouvement=false)do
+                               begin
+                                    Read(FListeMouvementCopie,RListeMouvementCopie);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                                    if(RListeMouvementCopie.NumListeMouvement=RListeMouvement.NumListeMouvement)
+                                    and(RListeMouvementCopie.DateMouvement=RListeMouvement.DateMouvement)
+                                    and(RListeMouvementCopie.PositionTypeMouvement=RListeMouvement.PositionTypeMouvement)
+                                    and(RListeMouvementCopie.PositionMouvement=RListeMouvement.PositionMouvement)
+                                    then ExisteListeMouvement:=true;
+
+                                    if(OrdreListeMouvement<=RListeMouvementCopie.OrdreListeMouvement)
+                                    then OrdreListeMouvement:=RListeMouvementCopie.OrdreListeMouvement+1;
+                               end;
+
+                               if(ExisteListeMouvement=false)then
+                               begin
+                                    RListeMouvementCopie:=RListeMouvement;
+                                    RListeMouvementCopie.OrdreListeMouvement:=OrdreListeMouvement;
+                                    RListeMouvementCopie.PositionDetailMouvementBegin:=-1;
+                                    RListeMouvementCopie.PositionDetailMouvementEnd:=-1;
+                                    if strtointeger(Lastlaters(RListeMouvement.DateMouvement,4))>=strtointeger(NewExercice)then
+                                    begin
+                                         RListeMouvementCopie.ListeNumAvis:='';
+                                         RListeMouvementCopie.NumListeMouvement:=i+1;
+                                    end;
+
+                                    Seek(FListeMouvementCopie,i);
+                                    write(FListeMouvementCopie,RListeMouvementCopie);
+                                    i:=i+1;
+                               end;
+                          end;
+                     end;
+                     finally
+                     CloseFile(FListeMouvement);
+                     end;
+                     finally
+                     CloseFile(FListeMouvementCopie);
+                     end;
+               end
+               else
+               begin
+                    AfficherMessage('Opération réseaux non autorisée !');
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn16Click(Sender: TObject);
+begin
+      MiseAJourListeMouvementJustifierParAvis(FSTravauxFinAnnee.EditNewExercice.Text);
+end;
+
+
+procedure TFSTravauxFinAnnee.BitFermerVisualisationClick(Sender: TObject);
+begin
+     FSTravauxFinAnnee.AffichePatienter.Visible:=false;
+end;
+
+procedure TFSTravauxFinAnnee.BitBtn17Click(Sender: TObject);
+begin
+     FSTravauxFinAnnee.AfficheAnomalieReouverture.Visible:=false;
+end;
+
+Procedure ReouvertureColsTableaux(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FColsTableaux');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FColsTableaux';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChColsTableauxCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FColsTableauxCopie,ChColsTableauxCopie);
+                           try
+                           if FileExists(ChColsTableauxCopie)then
+                           Reset(FColsTableauxCopie)
+                           else Rewrite(FColsTableauxCopie);
+                           Seek(FColsTableauxCopie,0);
+                           Truncate(FColsTableauxCopie);
+
+                           ChColsTableaux:=Adresse;
+                           assignfile(FColsTableaux,ChColsTableaux);
+                           try
+                           if FileExists(ChColsTableaux)then
+                           Reset(FColsTableaux)
+                           else Rewrite(FColsTableaux);
+                           Seek(FColsTableaux,0);
+                           i:=0;
+                           while not eof(FColsTableaux)do
+                           begin
+                                Read(FColsTableaux,RColsTableaux);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RColsTableauxCopie:=RColsTableaux;
+                                Seek(FColsTableauxCopie,i);
+                                write(FColsTableauxCopie,RColsTableauxCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FColsTableaux);
+                           end;
+                           finally
+                           CloseFile(FColsTableauxCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FColsTableaux',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FColsTableaux',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureQteforfaitStock(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     TypeProces:='Business';
+     FichierConserne:='FQteforfaitStock';
+     if not(ActiverReouvertureStock(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,FichierConserne,NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FQteforfaitStock');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FQteforfaitStock';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChQteforfaitStockCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FQteforfaitStockCopie,ChQteforfaitStockCopie);
+                           try
+                           if FileExists(ChQteforfaitStockCopie)then
+                           Reset(FQteforfaitStockCopie)
+                           else Rewrite(FQteforfaitStockCopie);
+                           Seek(FQteforfaitStockCopie,0);
+                           Truncate(FQteforfaitStockCopie);
+
+                           ChQteforfaitStock:=Adresse;
+                           assignfile(FQteforfaitStock,ChQteforfaitStock);
+                           try
+                           if FileExists(ChQteforfaitStock)then
+                           Reset(FQteforfaitStock)
+                           else Rewrite(FQteforfaitStock);
+                           Seek(FQteforfaitStock,0);
+                           i:=0;
+                           while not eof(FQteforfaitStock)do
+                           begin
+                                Read(FQteforfaitStock,RQteforfaitStock);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RQteforfaitStockCopie:=RQteforfaitStock;
+                                Seek(FQteforfaitStockCopie,i);
+                                write(FQteforfaitStockCopie,RQteforfaitStockCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FQteforfaitStock);
+                           end;
+                           finally
+                           CloseFile(FQteforfaitStockCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FQteforfaitStock',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FQteforfaitStock',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAffichagePublication(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAffichagePublication');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FAffichagePublication';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChAffichagePublicationCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FAffichagePublicationCopie,ChAffichagePublicationCopie);
+                           try
+                           if FileExists(ChAffichagePublicationCopie)then
+                           Reset(FAffichagePublicationCopie)
+                           else Rewrite(FAffichagePublicationCopie);
+                           Seek(FAffichagePublicationCopie,0);
+                           Truncate(FAffichagePublicationCopie);
+
+                           ChAffichagePublication:=Adresse;
+                           assignfile(FAffichagePublication,ChAffichagePublication);
+                           try
+                           if FileExists(ChAffichagePublication)then
+                           Reset(FAffichagePublication)
+                           else Rewrite(FAffichagePublication);
+                           Seek(FAffichagePublication,0);
+                           i:=0;
+                           while not eof(FAffichagePublication)do
+                           begin
+                                Read(FAffichagePublication,RAffichagePublication);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RAffichagePublicationCopie:=RAffichagePublication;
+                                Seek(FAffichagePublicationCopie,i);
+                                write(FAffichagePublicationCopie,RAffichagePublicationCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FAffichagePublication);
+                           end;
+                           finally
+                           CloseFile(FAffichagePublicationCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAffichagePublication',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAffichagePublication',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureAutresParametres(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FAutresParametres');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FAutresParametres';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChAutresParametresCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FAutresParametresCopie,ChAutresParametresCopie);
+                           try
+                           if FileExists(ChAutresParametresCopie)then
+                           Reset(FAutresParametresCopie)
+                           else Rewrite(FAutresParametresCopie);
+                           Seek(FAutresParametresCopie,0);
+                           Truncate(FAutresParametresCopie);
+
+                           ChAutresParametres:=Adresse;
+                           assignfile(FAutresParametres,ChAutresParametres);
+                           try
+                           if FileExists(ChAutresParametres)then
+                           Reset(FAutresParametres)
+                           else Rewrite(FAutresParametres);
+                           Seek(FAutresParametres,0);
+                           i:=0;
+                           while not eof(FAutresParametres)do
+                           begin
+                                Read(FAutresParametres,RAutresParametres);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RAutresParametresCopie:=RAutresParametres;
+                                Seek(FAutresParametresCopie,i);
+                                write(FAutresParametresCopie,RAutresParametresCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FAutresParametres);
+                           end;
+                           finally
+                           CloseFile(FAutresParametresCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAutresParametres',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FAutresParametres',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureLastNumDetailMouvementMAJ(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FLastNumDetailMouvementMAJ');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FLastNumDetailMouvementMAJ';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChLastNumDetailMouvementMAJCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FLastNumDetailMouvementMAJCopie,ChLastNumDetailMouvementMAJCopie);
+                           try
+                           if FileExists(ChLastNumDetailMouvementMAJCopie)then
+                           Reset(FLastNumDetailMouvementMAJCopie)
+                           else Rewrite(FLastNumDetailMouvementMAJCopie);
+                           Seek(FLastNumDetailMouvementMAJCopie,0);
+                           Truncate(FLastNumDetailMouvementMAJCopie);
+
+                           ChLastNumDetailMouvementMAJ:=Adresse;
+                           assignfile(FLastNumDetailMouvementMAJ,ChLastNumDetailMouvementMAJ);
+                           try
+                           if FileExists(ChLastNumDetailMouvementMAJ)then
+                           Reset(FLastNumDetailMouvementMAJ)
+                           else Rewrite(FLastNumDetailMouvementMAJ);
+                           Seek(FLastNumDetailMouvementMAJ,0);
+                           i:=0;
+                           while not eof(FLastNumDetailMouvementMAJ)do
+                           begin
+                                Read(FLastNumDetailMouvementMAJ,RLastNumDetailMouvementMAJ);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RLastNumDetailMouvementMAJCopie:=RLastNumDetailMouvementMAJ;
+                                Seek(FLastNumDetailMouvementMAJCopie,i);
+                                write(FLastNumDetailMouvementMAJCopie,RLastNumDetailMouvementMAJCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FLastNumDetailMouvementMAJ);
+                           end;
+                           finally
+                           CloseFile(FLastNumDetailMouvementMAJCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FLastNumDetailMouvementMAJ',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FLastNumDetailMouvementMAJ',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureListeTableauxCols(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer; TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FListeTableauxCols');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FListeTableauxCols';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChListeTableauxColsCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FListeTableauxColsCopie,ChListeTableauxColsCopie);
+                           try
+                           if FileExists(ChListeTableauxColsCopie)then
+                           Reset(FListeTableauxColsCopie)
+                           else Rewrite(FListeTableauxColsCopie);
+                           Seek(FListeTableauxColsCopie,0);
+                           Truncate(FListeTableauxColsCopie);
+
+                           ChListeTableauxCols:=Adresse;
+                           assignfile(FListeTableauxCols,ChListeTableauxCols);
+                           try
+                           if FileExists(ChListeTableauxCols)then
+                           Reset(FListeTableauxCols)
+                           else Rewrite(FListeTableauxCols);
+                           Seek(FListeTableauxCols,0);
+                           i:=0;
+                           while not eof(FListeTableauxCols)do
+                           begin
+                                Read(FListeTableauxCols,RListeTableauxCols);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RListeTableauxColsCopie:=RListeTableauxCols;
+                                Seek(FListeTableauxColsCopie,i);
+                                write(FListeTableauxColsCopie,RListeTableauxColsCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FListeTableauxCols);
+                           end;
+                           finally
+                           CloseFile(FListeTableauxColsCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeTableauxCols',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FListeTableauxCols',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureRParametresImprimePrelevement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i:integer;
+     TypeProces,FichierConserne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut,TypeProcesControleReseaux:string;
+     OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FRParametresImprimePrelevement',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FRParametresImprimePrelevement');
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProces:='Business';
+               FichierConserne:='FRParametresImprimePrelevement';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     if not(FunctionAdresseProces(TypeProces,FichierConserne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                     begin
+                           AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserne+' recherché !');
+                     end;
+                     TypeProcesControleReseaux:=TypeProcesReseaux;
+
+                     ActiverReouverture:=true;
+
+                     if(TypeProcesControleReseaux='Réseaux')then
+                     begin
+                          if(FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=false;
+                          end
+                          else
+                          if(FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked=true)then
+                          begin
+                               ActiverReouverture:=true;
+                          end
+                          else ActiverReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+                     end;
+
+                     if(ActiverReouverture=true)then
+                     begin
+                           ChRParametresImprimePrelevementCopie:=ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice);
+                           assignfile(FRParametresImprimePrelevementCopie,ChRParametresImprimePrelevementCopie);
+                           try
+                           if FileExists(ChRParametresImprimePrelevementCopie)then
+                           Reset(FRParametresImprimePrelevementCopie)
+                           else Rewrite(FRParametresImprimePrelevementCopie);
+                           Seek(FRParametresImprimePrelevementCopie,0);
+                           Truncate(FRParametresImprimePrelevementCopie);
+
+                           ChRParametresImprimePrelevement:=Adresse;
+                           assignfile(FRParametresImprimePrelevement,ChRParametresImprimePrelevement);
+                           try
+                           if FileExists(ChRParametresImprimePrelevement)then
+                           Reset(FRParametresImprimePrelevement)
+                           else Rewrite(FRParametresImprimePrelevement);
+                           Seek(FRParametresImprimePrelevement,0);
+                           i:=0;
+                           while not eof(FRParametresImprimePrelevement)do
+                           begin
+                                Read(FRParametresImprimePrelevement,RParametresImprimePrelevement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                                RParametresImprimePrelevementCopie:=RParametresImprimePrelevement;
+                                Seek(FRParametresImprimePrelevementCopie,i);
+                                write(FRParametresImprimePrelevementCopie,RParametresImprimePrelevementCopie);
+
+                                FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Paramètres Imprime Prélèvement '+inttostr(RParametresImprimePrelevement.RegistreDetailCompteur.NumClasse));
+                           i:=i+1;
+                           end;
+                           finally
+                           CloseFile(FRParametresImprimePrelevement);
+                           end;
+                           finally
+                           CloseFile(FRParametresImprimePrelevementCopie);
+                           end;
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FRParametresImprimePrelevement',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FRParametresImprimePrelevement',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure ReouvertureArchiveRegistreEtatStockPrelevement(TableauListeBaseDonnees:TStringGrid; NewExercice:string; ActiverReouverture:boolean);
+var  i,PBegin,IndexPrelevement,iIPM:integer;
+     TypeProcesControleReseaux,FichierConserne,PositionPrelevement:string;
+     OKIndexPrelevementMatricule,OKArchive:boolean;
+begin
+     if not(ActiverReouverturePrelevement(NewExercice,true,FSTravauxFinAnnee.RBAucuneReouvertureReseaux.Checked,FSTravauxFinAnnee.RBNouvelleReouvertureReseaux.Checked,OKArchive,TypeProcesControleReseaux))then
+     begin
+          ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchiveRegistreEtatStockPrelevement',NewExercice,TypeProcesControleReseaux,i);
+          Exit;
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Réouverture FArchiveRegistreEtatStockPrelevement');
+
+     TPrelevementCopie:=RemplireTPrelevement(ExerciceAnnee,FSMenuPrincipal.RBRemplireTPrelevement,ArrayIndexPrelevementMatricule);
+
+     if(strtointeger(NewExercice)>0)then
+     begin
+          if(strtointeger(NewExercice)=(strtointeger(ExerciceAnnee))+1)then
+          begin
+               try
+
+               i:=0;
+               TypeProcesControleReseaux:='';
+               FichierConserne:='FArchiveRegistreEtatStockPrelevement';
+               if(ActiverReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConserne)=true)then
+               begin
+                     OpenFParc(RParc);
+                     ChArchiveRegistreEtatStockPrelevementCopie:=RParc.Parcours+'\'+Entreprise+'-'+NewExercice+'FArchiveRegistreEtatStockPrelevement';
+                     assignfile(FArchiveRegistreEtatStockPrelevementCopie,ChArchiveRegistreEtatStockPrelevementCopie);
+                     try
+                     if FileExists(ChArchiveRegistreEtatStockPrelevementCopie)then
+                     Reset(FArchiveRegistreEtatStockPrelevementCopie)
+                     else Rewrite(FArchiveRegistreEtatStockPrelevementCopie);
+                     Seek(FArchiveRegistreEtatStockPrelevementCopie,0);
+                     Truncate(FArchiveRegistreEtatStockPrelevementCopie);
+
+                     //RPrelevement:=ChercherPrelevement(strtointeger(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text),ExerciceAnnee,FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text,PositionPrelevement);
+                     //TPrelevementCopie[IndexPrelevement]
+                     IndexPrelevement:=strtoint(FSTravauxFinAnnee.EditNumPrelevementFirstNewExercice.Text+inttostr(strtointeger(FSTravauxFinAnnee.EditMatriculeFirstNewExercice.Text)));
+
+                     iIPM:=0;
+                     OKIndexPrelevementMatricule:=false;
+                     while(iIPM<=High(ArrayIndexPrelevementMatricule))and(OKIndexPrelevementMatricule=false)do
+                     begin
+                          if(ArrayIndexPrelevementMatricule[iIPM]=IndexPrelevement)then
+                          begin
+                               OKIndexPrelevementMatricule:=true;
+                               IndexPrelevement:=iIPM;
+                          end;
+                          iIPM:=iIPM+1;
+                     end;
+
+                     PBegin:=TPrelevementCopie[IndexPrelevement].RegistrePositionEtatStockPrelevement.PositionArchiveBegin;
+
+                     ChArchiveRegistreEtatStockPrelevement:=RParc.Parcours+'\'+Exercice+'FArchiveRegistreEtatStockPrelevement';
+                     assignfile(FArchiveRegistreEtatStockPrelevement,ChArchiveRegistreEtatStockPrelevement);
+                     try
+                     if FileExists(ChArchiveRegistreEtatStockPrelevement)then
+                     Reset(FArchiveRegistreEtatStockPrelevement)
+                     else Rewrite(FArchiveRegistreEtatStockPrelevement);
+                     Seek(FArchiveRegistreEtatStockPrelevement,PBegin);
+                     i:=0;
+                     while not eof(FArchiveRegistreEtatStockPrelevement)do
+                     begin
+                          Read(FArchiveRegistreEtatStockPrelevement,RArchiveRegistreEtatStockPrelevement);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+                          if(datecorrecte(RArchiveRegistreEtatStockPrelevement.DatePrelevement)=true)
+                          and(strtodate(RArchiveRegistreEtatStockPrelevement.DatePrelevement)>strtodate('31/12/'+ExerciceAnnee))then
+                          begin
+                               RArchiveRegistreEtatStockPrelevementCopie:=RArchiveRegistreEtatStockPrelevement;
+                               RArchiveRegistreEtatStockPrelevementCopie.NumPrelevement:=RArchiveRegistreEtatStockPrelevementCopie.NumPrelevement-strtointeger(FSTravauxFinAnnee.EditEcartPrelevement.Text);
+                               Seek(FArchiveRegistreEtatStockPrelevementCopie,i);
+                               write(FArchiveRegistreEtatStockPrelevementCopie,RArchiveRegistreEtatStockPrelevementCopie);
+
+                               FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('');
+                          i:=i+1;
+
+                          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Etat stock PUF n° '+inttostr(RArchiveRegistreEtatStockPrelevement.PositionRegistreEtatStockPrelevement)+' du '+RArchiveRegistreEtatStockPrelevement.DatePrelevement);
+                          end;
+                     end;
+                     finally
+                     CloseFile(FArchiveRegistreEtatStockPrelevement);
+                     end;
+                     finally
+                     CloseFile(FArchiveRegistreEtatStockPrelevementCopie);
+                     end;
+               end;
+
+               if(ActiverReouverture=true)then ProcEffectueBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchiveRegistreEtatStockPrelevement',NewExercice,TypeProcesControleReseaux,i);
+
+               except
+                     ProcAnomalieBaseDonnee(TableauListeBaseDonnees,Entreprise,'FArchiveRegistreEtatStockPrelevement',NewExercice,TypeProcesControleReseaux,i);
+               end;
+          end
+          else
+          begin
+               AfficherMessage('Attention ! L''Exercice à rouvrir non valide ! ');
+          end;
+     end
+     else
+     begin
+          AfficherMessage('Veuillez préciser l''exercice SVP !');
+     end;
+end;
+
+Procedure EnregistrementReouverture(ExerciceReouverture:string; OKCloture:boolean);
+var  i,iSelect:integer;  OKReouverture:boolean;
+begin
+     OpenFParc(RParc);
+     ChParametresReouverture:=RParc.Parcours+'\'+Entreprise+'FParametresReouverture';
+     assignfile(FParametresReouverture,ChParametresReouverture);
+     try
+     if FileExists(ChParametresReouverture)then
+     Reset(FParametresReouverture)
+     else Rewrite(FParametresReouverture);
+     Seek(FParametresReouverture,0);
+     i:=0;
+     OKReouverture:=false;
+     while not eof(FParametresReouverture)and(OKReouverture=false)do
+     begin
+          Read(FParametresReouverture,RParametresReouverture);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+          if(RParametresReouverture.ExerciceReouverture=ExerciceReouverture)then
+          begin
+               OKReouverture:=true;
+               iSelect:=i;
+          end;
+     i:=i+1;
+     end;
+
+     if(OKReouverture=true)then i:=iSelect;
+     RParametresReouverture.PositionReouverture:=i;
+     RParametresReouverture.ExerciceReouverture:=ExerciceReouverture;
+     RParametresReouverture.DateReouverture:=datetostr(Date);
+     RParametresReouverture.HeureReouverture:=Timetostr(Time);
+     RParametresReouverture.CodeUtilisateur:=FSMenuPrincipal.EditCodeUtilisateur.Text;
+     RParametresReouverture.OKClotureExercice:=OKCloture;
+     Seek(FParametresReouverture,i);
+     Write(FParametresReouverture,RParametresReouverture);
+
+     Finally
+     CloseFile(FParametresReouverture);
+     end;
+end;
+
+Function FinReouvertureClotureExercice(ExerciceReouverture:string):boolean;
+var  OKReouverture:boolean;
+begin
+     FinReouvertureClotureExercice:=false;
+     
+     if(FSTravauxFinAnnee.RBFinReouvertureClotureExercice.Checked=false)then
+     begin
+          FSTravauxFinAnnee.RBFinReouvertureClotureExercice.Checked:=true;
+          OpenFParc(RParc);
+          ChParametresReouvertureCopie:=RParc.Parcours+'\'+Entreprise+'FParametresReouverture';
+          assignfile(FParametresReouvertureCopie,ChParametresReouvertureCopie);
+          if FileExists(ChParametresReouvertureCopie)then
+          begin
+               try
+               Reset(FParametresReouvertureCopie);
+               Seek(FParametresReouvertureCopie,0);
+               OKReouverture:=false;
+               while not eof(FParametresReouvertureCopie)and(OKReouverture=false)do
+               begin
+                    Read(FParametresReouvertureCopie,RParametresReouvertureCopie);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                    if(RParametresReouvertureCopie.ExerciceReouverture=ExerciceReouverture)then
+                    begin
+                         OKReouverture:=true;
+                         FinReouvertureClotureExercice:=RParametresReouvertureCopie.OKClotureExercice;
+                    end;
+               end;
+               Finally
+               CloseFile(FParametresReouvertureCopie);
+               end;
+          end;
+
+          FSTravauxFinAnnee.RBFinReouvertureClotureExercice.Checked:=false;
+     end;
+end;
+
+Procedure ListeReouvertureClotureExercice(TableauReouverture:TStringGrid);
+var  R:integer;
+begin
+     TableauReouverture.ColCount:=7;
+     TableauReouverture.Cols[0].Text:='N°';
+     TableauReouverture.Cols[1].Text:='P°';
+     TableauReouverture.Cols[2].Text:='Exercice';
+     TableauReouverture.Cols[3].Text:='Date';
+     TableauReouverture.Cols[4].Text:='Heure';
+     TableauReouverture.Cols[5].Text:='Code Utilisateur';
+     TableauReouverture.Cols[6].Text:='Côturé';
+
+     TableauReouverture.RowCount:=2;
+     TableauReouverture.Rows[1].Text:='';
+
+     OpenFParc(RParc);
+     ChParametresReouvertureListe:=RParc.Parcours+'\'+Entreprise+'FParametresReouverture';
+     assignfile(FParametresReouvertureListe,ChParametresReouvertureListe);
+     if FileExists(ChParametresReouvertureListe)then
+     begin
+          try
+          Reset(FParametresReouvertureListe);
+          Seek(FParametresReouvertureListe,0);
+          R:=0;
+          while not eof(FParametresReouvertureListe)do
+          begin
+               Read(FParametresReouvertureListe,RParametresReouvertureListe);   Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+               R:=R+1;
+               TableauReouverture.Rows[R].Text:=inttostr(R);
+               TableauReouverture.Cells[1,R]:=inttostr(RParametresReouvertureListe.PositionReouverture);
+               TableauReouverture.Cells[2,R]:=RParametresReouvertureListe.ExerciceReouverture;
+               TableauReouverture.Cells[3,R]:=RParametresReouvertureListe.DateReouverture;
+               TableauReouverture.Cells[4,R]:=RParametresReouvertureListe.HeureReouverture;
+               TableauReouverture.Cells[5,R]:=RParametresReouvertureListe.CodeUtilisateur;
+               TableauReouverture.Cells[6,R]:=booleantostr(RParametresReouvertureListe.OKClotureExercice);
+          end;
+          Finally
+          CloseFile(FParametresReouvertureListe);
+          end;
+     end;
+
+     if(R>0)then TableauReouverture.RowCount:=R+1
+            else TableauReouverture.RowCount:=2;
+
+     AjusterColWidth(TableauReouverture,'','');
+
+     TrierTableauARowSpecial(TableauReouverture,1,TableauReouverture.RowCount-1,1,'2','Num','+');
+end;
+
+procedure TFSTravauxFinAnnee.BitReouvertureExerciceContextPopup(
+  Sender: TObject; MousePos: TPoint; var Handled: Boolean);
+begin
+     if(FSTravauxFinAnnee.EditAutorisationEnregistrementClotureExercice.Text='000')then
+     begin
+          FSTravauxFinAnnee.EditAutorisationEnregistrementClotureExercice.Text:='';
+          FSTravauxFinAnnee.AfficheConsultationNewExercice.Visible:=true;
+          FSTravauxFinAnnee.AfficheConsultationNewExercice.Caption:='Voulez vous enregistré la clôture de l''exercice '+ExerciceAnnee;
+     end
+     else
+     begin
+          FSTravauxFinAnnee.EditAutorisationEnregistrementClotureExercice.Text:='';
+          FSTravauxFinAnnee.EditAutorisationEnregistrementClotureExercice.SetFocus;
+     end;
+end;
+
+Function ActiverReouverturePrelevement(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; Var PrelevementArchiver:boolean; Var TypeProcesReseaux:string):boolean;
+var  i:integer;
+     OKReouverture:boolean;
+begin
+     PrelevementArchiver:=true;
+
+     TypeProces:='Business';
+     FichierConcerne:='FPrelevement';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     if(TypeProcesReseaux<>'Réseaux')then
+     begin
+          ChPrelevementCopie:=Adresse;
+          assignfile(FPrelevementCopie,ChPrelevementCopie);
+          if FileExists(ChPrelevementCopie)then
+          begin
+               Reset(FPrelevementCopie);
+               i:=filesize(FPrelevementCopie)-1;
+               Seek(FPrelevementCopie,i);
+               if not eof(FPrelevementCopie)then
+               begin
+                    Read(FPrelevementCopie,RPrelevementCopie);
+                    PrelevementArchiver:=RPrelevementCopie.Archiver;
+               end;
+
+          CloseFile(FPrelevementCopie);
+          end;
+     end
+     else PrelevementArchiver:=true;
+
+     OKReouverture:=true;
+
+     if(TypeProcesReseaux='Réseaux')then
+     begin
+          if(RBAucuneReouvertureReseaux=true)then
+          begin
+               OKReouverture:=false;
+          end
+          else
+          if(RBNouvelleReouvertureReseaux=true)then
+          begin
+               OKReouverture:=true;
+          end
+          else OKReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+     end;
+
+     if(VerifierAutorisationReouverture=true)then
+     begin
+          if(OKReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConcerne)=true)
+          then ActiverReouverturePrelevement:=true
+          else ActiverReouverturePrelevement:=false;
+     end
+     else
+     begin
+          ActiverReouverturePrelevement:=OKReouverture;
+     end;
+end;
+
+Function ActiverReouvertureStock(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+var  i:integer;
+     OKReouverture:boolean;
+begin
+     TypeProces:='Business';
+     FichierConcerne:='FStockArticle';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OKReouverture:=true;
+
+     if(TypeProcesReseaux='Réseaux')then
+     begin
+          if(RBAucuneReouvertureReseaux=true)then
+          begin
+               OKReouverture:=false;
+          end
+          else
+          if(RBNouvelleReouvertureReseaux=true)then
+          begin
+               OKReouverture:=true;
+          end
+          else OKReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+     end;
+
+     if(VerifierAutorisationReouverture=true)then
+     begin
+          if(OKReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConcerne)=true)
+          then ActiverReouvertureStock:=true
+          else ActiverReouvertureStock:=false;
+     end
+     else
+     begin
+          ActiverReouvertureStock:=OKReouverture;
+     end;
+end;
+
+Function ActiverReouverturePlanComptable(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+var  i:integer;
+     OKReouverture:boolean;
+begin
+     TypeProces:='Business';
+     FichierConcerne:='FPlanComptable';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OKReouverture:=true;
+
+     if(TypeProcesReseaux='Réseaux')then
+     begin
+          if(RBAucuneReouvertureReseaux=true)then
+          begin
+               OKReouverture:=false;
+          end
+          else
+          if(RBNouvelleReouvertureReseaux=true)then
+          begin
+               OKReouverture:=true;
+          end
+          else OKReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+     end;
+
+     if(VerifierAutorisationReouverture=true)then
+     begin
+          if(OKReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConcerne)=true)
+          then ActiverReouverturePlanComptable:=true
+          else ActiverReouverturePlanComptable:=false;
+     end
+     else
+     begin
+          ActiverReouverturePlanComptable:=OKReouverture;
+     end;
+end;
+
+Function ActiverReouvertureMarche(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+var  i:integer;
+     OKReouverture:boolean;
+begin
+     TypeProces:='Business';
+     FichierConcerne:='FMarche';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OKReouverture:=true;
+
+     if(TypeProcesReseaux='Réseaux')then
+     begin
+          if(RBAucuneReouvertureReseaux=true)then
+          begin
+               OKReouverture:=false;
+          end
+          else
+          if(RBNouvelleReouvertureReseaux=true)then
+          begin
+               OKReouverture:=true;
+          end
+          else OKReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+     end;
+
+     if(VerifierAutorisationReouverture=true)then
+     begin
+          if(OKReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConcerne)=true)
+          then ActiverReouvertureMarche:=true
+          else ActiverReouvertureMarche:=false;
+     end
+     else
+     begin
+          ActiverReouvertureMarche:=OKReouverture;
+     end;
+end;
+
+Function ActiverReouvertureTiers(NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+var  i:integer;
+     OKReouverture:boolean;
+begin
+     TypeProces:='Business';
+     FichierConcerne:='FTiers';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OKReouverture:=true;
+
+     if(TypeProcesReseaux='Réseaux')then
+     begin
+          if(RBAucuneReouvertureReseaux=true)then
+          begin
+               OKReouverture:=false;
+          end
+          else
+          if(RBNouvelleReouvertureReseaux=true)then
+          begin
+               OKReouverture:=true;
+          end
+          else OKReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+     end;
+
+     if(VerifierAutorisationReouverture=true)then
+     begin
+          if(OKReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConcerne)=true)
+          then ActiverReouvertureTiers:=true
+          else ActiverReouvertureTiers:=false;
+     end
+     else
+     begin
+          ActiverReouvertureTiers:=OKReouverture;
+     end;
+end;
+
+Function ActiverReouvertureDetailMouvement(FichierConcerne,NewExercice:string; VerifierAutorisationReouverture,RBAucuneReouvertureReseaux,RBNouvelleReouvertureReseaux:boolean; var TypeProcesReseaux:string):boolean;
+var  i:integer;
+     OKReouverture:boolean;
+begin
+     TypeProces:='Business';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     OKReouverture:=true;
+
+     if(TypeProcesReseaux='Réseaux')then
+     begin
+          if(RBAucuneReouvertureReseaux=true)then
+          begin
+               OKReouverture:=false;
+          end
+          else
+          if(RBNouvelleReouvertureReseaux=true)then
+          begin
+               OKReouverture:=true;
+          end
+          else OKReouverture:=Not(FileExists(ConvertirAdresseExerciceAnnee(Adresse,ExerciceAnnee,NewExercice)));
+     end;
+
+     if(VerifierAutorisationReouverture=true)then
+     begin
+          if(OKReouverture=true)and(AutoriserReouvertureFichierConcerne(FichierConcerne)=true)
+          then ActiverReouvertureDetailMouvement:=true
+          else ActiverReouvertureDetailMouvement:=false;
+     end
+     else
+     begin
+          ActiverReouvertureDetailMouvement:=OKReouverture;
+     end;
+end;
+
+procedure TFSTravauxFinAnnee.AfficheTableauConfigurationsClick(
+  Sender: TObject);
+begin
+     if(FSTravauxFinAnnee.AfficheTableauConfigurations.Width=7)
+     then FSTravauxFinAnnee.AfficheTableauConfigurations.Width:=1137
+     else FSTravauxFinAnnee.AfficheTableauConfigurations.Width:=7;
+end;
+
+Function RemplireOrdreListeMouvementExerciceNPlusUn:TOrdreListeMouvementReouvertures;
+var  l,IndiceTableauMax:integer;
+     TOrdreListeMouvementReouverture:TOrdreListeMouvementReouvertures;
+begin
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Remplire Tableau Ordre  Liste Mouvement exercice N+1');
+     IndiceTableauMax:=0;
+     setlength(TOrdreListeMouvementReouverture,IndiceTableauMax+1);
+     TOrdreListeMouvementReouverture[IndiceTableauMax].OrdreListeMouvementExerciceNPlusUn:=-1;
+
+     l:=1;
+     while(l<=FSTravauxFinAnnee.TableauOrdreListeMouvement.RowCount-1)do
+     begin
+          Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+          if(IndiceTableauMax<strtointeger(FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[0,l]))then
+          begin
+               IndiceTableauMax:=strtointeger(FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[0,l]);
+               setlength(TOrdreListeMouvementReouverture,IndiceTableauMax+1);
+               TOrdreListeMouvementReouverture[IndiceTableauMax].OrdreListeMouvementExerciceNPlusUn:=0;
+          end;
+
+          TOrdreListeMouvementReouverture[strtointeger(FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[0,l])].OrdreListeMouvementExerciceNPlusUn:=strtointeger(FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[1,l]);
+
+          FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Ordre liste mouvement: N: '+FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[0,l]+' N+1 '+FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[1,l]);
+     l:=l+1;
+     end;
+
+     FSTravauxFinAnnee.TableauOrdreListeMouvement.ColCount:=3;
+     FSTravauxFinAnnee.TableauOrdreListeMouvement.Cols[2].Text:='Teste';
+
+     for l:=0 to High(TOrdreListeMouvementReouverture)do
+     begin
+          FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[2,l+1]:=inttostr(TOrdreListeMouvementReouverture[strtointeger(FSTravauxFinAnnee.TableauOrdreListeMouvement.Cells[0,l+1])].OrdreListeMouvementExerciceNPlusUn)
+     end;
+
+     AjusterColWidth(FSTravauxFinAnnee.TableauOrdreListeMouvement,'','');
+
+     RemplireOrdreListeMouvementExerciceNPlusUn:=TOrdreListeMouvementReouverture;
+end;
+
+Function RemplireTPositionDetaiMouvementInOrdreListeMouvement(DesignationTypeMouvement,ExerciceAnneeConserne:string; var NbrRegistre:integer):TPositionDetaiMouvementInOrdreListeMouvements;
+var  iDM,IndiceTableauMax:integer; TypeProcesDM,FichierConserneDM,AdresseDM:string;
+     OKDetailMouvement:boolean;
+     TPositionDetaiMouvementInOrdreListeMouvement:TPositionDetaiMouvementInOrdreListeMouvements;
+begin
+     NbrRegistre:=0;
+
+     FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.ColCount:=3;
+     FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.Cols[0].Text:='Ordre Mnt';
+     FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.Cols[1].Text:='P° DMnt Begin';
+     FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.Cols[2].Text:='P° DMnt End';
+
+     FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.RowCount:=2;
+     FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.Rows[1].Text:='';
+
+     TypeProcesDM:='Business';   FichierConserneDM:='DétailMouvement '+DesignationTypeMouvement;
+     AdresseDM:='';
+     if not(FunctionAdresseProces(TypeProcesDM,FichierConserneDM,'',AdresseDM,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConserneDM+' recherché !');
+     end;
+
+     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add('Remplire Tableau Position '+FichierConserneDM+' dans Liste Mouvement');
+     IndiceTableauMax:=0;
+     setlength(TPositionDetaiMouvementInOrdreListeMouvement,IndiceTableauMax+1);
+     TPositionDetaiMouvementInOrdreListeMouvement[IndiceTableauMax].PoisitionDetailMouvementBegin:=999999999;
+     TPositionDetaiMouvementInOrdreListeMouvement[IndiceTableauMax].PoisitionDetailMouvementEnd:=0;
+
+     ChDetailMouvement:=ConvertirAdresseExerciceAnnee(AdresseDM,ExerciceAnnee,ExerciceAnneeConserne);
+     assignfile(FDetailMouvement,ChDetailMouvement);
+     if FileExists(ChDetailMouvement)then
+     begin
+           try
+           Reset(FDetailMouvement);
+           Seek(FDetailMouvement,0);
+           iDM:=0;
+           while not eof(FDetailMouvement)do
+           begin
+                read(FDetailMouvement,RDetailMouvement);  Application.ProcessMessages;   if(FSTravauxFinAnnee.RBSuspendreReouverture.Checked=true)then Exit;
+
+                if(RDetailMouvement.ValidationDetailMouvement=true)then
+                begin
+
+                     if(IndiceTableauMax<RDetailMouvement.OrdreListeMouvement)then
+                     begin
+                          IndiceTableauMax:=RDetailMouvement.OrdreListeMouvement;
+                          setlength(TPositionDetaiMouvementInOrdreListeMouvement,IndiceTableauMax+1);
+                          TPositionDetaiMouvementInOrdreListeMouvement[IndiceTableauMax].PoisitionDetailMouvementBegin:=iDM;
+                          TPositionDetaiMouvementInOrdreListeMouvement[IndiceTableauMax].PoisitionDetailMouvementEnd:=iDM;
+                     end;
+
+                     if(TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementBegin=0)
+                     and(TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementEnd=0)
+                     then
+                     begin
+                          TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementBegin:=iDM;
+                          TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementEnd:=iDM;
+                     end
+                     else
+                     begin
+                          if(TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementBegin>iDM)then TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementBegin:=iDM;
+                          if(TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementEnd<iDM)then TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementEnd:=iDM;
+                     end;
+                     NbrRegistre:=NbrRegistre+1;
+
+                     FSTravauxFinAnnee.AfficherDetailleReouverture.Lines.Add(FichierConserneDM+': ListeMouvement Ordre: '+inttostr(RDetailMouvement.OrdreListeMouvement)+' P°Begin '+inttostr(TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementBegin)+' P° End '+inttostr(TPositionDetaiMouvementInOrdreListeMouvement[RDetailMouvement.OrdreListeMouvement].PoisitionDetailMouvementEnd));
+                end;
+           iDM:=iDM+1;
+           end;
+           finally
+           CloseFile(FDetailMouvement);
+           end;
+     end;
+     NbrRegistre:=iDM;
+
+     FSTravauxFinAnnee.EditFichierDetailMouvementConcerne.Lines.Add(FichierConserneDM+': '+ExerciceAnneeConserne+' {'+inttostr(NbrRegistre)+'}');
+
+     for iDM:=0 to High(TPositionDetaiMouvementInOrdreListeMouvement)do
+     begin
+          if (TPositionDetaiMouvementInOrdreListeMouvement[iDM].PoisitionDetailMouvementBegin=999999999)
+          and(TPositionDetaiMouvementInOrdreListeMouvement[iDM].PoisitionDetailMouvementEnd=0)
+          then
+          begin
+               TPositionDetaiMouvementInOrdreListeMouvement[iDM].PoisitionDetailMouvementBegin:=0;
+               TPositionDetaiMouvementInOrdreListeMouvement[iDM].PoisitionDetailMouvementEnd:=999999999;
+          end;
+
+          FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.Cells[0,iDM+1]:=inttostr(iDM);
+          FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.Cells[1,iDM+1]:=inttostr(TPositionDetaiMouvementInOrdreListeMouvement[iDM].PoisitionDetailMouvementBegin);
+          FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.Cells[2,iDM+1]:=inttostr(TPositionDetaiMouvementInOrdreListeMouvement[iDM].PoisitionDetailMouvementEnd);
+     end;
+
+     FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.Cells[0,0]:='Nbr: '+inttostr(NbrRegistre);
+
+     if(iDM>0)then FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement.RowCount:=iDM+1;
+
+     AjusterColWidth(FSTravauxFinAnnee.TableauPositionDetailMouvementOdreListeMouvement,'','');
+     
+     RemplireTPositionDetaiMouvementInOrdreListeMouvement:=TPositionDetaiMouvementInOrdreListeMouvement;
+end;
+
+Procedure EnregistrerRedemarrerReouverture(OKRedemarreReouverture:boolean);
+begin
+     OpenFParc(RParc);
+     ChRedemarreReouverture:=RParc.Parcours+'\'+'FRedemarreReouverture';
+     assignfile(FRedemarreReouverture,ChRedemarreReouverture);
+     if FileExists(ChRedemarreReouverture)
+     then Reset(FRedemarreReouverture)
+     else Rewrite(FRedemarreReouverture);
+     Seek(FRedemarreReouverture,0);
+     Truncate(FRedemarreReouverture);
+     RRedemarreReouverture.OKRedemarrerReouverture:=OKRedemarreReouverture;
+     Write(FRedemarreReouverture,RRedemarreReouverture);
+     CloseFile(FRedemarreReouverture);
+end;
+
+Function FunctOKRedemarrerReouverture:boolean;
+var  OKRedemarrerReouverture:boolean;
+begin
+     OKRedemarrerReouverture:=false;
+
+     OpenFParc(RParc);
+     ChRedemarreReouverture:=RParc.Parcours+'\'+'FRedemarreReouverture';
+     assignfile(FRedemarreReouverture,ChRedemarreReouverture);
+     if FileExists(ChRedemarreReouverture)then
+     begin
+          Reset(FRedemarreReouverture);
+
+          Seek(FRedemarreReouverture,0);
+          if not eof(FRedemarreReouverture)then
+          begin
+               Read(FRedemarreReouverture,RRedemarreReouverture);   Application.ProcessMessages;
+               OKRedemarrerReouverture:=RRedemarreReouverture.OKRedemarrerReouverture;
+          end;
+          CloseFile(FRedemarreReouverture);
+     end;
+
+     FunctOKRedemarrerReouverture:=OKRedemarrerReouverture;
+end;
+
+end.

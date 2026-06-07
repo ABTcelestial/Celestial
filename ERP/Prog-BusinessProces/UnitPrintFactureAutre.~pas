@@ -1,0 +1,200 @@
+unit UnitPrintFactureAutre;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls;
+
+type
+  TPrintFactureAutre = class(TQuickRep)
+    PageHeaderBand1: TQRBand;
+    QRShape1: TQRShape;
+    TextD1: TQRLabel;
+    EnteteTitre: TQRLabel;
+    QRShape37: TQRShape;
+    TextClient: TQRLabel;
+    TextEntreprise: TQRLabel;
+    TextDateFact: TQRLabel;
+    PageSuite: TQRLabel;
+    TextProjet: TQRRichText;
+    Projet: TQRLabel;
+    DataDateHeure: TQRSysData;
+    Logo: TQRImage;
+    LabelISO: TQRImage;
+    TextPayement: TQRRichText;
+    SousLigneTextEntreprise: TQRShape;
+    TitleBand1: TQRBand;
+    CH2: TQRShape;
+    Code0: TQRLabel;
+    Desig0: TQRLabel;
+    UM0: TQRLabel;
+    Qte0: TQRLabel;
+    PUHT0: TQRLabel;
+    MHT0: TQRLabel;
+    MTVA0: TQRLabel;
+    MTTC0: TQRLabel;
+    C1: TQRShape;
+    C2: TQRShape;
+    C3: TQRShape;
+    C4: TQRShape;
+    C6: TQRShape;
+    C7: TQRShape;
+    C9: TQRShape;
+    Code1: TQRLabel;
+    Code2: TQRLabel;
+    Code3: TQRLabel;
+    Code4: TQRLabel;
+    Code5: TQRLabel;
+    Code6: TQRLabel;
+    Code7: TQRLabel;
+    Code8: TQRLabel;
+    Code9: TQRLabel;
+    Desig1: TQRLabel;
+    Desig2: TQRLabel;
+    Desig3: TQRLabel;
+    Desig4: TQRLabel;
+    Desig5: TQRLabel;
+    Desig6: TQRLabel;
+    Desig7: TQRLabel;
+    Desig8: TQRLabel;
+    Desig9: TQRLabel;
+    UM1: TQRLabel;
+    UM2: TQRLabel;
+    UM3: TQRLabel;
+    UM4: TQRLabel;
+    UM5: TQRLabel;
+    UM6: TQRLabel;
+    UM7: TQRLabel;
+    UM8: TQRLabel;
+    UM9: TQRLabel;
+    Qte1: TQRLabel;
+    Qte2: TQRLabel;
+    Qte3: TQRLabel;
+    Qte4: TQRLabel;
+    Qte5: TQRLabel;
+    Qte6: TQRLabel;
+    Qte7: TQRLabel;
+    Qte8: TQRLabel;
+    Qte9: TQRLabel;
+    PUHT1: TQRLabel;
+    PUHT2: TQRLabel;
+    PUHT3: TQRLabel;
+    PUHT4: TQRLabel;
+    PUHT5: TQRLabel;
+    PUHT6: TQRLabel;
+    PUHT7: TQRLabel;
+    PUHT8: TQRLabel;
+    PUHT9: TQRLabel;
+    MHT1: TQRLabel;
+    MHT2: TQRLabel;
+    MHT3: TQRLabel;
+    MHT4: TQRLabel;
+    MHT5: TQRLabel;
+    MHT6: TQRLabel;
+    MHT7: TQRLabel;
+    MHT8: TQRLabel;
+    MHT9: TQRLabel;
+    MTVA1: TQRLabel;
+    MTVA2: TQRLabel;
+    MTVA3: TQRLabel;
+    MTVA4: TQRLabel;
+    MTVA5: TQRLabel;
+    MTVA6: TQRLabel;
+    MTVA7: TQRLabel;
+    MTVA8: TQRLabel;
+    MTVA9: TQRLabel;
+    MTTC1: TQRLabel;
+    MTTC2: TQRLabel;
+    MTTC3: TQRLabel;
+    MTTC4: TQRLabel;
+    MTTC5: TQRLabel;
+    MTTC6: TQRLabel;
+    MTTC7: TQRLabel;
+    MTTC8: TQRLabel;
+    MTTC9: TQRLabel;
+    CH0: TQRShape;
+    CH1: TQRShape;
+    C0: TQRShape;
+    C10: TQRShape;
+    Code10: TQRLabel;
+    Code11: TQRLabel;
+    Code12: TQRLabel;
+    Code13: TQRLabel;
+    Code14: TQRLabel;
+    Code15: TQRLabel;
+    Desig10: TQRLabel;
+    Desig11: TQRLabel;
+    Desig12: TQRLabel;
+    Desig13: TQRLabel;
+    Desig14: TQRLabel;
+    Desig15: TQRLabel;
+    UM10: TQRLabel;
+    UM11: TQRLabel;
+    UM12: TQRLabel;
+    UM13: TQRLabel;
+    UM14: TQRLabel;
+    UM15: TQRLabel;
+    Qte10: TQRLabel;
+    Qte11: TQRLabel;
+    Qte12: TQRLabel;
+    Qte13: TQRLabel;
+    Qte14: TQRLabel;
+    Qte15: TQRLabel;
+    PUHT10: TQRLabel;
+    PUHT11: TQRLabel;
+    PUHT12: TQRLabel;
+    PUHT13: TQRLabel;
+    PUHT14: TQRLabel;
+    PUHT15: TQRLabel;
+    MHT10: TQRLabel;
+    MHT11: TQRLabel;
+    MHT12: TQRLabel;
+    MHT13: TQRLabel;
+    MHT14: TQRLabel;
+    MHT15: TQRLabel;
+    MTVA10: TQRLabel;
+    MTVA11: TQRLabel;
+    MTVA12: TQRLabel;
+    MTVA13: TQRLabel;
+    MTVA14: TQRLabel;
+    MTVA15: TQRLabel;
+    MTTC10: TQRLabel;
+    MTTC11: TQRLabel;
+    MTTC12: TQRLabel;
+    MTTC13: TQRLabel;
+    MTTC14: TQRLabel;
+    MTTC15: TQRLabel;
+    PageASuivre: TQRLabel;
+    C11: TQRShape;
+    CH3: TQRShape;
+    C12: TQRShape;
+    RecTotalMHT: TQRLabel;
+    RecTotalMTVA: TQRLabel;
+    RecTotalMTTC: TQRLabel;
+    TotalMHT: TQRLabel;
+    TotalMTVA: TQRLabel;
+    TotalMTTC: TQRLabel;
+    TextArreteeLaFacture: TQRLabel;
+    TextChiffreenLettre: TQRRichText;
+    TitreSignataire: TQRLabel;
+    BasTT3: TQRLabel;
+    DataCodageEtat: TQRLabel;
+    TexteListeSuite: TQRLabel;
+    TexteListeASuivre: TQRLabel;
+    CadreVisible: TQRShape;
+    DataEntreprise: TQRRichText;
+    DataTiers: TQRRichText;
+  private
+
+  public
+
+  end;
+
+var
+  PrintFactureAutre: TPrintFactureAutre;
+
+implementation
+
+{$R *.DFM}
+
+end.

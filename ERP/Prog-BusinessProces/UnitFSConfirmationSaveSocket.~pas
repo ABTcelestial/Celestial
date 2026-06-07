@@ -1,0 +1,33 @@
+unit UnitFSConfirmationSaveSocket;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, ExtCtrls;
+
+type
+  TFSConfirmationSaveSocket = class(TForm)
+    Bevel1: TBevel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    SaveTo: TEdit;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    SaveD: TSaveDialog;
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSConfirmationSaveSocket: TFSConfirmationSaveSocket;
+
+implementation
+
+{$R *.dfm}
+
+end.

@@ -1,0 +1,257 @@
+unit UnitFSAccueilUtilisateurs;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, Buttons, Mask;
+
+type
+  TFSAccueilUtilisateurs = class(TForm)
+    Bevel1: TBevel;
+    BitOK: TBitBtn;
+    BitBtn2: TBitBtn;
+    AfficheUtilisateur: TPanel;
+    AfficheFonction: TPanel;
+    AfficheAjout: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    EditCodeUtilisateur: TEdit;
+    EditCodePosteMenu: TEdit;
+    BitValiderAjout: TBitBtn;
+    EditNumeroAccesNewAcces: TEdit;
+    Panel2: TPanel;
+    Bevel9: TBevel;
+    LabelDateDebutConsultationNewAcces: TLabel;
+    LabelDateFinConsultationNewAcces: TLabel;
+    RBConsultationNewAcces: TCheckBox;
+    EditDateDebutConsultationNewAcces: TMaskEdit;
+    EditDateFinConsultationNewAcces: TMaskEdit;
+    Panel3: TPanel;
+    Bevel10: TBevel;
+    LabelDateDebutAjouterNewAcces: TLabel;
+    LabelDateFinAjouterNewAcces: TLabel;
+    RBAjouterNewAcces: TCheckBox;
+    EditDateDebutAjouterNewAcces: TMaskEdit;
+    EditDateFinAjouterNewAcces: TMaskEdit;
+    Panel4: TPanel;
+    Bevel14: TBevel;
+    LabelDateDebutModifierNewAcces: TLabel;
+    LabelDateFinModifierNewAcces: TLabel;
+    RBModifierNewAcces: TCheckBox;
+    EditDateDebutModifierNewAcces: TMaskEdit;
+    EditDateFinModifierNewAcces: TMaskEdit;
+    Panel5: TPanel;
+    Bevel15: TBevel;
+    LabelDateDebutSupprimerNewAcces: TLabel;
+    LabelDateFinSupprimerNewAcces: TLabel;
+    RBSupprimerNewAcces: TCheckBox;
+    EditDateDebutSupprimerNewAcces: TMaskEdit;
+    EditDateFinSupprimerNewAcces: TMaskEdit;
+    Panel6: TPanel;
+    Bevel16: TBevel;
+    LabelDateDebutImprimerNewAcces: TLabel;
+    LabelDateFinImprimerNewAcces: TLabel;
+    RBImprimerNewAcces: TCheckBox;
+    EditDateDebutImprimerNewAcces: TMaskEdit;
+    EditDateFinImprimerNewAcces: TMaskEdit;
+    Bevel2: TBevel;
+    Label3: TLabel;
+    BitAjouter: TBitBtn;
+    EditCodeFondateurParDefaut: TEdit;
+    Panel1: TPanel;
+    Bevel3: TBevel;
+    Bevel4: TBevel;
+    Bevel5: TBevel;
+    Bevel6: TBevel;
+    EditOpenForme: TEdit;
+    procedure BitOKClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitValiderAjoutClick(Sender: TObject);
+    procedure BitAjouterClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure EditCodeFondateurParDefautKeyUp(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSAccueilUtilisateurs: TFSAccueilUtilisateurs;
+
+implementation
+
+uses UnitInitialisation, UnitFSCodeUtilisateurs, UnitFSMenuPrincipal,
+  UnitShowmessage;
+
+{$R *.dfm}
+
+procedure TFSAccueilUtilisateurs.BitOKClick(Sender: TObject);
+begin
+
+if(FSAccueilUtilisateurs.BitOK.Caption='Code d''Accès')then
+begin
+     FSCodeUtilisateurs.Show;
+     FSCodeUtilisateurs.AfficheModifierCodeAcces.Visible:=false;
+     FSCodeUtilisateurs.EditCodeAcces.Text:='';
+     FSCodeUtilisateurs.EditCDL.Text:='';
+     FSCodeUtilisateurs.EditCodeAcces.MaxLength:=10;
+     FSCodeUtilisateurs.EditCodeAcces.SetFocus;
+     FSAccueilUtilisateurs.Close;
+end;
+
+if(FSAccueilUtilisateurs.BitOK.Caption='Démarrer')
+or(FSAccueilUtilisateurs.BitOK.Caption='Continuer')
+then
+begin
+     FSAccueilUtilisateurs.Close;
+     FSMenuPrincipal.Align:=alNone;
+     FSMenuPrincipal.TimerLancementControleDivers.Enabled:=true;
+end;
+
+end;
+
+procedure TFSAccueilUtilisateurs.BitBtn2Click(Sender: TObject);
+begin
+FSMenuPrincipal.Close;
+end;
+
+procedure TFSAccueilUtilisateurs.BitValiderAjoutClick(Sender: TObject);
+var  i,iSelect,NumeroAcces:integer;  OK:boolean;
+begin
+
+OpenFParc(RParc);
+ChPosteMenu:=RParc.Parcours+'\'+Exercice+'FPosteMenu';
+assignfile(FPosteMenu,ChPosteMenu);
+if FileExists(ChPosteMenu)then
+Reset(FPosteMenu)
+else Rewrite(FPosteMenu);
+Seek(FPosteMenu,0);
+OK:=false;
+i:=0;
+while(not eof(FPosteMenu)and(OK=false))do
+begin
+     Read(FPosteMenu,RPosteMenu);
+     if(RPosteMenu.CodePosteMenu=FSAccueilUtilisateurs.EditCodePosteMenu.Text)then
+     begin
+          OK:=true;
+          iSelect:=i;
+     end;
+     i:=i+1;
+end;
+
+if(OK=true)then i:=iSelect;
+Seek(FPosteMenu,i);
+if(OK=false)then Truncate(FPosteMenu);
+RPosteMenu.CodePosteMenu:=FSAccueilUtilisateurs.EditCodePosteMenu.Text;
+RPosteMenu.DesignationPosteMenu:=FSAccueilUtilisateurs.EditCodePosteMenu.Text;
+RPosteMenu.DefinitionPosteMenu:='';
+Write(FPosteMenu,RPosteMenu);
+CloseFile(FPosteMenu);
+
+///////////////////////////////////////////////////////////////////////////////
+OpenFParc(RParc);
+ChAccesPrivilegie:=RParc.Parcours+'\'+Exercice+'FAccesPrivilegie';
+assignfile(FAccesPrivilegie,ChAccesPrivilegie);
+if FileExists(ChAccesPrivilegie)then
+Reset(FAccesPrivilegie)
+else Rewrite(FAccesPrivilegie);
+Seek(FAccesPrivilegie,0);
+OK:=false;
+i:=0;
+iSelect:=0;
+NumeroAcces:=1;
+while(not eof(FAccesPrivilegie)and(OK=false))do
+begin
+     Read(FAccesPrivilegie,RAccesPrivilegie);
+     if(NumeroAcces<=RAccesPrivilegie.NumeroAcces)then NumeroAcces:=RAccesPrivilegie.NumeroAcces+1;
+
+     if(inttostr(RAccesPrivilegie.NumeroAcces)=FSAccueilUtilisateurs.EditNumeroAccesNewAcces.Text)then
+     begin
+          OK:=true;
+          NumeroAcces:=RAccesPrivilegie.NumeroAcces;
+          iSelect:=i;
+     end;
+     i:=i+1;
+end;
+
+if(OK=true)then i:=iSelect;
+Seek(FAccesPrivilegie,i);
+if(OK=false)then Truncate(FAccesPrivilegie);
+RAccesPrivilegie.NumeroAcces:=NumeroAcces;
+RAccesPrivilegie.CodeUtilisateur:=FSAccueilUtilisateurs.EditCodeUtilisateur.Text;
+RAccesPrivilegie.CodePosteMenu:=FSAccueilUtilisateurs.EditCodePosteMenu.Text;
+
+RAccesPrivilegie.ModeConsultation:=FSAccueilUtilisateurs.RBConsultationNewAcces.Checked;
+RAccesPrivilegie.DateDebutConsultation:=FSAccueilUtilisateurs.EditDateDebutConsultationNewAcces.Text;
+RAccesPrivilegie.DateFinConsultation:=FSAccueilUtilisateurs.EditDateFinConsultationNewAcces.Text;
+
+RAccesPrivilegie.ModeAjouter:=FSAccueilUtilisateurs.RBAjouterNewAcces.Checked;
+RAccesPrivilegie.DateDebutAjouter:=FSAccueilUtilisateurs.EditDateDebutAjouterNewAcces.Text;
+RAccesPrivilegie.DateFinAjouter:=FSAccueilUtilisateurs.EditDateFinAjouterNewAcces.Text;
+
+RAccesPrivilegie.ModeModifier:=FSAccueilUtilisateurs.RBModifierNewAcces.Checked;
+RAccesPrivilegie.DateDebutModifier:=FSAccueilUtilisateurs.EditDateDebutModifierNewAcces.Text;
+RAccesPrivilegie.DateFinModifier:=FSAccueilUtilisateurs.EditDateFinModifierNewAcces.Text;
+
+RAccesPrivilegie.ModeSupprimer:=FSAccueilUtilisateurs.RBSupprimerNewAcces.Checked;
+RAccesPrivilegie.DateDebutSupprimer:=FSAccueilUtilisateurs.EditDateDebutSupprimerNewAcces.Text;
+RAccesPrivilegie.DateFinSupprimer:=FSAccueilUtilisateurs.EditDateFinSupprimerNewAcces.Text;
+
+RAccesPrivilegie.ModeImprimer:=FSAccueilUtilisateurs.RBImprimerNewAcces.Checked;
+RAccesPrivilegie.DateDebutImprimer:=FSAccueilUtilisateurs.EditDateDebutImprimerNewAcces.Text;
+RAccesPrivilegie.DateFinImprimer:=FSAccueilUtilisateurs.EditDateFinImprimerNewAcces.Text;
+
+Write(FAccesPrivilegie,RAccesPrivilegie);
+CloseFile(FAccesPrivilegie);
+
+FSAccueilUtilisateurs.AfficheAjout.Visible:=false;
+FSAccueilUtilisateurs.Height:=190;
+FSAccueilUtilisateurs.Close;
+
+if AccesPrivilegies(FSAccueilUtilisateurs.EditOpenForme.Text,FSMenuPrincipal.EditCodeUtilisateur.Text,'MC',true)then OpenForm(FSAccueilUtilisateurs.EditOpenForme.Text);
+
+end;
+
+procedure TFSAccueilUtilisateurs.BitAjouterClick(Sender: TObject);
+begin
+      if AccesPrivilegies('FS Accés Privilégiés',FSMenuPrincipal.EditCodeUtilisateur.Text,'MC',false)
+      or(AnsiUpperCase(FSAccueilUtilisateurs.EditCodeFondateurParDefaut.Text)=AnsiUpperCase(FSMenuPrincipal.EditCodeFondateurParDefaut.Text))
+      then
+      begin
+           FSAccueilUtilisateurs.Height:=518;
+           FSAccueilUtilisateurs.AfficheAjout.Height:=321;
+           FSAccueilUtilisateurs.Position:=poDesigned;
+           FSAccueilUtilisateurs.AfficheAjout.Visible:=true;
+           FSAccueilUtilisateurs.RBConsultationNewAcces.Checked:=true;
+           FSAccueilUtilisateurs.BitValiderAjout.SetFocus;
+      end
+      else
+      begin
+           showmessage('Accés Privilégiés Non Autorisé !');
+           FSAccueilUtilisateurs.EditCodeFondateurParDefaut.SetFocus;
+      end;
+end;
+
+procedure TFSAccueilUtilisateurs.FormShow(Sender: TObject);
+begin
+     FSAccueilUtilisateurs.AfficheAjout.Visible:=false;
+     FSAccueilUtilisateurs.AfficheAjout.Height:=9;
+     FSAccueilUtilisateurs.Height:=190;
+
+     FSAccueilUtilisateurs.Position:=poDesigned;
+end;
+
+procedure TFSAccueilUtilisateurs.EditCodeFondateurParDefautKeyUp(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if(AnsiUpperCase(FSAccueilUtilisateurs.EditCodeFondateurParDefaut.Text)=AnsiUpperCase(FSMenuPrincipal.EditCodeFondateurParDefaut.Text))
+     then
+     begin
+          FSAccueilUtilisateurs.BitAjouter.SetFocus;
+     end;
+end;
+
+end.

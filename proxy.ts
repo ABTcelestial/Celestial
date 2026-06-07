@@ -2,8 +2,8 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-const isPlatformRoute = createRouteMatcher(['/platform/:path*']);
-const isPlatformLogin = createRouteMatcher(['/platform/login']);
+const isPlatformRoute = createRouteMatcher(['/platforme-BusinessProcess/:path*']);
+const isPlatformLogin = createRouteMatcher(['/platforme-BusinessProcess/login']);
 const isAdminLogin = createRouteMatcher(['/celestial-admin-rtabt/login']);
 
 export const proxy = clerkMiddleware(async (auth, request: NextRequest) => {
@@ -49,5 +49,5 @@ export const proxy = clerkMiddleware(async (auth, request: NextRequest) => {
 });
 
 export const config = {
-  matcher: ['/celestial-admin-rtabt/:path*', '/platform/:path*'],
+  matcher: ['/celestial-admin-rtabt/:path*', '/platforme-BusinessProcess/:path*'],
 };

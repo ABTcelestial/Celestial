@@ -1,0 +1,61 @@
+object FSModuleCalculeFormule: TFSModuleCalculeFormule
+  Left = 393
+  Top = 101
+  Width = 552
+  Height = 480
+  Caption = 'Module de Calcule par Formule'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object TableauFormule: TStringGrid
+    Left = 8
+    Top = 56
+    Width = 521
+    Height = 377
+    Ctl3D = False
+    ParentCtl3D = False
+    TabOrder = 0
+  end
+  object Panel1: TPanel
+    Left = 8
+    Top = 8
+    Width = 521
+    Height = 41
+    BevelInner = bvLowered
+    TabOrder = 1
+  end
+  object AfficheTypeFormule: TPanel
+    Left = 30
+    Top = 105
+    Width = 483
+    Height = 257
+    BevelInner = bvLowered
+    TabOrder = 2
+    Visible = False
+    object TableauTypeFormule: TStringGrid
+      Left = 8
+      Top = 8
+      Width = 465
+      Height = 240
+      ColCount = 4
+      Ctl3D = False
+      DefaultColWidth = 40
+      DefaultRowHeight = 20
+      RowCount = 2
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goAlwaysShowEditor]
+      ParentCtl3D = False
+      TabOrder = 0
+      ColWidths = (
+        40
+        2
+        40
+        40)
+    end
+  end
+end

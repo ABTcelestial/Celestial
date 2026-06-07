@@ -1,0 +1,281 @@
+unit UnitFSCopieLibre;
+
+interface
+
+uses
+  {Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, ComCtrls, ShellCtrls, Buttons, ShellAPI;}
+
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+    Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, Grids, OleServer, Word2000,
+    ComCtrls, ToolWin, OleCtrls,
+    ExtDlgs, jpeg, Mask, ShellCtrls, ActnMan, ActnCtrls, ActnMenus, ShellAPI, TlHelp32;
+
+type
+    RParametresTransfertDatass=record
+                               OKTransfertDats:boolean;
+                               AdresseSource:string[250];
+                               AdresseCible:string[250];
+                               ApplicationExe:string[100];
+                               end;
+    FParametresTransfertDatass=file of RParametresTransfertDatass;
+
+    TFSCopieLibre = class(TForm)
+    EditSource: TEdit;
+    ListeSource: TShellTreeView;
+    Label5: TLabel;
+    Bevel1: TBevel;
+    EditCible: TEdit;
+    Cible: TShellTreeView;
+    Label1: TLabel;
+    Bevel2: TBevel;
+    Panel1: TPanel;
+    BitBtn1: TBitBtn;
+    DetailSource: TShellListView;
+    DetailCible: TShellListView;
+    procedure ListeSourceMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure CibleMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure DetailSourceMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSCopieLibre: TFSCopieLibre;
+
+  Function LectureParametresTransfertDatas(TableauParametresTransfertDatas:TStringGrid; AfficheAdresseParametresTransfertDatas:TPanel; var AdresseSource,AdresseCible,ApplicationExe:string):boolean;
+  Procedure EnregistrementParametresTransfertDatas(OKTransfertDats:boolean; AdresseSource,AdresseCible,ApplicationExe:string);
+
+  //////////////////////////////////////////////////////////////////////////////
+  function TailleFichier(fichier: string): longint;
+  function TimeCreationFichier(fichier: string): TDateTime;
+  function FileTimeToDateTime(FileTime: TFileTime): TDateTime;
+  //////////////////////////////////////////////////////////////////////////////
+
+implementation
+
+Uses UnitInitialisation, UnitFSMenuPrincipal;
+
+var
+   RParametresTransfertDatas,RParametresTransfertDatasCopie:RParametresTransfertDatass;
+   FParametresTransfertDatas,FParametresTransfertDatasCopie:FParametresTransfertDatass;
+   ChParametresTransfertDatas,ChParametresTransfertDatasCopie:string250;
+
+{$R *.dfm}
+
+procedure TFSCopieLibre.ListeSourceMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+     FSCopieLibre.EditSource.Text:=FSCopieLibre.ListeSource.Path;
+end;
+
+procedure TFSCopieLibre.CibleMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+     FSCopieLibre.EditCible.Text:=FSCopieLibre.Cible.Path;
+end;
+
+procedure TFSCopieLibre.BitBtn1Click(Sender: TObject);
+var  AdresseSource,AdresseCible,ApplicationExe,Separator:string; RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression,OKMiseAJour:boolean; AdresseProces:string;
+     AdresseExecutionProces:string;
+begin
+     AdresseExecutionProces:='';
+
+     if(FSCopieLibre.EditSource.Text='')then
+     begin
+          showmessage('Veuillez choisir un fichier source SVP !');
+          FSCopieLibre.EditSource.SetFocus;
+          Exit;
+     end;
+
+     if(FSCopieLibre.EditCible.Text='')then
+     begin
+          showmessage('Veuillez choisir un fichier cible SVP !');
+          FSCopieLibre.EditCible.SetFocus;
+          Exit;
+     end;
+
+     RBPossibleAnnuler:=true;           //Préserver la possibilité d'annuler l'opération.
+     RBChangeNomSiCollision:=false; //Si le fichier cible existe déjà, il le copie sous un nom du style copie (1) de..
+     RBSansConfirmation:=false;         //Pas de demande de confirmation
+     RBSansProgression:=false;           //Ne pas voir la progression se faire (On le la voit que pour les opérations longues)
+
+     AdresseSource:=FSCopieLibre.EditSource.Text;
+     AdresseCible:=FSCopieLibre.EditCible.Text;
+     if(lastlaters(AdresseCible,1)='\')
+     then Separator:=''
+     else Separator:='\';
+
+     if(AdresseCible+Separator+ExtractFileName(AdresseSource)=application.ExeName)then
+     begin
+          if(nonoui('Voulez vous mètre à jour '+ExtractFileName(application.ExeName)+' ?'))then
+          begin
+               if(TimeCreationFichier(AdresseCible)>TimeCreationFichier(AdresseSource))then
+               begin
+                    OKMiseAJour:=nonoui('La mise à jour est obsolète ! La cible est plus récente que la source ! Voulez vous continué ?');
+               end
+               else
+               begin
+                    OKMiseAJour:=true;
+               end;
+
+               if(OKMiseAJour=true)then
+               begin
+                    AdresseSource:=AdresseSource;
+                    AdresseCible:=AdresseCible;
+                    ApplicationExe:=application.ExeName;
+                    EnregistrementParametresTransfertDatas(true,AdresseSource,AdresseCible,ApplicationExe);
+
+                    AdresseExecutionProces:=GetCurrentDir+'\'+'ProjectTransfertDatas.exe';
+                    if(AdresseExecutionProces<>'')
+                    then ShellExecute(Handle,'Open',PChar(AdresseExecutionProces),nil,nil,SW_SHOWDEFAULT);
+                    Application.Terminate;
+               end
+               else Exit;
+          end
+          else Exit;
+     end;
+
+     if(AdresseSource<>AdresseCible+Separator+ExtractFileName(AdresseSource))then
+     begin
+          if(not DirectoryExists(AdresseCible+Separator+ExtractFileName(AdresseSource)))then
+          begin
+               if(nonoui('voulez vous copier dans '+AdresseCible))then
+               begin
+                    ProcCopierFichier(AdresseSource,AdresseCible,Handle,RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression)
+               end;
+          end
+          else
+          begin
+               if(RBChangeNomSiCollision=true)then
+               begin
+                    if(nonoui('La base de données '+AdresseCible+Separator+ExtractFileName(AdresseSource)+' existe déjà, voulez vous enregistré une autre copie !')=true)then
+                    begin
+                         ProcCopierFichier(AdresseSource,AdresseCible,Handle,RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression)
+                    end;
+               end
+               else
+               begin
+                    if(nonoui('La base de données '+AdresseCible+Separator+ExtractFileName(AdresseSource)+' existe déjà, voulez vous la remplacer !')=true)then
+                    begin
+                         ProcCopierFichier(AdresseSource,AdresseCible,Handle,RBPossibleAnnuler,RBChangeNomSiCollision,RBSansConfirmation,RBSansProgression)
+                    end;
+               end;
+          end;
+     end
+     else
+     begin
+          showmessage('Copie impossible pour la même adresse !');
+     end;
+end;
+
+procedure TFSCopieLibre.DetailSourceMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+     FSCopieLibre.EditSource.Text:=FSCopieLibre.DetailSource.Folders[FSCopieLibre.DetailSource.ItemIndex].PathName;
+end;
+
+Procedure EnregistrementParametresTransfertDatas(OKTransfertDats:boolean; AdresseSource,AdresseCible,ApplicationExe:string);
+begin
+     ChParametresTransfertDatas:=ExtractFilePath(Application.ExeName)+'\'+'FParametresTransfertDatas';
+     assignfile(FParametresTransfertDatas,ChParametresTransfertDatas);
+     if FileExists(ChParametresTransfertDatas)then
+     Reset(FParametresTransfertDatas)
+     else Rewrite(FParametresTransfertDatas);
+     Seek(FParametresTransfertDatas,0);
+     RParametresTransfertDatas.OKTransfertDats:=OKTransfertDats;
+     RParametresTransfertDatas.AdresseSource:=AdresseSource;
+     RParametresTransfertDatas.AdresseCible:=AdresseCible;
+     RParametresTransfertDatas.ApplicationExe:=ApplicationExe;
+     Write(FParametresTransfertDatas,RParametresTransfertDatas);
+     CloseFile(FParametresTransfertDatas);
+end;
+
+Function LectureParametresTransfertDatas(TableauParametresTransfertDatas:TStringGrid; AfficheAdresseParametresTransfertDatas:TPanel; var AdresseSource,AdresseCible,ApplicationExe:string):boolean;
+var  R:integer;
+begin
+     TableauParametresTransfertDatas.ColCount:=2;
+     TableauParametresTransfertDatas.Cols[0].Text:='Rubriques';
+     TableauParametresTransfertDatas.Cols[1].Text:='Datas';
+
+     TableauParametresTransfertDatas.RowCount:=5;
+     TableauParametresTransfertDatas.Rows[1].Text:='OKTransfertDats';
+     TableauParametresTransfertDatas.Rows[2].Text:='AdresseSource';
+     TableauParametresTransfertDatas.Rows[3].Text:='AdresseCible';
+     TableauParametresTransfertDatas.Rows[4].Text:='ApplicationExe';
+
+
+     LectureParametresTransfertDatas:=false;
+
+     ChParametresTransfertDatas:=ExtractFilePath(Application.ExeName)+'\'+'FParametresTransfertDatas';
+     AfficheAdresseParametresTransfertDatas.Caption:=ChParametresTransfertDatas;
+     assignfile(FParametresTransfertDatas,ChParametresTransfertDatas);
+     if FileExists(ChParametresTransfertDatas)then
+     Reset(FParametresTransfertDatas)
+     else Rewrite(FParametresTransfertDatas);
+     Seek(FParametresTransfertDatas,0);
+     if not eof(FParametresTransfertDatas)then
+     begin
+          read(FParametresTransfertDatas,RParametresTransfertDatas);
+          LectureParametresTransfertDatas:=RParametresTransfertDatas.OKTransfertDats;
+          AdresseSource:=RParametresTransfertDatas.AdresseSource;
+          AdresseCible:=RParametresTransfertDatas.AdresseCible;
+          ApplicationExe:=RParametresTransfertDatas.ApplicationExe;
+
+          TableauParametresTransfertDatas.Cells[1,1]:=booleantostr(RParametresTransfertDatas.OKTransfertDats);
+          TableauParametresTransfertDatas.Cells[1,2]:=RParametresTransfertDatas.AdresseSource;
+          TableauParametresTransfertDatas.Cells[1,3]:=RParametresTransfertDatas.AdresseCible;
+          TableauParametresTransfertDatas.Cells[1,4]:=RParametresTransfertDatas.ApplicationExe;
+     end;
+     CloseFile(FParametresTransfertDatas);
+
+     Ajustercolwidth(TableauParametresTransfertDatas,'','');
+end;
+
+function TailleFichier(fichier: string): longint;
+{=================================================================}
+{ fonction renvoyant la taille du fichier 'fichier' en Octets     }
+{=================================================================}
+var SearchRec:TSearchRec;
+    Resultat:integer;
+begin
+  Result:=0;
+  Resultat:=FindFirst(fichier, FaAnyFile, SearchRec);
+  if Resultat=0 then Result:=SearchRec.Size;
+  FindClose(SearchRec);
+end;
+
+function TimeCreationFichier(fichier: string): TDateTime;
+{=================================================================}
+{ fonction renvoyant la date et heure de la création du fichier   }
+{=================================================================}
+var SearchRec:TSearchRec;
+    Resultat:LongInt;
+begin
+  Result:=0;
+  Resultat:=FindFirst(fichier, FaAnyFile, SearchRec);
+  if Resultat=0 then Result:=FileTimeToDateTime(SearchRec.FindData.ftCreationTime) ; // FileDateToDateTime transforme une date de type dos en format TDateTime
+  FindClose(SearchRec);
+end;
+
+function FileTimeToDateTime(FileTime: TFileTime): TDateTime;
+{=================================================================}
+{ fonction permettant de convertir des date de type FileTime      }
+{ en Date de type DateTime                                        }
+{=================================================================}
+var
+  LocalFileTime: TFileTime;
+  SystemTime: TSystemTime;
+begin
+  FileTimeToLocalFileTime(FileTime, LocalFileTime);
+  FileTimeToSystemTime(LocalFileTime, SystemTime);
+  Result := SystemTimeToDateTime(SystemTime);
+end;
+
+end.

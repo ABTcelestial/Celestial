@@ -1,0 +1,2747 @@
+unit UnitFSMarche;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, Mask, Grids, Buttons, ComCtrls;
+
+type
+  TFSMarche = class(TForm)
+    Panel6: TPanel;
+    EditTypeProjet: TComboBox;
+    EditChoixNumMarcheReference: TEdit;
+    EditMarcheControle: TMemo;
+    AfficheListeMarche: TPanel;
+    GroupBox3: TGroupBox;
+    Bevel1: TBevel;
+    Bevel2: TBevel;
+    Bevel3: TBevel;
+    BitBtn8: TBitBtn;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    AfficheEditMarcheReference: TPanel;
+    EditMarcheReference: TLabel;
+    EditRefMarcheEnReference: TEdit;
+    TableauMarche: TStringGrid;
+    AfficheSaisieChantier: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label9: TLabel;
+    Bevel4: TBevel;
+    Bevel5: TBevel;
+    Label6: TLabel;
+    Label20: TLabel;
+    Label22: TLabel;
+    Label29: TLabel;
+    Label31: TLabel;
+    EditNumDomiciliation: TEdit;
+    EditTypeFormulation: TEdit;
+    EditCodeMaitreOuvrage: TEdit;
+    EditAvertirAvant: TEdit;
+    EditDureeAttente: TEdit;
+    EditNSMarche: TEdit;
+    EditLOT: TEdit;
+    EditLieuTrav: TEdit;
+    EditRefDevis: TEdit;
+    EditDelaisExecut: TEdit;
+    EditRefMarche: TEdit;
+    EditMaitreOuvrage: TEdit;
+    EditDateMarche: TMaskEdit;
+    EditMontantMarche: TEdit;
+    EditRabaix: TEdit;
+    EditRetenueGarantie: TEdit;
+    BitActions: TBitBtn;
+    BitBtn4: TBitBtn;
+    EditDateReceptionMarche: TMaskEdit;
+    BitBtn58: TBitBtn;
+    AfficheLienMarcheAvenant: TPanel;
+    Label30: TLabel;
+    EditNumMarcheReference: TEdit;
+    MarcheReference: TEdit;
+    EditDomiciliation: TEdit;
+    EditNumIdentificationDomiciliation: TEdit;
+    EditMarche: TMemo;
+    AfficheOptionRGarantie: TPanel;
+    Bevel24: TBevel;
+    Label10: TLabel;
+    Label16: TLabel;
+    Label39: TLabel;
+    Label40: TLabel;
+    Bevel6: TBevel;
+    Bevel7: TBevel;
+    Label53: TLabel;
+    TitreEditTiersFichierConserne: TLabel;
+    Label55: TLabel;
+    Label32: TLabel;
+    BitBtn59: TBitBtn;
+    EditDureeAttenteM: TEdit;
+    EditAvertirAvantM: TEdit;
+    BitValiderOptionsRGarantie: TBitBtn;
+    Panel12: TPanel;
+    RadioGroup9: TRadioGroup;
+    RBFormuleGlobaleM: TRadioButton;
+    RBFormuleDistincteM: TRadioButton;
+    Panel13: TPanel;
+    RadioGroup7: TRadioGroup;
+    RBFormuleParStructureM: TRadioButton;
+    RBFormuleParStatistiqueM: TRadioButton;
+    Panel4: TPanel;
+    Label28: TLabel;
+    EditSourceStatistiqueMarche: TComboBox;
+    EditFichierConserneTiers: TComboBox;
+    EditTypeProces: TComboBox;
+    EditNumProjet: TEdit;
+    EditNomProjet: TEdit;
+    EditDebitCredit: TComboBox;
+    AfficheStructureMarche: TPanel;
+    EditSauvegardeStructureMarche: TEdit;
+    TableauStructureMarche: TStringGrid;
+    Panel2: TPanel;
+    AfficheStructureMarcheActions: TPanel;
+    Label19: TLabel;
+    Label21: TLabel;
+    Bevel9: TBevel;
+    BitBtn1: TBitBtn;
+    BitOptionStructureMarche: TBitBtn;
+    EditNStructureMarche: TEdit;
+    EditStructureMarche: TEdit;
+    AfficheStatistiqueMarche: TPanel;
+    EditSauvegardeStatistiqueMarche: TEdit;
+    Panel3: TPanel;
+    TableauStatistiqueMarche: TStringGrid;
+    AfficheStatistiqueMarcheActions: TPanel;
+    Label23: TLabel;
+    Label24: TLabel;
+    Bevel10: TBevel;
+    Label25: TLabel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Bevel11: TBevel;
+    BitBtn6: TBitBtn;
+    BitOptionStatistiqueMarche: TBitBtn;
+    EditNStatistiqueMarche: TEdit;
+    EditNStructureMarcheStatistique: TEdit;
+    EditStatistiqueMarche: TEdit;
+    EditPourcentageStatistiqueMarche: TEdit;
+    EditTVAStatistiqueMarche: TEdit;
+    UpDown1: TUpDown;
+    BitRafraichir: TBitBtn;
+    Panel1: TPanel;
+    AfficheListeMarcheCopie: TLabel;
+    EditIncrimenteDefileTexte: TEdit;
+    EditIMax: TEdit;
+    Panel5: TPanel;
+    BitStructureStatistiqueAuto: TBitBtn;
+    RBAutoriserGenerationStructureStatistiqueAvenant: TCheckBox;
+    TableauAnalyseMontantMarche: TStringGrid;
+    AfficheValeureStatistiqueMarche: TPanel;
+    TableauDomiciliation: TStringGrid;
+    AfficheDistination: TPanel;
+    PageControl10: TPageControl;
+    PageClient: TTabSheet;
+    TableauClient: TStringGrid;
+    AfficheNouveauClient: TPanel;
+    Bevel29: TBevel;
+    Label48: TLabel;
+    Label124: TLabel;
+    Label125: TLabel;
+    Label126: TLabel;
+    Bevel30: TBevel;
+    Bevel8: TBevel;
+    Bevel12: TBevel;
+    BitValiderN: TBitBtn;
+    EditCodeClientN: TEdit;
+    EditNomClientN: TEdit;
+    EditPrenomClientN: TEdit;
+    EditAdresseClientN: TEdit;
+    BitBtn63: TBitBtn;
+    TableauMarcheReference: TStringGrid;
+    AfficheShoixMarcheReference: TPanel;
+    AfficheTitreShoixMarcheReference: TPanel;
+    TableauCoixMarcheReference: TStringGrid;
+    TableauProjet: TStringGrid;
+    TimerClic: TTimer;
+    TimerAlerteMarche: TTimer;
+    TimerDefilerAffichage: TTimer;
+    AfficheAdresseMarche: TPanel;
+    AdresseStructureMarche: TPanel;
+    AdresseStatistiqueMarche: TPanel;
+    procedure BitBtn8Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure TimerClicTimer(Sender: TObject);
+    procedure BitActionsClick(Sender: TObject);
+    procedure TableauMarcheClick(Sender: TObject);
+    procedure TableauMarcheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauMarcheKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn58Click(Sender: TObject);
+    procedure BitBtn63Click(Sender: TObject);
+    procedure BitValiderNClick(Sender: TObject);
+    procedure EditNomClientNKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditPrenomClientNKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditAdresseClientNKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCodeMaitreOuvrageEnter(Sender: TObject);
+    procedure EditCodeMaitreOuvrageKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditCodeMaitreOuvrageKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditCodeMaitreOuvrageKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditMaitreOuvrageEnter(Sender: TObject);
+    procedure EditMaitreOuvrageKeyPress(Sender: TObject; var Key: Char);
+    procedure EditMaitreOuvrageKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditMaitreOuvrageKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditLOTKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditLieuTravKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditMontantMarcheDblClick(Sender: TObject);
+    procedure EditMontantMarcheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditMontantMarcheKeyPress(Sender: TObject; var Key: Char);
+    procedure EditRabaixKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditRabaixKeyPress(Sender: TObject; var Key: Char);
+    procedure EditRetenueGarantieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditRetenueGarantieKeyPress(Sender: TObject; var Key: Char);
+    procedure EditRefDevisKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDelaisExecutKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDateReceptionMarcheKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure BitBtn59Click(Sender: TObject);
+    procedure BitValiderOptionsRGarantieClick(Sender: TObject);
+    procedure EditDureeAttenteMKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDureeAttenteMKeyPress(Sender: TObject; var Key: Char);
+    procedure EditAvertirAvantMKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditAvertirAvantMKeyPress(Sender: TObject; var Key: Char);
+    procedure EditRefMarcheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDateMarcheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure AfficheSaisieChantierEnter(Sender: TObject);
+    procedure TableauClientKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitOptionStatistiqueMarcheClick(Sender: TObject);
+    procedure TableauStatistiqueMarcheClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitOptionStructureMarcheClick(Sender: TObject);
+    procedure TableauStructureMarcheClick(Sender: TObject);
+    procedure TableauStructureMarcheKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditStructureMarcheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauStatistiqueMarcheKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditSourceStatistiqueMarcheKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure EditTypeProjetChange(Sender: TObject);
+    procedure EditNumMarcheReferenceEnter(Sender: TObject);
+    procedure TableauMarcheReferenceKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure MarcheReferenceEnter(Sender: TObject);
+    procedure EditTypeProjetKeyPress(Sender: TObject; var Key: Char);
+    procedure EditStatistiqueMarcheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditPourcentageStatistiqueMarcheKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditTVAStatistiqueMarcheKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure TableauStatistiqueMarcheContextPopup(Sender: TObject;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure BitRafraichirClick(Sender: TObject);
+    procedure TimerAlerteMarcheTimer(Sender: TObject);
+    procedure TableauCoixMarcheReferenceKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure AfficheShoixMarcheReferenceEnter(Sender: TObject);
+    procedure AfficheShoixMarcheReferenceExit(Sender: TObject);
+    procedure AfficheListeMarcheDblClick(Sender: TObject);
+    procedure EditNumDomiciliationKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDomiciliationKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNumIdentificationDomiciliationKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure EditDomiciliationEnter(Sender: TObject);
+    procedure TableauDomiciliationKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure AfficheSaisieChantierClick(Sender: TObject);
+    procedure EditMarcheKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauCoixMarcheReferenceClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure AfficheListeMarcheClick(Sender: TObject);
+    procedure TimerDefilerAffichageTimer(Sender: TObject);
+    procedure BitStructureStatistiqueAutoClick(Sender: TObject);
+    procedure EditNomProjetEnter(Sender: TObject);
+    procedure EditTypeProcesSelect(Sender: TObject);
+    procedure TableauProjetKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure TableauMarcheDblClick(Sender: TObject);
+    procedure TableauAnalyseMontantMarcheClick(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSMarche: TFSMarche;
+
+  Procedure ProcAfficheMarche(TableauMarche:TStringGrid;  TypeProjet,NumMarcheReference:string);
+  Procedure ProcAfficheSaisieMarche(NSMarche:integer);
+  Procedure ProcAfficheStatistiqueMarche(TableauStatistiqueMarche:TStringGrid; NSMarche,NStructureMarche:string);
+  Procedure ProcAfficheStructureMarche(TableauStructureMarche:TStringGrid; NSMarche:string);
+  Procedure AfficheValeuresStatistiqueMarche(TableauValeuresStatistiqueMarche:TStringGrid; NMarche:string);
+  Function FunctMontantMarcheHT(NSMarche:string):real;
+
+implementation
+
+Uses UnitInitialisation, UnitSuppression, UnitInitialisationSpeciale, UnitFSMenuPrincipal, UnitFSGenerateurBase,
+     UnitFSTiers;
+
+{$R *.dfm}
+
+procedure TFSMarche.BitBtn8Click(Sender: TObject);
+var  i:integer;  TypeProcesMarche,FichierConcerneMarche,AdresseMarche:string;
+begin
+if not AccesPrivilegies('FS Marche',FSMenuPrincipal.EditCodeUtilisateur.Text,'MA',true)then exit;
+
+if(FSMarche.EditTypeProjet.Text='Marche')
+then FSMarche.AfficheLienMarcheAvenant.Visible:=false
+else FSMarche.AfficheLienMarcheAvenant.Visible:=true;
+
+TypeProcesMarche:='Business'; FichierConcerneMarche:='FMarche';
+if not(FunctionAdresseProces(TypeProcesMarche,FichierConcerneMarche,'',AdresseMarche,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+
+ChMarche:=AdresseMarche;
+assignfile(FMarche,ChMarche);
+if FileExists(ChMarche)then
+Reset(FMarche)
+else Rewrite(FMarche);
+Seek(FMarche,0);
+i:=1;
+while not eof(FMarche) do
+begin
+     Read(FMarche,RMarche);
+     if(i<=RMarche.NSMarche)then i:=RMarche.NSMarche+1;
+end;
+CloseFile(FMarche);
+
+FSMarche.AfficheSaisieChantier.Visible:=true;
+FSMarche.BitActions.Kind:=bkAll;
+FSMarche.BitActions.Caption:='Valider';
+FSMarche.EditNSMarche.Text:=inttostr(i);
+FSMarche.EditMarche.Text:='';
+FSMarche.EditLOT.Text:='';
+FSMarche.EditLieuTrav.Text:='';
+FSMarche.EditMontantMarche.Text:='';
+FSMarche.EditRabaix.Text:='';
+FSMarche.EditRetenueGarantie.Text:='';
+FSMarche.EditRefDevis.Text:='';
+FSMarche.EditDelaisExecut.Text:='';
+FSMarche.EditRefMarche.Text:='';
+FSMarche.EditCodeMaitreOuvrage.Text:='';
+FSMarche.EditMaitreOuvrage.Text:='';
+FSMarche.EditDateMarche.Text:='';
+FSMarche.EditDateReceptionMarche.Text:='';
+FSMarche.EditDureeAttente.Text:='365';
+FSMarche.EditAvertirAvant.Text:='15';
+FSMarche.EditRefMarche.SetFocus;
+FSMarche.EditNumMarcheReference.Text:=FSMarche.EditChoixNumMarcheReference.Text;
+FSMarche.MarcheReference.Text:=ChercherMarche(strtointeger(FSMarche.EditNumMarcheReference.Text)).Marche;
+FSMarche.EditNumDomiciliation.Text:='';
+FSMarche.EditDomiciliation.Text:='';
+FSMarche.EditNumIdentificationDomiciliation.Text:='';
+end;
+
+procedure TFSMarche.BitBtn2Click(Sender: TObject);
+var  NSMarche:integer;
+begin
+if not AccesPrivilegies('FS Marche',FSMenuPrincipal.EditCodeUtilisateur.Text,'MA',true)then exit;
+
+if(FSMarche.EditTypeProjet.Text='Marche')
+then FSMarche.AfficheLienMarcheAvenant.Visible:=false
+else FSMarche.AfficheLienMarcheAvenant.Visible:=true;
+
+FSMarche.AfficheSaisieChantier.Visible:=true;
+FSMarche.BitActions.Kind:=bkRetry;
+FSMarche.BitActions.Caption:='Modifier';
+NSMarche:=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+ProcAfficheSaisieMarche(NSMarche);
+FSMarche.EditRefMarche.SetFocus;
+end;
+
+procedure TFSMarche.BitBtn3Click(Sender: TObject);
+var  NSMarche:integer;
+begin
+if not AccesPrivilegies('FS Marche',FSMenuPrincipal.EditCodeUtilisateur.Text,'MS',true)then exit;
+
+if(FSMarche.EditTypeProjet.Text='Marche')
+then FSMarche.AfficheLienMarcheAvenant.Visible:=false
+else FSMarche.AfficheLienMarcheAvenant.Visible:=true;
+
+FSMarche.AfficheSaisieChantier.Visible:=true;
+FSMarche.BitActions.Kind:=bkCancel;
+FSMarche.BitActions.Caption:='Supprimer';
+NSMarche:=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+ProcAfficheSaisieMarche(NSMarche);
+FSMarche.BitActions.SetFocus;
+end;
+
+procedure TFSMarche.BitBtn4Click(Sender: TObject);
+begin
+FSMarche.TableauMarche.SetFocus;
+FSMarche.TimerClic.Enabled:=false;
+FSMarche.AfficheOptionRGarantie.Visible:=false;
+FSMarche.TableauProjet.Visible:=false;
+FSMarche.AfficheSaisieChantier.Visible:=false;
+FSMarche.AfficheDistination.Visible:=false;
+end;
+
+procedure TFSMarche.TimerClicTimer(Sender: TObject);
+begin
+     if(FSMarche.AfficheSaisieChantier.Visible=true)then
+     begin
+          if(FSMarche.AfficheSaisieChantier.Color=$00CCFFFF) then
+          begin
+               FSMarche.AfficheSaisieChantier.Color:=$00FDFFFF;
+          end
+          else
+          begin
+               FSMarche.AfficheSaisieChantier.Color:=$00CCFFFF;
+          end;
+     end;
+
+     if(FSMarche.AfficheShoixMarcheReference.Visible=true)then
+     begin
+          if(FSMarche.AfficheTitreShoixMarcheReference.Color=$00CCFFFF) then
+          begin
+               FSMarche.AfficheTitreShoixMarcheReference.Color:=$00FDFFFF;
+          end
+          else
+          begin
+               FSMarche.AfficheTitreShoixMarcheReference.Color:=$00CCFFFF;
+          end;
+     end;
+end;
+
+procedure TFSMarche.BitActionsClick(Sender: TObject);
+var i:integer;  OK,Confirme:boolean;  NSMarche,NStructureMarche,NStatistiqueMarche,TypeProcesMarche,FichierConcerneMarche,AdresseMarche:string;
+begin
+FSMarche.TimerClic.Enabled:=false;
+if(FSMarche.EditNSMarche.Text='')
+then
+begin
+     showmessage('Saisissez le numéro du Marché SVP !');
+     Exit;
+end;
+
+NSMarche:=FSMarche.EditNSMarche.Text;
+NStructureMarche:='';
+NStatistiqueMarche:='';
+
+if((FSMarche.BitActions.Kind=bkAll)
+and(FSMarche.BitActions.Caption='Valider'))
+then
+begin
+TypeProcesMarche:='Business'; FichierConcerneMarche:='FMarche';
+if not(FunctionAdresseProces(TypeProcesMarche,FichierConcerneMarche,'',AdresseMarche,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+
+ChMarche:=AdresseMarche;
+assignfile(FMarche,ChMarche);
+if FileExists(ChMarche)then
+Reset(FMarche)
+else Rewrite(FMarche);
+Seek(FMarche,0);
+i:=0;
+while not eof(FMarche) do
+begin
+     Read(FMarche,RMarche);
+     i:=i+1;
+     if(inttostr(RMarche.NSMarche)=FSMarche.EditNSMarche.Text)then
+     begin
+          showmessage('Le numéro du Marché est déjas enregistré');
+          exit;
+     end;
+end;
+{******************************}
+Seek(FMarche,i);
+Truncate(FMarche);
+RMarche.Marche:=FSMarche.EditMarche.Text;
+RMarche.CodeMaitreOuvrage:=FSMarche.EditCodeMaitreOuvrage.Text;
+RMarche.LOT:=FSMarche.EditLOT.Text;
+RMarche.RefMarche:=FSMarche.EditRefMarche.Text;
+RMarche.LieuTrav:=FSMarche.EditLieuTrav.Text;
+RMarche.RefDevis:=FSMarche.EditRefDevis.Text;
+RMarche.DelaisExecut:=FSMarche.EditDelaisExecut.Text;
+RMarche.DateMarche:=FSMarche.EditDateMarche.Text;
+RMarche.NSMarche:=strtoInteger(FSMarche.EditNSMarche.Text);
+RMarche.MontantMarche:=strtoreal(FSMarche.EditMontantMarche.Text);
+RMarche.Rabaix:=strtoreal(FSMarche.EditRabaix.Text);
+RMarche.RetenueGarantie:=strtoreal(FSMarche.EditRetenueGarantie.Text);
+RMarche.DateReception:=FSMarche.EditDateReceptionMarche.Text;
+RMarche.DureeAttenteRG:=strtointeger(FSMarche.EditDureeAttente.Text);
+RMarche.AvertirAvantRG:=strtointeger(FSMarche.EditAvertirAvant.Text);
+RMarche.TypeFormulation:=FSMarche.EditTypeFormulation.Text;
+RMarche.SourceStatistiqueMarche:=FSMarche.EditSourceStatistiqueMarche.Text;
+RMarche.TypeProjet:=FSMarche.EditTypeProjet.Text;
+RMarche.NumMarcheReference:=FSMarche.EditNumMarcheReference.Text;
+RMarche.NumDomiciliation:=FSMarche.EditNumDomiciliation.Text;
+
+RMarche.DebitCredit:=FSMarche.EditDebitCredit.Text;
+RMarche.TypeProces:=FSMarche.EditTypeProces.Text;
+RMarche.FichierConcerneTiers:=FSMarche.EditFichierConserneTiers.Text;
+RMarche.NumProjetFinance:=FSMarche.EditNumProjet.Text; 
+
+Write(FMarche,RMarche);
+Closefile(FMarche);
+{******************************}
+end;
+
+if((FSMarche.BitActions.Kind=bkRetry)
+and(FSMarche.BitActions.Caption='Modifier'))
+then
+begin
+TypeProcesMarche:='Business'; FichierConcerneMarche:='FMarche';
+if not(FunctionAdresseProces(TypeProcesMarche,FichierConcerneMarche,'',AdresseMarche,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+
+ChMarche:=AdresseMarche;
+assignfile(FMarche,ChMarche);
+if FileExists(ChMarche)then
+Reset(FMarche)
+else Rewrite(FMarche);
+Seek(FMarche,0);
+i:=0;
+OK:=false;
+while not eof(FMarche)and(OK=false)do
+begin
+     Read(FMarche,RMarche);
+     if(inttostr(RMarche.NSMarche)=NSMarche)then
+     begin
+          OK:=true;
+          Seek(FMarche,i);
+          RMarche.Marche:=FSMarche.EditMarche.Text;
+          RMarche.CodeMaitreOuvrage:=FSMarche.EditCodeMaitreOuvrage.Text;
+          RMarche.LOT:=FSMarche.EditLOT.Text;
+          RMarche.RefMarche:=FSMarche.EditRefMarche.Text;
+          RMarche.LieuTrav:=FSMarche.EditLieuTrav.Text;
+          RMarche.RefDevis:=FSMarche.EditRefDevis.Text;
+          RMarche.DelaisExecut:=FSMarche.EditDelaisExecut.Text;
+          RMarche.DateMarche:=FSMarche.EditDateMarche.Text;
+          RMarche.NSMarche:=strtoInteger(FSMarche.EditNSMarche.Text);
+          RMarche.MontantMarche:=strtoreal(FSMarche.EditMontantMarche.Text);
+          RMarche.Rabaix:=strtoreal(FSMarche.EditRabaix.Text);
+          RMarche.RetenueGarantie:=strtoreal(FSMarche.EditRetenueGarantie.Text);
+          RMarche.DateReception:=FSMarche.EditDateReceptionMarche.Text;
+          RMarche.DureeAttenteRG:=strtointeger(FSMarche.EditDureeAttente.Text);
+          RMarche.AvertirAvantRG:=strtointeger(FSMarche.EditAvertirAvant.Text);
+          RMarche.TypeFormulation:=FSMarche.EditTypeFormulation.Text;
+          RMarche.SourceStatistiqueMarche:=FSMarche.EditSourceStatistiqueMarche.Text;
+          RMarche.TypeProjet:=FSMarche.EditTypeProjet.Text;
+          RMarche.NumMarcheReference:=FSMarche.EditNumMarcheReference.Text;
+          RMarche.NumDomiciliation:=FSMarche.EditNumDomiciliation.Text;
+          RMarche.DebitCredit:=FSMarche.EditDebitCredit.Text;
+          RMarche.TypeProces:=FSMarche.EditTypeProces.Text;
+          RMarche.FichierConcerneTiers:=FSMarche.EditFichierConserneTiers.Text;
+          RMarche.NumProjetFinance:=FSMarche.EditNumProjet.Text;
+          RMarche.DebitCredit:=FSMarche.EditDebitCredit.Text;
+          RMarche.TypeProces:=FSMarche.EditTypeProces.Text;
+          RMarche.FichierConcerneTiers:=FSMarche.EditFichierConserneTiers.Text;
+          RMarche.NumProjetFinance:=FSMarche.EditNumProjet.Text;
+          Write(FMarche,RMarche);
+     end;
+     i:=i+1;
+end;
+{******************************}
+Closefile(FMarche);
+end;
+
+if((FSMarche.BitActions.Kind=bkCancel)
+and(FSMarche.BitActions.Caption='Supprimer'))
+then
+begin
+     Confirme:=false;
+     DeleteFMarche(strtointeger(NSMarche),Confirme);
+     if(Confirme=true)then
+     begin
+          Confirme:=false;
+          DeleteFStructureMarche(strtointeger(NSMarche),0,Confirme);
+          DeleteFStatistiqueMarche(NSMarche,NStructureMarche,NStatistiqueMarche,Confirme);
+     end;
+end;
+
+ProcAfficheMarche(FSMarche.TableauMarche,FSMarche.EditTypeProjet.Text,FSMarche.EditChoixNumMarcheReference.Text);
+ProcAfficheStructureMarche(FSMarche.TableauStructureMarche,NSMarche);
+ProcAfficheStatistiqueMarche(FSMarche.TableauStatistiqueMarche,NSMarche,NStructureMarche);
+FSMarche.TableauMarche.SetFocus;
+FSMarche.AfficheSaisieChantier.Visible:=false;
+end;
+
+Procedure ProcAfficheStatistiqueMarche(TableauStatistiqueMarche:TStringGrid; NSMarche,NStructureMarche:string);
+var  i,R:integer;  Pourcentage:real;   NotCol,TypeProces,FichierConcerne,Adresse:string;   OKStatistiqueMarche:boolean;
+begin
+     TableauStatistiqueMarche.ColCount:=7;
+     TableauStatistiqueMarche.Cols[0].Text:='N°';
+     TableauStatistiqueMarche.Cols[1].Text:='NSMarche';
+     TableauStatistiqueMarche.Cols[2].Text:='NStructureMarche';
+     TableauStatistiqueMarche.Cols[3].Text:='NStatistiqueMarche';
+     TableauStatistiqueMarche.Cols[4].Text:='Statistiques du Marché';
+     TableauStatistiqueMarche.Cols[5].Text:='Pourcentage (%)';
+     TableauStatistiqueMarche.Cols[6].Text:='TVA(%)';
+     TableauStatistiqueMarche.RowCount:=2;
+     TableauStatistiqueMarche.Rows[1].Text:='';
+
+          TypeProces:='Business'; FichierConcerne:='FStatistiqueMarche';
+          if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+                //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+          end;
+          ChStatistiqueMarche:=Adresse; FSMarche.AdresseStatistiqueMarche.Caption:=ChStatistiqueMarche;
+          assignfile(FStatistiqueMarche,ChStatistiqueMarche);
+          if FileExists(ChStatistiqueMarche)then
+          Reset(FStatistiqueMarche)
+          else Rewrite(FStatistiqueMarche);
+          Seek(FStatistiqueMarche,0);
+          i:=0;
+          while not eof(FStatistiqueMarche)do
+          begin
+               Read(FStatistiqueMarche,RStatistiqueMarche);
+
+               if(NSMarche<>'')then
+               begin
+                    if(RStatistiqueMarche.NSMarche=strtointeger(NSMarche))
+                    then OKStatistiqueMarche:=true
+                    else OKStatistiqueMarche:=false;
+               end
+               else OKStatistiqueMarche:=true;
+
+               if(OKStatistiqueMarche=true)then
+               begin
+                   if(NStructureMarche<>'')then
+                   begin
+                        if(RStatistiqueMarche.NStructureMarche=NStructureMarche)
+                        then OKStatistiqueMarche:=true
+                        else OKStatistiqueMarche:=false;
+                   end;
+               end;
+
+               if(OKStatistiqueMarche=true)then
+               begin
+                    i:=i+1;
+                    TableauStatistiqueMarche.Rows[i].Text:=inttostr(i);
+                    TableauStatistiqueMarche.Cells[1,i]:=inttostr(RStatistiqueMarche.NSMarche);
+                    TableauStatistiqueMarche.Cells[2,i]:=RStatistiqueMarche.NStructureMarche;
+                    TableauStatistiqueMarche.Cells[3,i]:=inttostr(RStatistiqueMarche.NStatistiqueMarche);
+                    TableauStatistiqueMarche.Cells[4,i]:=RStatistiqueMarche.StatistiqueMarche;
+                    TableauStatistiqueMarche.Cells[5,i]:=floattostr(RStatistiqueMarche.PourcentageStatistiqueMarche);
+                    TableauStatistiqueMarche.Cells[6,i]:=floattostr(RStatistiqueMarche.TVAStatistiqueMarche);
+               end;
+          end;
+          CloseFile(FStatistiqueMarche);
+          if(i>0)then TableauStatistiqueMarche.RowCount:=i+1
+                  else TableauStatistiqueMarche.RowCount:=2;
+
+          NotCol:='1;2;3';
+          for R:=1 to TableauStatistiqueMarche.ColCount-1 do if ExisteNumInTexte(inttostr(R),NotCol)then TableauStatistiqueMarche.ColWidths[R]:=0;
+          AjusterColWidth(TableauStatistiqueMarche,'',NotCol);
+          TableauStatistiqueMarche.FixedCols:=4;
+
+if(i>0)then
+begin
+
+if(Pourcentage<100)and(Pourcentage<>0)then
+     begin
+          showmessage('Le Cumul Statistique ( = '+floattostr(Pourcentage)+' % ), Veuillez le compléter à ( 100 % ) SVP !');
+          FSMarche.TableauStatistiqueMarche.SetFocus;
+     end;
+
+if(Pourcentage>100)then
+          begin
+               showmessage('Le cumul Statistique ( = '+floattostr(Pourcentage)+' % ) ne doit pas dépasser 100 % ! ');
+               FSMarche.TableauStatistiqueMarche.SetFocus;
+          end;
+end;
+
+end;
+
+procedure TFSMarche.TableauMarcheKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var  i:integer;   TypeProcesMarche,FichierConcerneMarche,AdresseMarche:string;
+begin
+if key in[VK_RETURN]then
+begin
+     FSMarche.AfficheSaisieChantier.Visible:=true;
+     FSMarche.BitActions.Kind:=bkHelp;
+     FSMarche.BitActions.Caption:='Voir';
+end;
+
+if key in[VK_DELETE]then
+begin
+if not AccesPrivilegies('FS Marche',FSMenuPrincipal.EditCodeUtilisateur.Text,'MS',true)then exit;
+
+FSMarche.AfficheSaisieChantier.Visible:=true;
+FSMarche.BitActions.Kind:=bkCancel;
+FSMarche.BitActions.Caption:='Supprimer';
+ProcAfficheSaisieMarche(strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]));
+FSMarche.BitActions.SetFocus;
+end;
+
+if key in[VK_INSERT]then
+begin
+if not AccesPrivilegies('FS Marche',FSMenuPrincipal.EditCodeUtilisateur.Text,'MA',true)then exit;
+
+TypeProcesMarche:='Business'; FichierConcerneMarche:='FMarche';
+if not(FunctionAdresseProces(TypeProcesMarche,FichierConcerneMarche,'',AdresseMarche,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+
+ChMarche:=AdresseMarche;
+assignfile(FMarche,ChMarche);
+if FileExists(ChMarche)then
+Reset(FMarche)
+else Rewrite(FMarche);
+Seek(FMarche,0);
+i:=1;
+while not eof(FMarche) do
+begin
+     Read(FMarche,RMarche);
+     if(RMarche.NSMarche<=i)then i:=RMarche.NSMarche+1;
+end;
+CloseFile(FMarche);
+
+FSMarche.AfficheSaisieChantier.Visible:=true;
+FSMarche.BitActions.Kind:=bkAll;
+FSMarche.BitActions.Caption:='Valider';
+FSMarche.EditNSMarche.Text:=inttostr(i);
+FSMarche.EditMarche.Text:='';
+FSMarche.EditLOT.Text:='';
+FSMarche.EditLieuTrav.Text:='';
+FSMarche.EditMontantMarche.Text:='';
+FSMarche.EditRabaix.Text:='';
+FSMarche.EditRetenueGarantie.Text:='';
+FSMarche.EditRefDevis.Text:='';
+FSMarche.EditDelaisExecut.Text:='';
+FSMarche.EditRefMarche.Text:='';
+FSMarche.EditCodeMaitreOuvrage.Text:='';
+FSMarche.EditMaitreOuvrage.Text:='';
+FSMarche.EditDateMarche.Text:='';
+FSMarche.EditRefMarche.SetFocus;
+FSMarche.EditDateReceptionMarche.Text:='';
+FSMarche.EditDureeAttente.Text:='365';
+FSMarche.EditAvertirAvant.Text:='15';
+end;
+
+end;
+
+procedure TFSMarche.TableauMarcheKeyPress(Sender: TObject; var Key: Char);
+var  i,NSMarche:integer; TypeProcesMarche,FichierConcerneMarche,AdresseMarche:string;
+begin
+
+if(FSMarche.EditTypeProjet.Text='Marche')
+then FSMarche.AfficheLienMarcheAvenant.Visible:=false
+else FSMarche.AfficheLienMarcheAvenant.Visible:=true;
+
+if key in['n','N','+']then
+begin
+if not AccesPrivilegies('FS Marche',FSMenuPrincipal.EditCodeUtilisateur.Text,'MA',true)then exit;
+
+TypeProcesMarche:='Business'; FichierConcerneMarche:='FMarche';
+if not(FunctionAdresseProces(TypeProcesMarche,FichierConcerneMarche,'',AdresseMarche,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+
+ChMarche:=AdresseMarche;
+assignfile(FMarche,ChMarche);
+if FileExists(ChMarche)then
+Reset(FMarche)
+else Rewrite(FMarche);
+Seek(FMarche,0);
+i:=1;
+while not eof(FMarche) do
+begin
+     Read(FMarche,RMarche);
+     if(RMarche.NSMarche<=i)then i:=RMarche.NSMarche+1;
+end;
+CloseFile(FMarche);
+
+FSMarche.AfficheSaisieChantier.Visible:=true;
+FSMarche.BitActions.Kind:=bkAll;
+FSMarche.BitActions.Caption:='Valider';
+FSMarche.EditNSMarche.Text:=inttostr(i);
+FSMarche.EditMarche.Text:='';
+FSMarche.EditLOT.Text:='';
+FSMarche.EditLieuTrav.Text:='';
+FSMarche.EditMontantMarche.Text:='';
+FSMarche.EditRabaix.Text:='';
+FSMarche.EditRetenueGarantie.Text:='';
+FSMarche.EditRefDevis.Text:='';
+FSMarche.EditDelaisExecut.Text:='';
+FSMarche.EditRefMarche.Text:='';
+FSMarche.EditCodeMaitreOuvrage.Text:='';
+FSMarche.EditMaitreOuvrage.Text:='';
+FSMarche.EditDateMarche.Text:='';
+FSMarche.EditRefMarche.SetFocus;
+FSMarche.EditDateReceptionMarche.Text:='';
+FSMarche.EditDureeAttente.Text:='365';
+FSMarche.EditAvertirAvant.Text:='15';
+
+FSMarche.EditDebitCredit.Text:='';
+FSMarche.EditTypeProces.Text:='';
+FSMarche.EditFichierConserneTiers.Text:='';
+FSMarche.EditNumProjet.Text:='';
+FSMarche.EditNomProjet.Text:='';
+end;
+
+if key in['m','M']then
+begin
+if not AccesPrivilegies('FS Marche',FSMenuPrincipal.EditCodeUtilisateur.Text,'MM',true)then exit;
+
+FSMarche.AfficheSaisieChantier.Visible:=true;
+FSMarche.BitActions.Kind:=bkRetry;
+FSMarche.BitActions.Caption:='Modifier';
+NSMarche:=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+ProcAfficheSaisieMarche(NSMarche);
+FSMarche.EditRefMarche.SetFocus;
+end;
+
+if key in['s','S','-']then
+begin
+if not AccesPrivilegies('FS Marche',FSMenuPrincipal.EditCodeUtilisateur.Text,'MS',true)then exit;
+
+FSMarche.AfficheSaisieChantier.Visible:=true;
+FSMarche.BitActions.Kind:=bkCancel;
+FSMarche.BitActions.Caption:='Supprimer';
+NSMarche:=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+ProcAfficheSaisieMarche(NSMarche);
+FSMarche.BitActions.SetFocus;
+end;
+
+key:=#0;
+end;
+
+procedure TFSMarche.BitBtn58Click(Sender: TObject);
+begin
+FSMarche.AfficheOptionRGarantie.Visible:=true;
+FSMarche.AfficheOptionRGarantie.Top:=8;
+FSMarche.AfficheOptionRGarantie.Left:=8;
+FSMarche.EditDureeAttenteM.Text:=FSMarche.EditDureeAttente.Text;
+FSMarche.EditAvertirAvantM.Text:=FSMarche.EditAvertirAvant.Text;
+
+if(FSMarche.EditTypeFormulation.Text<>'')then
+begin
+     if(Firstlaters(FSMarche.EditTypeFormulation.Text,1)='G')then FSMarche.RBFormuleGlobaleM.Checked:=true
+     else
+     if(Firstlaters(FSMarche.EditTypeFormulation.Text,1)='D')then FSMarche.RBFormuleDistincteM.Checked:=true;
+
+     if(Lastlaters(FSMarche.EditTypeFormulation.Text,1)='S')then FSMarche.RBFormuleParStructureM.Checked:=true
+     else
+     if(Lastlaters(FSMarche.EditTypeFormulation.Text,1)='T')then FSMarche.RBFormuleParStatistiqueM.Checked:=true;
+end;
+
+FSMarche.EditDureeAttenteM.SetFocus;
+end;
+
+procedure TFSMarche.BitBtn63Click(Sender: TObject);
+begin
+FSMarche.AfficheNouveauClient.Visible:=false;
+FSMarche.AfficheDistination.Visible:=false;
+end;
+
+procedure TFSMarche.BitValiderNClick(Sender: TObject);
+var  i:integer;  OK:boolean;
+begin
+if  (FSMarche.EditCodeClientN.Text<>'')
+then
+begin
+TypeProces:='Business'; FichierConcerne:='FClient';
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+ChClient:=Adresse;
+assignfile(FClient,ChClient);
+if FileExists(ChClient)then
+Reset(FClient)
+else Rewrite(FClient);
+Seek(FClient,0);
+i:=0;
+OK:=false;
+while not eof(FClient)and(OK=false)do
+begin
+     Read(FClient,RClient);
+     if (RClient.CodeTiers=FSMarche.EditCodeClientN.Text)
+     then
+     begin
+          OK:=true;
+          showmessage('Les coordonnées du Client sont déjas enregistrées');
+          FSMarche.EditCodeClientN.SetFocus;
+     end;
+i:=i+1;
+end;
+
+if(OK=false)then
+begin
+Seek(FClient,i);
+Truncate(FClient);
+RClient.CodeTiers:=FSMarche.EditCodeClientN.Text;
+RClient.NomTiers:=FSMarche.EditNomClientN.Text;
+RClient.PrenomTiers:=FSMarche.EditPrenomClientN.Text;
+RClient.AdresseTiers:=FSMarche.EditAdresseClientN.Text;
+RClient.Data1:='';
+RClient.Data2:='';
+RClient.Data3:='';
+RClient.Data4:='';
+RClient.Data5:='';
+RClient.Data6:='';
+
+Write(FClient,RClient);
+end;
+Closefile(FClient);
+
+FSMarche.EditCodeMaitreOuvrage.Text:=FSMarche.EditCodeClientN.Text;
+FSMarche.EditMaitreOuvrage.Text:=FSMarche.EditNomClientN.Text+' '+FSMarche.EditPrenomClientN.Text;
+FSMarche.EditLOT.SetFocus;
+FSMarche.AfficheNouveauClient.Visible:=false;
+FSMarche.AfficheDistination.Visible:=false;
+end;
+
+end;
+
+procedure TFSMarche.EditNomClientNKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditPrenomClientN.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditPrenomClientNKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditAdresseClientN.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditAdresseClientNKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.BitValiderN.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditCodeMaitreOuvrageEnter(Sender: TObject);
+var  TypeProces,FichierConcerne:string;
+begin
+     FSMarche.AfficheDistination.Top:=FSMarche.AfficheSaisieChantier.Top+FSMarche.EditMaitreOuvrage.Top+FSMarche.EditMaitreOuvrage.Height+2;
+     FSMarche.AfficheDistination.Left:=FSMarche.AfficheSaisieChantier.Left+FSMarche.EditMaitreOuvrage.Left;
+     FSMarche.AfficheDistination.Visible:=true;
+     TypeProces:=FSMarche.EditTypeProces.Text;
+     FichierConcerne:=FSMarche.EditFichierConserneTiers.Text;
+     ListeTiers(FSMarche.TableauClient,TypeProces,FichierConcerne,'',FSMarche.EditCodeMaitreOuvrage.Text,FSMarche.EditMaitreOuvrage.Text,false);
+end;
+
+procedure TFSMarche.EditCodeMaitreOuvrageKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if(key=VK_DOWN)and(FSMarche.AfficheDistination.Visible=true)then
+begin
+     FSMarche.TableauClient.SetFocus;
+end;
+
+if key in[VK_RETURN]then
+begin
+     if((FSMarche.EditCodeMaitreOuvrage.Text='')
+     or (FSMarche.AfficheDistination.Visible=false))
+     then
+     begin
+          FSMarche.EditMaitreOuvrage.SetFocus;
+     end
+     else
+     begin
+          FSMarche.TableauClient.SetFocus;
+     end;
+end;
+
+end;
+
+procedure TFSMarche.EditCodeMaitreOuvrageKeyPress(Sender: TObject;
+  var Key: Char);
+var  m,l:integer;  ListeCodeClient,CodeFamille:string; OK:boolean;
+begin
+if(key=#13)then key:=#0;
+if(key=#43)then
+begin
+
+FSMarche.AfficheNouveauClient.Visible:=true;
+
+TypeProces:='Business'; FichierConcerne:='FClient';
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+ChClient:=Adresse;
+assignfile(FClient,ChClient);
+if FileExists(ChClient)then
+Reset(FClient)
+else Rewrite(FClient);
+Seek(FClient,0);
+ListeCodeClient:='';
+while not eof(FClient)do
+begin
+     Read(FClient,RClient);
+     if(longueur(RClient.CodeTiers)=10)then
+     begin
+          if(ListeCodeClient='')then ListeCodeClient:=Firstlaters(RClient.CodeTiers,6)
+          else
+          if not(ExisteCharinString(Firstlaters(RClient.CodeTiers,6),ListeCodeClient))then ListeCodeClient:=ListeCodeClient+';'+Firstlaters(RClient.CodeTiers,6);
+     end;
+end;
+CloseFile(FClient);
+
+
+TypeProces:='Business'; FichierConcerne:='FClient';
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+ChClient:=Adresse;
+assignfile(FClient,ChClient);
+if FileExists(ChClient)then
+Reset(FClient)
+else Rewrite(FClient);
+Seek(FClient,0);
+m:=1;
+l:=0;
+CodeFamille:='';
+while not eof(FClient)do
+begin
+     Read(FClient,RClient);
+     if(ListeCodeClient<>'')then
+     begin
+          if(ExisteCharinString(Firstlaters(RClient.CodeTiers,6),ListeCodeClient))then
+          begin
+               CodeFamille:=Firstlaters(RClient.CodeTiers,6);
+               if(m<=strtoint(LastLaters(RClient.CodeTiers,4)))
+               then m:=strtoint(LastLaters(RClient.CodeTiers,4))+1;
+          end;
+     end
+     else
+     begin
+          CodeFamille:='';
+          if(m<=strtoint(RClient.CodeTiers))
+          then m:=strtoint(RClient.CodeTiers)+1;
+     end;
+end;
+CloseFile(FClient);
+
+FSMarche.EditCodeClientN.Text:=CodeFamille+CompleteZeroGauche(inttostr(m),'4');
+FSMarche.EditNomClientN.Text:='';
+FSMarche.EditPrenomClientN.Text:='';
+FSMarche.EditAdresseClientN.Text:='';
+FSMarche.EditNomClientN.SetFocus;
+end;
+end;
+
+procedure TFSMarche.EditCodeMaitreOuvrageKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var  i:integer;  TypeProces,FichierConcerne:string;
+begin
+     if(Lastlaters(FSMarche.EditCodeMaitreOuvrage.Text,1)<>'+')then
+     begin
+          TypeProces:=FSMarche.EditTypeProces.Text;
+          FichierConcerne:=FSMarche.EditFichierConserneTiers.Text;
+          ListeTiers(FSMarche.TableauClient,TypeProces,FichierConcerne,'',FSMarche.EditCodeMaitreOuvrage.Text,FSMarche.EditMaitreOuvrage.Text,false);
+     end;
+end;
+
+procedure TFSMarche.EditMaitreOuvrageEnter(Sender: TObject);
+var     TypeProces,FichierConcerne:string;
+begin
+     FSMarche.AfficheDistination.Top:=FSMarche.AfficheSaisieChantier.Top+FSMarche.EditMaitreOuvrage.Top+FSMarche.EditMaitreOuvrage.Height+2;
+     FSMarche.AfficheDistination.Left:=FSMarche.AfficheSaisieChantier.Left+FSMarche.EditMaitreOuvrage.Left;
+     FSMarche.AfficheDistination.Visible:=true;
+
+     TypeProces:=FSMarche.EditTypeProces.Text;
+     FichierConcerne:=FSMarche.EditFichierConserneTiers.Text;
+     ListeTiers(FSMarche.TableauClient,TypeProces,FichierConcerne,'',FSMarche.EditCodeMaitreOuvrage.Text,FSMarche.EditMaitreOuvrage.Text,false);
+end;
+
+procedure TFSMarche.EditMaitreOuvrageKeyPress(Sender: TObject;
+  var Key: Char);
+var  m,l:integer;  ListeCodeClient,CodeFamille:string; OK:boolean;
+begin
+if(key=#13)then key:=#0;
+if(key=#43)then
+begin
+
+FSMarche.AfficheNouveauClient.Visible:=true;
+
+TypeProces:='Business'; FichierConcerne:='FClient';
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+ChClient:=Adresse;
+assignfile(FClient,ChClient);
+if FileExists(ChClient)then
+Reset(FClient)
+else Rewrite(FClient);
+Seek(FClient,0);
+ListeCodeClient:='';
+while not eof(FClient)do
+begin
+     Read(FClient,RClient);
+     if(longueur(RClient.CodeTiers)=10)then
+     begin
+          if(ListeCodeClient='')then ListeCodeClient:=Firstlaters(RClient.CodeTiers,6)
+          else
+          if not(ExisteCharinString(Firstlaters(RClient.CodeTiers,6),ListeCodeClient))then ListeCodeClient:=ListeCodeClient+';'+Firstlaters(RClient.CodeTiers,6);
+     end;
+end;
+CloseFile(FClient);
+
+
+TypeProces:='Business'; FichierConcerne:='FClient';
+if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+ChClient:=Adresse;
+assignfile(FClient,ChClient);
+if FileExists(ChClient)then
+Reset(FClient)
+else Rewrite(FClient);
+Seek(FClient,0);
+m:=1;
+l:=0;
+CodeFamille:='';
+while not eof(FClient)do
+begin
+     Read(FClient,RClient);
+     if(ListeCodeClient<>'')then
+     begin
+          if(ExisteCharinString(Firstlaters(RClient.CodeTiers,6),ListeCodeClient))then
+          begin
+               CodeFamille:=Firstlaters(RClient.CodeTiers,6);
+               if(m<=strtoint(LastLaters(RClient.CodeTiers,4)))
+               then m:=strtoint(LastLaters(RClient.CodeTiers,4))+1;
+          end;
+     end
+     else
+     begin
+          CodeFamille:='';
+          if(m<=strtoint(RClient.CodeTiers))
+          then m:=strtoint(RClient.CodeTiers)+1;
+     end;
+end;
+CloseFile(FClient);
+
+FSMarche.EditCodeClientN.Text:=CodeFamille+CompleteZeroGauche(inttostr(m),'4');
+FSMarche.EditNomClientN.Text:='';
+FSMarche.EditPrenomClientN.Text:='';
+FSMarche.EditAdresseClientN.Text:='';
+FSMarche.EditNomClientN.SetFocus;
+end;
+end;
+
+procedure TFSMarche.EditMaitreOuvrageKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if(key=VK_DOWN)and(FSMarche.AfficheDistination.Visible=true)then
+begin
+     FSMarche.TableauClient.SetFocus;
+end;
+
+if key in[VK_RETURN]then
+begin
+     if(FSMarche.AfficheDistination.Visible=true)
+     then
+     begin
+          FSMarche.TableauClient.SetFocus;
+     end;
+end;
+
+end;
+
+procedure TFSMarche.EditMaitreOuvrageKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var  i:integer;    TypeProces,FichierConcerne:string;
+begin
+     if(Lastlaters(FSMarche.EditMaitreOuvrage.Text,1)<>'+')then
+     begin
+          TypeProces:=FSMarche.EditTypeProces.Text;
+          FichierConcerne:=FSMarche.EditFichierConserneTiers.Text;
+          ListeTiers(FSMarche.TableauClient,TypeProces,FichierConcerne,'',FSMarche.EditCodeMaitreOuvrage.Text,FSMarche.EditMaitreOuvrage.Text,false);
+     end;
+end;
+
+procedure TFSMarche.EditLOTKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditLieuTrav.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditLieuTravKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditMontantMarche.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditMontantMarcheDblClick(Sender: TObject);
+begin
+     AfficheValeuresStatistiqueMarche(FSMarche.TableauAnalyseMontantMarche,FSMarche.EditNSMarche.Text);
+     FSMarche.EditMontantMarche.Text:=FSMarche.TableauAnalyseMontantMarche.Cells[6,FSMarche.TableauAnalyseMontantMarche.RowCount-1];
+end;
+
+procedure TFSMarche.EditMontantMarcheKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditRabaix.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditMontantMarcheKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if not(key in['0'..'9','.',','])then key:=#0;
+if key='.' then key:=',';
+end;
+
+procedure TFSMarche.EditRabaixKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditRetenueGarantie.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditRabaixKeyPress(Sender: TObject; var Key: Char);
+begin
+if not(key in['0'..'9','.',','])then key:=#0;
+if key='.' then key:=',';
+end;
+
+procedure TFSMarche.EditRetenueGarantieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditRefDevis.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditRetenueGarantieKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if not(key in['0'..'9','.',','])then key:=#0;
+if key='.' then key:=',';
+end;
+
+procedure TFSMarche.EditRefDevisKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditDelaisExecut.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditDelaisExecutKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditDateReceptionMarche.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditDateReceptionMarcheKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditNumDomiciliation.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.BitBtn59Click(Sender: TObject);
+begin
+FSMarche.AfficheOptionRGarantie.Visible:=false;
+FSMarche.TableauProjet.Visible:=false;
+end;
+
+procedure TFSMarche.BitValiderOptionsRGarantieClick(Sender: TObject);
+begin
+FSMarche.EditDureeAttente.Text:=FSMarche.EditDureeAttenteM.Text;
+FSMarche.EditAvertirAvant.Text:=FSMarche.EditAvertirAvantM.Text;
+
+FSMarche.EditTypeFormulation.Text:='';
+if(FSMarche.RBFormuleGlobaleM.Checked=true)then FSMarche.EditTypeFormulation.Text:='G'
+else
+if(FSMarche.RBFormuleDistincteM.Checked=true)then FSMarche.EditTypeFormulation.Text:='D';
+
+if(FSMarche.RBFormuleParStructureM.Checked=true)then FSMarche.EditTypeFormulation.Text:=FSMarche.EditTypeFormulation.Text+'S'
+else
+if(FSMarche.RBFormuleParStatistiqueM.Checked=true)then FSMarche.EditTypeFormulation.Text:=FSMarche.EditTypeFormulation.Text+'T';
+
+FSMarche.AfficheOptionRGarantie.Visible:=false;
+FSMarche.TableauProjet.Visible:=false;
+end;
+
+procedure TFSMarche.EditDureeAttenteMKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditAvertirAvantM.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditDureeAttenteMKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if not(key in['0'..'9'])then key:=#0;
+end;
+
+procedure TFSMarche.EditAvertirAvantMKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.BitValiderOptionsRGarantie.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditAvertirAvantMKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if not(key in['0'..'9'])then key:=#0;
+end;
+
+procedure TFSMarche.EditRefMarcheKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditDateMarche.Text:=datetostr(date);
+     FSMarche.EditDateMarche.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditDateMarcheKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditMarche.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.TableauMarcheClick(Sender: TObject);
+var  R,NSMarche:integer;   NStructureMarche:string;
+begin
+     FSMarche.TableauDomiciliation.Visible:=false;
+     FSMarche.TableauMarcheReference.Visible:=false;
+     FSMarche.AfficheStructureMarcheActions.Visible:=false;
+     FSMarche.AfficheStatistiqueMarcheActions.Visible:=false;
+     FSMarche.AfficheStructureMarcheActions.Visible:=false;
+     FSMarche.EditSauvegardeStructureMarche.Text:='';
+     FSMarche.AfficheStatistiqueMarcheActions.Visible:=false;
+     FSMarche.EditSauvegardeStatistiqueMarche.Text:='';
+
+     NSMarche:=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+     if(FSMarche.AfficheSaisieChantier.Visible=true)then
+     begin
+          ProcAfficheSaisieMarche(NSMarche);
+     end;
+
+     ProcAfficheStructureMarche(FSMarche.TableauStructureMarche,FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+
+     if(FSMarche.TableauMarche.Cells[18,FSMarche.TableauMarche.Row]='Marche')
+     then NStructureMarche:=''
+     else NStructureMarche:=FSMarche.TableauStructureMarche.Cells[2,FSMarche.TableauStructureMarche.Row];
+     ProcAfficheStatistiqueMarche(FSMarche.TableauStatistiqueMarche,FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row],NStructureMarche);
+
+     AfficheValeuresStatistiqueMarche(FSMarche.TableauAnalyseMontantMarche,FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+
+     FSMarche.AfficheValeureStatistiqueMarche.Color:=$00AEFFFF;
+     if(strtoreal(FSMarche.TableauMarche.Cells[9,FSMarche.TableauMarche.Row])<>strtoreal(FSMarche.TableauAnalyseMontantMarche.Cells[6,FSMarche.TableauAnalyseMontantMarche.RowCount-1]))
+     then
+     begin
+          FSMarche.TimerAlerteMarche.Enabled:=true;
+          FSMarche.TableauMarche.Col:=9;
+          FSMarche.TableauAnalyseMontantMarche.Col:=6;
+          FSMarche.TableauAnalyseMontantMarche.Row:=FSMarche.TableauAnalyseMontantMarche.RowCount-1;
+     end
+     else FSMarche.TimerAlerteMarche.Enabled:=false;
+
+     for R:=1 to FSMarche.TableauMarche.RowCount-1 do
+     begin
+          if(R=FSMarche.TableauMarche.Row)then
+          begin
+               FSMarche.EditMarcheControle.Lines.Text:=FSMarche.TableauMarche.Cells[4,R];
+               FSMarche.TableauMarche.RowHeights[R]:=FSMarche.EditMarcheControle.Lines.Capacity*20;
+          end
+          else FSMarche.TableauMarche.RowHeights[R]:=20;
+     end;
+
+     FSMarche.RBAutoriserGenerationStructureStatistiqueAvenant.Checked:=false;
+
+     if(FSMarche.EditChoixNumMarcheReference.Text='')then
+     begin
+          FSMarche.BitStructureStatistiqueAuto.Enabled:=false;
+          FSMarche.RBAutoriserGenerationStructureStatistiqueAvenant.Enabled:=false;
+     end
+     else
+     begin
+          FSMarche.BitStructureStatistiqueAuto.Enabled:=true;
+          FSMarche.RBAutoriserGenerationStructureStatistiqueAvenant.Enabled:=true;
+     end;
+end;
+
+Procedure ProcAfficheMarche(TableauMarche:TStringGrid;  TypeProjet,NumMarcheReference:string);
+var i:integer;   NotRow,NotCol,TypeProcesMarche,FichierConcerneMarche,AdresseMarche:string;   OKMarche:boolean;
+begin
+TableauMarche.ColCount:=27;
+TableauMarche.Cols[0].Text:='N°';
+TableauMarche.Cols[1].Text:='N°.Marche';
+TableauMarche.Cols[2].Text:='Référence ';
+TableauMarche.Cols[3].Text:='Date';
+TableauMarche.Cols[4].Text:='Marche';
+TableauMarche.Cols[5].Text:='Code Maitre d''Ouvrage';
+TableauMarche.Cols[6].Text:='Maitre d''Ouvrage';
+TableauMarche.Cols[7].Text:='L.O.T';
+TableauMarche.Cols[8].Text:='Lieu des traveaux';
+TableauMarche.Cols[9].Text:='Montant du marché';
+TableauMarche.Cols[10].Text:='Rabaix';
+TableauMarche.Cols[11].Text:='Retenu de garantie';
+TableauMarche.Cols[12].Text:='Référence devis';
+TableauMarche.Cols[13].Text:='Délais d''exécution';
+TableauMarche.Cols[14].Text:='Date Recpt.';
+TableauMarche.Cols[15].Text:='Durée Attente';
+TableauMarche.Cols[16].Text:='Avertir avant';
+TableauMarche.Cols[17].Text:='Type Formulation';
+TableauMarche.Cols[18].Text:='Source Statistique Marche';
+TableauMarche.Cols[19].Text:='TypeProjet';
+TableauMarche.Cols[20].Text:='NumMarcheReference';
+TableauMarche.Cols[21].Text:='NumDomiciliation';
+
+TableauMarche.Cols[22].Text:='Débit/Crédit';
+TableauMarche.Cols[23].Text:='TypeProces';
+TableauMarche.Cols[24].Text:='Fichier Conserne';
+TableauMarche.Cols[25].Text:='Num Projet';
+TableauMarche.Cols[26].Text:='Projet';
+
+TableauMarche.RowCount:=2;
+TableauMarche.Rows[1].Text:='';
+
+i:=0;
+
+TypeProcesMarche:='Business'; FichierConcerneMarche:='FMarche';
+if not(FunctionAdresseProces(TypeProcesMarche,FichierConcerneMarche,'',AdresseMarche,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+
+ChMarche:=AdresseMarche;   FSMarche.AfficheAdresseMarche.Caption:=AdresseMarche;
+assignfile(FMarche,ChMarche);
+if FileExists(ChMarche)then
+begin
+     try
+
+     Reset(FMarche);
+     Seek(FMarche,0);
+     
+     while not eof(FMarche)do
+     begin
+          Read(FMarche,RMarche);
+
+          if(TypeProjet<>'')then
+          begin
+               if(RMarche.TypeProjet=TypeProjet)then
+               begin
+                    if(NumMarcheReference<>'')then
+                    begin
+                         if(RMarche.NumMarcheReference=NumMarcheReference)
+                         then OKMarche:=true
+                         else OKMarche:=false;
+                    end
+                    else OKMarche:=true;
+               end
+               else OKMarche:=false;
+          end
+          else OKMarche:=true;
+
+          if(OKMarche=true)then
+          begin
+                i:=i+1;
+                TableauMarche.Rows[i].Text:=inttostr(i);
+                TableauMarche.Cells[1,i]:=inttostr(RMarche.NSMarche);
+                TableauMarche.Cells[2,i]:=RMarche.RefMarche;
+                TableauMarche.Cells[3,i]:=RMarche.DateMarche;
+                TableauMarche.Cells[4,i]:=RMarche.Marche;
+                TableauMarche.Cells[5,i]:=RMarche.CodeMaitreOuvrage;
+                RTiers:=ChercherTiers(RMarche.TypeProces,RMarche.FichierConcerneTiers,RMarche.CodeMaitreOuvrage,'');
+                TableauMarche.Cells[6,i]:=RTiers.NomTiers+' '+RTiers.PrenomTiers;
+                TableauMarche.Cells[7,i]:=RMarche.LOT;
+                TableauMarche.Cells[8,i]:=RMarche.LieuTrav;
+                TableauMarche.Cells[9,i]:=Vergule(floattostr(RMarche.MontantMarche),'2','C','');
+                TableauMarche.Cells[10,i]:=floattostr(RMarche.Rabaix);
+                TableauMarche.Cells[11,i]:=floattostr(RMarche.RetenueGarantie);
+                TableauMarche.Cells[12,i]:=RMarche.RefDevis;
+                TableauMarche.Cells[13,i]:=RMarche.DelaisExecut;
+                TableauMarche.Cells[14,i]:=RMarche.DateReception;
+                TableauMarche.Cells[15,i]:=inttostr(RMarche.DureeAttenteRG);
+                TableauMarche.Cells[16,i]:=inttostr(RMarche.AvertirAvantRG);
+                TableauMarche.Cells[17,i]:=RMarche.TypeFormulation;
+                TableauMarche.Cells[18,i]:=RMarche.SourceStatistiqueMarche;
+                TableauMarche.Cells[19,i]:=RMarche.TypeProjet;
+                TableauMarche.Cells[20,i]:=RMarche.NumMarcheReference;
+                TableauMarche.Cells[21,i]:=RMarche.NumDomiciliation;
+
+                TableauMarche.Cells[22,i]:=RMarche.DebitCredit;
+                TableauMarche.Cells[23,i]:=RMarche.TypeProces;
+                TableauMarche.Cells[24,i]:=RMarche.FichierConcerneTiers;
+                TableauMarche.Cells[25,i]:=RMarche.NumProjetFinance;
+                TableauMarche.Cells[26,i]:=ChercherProjetFinance(RMarche.NumProjetFinance,PositionProjetFinancesRecherche).DesignationProjetFinance;
+          end;
+     end;
+     finally
+     CloseFile(FMarche);
+     end;
+end;
+
+if(i>0)then
+begin
+     TableauMarche.RowCount:=i+1;
+end
+else
+begin
+     TableauMarche.RowCount:=2;
+     TableauMarche.Rows[1].Text:='';
+end;
+
+NotRow:='';
+NotCol:='1;5;14-21';
+for i:=1 to TableauMarche.ColCount-1 do if(existenumintexte(inttostr(i),NotCol))then TableauMarche.ColWidths[i]:=0;
+AjusterColWidth(TableauMarche,NotRow,NotCol);
+TableauMarche.FixedCols:=2;
+
+TableauMarche.ColWidths[4]:=FSMarche.EditMarcheControle.Width;
+end;
+
+Procedure ProcAfficheSaisieMarche(NSMarche:integer);
+var OK:boolean;  TypeProcesMarche,FichierConcerneMarche,AdresseMarche:string;
+begin
+TypeProcesMarche:='Business'; FichierConcerneMarche:='FMarche';
+if not(FunctionAdresseProces(TypeProcesMarche,FichierConcerneMarche,'',AdresseMarche,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+begin
+     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+end;
+
+ChMarche:=AdresseMarche;
+assignfile(FMarche,ChMarche);
+if FileExists(ChMarche)then
+Reset(FMarche)
+else Rewrite(FMarche);
+Seek(FMarche,0);
+OK:=false;
+while not eof(FMarche)and(OK=false)do
+begin
+     Read(FMarche,RMarche);
+     if(RMarche.NSMarche=NSMarche)then
+     begin
+          OK:=true;
+          FSMarche.EditNSMarche.Text:=inttostr(RMarche.NSMarche);
+          FSMarche.EditRefMarche.Text:=RMarche.RefMarche;
+          FSMarche.EditDateMarche.Text:=RMarche.DateMarche;
+          FSMarche.EditCodeMaitreOuvrage.Text:=RMarche.CodeMaitreOuvrage;
+          RTiers:=ChercherTiers(RMarche.TypeProces,RMarche.FichierConcerneTiers,RMarche.CodeMaitreOuvrage,'');
+          FSMarche.EditMaitreOuvrage.Text:=RTiers.NomTiers+' '+RTiers.PrenomTiers;
+          FSMarche.EditMarche.Text:=RMarche.Marche;
+          FSMarche.EditLOT.Text:=RMarche.LOT;
+          FSMarche.EditLieuTrav.Text:=RMarche.LieuTrav;
+          FSMarche.EditMontantMarche.Text:=Vergule(floattostr(RMarche.MontantMarche),'2','C','');
+          FSMarche.EditRabaix.Text:=floattostr(RMarche.Rabaix);
+          FSMarche.EditRetenueGarantie.Text:=floattostr(RMarche.RetenueGarantie);
+          FSMarche.EditRefDevis.Text:=RMarche.RefMarche;
+          FSMarche.EditDelaisExecut.Text:=RMarche.DelaisExecut;
+          FSMarche.EditDateReceptionMarche.Text:=RMarche.DateReception;
+          FSMarche.EditDureeAttente.Text:=inttostr(RMarche.DureeAttenteRG);
+          FSMarche.EditAvertirAvant.Text:=inttostr(RMarche.AvertirAvantRG);
+          FSMarche.EditTypeFormulation.Text:=RMarche.TypeFormulation;
+          FSMarche.EditSourceStatistiqueMarche.Text:=RMarche.SourceStatistiqueMarche;
+          //FSMarche.EditTypeProjet.Text:=RMarche.TypeProjet;
+          FSMarche.EditNumMarcheReference.Text:=RMarche.NumMarcheReference;
+          FSMarche.MarcheReference.Text:=ChercherMarche(strtointeger(RMarche.NumMarcheReference)).Marche;
+          FSMarche.EditNumDomiciliation.Text:=RMarche.NumDomiciliation;
+          RDomiciliation:=ChercherDomiciliation(RMarche.NumDomiciliation,'',PositionDomiciliationRecherche);
+          FSMarche.EditDomiciliation.Text:=RDomiciliation.DesignationDomiciliation;
+          FSMarche.EditNumIdentificationDomiciliation.Text:=RDomiciliation.Identificateur;
+
+          FSMarche.EditDebitCredit.Text:=RMarche.DebitCredit;
+          FSMarche.EditTypeProces.Text:=RMarche.TypeProces;
+          FSMarche.EditFichierConserneTiers.Text:=RMarche.FichierConcerneTiers;
+          FSMarche.EditNumProjet.Text:=RMarche.NumProjetFinance;
+          FSMarche.EditNomProjet.Text:=ChercherProjetFinance(RMarche.NumProjetFinance,PositionProjetFinancesRecherche).DesignationProjetFinance;
+     end;
+end;
+CloseFile(FMarche);
+
+if(OK=false)then
+begin
+          FSMarche.EditNSMarche.Text:='';
+          FSMarche.EditRefMarche.Text:='';
+          FSMarche.EditDateMarche.Text:='';
+          FSMarche.EditCodeMaitreOuvrage.Text:='';
+          FSMarche.EditMaitreOuvrage.Text:='';
+          FSMarche.EditMarche.Text:='';
+          FSMarche.EditLOT.Text:='';
+          FSMarche.EditLieuTrav.Text:='';
+          FSMarche.EditMontantMarche.Text:='';
+          FSMarche.EditRabaix.Text:='';
+          FSMarche.EditRetenueGarantie.Text:='';
+          FSMarche.EditRefDevis.Text:='';
+          FSMarche.EditDelaisExecut.Text:='';
+          FSMarche.EditDateReceptionMarche.Text:='';
+          FSMarche.EditTypeFormulation.Text:='';
+          FSMarche.EditSourceStatistiqueMarche.ItemIndex:=0;
+          FSMarche.EditTypeProjet.ItemIndex:=0;
+          FSMarche.EditNumMarcheReference.Text:=RMarche.NumMarcheReference;
+          FSMarche.MarcheReference.Text:='';
+          FSMarche.EditNumDomiciliation.Text:='';
+          FSMarche.EditDomiciliation.Text:='';
+          FSMarche.EditNumIdentificationDomiciliation.Text:='';
+
+          FSMarche.EditDebitCredit.Text:='';
+          FSMarche.EditTypeProces.Text:='';
+          FSMarche.EditFichierConserneTiers.Text:='';
+          FSMarche.EditNumProjet.Text:='';
+          FSMarche.EditNomProjet.Text:='';
+end;
+
+end;
+
+procedure TFSMarche.AfficheSaisieChantierEnter(Sender: TObject);
+begin
+FSMarche.TimerClic.Enabled:=true;
+FSMarche.TimerClic.Interval:=500;
+end;
+
+procedure TFSMarche.TableauClientKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+FSMarche.EditCodeMaitreOuvrage.Text:=FSMarche.TableauClient.Cells[1,FSMarche.TableauClient.Row];
+FSMarche.EditMaitreOuvrage.Text:=FSMarche.TableauClient.Cells[2,FSMarche.TableauClient.Row]+' '+
+                                   FSMarche.TableauClient.Cells[3,FSMarche.TableauClient.Row];
+FSMarche.EditLOT.SetFocus;
+FSMarche.AfficheNouveauClient.Visible:=false;
+FSMarche.AfficheDistination.Visible:=false;
+end;
+
+if(key=VK_BACK)then
+begin
+     FSMarche.EditCodeMaitreOuvrage.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.BitBtn6Click(Sender: TObject);
+begin
+     FSMarche.AfficheStatistiqueMarcheActions.Visible:=false;
+end;
+
+procedure TFSMarche.BitOptionStatistiqueMarcheClick(Sender: TObject);
+var   i,iExiste,NewNStatistiqueMarche:integer;   OKStatistiqueMarche,OKConfirme:boolean;   NStructureMarche,TypeProces,FichierConcerne,Adresse:string;
+begin
+     if(FSMarche.BitOptionStatistiqueMarche.Caption='Valider')then
+     begin
+          TypeProces:='Business'; FichierConcerne:='FStatistiqueMarche';
+          if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+                //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+          end;
+          ChStatistiqueMarche:=Adresse;
+          assignfile(FStatistiqueMarche,ChStatistiqueMarche);
+          if FileExists(ChStatistiqueMarche)then
+          Reset(FStatistiqueMarche)
+          else Rewrite(FStatistiqueMarche);
+          Seek(FStatistiqueMarche,0);
+          i:=0;
+          NewNStatistiqueMarche:=1;
+          OKStatistiqueMarche:=false;
+          while not eof(FStatistiqueMarche)and(OKStatistiqueMarche=false)do
+          begin
+               Read(FStatistiqueMarche,RStatistiqueMarche);
+
+               if(inttostr(RStatistiqueMarche.NSMarche)=FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row])then
+               begin
+                    if(FSMarche.EditNStructureMarcheStatistique.Text<>'')and(FSMarche.EditNStructureMarcheStatistique.Text=FSMarche.TableauStatistiqueMarche.Cells[2,FSMarche.TableauStatistiqueMarche.Row])then
+                    begin
+                         if(RStatistiqueMarche.NStructureMarche=FSMarche.EditNStructureMarcheStatistique.Text)then
+                         begin
+                              OKStatistiqueMarche:=true;
+                              if(NewNStatistiqueMarche<=RStatistiqueMarche.NStatistiqueMarche)then NewNStatistiqueMarche:=RStatistiqueMarche.NStatistiqueMarche+1;
+                         end
+                         else OKStatistiqueMarche:=false;
+                    end
+                    else
+                    begin
+                         OKStatistiqueMarche:=true;
+                         if(NewNStatistiqueMarche<=RStatistiqueMarche.NStatistiqueMarche)then NewNStatistiqueMarche:=RStatistiqueMarche.NStatistiqueMarche+1;
+                    end;
+
+                    if(OKStatistiqueMarche=true)then
+                    begin
+                         if(inttostr(RStatistiqueMarche.NStatistiqueMarche)=FSMarche.EditNStatistiqueMarche.Text)
+                         then
+                         begin
+                              OKStatistiqueMarche:=true;
+                              iExiste:=i;
+                              NewNStatistiqueMarche:=RStatistiqueMarche.NStatistiqueMarche;
+                         end
+                         else OKStatistiqueMarche:=false;
+                    end;
+               end;
+          i:=i+1;
+          end;
+
+          if(OKStatistiqueMarche=true)then i:=iExiste;
+          if(FSMarche.EditNStatistiqueMarche.Text='')then FSMarche.EditNStatistiqueMarche.Text:=inttostr(NewNStatistiqueMarche);
+
+          Seek(FStatistiqueMarche,i);
+          RStatistiqueMarche.NSMarche:=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+
+          if(FSMarche.TableauMarche.Cells[18,FSMarche.TableauMarche.Row]='Marche')
+          then RStatistiqueMarche.NStructureMarche:=''
+          else RStatistiqueMarche.NStructureMarche:=FSMarche.EditNStructureMarcheStatistique.Text;
+          RStatistiqueMarche.NStatistiqueMarche:=strtointeger(FSMarche.EditNStatistiqueMarche.Text);
+          RStatistiqueMarche.StatistiqueMarche:=FSMarche.EditStatistiqueMarche.Text;
+          RStatistiqueMarche.PourcentageStatistiqueMarche:=strtointeger(FSMarche.EditPourcentageStatistiqueMarche.Text);
+          RStatistiqueMarche.TVAStatistiqueMarche:=strtoreal(FSMarche.EditTVAStatistiqueMarche.Text);
+          write(FStatistiqueMarche,RStatistiqueMarche);
+          CloseFile(FStatistiqueMarche);
+     end;
+
+     if(FSMarche.BitOptionStatistiqueMarche.Caption='Supprimer')then
+     begin
+          DeleteFStatistiqueMarche(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row],FSMarche.EditNStructureMarcheStatistique.Text,FSMarche.EditNStatistiqueMarche.Text,OKConfirme);
+     end;
+
+     if(FSMarche.TableauMarche.Cells[18,FSMarche.TableauMarche.Row]='Marche')
+     then NStructureMarche:=''
+     else NStructureMarche:=FSMarche.TableauStructureMarche.Cells[2,FSMarche.TableauStructureMarche.Row];
+     ProcAfficheStatistiqueMarche(FSMarche.TableauStatistiqueMarche,FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row],NStructureMarche);
+          
+     FSMarche.AfficheStatistiqueMarcheActions.Visible:=false;
+
+     FSMarche.TableauStatistiqueMarche.SetFocus;
+FSMarche.AfficheStatistiqueMarcheActions.Visible:=false;
+end;
+
+procedure TFSMarche.TableauStatistiqueMarcheClick(Sender: TObject);
+begin
+
+FSMarche.AfficheStatistiqueMarcheActions.Visible:=false;
+end;
+
+procedure TFSMarche.BitBtn1Click(Sender: TObject);
+begin
+     FSMarche.AfficheStructureMarcheActions.Visible:=false;
+end;
+
+procedure TFSMarche.BitOptionStructureMarcheClick(Sender: TObject);
+var   i,iExiste,NewNStructureMarche:integer;   OKStructureMarche,OKConfirme:boolean;  TypeProces,FichierConcerne,Adresse:string;
+begin
+     if(FSMarche.BitOptionStructureMarche.Caption='Valider')then
+     begin
+          TypeProces:='Business'; FichierConcerne:='FStructureMarche';
+          if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+          begin
+                //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+          end;
+          ChStructureMarche:=Adresse;
+          assignfile(FStructureMarche,ChStructureMarche);
+          if FileExists(ChStructureMarche)then
+          Reset(FStructureMarche)
+          else Rewrite(FStructureMarche);
+          Seek(FStructureMarche,0);
+          i:=0;
+          NewNStructureMarche:=1;
+          OKStructureMarche:=false;
+          while not eof(FStructureMarche)and(OKStructureMarche=false)do
+          begin
+               Read(FStructureMarche,RStructureMarche);
+
+               if(inttostr(RStructureMarche.NSMarche)=FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row])then
+               begin
+                    if(NewNStructureMarche<=RStructureMarche.NStructureMarche)then NewNStructureMarche:=RStructureMarche.NStructureMarche+1;
+
+                    if(inttostr(RStructureMarche.NStructureMarche)=FSMarche.EditNStructureMarche.Text)
+                    then
+                    begin
+                         OKStructureMarche:=true;
+                         iExiste:=i;
+                         NewNStructureMarche:=RStructureMarche.NStructureMarche;
+                    end;
+               end;
+          i:=i+1;
+          end;
+
+          if(OKStructureMarche=true)then i:=iExiste;
+          if(FSMarche.EditNStructureMarche.Text='')then FSMarche.EditNStructureMarche.Text:=inttostr(NewNStructureMarche);
+
+          Seek(FStructureMarche,i);
+          RStructureMarche.NSMarche:=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+          RStructureMarche.NStructureMarche:=strtointeger(FSMarche.EditNStructureMarche.Text);
+          RStructureMarche.StructureMarche:=FSMarche.EditStructureMarche.Text;
+          write(FStructureMarche,RStructureMarche);
+          CloseFile(FStructureMarche);
+     end;
+
+     if(FSMarche.BitOptionStructureMarche.Caption='Supprimer')then
+     begin
+          DeleteFStructureMarche(strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]),strtointeger(FSMarche.EditNStructureMarche.Text),OKConfirme);
+     end;
+
+     ProcAfficheStructureMarche(FSMarche.TableauStructureMarche,FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+
+     FSMarche.AfficheStructureMarcheActions.Visible:=false;
+
+     FSMarche.TableauStructureMarche.SetFocus;
+end;
+
+procedure TFSMarche.TableauStructureMarcheClick(Sender: TObject);
+var  NStructureMarche:string;
+begin
+     if(FSMarche.TableauMarche.Cells[18,FSMarche.TableauMarche.Row]='Marche')
+     then NStructureMarche:=''
+     else NStructureMarche:=FSMarche.TableauStructureMarche.Cells[2,FSMarche.TableauStructureMarche.Row];
+     ProcAfficheStatistiqueMarche(FSMarche.TableauStatistiqueMarche,FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row],NStructureMarche);
+     FSMarche.AfficheStructureMarcheActions.Visible:=false;
+end;
+
+procedure TFSMarche.TableauStructureMarcheKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if(key in['n','N','m','M'])and(FSMarche.EditChoixNumMarcheReference.Text<>'')and(FSMarche.RBAutoriserGenerationStructureStatistiqueAvenant.Checked=false)then
+     begin
+          showmessage('Génération automatique !');
+          FSMarche.BitStructureStatistiqueAuto.SetFocus;
+          Exit;
+     end;
+
+     if key in['n','N']then
+     begin
+          FSMarche.AfficheStructureMarcheActions.Visible:=true;
+          FSMarche.BitOptionStructureMarche.Kind:=bkAll;
+          FSMarche.BitOptionStructureMarche.Caption:='Valider';
+          FSMarche.EditNStructureMarche.Text:='';
+          FSMarche.EditStructureMarche.Text:='';
+          FSMarche.EditStructureMarche.SetFocus;
+     end;
+
+     if key in['m','M']then
+     begin
+          FSMarche.AfficheStructureMarcheActions.Visible:=true;
+          FSMarche.BitOptionStructureMarche.Kind:=bkRetry;
+          FSMarche.BitOptionStructureMarche.Caption:='Valider';
+          FSMarche.EditNStructureMarche.Text:=FSMarche.TableauStructureMarche.Cells[2,FSMarche.TableauStructureMarche.Row];
+          FSMarche.EditStructureMarche.Text:=FSMarche.TableauStructureMarche.Cells[3,FSMarche.TableauStructureMarche.Row];
+          FSMarche.EditStructureMarche.SetFocus;
+     end;
+
+     if key in['s','S']then
+     begin
+          FSMarche.AfficheStructureMarcheActions.Visible:=true;
+          FSMarche.BitOptionStructureMarche.Kind:=bkCancel;
+          FSMarche.BitOptionStructureMarche.Caption:='Supprimer';
+          FSMarche.EditNStructureMarche.Text:=FSMarche.TableauStructureMarche.Cells[2,FSMarche.TableauStructureMarche.Row];
+          FSMarche.EditStructureMarche.Text:=FSMarche.TableauStructureMarche.Cells[3,FSMarche.TableauStructureMarche.Row];
+          FSMarche.BitOptionStructureMarche.SetFocus;
+     end;
+end;
+
+Procedure ProcAfficheStructureMarche(TableauStructureMarche:TStringGrid; NSMarche:string);
+var  R:integer; OKStructureMarche:boolean;    NotCol,TypeProces,FichierConcerne,Adresse:string;
+begin
+     TableauStructureMarche.ColCount:=4;
+     TableauStructureMarche.Cols[0].Text:='N°';
+     TableauStructureMarche.Cols[1].Text:='N°Marche';
+     TableauStructureMarche.Cols[2].Text:='N°StMarche';
+     TableauStructureMarche.Cols[3].Text:='Structure Marche';
+     TableauStructureMarche.RowCount:=2;
+     TableauStructureMarche.Rows[1].Text:='';
+
+     TypeProces:='Business'; FichierConcerne:='FStructureMarche';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+     end;
+     ChStructureMarche:=Adresse;  FSMarche.AdresseStructureMarche.Caption:=ChStructureMarche;
+     assignfile(FStructureMarche,ChStructureMarche);
+     if FileExists(ChStructureMarche)then
+     Reset(FStructureMarche)
+     else Rewrite(FStructureMarche);
+     Seek(FStructureMarche,0);
+     R:=0;
+     while not eof(FStructureMarche)do
+     begin
+          Read(FStructureMarche,RStructureMarche);
+
+          if(NSMarche<>'')then
+          begin
+               if(RStructureMarche.NSMarche=strtointeger(NSMarche))
+               then OKStructureMarche:=true
+               else OKStructureMarche:=false;
+          end
+          else OKStructureMarche:=true;
+                          
+          if(OKStructureMarche=true)then
+          begin
+               R:=R+1;
+               TableauStructureMarche.Rows[R].Text:=inttostr(R);
+               TableauStructureMarche.Cells[1,R]:=inttostr(RStructureMarche.NSMarche);
+               TableauStructureMarche.Cells[2,R]:=inttostr(RStructureMarche.NStructureMarche);
+               TableauStructureMarche.Cells[3,R]:=RStructureMarche.StructureMarche;
+          end;
+     end;
+     CloseFile(FStructureMarche);
+
+     if(R>0)then TableauStructureMarche.RowCount:=R+1
+            else TableauStructureMarche.RowCount:=2;
+
+     NotCol:='1;2';   
+     for R:=1 to TableauStructureMarche.ColCount-1 do if ExisteNumInTexte(inttostr(R),NotCol)then TableauStructureMarche.ColWidths[R]:=0;
+     AjusterColWidth(TableauStructureMarche,'',NotCol);
+     TableauStructureMarche.FixedCols:=3;
+end;
+
+procedure TFSMarche.EditStructureMarcheKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+     if key in[VK_RETURN]then
+     begin
+          FSMarche.BitOptionStructureMarche.SetFocus;
+     end;
+end;
+
+procedure TFSMarche.TableauStatistiqueMarcheKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if(key in['n','N','m','M'])and(FSMarche.EditChoixNumMarcheReference.Text<>'')and(FSMarche.RBAutoriserGenerationStructureStatistiqueAvenant.Checked=false)then
+     begin
+          showmessage('Génération automatique !');
+          FSMarche.BitStructureStatistiqueAuto.SetFocus;
+          Exit;
+     end;
+
+     if(FSMarche.TableauStatistiqueMarche.Cells[0,0]='?')then FSMarche.BitRafraichir.Visible:=true else FSMarche.BitRafraichir.Visible:=false;
+
+     if key in['n','N']then
+     begin
+          FSMarche.AfficheStatistiqueMarcheActions.Visible:=true;
+          FSMarche.BitOptionStatistiqueMarche.Kind:=bkAll;
+          FSMarche.BitOptionStatistiqueMarche.Caption:='Valider';
+          FSMarche.EditNStatistiqueMarche.Text:='';
+          if(FSMarche.TableauMarche.Cells[18,FSMarche.TableauMarche.Row]='Marche')
+          then FSMarche.EditNStructureMarcheStatistique.Text:=''
+          else FSMarche.EditNStructureMarcheStatistique.Text:=FSMarche.TableauStructureMarche.Cells[2,FSMarche.TableauStructureMarche.Row];
+          FSMarche.EditStatistiqueMarche.Text:='';
+          FSMarche.EditPourcentageStatistiqueMarche.Text:='';
+          FSMarche.EditTVAStatistiqueMarche.Text:='';
+          FSMarche.EditStatistiqueMarche.SetFocus;
+     end;
+
+     if key in['m','M']then
+     begin
+          FSMarche.AfficheStatistiqueMarcheActions.Visible:=true;
+          FSMarche.BitOptionStatistiqueMarche.Kind:=bkRetry;
+          FSMarche.BitOptionStatistiqueMarche.Caption:='Valider';
+          FSMarche.EditNStructureMarcheStatistique.Text:=FSMarche.TableauStatistiqueMarche.Cells[2,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.EditNStatistiqueMarche.Text:=FSMarche.TableauStatistiqueMarche.Cells[3,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.EditStatistiqueMarche.Text:=FSMarche.TableauStatistiqueMarche.Cells[4,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.EditPourcentageStatistiqueMarche.Text:=FSMarche.TableauStatistiqueMarche.Cells[5,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.EditTVAStatistiqueMarche.Text:=FSMarche.TableauStatistiqueMarche.Cells[6,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.EditStatistiqueMarche.SetFocus;
+     end;
+
+     if key in['s','S']then
+     begin
+          FSMarche.AfficheStatistiqueMarcheActions.Visible:=true;
+          FSMarche.BitOptionStatistiqueMarche.Kind:=bkCancel;
+          FSMarche.BitOptionStatistiqueMarche.Caption:='Supprimer';
+          FSMarche.EditNStructureMarcheStatistique.Text:=FSMarche.TableauStatistiqueMarche.Cells[2,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.EditNStatistiqueMarche.Text:=FSMarche.TableauStatistiqueMarche.Cells[3,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.EditStatistiqueMarche.Text:=FSMarche.TableauStatistiqueMarche.Cells[4,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.EditPourcentageStatistiqueMarche.Text:=FSMarche.TableauStatistiqueMarche.Cells[5,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.EditTVAStatistiqueMarche.Text:=FSMarche.TableauStatistiqueMarche.Cells[6,FSMarche.TableauStatistiqueMarche.Row];
+          FSMarche.BitOptionStatistiqueMarche.SetFocus;
+     end;
+end;
+
+procedure TFSMarche.EditSourceStatistiqueMarcheKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSMarche.EditTypeProjetChange(Sender: TObject);
+begin
+     if(FSMarche.EditTypeProjet.Text='Avenant')
+     then FSMarche.AfficheLienMarcheAvenant.Visible:=true    
+     else FSMarche.AfficheLienMarcheAvenant.Visible:=false;
+
+     ProcAfficheMarche(FSMarche.TableauMarche,FSMarche.EditTypeProjet.Text,'');
+end;
+
+procedure TFSMarche.EditNumMarcheReferenceEnter(Sender: TObject);
+begin
+     if(FSMarche.EditChoixNumMarcheReference.Text='')then
+     begin
+          FSMarche.TableauMarcheReference.Top:=FSMarche.AfficheSaisieChantier.Top+FSMarche.AfficheLienMarcheAvenant.Top+FSMarche.MarcheReference.Top+2;
+          FSMarche.TableauMarcheReference.Left:=FSMarche.AfficheSaisieChantier.Left+FSMarche.AfficheLienMarcheAvenant.Left+FSMarche.MarcheReference.Left;
+          FSMarche.TableauMarcheReference.Visible:=true;
+          ProcAfficheMarche(FSMarche.TableauMarcheReference,'Marche','');
+     end
+     else
+     begin
+          AfficherMessage('Le marché de référence est déjà choisi !');
+     end;
+end;
+
+procedure TFSMarche.TableauMarcheReferenceKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var  TypeProces,FichierConcerne:string;
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSMarche.EditNumMarcheReference.Text:=FSMarche.TableauMarcheReference.Cells[1,FSMarche.TableauMarcheReference.Row];
+          FSMarche.MarcheReference.Text:=FSMarche.TableauMarcheReference.Cells[4,FSMarche.TableauMarcheReference.Row];
+
+          TypeProces:='Commercial'; FichierConcerne:='FClient';
+          RTiers:=ChercherTiers(TypeProces,FichierConcerne,FSMarche.TableauMarcheReference.Cells[5,FSMarche.TableauMarcheReference.Row],'');
+          FSMarche.EditCodeMaitreOuvrage.Text:=RTiers.CodeTiers;
+          FSMarche.EditMaitreOuvrage.Text:=RTiers.NomTiers+' '+RTiers.PrenomTiers;
+          FSMarche.EditLieuTrav.Text:=FSMarche.TableauMarcheReference.Cells[8,FSMarche.TableauMarcheReference.Row];
+          FSMarche.TableauMarcheReference.Visible:=false;
+     end;
+end;
+
+procedure TFSMarche.MarcheReferenceEnter(Sender: TObject);
+begin      
+     FSMarche.TableauMarcheReference.Top:=FSMarche.AfficheSaisieChantier.Top+FSMarche.AfficheLienMarcheAvenant.Top+FSMarche.MarcheReference.Top+2;
+     FSMarche.TableauMarcheReference.Left:=FSMarche.AfficheSaisieChantier.Left+FSMarche.AfficheLienMarcheAvenant.Left+FSMarche.MarcheReference.Left;
+     FSMarche.TableauMarcheReference.Visible:=true;
+     ProcAfficheMarche(FSMarche.TableauMarcheReference,'Marche','');
+end;
+
+procedure TFSMarche.EditTypeProjetKeyPress(Sender: TObject; var Key: Char);
+begin
+     key:=#0;
+end;
+
+procedure TFSMarche.EditStatistiqueMarcheKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSMarche.EditPourcentageStatistiqueMarche.SetFocus;
+     end;
+end;
+
+procedure TFSMarche.EditPourcentageStatistiqueMarcheKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSMarche.EditTVAStatistiqueMarche.SetFocus;
+     end;
+end;
+
+procedure TFSMarche.EditTVAStatistiqueMarcheKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSMarche.BitOptionStatistiqueMarche.SetFocus;
+     end;
+end;
+
+procedure TFSMarche.TableauStatistiqueMarcheContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+     ProcAfficheStatistiqueMarche(FSMarche.TableauStatistiqueMarche,FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row],'');
+     FSMarche.TableauStatistiqueMarche.Cells[0,0]:='?';
+end;
+
+procedure TFSMarche.BitRafraichirClick(Sender: TObject);
+begin
+     if(FSMarche.TableauMarche.Cells[18,FSMarche.TableauMarche.Row]='Marche')
+     then FSMarche.EditNStructureMarcheStatistique.Text:=''
+     else FSMarche.EditNStructureMarcheStatistique.Text:=FSMarche.TableauStructureMarche.Cells[2,FSMarche.TableauStructureMarche.Row];
+end;
+
+Procedure AfficheValeuresStatistiqueMarche(TableauValeuresStatistiqueMarche:TStringGrid; NMarche:string);
+var  R,C,RowCountPlus,PourcentageStatistiqueMarche:integer; OutCode:char;  MontantMarche:real;  OKStatistique:boolean; NotRow,NotCol,TypeProces,FichierConcerne,Adresse:string;
+begin
+TableauValeuresStatistiqueMarche.ColCount:=7;
+TableauValeuresStatistiqueMarche.Cols[0].Text:='N°';
+TableauValeuresStatistiqueMarche.Cols[1].Text:='N°Stq';
+TableauValeuresStatistiqueMarche.Cols[2].Text:='Statistique';
+TableauValeuresStatistiqueMarche.Cols[3].Text:='MHT';
+TableauValeuresStatistiqueMarche.Cols[4].Text:='TVA';
+TableauValeuresStatistiqueMarche.Cols[5].Text:='Montant TVA';
+TableauValeuresStatistiqueMarche.Cols[6].Text:='TTC';
+
+TableauValeuresStatistiqueMarche.RowCount:=2;
+TableauValeuresStatistiqueMarche.Rows[1].Text:='';
+
+if(NMarche<>'')then
+begin
+     RMarche:=ChercherMarche(strtointeger(NMarche));
+
+     TypeProces:='Business'; FichierConcerne:='FStatistiqueMarche';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+     end;
+     ChStatistiqueMarche:=Adresse;
+     assignfile(FStatistiqueMarche,ChStatistiqueMarche);
+     if FileExists(ChStatistiqueMarche)then
+     Reset(FStatistiqueMarche)
+     else Rewrite(FStatistiqueMarche);
+     Seek(FStatistiqueMarche,0);
+     R:=0;
+     while not eof(FStatistiqueMarche) do
+     begin
+          Read(FStatistiqueMarche,RStatistiqueMarche);
+          if(RStatistiqueMarche.NSMarche=RMarche.NSMarche)then
+          begin
+               R:=R+1;
+               TableauValeuresStatistiqueMarche.Rows[R].Text:=inttostr(R);
+               TableauValeuresStatistiqueMarche.Cells[1,R]:=inttostr(RStatistiqueMarche.NStatistiqueMarche);
+               TableauValeuresStatistiqueMarche.Cells[2,R]:=RStatistiqueMarche.StatistiqueMarche;
+               TableauValeuresStatistiqueMarche.Cells[3,R]:='';
+               TableauValeuresStatistiqueMarche.Cells[4,R]:=floattostr(RStatistiqueMarche.TVAStatistiqueMarche);
+               TableauValeuresStatistiqueMarche.Cells[5,R]:='';
+               TableauValeuresStatistiqueMarche.Cells[6,R]:='';
+          end;
+     end;
+     CloseFile(FStatistiqueMarche);
+
+     if(R>0)then
+     begin
+          OutCode:='T';
+          RowCountPlus:=3;
+          R:=R+3;
+          TableauValeuresStatistiqueMarche.RowCount:=R;
+          TableauValeuresStatistiqueMarche.Rows[R-1].Text:='';
+          TableauValeuresStatistiqueMarche.Rows[R-2].Text:='';
+          TableauValeuresStatistiqueMarche.Cells[2,R-1]:='Total '+ChercherMarche(strtointeger(NMarche)).TypeProjet;
+          NotCol:='';
+     end
+     else
+     begin
+          OutCode:='M';
+          RowCountPlus:=1;
+          TableauValeuresStatistiqueMarche.RowCount:=2;
+          TableauValeuresStatistiqueMarche.Cells[1,0]:='N° Marche';
+          TableauValeuresStatistiqueMarche.Cells[2,0]:='Désignation';
+          TableauValeuresStatistiqueMarche.Cells[1,1]:=NMarche;
+          TableauValeuresStatistiqueMarche.Cells[2,1]:='Total '+ChercherMarche(strtointeger(NMarche)).TypeProjet;
+          NotCol:='1';
+     end;
+
+     TStatistiqueMarcheArchive:=TableauStatistiqueMarche(strtointeger(NMarche));
+
+
+     TypeProces:='Business'; FichierConcerne:='FDetail'+ChercherMarche(strtointeger(NMarche)).TypeProjet+' '+NMarche;
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+     end;
+     ChDetailMarche:=Adresse;
+     assignfile(FDetailMarche,ChDetailMarche);
+     if FileExists(ChDetailMarche)then
+     Reset(FDetailMarche)
+     else Rewrite(FDetailMarche);
+     Seek(FDetailMarche,0);
+     MontantMarche:=0;
+     while not eof(FDetailMarche) do
+     begin
+          Read(FDetailMarche,RDetailMarche);
+
+          if(DTrie('M',RDetailMarche.CodeTrie)=inttostr(RMarche.NSMarche))then
+          begin
+               R:=1;
+               OKStatistique:=false;
+               while(R<=TableauValeuresStatistiqueMarche.RowCount-RowCountPlus)and(OKStatistique=false)do
+               begin
+                    if(DTrie(OutCode,RDetailMarche.CodeTrie)=TableauValeuresStatistiqueMarche.Cells[1,R])then //OutCode='T'
+                    begin
+                         OKStatistique:=true;
+                         if(OutCode='T')
+                         then PourcentageStatistiqueMarche:=TStatistiqueMarcheArchive[strtointeger(MidelLaters(RDetailMarche.CodeTrie,11,15))].PourcentageStatistiqueMarche
+                         else PourcentageStatistiqueMarche:=0;
+                         if(PourcentageStatistiqueMarche<>0)
+                         then TableauValeuresStatistiqueMarche.Cells[3,R]:=floattostr(strtoreal(TableauValeuresStatistiqueMarche.Cells[3,R])+(RDetailMarche.QuantiteGlobale*RDetailMarche.PrixUnitaire*PourcentageStatistiqueMarche/100))
+                         else TableauValeuresStatistiqueMarche.Cells[3,R]:=floattostr(strtoreal(TableauValeuresStatistiqueMarche.Cells[3,R])+(RDetailMarche.QuantiteGlobale*RDetailMarche.PrixUnitaire));
+                    end;
+               R:=R+1;
+               end;
+          end;
+     end;
+     CloseFile(FDetailMarche);
+
+     R:=1;
+     while(R<=TableauValeuresStatistiqueMarche.RowCount-RowCountPlus)do
+     begin
+          TableauValeuresStatistiqueMarche.Cells[3,R]:=Vergule(TableauValeuresStatistiqueMarche.Cells[3,R],'2','C','');
+          TableauValeuresStatistiqueMarche.Cells[5,R]:=Vergule(floattostr(strtoreal(TableauValeuresStatistiqueMarche.Cells[3,R])*strtoreal(TableauValeuresStatistiqueMarche.Cells[4,R])/100),'2','C','');
+          TableauValeuresStatistiqueMarche.Cells[6,R]:=Vergule(floattostr(strtoreal(TableauValeuresStatistiqueMarche.Cells[3,R])+strtoreal(TableauValeuresStatistiqueMarche.Cells[5,R])),'2','C','');
+          if(RowCountPlus=3)then
+          begin
+               TableauValeuresStatistiqueMarche.Cells[3,TableauValeuresStatistiqueMarche.RowCount-1]:=floattostr(strtoreal(TableauValeuresStatistiqueMarche.Cells[3,TableauValeuresStatistiqueMarche.RowCount-1])+strtoreal(TableauValeuresStatistiqueMarche.Cells[3,R]));
+               TableauValeuresStatistiqueMarche.Cells[5,TableauValeuresStatistiqueMarche.RowCount-1]:=floattostr(strtoreal(TableauValeuresStatistiqueMarche.Cells[5,TableauValeuresStatistiqueMarche.RowCount-1])+strtoreal(TableauValeuresStatistiqueMarche.Cells[5,R]));
+               TableauValeuresStatistiqueMarche.Cells[6,TableauValeuresStatistiqueMarche.RowCount-1]:=floattostr(strtoreal(TableauValeuresStatistiqueMarche.Cells[6,TableauValeuresStatistiqueMarche.RowCount-1])+strtoreal(TableauValeuresStatistiqueMarche.Cells[6,R]));
+          end;
+          R:=R+1;
+     end;
+     TableauValeuresStatistiqueMarche.Cells[3,TableauValeuresStatistiqueMarche.RowCount-1]:=Vergule(TableauValeuresStatistiqueMarche.Cells[3,TableauValeuresStatistiqueMarche.RowCount-1],'2','C','');
+     TableauValeuresStatistiqueMarche.Cells[5,TableauValeuresStatistiqueMarche.RowCount-1]:=Vergule(TableauValeuresStatistiqueMarche.Cells[5,TableauValeuresStatistiqueMarche.RowCount-1],'2','C','');
+     TableauValeuresStatistiqueMarche.Cells[6,TableauValeuresStatistiqueMarche.RowCount-1]:=Vergule(TableauValeuresStatistiqueMarche.Cells[6,TableauValeuresStatistiqueMarche.RowCount-1],'2','C','');
+
+     if(strtoreal(TableauValeuresStatistiqueMarche.Cells[3,TableauValeuresStatistiqueMarche.RowCount-1])<>0)then
+     begin
+          TableauValeuresStatistiqueMarche.Cells[4,TableauValeuresStatistiqueMarche.RowCount-1]:=floattostr(strtoreal(TableauValeuresStatistiqueMarche.Cells[5,TableauValeuresStatistiqueMarche.RowCount-1])/strtoreal(TableauValeuresStatistiqueMarche.Cells[3,TableauValeuresStatistiqueMarche.RowCount-1])*100);
+          TableauValeuresStatistiqueMarche.Cells[4,TableauValeuresStatistiqueMarche.RowCount-1]:=Vergule(TableauValeuresStatistiqueMarche.Cells[4,TableauValeuresStatistiqueMarche.RowCount-1],'2','C','')+' %';
+     end;
+end;
+NotRow:='';
+for C:=1 to TableauValeuresStatistiqueMarche.ColCount-1 do TableauValeuresStatistiqueMarche.ColWidths[C]:=0;
+AjusterColWidth(TableauValeuresStatistiqueMarche,NotRow,NotCol);
+end;
+
+procedure TFSMarche.TimerAlerteMarcheTimer(Sender: TObject);
+begin
+     if(FSMarche.AfficheValeureStatistiqueMarche.Color=$00AEFFFF) then
+     begin
+          FSMarche.AfficheValeureStatistiqueMarche.Color:=$0062FFFF;
+     end
+     else
+     begin
+          FSMarche.AfficheValeureStatistiqueMarche.Color:=$00AEFFFF;
+     end;
+end;
+
+procedure TFSMarche.TableauCoixMarcheReferenceKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          if(FSMarche.TableauCoixMarcheReference.Cells[1,FSMarche.TableauCoixMarcheReference.Row]<>'')then
+          begin
+               FSMarche.AfficheListeMarche.Caption:='Avenants du marché: {'+
+               FSMarche.TableauCoixMarcheReference.Cells[1,FSMarche.TableauCoixMarcheReference.Row]+'} '+
+               FSMarche.TableauCoixMarcheReference.Cells[4,FSMarche.TableauCoixMarcheReference.Row];
+               FSMarche.EditMarcheReference.Caption:='Marche de référence: ';
+          end
+          else
+          begin
+               FSMarche.AfficheListeMarche.Caption:='Avenants';
+          end;
+
+          FSMarche.EditMarcheReference.Caption:='Marche de référence: ';
+          FSMarche.EditRefMarcheEnReference.Text:=FSMarche.TableauCoixMarcheReference.Cells[2,FSMarche.TableauCoixMarcheReference.Row];
+          FSMarche.AfficheEditMarcheReference.Width:=409;
+          FSMarche.EditChoixNumMarcheReference.Text:=FSMarche.TableauCoixMarcheReference.Cells[1,FSMarche.TableauCoixMarcheReference.Row];
+          ProcAfficheMarche(FSMarche.TableauMarche,FSMarche.EditTypeProjet.Text,FSMarche.TableauCoixMarcheReference.Cells[1,FSMarche.TableauCoixMarcheReference.Row]);
+          FSMarche.TableauMarche.SetFocus;
+          FSMarche.AfficheShoixMarcheReference.Visible:=false;
+
+          if(FSMarche.EditIMax.Text<>'')and(longueur(FSMarche.AfficheListeMarche.Caption)>strtointeger(FSMarche.EditIMax.Text))then
+          begin
+               FSMarche.EditIncrimenteDefileTexte.Text:='1';
+               FSMarche.AfficheListeMarcheCopie.Caption:=FSMarche.AfficheListeMarche.Caption;
+               FSMarche.AfficheListeMarche.Caption:='';
+               FSMarche.TimerDefilerAffichage.Enabled:=true;
+          end
+          else
+          begin
+               FSMarche.EditIncrimenteDefileTexte.Text:='';
+               FSMarche.AfficheListeMarcheCopie.Caption:='';
+               FSMarche.TimerDefilerAffichage.Enabled:=false;
+          end;
+     end;
+end;
+
+procedure TFSMarche.AfficheShoixMarcheReferenceEnter(Sender: TObject);
+begin
+     FSMarche.TimerClic.Enabled:=true;
+end;
+
+procedure TFSMarche.AfficheShoixMarcheReferenceExit(Sender: TObject);
+begin
+     FSMarche.TimerClic.Enabled:=false;
+end;
+
+procedure TFSMarche.AfficheListeMarcheDblClick(Sender: TObject);
+begin
+     if(FSMarche.EditTypeProjet.Text<>'Marche')then
+     begin
+          FSMarche.AfficheShoixMarcheReference.Visible:=true;
+          ProcAfficheMarche(FSMarche.TableauCoixMarcheReference,'Marche','');
+          FSMarche.TableauCoixMarcheReference.RowCount:=FSMarche.TableauCoixMarcheReference.RowCount+1;
+          FSMarche.TableauCoixMarcheReference.Rows[FSMarche.TableauCoixMarcheReference.RowCount-1].Text:='';
+          FSMarche.TableauCoixMarcheReference.Cells[4,FSMarche.TableauCoixMarcheReference.RowCount-1]:='Tous';
+     end;
+end;
+
+procedure TFSMarche.EditNumDomiciliationKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditDomiciliation.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditDomiciliationKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditNumIdentificationDomiciliation.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditNumIdentificationDomiciliationKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.BitActions.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.EditDomiciliationEnter(Sender: TObject);
+begin
+     FSMarche.TableauDomiciliation.Left:=FSMarche.AfficheSaisieChantier.Left+FSMarche.EditDomiciliation.Left;
+     FSMarche.TableauDomiciliation.Top:=FSMarche.AfficheSaisieChantier.Top+FSMarche.EditDomiciliation.Top+24;
+     FSMarche.TableauDomiciliation.Visible:=true;
+     ListeDomiciliation(FSMarche.TableauDomiciliation);
+end;
+
+procedure TFSMarche.TableauDomiciliationKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSMarche.EditNumDomiciliation.Text:=FSMarche.TableauDomiciliation.Cells[1,FSMarche.TableauDomiciliation.Row];
+          FSMarche.EditDomiciliation.Text:=FSMarche.TableauDomiciliation.Cells[2,FSMarche.TableauDomiciliation.Row];
+          FSMarche.EditNumIdentificationDomiciliation.Text:=FSMarche.TableauDomiciliation.Cells[3,FSMarche.TableauDomiciliation.Row];
+          FSMarche.TableauDomiciliation.Visible:=false;
+          FSMarche.BitActions.SetFocus;
+     end;
+end;
+
+procedure TFSMarche.AfficheSaisieChantierClick(Sender: TObject);
+begin
+     FSMarche.TableauDomiciliation.Visible:=false;
+end;
+
+procedure TFSMarche.EditMarcheKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSMarche.EditCodeMaitreOuvrage.SetFocus;
+end;
+
+end;
+
+procedure TFSMarche.TableauCoixMarcheReferenceClick(Sender: TObject);
+var  R:integer;
+begin
+     for R:=1 to FSMarche.TableauCoixMarcheReference.RowCount-1 do
+     begin
+          if(R=FSMarche.TableauCoixMarcheReference.Row)then
+          begin
+               FSMarche.EditMarcheControle.Lines.Text:=FSMarche.TableauCoixMarcheReference.Cells[4,R];
+               FSMarche.TableauCoixMarcheReference.RowHeights[R]:=FSMarche.EditMarcheControle.Lines.Capacity*20;
+          end
+          else FSMarche.TableauCoixMarcheReference.RowHeights[R]:=20;
+     end;
+end;
+
+procedure TFSMarche.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+     FSMarche.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Fiche de Saisie Marché';
+end;
+
+procedure TFSMarche.AfficheListeMarcheClick(Sender: TObject);
+begin
+     if(FSMarche.TimerDefilerAffichage.Enabled=false)then
+     begin
+          FSMarche.EditIncrimenteDefileTexte.Text:='1';
+          FSMarche.AfficheListeMarcheCopie.Caption:=FSMarche.AfficheListeMarche.Caption;
+          FSMarche.AfficheListeMarche.Caption:='';
+          FSMarche.TimerDefilerAffichage.Enabled:=true;
+     end
+     else
+     begin
+          FSMarche.TimerDefilerAffichage.Enabled:=false;
+          FSMarche.AfficheListeMarche.Caption:=FSMarche.AfficheListeMarcheCopie.Caption;
+          FSMarche.AfficheListeMarcheCopie.Caption:='';
+          FSMarche.EditIncrimenteDefileTexte.Text:='1';
+     end;
+end;
+
+procedure TFSMarche.TimerDefilerAffichageTimer(Sender: TObject);
+var IBegin,IEnd,iMax:integer;
+begin
+     IEnd:=strtointeger(FSMarche.EditIncrimenteDefileTexte.Text);
+     FSMarche.EditIncrimenteDefileTexte.Text:=inttostr(strtointeger(FSMarche.EditIncrimenteDefileTexte.Text)+1);
+
+     if(FSMarche.EditIMax.Text='')then
+     begin
+          iMax:=longueur(FSMarche.AfficheListeMarcheCopie.Caption);
+          IBegin:=1;
+     end
+     else
+     begin
+          iMax:=strtointeger(FSMarche.EditIMax.Text);
+          if(strtointeger(FSMarche.EditIncrimenteDefileTexte.Text)>strtointeger(FSMarche.EditIMax.Text))
+          then IBegin:=strtointeger(FSMarche.EditIncrimenteDefileTexte.Text)-strtointeger(FSMarche.EditIMax.Text)
+          else IBegin:=1;
+     end;
+
+     if(strtointeger(FSMarche.EditIncrimenteDefileTexte.Text)>=longueur(FSMarche.AfficheListeMarcheCopie.Caption))then
+     begin
+          FSMarche.EditIncrimenteDefileTexte.Text:='1';
+          IBegin:=1;
+          IEnd:=strtointeger(FSMarche.EditIncrimenteDefileTexte.Text);
+     end;
+
+     FSMarche.AfficheListeMarche.Caption:=MidelLaters(FSMarche.AfficheListeMarcheCopie.Caption,IBegin,IEnd);
+
+end;
+
+procedure TFSMarche.BitStructureStatistiqueAutoClick(Sender: TObject);
+var  i,iExiste:integer;  OKStructureMarche,OKStatistiqueMarche:boolean;   TypeProces,FichierConcerne,Adresse,TypeProcesCopie,FichierConcerneCopie,AdresseCopie:string;
+begin
+     if(FSMarche.EditChoixNumMarcheReference.Text='')then
+     begin
+          showmessage('Aucun marché de référence !');
+          Exit;
+     end;
+
+     TypeProcesCopie:='Business'; FichierConcerneCopie:='FStructureMarche';
+     if not(FunctionAdresseProces(TypeProcesCopie,FichierConcerneCopie,'',AdresseCopie,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+     end;
+     ChStructureMarcheCopie:=AdresseCopie;
+     assignfile(FStructureMarcheCopie,ChStructureMarcheCopie);
+     if FileExists(ChStructureMarcheCopie)then
+     Reset(FStructureMarcheCopie)
+     else Rewrite(FStructureMarcheCopie);
+     Seek(FStructureMarcheCopie,0);
+     while not eof(FStructureMarcheCopie)do
+     begin
+          Read(FStructureMarcheCopie,RStructureMarcheCopie);
+
+          if(inttostr(RStructureMarcheCopie.NSMarche)=FSMarche.EditChoixNumMarcheReference.Text)then
+          begin
+               /////////////////////////////////////////////////////////////////
+                TypeProces:='Business'; FichierConcerne:='FStructureMarche';
+                if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                begin
+                      //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+                end;
+                ChStructureMarche:=Adresse;
+                assignfile(FStructureMarche,ChStructureMarche);
+                if FileExists(ChStructureMarche)then
+                Reset(FStructureMarche)
+                else Rewrite(FStructureMarche);
+                Seek(FStructureMarche,0);
+                i:=0;
+                iExiste:=i;
+                OKStructureMarche:=false;
+                while not eof(FStructureMarche)and(OKStructureMarche=false)do
+                begin
+                     Read(FStructureMarche,RStructureMarche);
+
+                     if(RStructureMarche.NSMarche=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]))then
+                     begin
+                          if(RStructureMarche.NStructureMarche=RStructureMarcheCopie.NStructureMarche)
+                          then
+                          begin
+                               OKStructureMarche:=true;
+                               iExiste:=i;
+                          end;
+                     end;
+                i:=i+1;
+                end;
+
+                if(OKStructureMarche=true)then i:=iExiste;
+
+                Seek(FStructureMarche,i);
+                RStructureMarche.NSMarche:=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+                RStructureMarche.NStructureMarche:=RStructureMarcheCopie.NStructureMarche;
+                RStructureMarche.StructureMarche:=RStructureMarcheCopie.StructureMarche;
+                write(FStructureMarche,RStructureMarche);
+                CloseFile(FStructureMarche);
+               /////////////////////////////////////////////////////////////////
+          end;
+     end;
+     CloseFile(FStructureMarcheCopie);
+
+     TypeProcesCopie:='Business'; FichierConcerneCopie:='FStatistiqueMarche';
+     if not(FunctionAdresseProces(TypeProcesCopie,FichierConcerneCopie,'',AdresseCopie,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+     end;
+     ChStatistiqueMarcheCopie:=AdresseCopie;
+     assignfile(FStatistiqueMarcheCopie,ChStatistiqueMarcheCopie);
+     if FileExists(ChStatistiqueMarcheCopie)then
+     Reset(FStatistiqueMarcheCopie)
+     else Rewrite(FStatistiqueMarcheCopie);
+     Seek(FStatistiqueMarcheCopie,0);
+     while not eof(FStatistiqueMarcheCopie)do
+     begin
+          Read(FStatistiqueMarcheCopie,RStatistiqueMarcheCopie);
+
+          if(inttostr(RStatistiqueMarcheCopie.NSMarche)=FSMarche.EditChoixNumMarcheReference.Text)then
+          begin
+               /////////////////////////////////////////////////////////////////
+                TypeProces:='Business'; FichierConcerne:='FStatistiqueMarche';
+                if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+                begin
+                     //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+                end;
+                ChStatistiqueMarche:=Adresse;
+                assignfile(FStatistiqueMarche,ChStatistiqueMarche);
+                if FileExists(ChStatistiqueMarche)then
+                Reset(FStatistiqueMarche)
+                else Rewrite(FStatistiqueMarche);
+                Seek(FStatistiqueMarche,0);
+                i:=0;
+                iExiste:=i;
+                OKStatistiqueMarche:=false;
+                while not eof(FStatistiqueMarche)and(OKStatistiqueMarche=false)do
+                begin
+                     Read(FStatistiqueMarche,RStatistiqueMarche);
+
+                     if(RStatistiqueMarche.NSMarche=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]))then
+                     begin
+                          if(RStatistiqueMarche.NStatistiqueMarche=RStatistiqueMarcheCopie.NStatistiqueMarche)
+                          then
+                          begin
+                               OKStatistiqueMarche:=true;
+                               iExiste:=i;
+                          end;
+                     end;
+                i:=i+1;
+                end;
+
+                if(OKStatistiqueMarche=true)then i:=iExiste;
+
+                Seek(FStatistiqueMarche,i);
+                RStatistiqueMarche.NSMarche:=strtointeger(FSMarche.TableauMarche.Cells[1,FSMarche.TableauMarche.Row]);
+                RStatistiqueMarche.NStructureMarche:=RStatistiqueMarcheCopie.NStructureMarche;
+                RStatistiqueMarche.NStatistiqueMarche:=RStatistiqueMarcheCopie.NStatistiqueMarche;
+                RStatistiqueMarche.StatistiqueMarche:=RStatistiqueMarcheCopie.StatistiqueMarche;
+                RStatistiqueMarche.PourcentageStatistiqueMarche:=RStatistiqueMarcheCopie.PourcentageStatistiqueMarche;
+                RStatistiqueMarche.TVAStatistiqueMarche:=RStatistiqueMarcheCopie.TVAStatistiqueMarche;
+                write(FStatistiqueMarche,RStatistiqueMarche);
+                CloseFile(FStatistiqueMarche);
+               /////////////////////////////////////////////////////////////////
+          end;
+     end;
+     CloseFile(FStatistiqueMarcheCopie);
+end;
+
+procedure TFSMarche.EditNomProjetEnter(Sender: TObject);
+begin
+FSMarche.TableauProjet.Visible:=true;
+FSMarche.TableauProjet.Left:=465;
+FSMarche.TableauProjet.Top:=318;
+FSMarche.TableauProjet.SetFocus;
+ListeProjetFinance(FSMarche.TableauProjet,'','','10',false,'1','',false,false,'','');
+end;
+
+procedure TFSMarche.EditTypeProcesSelect(Sender: TObject);
+begin
+     ListeTypeFichierTiersBox(FSMarche.EditTypeProces.Text,'','',EditFichierConserneTiers,FSMarche.TitreEditTiersFichierConserne);
+end;
+
+procedure TFSMarche.TableauProjetKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSMarche.EditNumProjet.Text:=FSMarche.TableauProjet.Cells[1,FSMarche.TableauProjet.Row];
+          FSMarche.EditNomProjet.Text:=ChercherProjetFinance(FSMarche.EditNumProjet.Text,PositionProjetFinancesRecherche).DesignationProjetFinance;
+          FSMarche.TableauProjet.Visible:=false;
+     end;
+end;
+
+procedure TFSMarche.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+Function FunctMontantMarcheHT(NSMarche:string):real;
+var  MontantMarche:real;  OKArticle:boolean; TypeProces,FichierConcerne,Adresse:string;
+begin
+     TypeProces:='Business'; FichierConcerne:='FDetail'+ChercherMarche(strtointeger(NSMarche)).TypeProjet+' '+NSMarche;
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //if(<>'')then AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier recherché !'+' {'+FichierConcerne+'}');
+     end;
+     ChDetailMarche:=Adresse;
+     assignfile(FDetailMarche,ChDetailMarche);
+     if FileExists(ChDetailMarche)then
+     Reset(FDetailMarche)
+     else Rewrite(FDetailMarche);
+     Seek(FDetailMarche,0);
+     MontantMarche:=0;
+     while not eof(FDetailMarche) do
+     begin
+          Read(FDetailMarche,RDetailMarche);
+
+          RStatistiqueMarcheCopie:=ChercherStatistiqueMarche(strtointeger(NSMarche),strtointeger(MidelLaters(RDetailMarche.CodeTrie,11,15)));
+
+          if(DTrie('M',RDetailMarche.CodeTrie)=NSMarche)
+          then OKArticle:=true
+          else OKArticle:=false;
+
+          if(OKArticle=true)then
+          begin
+               if(RStatistiqueMarcheCopie.NSMarche=strtointeger(NSMarche))then
+               begin
+                    if(DTrie('T',RDetailMarche.CodeTrie)=inttostr(RStatistiqueMarcheCopie.NStatistiqueMarche))
+                    then OKArticle:=true
+                    else OKArticle:=false;
+               end;
+          end;
+
+          if(OKArticle=true)then
+          begin
+               MontantMarche:=MontantMarche+(RDetailMarche.QuantiteGlobale*RDetailMarche.PrixUnitaire);
+          end;
+     end;
+     CloseFile(FDetailMarche);
+
+     FunctMontantMarcheHT:=MontantMarche;
+end;
+
+procedure TFSMarche.TableauMarcheDblClick(Sender: TObject);
+begin
+ProcAfficheMarche(FSMarche.TableauMarche,'','');
+end;
+
+procedure TFSMarche.TableauAnalyseMontantMarcheClick(Sender: TObject);
+begin
+     FSMarche.TableauAnalyseMontantMarche.DefaultRowHeight:=20;
+end;
+
+end.

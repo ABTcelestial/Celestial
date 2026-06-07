@@ -1,0 +1,5 @@
+
+Ci-joint l'adresse de trayicons pour que la compilation sous delphi fonctionne :
+
+
+http://swiss.torry.net/trayicons.htm

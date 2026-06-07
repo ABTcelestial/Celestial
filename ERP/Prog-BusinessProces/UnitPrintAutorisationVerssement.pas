@@ -1,0 +1,56 @@
+unit UnitPrintAutorisationVerssement;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls;
+
+type
+  TPrintAutorisationVerssement = class(TQuickRep)
+    TitleBand1: TQRBand;
+    QRShape1: TQRShape;
+    QRLabel3: TQRLabel;
+    QRShape7: TQRShape;
+    QRLabel5: TQRLabel;
+    QRShape9: TQRShape;
+    QRLabel6: TQRLabel;
+    DataNometPrenom: TQRLabel;
+    DataDateNaissance: TQRLabel;
+    DataFonction: TQRLabel;
+    TitreEtat: TQRLabel;
+    DataDateFormulaire: TQRLabel;
+    DataSignataire: TQRLabel;
+    PageHeaderBand1: TQRBand;
+    TitreEntreprise1: TQRLabel;
+    TitreEntreprise2: TQRLabel;
+    TitreEntreprise3: TQRLabel;
+    TitreEntreprise4: TQRLabel;
+    Logo: TQRImage;
+    DataAutorisation: TQRRichText;
+    QRShape2: TQRShape;
+    QRLabel1: TQRLabel;
+    QRShape4: TQRShape;
+    QRShape5: TQRShape;
+    TitrePieceIdentite: TQRLabel;
+    QRShape10: TQRShape;
+    DataPieceIdentite: TQRLabel;
+    QRLabel2: TQRLabel;
+    QRLabel4: TQRLabel;
+    QRShape12: TQRShape;
+    QRShape3: TQRShape;
+    QRShape6: TQRShape;
+    QRShape8: TQRShape;
+  private
+
+  public
+
+  end;
+
+var
+  PrintAutorisationVerssement: TPrintAutorisationVerssement;
+
+implementation
+
+{$R *.DFM}
+
+end.

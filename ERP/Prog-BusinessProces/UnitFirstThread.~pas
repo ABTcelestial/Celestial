@@ -1,0 +1,48 @@
+unit UnitFirstThread;
+interface
+uses Windows, Dialogs, Classes, SysUtils;
+
+type
+  TUnitFirstThread = class(TThread);
+  TPersoThread = class(TThread)
+  private
+    procedure CentralControl;
+  public
+    constructor Create(CreateSuspended:boolean);
+     destructor Destroy; override;
+  protected
+    procedure Execute; override;
+  end;
+
+implementation
+
+Uses UnitInitialisation, UnitFSTraitementDonnees;
+
+constructor TPersoThread.Create(CreateSuspended:boolean);
+begin
+  inherited Create(CreateSuspended);
+  FreeOnTerminate:=false;
+  Priority:=tpNormal;
+end;
+
+destructor TPersoThread.Destroy;
+begin
+  //déchargez la mémoire ici si vous avez créé des objets
+  inherited;
+end;
+
+procedure TPersoThread.CentralControl;
+begin
+  //écrivez ici ce que doit faire votre thread à un instant T donné
+
+  SituationTiers(FSTraitementDonnees.TableauFinanceTiers,FSTraitementDonnees.EditTiersModePaiement.Text,FSTraitementDonnees.EditTiersDomiciliation.Text,datetostr(FSTraitementDonnees.EditTiersDateDebut.Date),datetostr(FSTraitementDonnees.EditTiersDateFin.Date),FSTraitementDonnees.EditTiersNumProjetTraitement.Text,FSTraitementDonnees.EditTiersNumFicheTraitement.Text,FSTraitementDonnees.EditTiersNumRubriqueTraitement.Text,FSTraitementDonnees.EditTiersNumPlanificateurTraitement.Text,FSTraitementDonnees.EditTiersTypeProces.Text,FSTraitementDonnees.EditTiersFichierConserne.Text,FSTraitementDonnees.EditTiersCodeTiers.Text,strtointeger(FSTraitementDonnees.EditRubriqueTrie.Text),FSTraitementDonnees.RBAfficherAvisAnnulesTiers.Checked,FSTraitementDonnees.RBAvisExecutesNonExecutes.Checked,FSTraitementDonnees.RBAvisExecutes.Checked,FSTraitementDonnees.RBAvisNonExecutes.Checked);
+end;
+
+procedure TPersoThread.Execute;
+begin
+  repeat
+    Sleep(500); //en millisecondes
+    Synchronize(CentralControl);
+  until Terminated;
+end;
+end.

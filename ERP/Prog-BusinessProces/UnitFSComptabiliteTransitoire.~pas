@@ -1,0 +1,752 @@
+unit UnitFSComptabiliteTransitoire;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, Grids, StdCtrls, Buttons, ExtCtrls, Mask;
+
+type
+  TFSComptabiliteTransitoire = class(TForm)
+    PageControl1: TPageControl;
+    PageComptabilisationTransitoire: TTabSheet;
+    AfficheImputationComptable: TPanel;
+    Bevel22: TBevel;
+    Label44: TLabel;
+    Bevel7: TBevel;
+    Bevel5: TBevel;
+    Bevel6: TBevel;
+    Label41: TLabel;
+    Label42: TLabel;
+    Label43: TLabel;
+    Bevel4: TBevel;
+    Bevel14: TBevel;
+    Bevel21: TBevel;
+    BitBtn5: TBitBtn;
+    EditNumEntite: TEdit;
+    EditNomEntite: TEdit;
+    TableauImputationComptable: TStringGrid;
+    EditNumPieceComptable: TEdit;
+    EditJournalAuxiliaireUtiliseAvis: TEdit;
+    EditDateImputation: TDateTimePicker;
+    TableauEntite: TStringGrid;
+    TableauJournalauxiliaire: TStringGrid;
+    BitBtn1: TBitBtn;
+    AfficheOperationComptable: TPanel;
+    Bevel20: TBevel;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    TabSheet1: TTabSheet;
+    TableauChargementImputationComptable: TStringGrid;
+    TableauChargementPieceComptable: TStringGrid;
+    TableauDataImputation: TStringGrid;
+    TabSheet2: TTabSheet;
+    TableauPiecesComptable: TStringGrid;
+    AfficheOperationPiecesComptable: TPanel;
+    Bevel8: TBevel;
+    BitBtn4: TBitBtn;
+    BitOperationPiecesComptable: TBitBtn;
+    Panel1: TPanel;
+    Label25: TLabel;
+    Label26: TLabel;
+    RBExtentionFichierConcerne: TCheckBox;
+    EditRechercheNPiece: TEdit;
+    EditJournal: TEdit;
+    RadioGroup3: TRadioGroup;
+    RBPortrait: TRadioButton;
+    RBPaysage: TRadioButton;
+    RadioGroup2: TRadioGroup;
+    RBPieceEntitePrecise: TRadioButton;
+    RBPieceEntitePreciseFiliales: TRadioButton;
+    AfficheOperationImputationComptable: TPanel;
+    BitOperationImputationComptable: TBitBtn;
+    BitBtn10: TBitBtn;
+    procedure EditDateImputationChange(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure TableauImputationComptableClick(Sender: TObject);
+    procedure EditNumEntiteEnter(Sender: TObject);
+    procedure EditJournalAuxiliaireUtiliseAvisEnter(Sender: TObject);
+    procedure TableauEntiteKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauJournalauxiliaireDblClick(Sender: TObject);
+    procedure TableauJournalauxiliaireKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure TabSheet2Show(Sender: TObject);
+    procedure EditRechercheNPieceKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure RBPieceEntitePreciseClick(Sender: TObject);
+    procedure RBPieceEntitePreciseFilialesClick(Sender: TObject);
+    procedure TableauPiecesComptableClick(Sender: TObject);
+    procedure BitOperationPiecesComptableClick(Sender: TObject);
+    procedure BitBtn10Click(Sender: TObject);
+    procedure BitOperationImputationComptableClick(Sender: TObject);
+    procedure TableauImputationComptableKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure TableauPiecesComptableKeyPress(Sender: TObject;
+      var Key: Char);
+    procedure TableauJournalauxiliaireKeyPress(Sender: TObject;
+      var Key: Char);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSComptabiliteTransitoire: TFSComptabiliteTransitoire;
+
+Procedure ProcNouvelPieceComptable(NumEntite:string);
+Procedure ProcImputationJournalGeneralTransitoire(NumEntite:string);
+Procedure EnteteTableauDataImputation(TableauDataImputation:TStringGrid; NbrColonne:integer);
+Procedure ChargementTableauDataImputation(TableauDataImputation:TStringGrid; ColSaisie:integer; TypeAvis,TypeProces,FichierConcerne,CodeFichierConcerne,DebitCreditDomiciliation,NumDomiciliation,CompteImputation,Montant,ModePaiement,NumPiece,DateImputation,DocumentBase,NumDocumentBase,DateDocumentBase,IntituleOperationDocumentBase:string);
+Procedure ProcListePiecesComptable(TableauPiecesComptable:TStringGrid; PieceEntitePrecise:boolean; NPiece,ExtentionFichierConcerne,RowSelect:string);
+
+implementation
+
+Uses UnitInitialisation, UnitSuppression;
+
+{$R *.dfm}
+
+procedure TFSComptabiliteTransitoire.EditDateImputationChange(
+  Sender: TObject);
+begin
+ProcAfficheJournalGeneral(FSComptabiliteTransitoire.TableauImputationComptable,FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text,datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),FSComptabiliteTransitoire.EditNumEntite.Text);
+end;
+
+procedure TFSComptabiliteTransitoire.BitBtn5Click(Sender: TObject);
+begin
+FSComptabiliteTransitoire.AfficheOperationComptable.Visible:=true;
+end;
+
+procedure TFSComptabiliteTransitoire.BitBtn3Click(Sender: TObject);
+begin
+ProcNouvelPieceComptable(FSComptabiliteTransitoire.EditNumEntite.Text);
+ProcImputationJournalGeneralTransitoire(FSComptabiliteTransitoire.EditNumEntite.Text);
+ProcAfficheJournalGeneral(FSComptabiliteTransitoire.TableauImputationComptable,FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text,datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),FSComptabiliteTransitoire.EditNumEntite.Text);
+FSComptabiliteTransitoire.AfficheOperationComptable.Visible:=false;
+end;
+
+procedure TFSComptabiliteTransitoire.BitBtn2Click(Sender: TObject);
+begin
+FSComptabiliteTransitoire.AfficheOperationComptable.Visible:=false;
+end;
+
+procedure TFSComptabiliteTransitoire.TableauImputationComptableClick(
+  Sender: TObject);
+begin
+FSComptabiliteTransitoire.TableauEntite.Visible:=false;
+FSComptabiliteTransitoire.TableauJournalauxiliaire.Visible:=false;
+FSComptabiliteTransitoire.AfficheOperationImputationComptable.Visible:=false;
+end;
+
+procedure TFSComptabiliteTransitoire.EditNumEntiteEnter(Sender: TObject);
+begin
+AfficherArborescenceEntite(FSComptabiliteTransitoire.TableauEntite,'','');
+FSComptabiliteTransitoire.TableauEntite.SetFocus;
+end;
+
+procedure TFSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvisEnter(
+  Sender: TObject);
+var  i,R,OrdrePiece,NbrOK:integer; OKRowSelecte:boolean;
+     NumTypeAvis,ChercheSigneDebitCredit:integer; CompteImputation,DebitCredit,TypeProces,FichierConserne,JourneauxAuxiliaireUtilise:string;
+begin
+     FSComptabiliteTransitoire.TableauJournalauxiliaire.Visible:=true;
+     ProcListeJournalauxiliaireTD(FSComptabiliteTransitoire.TableauJournalauxiliaire,JourneauxAuxiliaireUtilise);
+     FSComptabiliteTransitoire.TableauJournalauxiliaire.SetFocus;
+end;                                                                   
+
+procedure TFSComptabiliteTransitoire.TableauEntiteKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var  i,R,OrdrePiece,NbrOK:integer; OKRowSelecte:boolean;
+     NumTypeAvis:integer; CompteImputation,DebitCredit,TypeProces,FichierConcerne,JourneauxAuxiliaireUtilise,Adresse:string;
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSComptabiliteTransitoire.EditNumEntite.Text:=FSComptabiliteTransitoire.TableauEntite.Cells[1,FSComptabiliteTransitoire.TableauEntite.Row];
+          FSComptabiliteTransitoire.EditNomEntite.Text:=FSComptabiliteTransitoire.TableauEntite.Cells[2,FSComptabiliteTransitoire.TableauEntite.Row];
+          FSComptabiliteTransitoire.TableauEntite.Visible:=false;
+
+          if(FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text='')then
+          begin
+               FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.SetFocus;
+          end
+          else
+          begin
+               FSComptabiliteTransitoire.TableauJournalauxiliaire.Visible:=false;
+               TypeProces:='Comptabilité';
+               FichierConcerne:='FJournalGeneralTransitoire'+Firstlaters(FSComptabiliteTransitoire.EditNumEntite.Text,5);
+               if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+               end;
+
+               assignfile(FJournalGeneral,Adresse);
+               if FileExists(Adresse)then
+               begin
+                    Reset(FJournalGeneral);
+                    Seek(FJournalGeneral,0);
+                    i:=0;
+                    OrdrePiece:=1;
+                    while not eof(FJournalGeneral)do
+                    begin
+                         Read(FJournalGeneral,RJournalGeneral);
+
+                         if(FSComptabiliteTransitoire.EditNumPieceComptable.Text='')
+                         and(Firstlaters(RJournalGeneral.NumPiece,longueur(FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/'))=FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/')then
+                         begin
+                              if(OrdrePiece<=strtointeger(lastlaters(RJournalGeneral.NumPiece,longueur(RJournalGeneral.NumPiece)-longueur(Firstlaters(RJournalGeneral.NumPiece,longueur(FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text))+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/'))))
+                              then OrdrePiece:=strtointeger(lastlaters(RJournalGeneral.NumPiece,longueur(RJournalGeneral.NumPiece)-longueur(Firstlaters(RJournalGeneral.NumPiece,longueur(FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text))+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/')))+1;
+                         end;
+                    i:=i+1;
+                    end;
+                    FSComptabiliteTransitoire.EditNumPieceComptable.Text:=FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/'+Completezerogauche(inttostr(OrdrePiece),'2');
+               end
+               else
+               begin
+                    Affichermessage('Le fichier Adresse n''existe pas !');
+               end;
+          end;
+     end;
+end;
+
+procedure TFSComptabiliteTransitoire.TableauJournalauxiliaireDblClick(
+  Sender: TObject);
+var  R:integer;
+begin
+
+for R:=1 to FSComptabiliteTransitoire.TableauJournalauxiliaire.RowCount-1 do
+if(R<>FSComptabiliteTransitoire.TableauJournalauxiliaire.Row)then FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[7,R]:='';
+
+if(FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[7,FSComptabiliteTransitoire.TableauJournalauxiliaire.Row]='')
+then FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[7,FSComptabiliteTransitoire.TableauJournalauxiliaire.Row]:='OK'
+else FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[7,FSComptabiliteTransitoire.TableauJournalauxiliaire.Row]:='';
+end;
+
+procedure TFSComptabiliteTransitoire.TableauJournalauxiliaireKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+var i,R,RowSelect,OrdrePiece,NbrOK:integer; OKComtabilisation:boolean;  TypeProces,FichierConcerne,Adresse:string;
+begin
+
+if key in[VK_RETURN]then
+begin
+     R:=1;
+     RowSelect:=0;
+     while(R<=FSComptabiliteTransitoire.TableauJournalauxiliaire.RowCount-1)and(RowSelect=0)do
+     begin
+          if(FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[7,R]='OK')then
+          begin
+               RowSelect:=R;
+          end;
+     R:=R+1;
+     end;
+
+     if(RowSelect<>0)then
+     begin
+          FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text:=FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[1,RowSelect];
+          if(FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text<>'')then
+          begin
+               FSComptabiliteTransitoire.TableauJournalauxiliaire.Visible:=false;
+               TypeProces:='Comptabilité';
+               FichierConcerne:='FJournalGeneralTransitoire'+Firstlaters(FSComptabiliteTransitoire.EditNumEntite.Text,5);
+               if not(FunctionAdresseProces(TypeProces,FichierConcerne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+               begin
+                    AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+               end;
+
+               assignfile(FJournalGeneral,Adresse);
+               if FileExists(Adresse)then
+               begin
+                    Reset(FJournalGeneral);
+                    Seek(FJournalGeneral,0);
+                    i:=0;
+                    OrdrePiece:=1;
+                    while not eof(FJournalGeneral)do
+                    begin
+                         Read(FJournalGeneral,RJournalGeneral);
+
+                         if(FSComptabiliteTransitoire.EditNumPieceComptable.Text='')
+                         and(Firstlaters(RJournalGeneral.NumPiece,longueur(FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/'))=FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/')then
+                         begin
+                              if(OrdrePiece<=strtointeger(lastlaters(RJournalGeneral.NumPiece,longueur(RJournalGeneral.NumPiece)-longueur(Firstlaters(RJournalGeneral.NumPiece,longueur(FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text))+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/'))))
+                              then OrdrePiece:=strtointeger(lastlaters(RJournalGeneral.NumPiece,longueur(RJournalGeneral.NumPiece)-longueur(Firstlaters(RJournalGeneral.NumPiece,longueur(FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text))+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/')))+1;
+                         end;
+                    i:=i+1;
+                    end;
+                    FSComptabiliteTransitoire.EditNumPieceComptable.Text:=FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text+'/'+lastlaters(datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),7)+'/'+Completezerogauche(inttostr(OrdrePiece),'2');
+               end
+               else
+               begin
+                    Affichermessage('Le fichier Adresse n''existe pas !');
+               end;
+          end;
+
+          if(FSComptabiliteTransitoire.EditNumEntite.Text='')then
+          begin
+               FSComptabiliteTransitoire.EditNumEntite.SetFocus;
+          end;
+     end
+     else
+     begin
+         showmessage('Aucun journal n''est sélectionné !');
+     end;
+
+ProcAfficheJournalGeneral(FSComptabiliteTransitoire.TableauImputationComptable,FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text,datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),FSComptabiliteTransitoire.EditNumEntite.Text);
+end;
+end;
+
+procedure TFSComptabiliteTransitoire.BitBtn1Click(Sender: TObject);
+begin
+     FSComptabiliteTransitoire.AfficheOperationComptable.Visible:=false;
+     FSComptabiliteTransitoire.Close;
+end;
+
+Procedure ProcImputationJournalGeneralTransitoire(NumEntite:string);
+var  i,C,NumImputation:integer; TypeProces,FichierConcerne,Adresse:string;  OKExistePiece:boolean;
+begin
+     TypeProces:='Comptabilité';
+     FichierConcerne:='FJournalGeneralTransitoire'+Firstlaters(NumEntite,5);
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     assignfile(FJournalGeneral,Adresse);
+     if FileExists(Adresse)then
+     begin
+          Reset(FJournalGeneral);
+          Seek(FJournalGeneral,0);
+          i:=0;
+          NumImputation:=1;
+          while not eof(FJournalGeneral)do
+          begin
+               Read(FJournalGeneral,RJournalGeneral);
+               if(NumImputation<=RJournalGeneral.NumImputation)then NumImputation:=RJournalGeneral.NumImputation+1;
+          i:=i+1;
+          end;
+
+          C:=1;
+          while(C<=FSComptabiliteTransitoire.TableauDataImputation.ColCount-1)do
+          begin
+               Seek(FJournalGeneral,i);
+               Truncate(FJournalGeneral);
+               RJournalGeneral.NumImputation:=NumImputation;
+
+               if(NumEntite='Tous')
+               then RJournalGeneral.NumEntite:=''
+               else RJournalGeneral.NumEntite:=NumEntite;
+
+               RJournalGeneral.CodeJournal:=FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text;
+               RJournalGeneral.DateImputation:=datetostr(FSComptabiliteTransitoire.EditDateImputation.Date);
+               RJournalGeneral.NumPiece:=FSComptabiliteTransitoire.EditNumPieceComptable.Text;
+               RJournalGeneral.CodeTiers:=FSComptabiliteTransitoire.TableauDataImputation.Cells[C,4];
+               RJournalGeneral.TypeProces:=FSComptabiliteTransitoire.TableauDataImputation.Cells[C,2];
+               RJournalGeneral.FichierTiersConserne:=FSComptabiliteTransitoire.TableauDataImputation.Cells[C,3];
+               RJournalGeneral.DebitCredit:=FSComptabiliteTransitoire.TableauDataImputation.Cells[C,5];
+               RJournalGeneral.NumCompte:=FSComptabiliteTransitoire.TableauDataImputation.Cells[C,7];
+               RJournalGeneral.MontantImputer:=strtoreal(FSComptabiliteTransitoire.TableauDataImputation.Cells[C,8]);
+               write(FJournalGeneral,RJournalGeneral);
+               i:=i+1;
+               NumImputation:=NumImputation+1;
+          C:=C+1;
+          end;
+          CloseFile(FJournalGeneral);
+     end;
+end;
+
+Procedure ProcNouvelPieceComptable(NumEntite:string);
+var  i:integer; TypeProces,FichierConcerne,Adresse:string;  OKExistePiece:boolean;
+begin
+     TypeProces:='Comptabilité';
+     FichierConcerne:='FPiecesComptableTransitoire'+Firstlaters(NumEntite,5);
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     assignfile(FPiecesComptable,Adresse);
+     if FileExists(Adresse)then
+     begin
+          Reset(FPiecesComptable);
+          Seek(FPiecesComptable,0);
+          i:=0;
+          OKExistePiece:=false;
+          while not eof(FPiecesComptable)and(OKExistePiece=false)do
+          begin
+               Read(FPiecesComptable,RPiecesComptable);
+               if(RPiecesComptable.NumPiece=FSComptabiliteTransitoire.EditNumPieceComptable.Text)then
+               begin
+                    OKExistePiece:=true;
+              end;
+          i:=i+1;
+          end;
+
+          if(OKExistePiece=false)then
+          begin
+               Seek(FPiecesComptable,i);
+               Truncate(FPiecesComptable);
+               RPiecesComptable.NumPiece:=FSComptabiliteTransitoire.EditNumPieceComptable.Text;
+
+               if(FSComptabiliteTransitoire.EditNumEntite.Text='Tous')
+               then RPiecesComptable.NumEntite:=''
+               else RPiecesComptable.NumEntite:=FSComptabiliteTransitoire.EditNumEntite.Text;
+
+               RPiecesComptable.DateImputation:=datetostr(FSComptabiliteTransitoire.EditDateImputation.Date);
+               RPiecesComptable.NumComptePrincipal:=FSComptabiliteTransitoire.TableauDataImputation.Cells[1,6];
+               RPiecesComptable.NumCptTiers:=FSComptabiliteTransitoire.TableauDataImputation.Cells[1,7];
+
+               RPiecesComptable.DesignationDocument:=FSComptabiliteTransitoire.TableauDataImputation.Cells[1,9];
+               RPiecesComptable.NumeroDocument:=FSComptabiliteTransitoire.TableauDataImputation.Cells[1,10];
+               RPiecesComptable.DateDocument:=FSComptabiliteTransitoire.TableauDataImputation.Cells[1,11];
+
+               RPiecesComptable.IntituleOperationBase:=FSComptabiliteTransitoire.TableauDataImputation.Cells[1,15];
+               RPiecesComptable.DesignationDocumentBase:=FSComptabiliteTransitoire.TableauDataImputation.Cells[1,12];
+               RPiecesComptable.NumeroDocumentBase:=FSComptabiliteTransitoire.TableauDataImputation.Cells[1,13];
+               RPiecesComptable.DateDocumentBase:=FSComptabiliteTransitoire.TableauDataImputation.Cells[1,14];
+
+               write(FPiecesComptable,RPiecesComptable);
+          end
+          else
+          begin
+               showmessage('Le numéro de la pièce comptable est déjà enregistré !');
+               Exit;
+          end;
+     Closefile(FPiecesComptable);
+     end;
+end;
+
+Procedure EnteteTableauDataImputation(TableauDataImputation:TStringGrid; NbrColonne:integer);
+var  C:integer;
+begin
+     TableauDataImputation.ColCount:=NbrColonne+1;
+     TableauDataImputation.Cols[0].Text:='Data';
+     for C:=1 to NbrColonne do TableauDataImputation.Cols[C].Text:='Imputation N° '+inttostr(C);
+
+     TableauDataImputation.RowCount:=16;
+     TableauDataImputation.Rows[1].Text:='Type Avis';
+     TableauDataImputation.Rows[2].Text:='Type Proces';
+     TableauDataImputation.Rows[3].Text:='Fichier Concerne';
+     TableauDataImputation.Rows[4].Text:='Code Fichier Concerne';
+     TableauDataImputation.Rows[5].Text:='DebitCreditDomiciliation';
+     TableauDataImputation.Rows[6].Text:='Num Domiciliation';
+     TableauDataImputation.Rows[7].Text:='Compte Imputation';
+     TableauDataImputation.Rows[8].Text:='Montant';
+     TableauDataImputation.Rows[9].Text:='Mode Paiement';
+     TableauDataImputation.Rows[10].Text:='Num Pièce';
+     TableauDataImputation.Rows[11].Text:='Date Imputation';
+     TableauDataImputation.Rows[12].Text:='Document Base';
+     TableauDataImputation.Rows[13].Text:='Num Document Base';
+     TableauDataImputation.Rows[14].Text:='Date Document Base';
+     TableauDataImputation.Rows[15].Text:='Intitulé Opération Document Base';
+end;
+
+Procedure ChargementTableauDataImputation(TableauDataImputation:TStringGrid; ColSaisie:integer; TypeAvis,TypeProces,FichierConcerne,CodeFichierConcerne,DebitCreditDomiciliation,NumDomiciliation,CompteImputation,Montant,ModePaiement,NumPiece,DateImputation,DocumentBase,NumDocumentBase,DateDocumentBase,IntituleOperationDocumentBase:string);
+begin
+     TableauDataImputation.Cells[ColSaisie,1]:=TypeAvis;
+     TableauDataImputation.Cells[ColSaisie,2]:=TypeProces;
+     TableauDataImputation.Cells[ColSaisie,3]:=FichierConcerne;
+     TableauDataImputation.Cells[ColSaisie,4]:=CodeFichierConcerne;
+     TableauDataImputation.Cells[ColSaisie,5]:=DebitCreditDomiciliation;
+     TableauDataImputation.Cells[ColSaisie,6]:=NumDomiciliation;
+     TableauDataImputation.Cells[ColSaisie,7]:=CompteImputation;
+     TableauDataImputation.Cells[ColSaisie,8]:=Montant;
+     TableauDataImputation.Cells[ColSaisie,9]:=ModePaiement;
+     TableauDataImputation.Cells[ColSaisie,10]:=NumPiece;
+     TableauDataImputation.Cells[ColSaisie,11]:=DateImputation;
+     TableauDataImputation.Cells[ColSaisie,12]:=DocumentBase;
+     TableauDataImputation.Cells[ColSaisie,13]:=NumDocumentBase;
+     TableauDataImputation.Cells[ColSaisie,14]:=DateDocumentBase;
+     TableauDataImputation.Cells[ColSaisie,15]:=IntituleOperationDocumentBase;
+
+     AjusterColWidth(TableauDataImputation,'','');
+end;
+
+procedure TFSComptabiliteTransitoire.TabSheet2Show(Sender: TObject);
+var     TypeProces,FichierConcerne,Adresse:string;  OKExisteJournal:boolean;
+begin
+     TypeProces:='Comptabilité';
+     FichierConcerne:='FJournalauxiliaire';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+     FSComptabiliteTransitoire.EditJournal.Text:='';
+     ChJournalauxiliaire:=Adresse;
+     assignfile(FJournalauxiliaire,ChJournalauxiliaire);
+     if FileExists(ChJournalauxiliaire)
+     then Reset(FJournalauxiliaire)else Rewrite(FJournalauxiliaire);
+     Seek(FJournalauxiliaire,0);
+     OKExisteJournal:=false;
+     while not eof(FJournalauxiliaire)and(OKExisteJournal=false)do
+     begin
+          Read(FJournalauxiliaire,RJournalauxiliaire);
+          if(firstlaters(FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text,longueur(RJournalauxiliaire.CodeJournal))=RJournalauxiliaire.CodeJournal)then
+          begin
+               OKExisteJournal:=true;
+               FSComptabiliteTransitoire.EditJournal.Text:=RJournalauxiliaire.Designation;
+          end;
+     end;
+     CloseFile(FJournalauxiliaire);
+     
+     ProcListePiecesComptable(FSComptabiliteTransitoire.TableauPiecesComptable,FSComptabiliteTransitoire.RBPieceEntitePrecise.Checked,'',FSComptabiliteTransitoire.RBExtentionFichierConcerne.Caption,'');
+end;
+
+Procedure ProcListePiecesComptable(TableauPiecesComptable:TStringGrid; PieceEntitePrecise:boolean; NPiece,ExtentionFichierConcerne,RowSelect:string);
+var i:integer; OKpiece:boolean;   TypeProces,FichierConcerne,Adresse:string;
+begin
+     TableauPiecesComptable.RowCount:=2;
+     TableauPiecesComptable.Rows[1].Text:='';
+     TableauPiecesComptable.Cols[0].Text:='N°';
+     TableauPiecesComptable.Cols[1].Text:='Date Imputation';
+     TableauPiecesComptable.Cols[2].Text:='Cpt Principal';
+     TableauPiecesComptable.Cols[3].Text:='Tiers';
+     TableauPiecesComptable.Cols[4].Text:='Num Pièce';
+     TableauPiecesComptable.Cols[5].Text:='Désignation';
+     TableauPiecesComptable.Cols[6].Text:='Numéro';
+     TableauPiecesComptable.Cols[7].Text:='Date';
+     TableauPiecesComptable.Cols[8].Text:='Intitulé de l''opération';
+     TableauPiecesComptable.Cols[9].Text:='DesignationDocumentBase';
+     TableauPiecesComptable.Cols[10].Text:='NumeroDocumentBase';
+     TableauPiecesComptable.Cols[11].Text:='DateDocumentBase';
+     TableauPiecesComptable.Cols[12].Text:='NumEntite';
+     TableauPiecesComptable.Cols[13].Text:='Entité';
+
+     TypeProces:='Comptabilité';
+     FichierConcerne:='FPiecesComptableTransitoire'+Firstlaters(FSComptabiliteTransitoire.EditNumEntite.Text,5);
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChPiecesComptable:=Adresse;
+     assignfile(FPiecesComptable,ChPiecesComptable);
+     if FileExists(ChPiecesComptable)
+     then Reset(FPiecesComptable)else Rewrite(FPiecesComptable);
+     Seek(FPiecesComptable,0);
+     i:=0;
+     while not eof(FPiecesComptable)do
+     begin
+          Read(FPiecesComptable,RPiecesComptable);
+
+          if(FSComptabiliteTransitoire.EditNumEntite.Text<>'')then
+          begin
+               if(PieceEntitePrecise=true)then
+               begin
+                    if(RPiecesComptable.NumEntite=FSComptabiliteTransitoire.EditNumEntite.Text)
+                    then OKPiece:=true
+                    else OKPiece:=false;
+               end
+               else
+               begin
+                    if(firstlaters(RPiecesComptable.NumEntite,longueur(FSComptabiliteTransitoire.EditNumEntite.Text))=FSComptabiliteTransitoire.EditNumEntite.Text)
+                    then OKPiece:=true
+                    else OKPiece:=false;
+               end;
+          end
+          else OKPiece:=false;
+
+          if(OKPiece=true)then
+          begin
+               if(NPiece<>'')then
+               begin
+                    if(firstlaters(RPiecesComptable.NumPiece,longueur(NPiece))=NPiece)
+                    then OKPiece:=true
+                    else OKPiece:=false;
+               end;
+          end;
+
+          if(OKPiece=true)then
+          begin
+          i:=i+1;
+          TableauPiecesComptable.Rows[i].Text:=inttostr(i);
+          TableauPiecesComptable.Cells[1,i]:=RPiecesComptable.DateImputation;
+          TableauPiecesComptable.Cells[2,i]:=RPiecesComptable.NumComptePrincipal;
+          TableauPiecesComptable.Cells[3,i]:=RPiecesComptable.NumCptTiers;
+          TableauPiecesComptable.Cells[4,i]:=RPiecesComptable.NumPiece;
+          RTiersCopie:=ChercherTiers('','',RPiecesComptable.NumCptTiers,'');
+          TableauPiecesComptable.Cells[5,i]:=RPiecesComptable.DesignationDocument+' '+RTiersCopie.NomTiers+' '+RTiersCopie.PrenomTiers;
+          TableauPiecesComptable.Cells[6,i]:=RPiecesComptable.NumeroDocument;
+          TableauPiecesComptable.Cells[7,i]:=RPiecesComptable.DateDocument;
+          TableauPiecesComptable.Cells[8,i]:=RPiecesComptable.IntituleOperationBase;
+          TableauPiecesComptable.Cells[9,i]:=RPiecesComptable.DesignationDocumentBase;
+          TableauPiecesComptable.Cells[10,i]:=RPiecesComptable.NumeroDocumentBase;
+          TableauPiecesComptable.Cells[11,i]:=RPiecesComptable.DateDocumentBase;
+          TableauPiecesComptable.Cells[12,i]:=RPiecesComptable.NumEntite;
+          TableauPiecesComptable.Cells[13,i]:=FSComptabiliteTransitoire.EditNomEntite.Text;//DesignationEntite(RPiecesComptable.NumEntite);
+          end;
+     end;
+     CloseFile(FPiecesComptable);
+
+     if(i>0)then TableauPiecesComptable.RowCount:=i+1
+            else
+            begin
+                 TableauPiecesComptable.RowCount:=2;
+                 TableauPiecesComptable.Rows[1].Text:='';
+            end;
+     AjusterColWidth(TableauPiecesComptable,'','1-3;9-12'); 
+
+     if(RowSelect<>'')then
+     begin
+          TableauPiecesComptable.Row:=MaxInt(1,strtointeger(RowSelect));
+     end;
+     TableauPiecesComptable.SetFocus;
+end;
+
+procedure TFSComptabiliteTransitoire.EditRechercheNPieceKeyUp(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+var  i:integer;   OKExisteJournal:boolean;   TypeProces,FichierConcerne,Adresse:string;
+begin
+     TypeProces:='Comptabilité';
+     FichierConcerne:='FJournalauxiliaire';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+     FSComptabiliteTransitoire.EditJournal.Text:='';
+     ChJournalauxiliaire:=Adresse;
+     assignfile(FJournalauxiliaire,ChJournalauxiliaire);
+     if FileExists(ChJournalauxiliaire)
+     then Reset(FJournalauxiliaire)else Rewrite(FJournalauxiliaire);
+     Seek(FJournalauxiliaire,0);
+     OKExisteJournal:=false;
+     while not eof(FJournalauxiliaire)and(OKExisteJournal=false)do
+     begin
+          Read(FJournalauxiliaire,RJournalauxiliaire);
+          if(firstlaters(FSComptabiliteTransitoire.EditRechercheNPiece.Text,longueur(RJournalauxiliaire.CodeJournal))=RJournalauxiliaire.CodeJournal)then
+          begin
+               OKExisteJournal:=true;
+               FSComptabiliteTransitoire.EditJournal.Text:=RJournalauxiliaire.Designation;
+          end;
+     end;
+     CloseFile(FJournalauxiliaire);
+
+ProcListePiecesComptable(FSComptabiliteTransitoire.TableauPiecesComptable,FSComptabiliteTransitoire.RBPieceEntitePrecise.Checked,FSComptabiliteTransitoire.EditRechercheNPiece.Text,FSComptabiliteTransitoire.RBExtentionFichierConcerne.Caption,'');
+end;
+
+procedure TFSComptabiliteTransitoire.RBPieceEntitePreciseClick(
+  Sender: TObject);
+begin
+     ProcListePiecesComptable(FSComptabiliteTransitoire.TableauPiecesComptable,FSComptabiliteTransitoire.RBPieceEntitePrecise.Checked,FSComptabiliteTransitoire.EditRechercheNPiece.Text,FSComptabiliteTransitoire.RBExtentionFichierConcerne.Caption,'');
+end;
+
+procedure TFSComptabiliteTransitoire.RBPieceEntitePreciseFilialesClick(
+  Sender: TObject);
+begin
+     ProcListePiecesComptable(FSComptabiliteTransitoire.TableauPiecesComptable,FSComptabiliteTransitoire.RBPieceEntitePrecise.Checked,FSComptabiliteTransitoire.EditRechercheNPiece.Text,FSComptabiliteTransitoire.RBExtentionFichierConcerne.Caption,'');
+end;
+
+procedure TFSComptabiliteTransitoire.TableauPiecesComptableClick(
+  Sender: TObject);
+begin
+FSComptabiliteTransitoire.AfficheOperationPiecesComptable.Visible:=false;
+FSComptabiliteTransitoire.TableauEntite.Visible:=false;
+end;
+
+procedure TFSComptabiliteTransitoire.BitOperationPiecesComptableClick(
+  Sender: TObject);
+var  i:integer;   Confirme,OKPiece:boolean;   RowSelect,TypeProces,FichierConcerne,Adresse:string;
+begin
+RowSelect:=inttostr(FSComptabiliteTransitoire.TableauPiecesComptable.Row);
+
+if(FSComptabiliteTransitoire.BitOperationPiecesComptable.Caption='Supprimer')then
+begin
+     DeleteFPiecesComptable(FSComptabiliteTransitoire.TableauPiecesComptable.Cells[4,FSComptabiliteTransitoire.TableauPiecesComptable.Row],FSComptabiliteTransitoire.EditNumEntite.Text,Confirme);
+     if(Confirme=true)then RowSelect:=inttostr(strtointeger(RowSelect)-1);
+end;
+
+ProcListePiecesComptable(FSComptabiliteTransitoire.TableauPiecesComptable,FSComptabiliteTransitoire.RBPieceEntitePrecise.Checked,FSComptabiliteTransitoire.EditRechercheNPiece.Text,FSComptabiliteTransitoire.RBExtentionFichierConcerne.Caption,RowSelect);
+FSComptabiliteTransitoire.AfficheOperationPiecesComptable.Visible:=false;
+end;
+
+procedure TFSComptabiliteTransitoire.BitBtn10Click(Sender: TObject);
+begin
+     FSComptabiliteTransitoire.AfficheOperationImputationComptable.Visible:=false;
+end;
+
+procedure TFSComptabiliteTransitoire.BitOperationImputationComptableClick(Sender: TObject);
+var  OKConformation:boolean;
+begin
+     if(FSComptabiliteTransitoire.BitOperationImputationComptable.Caption='Supprimer')
+     and(FSComptabiliteTransitoire.TableauImputationComptable.Cells[1,FSComptabiliteTransitoire.TableauImputationComptable.Row]<>'')
+     then
+     begin
+          DeleteFJournalGeneral(FSComptabiliteTransitoire.TableauImputationComptable.Cells[1,FSComptabiliteTransitoire.TableauImputationComptable.Row],FSComptabiliteTransitoire.EditNumEntite.Text,OKConformation);
+          ProcAfficheJournalGeneral(FSComptabiliteTransitoire.TableauImputationComptable,FSComptabiliteTransitoire.EditJournalAuxiliaireUtiliseAvis.Text,datetostr(FSComptabiliteTransitoire.EditDateImputation.Date),FSComptabiliteTransitoire.EditNumEntite.Text);
+          FSComptabiliteTransitoire.TableauImputationComptable.SetFocus;
+     end;
+     FSComptabiliteTransitoire.AfficheOperationImputationComptable.Visible:=false;
+end;
+
+procedure TFSComptabiliteTransitoire.TableauImputationComptableKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+     if key in['s','S']then
+     begin
+          FSComptabiliteTransitoire.AfficheOperationImputationComptable.Visible:=true;
+          FSComptabiliteTransitoire.AfficheOperationImputationComptable.Caption:='Supprimer l''imputation';
+          FSComptabiliteTransitoire.BitOperationImputationComptable.Kind:=bkCancel;
+          FSComptabiliteTransitoire.BitOperationImputationComptable.Caption:='Supprimer';
+          FSComptabiliteTransitoire.BitOperationImputationComptable.SetFocus;
+     end;
+end;
+
+procedure TFSComptabiliteTransitoire.TableauPiecesComptableKeyPress(
+  Sender: TObject; var Key: Char);
+var  TypeProces,FichierConcerne,Adresse:string;  OKPieceComptable:boolean;
+begin
+
+if key in['s','S']then
+begin
+     TypeProces:='Comptabilité';
+     FichierConcerne:='FJournalGeneralTransitoire'+Firstlaters(FSComptabiliteTransitoire.EditNumEntite.Text,5);
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChJournalGeneral:=Adresse;
+     assignfile(FJournalGeneral,ChJournalGeneral);
+     if FileExists(ChJournalGeneral)
+     then Reset(FJournalGeneral)else Rewrite(FJournalGeneral);
+     Seek(FJournalGeneral,0);
+     OKPieceComptable:=false;
+     while not eof(FJournalGeneral)and(OKPieceComptable=false)do
+     begin
+          Read(FJournalGeneral,RJournalGeneral);
+          if(RJournalGeneral.NumPiece=FSComptabiliteTransitoire.TableauPiecesComptable.Cells[4,FSComptabiliteTransitoire.TableauPiecesComptable.Row])then
+          begin
+               OKPieceComptable:=true;
+               showmessage('La pièce est enregistré dans le journal comptable!');
+          end;
+     end;
+     CloseFile(FJournalGeneral);
+
+     if(OKPieceComptable=false)then
+     begin
+          FSComptabiliteTransitoire.AfficheOperationPiecesComptable.Visible:=true;
+          FSComptabiliteTransitoire.BitOperationPiecesComptable.Kind:=bkCancel;
+          FSComptabiliteTransitoire.BitOperationPiecesComptable.Caption:='Supprimer';
+          FSComptabiliteTransitoire.BitOperationPiecesComptable.SetFocus;
+     end
+     else FSComptabiliteTransitoire.TableauPiecesComptable.SetFocus;
+end;
+end;
+
+procedure TFSComptabiliteTransitoire.TableauJournalauxiliaireKeyPress(
+  Sender: TObject; var Key: Char);
+var  R:integer;
+begin
+     if key in['+']then
+     begin
+          for R:=1 to FSComptabiliteTransitoire.TableauJournalauxiliaire.RowCount-1 do
+          if(R<>FSComptabiliteTransitoire.TableauJournalauxiliaire.Row)then FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[7,R]:='';
+
+          if(FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[7,FSComptabiliteTransitoire.TableauJournalauxiliaire.Row]='')
+          then FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[7,FSComptabiliteTransitoire.TableauJournalauxiliaire.Row]:='OK'
+          else FSComptabiliteTransitoire.TableauJournalauxiliaire.Cells[7,FSComptabiliteTransitoire.TableauJournalauxiliaire.Row]:='';
+     end;
+end;
+
+end.

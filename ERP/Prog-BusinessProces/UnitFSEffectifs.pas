@@ -1,0 +1,417 @@
+unit UnitFSEffectifs;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, ExtCtrls, Grids, Mask;
+
+type
+  TFSEffectifs = class(TForm)
+    TableauEffectifs: TStringGrid;
+    AfficheOperationEffectif: TPanel;
+    BitBtn1: TBitBtn;
+    BitOperationEffectif: TBitBtn;
+    Label1: TLabel;
+    EditMatricule: TEdit;
+    Label4: TLabel;
+    EditNom: TEdit;
+    Label5: TLabel;
+    EditPrenom: TEdit;
+    Label18: TLabel;
+    EditSex: TComboBox;
+    Label7: TLabel;
+    EditDateNais: TMaskEdit;
+    EditLieuNais: TEdit;
+    Label10: TLabel;
+    EditAdresse: TEdit;
+    Bevel1: TBevel;
+    Bevel2: TBevel;
+    Bevel3: TBevel;
+    Bevel4: TBevel;
+    EditMatriculeOperation: TEdit;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure TableauEffectifsClick(Sender: TObject);
+    procedure TableauEffectifsKeyPress(Sender: TObject; var Key: Char);
+    procedure BitOperationEffectifClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure EditMatriculeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNomKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditPrenomKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditSexKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDateNaisKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditLieuNaisKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditAdresseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSEffectifs: TFSEffectifs;
+
+Procedure ListeEffectifs(TableauEffectif:TStringGrid);
+
+implementation
+
+Uses UnitInitialisation;
+
+var
+
+   TPersonnel,TEffectif:TPersonnels;
+   RPersonnel,REffectif:RPersonnels;
+   FPersonnel,FEffectif:FPersonnels;
+   ChPersonnel,ChEffectif:string250;
+
+{$R *.dfm}
+
+Procedure ListeEffectifs(TableauEffectif:TStringGrid);
+var   iEffectif:integer;  TypeProces,FichierConcerne,Adresse:string;   OKEffectif:boolean;
+begin
+     TableauEffectif.RowCount:=2;
+     TableauEffectif.Rows[1].Text:='';
+     TableauEffectif.Cols[0].Text:='P°';
+     TableauEffectif.Cols[1].Text:='Matricule';
+     TableauEffectif.Cols[2].Text:='Nom et Prénom';
+     TableauEffectif.Cols[3].Text:='Sex';
+     TableauEffectif.Cols[4].Text:='Date Naiss.';
+     TableauEffectif.Cols[5].Text:='Liaue Naiss.';
+     TableauEffectif.Cols[6].Text:='Adresse';
+
+     TypeProces:='Paie';
+     FichierConcerne:='FPersonnel';
+     Adresse:='';
+     FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut);
+
+     ChEffectif:=Adresse;
+     assignfile(FEffectif,ChEffectif);
+     if FileExists(ChEffectif)then
+     Reset(FEffectif)
+     else Rewrite(FEffectif);
+     Seek(FEffectif,0);
+     iEffectif:=0;
+     while not eof(FEffectif)do
+     begin
+          read(FEffectif,REffectif);
+
+          OKEffectif:=true;
+
+          if(OKEffectif=true)then
+          begin
+               iEffectif:=iEffectif+1;
+               TableauEffectif.Rows[iEffectif].Text:=inttostr(REffectif.PositionPersonnel);
+               TableauEffectif.Cells[1,iEffectif]:=REffectif.Matricule;
+               TableauEffectif.Cells[2,iEffectif]:=REffectif.Nom+' '+REffectif.Prenom;
+               TableauEffectif.Cells[3,iEffectif]:=REffectif.Sex;
+               TableauEffectif.Cells[4,iEffectif]:=REffectif.DateNais;
+               TableauEffectif.Cells[5,iEffectif]:=REffectif.LieuNais;
+               TableauEffectif.Cells[6,iEffectif]:=REffectif.Adresse;
+          end;
+     end;
+     Closefile(FEffectif);
+
+     if(iEffectif>0)then TableauEffectif.RowCount:=iEffectif+1
+                    else TableauEffectif.RowCount:=2;
+
+     AjusterColWidth(TableauEffectif,'','');
+
+     TableauEffectif.SetFocus;
+end;
+
+procedure TFSEffectifs.BitBtn1Click(Sender: TObject);
+begin
+FSEffectifs.AfficheOperationEffectif.Visible:=false;
+end;
+
+procedure TFSEffectifs.TableauEffectifsClick(Sender: TObject);
+begin
+FSEffectifs.AfficheOperationEffectif.Visible:=false;
+end;
+
+procedure TFSEffectifs.TableauEffectifsKeyPress(Sender: TObject;
+  var Key: Char);
+var  Matricule:integer;   TypeProces,FichierConcerne,Adresse:string;  OKEffectif:boolean;
+begin
+
+if key in['n','N']then
+begin
+     FSEffectifs.AfficheOperationEffectif.Visible:=true;
+     FSEffectifs.BitOperationEffectif.Kind:=bkAll;
+     FSEffectifs.BitOperationEffectif.Caption:='Valider';
+     FSEffectifs.EditMatriculeOperation.Text:='';
+     FSEffectifs.EditMatricule.Text:='';
+     FSEffectifs.EditNom.Text:='';
+     FSEffectifs.EditPrenom.Text:='';
+     FSEffectifs.EditSex.Text:='';
+     FSEffectifs.EditDateNais.Text:='';
+     FSEffectifs.EditLieuNais.Text:='';
+     FSEffectifs.EditAdresse.Text:='';
+     FSEffectifs.EditNom.SetFocus;
+
+     TypeProces:='Paie';
+     FichierConcerne:='FPersonnel';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChEffectif:=Adresse;
+     assignfile(FEffectif,ChEffectif);
+     if FileExists(ChEffectif)then
+     Reset(FEffectif)
+     else Rewrite(FEffectif);
+     Seek(FEffectif,0);
+     OKEffectif:=false;
+     Matricule:=1;
+     while not eof(FEffectif)do
+     begin
+          read(FEffectif,REffectif);
+          if(Matricule<=strtointeger(REffectif.Matricule))then Matricule:=strtointeger(REffectif.Matricule)+1;
+     end;
+     CloseFile(FEffectif);
+     FSEffectifs.EditMatricule.Text:=inttostr(Matricule);
+end;
+
+if key in['m','M','s','S']then
+begin
+     if key in['m','M']then
+     begin
+          FSEffectifs.AfficheOperationEffectif.Visible:=true;
+          FSEffectifs.BitOperationEffectif.Kind:=bkRetry;
+          FSEffectifs.BitOperationEffectif.Caption:='Valider';
+          FSEffectifs.EditMatriculeOperation.Text:='';
+          FSEffectifs.EditNom.SetFocus;
+     end;
+
+     if key in['s','S']then
+     begin
+          FSEffectifs.AfficheOperationEffectif.Visible:=true;
+          FSEffectifs.BitOperationEffectif.Kind:=bkCancel;
+          FSEffectifs.BitOperationEffectif.Caption:='Supprimer';
+          FSEffectifs.EditMatriculeOperation.Text:='';
+          FSEffectifs.BitOperationEffectif.SetFocus;
+     end;
+
+     TypeProces:='Paie';
+     FichierConcerne:='FPersonnel';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChEffectif:=Adresse;
+     assignfile(FEffectif,ChEffectif);
+     if FileExists(ChEffectif)then
+     Reset(FEffectif)
+     else Rewrite(FEffectif);
+     Seek(FEffectif,0);
+     OKEffectif:=false;
+     while not eof(FEffectif)and(OKEffectif=false)do
+     begin
+          read(FEffectif,REffectif);
+          if(REffectif.Matricule=FSEffectifs.TableauEffectifs.Cells[1,FSEffectifs.TableauEffectifs.Row])then
+          begin
+               OKEffectif:=true;
+               FSEffectifs.EditMatriculeOperation.Text:=REffectif.Matricule;
+               FSEffectifs.EditMatricule.Text:=REffectif.Matricule;
+               FSEffectifs.EditNom.Text:=REffectif.Nom;
+               FSEffectifs.EditPrenom.Text:=REffectif.Prenom;
+               FSEffectifs.EditSex.Text:=REffectif.Sex;
+               FSEffectifs.EditDateNais.Text:=REffectif.DateNais;
+               FSEffectifs.EditLieuNais.Text:=REffectif.LieuNais;
+               FSEffectifs.EditAdresse.Text:=REffectif.Adresse;
+          end;
+     end;
+     Closefile(FEffectif);
+end;
+
+FSEffectifs.BitOperationEffectif.Cancel:=false;
+end;
+
+procedure TFSEffectifs.BitOperationEffectifClick(Sender: TObject);
+var  i,Matricule:integer;  TypeProces,FichierConcerne,Adresse:string;   OKEffectif,Confirme:boolean;
+begin
+
+if(FSEffectifs.BitOperationEffectif.Caption='Valider')then
+begin
+     TypeProces:='Paie';
+     FichierConcerne:='FPersonnel';
+     Adresse:='';
+     if not(FunctionAdresseProces(TypeProces,FichierConcerne,'',Adresse,TypeProcesReseaux,NomDossierPartageReseauxOut))then
+     begin
+          //AfficherMessage('Veuillez indiquer l''adresse du Proces qui génére le fichier '+FichierConcerne+' recherché !');
+     end;
+
+     ChEffectif:=Adresse;
+     assignfile(FEffectif,ChEffectif);
+     if FileExists(ChEffectif)then
+     Reset(FEffectif)
+     else Rewrite(FEffectif);
+     Seek(FEffectif,0);
+     OKEffectif:=false;
+     i:=0;
+     while not eof(FEffectif)and(OKEffectif=false)do
+     begin
+          read(FEffectif,REffectif);
+          
+          if(REffectif.Matricule=FSEffectifs.EditMatriculeOperation.Text)then
+          begin
+               OKEffectif:=true;
+          end
+          else i:=i+1;
+     end;
+
+     if(OKEffectif=false)then
+     begin
+          REffectif.PositionNationalite:=0;         REffectif.PositionGrilleSalaire:=0;
+          REffectif.PositionWilaya:=0;              REffectif.Section:='';
+          REffectif.PositionDaira:=0;               REffectif.PositionEchellon:=0;
+          REffectif.PositionCommune:=0;             REffectif.TypePosteTravail:='';
+          REffectif.CodePostal:='';                 REffectif.PositionCentrePaie:=0;
+          REffectif.ServiceNationnal:='';           REffectif.NComptePaie:='';
+          REffectif.GroupeSang:='';                 REffectif.ClePaie:='';
+          REffectif.SituationF:='';                 REffectif.PositionCentreMutuelle:=0;
+          REffectif.PositionSituationConjoint:=0;   REffectif.NCompteMutuelle:='';
+          REffectif.NbrEnfantTotal:=0;              REffectif.CleMutuelle:='';
+          REffectif.NbrEnfantAF:=0;                 REffectif.PositionCentreCCP:=0;
+          REffectif.NbrEnfantScol:=0;               REffectif.NCompteCCP:='';
+          REffectif.PositionCentreSSociale:=0;      REffectif.CleCCP:='';
+          REffectif.NSS:='';                        REffectif.PositionConge:=0;
+          REffectif.DateEntree:='';                 REffectif.DeclarationEntree:='';
+          REffectif.DateSortie:='';                 REffectif.DeclarationSortie:='';
+          REffectif.Anciente:=0;                    REffectif.Telephone:='';
+          REffectif.PositionOrganisme:=0;           REffectif.Email:='';
+          REffectif.PositionUnite:=0;               REffectif.NaturePieceIdentite:='';
+          REffectif.PositionStructure:=0;           REffectif.NumPieceIdentite:='';
+          REffectif.PositionSStructure:=0;          REffectif.DateLieuDelivrance:='';
+          REffectif.PositionPosteTravail:=0;       
+         
+
+     end;    
+
+     Seek(FEffectif,i);
+     REffectif.PositionPersonnel:=i;
+     REffectif.Matricule:=FSEffectifs.EditMatricule.Text;
+     REffectif.Nom:=FSEffectifs.EditNom.Text;
+     REffectif.Prenom:=FSEffectifs.EditPrenom.Text;
+     REffectif.Sex:=FSEffectifs.EditSex.Text;
+     REffectif.DateNais:=FSEffectifs.EditDateNais.Text;
+     REffectif.LieuNais:=FSEffectifs.EditLieuNais.Text;
+     REffectif.Adresse:=FSEffectifs.EditAdresse.Text;
+     write(FEffectif,REffectif);
+     Closefile(FEffectif);
+end;
+
+if(FSEffectifs.BitOperationEffectif.Caption='Supprimer')then
+begin
+     DeleteFEffectif(FSEffectifs.EditMatricule.Text,Confirme);
+end;
+
+ListeEffectifs(FSEffectifs.TableauEffectifs);
+FSEffectifs.AfficheOperationEffectif.Visible:=false;
+
+end;
+
+procedure TFSEffectifs.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+     FSEffectifs.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Fiche Efféctifs';
+
+     ListeEffectifs(FSEffectifs.TableauEffectifs);
+end;
+
+procedure TFSEffectifs.EditMatriculeKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSEffectifs.EditNom.SetFocus;
+end;
+
+end;
+
+procedure TFSEffectifs.EditNomKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSEffectifs.EditPrenom.SetFocus;
+end;
+
+end;
+
+procedure TFSEffectifs.EditPrenomKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSEffectifs.EditSex.SetFocus;
+end;
+
+end;
+
+procedure TFSEffectifs.EditSexKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSEffectifs.EditDateNais.SetFocus;
+end;
+
+end;
+
+procedure TFSEffectifs.EditDateNaisKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSEffectifs.EditLieuNais.SetFocus;
+end;
+
+end;
+
+procedure TFSEffectifs.EditLieuNaisKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSEffectifs.EditAdresse.SetFocus;
+end;
+
+end;
+
+procedure TFSEffectifs.EditAdresseKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+if key in[VK_RETURN]then
+begin
+     FSEffectifs.BitOperationEffectif.SetFocus;
+end;
+
+end;
+
+procedure TFSEffectifs.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.

@@ -1,0 +1,149 @@
+unit UnitFSSplash;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, jpeg;
+
+type
+    TPercent = 0..100;
+    TSplash = class(TForm)
+    Splashimg: TImage;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  Splash: TSplash;
+
+  scrbmp: TBitmap;
+  mixbmp: TBitmap;
+
+procedure DrawTransparent(dstBitmap, srcBitmap: TBitmap; Transparency: TPercent);
+procedure GetScreenBitmap(r: TRect; var bitmap: TBitmap);
+
+implementation
+
+procedure DrawTransparent(dstBitmap, srcBitmap: TBitmap; Transparency: TPercent);
+const
+  MaxPixelCount = 32768;
+type
+  PRGBTripleArray = ^TRGBTripleArray;
+  TRGBTripleArray = array[0..MaxPixelCount] of TRGBTriple;
+var
+  dstRow, srcRow: PRGBTripleArray;
+  x, y: Integer;
+begin
+  dstBitmap.PixelFormat := pf24bit;
+  srcBitmap.PixelFormat := pf24bit;
+  for y := 0 to srcBitmap.Height-1 do
+  begin
+    srcRow := srcBitmap.ScanLine[y];
+    dstRow := dstBitmap.ScanLine[y];
+    for x := 0 to srcBitmap.Width-1 do
+    begin
+      dstRow[x].rgbtRed := ((100-Transparency) * dstRow[X].rgbtRed) div 100 +
+                            (Transparency * srcRow[X].rgbtRed) div 100;
+      dstRow[x].rgbtGreen := ((100-Transparency) * dstRow[X].rgbtGreen) div 100 +
+                            (Transparency * srcRow[X].rgbtGreen) div 100;
+      dstRow[x].rgbtBlue := ((100-Transparency) * dstRow[X].rgbtBlue) div 100 +
+                            (Transparency * srcRow[X].rgbtBlue) div 100;
+    end;
+  end;
+end;
+
+procedure GetScreenBitmap(r: TRect; var bitmap: TBitmap);
+var DC: HDC;
+begin
+  Bitmap.Width := r.Right;
+  Bitmap.Height := r.Bottom;
+  DC := GetDC(0);
+  try
+    with Bitmap do
+      BitBlt(Canvas.Handle, 0, 0,
+             Width, Height, DC, r.Left, r.Top, SrcCopy);
+  finally
+    ReleaseDC(0, DC);
+  end;
+end;
+
+{$R *.dfm}
+
+procedure TSplash.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+     scrbmp.Free;
+     mixbmp.Free;
+end;
+
+procedure TSplash.FormCreate(Sender: TObject);
+begin
+     Splashimg.Visible := false;
+end;
+
+procedure TSplash.FormShow(Sender: TObject);
+begin
+     with self do begin
+          Splashimg.Width := Splashimg.Picture.Width;
+          Splashimg.Height := Splashimg.Picture.Height;
+          Width := Splashimg.Width;
+          Height := Splashimg.Height;
+          Left := round((Screen.Width)  / 2 - (Width  / 2));
+          Top  := round((Screen.Height) / 2 - (Height / 2));
+          self.FormStyle := fsStayOnTop;
+     end;
+end;
+
+procedure TSplash.DoFade(Duree: integer);
+var
+   trans, delay: TPercent;
+   i: integer;
+begin
+     scrbmp := TBitmap.Create;
+     mixbmp := TBitmap.Create;
+     mixbmp.Assign(Splashimg.Picture.Bitmap);
+     getscreenbitmap(rect(Left, Top, Width, Height), scrbmp);
+     try
+       delay := 0;
+       for i := 1 to duree do begin
+           trans := (i * 100) div duree;
+           if trans <> delay then begin
+              Splashimg.Picture.Assign(mixbmp);
+              drawtransparent(Splashimg.Picture.Bitmap, scrbmp, (100-trans));
+              if not SplashImg.Visible then
+                 Splashimg.Visible := true;
+           end;
+           delay := trans;
+           application.ProcessMessages;
+       end;
+     finally
+        mixbmp.Free;
+        scrbmp.Free;
+        Afterfade;
+     end;
+end;
+
+procedure TSplashfrm.Afterfade;
+begin
+     //Mettez ici les items à charger après le fondu de la fiche
+     wait(1000);
+end;
+
+procedure TSplashfrm.Wait(Duree: integer);
+var
+   i: integer;
+begin
+     //Cette procédure remplace le Sleep. Elle permet aux messages Windows de passer
+     //durant l'attente. La durée est en millisecondes.
+     for i := 1 to duree do begin
+         application.ProcessMessages;
+         sleep(1);
+     end;
+end;
+
+end.

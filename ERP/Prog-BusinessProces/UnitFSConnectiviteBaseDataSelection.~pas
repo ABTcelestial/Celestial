@@ -1,0 +1,673 @@
+unit UnitFSConnectiviteBaseDataSelection;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, ShellCtrls, Buttons, ExtCtrls;
+
+type
+  TFSConnectiviteBaseDataSelection = class(TForm)
+    AfficheAdresseBaseDonnee: TPanel;
+    Source: TShellTreeView;
+    AfficheOptionBaseDonnee: TPanel;
+    ListeFichierSource: TShellListView;
+    AfficheBaseValide: TPanel;
+    BitValiderConnectiviterBaseSelect: TBitBtn;
+    EditExerciceExtract: TEdit;
+    Label4: TLabel;
+    Label1: TLabel;
+    Bevel6: TBevel;
+    EditAdresseBaseDonnee: TEdit;
+    Label2: TLabel;
+    EditParcours: TEdit;
+    AfficheDataInstall: TPanel;
+    Label3: TLabel;
+    Bevel1: TBevel;
+    EditParcoursInstall: TEdit;
+    Label5: TLabel;
+    EditMotPasse: TEdit;
+    Label6: TLabel;
+    EditDateAvancement: TEdit;
+    Label7: TLabel;
+    EditDateExp: TEdit;
+    Label8: TLabel;
+    EditHeureExp: TEdit;
+    Label9: TLabel;
+    EditNomLogo: TEdit;
+    Label10: TLabel;
+    EditNomLabel: TEdit;
+    Label11: TLabel;
+    EditText1: TEdit;
+    Label12: TLabel;
+    EditText2: TEdit;
+    Label13: TLabel;
+    EditText3: TEdit;
+    Label14: TLabel;
+    EditText4: TEdit;
+    Label15: TLabel;
+    EditText5: TEdit;
+    Label16: TLabel;
+    EditText6: TEdit;
+    Label17: TLabel;
+    EditText7: TEdit;
+    Label18: TLabel;
+    EditText8: TEdit;
+    Label19: TLabel;
+    EditText9: TEdit;
+    Label20: TLabel;
+    EditText10: TEdit;
+    Panel1: TPanel;
+    BitBtn1: TBitBtn;
+    BitValiderDataInstall: TBitBtn;
+    Panel2: TPanel;
+    Label21: TLabel;
+    LabelFichierSauv: TLabel;
+    BitBtn4: TBitBtn;
+    AfficheChargementDonnes: TPanel;
+    PageSelectFile: TPageControl;
+    PageSelectionFichier: TTabSheet;
+    Bevel13: TBevel;
+    Bevel14: TBevel;
+    Label30: TLabel;
+    Label31: TLabel;
+    Bevel22: TBevel;
+    Bevel45: TBevel;
+    SourceChargement: TShellTreeView;
+    FichierChargement: TShellListView;
+    EditFichierChargement: TEdit;
+    BitBtn15: TBitBtn;
+    BitCharger: TBitBtn;
+    EditStyleFichierChargement: TComboBox;
+    BitAnnuler: TBitBtn;
+    Bevel2: TBevel;
+    MemoRapport: TMemo;
+    Label22: TLabel;
+    Logo: TImage;
+    LabelISO: TImage;
+    Label23: TLabel;
+    PhotoVide: TImage;
+    BitBtn2: TBitBtn;
+    procedure SourceMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure ListeFichierSourceMouseUp(Sender: TObject;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure BitValiderConnectiviterBaseSelectClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitValiderDataInstallClick(Sender: TObject);
+    procedure EditParcoursInstallKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditMotPasseKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDateAvancementKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditDateExpKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditHeureExpKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNomLogoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditNomLabelKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText2KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText3KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText4KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText5KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText6KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText7KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText8KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText9KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure EditText10KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitBtn15Click(Sender: TObject);
+    procedure SourceChargementMouseUp(Sender: TObject;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure FichierChargementMouseUp(Sender: TObject;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure EditStyleFichierChargementSelect(Sender: TObject);
+    procedure BitChargerClick(Sender: TObject);
+    procedure BitAnnulerClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSConnectiviteBaseDataSelection: TFSConnectiviteBaseDataSelection;
+
+
+implementation
+
+Uses UnitInitialisation, UnitFSMiseaJour, UnitFSMenuPrincipal, UnitInstalle;
+
+{$R *.dfm}
+
+procedure TFSConnectiviteBaseDataSelection.SourceMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var  ExtractAnnee:string;
+begin
+
+if(FSConnectiviteBaseDataSelection.ListeFichierSource.Items.Count>0)then
+begin
+     FSConnectiviteBaseDataSelection.EditAdresseBaseDonnee.Text:=FSConnectiviteBaseDataSelection.Source.Path;
+     FSConnectiviteBaseDataSelection.EditParcours.Text:=ExtractParcours(FSConnectiviteBaseDataSelection.ListeFichierSource.Folders[0].DisplayName,ExtractAnnee);
+     FSConnectiviteBaseDataSelection.EditExerciceExtract.Text:=ExtractAnnee;
+
+     if(FSConnectiviteBaseDataSelection.EditParcours.Text<>'')and(FSConnectiviteBaseDataSelection.EditExerciceExtract.Text<>'')then
+     begin
+          FSConnectiviteBaseDataSelection.AfficheBaseValide.Enabled:=true;
+          FSConnectiviteBaseDataSelection.AfficheBaseValide.Color:=clLime;
+     end
+     else
+     begin
+          FSConnectiviteBaseDataSelection.AfficheBaseValide.Enabled:=false;
+          FSConnectiviteBaseDataSelection.AfficheBaseValide.Color:=clRed;
+     end;
+end
+else
+begin
+     FSConnectiviteBaseDataSelection.EditAdresseBaseDonnee.Text:='';
+     FSConnectiviteBaseDataSelection.EditParcours.Text:='';
+     FSConnectiviteBaseDataSelection.EditExerciceExtract.Text:='';
+
+     FSConnectiviteBaseDataSelection.AfficheBaseValide.Enabled:=false;
+     FSConnectiviteBaseDataSelection.AfficheBaseValide.Color:=clRed;
+end;
+
+end;
+
+procedure TFSConnectiviteBaseDataSelection.ListeFichierSourceMouseUp(
+  Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+  Y: Integer);
+var  ExtractAnnee:string;
+begin
+
+if(FSConnectiviteBaseDataSelection.ListeFichierSource.Items.Count>0)then
+begin
+     FSConnectiviteBaseDataSelection.EditAdresseBaseDonnee.Text:=FSConnectiviteBaseDataSelection.Source.Path;
+     FSConnectiviteBaseDataSelection.EditParcours.Text:=ExtractParcours(FSConnectiviteBaseDataSelection.ListeFichierSource.Folders[FSConnectiviteBaseDataSelection.ListeFichierSource.ItemIndex].DisplayName,ExtractAnnee);
+     FSConnectiviteBaseDataSelection.EditExerciceExtract.Text:=ExtractAnnee;
+
+     if(FSConnectiviteBaseDataSelection.EditParcours.Text<>'')and(FSConnectiviteBaseDataSelection.EditExerciceExtract.Text<>'')then
+     begin
+          FSConnectiviteBaseDataSelection.AfficheBaseValide.Enabled:=true;
+          FSConnectiviteBaseDataSelection.AfficheBaseValide.Color:=clLime;
+     end
+     else
+     begin
+          FSConnectiviteBaseDataSelection.AfficheBaseValide.Enabled:=false;
+          FSConnectiviteBaseDataSelection.AfficheBaseValide.Color:=clRed;
+     end;
+end
+else
+begin
+     FSConnectiviteBaseDataSelection.EditAdresseBaseDonnee.Text:='';
+     FSConnectiviteBaseDataSelection.EditParcours.Text:='';
+     FSConnectiviteBaseDataSelection.EditExerciceExtract.Text:='';
+
+     FSConnectiviteBaseDataSelection.AfficheBaseValide.Enabled:=false;
+     FSConnectiviteBaseDataSelection.AfficheBaseValide.Color:=clRed;
+end;
+
+end;
+
+procedure TFSConnectiviteBaseDataSelection.BitValiderConnectiviterBaseSelectClick(
+  Sender: TObject);
+begin
+     FSConnectiviteBaseDataSelection.AfficheDataInstall.Visible:=true;
+
+     FSConnectiviteBaseDataSelection.EditParcoursInstall.Text:=FSConnectiviteBaseDataSelection.EditAdresseBaseDonnee.Text;
+     FSConnectiviteBaseDataSelection.EditMotPasse.Text:='';
+     FSConnectiviteBaseDataSelection.EditDateAvancement.Text:=datetostr(Date);
+     FSConnectiviteBaseDataSelection.EditDateExp.Text:=datetostr(Date+100);
+     FSConnectiviteBaseDataSelection.EditHeureExp.Text:='10:00:00';
+     FSConnectiviteBaseDataSelection.EditNomLogo.Text:='';
+     FSConnectiviteBaseDataSelection.EditNomLabel.Text:='';
+     FSConnectiviteBaseDataSelection.EditText1.Text:='';
+     FSConnectiviteBaseDataSelection.EditText2.Text:='';
+     FSConnectiviteBaseDataSelection.EditText3.Text:='';
+     FSConnectiviteBaseDataSelection.EditText4.Text:='';
+     FSConnectiviteBaseDataSelection.EditText5.Text:='';
+     FSConnectiviteBaseDataSelection.EditText6.Text:='';
+     FSConnectiviteBaseDataSelection.EditText7.Text:='';
+     FSConnectiviteBaseDataSelection.EditText8.Text:='';
+     FSConnectiviteBaseDataSelection.EditText9.Text:='';
+     FSConnectiviteBaseDataSelection.EditText10.Text:='';
+
+     FSConnectiviteBaseDataSelection.EditParcoursInstall.SetFocus;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.BitBtn1Click(Sender: TObject);
+begin
+     FSConnectiviteBaseDataSelection.AfficheDataInstall.Visible:=false;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.BitValiderDataInstallClick(Sender: TObject);
+var  ChEnregistrement:string;
+begin
+     if Not FileExists('C:\WinBus.File')then
+     begin
+          assignfile(FRegistre,'C:\WinBus.File');
+          rewrite(FRegistre);
+          assignfile(FRegistre,'C:\WinBus.File');
+          reset(FRegistre);
+          Seek(FRegistre,0);
+          RRegistre.Adresse:=FSConnectiviteBaseDataSelection.EditAdresseBaseDonnee.Text+'\'+FSConnectiviteBaseDataSelection.EditParcours.Text;
+          RRegistre.Repertoire:=FSConnectiviteBaseDataSelection.EditParcours.Text;
+          RRegistre.Exercice:=FSConnectiviteBaseDataSelection.EditExerciceExtract.Text;
+          Write(FRegistre,RRegistre);
+     end
+     else
+     begin
+          assignfile(FRegistre,'C:\WinBus.File');
+          reset(FRegistre);
+          Seek(FRegistre,0);
+          RRegistre.Adresse:=FSConnectiviteBaseDataSelection.EditAdresseBaseDonnee.Text+'\'+FSConnectiviteBaseDataSelection.EditParcours.Text;
+          RRegistre.Repertoire:=FSConnectiviteBaseDataSelection.EditParcours.Text;
+          RRegistre.Exercice:=FSConnectiviteBaseDataSelection.EditExerciceExtract.Text;
+          Write(FRegistre,RRegistre);
+     end;
+
+     ChEnregistrement:=RRegistre.Adresse;
+
+     assignfile(FParc,ChEnregistrement);
+     rewrite(FParc);
+     assignfile(FParc,ChEnregistrement);
+     reset(FParc);
+     RParc.Parcours:=FSConnectiviteBaseDataSelection.EditParcoursInstall.Text;
+     RParc.MotPasse:=FSConnectiviteBaseDataSelection.EditMotPasse.Text;
+     RParc.DateAvancement:=FSConnectiviteBaseDataSelection.EditDateAvancement.Text;
+     RParc.DateExp:=FSConnectiviteBaseDataSelection.EditDateExp.Text;
+     RParc.HeureExp:=FSConnectiviteBaseDataSelection.EditHeureExp.Text;
+     RParc.NomLogo:=FSConnectiviteBaseDataSelection.EditNomLogo.Text;
+     RParc.NomLabel:=FSConnectiviteBaseDataSelection.EditNomLabel.Text;
+     RParc.Text1:=FSConnectiviteBaseDataSelection.EditText1.Text;
+     RParc.Text2:=FSConnectiviteBaseDataSelection.EditText2.Text;
+     RParc.Text3:=FSConnectiviteBaseDataSelection.EditText3.Text;
+     RParc.Text4:=FSConnectiviteBaseDataSelection.EditText4.Text;
+     RParc.Text5:=FSConnectiviteBaseDataSelection.EditText5.Text;
+     RParc.Text6:=FSConnectiviteBaseDataSelection.EditText6.Text;
+     RParc.Text7:=FSConnectiviteBaseDataSelection.EditText7.Text;
+     RParc.Text8:=FSConnectiviteBaseDataSelection.EditText8.Text;
+     RParc.Text9:=FSConnectiviteBaseDataSelection.EditText9.Text;
+     RParc.Text10:=FSConnectiviteBaseDataSelection.EditText10.Text;
+
+     Write(FParc,RParc);
+
+     OpenFParc(RParc);
+
+     {*********************************************************************}
+     FSMenuPrincipal.Caption:=RRegistre.Repertoire+' - Exercice '+RRegistre.Exercice+' - Menu Principal';
+     {*******************************************************************}
+
+     FSMenuPrincipal.TimerSaisieFiches.Enabled:=true;
+     FSMenuPrincipal.TimerControleSoldeDomiciliation.Enabled:=true;
+
+     FSConnectiviteBaseDataSelection.AfficheDataInstall.Visible:=false;
+     FSConnectiviteBaseDataSelection.Close;     
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditParcoursInstallKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditMotPasse.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditMotPasseKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditDateAvancement.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditDateAvancementKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditDateExp.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditDateExpKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditHeureExp.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditHeureExpKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditNomLogo.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditNomLogoKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditNomLabel.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditNomLabelKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText1.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText1KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText2.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText2KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText3.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText3KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText4.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText4KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText5.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText5KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText6.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText6KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText7.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText7KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText8.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText8KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText9.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText9KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.EditText10.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditText10KeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+     if key in[VK_RETURN]then
+     begin
+          FSConnectiviteBaseDataSelection.BitValiderDataInstall.SetFocus;
+     end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.BitBtn4Click(Sender: TObject);
+begin
+
+FSConnectiviteBaseDataSelection.AfficheChargementDonnes.Top:=8;
+FSConnectiviteBaseDataSelection.AfficheChargementDonnes.Left:=8;
+
+FSConnectiviteBaseDataSelection.AfficheChargementDonnes.Visible:=true;
+
+if(FSConnectiviteBaseDataSelection.EditStyleFichierChargement.Text='icônes')then FSConnectiviteBaseDataSelection.FichierChargement.ViewStyle:=VsIcon;
+if(FSConnectiviteBaseDataSelection.EditStyleFichierChargement.Text='liste')then FSConnectiviteBaseDataSelection.FichierChargement.ViewStyle:=VsList;
+if(FSConnectiviteBaseDataSelection.EditStyleFichierChargement.Text='détails')then FSConnectiviteBaseDataSelection.FichierChargement.ViewStyle:=VsReport;
+if(FSConnectiviteBaseDataSelection.EditStyleFichierChargement.Text='petite Icône')then FSConnectiviteBaseDataSelection.FichierChargement.ViewStyle:=vsSmallIcon;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.BitBtn15Click(Sender: TObject);
+begin
+FSConnectiviteBaseDataSelection.AfficheChargementDonnes.Visible:=false;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.SourceChargementMouseUp(
+  Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+  Y: Integer);
+begin
+FSConnectiviteBaseDataSelection.EditFichierChargement.Text:=FSConnectiviteBaseDataSelection.SourceChargement.Path;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.FichierChargementMouseUp(
+  Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+  Y: Integer);
+begin
+
+if(FSConnectiviteBaseDataSelection.FichierChargement.ItemIndex>=0)then
+begin
+     FSConnectiviteBaseDataSelection.EditFichierChargement.Text:=FSConnectiviteBaseDataSelection.FichierChargement.Folders[FSConnectiviteBaseDataSelection.FichierChargement.ItemIndex].PathName;
+end
+else
+begin
+     FSConnectiviteBaseDataSelection.EditFichierChargement.Text:='';
+end;
+
+end;
+
+procedure TFSConnectiviteBaseDataSelection.EditStyleFichierChargementSelect(
+  Sender: TObject);
+begin
+if(FSConnectiviteBaseDataSelection.EditStyleFichierChargement.Text='icônes')then FSConnectiviteBaseDataSelection.FichierChargement.ViewStyle:=VsIcon;
+if(FSConnectiviteBaseDataSelection.EditStyleFichierChargement.Text='liste')then FSConnectiviteBaseDataSelection.FichierChargement.ViewStyle:=VsList;
+if(FSConnectiviteBaseDataSelection.EditStyleFichierChargement.Text='détails')then FSConnectiviteBaseDataSelection.FichierChargement.ViewStyle:=VsReport;
+if(FSConnectiviteBaseDataSelection.EditStyleFichierChargement.Text='petite Icône')then FSConnectiviteBaseDataSelection.FichierChargement.ViewStyle:=vsSmallIcon;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.BitChargerClick(
+  Sender: TObject);
+var  i:integer; OKChargement:boolean;   Adresse:string;
+begin
+ChEnregistrement:=FSConnectiviteBaseDataSelection.EditFichierChargement.Text;
+i:=1;
+OKChargement:=false;
+while(i<=longueur(ChEnregistrement))and(OKChargement=false)do
+begin
+     if(ChEnregistrement[i]='.')then
+     begin
+          OKChargement:=true;
+          showmessage('Sélectionnez le fichier de données approprié SVP!');
+          Exit;
+     end;
+i:=i+1;
+end;
+
+if FileExists(ChEnregistrement)then
+begin
+     assignfile(FParc,ChEnregistrement);
+     reset(FParc);
+     Seek(FParc,0);
+     Read(FParc,RParc);
+
+     if(FSConnectiviteBaseDataSelection.EditParcoursInstall.Text='')then FSConnectiviteBaseDataSelection.EditParcoursInstall.Text:=RParc.Parcours;
+     if(FSConnectiviteBaseDataSelection.EditMotPasse.Text='')then FSConnectiviteBaseDataSelection.EditMotPasse.Text:=RParc.MotPasse;
+     if(FSConnectiviteBaseDataSelection.EditDateAvancement.Text='')then FSConnectiviteBaseDataSelection.EditDateAvancement.Text:=RParc.DateAvancement;
+     if(FSConnectiviteBaseDataSelection.EditDateExp.Text='')then FSConnectiviteBaseDataSelection.EditDateExp.Text:=RParc.DateExp;
+     if(FSConnectiviteBaseDataSelection.EditHeureExp.Text='')then FSConnectiviteBaseDataSelection.EditHeureExp.Text:=RParc.HeureExp;
+
+     FSConnectiviteBaseDataSelection.MemoRapport.Text:='';
+     FSConnectiviteBaseDataSelection.EditText1.Text:=RParc.Text1;
+     FSConnectiviteBaseDataSelection.EditText2.Text:=RParc.Text2;
+     FSConnectiviteBaseDataSelection.EditText3.Text:=RParc.Text3;
+     FSConnectiviteBaseDataSelection.EditText4.Text:=RParc.Text4;
+     FSConnectiviteBaseDataSelection.EditText5.Text:=RParc.Text5;
+     FSConnectiviteBaseDataSelection.EditText6.Text:=RParc.Text6;
+     FSConnectiviteBaseDataSelection.EditText7.Text:=RParc.Text7;
+     FSConnectiviteBaseDataSelection.EditText8.Text:=RParc.Text8;
+     FSConnectiviteBaseDataSelection.EditText9.Text:=RParc.Text9;
+     FSConnectiviteBaseDataSelection.EditText10.Text:=RParc.Text10;
+     FSConnectiviteBaseDataSelection.EditNomLogo.Text:=RParc.NomLogo;
+     FSConnectiviteBaseDataSelection.EditNomLabel.Text:=RParc.NomLabel;
+
+     Adresse:=RParc.Parcours+'\'+ExtractFileName(RParc.Parcours)+RParc.NomLogo;
+     if FileExists(Adresse)
+     then FSConnectiviteBaseDataSelection.Logo.Picture.LoadFromFile(Adresse)
+     else FSConnectiviteBaseDataSelection.Logo.Picture:=FSConnectiviteBaseDataSelection.PhotoVide.Picture;
+
+     Adresse:=RParc.Parcours+'\'+ExtractFileName(RParc.Parcours)+RParc.NomLabel;
+     if FileExists(Adresse)
+     then FSConnectiviteBaseDataSelection.LabelISO.Picture.LoadFromFile(Adresse)
+     else FSConnectiviteBaseDataSelection.LabelISO.Picture:=FSConnectiviteBaseDataSelection.PhotoVide.Picture;
+
+     FSConnectiviteBaseDataSelection.AfficheChargementDonnes.Visible:=false;
+end
+else
+begin
+     showmessage('Sélectionnez le fichier de données approprié SVP!');
+end;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.BitAnnulerClick(
+  Sender: TObject);
+begin
+FSConnectiviteBaseDataSelection.AfficheChargementDonnes.Visible:=false;
+end;
+
+procedure TFSConnectiviteBaseDataSelection.BitBtn2Click(Sender: TObject);
+var   i,RowSelect:integer; Adresse:string;
+begin
+     if FileExists('C:\WinBus.File')then
+           begin
+                assignfile(FRegistreVolatile,'C:\WinBus.File');
+                reset(FRegistreVolatile);
+                Seek(FRegistreVolatile,0);
+                Read(FRegistreVolatile,RRegistreVolatile);
+                FSInstalle.LabelNomEnregistre2.Caption:='Projet ouvert:  '+RRegistreVolatile.Repertoire;
+           end;
+
+           if FileExists('C:\WinBuss.dll')then
+           begin
+                assignfile(FRegistre,'C:\WinBuss.dll');
+                reset(FRegistre);
+                Seek(FRegistre,0);
+                i:=0;
+                RowSelect:=0;
+                while not eof(FRegistre) do
+                begin
+                     Read(FRegistre,RRegistre);
+                     FSInstalle.TableauRegistres.Rows[i].Text:=inttostr(i);
+                     FSInstalle.TableauRegistres.Cells[1,i]:=RRegistre.Repertoire;
+                     FSInstalle.TableauRegistres.Cells[2,i]:=RRegistre.Adresse;
+                     FSInstalle.TableauRegistres.Cells[3,i]:=RRegistre.Exercice;
+                     if(RRegistre.Repertoire=RRegistreVolatile.Repertoire)then RowSelect:=i;
+                     i:=i+1;
+                end;
+                FSInstalle.TableauRegistres.RowCount:=i;
+                FSInstalle.TableauRegistres.ColWidths[2]:=0;
+                FSInstalle.TableauRegistres.Row:=RowSelect;
+           end;
+
+           FSInstalle.EditExercice.Text:=FSInstalle.TableauRegistres.Cells[3,FSInstalle.TableauRegistres.Row];
+
+      FSInstalle.show;
+      FSInstalle.PanelClef.Visible:=true;
+      FSInstalle.EditClef.Text:='';
+      OpenFParc(RParc);
+      FSInstalle.LabelFichierSauv.Caption:=RParc.Parcours+'.';
+      FSInstalle.LabelText1.Caption:=RParc.Text1;
+      FSInstalle.LabelText2.Caption:=RParc.Text2;
+      FSInstalle.LabelText3.Caption:=RParc.Text3;
+      FSInstalle.LabelText4.Caption:=RParc.Text4;
+      FSInstalle.LabelText5.Caption:=RParc.Text5;
+      FSInstalle.LabelText6.Caption:=RParc.Text6;
+      FSInstalle.LabelText7.Caption:=RParc.Text7;
+      FSInstalle.LabelText8.Caption:=RParc.Text8;
+      FSInstalle.LabelText9.Caption:=RParc.Text9;
+      FSInstalle.LabelText10.Caption:=RParc.Text10;
+
+      if(RParc.NomLogo<>'')then
+      begin
+           Adresse:=RParc.Parcours+'\'+Entreprise+RParc.NomLogo;
+           if FileExists(Adresse)then
+           begin
+                FSInstalle.LogoAffiche.Picture.LoadFromFile(Adresse);
+           end;
+      end;
+
+      if(RParc.NomLabel<>'')then
+      begin
+           Adresse:=RParc.Parcours+'\'+Entreprise+RParc.NomLabel;
+           if FileExists(Adresse)then
+           begin
+                FSInstalle.LabelISOAffiche.Picture.LoadFromFile(Adresse);
+           end;
+      end;
+
+      FSInstalle.TableauRegistres.Height:=0;
+      FSInstalle.BitInsertEntite.Visible:=false;
+      FSInstalle.EditCodeAccer.SetFocus;
+
+      FSMenuPrincipal.AfficheChoisConnectivite.Visible:=false;
+end;
+
+end.

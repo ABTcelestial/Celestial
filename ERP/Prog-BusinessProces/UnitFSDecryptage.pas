@@ -1,0 +1,141 @@
+unit UnitFSDecryptage;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, Buttons, ComCtrls, FileCtrl;
+
+type
+  TFSDecryptage = class(TForm)
+    EditCodeCrypter: TEdit;
+    EditCodeDecrypter: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Bevel1: TBevel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    EditFrequence: TEdit;
+    Label3: TLabel;
+    Bevel2: TBevel;
+    Bevel3: TBevel;
+    Panel5: TPanel;
+    Label11: TLabel;
+    Label12: TLabel;
+    LabelNomVolume: TLabel;
+    Label13: TLabel;
+    LabelLongueurMaxiNomFichier: TLabel;
+    LabelNumSerie: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    LabelSystemeDeFichier: TLabel;
+    EditNomRepertoireRacine: TEdit;
+    Bevel4: TBevel;
+    Label4: TLabel;
+    EditSelectDisque: TDriveComboBox;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure EditCodeCrypterEnter(Sender: TObject);
+    procedure EditCodeDecrypterEnter(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure EditSelectDisqueChange(Sender: TObject);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSDecryptage: TFSDecryptage;
+
+implementation
+
+Uses UnitInitialisation;
+
+{$R *.dfm}
+
+procedure TFSDecryptage.BitBtn1Click(Sender: TObject);
+begin
+     FSDecryptage.EditFrequence.Text:=MidelLaters(FSDecryptage.EditCodeCrypter.Text,2,3);
+     FSDecryptage.EditCodeDecrypter.Text:=DeCodageTexteSpeciale(FSDecryptage.EditCodeCrypter.Text,true);
+     //FSDecryptage.EditCodeDecrypter.Text:=DeCodageTexte(FSDecryptage.EditCodeCrypter.Text,true);
+end;
+
+procedure TFSDecryptage.BitBtn2Click(Sender: TObject);
+begin
+     FSDecryptage.EditCodeCrypter.Text:=CodageTexteSpeciale(FSDecryptage.EditCodeDecrypter.Text);
+     //FSDecryptage.EditCodeCrypter.Text:=CodageTexte(FSDecryptage.EditCodeDecrypter.Text);
+     FSDecryptage.EditFrequence.Text:=MidelLaters(FSDecryptage.EditCodeCrypter.Text,2,3);
+end;
+
+procedure TFSDecryptage.EditCodeCrypterEnter(Sender: TObject);
+begin
+     FSDecryptage.EditCodeDecrypter.Text:='';
+end;
+
+procedure TFSDecryptage.EditCodeDecrypterEnter(Sender: TObject);
+begin
+     FSDecryptage.EditCodeCrypter.Text:='';
+end;
+
+procedure TFSDecryptage.FormShow(Sender: TObject);
+var
+  Repertoire:PChar;
+  NomVolume: array[0..255] of Char;
+  NumSerie:DWORD;
+  LongeurMaxNomFichier:DWORD;
+  TypeCase:DWORD;
+  FileSystem: array[0..255] of Char;
+begin
+     FSDecryptage.EditNomRepertoireRacine.Text:=FSDecryptage.EditSelectDisque.Drive+':\';
+     Repertoire:=PChar(FSDecryptage.EditNomRepertoireRacine.Text);
+     if not GetVolumeInformation(Repertoire,NomVolume,SizeOf(NomVolume),@NumSerie,
+                 LongeurMaxNomFichier,TypeCase, FileSystem,sizeOf(FileSystem))
+     then
+     begin
+          FSDecryptage.LabelNomVolume.Caption:='';
+          FSDecryptage.LabelLongueurMaxiNomFichier.Caption:='';
+          FSDecryptage.LabelNumSerie.Caption:='';
+          FSDecryptage.LabelSystemeDeFichier.Caption:='';
+          ShowMessage('erreur');
+     end
+     else
+     begin
+          FSDecryptage.LabelNomVolume.Caption:=String(NomVolume);
+          FSDecryptage.LabelLongueurMaxiNomFichier.Caption:=inttostr(LongeurMaxNomFichier)+' Caractères';
+          FSDecryptage.LabelNumSerie.Caption:=inttostr(NumSerie);
+          FSDecryptage.LabelSystemeDeFichier.Caption:=String(FileSystem);
+     end;
+end;
+
+procedure TFSDecryptage.EditSelectDisqueChange(Sender: TObject);
+var
+  Repertoire:PChar;
+  NomVolume: array[0..255] of Char;
+  NumSerie:DWORD;
+  LongeurMaxNomFichier:DWORD;
+  TypeCase:DWORD;
+  FileSystem: array[0..255] of Char;
+begin
+     FSDecryptage.EditNomRepertoireRacine.Text:=FSDecryptage.EditSelectDisque.Drive+':\';
+     Repertoire:=PChar(FSDecryptage.EditNomRepertoireRacine.Text);
+     if not GetVolumeInformation(Repertoire,NomVolume,SizeOf(NomVolume),@NumSerie,
+            LongeurMaxNomFichier,TypeCase, FileSystem,sizeOf(FileSystem))
+     then
+     begin
+          FSDecryptage.LabelNomVolume.Caption:='';
+          FSDecryptage.LabelLongueurMaxiNomFichier.Caption:='';
+          FSDecryptage.LabelNumSerie.Caption:='';
+          FSDecryptage.LabelSystemeDeFichier.Caption:='';
+          ShowMessage('erreur');
+     end
+     else
+     begin
+          FSDecryptage.LabelNomVolume.Caption:=String(NomVolume);
+          FSDecryptage.LabelLongueurMaxiNomFichier.Caption:=inttostr(LongeurMaxNomFichier)+' Caractères';
+          FSDecryptage.LabelNumSerie.Caption:=inttostr(NumSerie);
+          FSDecryptage.LabelSystemeDeFichier.Caption:=String(FileSystem);
+     end;
+end;
+
+end.

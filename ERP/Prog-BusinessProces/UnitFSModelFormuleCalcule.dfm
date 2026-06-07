@@ -1,0 +1,183 @@
+object FSModelFormuleCalcule: TFSModelFormuleCalcule
+  Left = 212
+  Top = 132
+  Width = 810
+  Height = 345
+  Caption = 'Model Formule de Calcule'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object TableauModelFormule: TStringGrid
+    Left = 8
+    Top = 8
+    Width = 777
+    Height = 284
+    Ctl3D = False
+    RowCount = 11
+    ParentCtl3D = False
+    TabOrder = 0
+    OnClick = TableauModelFormuleClick
+    OnKeyPress = TableauModelFormuleKeyPress
+  end
+  object AfficheModelFormule: TPanel
+    Left = 176
+    Top = 56
+    Width = 465
+    Height = 193
+    BevelInner = bvLowered
+    Color = 8454143
+    TabOrder = 1
+    Visible = False
+    object Bevel1: TBevel
+      Left = 8
+      Top = 8
+      Width = 449
+      Height = 129
+    end
+    object Label1: TLabel
+      Left = 68
+      Top = 20
+      Width = 40
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Num'#233'ro:'
+    end
+    object Label2: TLabel
+      Left = 52
+      Top = 44
+      Width = 56
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Abr'#233'viation:'
+    end
+    object Label3: TLabel
+      Left = 75
+      Top = 68
+      Width = 33
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Libell'#233':'
+    end
+    object Bevel2: TBevel
+      Left = 8
+      Top = 144
+      Width = 449
+      Height = 41
+    end
+    object Label4: TLabel
+      Left = 25
+      Top = 103
+      Width = 83
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Type d'#39'Affichage:'
+    end
+    object EditNumModelFormule: TEdit
+      Left = 112
+      Top = 16
+      Width = 65
+      Height = 19
+      Color = clScrollBar
+      Ctl3D = False
+      ParentCtl3D = False
+      ReadOnly = True
+      TabOrder = 0
+      OnKeyDown = EditNumModelFormuleKeyDown
+    end
+    object EditAbreviation: TEdit
+      Left = 112
+      Top = 40
+      Width = 121
+      Height = 19
+      Ctl3D = False
+      ParentCtl3D = False
+      TabOrder = 1
+      OnKeyDown = EditAbreviationKeyDown
+    end
+    object EditLibelle: TEdit
+      Left = 112
+      Top = 64
+      Width = 337
+      Height = 19
+      Ctl3D = False
+      ParentCtl3D = False
+      TabOrder = 2
+      OnKeyDown = EditLibelleKeyDown
+    end
+    object BitBtn1: TBitBtn
+      Left = 16
+      Top = 152
+      Width = 129
+      Height = 25
+      TabOrder = 3
+      OnClick = BitBtn1Click
+      Kind = bkCancel
+    end
+    object BitOperationModelFormule: TBitBtn
+      Left = 320
+      Top = 152
+      Width = 131
+      Height = 25
+      TabOrder = 4
+      OnClick = BitOperationModelFormuleClick
+      Kind = bkAll
+    end
+    object Panel1: TPanel
+      Left = 112
+      Top = 88
+      Width = 337
+      Height = 41
+      BevelInner = bvLowered
+      Ctl3D = False
+      ParentCtl3D = False
+      TabOrder = 5
+      object RadioGroup1: TRadioGroup
+        Left = 48
+        Top = 2
+        Width = 281
+        Height = 33
+        TabOrder = 0
+      end
+      object RBPourcentage: TRadioButton
+        Left = 64
+        Top = 13
+        Width = 105
+        Height = 17
+        Caption = 'Pourcentage (%)'
+        TabOrder = 1
+        OnClick = RBPourcentageClick
+        OnKeyDown = RBPourcentageKeyDown
+      end
+      object RBNumerique: TRadioButton
+        Left = 224
+        Top = 13
+        Width = 73
+        Height = 17
+        Caption = 'Num'#233'rique'
+        TabOrder = 2
+        OnClick = RBNumeriqueClick
+        OnKeyDown = RBNumeriqueKeyDown
+      end
+    end
+    object EditTypeAffichage: TEdit
+      Left = 120
+      Top = 100
+      Width = 33
+      Height = 19
+      Color = clScrollBar
+      Ctl3D = False
+      ParentCtl3D = False
+      ReadOnly = True
+      TabOrder = 6
+      OnKeyDown = EditTypeAffichageKeyDown
+    end
+  end
+end

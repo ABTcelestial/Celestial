@@ -1,0 +1,172 @@
+unit UnitFSRessourceFinanciere;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, StdCtrls, ExtCtrls, Buttons;
+
+type
+  TFSRessourceFinanciere = class(TForm)
+    TableauBaseAvis: TStringGrid;
+    RBMultiSelection: TCheckBox;
+    BitBtn1: TBitBtn;
+    Bevel1: TBevel;
+    procedure TableauBaseAvisKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure TableauBaseAvisDblClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Déclarations privées }
+  public
+    { Déclarations publiques }
+  end;
+
+var
+  FSRessourceFinanciere: TFSRessourceFinanciere;
+
+implementation
+
+uses UnitInitialisation, UnitFSAvis, UnitFSTiers, UnitFSTraitementDonnees;
+
+{$R *.dfm}
+
+procedure TFSRessourceFinanciere.TableauBaseAvisKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var  R:integer; FichierBaseAvis:string;
+begin
+     if key in[VK_RETURN]then
+     begin
+          FichierBaseAvis:='';
+          for R:=1 to FSRessourceFinanciere.TableauBaseAvis.RowCount-1 do
+          begin
+               if(FSRessourceFinanciere.TableauBaseAvis.Cells[3,R]='OK')then
+               begin
+                    if(FichierBaseAvis='')
+                    then FichierBaseAvis:=FSRessourceFinanciere.TableauBaseAvis.Cells[2,R]
+                    else FichierBaseAvis:=FichierBaseAvis+';'+FSRessourceFinanciere.TableauBaseAvis.Cells[2,R];
+               end;
+          end;
+
+          if(FichierBaseAvis='')then
+          begin
+               showmessage('Veuillez sélectionner une Base Avis AVP !');
+               Exit;
+          end;
+
+          if(FSRessourceFinanciere.TableauBaseAvis.Cells[0,0]='AV')then
+          begin
+               ListeBaseAvisBox(FSAvis.EditBaseAvis,FSAvis.TitreEditBaseAvis);
+
+               FSAvis.EditBaseAvis.Text:=FichierBaseAvis;
+               AfficherFSAvis(FSAvis.EditBaseAvis.Text);
+          end;
+
+          if(FSRessourceFinanciere.TableauBaseAvis.Cells[0,0]='TT')then
+          begin
+               ListeBaseAvisBox(FSTraitementDonnees.EditBaseAvisFichierConcerne,FSTraitementDonnees.TitreEditBaseAvisFichierConcerne);
+               FSTraitementDonnees.EditBaseAvisFichierConcerne.Text:=FichierBaseAvis;
+               AfficheTraitementTiers;
+          end;
+
+          if(FSRessourceFinanciere.TableauBaseAvis.Cells[0,0]='TD')then
+          begin
+               ListeBaseAvisBox(FSTraitementDonnees.EditBaseAvisFichierConcerne,FSTraitementDonnees.TitreEditBaseAvisFichierConcerne);
+               FSTraitementDonnees.EditBaseAvisFichierConcerne.Text:=FichierBaseAvis;
+               AfficheTraitementDomiciliation;
+          end;
+
+          if(FSRessourceFinanciere.TableauBaseAvis.Cells[0,0]='TB')then
+          begin
+               ListeBaseAvisBox(FSTraitementDonnees.EditBaseAvisFichierConcerne,FSTraitementDonnees.TitreEditBaseAvisFichierConcerne);
+               FSTraitementDonnees.EditBaseAvisFichierConcerne.Text:=FichierBaseAvis;
+
+               AfficheTableauDeBohrs;
+          end;
+
+          FSRessourceFinanciere.Close;
+
+     end;
+end;
+
+procedure TFSRessourceFinanciere.TableauBaseAvisDblClick(Sender: TObject);
+var  R:integer;
+begin
+     if(RBMultiSelection.Checked=false)then
+     begin
+          for R:=1 to FSRessourceFinanciere.TableauBaseAvis.RowCount-1 do
+          if(R<>FSRessourceFinanciere.TableauBaseAvis.Row)then FSRessourceFinanciere.TableauBaseAvis.Cells[3,R]:='';
+     end;
+
+     if(FSRessourceFinanciere.TableauBaseAvis.Cells[3,FSRessourceFinanciere.TableauBaseAvis.Row]='OK')
+     then FSRessourceFinanciere.TableauBaseAvis.Cells[3,FSRessourceFinanciere.TableauBaseAvis.Row]:=''
+     else FSRessourceFinanciere.TableauBaseAvis.Cells[3,FSRessourceFinanciere.TableauBaseAvis.Row]:='OK';
+end;
+
+procedure TFSRessourceFinanciere.BitBtn1Click(Sender: TObject);
+var  R:integer; FichierBaseAvis:string;
+begin
+          FichierBaseAvis:='';
+          for R:=1 to FSRessourceFinanciere.TableauBaseAvis.RowCount-1 do
+          begin
+               if(FSRessourceFinanciere.TableauBaseAvis.Cells[3,R]='OK')then
+               begin
+                    if(FichierBaseAvis='')
+                    then FichierBaseAvis:=FSRessourceFinanciere.TableauBaseAvis.Cells[2,R]
+                    else FichierBaseAvis:=FichierBaseAvis+';'+FSRessourceFinanciere.TableauBaseAvis.Cells[2,R];
+               end;
+          end;
+
+          if(FichierBaseAvis='')then
+          begin
+               showmessage('Veuillez sélectionner une Base Avis AVP !');
+               Exit;
+          end;
+
+          if(FSRessourceFinanciere.TableauBaseAvis.Cells[0,0]='AV')then
+          begin
+               ListeBaseAvisBox(FSAvis.EditBaseAvis,FSAvis.TitreEditBaseAvis);
+
+               FSAvis.EditBaseAvis.Text:=FichierBaseAvis;
+               AfficherFSAvis(FSAvis.EditBaseAvis.Text);
+          end;
+
+          if(FSRessourceFinanciere.TableauBaseAvis.Cells[0,0]='TT')then
+          begin
+               ListeBaseAvisBox(FSTraitementDonnees.EditBaseAvisFichierConcerne,FSTraitementDonnees.TitreEditBaseAvisFichierConcerne);
+               FSTraitementDonnees.EditBaseAvisFichierConcerne.Text:=FichierBaseAvis;
+               AfficheTraitementTiers;
+          end;
+
+          if(FSRessourceFinanciere.TableauBaseAvis.Cells[0,0]='TD')then
+          begin
+               ListeBaseAvisBox(FSTraitementDonnees.EditBaseAvisFichierConcerne,FSTraitementDonnees.TitreEditBaseAvisFichierConcerne);
+               FSTraitementDonnees.EditBaseAvisFichierConcerne.Text:=FichierBaseAvis;
+               AfficheTraitementDomiciliation;
+          end;
+
+          if(FSRessourceFinanciere.TableauBaseAvis.Cells[0,0]='TB')then
+          begin
+               ListeBaseAvisBox(FSTraitementDonnees.EditBaseAvisFichierConcerne,FSTraitementDonnees.TitreEditBaseAvisFichierConcerne);
+               FSTraitementDonnees.EditBaseAvisFichierConcerne.Text:=FichierBaseAvis;
+
+               AfficheTableauDeBohrs;
+          end;
+
+          FSRessourceFinanciere.Close;
+end;
+
+procedure TFSRessourceFinanciere.FormShow(Sender: TObject);
+begin
+ActiverNomForm(1,(Sender as TComponent).Name);
+end;
+
+procedure TFSRessourceFinanciere.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+ActiverNomForm(0,(Sender as TComponent).Name);
+end;
+
+end.
