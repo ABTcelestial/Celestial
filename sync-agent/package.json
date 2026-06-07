@@ -1,0 +1,17 @@
+{
+  "name": "celestial-sync-agent",
+  "version": "1.0.0",
+  "description": "Sync agent: PostgreSQL local → Supabase (Celestial Platform)",
+  "main": "index.js",
+  "scripts": {
+    "sync": "node index.js --all",
+    "sync:table": "node index.js --table"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0",
+    "pg": "^8.11.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,4 +1,10 @@
 export type DevisStatut = 'nouveau' | 'lu' | 'traite';
+
+export interface ErpColumnDef {
+  key: string;
+  label: string;
+  type: 'text' | 'number' | 'date' | 'boolean';
+}
 export type ChangelogProduit = string;
 export type DocProduit = string;
 
@@ -119,6 +125,54 @@ export type Database = {
           remise_pct?: number; badge?: string | null; actif?: boolean; ordre?: number; created_at?: string;
         };
         Update: Partial<Database['public']['Tables']['bundles']['Row']>;
+        Relationships: [];
+      };
+      platform_workspaces: {
+        Row: { id: string; name: string; slug: string; licence_key: string; active: boolean; created_at: string; };
+        Insert: { id?: string; name: string; slug: string; licence_key?: string; active?: boolean; created_at?: string; };
+        Update: Partial<Database['public']['Tables']['platform_workspaces']['Row']>;
+        Relationships: [];
+      };
+      platform_members: {
+        Row: { id: string; workspace_id: string; clerk_user_id: string; email: string; role: 'owner' | 'viewer'; created_at: string; };
+        Insert: { id?: string; workspace_id: string; clerk_user_id: string; email: string; role: 'owner' | 'viewer'; created_at?: string; };
+        Update: Partial<Database['public']['Tables']['platform_members']['Row']>;
+        Relationships: [];
+      };
+      erp_table_definitions: {
+        Row: { id: string; name: string; label: string; columns: ErpColumnDef[]; description: string | null; created_at: string; };
+        Insert: { id?: string; name: string; label: string; columns?: ErpColumnDef[]; description?: string | null; created_at?: string; };
+        Update: Partial<Database['public']['Tables']['erp_table_definitions']['Row']>;
+        Relationships: [];
+      };
+      workspace_table_access: {
+        Row: { workspace_id: string; table_id: string; can_export: boolean; };
+        Insert: { workspace_id: string; table_id: string; can_export?: boolean; };
+        Update: { workspace_id?: string; table_id?: string; can_export?: boolean; };
+        Relationships: [];
+      };
+      erp_data: {
+        Row: { id: string; workspace_id: string; table_name: string; record_id: string; data: Record<string, unknown>; synced_at: string; };
+        Insert: { id?: string; workspace_id: string; table_name: string; record_id: string; data: Record<string, unknown>; synced_at?: string; };
+        Update: Partial<Database['public']['Tables']['erp_data']['Row']>;
+        Relationships: [];
+      };
+      platform_notifications: {
+        Row: { id: string; workspace_id: string; title: string; message: string; read: boolean; created_at: string; };
+        Insert: { id?: string; workspace_id: string; title: string; message: string; read?: boolean; created_at?: string; };
+        Update: Partial<Database['public']['Tables']['platform_notifications']['Row']>;
+        Relationships: [];
+      };
+      platform_messages: {
+        Row: { id: string; workspace_id: string; sender_type: 'client' | 'admin'; clerk_user_id: string | null; content: string; created_at: string; };
+        Insert: { id?: string; workspace_id: string; sender_type: 'client' | 'admin'; clerk_user_id?: string | null; content: string; created_at?: string; };
+        Update: Partial<Database['public']['Tables']['platform_messages']['Row']>;
+        Relationships: [];
+      };
+      erp_sync_logs: {
+        Row: { id: string; workspace_id: string; table_name: string; records_synced: number | null; status: 'success' | 'error'; error_message: string | null; synced_at: string; };
+        Insert: { id?: string; workspace_id: string; table_name: string; records_synced?: number | null; status: 'success' | 'error'; error_message?: string | null; synced_at?: string; };
+        Update: Partial<Database['public']['Tables']['erp_sync_logs']['Row']>;
         Relationships: [];
       };
     };

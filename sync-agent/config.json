@@ -1,0 +1,8 @@
+{
+  "licence_key": "REMPLACER_PAR_LICENCE_KEY_DU_WORKSPACE",
+  "supabase_url": "https://mxiipovckjehtnlaqrqj.supabase.co",
+  "anon_key": "REMPLACER_PAR_ANON_KEY_SUPABASE",
+  "service_role_key": "REMPLACER_PAR_SERVICE_ROLE_KEY_SUPABASE",
+  "pg_url": "postgresql://postgres:motdepasse@localhost:5432/nom_base",
+  "tables": ["clients", "factures", "articles"]
+}

@@ -15,6 +15,7 @@ const links = [
   { href: '/celestial-admin-rtabt/changelogs',    label: 'Changelogs',    exact: false, icon: '≡' },
   { href: '/celestial-admin-rtabt/documentation', label: 'Documentation', exact: false, icon: '◫' },
   { href: '/celestial-admin-rtabt/parametres',  label: 'Paramètres',      exact: false, icon: '⚙' },
+  { href: '/celestial-admin-rtabt/platform',    label: 'Plateforme',       exact: false, icon: '◉' },
 ];
 
 export function AdminNav() {
