@@ -48,11 +48,15 @@ export type Database = {
       produits: {
         Row: {
           id: string; nom: string; icone: string; description: string;
-          prix: number; featured: boolean; ordre: number; actif: boolean; created_at: string;
+          type: 'logiciel' | 'materiel' | 'service';
+          prix: number; badge: string | null; lien: string | null;
+          featured: boolean; ordre: number; actif: boolean; created_at: string;
         };
         Insert: {
           id?: string; nom: string; icone?: string; description: string;
-          prix?: number; featured?: boolean; ordre?: number; actif?: boolean; created_at?: string;
+          type?: 'logiciel' | 'materiel' | 'service';
+          prix?: number; badge?: string | null; lien?: string | null;
+          featured?: boolean; ordre?: number; actif?: boolean; created_at?: string;
         };
         Update: Partial<Database['public']['Tables']['produits']['Row']>;
         Relationships: [];
@@ -118,11 +122,13 @@ export type Database = {
       bundles: {
         Row: {
           id: string; nom: string; description: string; produits: string[];
-          remise_pct: number; badge: string | null; actif: boolean; ordre: number; created_at: string;
+          prix: number | null; remise_pct: number; badge: string | null;
+          actif: boolean; ordre: number; created_at: string;
         };
         Insert: {
           id?: string; nom: string; description?: string; produits?: string[];
-          remise_pct?: number; badge?: string | null; actif?: boolean; ordre?: number; created_at?: string;
+          prix?: number | null; remise_pct?: number; badge?: string | null;
+          actif?: boolean; ordre?: number; created_at?: string;
         };
         Update: Partial<Database['public']['Tables']['bundles']['Row']>;
         Relationships: [];

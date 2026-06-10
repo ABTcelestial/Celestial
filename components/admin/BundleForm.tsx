@@ -15,6 +15,7 @@ export function BundleForm({ bundle, produits }: { bundle?: Bundle; produits: Pr
   const [nom, setNom] = useState(bundle?.nom ?? '');
   const [description, setDescription] = useState(bundle?.description ?? '');
   const [inclus, setInclus] = useState<string[]>(bundle?.produits ?? []);
+  const [prixFixe, setPrixFixe] = useState<number>(bundle?.prix ?? 0);
   const [remisePct, setRemisePct] = useState(bundle?.remise_pct ?? 0);
   const [badge, setBadge] = useState(bundle?.badge ?? '');
   const [actif, setActif] = useState(bundle?.actif ?? true);
@@ -28,13 +29,14 @@ export function BundleForm({ bundle, produits }: { bundle?: Bundle; produits: Pr
   }
 
   const basePrice = produits.filter(p => inclus.includes(p.nom)).reduce((s, p) => s + p.prix, 0);
-  const bundlePrice = Math.round(basePrice * (1 - remisePct / 100));
+  // le prix fixe est prioritaire ; sinon prix calculé par remise
+  const bundlePrice = prixFixe > 0 ? prixFixe : Math.round(basePrice * (1 - remisePct / 100));
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (inclus.length < 2) { setError('Sélectionnez au moins 2 logiciels.'); return; }
     setSaving(true); setError(null);
-    const data = { nom, description, produits: inclus, remise_pct: remisePct, badge: badge || null, actif };
+    const data = { nom, description, produits: inclus, prix: prixFixe > 0 ? prixFixe : null, remise_pct: remisePct, badge: badge || null, actif };
     const { error: err } = bundle
       ? await supabase.from('bundles').update(data).eq('id', bundle.id)
       : await supabase.from('bundles').insert(data);
@@ -79,11 +81,17 @@ export function BundleForm({ bundle, produits }: { bundle?: Bundle; produits: Pr
         )}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+        <div style={field}>
+          <span style={label}>Prix fixe du pack (DA)</span>
+          <input style={input} type="number" min={0} value={prixFixe}
+            onChange={e => setPrixFixe(Number(e.target.value))} />
+          <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>0 = utiliser la remise %</span>
+        </div>
         <div style={field}>
           <span style={label}>Remise (%)</span>
           <input style={input} type="number" min={0} max={100} value={remisePct}
-            onChange={e => setRemisePct(Number(e.target.value))} />
+            onChange={e => setRemisePct(Number(e.target.value))} disabled={prixFixe > 0} />
         </div>
         <div style={field}>
           <span style={label}>Badge (optionnel)</span>

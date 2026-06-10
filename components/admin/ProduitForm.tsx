@@ -22,6 +22,9 @@ export function ProduitForm({
   const [icone, setIcone]           = useState(initialData?.icone ?? '📦');
   const [description, setDescription] = useState(initialData?.description ?? '');
   const [prix, setPrix]             = useState(initialData?.prix ?? 0);
+  const [type, setType]             = useState<'logiciel' | 'materiel' | 'service'>(initialData?.type ?? 'logiciel');
+  const [badge, setBadge]           = useState(initialData?.badge ?? '');
+  const [lien, setLien]             = useState(initialData?.lien ?? '');
   const [featured, setFeatured]     = useState(initialData?.featured ?? false);
   const [ordre, setOrdre]           = useState(initialData?.ordre ?? 0);
   const [actif, setActif]           = useState(initialData?.actif ?? true);
@@ -42,7 +45,7 @@ export function ProduitForm({
     if (!nom.trim()) { setError('Le nom est requis.'); return; }
     setSaving(true); setError('');
 
-    const payload = { nom, icone, description, prix, featured, ordre, actif };
+    const payload = { nom, icone, description, prix, type, badge: badge || null, lien: lien || null, featured, ordre, actif };
 
     if (mode === 'create') {
       const { data: newProduit, error: err } = await supabase
@@ -85,7 +88,26 @@ export function ProduitForm({
 
         <div className="field">
           <label>Description courte *</label>
-          <input className="cel-input" placeholder="Description affichée sur la page logiciels…" value={description} onChange={e => setDescription(e.target.value)} required />
+          <input className="cel-input" placeholder="Description affichée sur la page offres…" value={description} onChange={e => setDescription(e.target.value)} required />
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr 1fr', gap: 16 }}>
+          <div className="field">
+            <label>Type d&apos;offre</label>
+            <select className="cel-input" value={type} onChange={e => setType(e.target.value as typeof type)}>
+              <option value="logiciel">Logiciel</option>
+              <option value="materiel">Matériel</option>
+              <option value="service">Service</option>
+            </select>
+          </div>
+          <div className="field">
+            <label>Badge (optionnel)</label>
+            <input className="cel-input" placeholder="ex: Produit phare" value={badge} onChange={e => setBadge(e.target.value)} />
+          </div>
+          <div className="field">
+            <label>Lien « En savoir plus » (optionnel)</label>
+            <input className="cel-input" placeholder="ex: /erp" value={lien} onChange={e => setLien(e.target.value)} />
+          </div>
         </div>
 
         {/* Module picker */}

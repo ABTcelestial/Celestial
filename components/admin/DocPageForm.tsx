@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import type { Database } from '@/lib/supabase/types';
@@ -25,6 +25,40 @@ export function DocPageForm({
   const [saving, setSaving]             = useState(false);
   const [error, setError]               = useState('');
   const [tab, setTab]                   = useState<'edit' | 'preview'>('edit');
+  const [uploading, setUploading]       = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const textareaRef  = useRef<HTMLTextAreaElement>(null);
+
+  /** Upload d'une image vers le bucket Storage « images » puis insertion
+      de la balise <img> à la position du curseur dans le contenu. */
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true); setError('');
+
+    const ext = file.name.split('.').pop()?.toLowerCase() || 'png';
+    const path = `docs/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+    const { error: upErr } = await supabase.storage.from('images').upload(path, file, {
+      cacheControl: '31536000',
+      contentType: file.type,
+    });
+    if (upErr) {
+      setError(`Échec de l'upload : ${upErr.message}`);
+      setUploading(false);
+      return;
+    }
+
+    const { data: { publicUrl } } = supabase.storage.from('images').getPublicUrl(path);
+    const imgTag = `\n<img src="${publicUrl}" alt="" style="max-width:100%;border-radius:12px" />\n`;
+
+    const ta = textareaRef.current;
+    const pos = ta && tab === 'edit' ? ta.selectionStart : contenu.length;
+    setContenu(c => c.slice(0, pos) + imgTag + c.slice(pos));
+
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -88,6 +122,23 @@ export function DocPageForm({
         <div className="field">
           <div className="flex items-center justify-between mb-2">
             <label>Contenu (HTML)</label>
+            <div className="flex items-center gap-2">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                onChange={handleImageUpload}
+                style={{ display: 'none' }}
+                id="doc-image-upload"
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                style={{ fontFamily: 'var(--font-display)', fontSize: 12, padding: '6px 14px', borderRadius: 'var(--r-pill)', border: '1px solid var(--card-border-strong)', background: 'var(--card)', color: 'var(--blue-deep)', cursor: 'pointer', opacity: uploading ? 0.6 : 1 }}
+              >
+                {uploading ? 'Upload…' : '🖼 Insérer une image'}
+              </button>
             <div className="flex gap-1" style={{ background: 'var(--glass)', border: '1px solid var(--glass-border)', borderRadius: 'var(--r-pill)', padding: 3 }}>
               {(['edit', 'preview'] as const).map(t => (
                 <button key={t} type="button" onClick={() => setTab(t)}
@@ -96,9 +147,11 @@ export function DocPageForm({
                 </button>
               ))}
             </div>
+            </div>
           </div>
           {tab === 'edit' ? (
             <textarea
+              ref={textareaRef}
               className="cel-textarea"
               placeholder={'<h2 id="section">Titre section</h2>\n<p>Paragraphe…</p>\n<ul><li>Élément</li></ul>'}
               value={contenu}

@@ -8,10 +8,9 @@ import { cn } from '@/lib/utils';
 const mainLinks = [
   { href: '/celestial-admin-rtabt',             label: 'Dashboard',     exact: true,  icon: '▦' },
   { href: '/celestial-admin-rtabt/devis',       label: 'Demandes',      exact: false, icon: '✉' },
-  { href: '/celestial-admin-rtabt/produits',    label: 'Logiciels',     exact: false, icon: '⬡' },
+  { href: '/celestial-admin-rtabt/produits',    label: 'Offres',        exact: false, icon: '⬡' },
   { href: '/celestial-admin-rtabt/modules',     label: 'Modules',       exact: false, icon: '⊕' },
-  { href: '/celestial-admin-rtabt/bundles',     label: 'Bundles',       exact: false, icon: '◈' },
-  { href: '/celestial-admin-rtabt/offres-config', label: 'Offres',      exact: false, icon: '⊞' },
+  { href: '/celestial-admin-rtabt/bundles',     label: 'Packs',         exact: false, icon: '◈' },
   { href: '/celestial-admin-rtabt/changelogs',  label: 'Changelogs',    exact: false, icon: '≡' },
   { href: '/celestial-admin-rtabt/documentation', label: 'Docs',        exact: false, icon: '◫' },
   { href: '/celestial-admin-rtabt/parametres',  label: 'Paramètres',    exact: false, icon: '⚙' },
