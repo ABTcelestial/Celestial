@@ -4,6 +4,17 @@ import { submitDevis } from '@/app/actions/devis';
 
 type Errors = { nom?: string; entreprise?: string; email?: string; logiciel?: string; message?: string };
 
+const BESOINS = [
+  { value: 'erp', label: 'ERP BusinessProces' },
+  { value: 'food', label: 'Celestial Food (restaurant)' },
+  { value: 'sur-mesure', label: 'Système / logiciel sur mesure' },
+  { value: 'materiel', label: 'Matériel informatique' },
+  { value: 'autre', label: 'Autre demande' },
+];
+
+const inputCls =
+  'w-full rounded-xl border bg-white px-4 py-3 text-[15px] text-[var(--text-primary)] outline-none transition-colors placeholder:text-[var(--text-faint)] focus:border-[var(--blue)]';
+
 export function QuoteForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [success, setSuccess] = useState(false);
@@ -16,7 +27,7 @@ export function QuoteForm() {
     if (!String(fd.get('entreprise')).trim()) e.entreprise = 'Champ requis.';
     const email = String(fd.get('email')).trim();
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) e.email = 'Email invalide.';
-    if (!String(fd.get('logiciel'))) e.logiciel = 'Veuillez choisir un logiciel.';
+    if (!String(fd.get('logiciel'))) e.logiciel = 'Veuillez choisir un besoin.';
     if (!String(fd.get('message')).trim()) e.message = 'Décrivez brièvement votre besoin.';
     return e;
   }
@@ -50,80 +61,134 @@ export function QuoteForm() {
 
   if (success) {
     return (
-      <div className="card" style={{ padding: 36, textAlign: 'center' }}>
-        <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--gold-soft)', border: '1px solid rgba(201,168,76,0.4)', display: 'grid', placeItems: 'center', margin: '0 auto 20px', color: 'var(--gold-bright)' }}>
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M20 6 9 17l-5-5" /></svg>
-        </div>
-        <h2 style={{ fontSize: 24 }}>Demande envoyée ✦</h2>
-        <p style={{ color: 'var(--text-secondary)', marginTop: 10, maxWidth: '38ch', marginInline: 'auto' }}>
-          Merci ! Notre équipe vous recontacte sous 48h ouvrées.
+      <div className="card-cel p-10 text-center">
+        <span
+          className="mx-auto flex h-14 w-14 items-center justify-center rounded-full text-[24px] text-white"
+          style={{ background: 'var(--grad-sky)' }}
+          aria-hidden
+        >
+          ✓
+        </span>
+        <h3 className="mt-5 text-[22px]">Demande envoyée !</h3>
+        <p className="mx-auto mt-3 max-w-[380px] text-[15px] text-[var(--text-secondary)]">
+          Merci pour votre confiance. Nous revenons vers vous rapidement avec une
+          proposition adaptée.
         </p>
-        <button className="btn btn-glass" style={{ marginTop: 24 }} onClick={() => setSuccess(false)}>
-          Envoyer une autre demande
-        </button>
       </div>
     );
   }
 
-  function f(name: keyof Errors) {
-    return errors[name] ? 'field field-invalid' : 'field';
-  }
-
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <div className="card" style={{ padding: 36 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
-          <div className={f('nom')}>
-            <label>Nom complet *</label>
-            <input className="cel-input" name="nom" placeholder="Sami Bennaceur" onChange={() => setErrors(p => ({ ...p, nom: undefined }))} />
-            <span className="field-err">{errors.nom}</span>
-          </div>
-          <div className={f('entreprise')}>
-            <label>Entreprise *</label>
-            <input className="cel-input" name="entreprise" placeholder="Nom de votre société" onChange={() => setErrors(p => ({ ...p, entreprise: undefined }))} />
-            <span className="field-err">{errors.entreprise}</span>
-          </div>
-          <div className={f('email')}>
-            <label>Email professionnel *</label>
-            <input className="cel-input" type="email" name="email" placeholder="vous@entreprise.dz" onChange={() => setErrors(p => ({ ...p, email: undefined }))} />
-            <span className="field-err">{errors.email}</span>
-          </div>
-          <div className="field">
-            <label>Téléphone</label>
-            <input className="cel-input" type="tel" name="tel" placeholder="+213 ..." />
-          </div>
-          <div className={f('logiciel')} style={{ gridColumn: '1 / -1' }}>
-            <label>Logiciel souhaité *</label>
-            <select className="cel-select" name="logiciel" defaultValue="" onChange={() => setErrors(p => ({ ...p, logiciel: undefined }))}>
-              <option value="">Sélectionnez une suite…</option>
-              <option>Business Process</option>
-              <option>Pay Process</option>
-              <option>Compta Process</option>
-              <option>Celestial Suite (les 3)</option>
-              <option>Je ne sais pas encore</option>
-            </select>
-            <span className="field-err">{errors.logiciel}</span>
-          </div>
-          <div className={f('message')} style={{ gridColumn: '1 / -1' }}>
-            <label>Votre message *</label>
-            <textarea className="cel-textarea" name="message" placeholder="Nombre d'utilisateurs, contexte, échéance…" onChange={() => setErrors(p => ({ ...p, message: undefined }))} />
-            <span className="field-err">{errors.message}</span>
-          </div>
+    <form onSubmit={handleSubmit} noValidate className="card-cel space-y-5 p-8 md:p-10">
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor="nom" className="mb-1.5 block text-[13.5px] font-semibold text-[var(--ink)]">
+            Votre nom *
+          </label>
+          <input
+            id="nom"
+            name="nom"
+            className={inputCls}
+            style={{ borderColor: errors.nom ? 'var(--danger)' : 'var(--card-border)' }}
+            placeholder="Nom et prénom"
+          />
+          {errors.nom && <p className="mt-1.5 text-[13px] text-[var(--danger)]">{errors.nom}</p>}
         </div>
-
-        {serverError && (
-          <div style={{ background: 'rgba(229,88,94,0.1)', border: '1px solid rgba(229,88,94,0.3)', borderRadius: 'var(--r-sm)', padding: '12px 16px', color: 'var(--danger)', fontSize: 14, marginTop: 16 }}>
-            {serverError}
-          </div>
-        )}
-
-        <button type="submit" className="btn btn-gold btn-lg btn-block" style={{ marginTop: 24, opacity: submitting ? 0.7 : 1 }} disabled={submitting}>
-          {submitting ? 'Envoi en cours…' : 'Envoyer ma demande'}
-        </button>
-        <p style={{ color: 'var(--text-muted)', fontSize: 12.5, textAlign: 'center', marginTop: 14 }}>
-          En soumettant, vous acceptez d'être recontacté par l'équipe Celestial. Vos données ne sont jamais partagées.
-        </p>
+        <div>
+          <label htmlFor="entreprise" className="mb-1.5 block text-[13.5px] font-semibold text-[var(--ink)]">
+            Entreprise *
+          </label>
+          <input
+            id="entreprise"
+            name="entreprise"
+            className={inputCls}
+            style={{ borderColor: errors.entreprise ? 'var(--danger)' : 'var(--card-border)' }}
+            placeholder="Nom de votre entreprise"
+          />
+          {errors.entreprise && <p className="mt-1.5 text-[13px] text-[var(--danger)]">{errors.entreprise}</p>}
+        </div>
       </div>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor="email" className="mb-1.5 block text-[13.5px] font-semibold text-[var(--ink)]">
+            Email *
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            className={inputCls}
+            style={{ borderColor: errors.email ? 'var(--danger)' : 'var(--card-border)' }}
+            placeholder="vous@entreprise.dz"
+          />
+          {errors.email && <p className="mt-1.5 text-[13px] text-[var(--danger)]">{errors.email}</p>}
+        </div>
+        <div>
+          <label htmlFor="tel" className="mb-1.5 block text-[13.5px] font-semibold text-[var(--ink)]">
+            Téléphone
+          </label>
+          <input
+            id="tel"
+            name="tel"
+            type="tel"
+            className={inputCls}
+            style={{ borderColor: 'var(--card-border)' }}
+            placeholder="05 XX XX XX XX"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="logiciel" className="mb-1.5 block text-[13.5px] font-semibold text-[var(--ink)]">
+          Votre besoin *
+        </label>
+        <select
+          id="logiciel"
+          name="logiciel"
+          defaultValue=""
+          className={inputCls}
+          style={{ borderColor: errors.logiciel ? 'var(--danger)' : 'var(--card-border)' }}
+        >
+          <option value="" disabled>
+            Choisissez…
+          </option>
+          {BESOINS.map((b) => (
+            <option key={b.value} value={b.value}>
+              {b.label}
+            </option>
+          ))}
+        </select>
+        {errors.logiciel && <p className="mt-1.5 text-[13px] text-[var(--danger)]">{errors.logiciel}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="message" className="mb-1.5 block text-[13.5px] font-semibold text-[var(--ink)]">
+          Votre message *
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows={5}
+          className={inputCls}
+          style={{ borderColor: errors.message ? 'var(--danger)' : 'var(--card-border)', resize: 'vertical' }}
+          placeholder="Décrivez votre activité et ce que vous souhaitez automatiser ou équiper…"
+        />
+        {errors.message && <p className="mt-1.5 text-[13px] text-[var(--danger)]">{errors.message}</p>}
+      </div>
+
+      {serverError && (
+        <p className="rounded-xl border border-[var(--danger)] bg-red-50 px-4 py-3 text-[14px] text-[var(--danger)]">
+          {serverError}
+        </p>
+      )}
+
+      <button type="submit" disabled={submitting} className="btn-primary w-full justify-center disabled:opacity-60">
+        {submitting ? 'Envoi en cours…' : 'Envoyer ma demande'}
+      </button>
+      <p className="text-center text-[12.5px] text-[var(--text-faint)]">
+        Réponse rapide, devis en dinars, sans engagement.
+      </p>
     </form>
   );
 }

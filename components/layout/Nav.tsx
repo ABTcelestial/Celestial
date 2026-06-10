@@ -1,82 +1,113 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import { useScrollNav } from '@/hooks/useScrollNav';
+import { useEffect, useState } from 'react';
 import { LogoMark } from './LogoMark';
-import { cn } from '@/lib/utils';
 
-const navLinks = [
+const LINKS = [
   { href: '/', label: 'Accueil' },
-  { href: '/offres', label: 'Logiciels' },
-  { href: '/documentation', label: 'Documentation' },
-  { href: '/changelogs', label: 'Changelogs' },
+  { href: '/erp', label: 'ERP' },
+  { href: '/food', label: 'Celestial Food' },
+  { href: '/services', label: 'Services' },
   { href: '/a-propos', label: 'À propos' },
 ];
 
 export function Nav() {
-  const scrolled = useScrollNav();
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [activeLang, setActiveLang] = useState('FR');
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <>
-      <nav className={cn('nav', scrolled && 'scrolled')}>
-        <div className="flex items-center justify-between gap-6 w-full max-w-[var(--maxw)] mx-auto px-7">
-          <Link href="/" className="logo">
-            <LogoMark />
-            <span className="logo-name">Celestial<span className="dot">.</span></span>
-          </Link>
+    <header
+      className="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+      style={{
+        height: 'var(--nav-h)',
+        background: scrolled || open ? 'rgba(255,255,255,0.85)' : 'transparent',
+        backdropFilter: scrolled || open ? 'blur(14px)' : 'none',
+        borderBottom: scrolled || open ? '1px solid var(--hairline)' : '1px solid transparent',
+      }}
+    >
+      <nav className="container-cel flex h-full items-center justify-between">
+        <Link href="/" className="flex items-center gap-3">
+          <LogoMark size={32} />
+          <span className="font-[family-name:var(--font-display)] text-[19px] font-bold tracking-tight text-[var(--ink)]">
+            Celestial
+          </span>
+        </Link>
 
-          <div className="nav-links-desktop flex items-center gap-1">
-            {navLinks.map(link => (
+        {/* Liens desktop */}
+        <div className="hidden items-center gap-1 md:flex">
+          {LINKS.map((l) => {
+            const active = l.href === '/' ? pathname === '/' : pathname.startsWith(l.href);
+            return (
               <Link
-                key={link.href}
-                href={link.href}
-                className={cn('nav-link', pathname === link.href && 'active')}
+                key={l.href}
+                href={l.href}
+                className="rounded-full px-4 py-2 text-[14.5px] font-medium transition-colors"
+                style={{
+                  color: active ? 'var(--blue-deep)' : 'var(--text-secondary)',
+                  background: active ? 'var(--card-tint)' : 'transparent',
+                }}
               >
-                {link.label}
+                {l.label}
               </Link>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3.5">
-            <div className="lang">
-              {['FR', 'EN', 'AR'].map(l => (
-                <button
-                  key={l}
-                  className={activeLang === l ? 'active' : ''}
-                  onClick={() => setActiveLang(l)}
-                >
-                  {l}
-                </button>
-              ))}
-            </div>
-            <Link href="/contact" className="btn btn-gold btn-sm">Demander un devis</Link>
-            <button
-              className="nav-burger"
-              style={{ display: 'none' }}
-              onClick={() => setMenuOpen(v => !v)}
-              aria-label="Menu"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
-                <path d="M3 6h18M3 12h18M3 18h18" />
-              </svg>
-            </button>
-          </div>
+            );
+          })}
         </div>
+
+        <div className="hidden md:block">
+          <Link href="/contact" className="btn-primary !px-6 !py-2.5 !text-[14px]">
+            Demander un devis
+          </Link>
+        </div>
+
+        {/* Burger mobile */}
+        <button
+          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
+          onClick={() => setOpen(!open)}
+          aria-label="Menu"
+          aria-expanded={open}
+        >
+          <span
+            className="h-[2px] w-6 rounded-full bg-[var(--ink)] transition-transform duration-300"
+            style={{ transform: open ? 'translateY(4px) rotate(45deg)' : 'none' }}
+          />
+          <span
+            className="h-[2px] w-6 rounded-full bg-[var(--ink)] transition-transform duration-300"
+            style={{ transform: open ? 'translateY(-4px) rotate(-45deg)' : 'none' }}
+          />
+        </button>
       </nav>
 
-      {/* Mobile overlay */}
-      <div className={cn('mobile-sheet', menuOpen && 'open')}>
-        {navLinks.map(link => (
-          <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
-            {link.label}
+      {/* Menu mobile */}
+      {open && (
+        <div
+          className="border-t border-[var(--hairline)] bg-white/95 px-6 py-4 backdrop-blur-xl md:hidden"
+          style={{ boxShadow: 'var(--shadow-cel-md)' }}
+        >
+          {LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="block rounded-xl px-4 py-3 text-[15px] font-medium text-[var(--text-secondary)]"
+            >
+              {l.label}
+            </Link>
+          ))}
+          <Link href="/contact" className="btn-primary mt-3 w-full justify-center">
+            Demander un devis
           </Link>
-        ))}
-        <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
-      </div>
-    </>
+        </div>
+      )}
+    </header>
   );
 }

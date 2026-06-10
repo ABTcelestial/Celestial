@@ -3,8 +3,9 @@ import './globals.css';
 import { SvgDefs } from '@/components/layout/SvgDefs';
 
 export const metadata: Metadata = {
-  title: 'Celestial — Logiciels ERP premium pour l\'Algérie',
-  description: 'Celestial conçoit des progiciels de gestion intégrés robustes, en licence unique, pensés pour la réglementation et les usages locaux.',
+  title: 'Celestial — Le guichet unique informatique en Algérie',
+  description:
+    'Matériel, logiciels et services : Celestial automatise la gestion des entreprises algériennes. ERP BusinessProces, Celestial Food, boutique hardware et développement sur mesure.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,52 +1,79 @@
 import Link from 'next/link';
 import { LogoMark } from './LogoMark';
 
+const COLS = [
+  {
+    title: 'Produits',
+    links: [
+      { href: '/erp', label: 'ERP BusinessProces' },
+      { href: '/food', label: 'Celestial Food' },
+      { href: 'https://celestial-shop.example.com', label: 'Celestial Shop (hardware)', external: true },
+    ],
+  },
+  {
+    title: 'Entreprise',
+    links: [
+      { href: '/a-propos', label: 'À propos' },
+      { href: '/services', label: 'Services' },
+      { href: '/contact', label: 'Contact & devis' },
+    ],
+  },
+  {
+    title: 'Ressources',
+    links: [
+      { href: '/documentation', label: 'Documentation' },
+      { href: '/changelogs', label: 'Changelogs' },
+    ],
+  },
+];
+
 export function Footer() {
   return (
-    <footer className="footer">
-      <div className="wrap">
-        <div
-          className="footer-grid-responsive"
-          style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr 1fr 1fr', gap: 40, paddingBlock: '64px 40px' }}
-        >
+    <footer className="section-mist border-t border-[var(--hairline)]">
+      <div className="container-cel">
+        <div className="grid gap-10 py-16 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div>
-            <div className="logo" style={{ marginBottom: 16 }}>
-              <LogoMark />
-              <span className="logo-name">Celestial<span className="dot">.</span></span>
+            <div className="mb-4 flex items-center gap-3">
+              <LogoMark size={30} />
+              <span className="font-[family-name:var(--font-display)] text-[18px] font-bold text-[var(--ink)]">
+                Celestial
+              </span>
             </div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: 14, maxWidth: '34ch' }}>
-              Éditeur de logiciels ERP premium pour les grandes entreprises algériennes. Depuis 2019.
+            <p className="max-w-[300px] text-[14px] leading-relaxed text-[var(--text-muted)]">
+              Le guichet unique informatique : matériel, logiciels et services pour les
+              entreprises algériennes. Basé à Béjaïa.
             </p>
           </div>
-          <div>
-            <h5>Produits</h5>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <Link href="/offres" className="footer-link">Business Process</Link>
-              <Link href="/offres" className="footer-link">Pay Process</Link>
-              <Link href="/offres" className="footer-link">Compta Process</Link>
+
+          {COLS.map((col) => (
+            <div key={col.title}>
+              <h4 className="mb-4 text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--text-faint)]">
+                {col.title}
+              </h4>
+              <ul className="space-y-2.5">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="text-[14.5px] text-[var(--text-secondary)] transition-colors hover:text-[var(--blue)]"
+                      {...('external' in l && l.external ? { target: '_blank', rel: 'noopener' } : {})}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-          <div>
-            <h5>Ressources</h5>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <Link href="/documentation" className="footer-link">Documentation</Link>
-              <Link href="/changelogs" className="footer-link">Changelogs</Link>
-              <Link href="/design-system" className="footer-link">Design System</Link>
-              <Link href="/guide" className="footer-link">Guide &amp; Mobile</Link>
-            </div>
-          </div>
-          <div>
-            <h5>Société</h5>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <Link href="/a-propos" className="footer-link">À propos</Link>
-              <Link href="/contact" className="footer-link">Contact</Link>
-              <Link href="/contact" className="footer-link">Support</Link>
-            </div>
-          </div>
+          ))}
         </div>
-        <div className="footer-bottom">
-          <span>© 2026 Celestial — Alger, Algérie. Tous droits réservés.</span>
-          <span>Conçu sous les étoiles ✦</span>
+
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-[var(--hairline)] py-6 md:flex-row">
+          <p className="text-[13px] text-[var(--text-faint)]">
+            © {new Date().getFullYear()} Celestial — Béjaïa, Algérie
+          </p>
+          <p className="text-[13px] text-[var(--text-faint)]">
+            Matériel · Logiciels · Services
+          </p>
         </div>
       </div>
     </footer>
