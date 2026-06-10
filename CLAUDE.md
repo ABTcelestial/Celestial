@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **⚠️ Refonte totale prévue** : ce site est le **site officiel de Celestial** (et plus seulement une vitrine ERP). Il doit être entièrement refait — même stack (Next.js + Supabase + Tailwind), nouveau design et nouveau contenu couvrant les 3 activités (hardware, logiciels, services). Voir `../CLAUDE.md` (racine) et `../Second Brain/02 - Projets/Celestial Website.md`. La doc d'architecture ci-dessous décrit la version actuelle.
+
 ## Commands
 
 ```bash
@@ -107,5 +109,6 @@ Both are required at build time and runtime. Copy `.env.local.example` → `.env
 - Do not read whole directories sequentially if structural relationships can be inferred from the graph.
 
 ### Declarative Memory (Obsidian Vault)
-- High-level progress tracking, future feature specs, and multi-session logs live inside your local Obsidian vault directory.
-- When finishing a development sprint, log a quick summary of changes to your Obsidian project logs folder to ensure clean continuity for the next session.
+- Le vault d'entreprise est à la racine : `../Second Brain/` (00-Entreprise, 01-Décisions, 02-Projets, 03-Journal). C'est là que vont les logs de session, specs et décisions.
+- Le dossier local `Celestial second brain/` ne contient que des notes techniques auto-générées (graphify) sur ce site — consultable, mais ne pas y écrire les logs.
+- En fin de sprint : écrire un résumé dans `../Second Brain/03 - Journal/`.
