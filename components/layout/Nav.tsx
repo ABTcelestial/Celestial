@@ -6,9 +6,9 @@ import { LogoMark } from './LogoMark';
 
 const LINKS = [
   { href: '/', label: 'Accueil' },
-  { href: '/erp', label: 'ERP' },
-  { href: '/food', label: 'Celestial Food' },
-  { href: '/services', label: 'Services' },
+  { href: '/offres', label: 'Offres' },
+  { href: '/documentation', label: 'Documentation' },
+  { href: '/changelogs', label: 'Changelogs' },
   { href: '/a-propos', label: 'À propos' },
 ];
 

@@ -1,85 +1,127 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { Database } from '@/lib/supabase/types';
 
 type Changelog = Database['public']['Tables']['changelogs']['Row'];
-type Filter = 'all' | 'business' | 'pay' | 'compta' | 'company';
 
-const dotColor: Record<string, string> = {
-  business: 'var(--purple-glow)',
-  compta: 'var(--gold)',
-  pay: 'var(--info)',
-  company: 'var(--success)',
+/* Produits actuels + anciens slugs encore présents en base */
+const PRODUIT_LABEL: Record<string, string> = {
+  erp: '⬡ ERP BusinessProces',
+  food: '🍽 Celestial Food',
+  shop: '🖥 Celestial Shop',
+  website: '🌐 Site Celestial',
+  // hérités
+  business: '⬡ ERP BusinessProces',
+  compta: '⬡ ERP BusinessProces',
+  pay: '⬡ ERP BusinessProces',
+  company: '✦ Celestial',
 };
 
-const produitLabel: Record<string, string> = {
-  business: '📊 Business Process',
-  compta: '🧮 Compta Process',
-  pay: '💼 Pay Process',
-  company: '⭐ Entreprise',
+const DOT_COLOR: Record<string, string> = {
+  erp: 'var(--blue)',
+  food: 'var(--success)',
+  shop: 'var(--warning)',
+  website: 'var(--sky-bright)',
 };
+
+function label(produit: string) {
+  return PRODUIT_LABEL[produit] ?? produit;
+}
 
 export function ChangelogTimeline({ initialData }: { initialData: Changelog[] }) {
-  const [filter, setFilter] = useState<Filter>('all');
+  const [filter, setFilter] = useState('all');
 
-  const chips: { key: Filter; label: string }[] = [
-    { key: 'all', label: 'Tout' },
-    { key: 'business', label: 'Business Process' },
-    { key: 'pay', label: 'Pay Process' },
-    { key: 'compta', label: 'Compta Process' },
-    { key: 'company', label: 'Entreprise' },
-  ];
+  // chips construits depuis les données réelles (regroupées par label)
+  const chips = useMemo(() => {
+    const seen = new Map<string, string>();
+    initialData.forEach((e) => {
+      const l = label(e.produit).replace(/^\S+\s/, '');
+      if (!seen.has(l)) seen.set(l, e.produit);
+    });
+    return [{ key: 'all', text: 'Tout' }, ...[...seen.entries()].map(([text, key]) => ({ key, text }))];
+  }, [initialData]);
 
-  const visible = initialData.filter(e => filter === 'all' || e.produit === filter);
+  const visible = initialData.filter((e) => filter === 'all' || label(e.produit) === label(filter));
 
   return (
     <>
-      <div className="flex gap-2.5 flex-wrap mt-9 pb-1.5">
-        {chips.map(c => (
-          <button
-            key={c.key}
-            onClick={() => setFilter(c.key)}
-            style={{
-              fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: filter === c.key ? 600 : 500,
-              padding: '9px 18px', borderRadius: 'var(--r-pill)',
-              border: filter === c.key ? '1px solid transparent' : '1px solid var(--glass-border)',
-              background: filter === c.key ? 'var(--grad-gold)' : 'var(--glass)',
-              color: filter === c.key ? '#1A1206' : 'var(--text-secondary)',
-              transition: 'all 0.25s', cursor: 'pointer',
-            }}
-          >
-            {c.label}
-          </button>
-        ))}
+      <div className="mt-9 flex flex-wrap gap-2.5 pb-1.5">
+        {chips.map((c) => {
+          const active = filter === c.key;
+          return (
+            <button
+              key={c.key}
+              onClick={() => setFilter(c.key)}
+              className="rounded-full px-[18px] py-[9px] text-[14px] transition-all"
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: active ? 600 : 500,
+                border: active ? '1px solid transparent' : '1px solid var(--card-border)',
+                background: active ? 'var(--grad-sky)' : 'var(--card)',
+                color: active ? '#FFFFFF' : 'var(--text-secondary)',
+              }}
+            >
+              {c.text}
+            </button>
+          );
+        })}
       </div>
 
       {visible.length === 0 ? (
-        <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: '60px 0' }}>Aucune entrée pour ce filtre.</p>
+        <p className="py-16 text-center text-[var(--text-muted)]">Aucune entrée pour ce filtre.</p>
       ) : (
-        <div style={{ position: 'relative', marginTop: 50, paddingLeft: 30 }}>
-          <div style={{ position: 'absolute', left: 7, top: 8, bottom: 0, width: 2, background: 'linear-gradient(180deg, var(--purple-bright), var(--blue-deep) 60%, transparent)' }} />
+        <div className="relative mt-12 pl-[30px]">
+          <div
+            className="absolute bottom-0 left-[7px] top-2 w-[2px]"
+            style={{ background: 'linear-gradient(180deg, var(--sky-bright), var(--blue) 60%, transparent)' }}
+          />
 
-          {visible.map((entry, i) => {
-            const changements = entry.changements as any[];
+          {visible.map((entry) => {
+            const changements = (entry.changements ?? []) as { tag?: string; texte?: string }[];
+            const dot = DOT_COLOR[entry.produit] ?? 'var(--blue)';
             return (
-              <div key={entry.id} style={{ position: 'relative', paddingBottom: 48 }}>
-                <div style={{ position: 'absolute', left: -30, top: 6, width: 16, height: 16, borderRadius: '50%', background: 'var(--bg-900)', border: `2px solid ${dotColor[entry.produit] ?? 'var(--purple-glow)'}`, boxShadow: `0 0 0 4px ${dotColor[entry.produit] ?? 'var(--purple-glow)'}22` }} />
+              <div key={entry.id} className="relative pb-12">
+                <div
+                  className="absolute -left-[30px] top-1.5 h-4 w-4 rounded-full bg-white"
+                  style={{ border: `2px solid ${dot}`, boxShadow: `0 0 0 4px ${dot}22` }}
+                />
 
-                <div className="flex items-center gap-3 flex-wrap mb-3.5">
-                  {entry.version && <span className="badge badge-version">{entry.version}</span>}
-                  <span style={{ fontSize: 12.5, color: 'var(--text-secondary)' }}>{produitLabel[entry.produit] ?? entry.produit}</span>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--text-muted)' }}>
+                <div className="mb-3.5 flex flex-wrap items-center gap-3">
+                  {entry.version && (
+                    <span
+                      className="rounded-full px-3 py-1 text-[12.5px] font-semibold"
+                      style={{ background: 'var(--card-tint)', border: '1px solid var(--card-border)', color: 'var(--blue-deep)', fontFamily: 'var(--font-display)' }}
+                    >
+                      {entry.version}
+                    </span>
+                  )}
+                  <span className="text-[13px] font-medium text-[var(--text-secondary)]">{label(entry.produit)}</span>
+                  <span className="text-[13px] text-[var(--text-muted)]" style={{ fontFamily: 'var(--font-display)' }}>
                     {new Date(entry.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </span>
-                  <span className={`badge ${entry.type_badge_cls} badge-dot`}>{entry.type_badge}</span>
+                  {entry.type_badge && (
+                    <span
+                      className="rounded-full px-3 py-1 text-[12px] font-semibold uppercase tracking-wide"
+                      style={{ background: 'var(--bg-mist)', color: 'var(--blue-deep)' }}
+                    >
+                      {entry.type_badge}
+                    </span>
+                  )}
                 </div>
 
-                <div className="card" style={{ padding: '26px 28px' }}>
-                  <h3 style={{ fontSize: 20, marginBottom: 4 }}>{entry.titre}</h3>
-                  <ul style={{ listStyle: 'none', marginTop: 18, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div className="card-cel p-7">
+                  <h3 className="text-[20px]">{entry.titre}</h3>
+                  <ul className="mt-4 space-y-3">
                     {changements.map((c, j) => (
-                      <li key={j} className="flex gap-3 items-start" style={{ fontSize: 14.5, color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                        <span className={`badge ${c.cls}`} style={{ flexShrink: 0, marginTop: 1 }}>{c.tag}</span>
+                      <li key={j} className="flex items-start gap-3 text-[14.5px] leading-relaxed text-[var(--text-secondary)]">
+                        {c.tag && (
+                          <span
+                            className="mt-0.5 shrink-0 rounded-md px-2 py-0.5 text-[11.5px] font-bold uppercase"
+                            style={{ background: 'var(--card-tint)', color: 'var(--blue)' }}
+                          >
+                            {c.tag}
+                          </span>
+                        )}
                         {c.texte}
                       </li>
                     ))}

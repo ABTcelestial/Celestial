@@ -13,6 +13,7 @@ const COLS = [
   {
     title: 'Entreprise',
     links: [
+      { href: '/offres', label: 'Nos offres' },
       { href: '/a-propos', label: 'À propos' },
       { href: '/services', label: 'Services' },
       { href: '/contact', label: 'Contact & devis' },

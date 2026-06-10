@@ -8,9 +8,14 @@ import type { Database } from '@/lib/supabase/types';
 type DocPage = Database['public']['Tables']['doc_pages']['Row'];
 
 const PRODUIT_LABEL: Record<string, string> = {
-  business: '📊 Business Process',
-  compta: '🧮 Compta Process',
-  pay: '💼 Pay Process',
+  erp: '⬡ ERP BusinessProces',
+  food: '🍽 Celestial Food',
+  shop: '🖥 Celestial Shop',
+  website: '🌐 Site Celestial',
+  // hérités
+  business: '⬡ ERP BusinessProces',
+  compta: '⬡ ERP BusinessProces',
+  pay: '⬡ ERP BusinessProces',
 };
 
 export function DocPagesList({ initialData }: { initialData: DocPage[] }) {

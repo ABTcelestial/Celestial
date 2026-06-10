@@ -80,7 +80,7 @@ export function ChangelogForm({ mode, initialData, suggestions = [] }: {
             <input
               className="cel-input"
               list="changelog-produit-suggestions"
-              placeholder="ex: Business Process"
+              placeholder="ex: erp, food, shop, website"
               value={produit}
               onChange={e => setProduit(e.target.value)}
               required

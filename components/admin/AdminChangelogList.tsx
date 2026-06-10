@@ -8,10 +8,15 @@ import type { Database } from '@/lib/supabase/types';
 type Changelog = Database['public']['Tables']['changelogs']['Row'];
 
 const PRODUIT_LABEL: Record<string, string> = {
-  business: '📊 Business Process',
-  compta: '🧮 Compta Process',
-  pay: '💼 Pay Process',
-  company: '⭐ Entreprise',
+  erp: '⬡ ERP BusinessProces',
+  food: '🍽 Celestial Food',
+  shop: '🖥 Celestial Shop',
+  website: '🌐 Site Celestial',
+  // hérités
+  business: '⬡ ERP BusinessProces',
+  compta: '⬡ ERP BusinessProces',
+  pay: '⬡ ERP BusinessProces',
+  company: '✦ Celestial',
 };
 
 export function AdminChangelogList({ initialData }: { initialData: Changelog[] }) {

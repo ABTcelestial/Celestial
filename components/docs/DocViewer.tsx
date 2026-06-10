@@ -4,14 +4,19 @@ import type { Database } from '@/lib/supabase/types';
 
 type DocPage = Database['public']['Tables']['doc_pages']['Row'];
 
-// Fallback labels pour les anciens slugs — tout nouveau produit utilise son nom directement
-const LEGACY_LABEL: Record<string, string> = {
-  business: '📊 Business Process',
-  compta:   '🧮 Compta Process',
-  pay:      '💼 Pay Process',
+// Labels des produits actuels + anciens slugs encore en base
+const PRODUIT_LABEL: Record<string, string> = {
+  erp:     '⬡ ERP BusinessProces',
+  food:    '🍽 Celestial Food',
+  shop:    '🖥 Celestial Shop',
+  website: '🌐 Site Celestial',
+  // hérités
+  business: '⬡ ERP BusinessProces',
+  compta:   '⬡ ERP BusinessProces',
+  pay:      '⬡ ERP BusinessProces',
 };
 function produitLabel(produit: string) {
-  return LEGACY_LABEL[produit] ?? produit;
+  return PRODUIT_LABEL[produit] ?? produit;
 }
 
 interface Tree {
@@ -79,7 +84,7 @@ export function DocViewer({ pages }: { pages: DocPage[] }) {
       <aside style={{ position: 'sticky', top: 'var(--nav-h)', alignSelf: 'start', height: 'calc(100vh - var(--nav-h))', overflowY: 'auto', padding: '26px 18px 60px 28px', borderRight: '1px solid var(--hairline)' }}>
         <div style={{ position: 'relative', marginBottom: 24 }}>
           <svg style={{ position: 'absolute', left: 13, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-          <input style={{ width: '100%', padding: '11px 14px 11px 40px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)', borderRadius: 'var(--r-sm)', color: 'var(--text-primary)', fontSize: 14 }} placeholder="Rechercher…" />
+          <input style={{ width: '100%', padding: '11px 14px 11px 40px', background: 'var(--bg-soft)', border: '1px solid var(--card-border)', borderRadius: 'var(--r-sm)', color: 'var(--text-primary)', fontSize: 14 }} placeholder="Rechercher…" />
         </div>
 
         {Object.entries(tree).map(([produit, sections]) => {
