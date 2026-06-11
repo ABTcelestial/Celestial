@@ -35,9 +35,9 @@ export function ParametresForm({ initialData }: { initialData?: ContactInfo }) {
   }
 
   const fields = [
-    { label: 'Adresse complète', value: adresse, set: setAdresse, placeholder: 'Cité des Affaires, Bab Ezzouar, Alger 16000, Algérie', type: 'text' },
-    { label: 'Téléphone', value: telephone, set: setTelephone, placeholder: '+213 21 00 00 00', type: 'tel' },
-    { label: 'Email de contact', value: email, set: setEmail, placeholder: 'contact@celestial.dz', type: 'email' },
+    { label: 'Adresse complète', value: adresse, set: setAdresse, placeholder: 'Béjaïa, Algérie', type: 'text' },
+    { label: 'Téléphone', value: telephone, set: setTelephone, placeholder: '05 XX XX XX XX', type: 'tel' },
+    { label: 'Email de contact', value: email, set: setEmail, placeholder: 'abtcelestial@gmail.com', type: 'email' },
     { label: 'URL LinkedIn', value: linkedin, set: setLinkedin, placeholder: 'https://linkedin.com/company/...', type: 'url' },
     { label: 'URL X / Twitter', value: twitter, set: setTwitter, placeholder: 'https://x.com/...', type: 'url' },
     { label: 'URL Facebook', value: facebook, set: setFacebook, placeholder: 'https://facebook.com/...', type: 'url' },

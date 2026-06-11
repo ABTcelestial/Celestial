@@ -87,7 +87,7 @@ export function DocPageForm({
             <input
               className="cel-input"
               list="produit-suggestions"
-              placeholder="ex: Business Process"
+              placeholder="erp, food, shop ou website"
               value={produit}
               onChange={e => setProduit(e.target.value)}
               required

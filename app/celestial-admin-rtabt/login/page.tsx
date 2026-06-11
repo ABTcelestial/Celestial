@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
               <input
                 className="cel-input"
                 type="email"
-                placeholder="admin@celestial.dz"
+                placeholder="votre@email.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required

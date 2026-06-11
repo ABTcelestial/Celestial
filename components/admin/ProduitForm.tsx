@@ -82,7 +82,7 @@ export function ProduitForm({
           </div>
           <div className="field">
             <label>Nom du logiciel *</label>
-            <input className="cel-input" placeholder="Business Process" value={nom} onChange={e => setNom(e.target.value)} required />
+            <input className="cel-input" placeholder="ex: ERP BusinessProces" value={nom} onChange={e => setNom(e.target.value)} required />
           </div>
         </div>
 

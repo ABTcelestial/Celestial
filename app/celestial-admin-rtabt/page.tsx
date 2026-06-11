@@ -8,17 +8,38 @@ async function getStats() {
     { count: newDevis },
     { count: totalChangelogs },
     { data: recentDevis },
+    { data: allDevis },
   ] = await Promise.all([
     supabase.from('devis').select('*', { count: 'exact', head: true }),
     supabase.from('devis').select('*', { count: 'exact', head: true }).eq('statut', 'nouveau'),
     supabase.from('changelogs').select('*', { count: 'exact', head: true }),
     supabase.from('devis').select('*').order('created_at', { ascending: false }).limit(5),
+    supabase.from('devis').select('logiciel'),
   ]);
-  return { totalDevis: totalDevis ?? 0, newDevis: newDevis ?? 0, totalChangelogs: totalChangelogs ?? 0, recentDevis: recentDevis ?? [] };
+
+  // répartition réelle des demandes par besoin
+  const repartition = new Map<string, number>();
+  (allDevis ?? []).forEach((d) => repartition.set(d.logiciel, (repartition.get(d.logiciel) ?? 0) + 1));
+
+  return {
+    totalDevis: totalDevis ?? 0,
+    newDevis: newDevis ?? 0,
+    totalChangelogs: totalChangelogs ?? 0,
+    recentDevis: recentDevis ?? [],
+    repartition,
+  };
 }
 
+const BESOIN_LABEL: Record<string, string> = {
+  erp: '⬡ ERP BusinessProces',
+  food: '🍽 Celestial Food',
+  'sur-mesure': '⚙ Système sur mesure',
+  materiel: '🖥 Matériel',
+  autre: '✦ Autre',
+};
+
 export default async function AdminDashboardPage() {
-  const { totalDevis, newDevis, totalChangelogs, recentDevis } = await getStats();
+  const { totalDevis, newDevis, totalChangelogs, recentDevis, repartition } = await getStats();
 
   const stats = [
     { label: 'Demandes totales', value: totalDevis, icon: '📩', href: '/celestial-admin-rtabt/devis' },
@@ -102,11 +123,18 @@ export default async function AdminDashboardPage() {
           </div>
           <div className="card" style={{ padding: '24px 26px' }}>
             <h2 style={{ fontSize: 17, marginBottom: 14 }}>Répartition des demandes</h2>
-            {['Business Process', 'Compta Process', 'Pay Process', 'Celestial Suite'].map(p => (
-              <div key={p} className="flex items-center justify-between" style={{ paddingBlock: 8, borderBottom: '1px solid var(--hairline)', fontSize: 13, color: 'var(--text-secondary)' }}>
-                <span>{p}</span>
-              </div>
-            ))}
+            {repartition.size === 0 ? (
+              <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Aucune demande pour l&apos;instant.</p>
+            ) : (
+              [...repartition.entries()]
+                .sort((a, b) => b[1] - a[1])
+                .map(([besoin, count]) => (
+                  <div key={besoin} className="flex items-center justify-between" style={{ paddingBlock: 8, borderBottom: '1px solid var(--hairline)', fontSize: 13, color: 'var(--text-secondary)' }}>
+                    <span>{BESOIN_LABEL[besoin] ?? besoin}</span>
+                    <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, color: 'var(--blue-deep)' }}>{count}</span>
+                  </div>
+                ))
+            )}
           </div>
         </div>
       </div>
