@@ -7,7 +7,7 @@ const COLS = [
     links: [
       { href: '/erp', label: 'ERP BusinessProces' },
       { href: '/food', label: 'Celestial Food' },
-      { href: 'https://celestial-shop.example.com', label: 'Celestial Shop (hardware)', external: true },
+      { href: '/services#shop', label: 'Celestial Shop (hardware)' },
     ],
   },
   {
