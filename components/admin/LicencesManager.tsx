@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import {
   createLicenseAccount,
   deleteLicense,
+  disconnectDevice,
   resetLicensePassword,
   setLicenseStatus,
 } from '@/app/actions/licences';
@@ -29,6 +30,7 @@ export function LicencesManager({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState(generatePassword());
   const [clientName, setClientName] = useState('');
+  const [company, setCompany] = useState('');
   const [note, setNote] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -38,10 +40,9 @@ export function LicencesManager({
     e.preventDefault();
     setSaving(true); setError(''); setCreatedInfo(null);
     try {
-      await createLicenseAccount(applicationId, email, password, clientName, note);
-      // Identifiants affichés une seule fois — à transmettre au client.
+      await createLicenseAccount(applicationId, email, password, clientName, company, note);
       setCreatedInfo({ email: email.trim().toLowerCase(), password });
-      setEmail(''); setClientName(''); setNote('');
+      setEmail(''); setClientName(''); setCompany(''); setNote('');
       setPassword(generatePassword());
       router.refresh();
     } catch (err) {
@@ -55,6 +56,16 @@ export function LicencesManager({
     if (next === 'revoked' && !confirm(`Révoquer la licence de ${license.email} ? L'application sera bloquée à sa prochaine connexion internet.`)) return;
     await setLicenseStatus(license.id, next);
     router.refresh();
+  }
+
+  async function handleDisconnect(license: License) {
+    if (!confirm(`Déconnecter l'appareil de ${license.email} ?\n\nLa licence sera révoquée. Le client devra être réactivé manuellement avant de pouvoir se reconnecter depuis un autre appareil.`)) return;
+    try {
+      await disconnectDevice(license.id);
+      router.refresh();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Erreur');
+    }
   }
 
   async function handleResetPassword(license: License) {
@@ -78,7 +89,7 @@ export function LicencesManager({
     <section className="card" style={{ padding: 26 }}>
       <h2 style={{ fontSize: 17, marginBottom: 4 }}>Comptes & licences</h2>
       <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 18 }}>
-        Créez le compte du client à la vente : il se connecte avec ces identifiants dans l&apos;application. Le compte vaut licence.
+        Créez le compte du client à la vente : il se connecte avec ces identifiants dans l&apos;application. Le compte vaut licence. L&apos;appareil est verrouillé à la première connexion.
       </p>
 
       <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 26 }}>
@@ -95,10 +106,14 @@ export function LicencesManager({
             </div>
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
           <div className="field">
-            <label>Nom du client / entreprise</label>
-            <input className="cel-input" placeholder="ex: SARL Bâtiments Béjaïa" value={clientName} onChange={e => setClientName(e.target.value)} />
+            <label>Entreprise</label>
+            <input className="cel-input" placeholder="ex: SARL Constructions Béjaïa" value={company} onChange={e => setCompany(e.target.value)} />
+          </div>
+          <div className="field">
+            <label>Nom du client</label>
+            <input className="cel-input" placeholder="ex: Mohamed Amrane" value={clientName} onChange={e => setClientName(e.target.value)} />
           </div>
           <div className="field">
             <label>Note</label>
@@ -146,12 +161,37 @@ export function LicencesManager({
                   </span>
                 </div>
                 <div style={{ fontSize: 12.5, color: 'var(--text-faint)', marginTop: 3 }}>
+                  {license.company && <><strong style={{ color: 'var(--text-muted)' }}>{license.company}</strong> · </>}
                   {license.client_name && <>{license.client_name} · </>}
                   créée le {new Date(license.created_at).toLocaleDateString('fr-FR')}
                   {license.note && <> · {license.note}</>}
                 </div>
+                <div style={{ fontSize: 12, color: 'var(--text-faint)', marginTop: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  {license.locked ? (
+                    <>
+                      <span style={{ color: 'var(--cel-success)', fontSize: 11 }}>● Appareil enregistré</span>
+                      <span>·</span>
+                      <span>{license.device_model}</span>
+                      {license.device_os && <><span>·</span><span>{license.device_os}</span></>}
+                      {license.device_id && (
+                        <><span>·</span><code style={{ fontSize: 10, opacity: 0.7 }}>{license.device_id.slice(0, 16)}…</code></>
+                      )}
+                    </>
+                  ) : (
+                    <span style={{ color: 'var(--text-faint)', fontStyle: 'italic' }}>Aucun appareil enregistré</span>
+                  )}
+                </div>
               </div>
-              <div className="flex gap-2" style={{ flexShrink: 0 }}>
+              <div className="flex gap-2 flex-wrap" style={{ flexShrink: 0 }}>
+                {license.locked && (
+                  <button
+                    className="btn btn-glass btn-sm"
+                    style={{ color: 'var(--cel-danger)', fontSize: 12 }}
+                    onClick={() => handleDisconnect(license)}
+                  >
+                    Déconnecter
+                  </button>
+                )}
                 <button
                   className="btn btn-glass btn-sm"
                   style={{ color: license.status === 'active' ? 'var(--cel-danger)' : 'var(--cel-success)', fontSize: 12 }}

@@ -80,13 +80,19 @@ export type Database = {
       licenses: {
         Row: {
           id: string; application_id: string; user_id: string; email: string;
-          client_name: string | null; note: string | null;
-          status: 'active' | 'revoked'; created_at: string;
+          client_name: string | null; company: string | null; note: string | null;
+          status: 'active' | 'revoked';
+          device_id: string | null; device_model: string | null; device_os: string | null;
+          locked: boolean;
+          created_at: string;
         };
         Insert: {
           id?: string; application_id: string; user_id: string; email: string;
-          client_name?: string | null; note?: string | null;
-          status?: 'active' | 'revoked'; created_at?: string;
+          client_name?: string | null; company?: string | null; note?: string | null;
+          status?: 'active' | 'revoked';
+          device_id?: string | null; device_model?: string | null; device_os?: string | null;
+          locked?: boolean;
+          created_at?: string;
         };
         Update: Partial<Database['public']['Tables']['licenses']['Row']>;
         Relationships: [];

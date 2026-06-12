@@ -69,6 +69,7 @@ export async function createLicenseAccount(
   email: string,
   password: string,
   clientName: string,
+  company: string,
   note: string
 ) {
   const admin = await requireAdmin();
@@ -97,6 +98,7 @@ export async function createLicenseAccount(
     user_id: userId,
     email: cleanEmail,
     client_name: clientName.trim() || null,
+    company: company.trim() || null,
     note: note.trim() || null,
   });
   if (error) {
@@ -104,6 +106,19 @@ export async function createLicenseAccount(
       error.code === '23505' ? 'Ce compte a déjà une licence pour cette application.' : error.message
     );
   }
+  revalidatePath(LICENCES_PATH);
+}
+
+export async function disconnectDevice(licenseId: string) {
+  const admin = await requireAdmin();
+  const { error } = await admin.from('licenses').update({
+    device_id: null,
+    device_model: null,
+    device_os: null,
+    locked: false,
+    status: 'revoked',
+  }).eq('id', licenseId);
+  if (error) throw new Error(error.message);
   revalidatePath(LICENCES_PATH);
 }
 
