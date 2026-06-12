@@ -32,13 +32,19 @@ function prixLabel(prix: number | null | undefined) {
 export default async function OffresPage() {
   const supabase = await createClient();
 
-  const [{ data: produits }, { data: bundles }] = await Promise.all([
+  const [{ data: produits }, { data: bundles }, { data: applications }] = await Promise.all([
     supabase
       .from('produits')
       .select('*, produit_modules(modules(*)), applications(*)')
       .eq('actif', true)
       .order('ordre'),
     supabase.from('bundles').select('*').eq('actif', true).order('ordre'),
+    supabase
+      .from('applications')
+      .select('*')
+      .eq('actif', true)
+      .not('apk_path', 'is', null)
+      .order('created_at'),
   ]);
 
   const offres = (((produits ?? []) as unknown) as ProduitJoin[]).map((p) => ({
@@ -222,6 +228,74 @@ export default async function OffresPage() {
                   </div>
                 </RevealWrapper>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Applications téléchargeables */}
+      {(applications ?? []).length > 0 && (
+        <section className="section section-mist !pt-14">
+          <div className="container-cel">
+            <RevealWrapper>
+              <span className="chip mb-5">Applications</span>
+              <h2 className="max-w-[560px] text-[clamp(26px,3.4vw,40px)]">
+                Nos applications <span className="text-grad">à télécharger</span>
+              </h2>
+              <p className="mt-4 max-w-[560px] text-[15.5px] text-[var(--text-secondary)]">
+                Installation directe sur votre appareil — sans passer par un store.
+              </p>
+            </RevealWrapper>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {(applications ?? []).map((app, i) => {
+                const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/apks/${app.apk_path}`;
+                const size = app.apk_size ? `${(app.apk_size / (1024 * 1024)).toFixed(1)} Mo` : null;
+                return (
+                  <RevealWrapper key={app.id} delay={i * 90}>
+                    <div className="card-cel flex h-full flex-col p-8">
+                      <div className="flex items-start justify-between gap-3 mb-5">
+                        <div
+                          className="flex h-12 w-12 items-center justify-center rounded-2xl text-[22px]"
+                          style={{ background: 'var(--card-tint)', border: '1px solid var(--card-border)' }}
+                          aria-hidden
+                        >
+                          📱
+                        </div>
+                        <div className="flex flex-col items-end gap-1.5">
+                          {app.apk_version && (
+                            <span className="chip text-[11.5px]">v{app.apk_version}</span>
+                          )}
+                          {app.has_licenses ? (
+                            <span className="text-[11.5px] font-medium text-[var(--text-muted)]">Licence requise</span>
+                          ) : (
+                            <span className="text-[11.5px] font-medium text-[var(--cel-success)]">Téléchargement libre</span>
+                          )}
+                        </div>
+                      </div>
+
+                      <h3 className="text-[20px]">{app.nom}</h3>
+                      {app.description && (
+                        <p className="mt-2.5 text-[14.5px] leading-relaxed text-[var(--text-secondary)]">
+                          {app.description}
+                        </p>
+                      )}
+
+                      <div className="mt-auto pt-6 flex flex-wrap items-center gap-3">
+                        <a href={url} download className="btn-primary">
+                          <span aria-hidden>⤓</span> Télécharger
+                          {size && <span className="ml-1 opacity-70 text-[12px]">{size}</span>}
+                        </a>
+                        {app.has_licenses && (
+                          <Link href="/contact" className="btn-ghost text-[13.5px]">
+                            Obtenir une licence →
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  </RevealWrapper>
+                );
+              })}
             </div>
           </div>
         </section>
