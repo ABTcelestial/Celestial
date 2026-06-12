@@ -93,7 +93,7 @@ export function LicencesManager({
       </p>
 
       <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 26 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+        <div className="grid-2" style={{ gap: 14 }}>
           <div className="field">
             <label>Email du client *</label>
             <input className="cel-input" type="email" placeholder="client@email.com" value={email} onChange={e => setEmail(e.target.value)} required />
@@ -106,7 +106,7 @@ export function LicencesManager({
             </div>
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
+        <div className="grid-3" style={{ gap: 14 }}>
           <div className="field">
             <label>Entreprise</label>
             <input className="cel-input" placeholder="ex: SARL Constructions Béjaïa" value={company} onChange={e => setCompany(e.target.value)} />

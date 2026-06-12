@@ -44,7 +44,7 @@ export function DevisTable({ initialData }: { initialData: Devis[] }) {
   }
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: selected ? '1fr 380px' : '1fr', gap: 20 }}>
+    <div className="devis-grid" style={{ gridTemplateColumns: selected ? '1fr 380px' : '1fr' }}>
       {/* Table */}
       <div>
         {/* Filter bar */}
@@ -70,7 +70,7 @@ export function DevisTable({ initialData }: { initialData: Devis[] }) {
           ))}
         </div>
 
-        <div style={{ border: '1px solid var(--hairline)', borderRadius: 'var(--r-lg)', overflow: 'hidden' }}>
+        <div className="table-wrap" style={{ border: '1px solid var(--hairline)', borderRadius: 'var(--r-lg)', overflow: 'hidden' }}>
           {visible.length === 0 ? (
             <p style={{ padding: '48px 28px', textAlign: 'center', color: 'var(--text-muted)' }}>Aucune demande dans cette catégorie.</p>
           ) : (
@@ -130,7 +130,7 @@ export function DevisTable({ initialData }: { initialData: Devis[] }) {
 
       {/* Detail panel */}
       {selected && (
-        <div className="card" style={{ padding: 28, alignSelf: 'start', position: 'sticky', top: 'calc(var(--nav-h) + 20px)' }}>
+        <div className="card detail-panel" style={{ padding: 28 }}>
           <div className="flex items-center justify-between mb-5">
             <h3 style={{ fontSize: 18 }}>Détail</h3>
             <button onClick={() => setSelected(null)} style={{ color: 'var(--text-muted)', padding: 4 }}>

@@ -216,3 +216,132 @@
 .admin-root tr:last-child td { border-bottom: none; }
 .admin-root tbody tr { transition: background 0.15s; }
 .admin-root tbody tr:hover { background: var(--bg-soft); }
+
+/* ====================================================
+   RESPONSIVE — grilles et utilitaires
+   ==================================================== */
+
+/* Grilles */
+.admin-root .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.admin-root .grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.admin-root .grid-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.admin-root .grid-main {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+}
+.admin-root .grid-doc-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr 100px 100px;
+}
+
+/* Scroll horizontal sur les tables */
+.admin-root .table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.admin-root .table-wrap table {
+  min-width: 520px;
+}
+
+/* Panneau détail (Devis) — sticky sur desktop */
+.admin-root .detail-panel {
+  align-self: start;
+  position: sticky;
+  top: calc(var(--nav-h) + 20px);
+}
+
+/* Layout DevisTable (grille dynamique via JS, overridée en mobile) */
+.admin-root .devis-grid {
+  display: grid;
+  gap: 20px;
+}
+
+/* ---- Hamburger (visible uniquement sur mobile) ---- */
+.admin-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--text-primary);
+}
+
+/* Nav desktop — masqué sur mobile */
+.admin-desktop-nav {
+  display: flex;
+}
+
+/* ---- Backdrop + drawer mobile ---- */
+.admin-drawer-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+  z-index: 55;
+  backdrop-filter: blur(3px);
+}
+.admin-drawer-backdrop.open {
+  display: block;
+}
+
+.admin-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(320px, 88vw);
+  background: #fff;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 18px;
+  transform: translateX(100%);
+  transition: transform 0.26s cubic-bezier(.4, 0, .2, 1);
+  overflow-y: auto;
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12);
+}
+.admin-drawer.open {
+  transform: translateX(0);
+}
+
+/* ====================================================
+   BREAKPOINT TABLETTE (≤ 768px)
+   ==================================================== */
+@media (max-width: 768px) {
+  .admin-hamburger { display: flex; }
+  .admin-desktop-nav { display: none !important; }
+
+  .admin-root .grid-3 { grid-template-columns: 1fr 1fr !important; }
+  .admin-root .grid-doc-meta { grid-template-columns: 1fr 1fr !important; }
+  .admin-root .grid-main { grid-template-columns: 1fr !important; }
+  .admin-root .grid-stats { grid-template-columns: 1fr !important; }
+
+  .admin-root .devis-grid { grid-template-columns: 1fr !important; }
+  .admin-root .detail-panel { position: static !important; }
+
+  .admin-root main { padding-inline: 16px !important; }
+}
+
+/* ====================================================
+   BREAKPOINT MOBILE (≤ 580px)
+   ==================================================== */
+@media (max-width: 580px) {
+  .admin-root .grid-2 { grid-template-columns: 1fr !important; }
+  .admin-root .grid-3 { grid-template-columns: 1fr !important; }
+  .admin-root .grid-doc-meta { grid-template-columns: 1fr !important; }
+  .admin-root .actions-row { flex-wrap: wrap; }
+}

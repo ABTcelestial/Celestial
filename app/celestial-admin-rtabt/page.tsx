@@ -55,7 +55,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginBottom: 40 }}>
+      <div className="grid-stats" style={{ gap: 20, marginBottom: 40 }}>
         {stats.map((s, i) => (
           <Link key={i} href={s.href} className="card card-hover" style={{ padding: '28px 30px', display: 'flex', alignItems: 'center', gap: 20, textDecoration: 'none' }}>
             <span style={{ fontSize: 36, lineHeight: 1 }}>{s.icon}</span>
@@ -74,7 +74,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Recent devis */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 0.6fr', gap: 24 }}>
+      <div className="grid-main" style={{ gap: 24 }}>
         <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
           <div className="flex items-center justify-between" style={{ padding: '22px 28px', borderBottom: '1px solid var(--hairline)' }}>
             <h2 style={{ fontSize: 18 }}>Demandes récentes</h2>

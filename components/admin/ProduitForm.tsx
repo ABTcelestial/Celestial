@@ -94,7 +94,7 @@ export function ProduitForm({
           <input className="cel-input" placeholder="Description affichée sur la page offres…" value={description} onChange={e => setDescription(e.target.value)} required />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr 1fr', gap: 16 }}>
+        <div className="grid-3" style={{ gap: 16 }}>
           <div className="field">
             <label>Type d&apos;offre</label>
             <select className="cel-input" value={type} onChange={e => setType(e.target.value as typeof type)}>
@@ -182,7 +182,7 @@ export function ProduitForm({
           )}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 18 }}>
+        <div className="grid-3" style={{ gap: 18 }}>
           <div className="field">
             <label>Prix affiché (DZD)</label>
             <input className="cel-input" type="number" min={0} value={prix} onChange={e => setPrix(Number(e.target.value))} />

@@ -81,7 +81,7 @@ export function DocPageForm({
     <form onSubmit={handleSubmit}>
       <div className="card" style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 22 }}>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 100px 100px', gap: 16 }}>
+        <div className="grid-doc-meta" style={{ gap: 16 }}>
           <div className="field">
             <label>Produit *</label>
             <input

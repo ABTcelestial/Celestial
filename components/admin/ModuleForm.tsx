@@ -51,7 +51,7 @@ export function ModuleForm({ module }: { module?: Module }) {
         <input style={inp} value={description} onChange={e => setDescription(e.target.value)} placeholder="Ce module permet de…" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+      <div className="grid-2" style={{ gap: 14 }}>
         <div>
           <label style={lbl}>Prix (DZD)</label>
           <input style={inp} type="number" min={0} step={1000} value={prix} onChange={e => setPrix(Number(e.target.value))} />

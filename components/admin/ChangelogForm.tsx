@@ -74,7 +74,7 @@ export function ChangelogForm({ mode, initialData, suggestions = [] }: {
       <div className="card" style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 22 }}>
 
         {/* Produit & Version */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+        <div className="grid-2" style={{ gap: 18 }}>
           <div className="field">
             <label>Produit *</label>
             <input
@@ -103,7 +103,7 @@ export function ChangelogForm({ mode, initialData, suggestions = [] }: {
         </div>
 
         {/* Date & Badge */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+        <div className="grid-2" style={{ gap: 18 }}>
           <div className="field">
             <label>Date *</label>
             <input className="cel-input" type="date" value={date} onChange={e => setDate(e.target.value)} required />

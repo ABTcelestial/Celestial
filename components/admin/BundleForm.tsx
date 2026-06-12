@@ -81,7 +81,7 @@ export function BundleForm({ bundle, produits }: { bundle?: Bundle; produits: Pr
         )}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+      <div className="grid-3" style={{ gap: 16 }}>
         <div style={field}>
           <span style={label}>Prix fixe du pack (DA)</span>
           <input style={input} type="number" min={0} value={prixFixe}

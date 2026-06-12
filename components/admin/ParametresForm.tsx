@@ -46,7 +46,7 @@ export function ParametresForm({ initialData }: { initialData?: ContactInfo }) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="card" style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 20 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+        <div className="grid-2" style={{ gap: 18 }}>
           {fields.map(f => (
             <div key={f.label} className="field" style={f.label === 'Adresse complète' ? { gridColumn: '1 / -1' } : {}}>
               <label>{f.label}</label>

@@ -59,7 +59,7 @@ export function ApplicationsList({ initialData }: { initialData: Application[] }
 
       {showForm && (
         <form onSubmit={handleCreate} className="card" style={{ padding: 26, display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div className="grid-2" style={{ gap: 16 }}>
             <div className="field">
               <label>Nom de l&apos;application *</label>
               <input
