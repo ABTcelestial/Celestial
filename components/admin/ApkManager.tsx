@@ -26,17 +26,14 @@ export function ApkManager({ application }: { application: Application }) {
 
   async function handleUpload() {
     const file = fileRef.current?.files?.[0];
-    if (!file) { setError('Choisissez un fichier APK.'); return; }
-    if (!file.name.toLowerCase().endsWith('.apk')) { setError('Le fichier doit être un .apk.'); return; }
+    if (!file) { setError('Choisissez un fichier.'); return; }
     setUploading(true); setError('');
     try {
-      // Signed URL: the browser uploads straight to storage, no size limit
-      // on the server action and no open write policy on the bucket.
       const { path, token } = await createApkUploadUrl(application.id, file.name);
       const supabase = createClient();
       const { error: uploadError } = await supabase.storage
         .from('apks')
-        .uploadToSignedUrl(path, token, file, { contentType: 'application/vnd.android.package-archive' });
+        .uploadToSignedUrl(path, token, file, { contentType: file.type || 'application/octet-stream' });
       if (uploadError) throw new Error(uploadError.message);
       await finalizeApkUpload(application.id, path, version, file.size);
       setVersion('');
@@ -49,7 +46,7 @@ export function ApkManager({ application }: { application: Application }) {
   }
 
   async function handleRemove() {
-    if (!confirm('Supprimer l\'APK ? Le téléchargement disparaîtra du site.')) return;
+    if (!confirm('Supprimer le fichier ? Le téléchargement disparaîtra du site.')) return;
     await removeApk(application.id);
     router.refresh();
   }
@@ -63,9 +60,9 @@ export function ApkManager({ application }: { application: Application }) {
 
   return (
     <section className="card" style={{ padding: 26 }}>
-      <h2 style={{ fontSize: 17, marginBottom: 4 }}>Fichier APK</h2>
+      <h2 style={{ fontSize: 17, marginBottom: 4 }}>Fichier téléchargeable</h2>
       <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 18 }}>
-        L&apos;APK est téléchargeable publiquement sur le site (page Offres, via le produit lié à cette application).
+        Le fichier est téléchargeable publiquement sur le site (page Offres, via le produit lié à cette application).
       </p>
 
       {application.apk_path ? (
@@ -89,13 +86,13 @@ export function ApkManager({ application }: { application: Application }) {
           </div>
         </div>
       ) : (
-        <p style={{ fontSize: 13.5, color: 'var(--text-muted)', marginBottom: 18 }}>Aucun APK uploadé pour le moment.</p>
+        <p style={{ fontSize: 13.5, color: 'var(--text-muted)', marginBottom: 18 }}>Aucun fichier uploadé pour le moment.</p>
       )}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 160px auto', gap: 12, alignItems: 'end' }}>
         <div className="field">
-          <label>{application.apk_path ? 'Remplacer l\'APK' : 'Uploader un APK'}</label>
-          <input ref={fileRef} type="file" accept=".apk" className="cel-input" style={{ paddingTop: 9 }} />
+          <label>{application.apk_path ? 'Remplacer le fichier' : 'Uploader un fichier'}</label>
+          <input ref={fileRef} type="file" className="cel-input" style={{ paddingTop: 9 }} />
         </div>
         <div className="field">
           <label>Version</label>

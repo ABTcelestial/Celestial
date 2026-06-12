@@ -67,12 +67,12 @@ export type Database = {
         Row: {
           id: string; nom: string; slug: string; description: string | null;
           apk_path: string | null; apk_version: string | null; apk_size: number | null;
-          actif: boolean; created_at: string;
+          actif: boolean; has_licenses: boolean; created_at: string;
         };
         Insert: {
           id?: string; nom: string; slug: string; description?: string | null;
           apk_path?: string | null; apk_version?: string | null; apk_size?: number | null;
-          actif?: boolean; created_at?: string;
+          actif?: boolean; has_licenses?: boolean; created_at?: string;
         };
         Update: Partial<Database['public']['Tables']['applications']['Row']>;
         Relationships: [];

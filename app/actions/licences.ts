@@ -29,7 +29,7 @@ const LICENCES_PATH = '/celestial-admin-rtabt/licences';
 
 /* ----------------------------- Applications ----------------------------- */
 
-export async function createApplication(nom: string, slug: string, description: string) {
+export async function createApplication(nom: string, slug: string, description: string, hasLicenses: boolean) {
   const admin = await requireAdmin();
   const cleanSlug = slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
   if (!nom.trim() || !cleanSlug) throw new Error('Nom et slug requis.');
@@ -37,6 +37,7 @@ export async function createApplication(nom: string, slug: string, description: 
     nom: nom.trim(),
     slug: cleanSlug,
     description: description.trim() || null,
+    has_licenses: hasLicenses,
   });
   if (error) throw new Error(error.message);
   revalidatePath(LICENCES_PATH);

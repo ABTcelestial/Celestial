@@ -20,9 +20,9 @@ export default async function AdminLicencesPage() {
     <main style={{ padding: '40px 28px', maxWidth: 1000, margin: '0 auto' }}>
       <div style={{ marginBottom: 32 }}>
         <div className="eyebrow">Administration</div>
-        <h1 style={{ fontSize: 'clamp(26px,2.8vw,36px)', marginTop: 10 }}>Licences</h1>
+        <h1 style={{ fontSize: 'clamp(26px,2.8vw,36px)', marginTop: 10 }}>Téléchargeables</h1>
         <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 6 }}>
-          Applications Celestial, comptes clients et fichiers APK. Un compte = une licence par application.
+          Applications Celestial, comptes clients et fichiers à télécharger. Un compte = une licence par application.
         </p>
       </div>
       <ApplicationsList

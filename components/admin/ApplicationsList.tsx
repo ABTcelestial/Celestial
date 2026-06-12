@@ -16,6 +16,7 @@ export function ApplicationsList({ initialData }: { initialData: Application[] }
   const [nom, setNom] = useState('');
   const [slug, setSlug] = useState('');
   const [description, setDescription] = useState('');
+  const [hasLicenses, setHasLicenses] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
@@ -28,8 +29,8 @@ export function ApplicationsList({ initialData }: { initialData: Application[] }
     e.preventDefault();
     setSaving(true); setError('');
     try {
-      await createApplication(nom, slug || slugify(nom), description);
-      setNom(''); setSlug(''); setDescription(''); setShowForm(false);
+      await createApplication(nom, slug || slugify(nom), description, hasLicenses);
+      setNom(''); setSlug(''); setDescription(''); setHasLicenses(true); setShowForm(false);
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur');
@@ -84,6 +85,18 @@ export function ApplicationsList({ initialData }: { initialData: Application[] }
             <label>Description</label>
             <input className="cel-input" placeholder="Description courte (optionnel)" value={description} onChange={e => setDescription(e.target.value)} />
           </div>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', userSelect: 'none', fontSize: 14 }}>
+            <input
+              type="checkbox"
+              checked={hasLicenses}
+              onChange={e => setHasLicenses(e.target.checked)}
+              style={{ width: 15, height: 15, accentColor: 'var(--gold)', cursor: 'pointer' }}
+            />
+            Gestion des licences activée
+            <span style={{ fontSize: 12, color: 'var(--text-faint)' }}>
+              (comptes clients requis pour accéder à l&apos;application)
+            </span>
+          </label>
           {error && <p style={{ color: 'var(--cel-danger)', fontSize: 13.5 }}>{error}</p>}
           <div>
             <button type="submit" className="btn btn-gold" disabled={saving}>
@@ -95,7 +108,7 @@ export function ApplicationsList({ initialData }: { initialData: Application[] }
 
       {initialData.length === 0 && !showForm && (
         <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: 48 }}>
-          Aucune application. Créez la première pour gérer ses licences et son APK.
+          Aucune application. Créez la première pour gérer son fichier téléchargeable et ses licences.
         </p>
       )}
 
@@ -106,18 +119,22 @@ export function ApplicationsList({ initialData }: { initialData: Application[] }
               <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
                 <h3 style={{ fontSize: 18 }}>{app.nom}</h3>
                 <span className="badge" style={{ fontFamily: 'monospace', fontSize: 11 }}>{app.slug}</span>
-                {app.apk_version && <span className="badge badge-gold">APK v{app.apk_version}</span>}
+                {app.apk_version && <span className="badge badge-gold">v{app.apk_version}</span>}
                 {!app.actif && (
                   <span className="badge" style={{ color: 'var(--cel-danger)', borderColor: 'rgba(229,88,94,0.35)' }}>Désactivée</span>
+                )}
+                {!app.has_licenses && (
+                  <span className="badge" style={{ color: 'var(--text-muted)' }}>Sans licences</span>
                 )}
               </div>
               {app.description && (
                 <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginBottom: 8 }}>{app.description}</p>
               )}
               <p style={{ fontSize: 12.5, color: 'var(--text-faint)' }}>
-                {app.licenseCount} licence{app.licenseCount > 1 ? 's' : ''}
-                {app.licenseCount > 0 && ` (${app.activeCount} active${app.activeCount > 1 ? 's' : ''})`}
-                {!app.apk_path && ' · aucun APK uploadé'}
+                {app.has_licenses
+                  ? `${app.licenseCount} licence${app.licenseCount > 1 ? 's' : ''}${app.licenseCount > 0 ? ` (${app.activeCount} active${app.activeCount > 1 ? 's' : ''})` : ''}`
+                  : 'Accès libre'}
+                {!app.apk_path && ' · aucun fichier uploadé'}
               </p>
             </div>
             <div className="flex gap-2" style={{ flexShrink: 0 }}>

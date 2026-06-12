@@ -19,7 +19,7 @@ export default async function AdminApplicationPage({ params }: { params: Promise
     <main style={{ padding: '40px 28px', maxWidth: 1000, margin: '0 auto' }}>
       <div style={{ marginBottom: 32 }}>
         <Link href="/celestial-admin-rtabt/licences" style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-          ← Licences
+          ← Téléchargeables
         </Link>
         <h1 style={{ fontSize: 'clamp(26px,2.8vw,36px)', marginTop: 10 }}>{application.nom}</h1>
         <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 6, fontFamily: 'monospace' }}>
@@ -29,7 +29,9 @@ export default async function AdminApplicationPage({ params }: { params: Promise
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
         <ApkManager application={application} />
-        <LicencesManager applicationId={application.id} initialLicenses={licenses ?? []} />
+        {application.has_licenses && (
+          <LicencesManager applicationId={application.id} initialLicenses={licenses ?? []} />
+        )}
       </div>
     </main>
   );
