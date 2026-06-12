@@ -69,7 +69,7 @@ export function LicencesManager({
   }
 
   async function handleDelete(license: License) {
-    if (!confirm(`Supprimer la licence de ${license.email} ? (le compte auth n'est pas supprimé)`)) return;
+    if (!confirm(`Supprimer la licence de ${license.email} ?\n\nLe compte Supabase sera également supprimé (si c'est sa seule licence).`)) return;
     await deleteLicense(license.id);
     router.refresh();
   }

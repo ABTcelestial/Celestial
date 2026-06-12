@@ -115,8 +115,28 @@ export async function setLicenseStatus(licenseId: string, status: 'active' | 're
 
 export async function deleteLicense(licenseId: string) {
   const admin = await requireAdmin();
+
+  // Récupère le user_id avant suppression
+  const { data: license } = await admin
+    .from('licenses')
+    .select('user_id')
+    .eq('id', licenseId)
+    .single();
+
   const { error } = await admin.from('licenses').delete().eq('id', licenseId);
   if (error) throw new Error(error.message);
+
+  // Supprime le compte auth seulement si c'est sa seule licence
+  if (license?.user_id) {
+    const { count } = await admin
+      .from('licenses')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', license.user_id);
+    if ((count ?? 0) === 0) {
+      await admin.auth.admin.deleteUser(license.user_id);
+    }
+  }
+
   revalidatePath(LICENCES_PATH);
 }
 
