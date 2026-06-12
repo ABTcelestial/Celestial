@@ -25,11 +25,23 @@ export async function proxy(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
 
   if (pathname.startsWith('/celestial-admin-rtabt')) {
+    // Le CMS est réservé aux admins (table admin_users) : un compte client
+    // (plateforme ou application licenciée) connecté n'y a pas accès.
+    let isAdmin = false;
+    if (user) {
+      const { data } = await supabase
+        .from('admin_users')
+        .select('user_id')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      isAdmin = !!data;
+    }
+
     const isLogin = pathname === '/celestial-admin-rtabt/login';
-    if (!isLogin && !user) {
+    if (!isLogin && !isAdmin) {
       return NextResponse.redirect(new URL('/celestial-admin-rtabt/login', request.url));
     }
-    if (isLogin && user) {
+    if (isLogin && isAdmin) {
       return NextResponse.redirect(new URL('/celestial-admin-rtabt', request.url));
     }
     return response;

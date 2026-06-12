@@ -14,7 +14,16 @@ export const revalidate = 60;
 type Module = Database['public']['Tables']['modules']['Row'];
 type Bundle = Database['public']['Tables']['bundles']['Row'];
 type ProduitRow = Database['public']['Tables']['produits']['Row'];
-type ProduitJoin = ProduitRow & { produit_modules: { modules: Module | null }[] | null };
+type Application = Database['public']['Tables']['applications']['Row'];
+type ProduitJoin = ProduitRow & {
+  produit_modules: { modules: Module | null }[] | null;
+  applications: Application | null;
+};
+
+function apkUrl(app: Application | null) {
+  if (!app?.apk_path || !app.actif) return null;
+  return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/apks/${app.apk_path}`;
+}
 
 function prixLabel(prix: number | null | undefined) {
   return prix && prix > 0 ? `${prix.toLocaleString('fr-DZ')} DA` : 'Sur devis';
@@ -26,7 +35,7 @@ export default async function OffresPage() {
   const [{ data: produits }, { data: bundles }] = await Promise.all([
     supabase
       .from('produits')
-      .select('*, produit_modules(modules(*))')
+      .select('*, produit_modules(modules(*)), applications(*)')
       .eq('actif', true)
       .order('ordre'),
     supabase.from('bundles').select('*').eq('actif', true).order('ordre'),
@@ -131,12 +140,20 @@ export default async function OffresPage() {
                     )}
 
                     <div className="mt-auto flex flex-wrap gap-3 pt-7">
+                      {apkUrl(o.applications) && (
+                        <a href={apkUrl(o.applications)!} download className="btn-primary">
+                          <span aria-hidden>⤓</span> Télécharger l&apos;application
+                          {o.applications?.apk_version && (
+                            <span className="ml-1 opacity-75 text-[12.5px]">v{o.applications.apk_version}</span>
+                          )}
+                        </a>
+                      )}
                       {o.lien && (
-                        <Link href={o.lien} className={o.featured ? 'btn-primary' : 'btn-ghost'}>
+                        <Link href={o.lien} className={o.featured && !apkUrl(o.applications) ? 'btn-primary' : 'btn-ghost'}>
                           En savoir plus <span aria-hidden>→</span>
                         </Link>
                       )}
-                      <Link href="/contact" className={o.featured && o.lien ? 'btn-ghost' : o.lien ? 'btn-ghost' : 'btn-primary'}>
+                      <Link href="/contact" className={apkUrl(o.applications) || o.lien ? 'btn-ghost' : 'btn-primary'}>
                         Demander un devis
                       </Link>
                     </div>

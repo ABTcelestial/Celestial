@@ -6,14 +6,16 @@ import type { Database } from '@/lib/supabase/types';
 
 type Produit = Database['public']['Tables']['produits']['Row'];
 type Module  = Database['public']['Tables']['modules']['Row'];
+type Application = Database['public']['Tables']['applications']['Row'];
 
 export function ProduitForm({
-  mode, initialData, availableModules, currentModuleIds = [],
+  mode, initialData, availableModules, currentModuleIds = [], availableApplications = [],
 }: {
   mode: 'create' | 'edit';
   initialData?: Produit;
   availableModules: Module[];
   currentModuleIds?: string[];
+  availableApplications?: Application[];
 }) {
   const router = useRouter();
   const supabase = createClient();
@@ -25,6 +27,7 @@ export function ProduitForm({
   const [type, setType]             = useState<'logiciel' | 'materiel' | 'service'>(initialData?.type ?? 'logiciel');
   const [badge, setBadge]           = useState(initialData?.badge ?? '');
   const [lien, setLien]             = useState(initialData?.lien ?? '');
+  const [applicationId, setApplicationId] = useState(initialData?.application_id ?? '');
   const [featured, setFeatured]     = useState(initialData?.featured ?? false);
   const [ordre, setOrdre]           = useState(initialData?.ordre ?? 0);
   const [actif, setActif]           = useState(initialData?.actif ?? true);
@@ -45,7 +48,7 @@ export function ProduitForm({
     if (!nom.trim()) { setError('Le nom est requis.'); return; }
     setSaving(true); setError('');
 
-    const payload = { nom, icone, description, prix, type, badge: badge || null, lien: lien || null, featured, ordre, actif };
+    const payload = { nom, icone, description, prix, type, badge: badge || null, lien: lien || null, featured, ordre, actif, application_id: applicationId || null };
 
     if (mode === 'create') {
       const { data: newProduit, error: err } = await supabase
@@ -108,6 +111,23 @@ export function ProduitForm({
             <label>Lien « En savoir plus » (optionnel)</label>
             <input className="cel-input" placeholder="ex: /erp" value={lien} onChange={e => setLien(e.target.value)} />
           </div>
+        </div>
+
+        {/* Application liée (téléchargement APK sur la page Offres) */}
+        <div className="field">
+          <label>Application mobile liée (optionnel)</label>
+          <select className="cel-input" value={applicationId} onChange={e => setApplicationId(e.target.value)}>
+            <option value="">— Aucune —</option>
+            {availableApplications.map(a => (
+              <option key={a.id} value={a.id}>
+                {a.nom}{a.apk_version ? ` (APK v${a.apk_version})` : ' (pas d\'APK uploadé)'}
+              </option>
+            ))}
+          </select>
+          <span style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 3, display: 'block' }}>
+            Si l&apos;application a un APK, un bouton « Télécharger l&apos;application » apparaît sur la page Offres.
+            Gérez les APK et les licences dans l&apos;onglet <a href="/celestial-admin-rtabt/licences" style={{ color: 'var(--gold)' }}>Licences</a>.
+          </span>
         </div>
 
         {/* Module picker */}

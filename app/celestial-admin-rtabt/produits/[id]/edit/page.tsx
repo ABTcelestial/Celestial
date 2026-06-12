@@ -5,10 +5,11 @@ import { notFound } from 'next/navigation';
 export default async function EditProduitPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const supabase = await createClient();
-  const [{ data: produit }, { data: modules }, { data: assignments }] = await Promise.all([
+  const [{ data: produit }, { data: modules }, { data: assignments }, { data: applications }] = await Promise.all([
     supabase.from('produits').select('*').eq('id', id).single(),
     supabase.from('modules').select('*').eq('actif', true).order('ordre'),
     supabase.from('produit_modules').select('module_id').eq('produit_id', id),
+    supabase.from('applications').select('*').order('nom'),
   ]);
   if (!produit) notFound();
   return (
@@ -22,6 +23,7 @@ export default async function EditProduitPage({ params }: { params: Promise<{ id
         initialData={produit}
         availableModules={modules ?? []}
         currentModuleIds={assignments?.map(a => a.module_id) ?? []}
+        availableApplications={applications ?? []}
       />
     </main>
   );

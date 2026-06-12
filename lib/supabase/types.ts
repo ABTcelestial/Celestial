@@ -50,15 +50,51 @@ export type Database = {
           id: string; nom: string; icone: string; description: string;
           type: 'logiciel' | 'materiel' | 'service';
           prix: number; badge: string | null; lien: string | null;
-          featured: boolean; ordre: number; actif: boolean; created_at: string;
+          featured: boolean; ordre: number; actif: boolean;
+          application_id: string | null; created_at: string;
         };
         Insert: {
           id?: string; nom: string; icone?: string; description: string;
           type?: 'logiciel' | 'materiel' | 'service';
           prix?: number; badge?: string | null; lien?: string | null;
-          featured?: boolean; ordre?: number; actif?: boolean; created_at?: string;
+          featured?: boolean; ordre?: number; actif?: boolean;
+          application_id?: string | null; created_at?: string;
         };
         Update: Partial<Database['public']['Tables']['produits']['Row']>;
+        Relationships: [];
+      };
+      applications: {
+        Row: {
+          id: string; nom: string; slug: string; description: string | null;
+          apk_path: string | null; apk_version: string | null; apk_size: number | null;
+          actif: boolean; created_at: string;
+        };
+        Insert: {
+          id?: string; nom: string; slug: string; description?: string | null;
+          apk_path?: string | null; apk_version?: string | null; apk_size?: number | null;
+          actif?: boolean; created_at?: string;
+        };
+        Update: Partial<Database['public']['Tables']['applications']['Row']>;
+        Relationships: [];
+      };
+      licenses: {
+        Row: {
+          id: string; application_id: string; user_id: string; email: string;
+          client_name: string | null; note: string | null;
+          status: 'active' | 'revoked'; created_at: string;
+        };
+        Insert: {
+          id?: string; application_id: string; user_id: string; email: string;
+          client_name?: string | null; note?: string | null;
+          status?: 'active' | 'revoked'; created_at?: string;
+        };
+        Update: Partial<Database['public']['Tables']['licenses']['Row']>;
+        Relationships: [];
+      };
+      admin_users: {
+        Row: { user_id: string; created_at: string };
+        Insert: { user_id: string; created_at?: string };
+        Update: Partial<Database['public']['Tables']['admin_users']['Row']>;
         Relationships: [];
       };
       modules: {
