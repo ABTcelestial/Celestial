@@ -102,90 +102,52 @@ create policy "public_read_apks" on storage.objects
 -- ---------- 5. Resserrage des policies CMS existantes ----------
 -- Avant : "for all to authenticated using (true)" = n'importe quel compte
 -- connecté (client plateforme, client app mobile) pouvait écrire.
--- Après : admins seulement. Les policies anon_read_* restent inchangées.
+-- Après : admins seulement. Les policies anon_read_* et platform_*
+-- (read_own / insert_own des clients) restent inchangées.
+-- Les tables absentes de la base sont ignorées (raise notice).
 
--- Tables CMS (les deux générations de noms sont couvertes)
-drop policy if exists "admins_all_devis"        on devis;
-drop policy if exists "admin_all_devis"         on devis;
-create policy "admin_all_devis" on devis
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admins_all_changelogs"   on changelogs;
-drop policy if exists "admin_all_changelogs"    on changelogs;
-create policy "admin_all_changelogs" on changelogs
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admins_all_produits"     on produits;
-drop policy if exists "admin_all_produits"      on produits;
-create policy "admin_all_produits" on produits
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admins_all_contact"      on contact_info;
-drop policy if exists "admin_all_contact"       on contact_info;
-create policy "admin_all_contact" on contact_info
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admins_all_doc_pages"    on doc_pages;
-drop policy if exists "admin_all_doc_pages"     on doc_pages;
-create policy "admin_all_doc_pages" on doc_pages
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admins_all_modules"      on modules;
-drop policy if exists "admin_all_modules"       on modules;
-create policy "admin_all_modules" on modules
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admins_all_produit_modules" on produit_modules;
-drop policy if exists "admin_all_produit_modules"  on produit_modules;
-create policy "admin_all_produit_modules" on produit_modules
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admins_all_bundles"      on bundles;
-drop policy if exists "admin_all_bundles"       on bundles;
-create policy "admin_all_bundles" on bundles
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admins_all_suite"        on suite_config;
-create policy "admin_all_suite_config" on suite_config
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admins_all_comparatif"   on comparatif_modules;
-create policy "admin_all_comparatif_modules" on comparatif_modules
-  for all to authenticated using (is_admin()) with check (is_admin());
-
--- Tables plateforme : l'admin passe par is_admin(), les clients gardent
--- leurs policies platform_* (read_own / insert_own) inchangées.
-drop policy if exists "admin_all_platform_workspaces" on platform_workspaces;
-create policy "admin_all_platform_workspaces" on platform_workspaces
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admin_all_platform_members" on platform_members;
-create policy "admin_all_platform_members" on platform_members
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admin_all_erp_table_definitions" on erp_table_definitions;
-create policy "admin_all_erp_table_definitions" on erp_table_definitions
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admin_all_workspace_table_access" on workspace_table_access;
-create policy "admin_all_workspace_table_access" on workspace_table_access
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admin_all_erp_data" on erp_data;
-create policy "admin_all_erp_data" on erp_data
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admin_all_platform_notifications" on platform_notifications;
-create policy "admin_all_platform_notifications" on platform_notifications
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admin_all_platform_messages" on platform_messages;
-create policy "admin_all_platform_messages" on platform_messages
-  for all to authenticated using (is_admin()) with check (is_admin());
-
-drop policy if exists "admin_all_erp_sync_logs" on erp_sync_logs;
-create policy "admin_all_erp_sync_logs" on erp_sync_logs
-  for all to authenticated using (is_admin()) with check (is_admin());
+do $$
+declare
+  t record;
+  p text;
+begin
+  for t in
+    select * from (values
+      ('devis',                  array['admins_all_devis']),
+      ('changelogs',             array['admins_all_changelogs']),
+      ('produits',               array['admins_all_produits']),
+      ('contact_info',           array['admins_all_contact', 'admin_all_contact']),
+      ('doc_pages',              array['admins_all_doc_pages']),
+      ('modules',                array['admins_all_modules']),
+      ('produit_modules',        array['admins_all_produit_modules']),
+      ('bundles',                array['admins_all_bundles']),
+      ('suite_config',           array['admins_all_suite']),
+      ('comparatif_modules',     array['admins_all_comparatif']),
+      ('platform_workspaces',    array[]::text[]),
+      ('platform_members',       array[]::text[]),
+      ('erp_table_definitions',  array[]::text[]),
+      ('workspace_table_access', array[]::text[]),
+      ('erp_data',               array[]::text[]),
+      ('platform_notifications', array[]::text[]),
+      ('platform_messages',      array[]::text[]),
+      ('erp_sync_logs',          array[]::text[])
+    ) as v(tbl, old_policies)
+  loop
+    if to_regclass('public.' || t.tbl) is null then
+      raise notice 'Table % absente — ignorée', t.tbl;
+      continue;
+    end if;
+    -- Anciens noms de policies (toutes générations confondues)
+    foreach p in array t.old_policies || array['admin_all_' || t.tbl]
+    loop
+      execute format('drop policy if exists %I on public.%I', p, t.tbl);
+    end loop;
+    execute format(
+      'create policy %I on public.%I for all to authenticated using (is_admin()) with check (is_admin())',
+      'admin_all_' || t.tbl, t.tbl
+    );
+  end loop;
+end $$;
 
 -- Storage images : écriture admin seulement (lecture publique inchangée)
 drop policy if exists "admin_upload_images" on storage.objects;
