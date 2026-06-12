@@ -1,9 +1,23 @@
 'use client';
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 import { createApkUploadUrl, finalizeApkUpload, removeApk } from '@/app/actions/licences';
 import type { Database } from '@/lib/supabase/types';
+
+function xhrUpload(url: string, file: File, onProgress: (pct: number) => void): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', url);
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+    xhr.setRequestHeader('x-upsert', 'true');
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100));
+    };
+    xhr.onload = () => (xhr.status < 300 ? resolve() : reject(new Error(`Erreur ${xhr.status}`)));
+    xhr.onerror = () => reject(new Error('Erreur réseau pendant l\'upload.'));
+    xhr.send(file);
+  });
+}
 
 type Application = Database['public']['Tables']['applications']['Row'];
 
@@ -31,14 +45,8 @@ export function ApkManager({ application }: { application: Application }) {
     setUploading(true); setError(''); setProgress(0);
     try {
       const { path, token } = await createApkUploadUrl(application.id, file.name);
-      const supabase = createClient();
-      const { error: uploadError } = await supabase.storage
-        .from('apks')
-        .uploadToSignedUrl(path, token, file, {
-          contentType: file.type || 'application/octet-stream',
-          onUploadProgress: (e) => setProgress(Math.round((e.loaded / e.total) * 100)),
-        });
-      if (uploadError) throw new Error(uploadError.message);
+      const uploadUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/upload/sign/apks/${path}?token=${token}`;
+      await xhrUpload(uploadUrl, file, setProgress);
       await finalizeApkUpload(application.id, path, version, file.size);
       setVersion('');
       setProgress(0);
