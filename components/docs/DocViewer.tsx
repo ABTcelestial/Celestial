@@ -5,10 +5,12 @@ import type { Database } from '@/lib/supabase/types';
 type DocPage = Database['public']['Tables']['doc_pages']['Row'];
 
 const PRODUIT_LABEL: Record<string, string> = {
-  erp:     '⬡ ERP BusinessProces',
-  food:    '🍽 Celestial Food',
-  shop:    '🖥 Celestial Shop',
-  website: '🌐 Site Celestial',
+  erp:       '⬡ ERP BusinessProces',
+  food:      '🍽 Celestial Food',
+  shop:      '🖥 Celestial Shop',
+  website:   '🌐 Site Celestial',
+  chantiers: '🏗 Celestial Chantiers',
+  // hérités
   business: '⬡ ERP BusinessProces',
   compta:   '⬡ ERP BusinessProces',
   pay:      '⬡ ERP BusinessProces',
