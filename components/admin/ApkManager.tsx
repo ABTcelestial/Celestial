@@ -17,6 +17,7 @@ export function ApkManager({ application }: { application: Application }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [version, setVersion] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
 
@@ -27,20 +28,25 @@ export function ApkManager({ application }: { application: Application }) {
   async function handleUpload() {
     const file = fileRef.current?.files?.[0];
     if (!file) { setError('Choisissez un fichier.'); return; }
-    setUploading(true); setError('');
+    setUploading(true); setError(''); setProgress(0);
     try {
       const { path, token } = await createApkUploadUrl(application.id, file.name);
       const supabase = createClient();
       const { error: uploadError } = await supabase.storage
         .from('apks')
-        .uploadToSignedUrl(path, token, file, { contentType: file.type || 'application/octet-stream' });
+        .uploadToSignedUrl(path, token, file, {
+          contentType: file.type || 'application/octet-stream',
+          onUploadProgress: (e) => setProgress(Math.round((e.loaded / e.total) * 100)),
+        });
       if (uploadError) throw new Error(uploadError.message);
       await finalizeApkUpload(application.id, path, version, file.size);
       setVersion('');
+      setProgress(0);
       if (fileRef.current) fileRef.current.value = '';
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur pendant l\'upload.');
+      setProgress(0);
     }
     setUploading(false);
   }
@@ -102,6 +108,17 @@ export function ApkManager({ application }: { application: Application }) {
           {uploading ? 'Upload en cours…' : 'Uploader'}
         </button>
       </div>
+      {uploading && (
+        <div style={{ marginTop: 12 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, color: 'var(--text-muted)', marginBottom: 6 }}>
+            <span>Upload en cours…</span>
+            <span>{progress}%</span>
+          </div>
+          <div style={{ height: 6, borderRadius: 999, background: 'var(--glass-border)', overflow: 'hidden' }}>
+            <div style={{ height: '100%', borderRadius: 999, background: 'linear-gradient(90deg, var(--gold), var(--gold-bright))', width: `${progress}%`, transition: 'width 0.2s ease' }} />
+          </div>
+        </div>
+      )}
       {error && <p style={{ color: 'var(--cel-danger)', fontSize: 13.5, marginTop: 10 }}>{error}</p>}
     </section>
   );
